@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+    
+
+    <LinearLayout 
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        
+        <include layout="@layout/app_backup" />
+    </LinearLayout>
+    
+     <LinearLayout 
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <include layout="@layout/system_apps" />
+    </LinearLayout>
+    
+      <LinearLayout 
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+         <include layout="@layout/zip_it" />
+    </LinearLayout>
+    
+     <LinearLayout 
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <include layout="@layout/app_stats_btn" />
+    </LinearLayout>
+    
+      <LinearLayout 
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <include layout="@layout/settings_btn" />
+    </LinearLayout>
+    
+     
+    
+</LinearLayout>

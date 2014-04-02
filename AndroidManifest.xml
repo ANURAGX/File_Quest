@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.anurag.file.quest"
+    android:versionCode="016"
+    android:versionName="0.1.6" >
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    
+    
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="19" />
+
+    <application
+        android:allowBackup="true"
+        
+        android:icon="@drawable/ic_launcher_main"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        
+        <service 
+            android:name="org.anurag.file.quest.AdService">
+            
+        </service>
+        
+         <activity android:name="com.google.android.gms.ads.AdActivity"
+             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+        
+        
+        <meta-data android:name="com.google.android.gms.version"
+           android:value="4242000" />
+        
+        <activity
+        	
+        	android:launchMode="standard"
+        	android:screenOrientation="portrait"    
+            android:name="org.anurag.file.quest.TaskerActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan" >
+            
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+       
+        
+        <!-- FILE QUEST EDITOR -->
+        <activity
+            android:label="@string/label" 
+            android:windowSoftInputMode="adjustPan"
+            android:name="org.anurag.text.editor.EditorActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+                <data android:mimeType="text/htm" />
+                <data android:mimeType="text/html" />
+                <data android:mimeType="*/rc"/>
+                <data android:mimeType="*/prop"/>
+            </intent-filter>
+        </activity>
+        
+        <!-- FQ IMAGE VIEWER -->
+        <activity 
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:label="FQ Image Viewer"
+            android:name="org.anurag.file.quest.ImageViewer">
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.EDIT"/>
+                <action android:name="android.intent.action.PICK"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="image/*"/>
+            </intent-filter>
+            
+        </activity>
+        
+        
+        <!-- DROPBOX -->
+        <activity
+     		android:name="com.dropbox.client2.android.AuthActivity"
+     	 	android:launchMode="singleTask"
+      	 	android:configChanges="orientation|keyboard">
+      		<intent-filter>
+        		<data android:scheme="db-ai6fnjtat01j6x9" />
+        		<action android:name="android.intent.action.VIEW" />
+        		<category android:name="android.intent.category.BROWSABLE"/>
+        		<category android:name="android.intent.category.DEFAULT" />
+      		</intent-filter>
+    	</activity>
+         
+         
+         
+      <!-- BOX -->   
+      <activity 
+          android:name="com.box.boxandroidlibv2.activities.OAuthActivity" />
+         
+      
+      
+      
+      <!-- START APP  -->
+      
+      <activity android:name="com.startapp.android.publish.list3d.List3DActivity"
+				android:taskAffinity="org.anurag.file.quest.AppWall"
+				android:theme="@android:style/Theme" />
+	  <activity android:name="com.startapp.android.publish.AppWallActivity"
+				android:theme="@android:style/Theme.Translucent"
+				android:taskAffinity="org.anurag.file.quest.AppWall"
+				android:configChanges="orientation|keyboardHidden" />
+      
+      
+      
+      
+               
+      
+		<!-- Airpush SDK Requirements -->
+
+		<!--  
+        <meta-data android:name="com.google.android.gms.version" android:value="4030500" />
+		<meta-data android:name="com.fuehlbypa.kddcbytnh159110.APPID" android:value="187564" />
+		<meta-data android:name="com.fuehlbypa.kddcbytnh159110.APIKEY" android:value="android*1377959896159110585"/>
+		<activity android:exported="false" android:name="com.fuehlbypa.kddcbytnh159110.MainActivity"
+     				android:configChanges="orientation|screenSize"
+					android:theme="@android:style/Theme.Translucent" />
+		<activity android:name="com.fuehlbypa.kddcbytnh159110.BrowserActivity"
+					android:configChanges="orientation|screenSize" />
+		<activity android:name="com.fuehlbypa.kddcbytnh159110.VDActivity"
+        	    android:configChanges="orientation|screenSize" android:screenOrientation="landscape"
+            	android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+		</activity> 
+		-->
+    </application>
+
+</manifest>

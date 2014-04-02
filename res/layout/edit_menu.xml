@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center" >
+   
+   
+   <LinearLayout 
+       android:paddingTop="10dp"
+       android:paddingLeft="10dp"
+       android:layout_width="fill_parent"
+       android:layout_height="0dp"
+       android:layout_weight="3"
+       android:orientation="horizontal">
+       <EditText 
+           android:textColor="@android:color/white"
+           android:singleLine="true"
+           android:background="@drawable/edit_text_focused_black"
+           android:focusable="true"
+           android:layout_weight="1"
+           android:id="@+id/editBox"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:hint="Enter New Name"/>
+       <LinearLayout 
+           android:layout_width="5dp"
+           android:layout_height="fill_parent">
+           
+       </LinearLayout>		
+       
+    	<LinearLayout 
+    	    android:onClick="onClick"
+    	    android:id="@+id/applyBtn"
+    	    android:layout_width="50dp"
+    	    android:focusable="true"
+    	    android:clickable="true"
+    	    android:background="@drawable/action_item_btn"
+    	    android:layout_height="40dp">
+    	    
+    	    <ImageButton 
+    	    android:clickable="false"    
+    	   
+    	    android:paddingLeft="10dp"
+    	    android:layout_width="50dp"
+    	    android:layout_height="30dp"
+    	    android:paddingBottom="20dp"
+    	    android:background="@drawable/ic_launcher_apply" />
+    	</LinearLayout>
+       
+   </LinearLayout>
+    
+    
+
+</LinearLayout>

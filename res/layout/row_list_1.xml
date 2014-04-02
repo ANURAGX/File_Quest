@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingLeft="10dp"
+    >       <CheckBox 
+            android:focusable="false"
+            android:focusableInTouchMode="false"    
+            android:button="@drawable/btn_check_holo_dark"    
+            android:layout_gravity="center_vertical"
+            android:id="@+id/checkbox"
+            android:paddingTop="5dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+           
+       
+        
+       <LinearLayout 
+           android:layout_width="50dp"
+           android:layout_height="50dp">
+            <ImageView 
+            android:layout_gravity="center_vertical"
+            android:id="@+id/fileIcon"
+            android:paddingTop="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"/>
+           
+       </LinearLayout>
+        <LinearLayout 
+            android:paddingLeft="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+            <TextView 
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:id="@+id/fileName"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textStyle="bold"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="Anurag"/>
+            <LinearLayout 
+                android:paddingLeft="10dp"
+                android:id="@+id/row1BtnLayout"
+                android:layout_weight="1.5"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+                <TextView 
+                    android:id="@+id/fileType"
+                    android:singleLine="true"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="File Type"/>
+                <TextView 
+                    android:id="@+id/fileSize"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="File Size"/>
+                
+            </LinearLayout> 
+            
+       
+            
+            
+        </LinearLayout>
+   
+    
+        
+    
+</LinearLayout>

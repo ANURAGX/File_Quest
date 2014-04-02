@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    
+    android:id="@+id/ui"
+	android:orientation="vertical" 
+	android:background="@android:color/black"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads">
+    
+	<LinearLayout 
+	android:id="@+id/menuLayout" 
+	android:layout_width="fill_parent" 
+	android:layout_height="0.0dip" 
+	android:layout_weight="1.2">
+        
+		<ViewFlipper 
+		android:id="@+id/viewFlipperMenu" 
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent">
+		<include
+               layout="@layout/main_menu_bar"/>
+        <include 
+            layout="@layout/app_menu_bar"/> 
+        <include 
+            layout="@layout/edit_menu"/>
+        </ViewFlipper>
+    </LinearLayout>
+	
+    <LinearLayout 
+	android:id="@+id/fragmentLayout" 
+	android:layout_width="fill_parent" 
+	android:layout_height="0.0dip" 
+	android:layout_weight="8.0">
+        <include layout="@layout/activity_tasker" />
+        
+        
+    </LinearLayout>
+	
+    
+    
+   
+    
+    
+    
+    <LinearLayout 
+	android:id="@+id/menu_bottom_layout" 
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content" >
+        
+		<ViewFlipper 
+		android:id="@+id/viewFlipperMenuBottom" 
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent">
+		<include
+               layout="@layout/menu_bottom"/>
+		<include 
+		    	layout="@layout/sdcard_space"/>
+		<include 
+		    	layout="@layout/menu_bottom_app"/>
+        
+        </ViewFlipper>
+    </LinearLayout>
+    
+    
+    <!-- 
+    
+   <com.fuehlbypa.kddcbytnh159110.AdView
+       android:layout_gravity="center"
+       android:id="@+id/adView"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       xmlns:ap="http://schemas.android.com/apk/res-auto"
+       ap:animation="fade"
+       ap:banner_type="inappad"
+       ap:canShowMR="false"
+       ap:placementType="interstitial"
+       ap:test_mode="false"/>
+     -->
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</LinearLayout>

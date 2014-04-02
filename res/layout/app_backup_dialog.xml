@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    
+    android:layout_gravity="center"
+    android:padding="10dp"
+    android:orientation="vertical" 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <LinearLayout 
+        android:orientation="horizontal" 
+        android:paddingLeft="10.0dip"
+        android:paddingTop="10.0dip" 
+        android:layout_width="fill_parent"
+        android:layout_gravity="center_vertical" 
+        android:layout_height="0.0dip" 
+        android:layout_weight="1.0">
+        <ImageView android:id="@+id/appImage"
+            android:gravity="center_vertical" 
+            android:layout_width="45.0dip" 
+            android:layout_height="45.0dip" />
+        <TextView 
+            android:gravity="center_vertical"
+            android:textStyle="bold" 
+            android:id="@+id/appName" 
+            android:paddingLeft="10.0dip" 
+            android:paddingTop="15.0dip" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+             />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+   		<ImageView 
+   		android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:background="#ff33b5e5" 
+        android:layout_width="fill_parent" 
+        android:layout_height="3.0dip" 
+         />     
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:orientation="vertical" 
+        android:paddingLeft="20.0dip" 
+        android:paddingTop="5.0dp" 
+        android:layout_width="fill_parent" 
+        android:layout_height="0.0dip" 
+        android:layout_weight="4.0">
+         <TextView 
+            android:paddingTop="15dp"
+            android:textStyle="bold"
+            android:id="@+id/header" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_weight="0.7" />
+         
+          <TextView 
+             android:paddingTop="15dp"
+            android:textStyle="bold"
+            android:id="@+id/header2" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_weight="0.7" />
+        <TextView 
+             android:paddingTop="15dp"
+            android:textStyle="bold" 
+            android:id="@+id/appProcessName" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_weight="0.7" />
+        <TextView 
+             android:textStyle="bold" 
+            android:id="@+id/appVersionCode" 
+            android:paddingTop="15.0dip" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_weight="0.7" />
+        <TextView 
+            android:textStyle="bold" 
+            android:id="@+id/appSize" 
+            android:paddingTop="15.0dip" 
+            android:visibility="visible" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_weight="0.7" />
+        
+        <LinearLayout 
+             android:paddingTop="10dp"
+            android:gravity="center" 
+            android:orientation="horizontal" 
+            android:paddingBottom="5.0dip" 
+            android:layout_width="fill_parent" 
+            android:layout_height="0.0dip" 
+            android:layout_weight="0.8">
+            <TextView 
+                android:textStyle="bold" 
+                android:ellipsize="end"
+                android:id="@+id/appBackupMessage" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:singleLine="true" />
+        </LinearLayout>
+    </LinearLayout>
+    
+    
+    <WebView 
+        android:layout_gravity="center"
+        android:id="@+id/app_Web_View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <LinearLayout 
+        android:id="@+id/strip"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+   		<ImageView 
+   		android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:background="#ff33b5e5" 
+        android:layout_width="fill_parent" 
+        android:layout_height="3.0dip" 
+         />     
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:gravity="center" 
+        android:orientation="horizontal" 
+        android:id="@+id/appBtnLayout" 
+        android:layout_width="fill_parent" 
+        android:layout_height="0.0dip" 
+        android:layout_weight="0.5">
+        <Button 
+            android:textColor="@android:color/white"
+            android:background="@drawable/action_item_btn"
+            android:textStyle="bold"
+            android:id="@+id/appBackupBtn" 
+            android:layout_width="fill_parent" 
+            android:layout_height="40dp" 
+            android:text="Take Backup" 
+            android:layout_weight="1.0" 
+            android:onClick="onClick" />
+        <Button 
+            android:textColor="@android:color/white"
+            android:background="@drawable/action_item_btn"
+            android:textStyle="bold" 
+            android:id="@+id/appCacheBtn" 
+            android:layout_width="fill_parent" 
+            android:layout_height="40dp" 
+            android:text="Cancel" 
+            android:layout_weight="1.0" />
+        
+    </LinearLayout>
+</LinearLayout>

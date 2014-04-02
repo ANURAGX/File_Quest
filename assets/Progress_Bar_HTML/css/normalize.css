@@ -1,0 +1,71 @@
+body {
+    font-family: 'Helvetica', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    
+}
+.msg {
+    margin-top: 00px;
+    text-align: center;
+    font-weight: bold;
+	margin-bottom:2px;
+}
+.loader_box {
+    text-align: center;
+    width: 200px;
+    border: 1px solid #999;
+    padding: 1px;
+    height: 8px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.loader {
+    width: 0;
+    height: 100%;
+    background-color: #6188F5;
+    background-repeat: repeat-x;
+    background-position: 0 0;
+    /*background-size*/
+    -webkit-background-size: 16px 8px;
+    -moz-background-size: 16px 8px;
+    -o-background-size: 16px 8px;
+    background-size: 16px 8px;
+    background-image: -webkit-linear-gradient(315deg,transparent,transparent 33%,rgba(0, 0, 0, 0.12) 33%,rgba(0, 0, 0, 0.12) 66%,transparent 66%,transparent);
+    background-image: -moz-linear-gradient(315deg,transparent,transparent 33%,rgba(0, 0, 0, 0.12) 33%,rgba(0, 0, 0, 0.12) 66%,transparent 66%,transparent);
+    background-image: -o-linear-gradient(315deg,transparent,transparent 33%,rgba(0, 0, 0, 0.12) 33%,rgba(0, 0, 0, 0.12) 66%,transparent 66%,transparent);
+    background-image: linear-gradient(315deg,transparent,transparent 33%,rgba(0, 0, 0, 0.12) 33%,rgba(0, 0, 0, 0.12) 66%,transparent 66%,transparent);
+    /*animation*/
+    -webkit-animation: load 5s linear 0 infinite;
+    -moz-animation: load 5s linear 0 infinite;
+    -ms-animation: load 5s linear 0 infinite;
+    -o-animation: load 5s linear 0 infinite;
+    animation: load 5s linear 0 infinite;
+}
+/* Then animate the stuff */
+@-webkit-keyframes load { 
+    0% { width: 0% ;
+		background-position:0 0;}
+    100% { width: 100%;
+			background-position:-40px 0;
+			}
+}
+@-ms-keyframes load { 
+   0% { width: 0% ;
+		background-position:0 0;}
+    100% { width: 100%;
+			background-position:-40px 0;
+			}
+}
+@-o-keyframes load { 
+    0% { width: 0% ;
+		background-position:0 0;}
+    100% { width: 100%;
+			background-position:-40px 0;
+			}
+}
+@keyframes load { 
+  0% { width: 0% ;
+		background-position:0 0;}
+    100% { width: 100%;
+			background-position:-40px 0;
+			}
+}

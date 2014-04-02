@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="New">New</string>
+    <string name="versionCode">105</string>
+    <string name="version">     1.0.5</string>
+    <string name="app_name">File Quest</string>
+    <string name="action_settings">Settings</string>
+    <string name="open">Open</string>
+    <string name="copy">Copy/Select</string>
+    <string name="cut">Cut</string>
+    <string name="paste">Paste</string>
+    <string name="delete">Delete</string>
+	<string name="rename">Rename</string>
+	<string name="properties">Properties</string>
+	<string name="send">Send</string>
+	<string name="archive">Archive</string>
+	<string name="empty">No Files</string>
+	<string name="cancel">Cancel</string>
+	<string name="overwrite">Overwrite</string>
+	
+	<!-- Editor Activity -->
+	<string name="search_hint">Enter Text To Search</string>
+	<string name="extrasmall">Extra Small</string>
+	<string name="small">Small</string>
+	<string name="medium">Medium</string>
+    <string name="large">Large</string>  
+    <string name="huge">Huge</string>
+    <string name="mono">Monospace</string> 
+    <string name="serif">Serif</string>	
+    <string name="sans">Sans Serif</string>
+	<string name="label">File Quest Editor</string>
+	<string name="fontsizeTitle">Choose Font Size</string>
+	<string name="fonttypeTitle">Choose Font Type</string>
+	<string name="failtowrite">Unable To Save File</string>
+	<string name="invalid">Invalid File Selected</string>
+	<string name="readerror">Unable To Read The File</string>
+	<string name="xerror">Unknown Error Encountered</string>
+	<string name="saved">File Successfully Saved</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	
+	<string name="success">File copied Successfully</string>
+	<string name="stopped">Copying was interupted by user</string>
+	<string name="Empty">No items available</string>
+	<string name="musicError">Unable to play music right now</string>
+	<string name="development">Cloud support is in development stage</string>
+	<string name="share">Share</string>
+	<string name="cloud">Cloud</string>
+	<string name="openwith">Open with</string>
+	<string name="wait">Please wait while loading file</string>
+	<string name="music">Music</string>
+	<string name="apps">Apps</string>
+	<string name="docs">Documents</string>
+	<string name="photo">Photos</string>
+	<string name="vids">Videos</string>
+	<string name="zip">Zip Files</string>
+	<string name="mis">Miscellaneous</string>
+	<string name="sd">Sd Card</string>
+	<string name="calc">Calculating</string>
+	
+	<string name="save">Settings have been saved</string>
+	<string name="setasdefault">Set as default</string>
+	
+	<string name="chooseHome">Choose Any Directory For Home</string>
+	<string name="internalstorage">Internal Phone Storage</string>
+	<string name="modified">Modified on</string>
+	<string name="type">Type</string>
+	<string name="propertie">Properties</string>
+	<string name="longClick">Select an action</string>
+	<string name="use">Use</string>
+	<string name="quit">Quit</string>
+	<string name="noApp">No such application is found</string>
+	<string name="selectFirst">First select an application</string>
+	<string name="Openwith">Open file with</string>
+	<string name="always">Always</string>
+	<string name="once">Once</string>
+	
+	<string name="removenextpanel">Remove File To Next Panel</string>
+	<string name="copynextpanel">Copy The File To Next Panel</string>
+	<string name="nohome">Home Directory Not Found</string>
+	<string name="nohomeerror">It Seems That The Defined Path For Home Directory Deosnot Exists,Setting Home Directory To Default Location /sdcard,You Can Change The Default Location</string>
+	<string name="cantrename">Failed to rename the file</string>				
+	<string name="renameerror">It Seems That You Are Trying To Rename The One Of The Root Directories Or File,If Not Then Because Of I/O Error Cannot Rename File,Please Try Again Later </string>
+	<string name="cantcopy">Cannot Copy File</string>				
+	<string name="copyerror">It Seems That You Are Trying To Copy One Of The Root Directories Or File And NULL POINTER EXCEPTION Was Encountered</string>
+	<string name="noapperror">Currently There Is No App Installed On This Device That Can Handle This Type Of File</string>
+	<string name="usize">Unsupported screen size</string>
+	<string name="usizeerror">Currently This App Is Not Available For Screen Resolution ,Please Stay Tuned For This Fix For Best Experience</string>
+	<string name="sec">Security Exception</string>
+	<string name="secerror">A Security Exception Was Encountered While Sending The Data To The Selected App,Please Try Other Apps For The Same File Type</string>
+	<string name="clod">Cloud Storage</string>
+	<string name="cloderror">This feature will arrive shortly,these features are in development stage.  So till then stay tuned to FILE QUEST</string>
+	<string name="cantcopyerror">Because Of The Unknown Error Cannot Copy File Please Try Again Later</string>
+	<string name="condelete">Confirm Deletion</string>
+	<string name="suredelete">Are You Sure to Delete The Folder :-</string>
+	<string name="noactivity">This App Donot Have Activity To Launch</string>
+	<string name="backupdeleted">Backup Has Been Deleted</string>
+	<string name="failtodeletebackup">Unable To Delete The Backup</string>
+	<string name="noitems">No file is selected to copy</string>
+	<string name="senderror">An error encountered while sending files,try later</string>
+	<string name="unabletosend">Unable To Send Right now try later</string>
+	<string name="someapps">First select some apps</string>
+	<string name="enablefirstforappstore">First Enable Multi Select mode for Your App Store then you can send multiple apps</string>
+	<string name="flashable">It Will Create A Unsigned Flashable Zip That is Usable Only In Recovery Mode With A Custom Rom</string>
+	<string name="deleteSystem">Are You Sure to Delete The Folders and Files :You are trying to delete system files,this will surely effect your device.....</string>
+	<string name="deleteSimple">Are You Sure to Delete The Folders and Files </string>
+	<string name="zipCompleted">Files have been successfully zipped</string>
+	<string name="serviceUnavaila">This service is unavailable for system files</string>
+	<string name="pasteNotAllowed">Paste not allowed here</string>
+	<string name="fsaved">File have been saved</string>
+	<string name="saveOnExit">Save File Before Quiting</string>
+	<string name="saveMesage">Do you want to save the file before quiting?</string>
+	<string name="selectFiles">First select some files</string>
+	<string name="failedToRetrieve">Failed to retrieve file properties</string>
+	<string name="p_String">Please wait while loading list</string>
+	<string name="dropbox">DropBox</string>
+	<string name="box">Box</string>
+	<string name="googledrive">Google Drive</string>
+	<string name="skydrive">Sky Drive</string>
+	<string name="waitWhileUploading">Please wait while uploading file</string>
+	<string name="minimise">Minimise</string> 
+	
+	
+</resources>

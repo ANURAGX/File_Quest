@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="340dp"
+    android:orientation="vertical" 
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:layout_gravity="center"
+    >
+    
+   
+   <LinearLayout 
+        android:orientation="horizontal" 
+        android:paddingLeft="10.0dip" 
+        android:paddingTop="5.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="0.0dip" 
+        android:layout_weight="1.2">
+        
+        <ImageView 
+            android:id="@+id/getImage" 
+            android:layout_width="fill_parent" 
+            android:layout_height="fill_parent" 
+            android:layout_weight="5.0" />
+        
+        <TextView 
+            android:id="@+id/open"
+            android:textStyle="bold"
+            android:gravity="center_vertical" 
+            android:paddingLeft="10.0dip" 
+            android:layout_width="fill_parent" 
+            android:layout_height="fill_parent" 
+            android:text="Open File With" 
+            android:layout_weight="1.0" />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:background="#ff33b5e5" 
+        android:layout_width="fill_parent" 
+        android:layout_height="3.0dip" 
+         />
+    
+    <LinearLayout 
+        android:paddingLeft="10.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="0.0dip" 
+        android:baselineAligned="false" 
+        android:layout_weight="5.0">
+        
+        <ListView 
+            android:padding="3dp"
+            android:id="@+id/open_list" 
+            android:layout_width="fill_parent" 
+            android:layout_height="fill_parent" 
+            android:listSelector="@drawable/background" 
+            android:divider="#ff242424" 
+            android:dividerHeight="0.5dip" 
+            android:minHeight="10.0dip" />
+    </LinearLayout>
+    
+     <LinearLayout 
+        android:background="#ff33b5e5" 
+        android:layout_width="fill_parent" 
+        android:layout_height="3.0dip" 
+        />
+    
+    <LinearLayout 
+        android:paddingTop="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+        
+         <Button 
+            android:onClick="onClick"
+            android:textColor="@android:color/white"
+            android:background="@drawable/action_item_btn"
+            android:id="@+id/goBack"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:text="Go Back"
+            android:layout_weight="1"/>
+        
+        <Button 
+            android:onClick="onClick"
+            android:textColor="@android:color/white"
+            android:background="@drawable/action_item_btn"
+            android:id="@+id/justOnce"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:text="Ok"
+            android:layout_weight="1"/>
+        <Button 
+            android:onClick="onClick"
+            android:textColor="@android:color/white"
+            android:background="@drawable/action_item_btn"
+            android:id="@+id/always"
+            android:text="Cancel"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"/>
+        
+    </LinearLayout>
+    
+
+</LinearLayout>

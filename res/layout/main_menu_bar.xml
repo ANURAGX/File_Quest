@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+    
+
+    <LinearLayout 
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        
+        <include layout="@layout/file_task" />
+    </LinearLayout>
+    
+     <LinearLayout 
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <include layout="@layout/home_folder"/>
+    </LinearLayout>
+    
+      <LinearLayout 
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+         <include layout="@layout/sd_stats" />
+    </LinearLayout>
+    
+     <LinearLayout 
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <include layout="@layout/settings" />
+    </LinearLayout>
+    
+      <LinearLayout 
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <include layout="@layout/settings_btn" />
+    </LinearLayout>
+    
+     
+    
+</LinearLayout>

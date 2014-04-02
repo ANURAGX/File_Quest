@@ -1,0 +1,11 @@
+/bin
+*.iml
+.classpath
+project.properties
+.idea/
+gen/
+.settings/
+.project
+local.properties
+lint.xml
+**/*.iml

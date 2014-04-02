@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center" >
+    
+    <ScrollView 
+        android:layout_gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        
+    	<LinearLayout 
+    	    android:gravity="center"
+    	    android:orientation="vertical"
+    	    android:layout_height="wrap_content"
+    	    android:layout_width="fill_parent">
+    	    
+    	    <TextView 
+    	    android:textSize="20sp"    
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:paddingTop="10dp"
+            android:gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome to FILE QUEST"/>
+    	    
+    	 <TextView 
+    	    android:textSize="15sp"    
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:paddingTop="10dp"
+            android:gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="DRAWNZER.ORG"/>
+    	 
+    	  <TextView 
+    	    android:textSize="15sp"    
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:paddingTop="10dp"
+            android:gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Copyright@ ANURAG"/>
+        
+        <TextView 
+            android:textStyle="bold"
+            android:paddingTop="10dp"
+            android:gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Dropbox cloud service has been integrated in a unique way.Other Cloud Services Arriving Soon To File Quest"/>
+        
+         <TextView 
+            android:textStyle="bold"
+            android:paddingTop="10dp"
+            android:gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="File Quest highly recommends to go through this user guide once for better use of cloud services."/>
+    	    
+    	</LinearLayout>    
+        
+        
+    </ScrollView>
+
+</LinearLayout>

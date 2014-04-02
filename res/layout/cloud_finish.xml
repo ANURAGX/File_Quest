@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center" >
+    
+     <TextView 
+         		android:textSize="15sp"
+                android:paddingTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="Useful Tip "/>
+     
+     <TextView 
+         		android:paddingTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="Always try to connect to cloud account from / panel,as all your local files are easily accessible from SDCARD panel and they can be uploaded with ease."/>
+     
+
+     <ImageView 
+         	android:layout_width="wrap_content"
+         	android:layout_height="wrap_content"
+         	android:background="@drawable/ic_launcher_main"/>
+     
+      <TextView 
+         		android:textSize="15sp"
+                android:paddingTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="Thanks for using FILE QUEST"/>
+</LinearLayout>

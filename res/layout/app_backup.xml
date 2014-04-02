@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    android:layout_margin="3dp"
+    android:id="@+id/backupAll" 
+    android:onClick="onClick"
+    android:background="@drawable/custom_button1"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center" 
+    android:orientation="vertical" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent" 
+    android:weightSum="7.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout 
+        android:orientation="horizontal" 
+        android:padding="1.0dip" 
+        android:paddingLeft="10dp" 
+        android:paddingTop="2.0dip" 
+        android:paddingRight="10dp" 
+        android:layout_width="fill_parent" 
+        android:layout_height="0.0dip" 
+        android:layout_weight="5.0">
+        <Button 
+            android:clickable="false"
+            android:background="@drawable/ic_launcher_backupall" 
+            android:layout_width="fill_parent" 
+            android:layout_height="fill_parent" 
+             />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:orientation="horizontal" 
+        android:padding="1.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="0.0dip" 
+        android:layout_weight="2.0">
+        <TextView 
+            android:textSize="9.0sp" 
+            android:textStyle="bold" 
+            android:gravity="center" 
+            android:layout_width="fill_parent" 
+            android:layout_height="fill_parent"
+            android:text="Backup" />
+    </LinearLayout>
+</LinearLayout>
