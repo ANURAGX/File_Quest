@@ -40,7 +40,7 @@ File Quest is world's first File Managing app having 3D Listview.Root enabled,gi
 | 25.      | Can filter out a file from current list of files|
 
 ###Submitting Pull Requests
-- We ask that all pull requests are well documented so that we may better understand your commits. Requests that lack documentation may be rejected.
+- I request you all that all pull requests are well documented so that we may better understand your commits. Requests that lack documentation may be rejected.
  
 ###Submitting Bug Reports
 When submitting a bug report, please include the following:-
