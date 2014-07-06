@@ -12,13 +12,12 @@
  * anurag.dev1512@gmail.com
  *
  */
-public
+
 
 package org.ultimate.menuItems;
 
 
 import org.anurag.file.quest.R;
-
 import android.app.Activity;
 import android.graphics.Point;
 import android.os.Build;
@@ -27,7 +26,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class SystemFlash extends Activity{

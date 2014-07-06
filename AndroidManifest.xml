@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.anurag.file.quest"
-    android:versionCode="016"
-    android:versionName="0.1.6" >
+    android:versionCode="025"
+    android:versionName="0.2.5" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -12,7 +12,7 @@
     
     
     <uses-sdk
-        android:minSdkVersion="19"
+        android:minSdkVersion="16"
         android:targetSdkVersion="19" />
 
     <application
@@ -96,47 +96,6 @@
         		<category android:name="android.intent.category.DEFAULT" />
       		</intent-filter>
     	</activity>
-         
-         
-         
-      <!-- BOX -->   
-      <activity 
-          android:name="com.box.boxandroidlibv2.activities.OAuthActivity" />
-         
-      
-      
-      
-      <!-- START APP  -->
-      
-      <activity android:name="com.startapp.android.publish.list3d.List3DActivity"
-				android:taskAffinity="org.anurag.file.quest.AppWall"
-				android:theme="@android:style/Theme" />
-	  <activity android:name="com.startapp.android.publish.AppWallActivity"
-				android:theme="@android:style/Theme.Translucent"
-				android:taskAffinity="org.anurag.file.quest.AppWall"
-				android:configChanges="orientation|keyboardHidden" />
-      
-      
-      
-      
-               
-      
-		<!-- Airpush SDK Requirements -->
-
-		<!--  
-        <meta-data android:name="com.google.android.gms.version" android:value="4030500" />
-		<meta-data android:name="com.fuehlbypa.kddcbytnh159110.APPID" android:value="187564" />
-		<meta-data android:name="com.fuehlbypa.kddcbytnh159110.APIKEY" android:value="android*1377959896159110585"/>
-		<activity android:exported="false" android:name="com.fuehlbypa.kddcbytnh159110.MainActivity"
-     				android:configChanges="orientation|screenSize"
-					android:theme="@android:style/Theme.Translucent" />
-		<activity android:name="com.fuehlbypa.kddcbytnh159110.BrowserActivity"
-					android:configChanges="orientation|screenSize" />
-		<activity android:name="com.fuehlbypa.kddcbytnh159110.VDActivity"
-        	    android:configChanges="orientation|screenSize" android:screenOrientation="landscape"
-            	android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
-		</activity> 
-		-->
-    </application>
+   </application>
 
 </manifest>
