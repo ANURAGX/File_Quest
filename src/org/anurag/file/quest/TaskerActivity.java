@@ -465,7 +465,8 @@ public class TaskerActivity extends FragmentActivity implements OnClickListener 
 				if(!added)
 					try {
 						//PROVIDING URL TO FETCH ADMOB ID.....
-						URL url = new URL("https://dl.dropboxusercontent.com/s/q645iprj62e97to/%20ADMOB_ONLINE_%20ID.txt?dl=1");
+						//THE URL MUST BE DIRECTLY DOWNLOADABLE....
+						URL url = new URL(ENTER_YOUR_URL_HERE_TO_FETCH_ADMOB_ID);
 						Scanner scan = new Scanner(url.openStream());
 						id = scan.next();
 						if(id!=null)
