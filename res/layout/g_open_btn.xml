@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+     android:onClick="onClick"
+     android:gravity="center" 
+     android:id="@+id/g_open"
+     android:background="@drawable/blue_button"
+     android:focusable="true"
+     android:clickable="true"
+     android:orientation="vertical"
+     android:layout_width="fill_parent" 
+     android:layout_height="fill_parent" 
+     
+     xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    
+   
+        <Button 
+            android:gravity="center"
+            android:clickable="false"
+            android:background="@drawable/ic_launcher_gesture" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:onClick="onClick" />
+   
+        <TextView 
+            android:textStyle="bold" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:text="G-Open" />
+   
+</LinearLayout>
