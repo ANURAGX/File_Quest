@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    android:background="@color/black"
+    android:gravity="center" 
+    android:orientation="vertical" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <LinearLayout 
+        android:gravity="center" 
+        android:background="@android:color/holo_purple" 
+        android:padding="5.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:layout_weight="0.08">
+        
+        <TextView 
+            android:textStyle="bold" 
+            android:textColor="@android:color/darker_gray" 
+            android:id="@+id/guideTitle" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:text="@string/whatsnew" />
+    </LinearLayout>
+    
+    <ScrollView 
+        android:paddingBottom="10.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent" 
+        android:layout_weight="2.0">
+        <LinearLayout 
+            android:orientation="vertical" 
+            android:layout_width="wrap_content" 
+            android:layout_height="fill_parent">
+            <LinearLayout 
+                android:layout_gravity="center" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content">
+                <TextView 
+                    android:textSize="18.0sp" 
+                    android:textStyle="bold" 
+                    android:paddingLeft="2.0dip" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:text="Current Release v-0.2.0" />
+            </LinearLayout>
+            <TextView android:textSize="15.0sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="  -> G Open " />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="     -> Add gesture to file or folder." />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="     -> Open any folder or file by drawing gesture." />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="     -> G Open widget for homescreen to draw gestures and open folder or file." />
+            <TextView android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="" />
+            <TextView android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="" />
+            <TextView android:textSize="15.0sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="  -> Hindi Language Support" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="     -> File Quest now also available in hindi and more languages coming soon." />
+        </LinearLayout>
+    </ScrollView>
+    
+    <Button 
+        android:textStyle="bold" 
+        android:textColor="@android:color/darker_gray" 
+        android:id="@+id/whats_new_btn" 
+        android:background="@drawable/action_item_btn" 
+        android:layout_width="fill_parent" 
+        android:layout_height="50.0dip" 
+        android:text="@string/ok" 
+        android:layout_weight="0.5" />
+</LinearLayout>

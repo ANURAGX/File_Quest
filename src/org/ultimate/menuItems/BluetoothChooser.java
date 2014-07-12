@@ -92,7 +92,7 @@ public class BluetoothChooser{
 		}
 		
 		ListView lv = (ListView)dialog.findViewById(R.id.launch_list);
-		lv.setSelector(R.drawable.action_item_selected);
+		lv.setSelector(R.drawable.blue_button);
 		lv.setAdapter(new OpenItems(mContext, R.layout.row_list_2, list));
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override

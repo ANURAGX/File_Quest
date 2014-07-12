@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background" >
+    android:background="@android:color/background_dark" >
     
     <LinearLayout 
         android:orientation="vertical"
@@ -41,7 +41,7 @@
             android:focusable="true"
             android:clickable="true"
             android:layout_weight="1"
-            android:background="@drawable/custom_button1"
+            android:background="@drawable/blue_button"
             android:orientation="horizontal"
             android:id="@+id/viewer_delete"
             android:layout_width="fill_parent"
@@ -68,7 +68,7 @@
             android:focusable="true"
             android:clickable="true"
             android:layout_weight="1"
-            android:background="@drawable/custom_button1"
+            android:background="@drawable/blue_button"
             android:orientation="horizontal"
             android:id="@+id/viewer_share"
             android:layout_width="fill_parent"

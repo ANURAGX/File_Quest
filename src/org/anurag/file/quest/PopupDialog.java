@@ -66,9 +66,11 @@ public class PopupDialog{
 		btn1 = (Button)dialog.findViewById(R.id.popupOk);
 		btn2 = (Button)dialog.findViewById(R.id.popupCancel);
 		popupTitle = (TextView)dialog.findViewById(R.id.popupTitle);
-		final WebView web = (WebView)dialog.findViewById(R.id.popup_Web_View);
-		web.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
-		web.setEnabled(false);
+		
+		//final WebView web = (WebView)dialog.findViewById(R.id.popup_Web_View);
+		//web.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
+		//web.setEnabled(false);
+		
 		popupMessage = (TextView)dialog.findViewById(R.id.textMessage);
 		popupTitle.setText(R.string.condelete);
 		popupMessage.setText("Are You Sure to Delete The Folder :-" + file.getName());
@@ -77,7 +79,7 @@ public class PopupDialog{
 				switch(msg.what){
 					case 0 :
 						popupMessage.setText("Please Wait While Deleting File");
-						web.setVisibility(View.VISIBLE);
+						//web.setVisibility(View.VISIBLE);
 						btn1.setVisibility(View.GONE);
 						btn2.setVisibility(View.GONE);
 						break;

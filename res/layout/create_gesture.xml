@@ -16,10 +16,9 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent_black"
+    android:background="@color/black"
     android:orientation="vertical">
 
     <TextView 
@@ -47,7 +46,7 @@
         <Button
             android:textStyle="bold"
             android:textColor="@android:color/darker_gray"
-            android:background="@drawable/blue_button"
+            android:background="@drawable/action_item_btn"
             android:id="@+id/done"
             android:layout_width="0dip"
             android:layout_height="40dp"
@@ -59,7 +58,7 @@
             android:id="@+id/discard"
             android:textStyle="bold"
             android:textColor="@android:color/darker_gray"
-            android:background="@drawable/blue_button"
+            android:background="@drawable/action_item_btn"
             android:layout_width="0dip"
             android:layout_height="40dp"
             android:layout_weight="1"

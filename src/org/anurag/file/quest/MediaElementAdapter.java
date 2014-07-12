@@ -1,14 +1,10 @@
 package org.anurag.file.quest;
 
 import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-
-
-
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -16,7 +12,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,21 +19,15 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 public class MediaElementAdapter extends ArrayAdapter<File>{
 
 	public static ArrayList<File> MULTI_FILES;
 	public static boolean MULTI_SELECT;
 	public static boolean[] thumbselection;
-	public static int FOLDER_TYPE;
-	public static int[] FOLDERS = {R.drawable.ic_launcher_folder_orange ,
-								   R.drawable.ic_launcher_folder_violet,
-								   R.drawable.ic_launcher_folder_oxygen , 
-								   R.drawable.ic_launcher_folder_yellow,
-								   R.drawable.ic_launcher_folder_ubuntu ,
-								   R.drawable.ic_launcher_folder_ubuntu_black ,
-								   R.drawable.ic_launcher_folder_gnome};	
+	
+	
 	private static Context context;
 	private static ArrayList<File> list;
 	private static PackageManager manager;

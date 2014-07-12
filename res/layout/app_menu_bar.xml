@@ -10,29 +10,32 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
         
-        <include layout="@layout/app_backup" />
+        <include layout="@layout/app_backup_btn" />
     </LinearLayout>
     
      <LinearLayout 
         android:layout_weight="1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-        <include layout="@layout/system_apps" />
+        <include layout="@layout/clean_app_btn" />
     </LinearLayout>
     
+     
       <LinearLayout 
         android:layout_weight="1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-         <include layout="@layout/zip_it" />
+        <include layout="@layout/g_open_btn" />
     </LinearLayout>
-    
-     <LinearLayout 
+     
+      <LinearLayout 
         android:layout_weight="1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-        <include layout="@layout/app_stats_btn" />
+         <include layout="@layout/zip_app_btn" />
     </LinearLayout>
+    
+    
     
       <LinearLayout 
         android:layout_weight="1"

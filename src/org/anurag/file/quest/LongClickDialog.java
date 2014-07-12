@@ -81,7 +81,7 @@ public class LongClickDialog extends ListActivity{
 		else	
 			setListAdapter(new DialogAdapter(getApplicationContext(), R.layout.row_list_2 , l));
 		lv = getListView();
-		lv.setSelector(R.drawable.action_item_btn);
+		lv.setSelector(R.drawable.blue_button);
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,long id) {

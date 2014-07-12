@@ -1,3 +1,21 @@
+/**
+ * Copyright(c) 2013 ANURAG 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * 
+ *               anurag.dev1512@gmail.com
+ *
+ */
+
+
 package org.ultimate.menuItems;
 
 import java.io.BufferedInputStream;
@@ -11,32 +29,40 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
 import org.ultimate.root.LinuxShell;
-import com.stericson.RootTools.RootTools;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.stericson.RootTools.RootTools;
 
+@SuppressLint("HandlerLeak")
 public class MultipleCopyDialog {
 	
-	int copyResult;
-	Context mContext;
+	
+	static long max;
+	static String copFrom;
+	static String copSize;
+	static String cop;
+	static String status;
+	ProgressBar progress;
+	static Context mContext;
 	static int BUFFER = 256;
 	Dialog dialog;
 	ArrayList<File> list;
-	long si = 0;
+	static long si = 0;
 	String DEST;
 	int len = 0;
-	COPY copy;
 	Button btn1,btn2;
 	TextView copyTo;
 	TextView copyFrom;
@@ -45,23 +71,26 @@ public class MultipleCopyDialog {
 	TextView time;
 	boolean command;
 	ImageView iM;
+	static Handler handle;
+	static boolean running ;
+	
+	
+	
+	
 	public MultipleCopyDialog(Context context,ArrayList<File> obj,int windowSize,String dest,boolean comm) {
 		// TODO Auto-generated constructor stub
 		mContext = context;
 		DEST = dest;
-		copyResult = 0;
 		command = comm;
 		si = 0;
 		BUFFER = 256;
 		list = obj;
-		WebView web;
+		running = true;
 		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
 		dialog.setContentView(R.layout.copy_dialog);
 		dialog.setCancelable(false);
 		dialog.getWindow().getAttributes().width = windowSize;
-		web = (WebView)dialog.findViewById(R.id.copy_Web_View);
-		web.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
-		web.setEnabled(false);
+		progress = (ProgressBar)dialog.findViewById(R.id.progress);
 		
 		iM = (ImageView)dialog.findViewById(R.id.headerImage);
 		iM.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_file_task));
@@ -74,104 +103,90 @@ public class MultipleCopyDialog {
 		time = (TextView)dialog.findViewById(R.id.timeLeft);
 		contentSize = (TextView)dialog.findViewById(R.id.copyFileSize);
 		len = list.size();
-		copyTo.setText("Copying To :-"+DEST);
-		startCopying();
-	}
-
-	public void startCopying(){
+		
 		btn2.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				copy.cancel(true);
-				Toast.makeText(mContext, R.string.stopped, Toast.LENGTH_SHORT).show();
-				dialog.dismiss();
+				running = false;
+				handle.sendEmptyMessage(10);				
 			}
 		});
-		try{
-			copy = new COPY();
-			copy.execute();
-		}catch(RuntimeException e){
-			Toast.makeText(mContext, R.string.xerror, Toast.LENGTH_SHORT).show();
-		}
 		
-		//dialog.show();
-	}
-	
-	/**
-	 * 
-	 * @author anurag
-	 *
-	 */
-	class COPY extends AsyncTask<Void, String, Void>{
-		@Override
-		protected void onPostExecute(Void result) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			if(copyResult == 0)
-				Toast.makeText(mContext, R.string.success, Toast.LENGTH_SHORT).show();
-			else
-				Toast.makeText(mContext, "Failed to copy file", Toast.LENGTH_SHORT).show();
-			mContext.sendBroadcast(new Intent("FQ_DELETE"));
-			dialog.dismiss();
-		}
-
-		@Override
-		protected void onPreExecute() {
-			// TODO Auto-generated method stub
-			super.onPreExecute();
-			dialog.show();
-		}
-
-		@Override
-		protected void onProgressUpdate(String... val) {
-			// TODO Auto-generated method stub
-			super.onProgressUpdate(val);
-			copyFrom.setText(val[0]);
-			copying.setText(val[1]);
-			contentSize.setText(val[2]);
-			time.setText(val[3]);
-		}
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			// TODO Auto-generated method stub
-			File file;
-			int j = 0;
-			int c = 0;
-			for(int i= 0 ; i<len ; ++i){
-				file = (File) list.get(i);
-				if(file!=null){
-					getFileSize(file);
-					c++;
-				}	
-			}
-			File Dest = new File(DEST);
-			String formated = formatsize();
-			for(int i = 0 ; i<len ;++i){
-				file = (File) list.get(i);
-				if(file!=null){
-					String[] res = {"Copying : "+file.getName(),size(file),formated,""+(j/c)*100 + " Percent Copied"};
-					publishProgress(res);
-					copyResult = copyToDirectory(file.getPath(), DEST);
-					j++;
-					if(command){
-						if(Dest.canWrite())
-							deleteTargetForCut(file);
-						else{
-							RootTools.deleteFileOrDirectory(file.getPath(), false);
-						}
-					}	
+		copyTo.setText(mContext.getResources().getString(R.string.copyingto) + " "+DEST);
+		
+		handle = new Handler(){
+			@Override
+			public void handleMessage(Message msg){
+				switch(msg.what){
+					case 0 :
+							copying.setText(mContext.getResources().getString(R.string.copying) + " " + cop);						
+							break;
+							
+					case 1:
+							copyFrom.setText(mContext.getResources().getString(R.string.copyingfrom) + " " + copFrom);
+							break;
+							
+					case 2:
+							progress.setMax((int)max);
+							contentSize.setText(copSize);
+							break;
+					case 3:
+							time.setText(status);
+							progress.setProgress((int)si);
+							break;
+							
+					case 4:
+						
+							progress.setProgress(0);
+							break;
+							
+					case 10:
+							if(dialog.isShowing()){
+								dialog.dismiss();
+								if(running){
+									Toast.makeText(mContext, mContext.getResources().getString(R.string.copsuccess), Toast.LENGTH_SHORT).show();
+									running = false;
+								}else
+									Toast.makeText(mContext, mContext.getResources().getString(R.string.copintr), Toast.LENGTH_SHORT).show();
+								
+							}	
 				}
 			}
-			
-			return null;
-		}
+		};
 		
+		
+		
+		startCopying();
 	}
-	
-	
-	
+
+	public void startCopying(){
+		dialog.show();
+		Thread thr = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				File file,Dest = new File(DEST);
+				//String formated = formatsize();
+				for(int i = 0 ; i<len && running;++i){
+					file = (File) list.get(i);
+					if(file!=null){
+						copyToDirectory(file.getPath(), DEST);
+						if(command){
+							if(Dest.canWrite())
+								deleteTargetForCut(file);
+							else{
+								RootTools.deleteFileOrDirectory(file.getPath(), false);
+							}
+						}	
+					}
+				}
+				//COPYING DONE NOW EXITING DIALOG....
+				handle.sendEmptyMessage(10);
+			}
+		});
+		thr.start();
+	}
 	
 	
 	/**
@@ -192,19 +207,37 @@ public class MultipleCopyDialog {
 			String file_name = old
 					.substring(old.lastIndexOf("/"), old.length());
 			File cp_file = new File(newDir + file_name);
-
+			
+			/*
 			if (cp_file.exists())
-				return -2;
+				return -2;*/
 
 			try {
-
+				//sending file name that is being copied...
+				cop = old_file.getName();
+				handle.sendEmptyMessage(0);
+				
+				//sending file that is being copied...
+				copFrom = old_file.getAbsolutePath();
+				copFrom = copFrom.substring(0,copFrom.lastIndexOf("/"));
+				handle.sendEmptyMessage(1);
+				
 				BufferedOutputStream o_stream = new BufferedOutputStream(
 						new FileOutputStream(cp_file));
 				BufferedInputStream i_stream = new BufferedInputStream(
 						new FileInputStream(old_file));
-
-				while ((read = i_stream.read(data, 0, BUFFER)) != -1)
+				
+				max = old_file.length();
+				copSize = size(max);
+				handle.sendEmptyMessage(2);
+				si = 0;
+				handle.sendEmptyMessage(4);
+				while ((read = i_stream.read(data, 0, BUFFER)) != -1 && running){
 					o_stream.write(data, 0, read);
+					si=si+read;
+					status = status(si);
+					handle.sendEmptyMessage(3);
+				}	
 
 				o_stream.flush();
 				i_stream.close();
@@ -250,93 +283,65 @@ public class MultipleCopyDialog {
 	
 	// Move or Copy with Root Access using RootTools library
 		private static int moveCopyRoot(String old, String newDir) {
-
 			try {
 				File f = new File(old);
 				if (LinuxShell.isRoot()) {
 					if (!readReadWriteFile()) {
 						RootTools.remount(newDir + "/"+f.getName(), "rw");
-						//LinuxShell.execute("mount -o remount,rw "+newDir    +" \n");
 					}
-					
-				//	CommandCapture command = new CommandCapture(0, "cat "+old+" > "+newDir+ "/"+f.getName()    + "/n");
 					RootTools.copyFile("'"+old+"'","'"+ newDir+"'", true, true);
-					//LinuxShell.execute("cat "+old+" > "+newDir+ "/"+f.getName()    + "/n");
-					//RootTools.getShell(true).add(command);	
-					//Shell.SU.run("cat '" + old + "' >" +"'"+ newDir+"'");
 					return 0;
 				} else {
 					return -1;
 				}
-
 			} catch (Exception e) {
 				return -1;
 			}
 		}
 	
 	
-	/**
-	 * 
-	 * @param file
-	 */
-	public void getFileSize(File file){
-		if(file.isFile()){
-			si = si + file.length();
-		}else if(file.isDirectory() && file.listFiles().length !=0){
-			File[] a = file.listFiles();
-			for(int i = 0 ; i<a.length ; ++i){
-				if(a[i].isFile()){
-					si = si + a[i].length();
-				}else
-					getFileSize(a[i]);
-			}
-		}
-	}
 	
 	/**
 	 * THIS FUNCTION RETURN THE SIZE IF THE GIVEN FIZE IN PARAMETER
 	 * @param f
 	 * @return
 	 */
-	public String size(File f){
-		long size = f.length();
-		if(size>1024*1024*1024){
-			size = size/(1024*1024*1024);
-			return String.format("File size :%.2f GB", (double)size);
+	public static String size(long size){
+		if(size>Constants.GB){
+			return String.format(mContext.getResources().getString(R.string.fsizegb), (double)size/(Constants.GB));
 		}
-		else if(size > 1024*1024){
-			size = size/(1024*1024);
-			return String.format("File size :%.2f MB", (double)size);
+		else if(size > Constants.MB){
+			return String.format(mContext.getResources().getString(R.string.fsizemb), (double)size/(Constants.MB));
 		}
 		else if(size>1024){
-			size = size/1024;
-			return String.format("File size :%.2f KB", (double)size);
+			return String.format(mContext.getResources().getString(R.string.fsizekb), (double)size/1024);
 		}
 		else{
-			return String.format("File size :%.2f Bytes", (double)size);
+			return String.format(mContext.getResources().getString(R.string.fsizebyte), (double)size);
 		}	
 	}
 	
 	
 	/**
-	 * THIS FUNCTION RETURN THE SIZE IF THE GIVEN FIZE IN PARAMETER
-	 * @param f
+	 * 
+	 * @param size
 	 * @return
 	 */
-	public String formatsize(){
-		//long size = f.length();
-		if(si>1024*1024*1024)
-			return String.format("Content size :%.2f GB", (double)si/(1024*1024*1024));
-		
-		else if(si > 1024*1024)
-			return String.format("Content size :%.2f MB", (double)si/(1024*1024));
-		
-		else if(si>1024)
-			return String.format("Content size :%.2f KB", (double)si/(1024));
-		
-		else
-			return String.format("Content size :%.2f Bytes", (double)si);
+	public static String status(long size){
+		if(size>Constants.GB){
+			return String.format(mContext.getResources().getString(R.string.copstatusgb), (double)size/(Constants.GB));
+		}
+		else if(size > Constants.MB){
+			return String.format(mContext.getResources().getString(R.string.copstatusmb), (double)size/(Constants.MB));
+		}
+		else if(size>1024){
+			return String.format(mContext.getResources().getString(R.string.copstatuskb), (double)size/1024);
+		}
+		else{
+			return String.format(mContext.getResources().getString(R.string.copstatusbyte), (double)size);
+		}	
 	}
+	
 	
 	/**
 	 * 
@@ -411,15 +416,5 @@ public class MultipleCopyDialog {
 				}
 			}
 			return false;
-		}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		}	
 }

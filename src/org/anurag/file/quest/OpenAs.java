@@ -55,7 +55,7 @@ public class OpenAs {
 		q.setText("Quit");
 		s.setText("Use");
 		lv.setAdapter(new Adapter(con, R.layout.row_list_2, list));
-		lv.setSelector(R.drawable.action_item_selected);
+		lv.setSelector(R.drawable.blue_button);
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,

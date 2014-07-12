@@ -180,7 +180,7 @@ public class ErrorDialogs {
 			b = (Button)dialog.findViewById(R.id.popupCancel);
 			b.setVisibility(View.GONE);
 			iTv.setText(R.string.clod);
-			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_sugar_sync));
+			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_drop_box));
 			tv.setText(R.string.cloderror);
 			b= (Button)dialog.findViewById(R.id.popupOk);
 			b.setText("Ok");

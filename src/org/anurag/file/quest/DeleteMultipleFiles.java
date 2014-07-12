@@ -61,9 +61,10 @@ public class DeleteMultipleFiles{
 		btn1 = (Button)dialog.findViewById(R.id.popupOk);
 		btn2 = (Button)dialog.findViewById(R.id.popupCancel);
 		popupTitle = (TextView)dialog.findViewById(R.id.popupTitle3);
-		view = (WebView)dialog.findViewById(R.id.delete_multi_Web_View);
-		view.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
-		view.setEnabled(false);
+		
+		//view = (WebView)dialog.findViewById(R.id.delete_multi_Web_View);
+		//view.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
+		//view.setEnabled(false);
 		
 		popupMessage = (TextView)dialog.findViewById(R.id.textMessage);
 		if(ACTION.equals("root")){

@@ -76,12 +76,14 @@ public class DeleteFlashable{
 		btn1 = (Button)dialog.findViewById(R.id.popupOk);
 		btn2 = (Button)dialog.findViewById(R.id.popupCancel);
 		popupTitle = (TextView)dialog.findViewById(R.id.popupTitle);
-		final WebView web = (WebView)dialog.findViewById(R.id.popup_Web_View);
-		web.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
-		web.setEnabled(false);
+		
+		//final WebView web = (WebView)dialog.findViewById(R.id.popup_Web_View);
+		//web.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
+		//web.setEnabled(false);
+		
 		popupMessage = (TextView)dialog.findViewById(R.id.textMessage);
 		ImageView v = (ImageView)dialog.findViewById(R.id.popupImage);
-		v.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_move));
+		v.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_delete));
 		file = new File(PATH +  "/File Quest");
 		if(file.exists()){
 			file = new File(PATH + "/File Quest/Flashable.zip");
@@ -95,7 +97,7 @@ public class DeleteFlashable{
 						switch(msg.what){
 							case 0 :
 								popupMessage.setText("Please Wait While Deleting File");
-								web.setVisibility(View.VISIBLE);
+								//web.setVisibility(View.VISIBLE);
 								btn1.setVisibility(View.GONE);
 								btn2.setVisibility(View.GONE);
 								break;
@@ -103,7 +105,7 @@ public class DeleteFlashable{
 								btn1.setVisibility(View.VISIBLE);
 								btn1.setText("Ok");
 								btn2.setVisibility(View.GONE);
-								web.setVisibility(View.GONE);
+								//web.setVisibility(View.GONE);
 								popupMessage.setText("Earlier Flashable Zip Has Been Deleted");
 								
 								

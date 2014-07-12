@@ -2,13 +2,14 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.util.ArrayList;
-
+import android.annotation.SuppressLint;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 
+@SuppressLint("HandlerLeak")
 public class Utils {
 	View v;
 	public static boolean loaded;
@@ -19,7 +20,19 @@ public class Utils {
 	public static ArrayList<File> zip;
 	public static ArrayList<File> mis;
 	public static ArrayList<File> img;
+	
+	long musicsize=0;
+	long apksize=0;
+	long vidsize=0;
+	long docsize=0;
+	long zipsize=0;
+	long missize=0;
+	long imgsize=0;
+	int size = 0;
 	File file; 	
+	String message;
+	Handler handle;
+	TextView count;
 	public Utils(View view) {
 		// TODO Auto-generated constructor stub
 		v = view;
@@ -36,64 +49,60 @@ public class Utils {
 	
 	public void load(){
 		
-		final Handler handle = new Handler(){
+		handle = new Handler(){
 			@Override
 			public void handleMessage(Message msg){
 				switch(msg.what){
 					case 1:
 							//Displaying File counts of each type
-							TextView count = (TextView)v.findViewById(R.id.mFiles);
-							count.setText(music.size() + " Items");
-							
-							count = (TextView)v.findViewById(R.id.aFiles);
-							count.setText(apps.size() + " Items");
-							
-							count = (TextView)v.findViewById(R.id.dFile);
-							count.setText(doc.size() + " Items");
-							
-							count = (TextView)v.findViewById(R.id.pFiles);
-							count.setText(img.size() + " Items");
-							
-							count = (TextView)v.findViewById(R.id.vFiles);
-							count.setText(vids.size() + " Items");
-							
-							count = (TextView)v.findViewById(R.id.zFiles);
-							count.setText(zip.size() + " Items");
-							
-							count = (TextView)v.findViewById(R.id.misFiles);
-							count.setText(mis.size() + " Items");
 							loaded = true;
 							break;
 				
 					case 2:
 							//DISLPAYS MUSIC SIZE..
 							TextView mSize= (TextView)v.findViewById(R.id.mSize);
-							mSize.setText((CharSequence) msg.obj);
+							mSize.setText(message);
+							
+							count = (TextView)v.findViewById(R.id.mFiles);
+							count.setText(music.size() + " Items");
 							break;
 							
 					case 3:
 							//DISPLAYS APPS SIZE...
 							TextView aSize= (TextView)v.findViewById(R.id.aSize);
-							aSize.setText((CharSequence) msg.obj);
+							aSize.setText(message);
 							
+							
+							count = (TextView)v.findViewById(R.id.aFiles);
+							count.setText(apps.size() + " Items");
 							break;
 							
 					case 4:
 						
 							//DSIPLAYS DOCS SIZE...
 							TextView dSize= (TextView)v.findViewById(R.id.dSize);
-							dSize.setText((CharSequence) msg.obj);
+							dSize.setText(message);
+							
+							count = (TextView)v.findViewById(R.id.dFile);
+							count.setText(doc.size() + " Items");
 							break;
 					case 5:
 							//displays IMAGE SIZE..
 							TextView iSize= (TextView)v.findViewById(R.id.pSize);
-							iSize.setText((CharSequence) msg.obj);
+							iSize.setText(message);
+							
+							count = (TextView)v.findViewById(R.id.pFiles);
+							count.setText(img.size() + " Items");
 							break;
 							
 					case 6:
 							//displays video size...
 							TextView vSize= (TextView)v.findViewById(R.id.vSize);
-							vSize.setText((CharSequence) msg.obj);
+							vSize.setText(message);
+							
+							
+							count = (TextView)v.findViewById(R.id.vFiles);
+							count.setText(vids.size() + " Items");
 							break;
 							
 							
@@ -101,13 +110,19 @@ public class Utils {
 						
 							//displays archive size...
 							TextView zSize= (TextView)v.findViewById(R.id.zSize);
-							zSize.setText((CharSequence) msg.obj);
+							zSize.setText(message);
+							
+							count = (TextView)v.findViewById(R.id.zFiles);
+							count.setText(zip.size() + " Items");
 							break;
 							
 					case 8:
 							//displays miscellaneous size...
 							TextView mmSize= (TextView)v.findViewById(R.id.misSize);
-							mmSize.setText((CharSequence) msg.obj);
+							mmSize.setText(message);
+							
+							count = (TextView)v.findViewById(R.id.misFiles);
+							count.setText(mis.size() + " Items");
 							break;
 				}
 			}
@@ -118,42 +133,7 @@ public class Utils {
 				// TODO Auto-generated method stub
 				loaded = false;
 				makelist(file);
-				handle.sendEmptyMessage(1);
-				
-				Message msg = new Message();
-				msg.what = 2;
-				msg.obj = size(music);
-				handle.sendMessage(msg);
-				
-				msg = new Message();
-				msg.what = 3;
-				msg.obj = size(apps);
-				handle.sendMessage(msg);
-				
-				msg = new Message();
-				msg.what = 4;
-				msg.obj = size(doc);
-				handle.sendMessage(msg);
-				
-				msg = new Message();
-				msg.what = 5;
-				msg.obj = size(img);
-				handle.sendMessage(msg);
-				
-				msg = new Message();
-				msg.what = 6;
-				msg.obj = size(vids);
-				handle.sendMessage(msg);
-				
-				msg = new Message();
-				msg.what = 7;
-				msg.obj = size(zip);
-				handle.sendMessage(msg);
-				
-				msg = new Message();
-				msg.what = 8;
-				msg.obj = size(mis);
-				handle.sendMessage(msg);
+				handle.sendEmptyMessage(1);				
 			}
 		});
 		thread.start();
@@ -165,17 +145,12 @@ public class Utils {
 	 * @param list
 	 * @return
 	 */
-	public String size(ArrayList<File> list){
-		int l = list.size();
-		long size = 0;
-		for(int i = 0 ; i<l;++i)
-			size += list.get(i).length(); 
+	public String size(long size){
+		if(size>Constants.GB)
+			return String.format("%.2f GB", (double)size/(Constants.GB));
 		
-		if(size>1024*1024*1024)
-			return String.format("%.2f GB", (double)size/(1024*1024*1024));
-		
-		else if(size > 1024*1024)
-			return String.format("%.2f MB", (double)size/(1024*1024));
+		else if(size > Constants.MB)
+			return String.format("%.2f MB", (double)size/(Constants.MB));
 		
 		else if(size>1024)
 			return String.format("%.2f KB", (double)size/(1024));
@@ -190,24 +165,56 @@ public class Utils {
 	 */
 	void makelist(File file){
 		if(file.isFile()){
-			if(SimpleAdapter.getFileType(file)==null)
+			if(SimpleAdapter.getFileType(file)==null){
 				mis.add(file);
-			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("song"))
+				missize+=file.length();
+				message = size(missize);
+				size = mis.size();
+				handle.sendEmptyMessage(8);
+			}	
+			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("song")){
 				music.add(file);
-			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("image"))
+				musicsize+=file.length();
+				message = size(musicsize);
+				size = music.size();
+				handle.sendEmptyMessage(2);
+			}	
+			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("image")){
 				img.add(file);
-			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("video"))
+				imgsize+=file.length();
+				message = size(imgsize);
+				size = img.size();
+				handle.sendEmptyMessage(5);
+			}	
+			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("video")){
 				vids.add(file);
-			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("zip"))
+				vidsize+=file.length();
+				message = size(vidsize);
+				size = vids.size();
+				handle.sendEmptyMessage(6);
+			}	
+			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("zip")||SimpleAdapter.getFileType(file).equalsIgnoreCase("compressed")){
 				zip.add(file);
-			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("compressed"))
-				zip.add(file);
-			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("apk"))
+				zipsize+=file.length();
+				message = size(zipsize);
+				size = zip.size();
+				handle.sendEmptyMessage(7);
+			}else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("apk")){
 				apps.add(file);
-			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("document"))
+				apksize+=file.length();
+				message = size(apksize);
+				size = apps.size();
+				handle.sendEmptyMessage(3);
+			}	
+			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("document")||
+					SimpleAdapter.getFileType(file).equalsIgnoreCase("text")){
 				doc.add(file);
-			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("text"))
-				doc.add(file);
+				docsize+=file.length();
+				message = size(docsize);
+				size = doc.size();
+				handle.sendEmptyMessage(4);
+			}	
+			
 		}else if(file.isDirectory()){
 			for(File f:file.listFiles())
 				makelist(f);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/black"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -66,13 +67,6 @@
             android:layout_height="wrap_content"/>
         
         </LinearLayout>
-        <WebView 
-            android:visibility="gone"
-            android:id="@+id/delete_multi_Web_View"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-    
         
      
     </LinearLayout>
@@ -97,6 +91,7 @@
         android:layout_height="0dp"
         android:layout_weight="1.2">
         <Button 
+            android:textStyle="bold"
             android:textColor="@android:color/white"
             android:background="@drawable/action_item_btn"
             android:onClick="onClick"
@@ -106,6 +101,7 @@
             android:text="Yes" 
             android:layout_weight="1.0" />
         <Button 
+            android:textStyle="bold"
             android:textColor="@android:color/white"
             android:background="@drawable/action_item_btn"
             android:onClick="onClick"

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/black"
     android:layout_width="match_parent"
     android:layout_height="340dp"
     android:orientation="vertical" 
@@ -19,9 +21,9 @@
         
         <ImageView 
             android:id="@+id/getImage" 
-            android:layout_width="fill_parent" 
-            android:layout_height="fill_parent" 
-            android:layout_weight="5.0" />
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            />
         
         <TextView 
             android:id="@+id/open"
@@ -31,7 +33,7 @@
             android:layout_width="fill_parent" 
             android:layout_height="fill_parent" 
             android:text="Open File With" 
-            android:layout_weight="1.0" />
+            />
     </LinearLayout>
     
     <LinearLayout 
@@ -52,7 +54,7 @@
             android:id="@+id/open_list" 
             android:layout_width="fill_parent" 
             android:layout_height="fill_parent" 
-            android:listSelector="@drawable/background" 
+            android:listSelector="@drawable/blue_button" 
             android:divider="#ff242424" 
             android:dividerHeight="0.5dip" 
             android:minHeight="10.0dip" />
@@ -71,32 +73,35 @@
         android:orientation="horizontal">
         
          <Button 
+            android:textStyle="bold"
             android:onClick="onClick"
             android:textColor="@android:color/white"
             android:background="@drawable/action_item_btn"
             android:id="@+id/goBack"
             android:layout_width="fill_parent"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:text="Go Back"
             android:layout_weight="1"/>
         
         <Button 
+            android:textStyle="bold"
             android:onClick="onClick"
             android:textColor="@android:color/white"
             android:background="@drawable/action_item_btn"
             android:id="@+id/justOnce"
             android:layout_width="fill_parent"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:text="Ok"
             android:layout_weight="1"/>
         <Button 
+            android:textStyle="bold"
             android:onClick="onClick"
             android:textColor="@android:color/white"
             android:background="@drawable/action_item_btn"
             android:id="@+id/always"
             android:text="Cancel"
             android:layout_width="fill_parent"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:layout_weight="1"/>
         
     </LinearLayout>

@@ -247,11 +247,11 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 	 */
 	public static String size(File f){
 		long size = f.length();
-		if(size>1024*1024*1024)
-			return String.format("%.2f GB", (double)size/(1024*1024*1024));
+		if(size>Constants.GB)
+			return String.format("%.2f GB", (double)size/(Constants.GB));
 		
-		else if(size > 1024*1024)
-			return String.format("%.2f MB", (double)size/(1024*1024));
+		else if(size > Constants.MB)
+			return String.format("%.2f MB", (double)size/(Constants.MB));
 		
 		else if(size>1024)
 			return String.format("%.2f KB", (double)size/(1024));

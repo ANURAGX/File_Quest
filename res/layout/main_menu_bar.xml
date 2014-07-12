@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal" >
     
 
-    <LinearLayout 
-        android:layout_weight="1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        
-        <include layout="@layout/file_task" />
-    </LinearLayout>
+   
     
      <LinearLayout 
         android:layout_weight="1"
@@ -24,14 +18,22 @@
         android:layout_weight="1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-         <include layout="@layout/sd_stats" />
+         <include layout="@layout/actions_btn" />
     </LinearLayout>
     
      <LinearLayout 
         android:layout_weight="1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-        <include layout="@layout/settings" />
+        
+        <include layout="@layout/g_open_btn" />
+    </LinearLayout>
+    
+     <LinearLayout 
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <include layout="@layout/add_new_btn" />
     </LinearLayout>
     
       <LinearLayout 

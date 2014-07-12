@@ -1,9 +1,22 @@
+/**
+ * Copyright(c) 2013 ANURAG 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *                             
+ *                             anurag.dev1512@gmail.com
+ *
+ */
+
 package org.anurag.file.quest;
 
 import java.util.ArrayList;
-
-
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +27,8 @@ import android.widget.TextView;
 
 public class AdapterLoaders {
 
-	static String list[] = {"DropBox","Box","Google Drive","SkyDrive"};
-	Context mContext;
+	static String list[];
+	static Context mContext;
 	boolean status; 
 	public AdapterLoaders(Context context,boolean st){
 		mContext = context;
@@ -58,14 +71,14 @@ public class AdapterLoaders {
 				
 			if(position == 0){
 					item.Icon.setBackgroundResource(R.drawable.ic_launcher_drop_box);
-					item.Name.setText("DropBox");
+					item.Name.setText(mContext.getString(R.string.dropbox));
 			}
 			else if(position == 1){
 				item.Icon.setBackgroundResource(R.drawable.ic_launcher_google_drive);
-				item.Name.setText("Google Drive");
+				item.Name.setText(mContext.getString(R.string.googledrive));
 			}else if(position == 2){
 				item.Icon.setBackgroundResource(R.drawable.ic_launcher_sky_drive);
-				item.Name.setText("Sky drive");
+				item.Name.setText(mContext.getString(R.string.skydrive));
 			}	
 			return convertView;
 		}
@@ -80,7 +93,7 @@ public class AdapterLoaders {
 	
 	public LongClickAdapter getLongClickAdapter(){
 		ArrayList<String> l = new ArrayList<String>();
-		l.add("");
+		l.add("");l.add("");
 		l.add("");l.add("");l.add("");l.add("");l.add("");l.add("");l.add("");l.add("");l.add("");
 		ArrayList<String> list = new ArrayList<String>();
 		list.add("");list.add("");list.add("");list.add("");list.add("");list.add("");list.add("");
@@ -125,58 +138,61 @@ public class AdapterLoaders {
 			if(status){
 				if(position == 0){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_open);
-					ho.Name.setText("Launch App");
+					ho.Name.setText(mContext.getString(R.string.launch));
 				}else if(position == 1){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_uninstall);
-					ho.Name.setText("Uninstall");
+					ho.Name.setText(mContext.getString(R.string.uninstall));
 				}else if(position == 2){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_backupall);
-					ho.Name.setText("Take Backup");
+					ho.Name.setText(mContext.getString(R.string.takebackup));
 				}else if(position == 3){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_delete);
-					ho.Name.setText("Delete Earlier Backups");
+					ho.Name.setText(mContext.getString(R.string.deleteearlierbackup));
 				}else if(position == 4){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_zip_it);
-					ho.Name.setText("Create Flashable Zip");
+					ho.Name.setText(mContext.getString(R.string.createbackupzip));
 				}else if(position == 5){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_share);
-					ho.Name.setText("Share App");
+					ho.Name.setText(mContext.getString(R.string.shareapp));
 				}else if(position == 6){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_stats);
-					ho.Name.setText("App Properties");
+					ho.Name.setText(mContext.getString(R.string.appproperties));
 				}
 			}
 			else{
 				if(position == 0){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_open);
-					ho.Name.setText("Open");
+					ho.Name.setText(mContext.getString(R.string.open));
 				}else if(position == 2){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_copy);
-					ho.Name.setText("Copy");
+					ho.Name.setText(mContext.getString(R.string.copy));
 				}else if(position == 3){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_cut);
-					ho.Name.setText("Cut");
+					ho.Name.setText(mContext.getString(R.string.cut));
 				}else if(position == 5){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_zip_it);
-					ho.Name.setText("Create Zip");
+					ho.Name.setText(mContext.getString(R.string.archive));
 				}else if(position == 6){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_delete);
-					ho.Name.setText("Delete");
+					ho.Name.setText(mContext.getString(R.string.delete));
 				}else if(position == 7){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_rename);
-					ho.Name.setText("Rename");
+					ho.Name.setText(mContext.getString(R.string.rename));
 				}else if(position == 8){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_share);
-					ho.Name.setText("Share");
-				}else if(position == 9){
+					ho.Name.setText(mContext.getString(R.string.send));
+				}else if(position == 10){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_stats);
-					ho.Name.setText("Properties");
+					ho.Name.setText(mContext.getString(R.string.properties));
 				}else if(position == 4){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_paste);
-					ho.Name.setText("Paste");
+					ho.Name.setText(mContext.getString(R.string.paste));
 				}else if(position == 1){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_drop_box);
-					ho.Name.setText("Copy to cloud");
+					ho.Name.setText(mContext.getString(R.string.copytocloud));
+				}else if(position == 9){
+					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_gesture);
+					ho.Name.setText(mContext.getString(R.string.addgesture));
 				}
 			}
 			return convertView;

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/jumpToBtn" 
+    android:background="@drawable/action_item_btn"
+    android:onClick="onClick"
+    android:clickable="true"
+    android:focusable="true" 
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+   
+    xmlns:android="http://schemas.android.com/apk/res/android">
+   
+        <Button
+            android:gravity="center" 
+            android:clickable="false"
+            android:background="@drawable/ic_launcher_actions"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:onClick="onClick" />
+   
+        <TextView 
+           
+            android:textStyle="bold" 
+            
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Actions" />
+   
+</LinearLayout>

@@ -4,7 +4,10 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Stack;
+
 import org.anurag.file.quest.R;
+import org.anurag.file.quest.RootAdapter;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -85,7 +88,7 @@ public class GetHomeDirectory {
 		go = (Button)dialog.findViewById(R.id.goBack);
 		go.setVisibility(View.GONE);
 		
-		lv.setSelector(R.drawable.action_item_btn);
+		lv.setSelector(R.drawable.blue_button);
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int pos,long id) {
@@ -164,7 +167,7 @@ public class GetHomeDirectory {
 			}else
 				item = (ItemHolder)convertView.getTag();
 				if(list[position].isDirectory())
-					item.Icon.setBackgroundResource(R.drawable.ic_launcher_folder_orange);
+					item.Icon.setBackgroundResource(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]);
 				else
 					item.Icon.setBackgroundResource(R.drawable.ic_launcher_unknown);
 				item.Name.setText(list[position].getName());

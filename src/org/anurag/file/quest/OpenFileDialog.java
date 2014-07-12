@@ -156,7 +156,7 @@ public class OpenFileDialog {
 			 * THEN IT WILL CAUSE EXCEPTION THEN LIST OF APPS WILL BE OFFERED TO USER TO SELECT
 			 */
 			view.setAdapter(new OpenItems(mContext, R.layout.row_list_2, list));
-			view.setSelector(mContext.getResources().getDrawable(R.drawable.action_item_selected));
+			view.setSelector(mContext.getResources().getDrawable(R.drawable.blue_button));
 			if(list.size()>0)
 				dialog.show();
 			view.setOnItemClickListener(new OnItemClickListener() {

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -26,13 +27,13 @@ import android.widget.TextView;
 public class RootAdapter extends ArrayAdapter<File>{
 
 	public static int FOLDER_TYPE;
-	public static int[] FOLDERS = {R.drawable.ic_launcher_folder_orange ,
-								   R.drawable.ic_launcher_folder_violet,
-								   R.drawable.ic_launcher_folder_oxygen , 
-								   R.drawable.ic_launcher_folder_yellow,
-								   R.drawable.ic_launcher_folder_ubuntu ,
-								   R.drawable.ic_launcher_folder_ubuntu_black ,
-								   R.drawable.ic_launcher_folder_gnome};
+	public static int[] FOLDERS = {R.drawable.ic_launcher_orange_folder ,
+		   R.drawable.ic_launcher_green_folder,
+		   R.drawable.ic_launcher_yellow_folder , 
+		   R.drawable.ic_launcher_violet_folder,
+		   R.drawable.ic_launcher_red_folder ,
+		   R.drawable.ic_launcher_brown_folder,
+		   R.drawable.ic_launcher_blue_folder};	
 	public boolean MULTI_SELECT;
 	public ArrayList<File> MULTI_FILES;
 	public boolean[] thumbselection;
@@ -206,11 +207,11 @@ public class RootAdapter extends ArrayAdapter<File>{
 	@SuppressLint("DefaultLocale")
 	public String size(File f){
 		long size = f.length();
-		if(size>1024*1024*1024)
-			return String.format("%.2f GB", (double)size/(1024*1024*1024));
+		if(size>Constants.GB)
+			return String.format("%.2f GB", (double)size/(Constants.GB));
 		
-		else if(size > 1024*1024)
-			return String.format("%.2f MB", (double)size/(1024*1024));
+		else if(size > Constants.MB)
+			return String.format("%.2f MB", (double)size/(Constants.MB));
 		
 		else if(size>1024)
 			return String.format("%.2f KB", (double)size/(1024));

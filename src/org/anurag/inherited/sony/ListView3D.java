@@ -401,7 +401,7 @@ public class ListView3D extends AdapterView<Adapter> {
 			@Override
 			public boolean onTouch(View arg0, MotionEvent arg1) {
 				// TODO Auto-generated method stub
-				child.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_item_selected));
+				child.setBackgroundDrawable(getResources().getDrawable(R.drawable.blue_button));
 				return false;
 			}
 		});

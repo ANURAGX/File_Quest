@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    android:id="@+id/addBtn" 
+    android:onClick="onClick"
+    android:gravity="center" 
+    android:clickable="true"
+	android:focusable="true"
+	android:background="@drawable/action_item_btn"
+    android:orientation="vertical" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent" 
+   
+    xmlns:android="http://schemas.android.com/apk/res/android">
+   
+    
+        <Button 
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:id="@+id/change"
+            android:background="@drawable/ic_launcher_add_new" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:onClick="onClick" />
+    
+        <TextView 
+            android:textStyle="bold" 
+            android:id="@+id/addText"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:text="@string/New" />
+   
+</LinearLayout>

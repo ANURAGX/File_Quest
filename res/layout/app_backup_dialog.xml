@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout 
-    
+    android:background="@color/black"
     android:layout_gravity="center"
     android:padding="10dp"
     android:orientation="vertical" 
@@ -10,24 +10,25 @@
     
     <LinearLayout 
         android:orientation="horizontal" 
-        android:paddingLeft="10.0dip"
-        android:paddingTop="10.0dip" 
+        android:padding="10dp"
         android:layout_width="fill_parent"
         android:layout_gravity="center_vertical" 
-        android:layout_height="0.0dip" 
-        android:layout_weight="1.0">
-        <ImageView android:id="@+id/appImage"
+        android:layout_height="wrap_content" 
+        >
+        
+        <ImageView 
+            android:background="@drawable/ic_launcher_file_task"
             android:gravity="center_vertical" 
             android:layout_width="45.0dip" 
             android:layout_height="45.0dip" />
         <TextView 
             android:gravity="center_vertical"
             android:textStyle="bold" 
-            android:id="@+id/appName" 
             android:paddingLeft="10.0dip" 
             android:paddingTop="15.0dip" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content" 
+            android:text="@string/appBackupTask"
              />
     </LinearLayout>
     
@@ -47,13 +48,13 @@
     
     <LinearLayout 
         android:orientation="vertical" 
-        android:paddingLeft="20.0dip" 
-        android:paddingTop="5.0dp" 
+        android:padding="5dp"
         android:layout_width="fill_parent" 
-        android:layout_height="0.0dip" 
-        android:layout_weight="4.0">
+        android:layout_height="wrap_content" 
+        >
          <TextView 
-            android:paddingTop="15dp"
+            android:text="@string/spaceavail" 
+            android:paddingTop="5dp"
             android:textStyle="bold"
             android:id="@+id/header" 
             android:layout_width="wrap_content" 
@@ -61,30 +62,45 @@
             android:layout_weight="0.7" />
          
           <TextView 
-             android:paddingTop="15dp"
+            android:text="@string/spaceleft" 
+            android:paddingTop="5dp"
             android:textStyle="bold"
             android:id="@+id/header2" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content" 
             android:layout_weight="0.7" />
         <TextView 
-             android:paddingTop="15dp"
+            android:text="@string/packagename"
+            android:paddingTop="5dp"
+            android:textStyle="bold" 
+            android:id="@+id/appname" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_weight="0.7" />
+          
+        
+        <TextView 
+            android:text="@string/packagename"
+            android:paddingTop="5dp"
             android:textStyle="bold" 
             android:id="@+id/appProcessName" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content" 
             android:layout_weight="0.7" />
+       
         <TextView 
-             android:textStyle="bold" 
+            android:text="@string/appversion"
+            android:textStyle="bold" 
             android:id="@+id/appVersionCode" 
-            android:paddingTop="15.0dip" 
+            android:paddingTop="5.0dip" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content" 
             android:layout_weight="0.7" />
         <TextView 
+            android:text="@string/appsizemb"
             android:textStyle="bold" 
             android:id="@+id/appSize" 
-            android:paddingTop="15.0dip" 
+            android:paddingTop="5.0dip" 
             android:visibility="visible" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content" 
@@ -99,6 +115,7 @@
             android:layout_height="0.0dip" 
             android:layout_weight="0.8">
             <TextView 
+                android:text="@string/backupexists"
                 android:textStyle="bold" 
                 android:ellipsize="end"
                 android:id="@+id/appBackupMessage" 
@@ -106,14 +123,30 @@
                 android:layout_height="wrap_content" 
                 android:singleLine="true" />
         </LinearLayout>
+        
+        
+        <LinearLayout 
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+        
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:progress="50"
+            android:progressDrawable="@drawable/progress_horizontal_holo_dark" />
+    </LinearLayout>
+        
+        
     </LinearLayout>
     
     
-    <WebView 
-        android:layout_gravity="center"
-        android:id="@+id/app_Web_View"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    
+    
     <LinearLayout 
         android:id="@+id/strip"
         android:paddingLeft="15dp"
@@ -130,8 +163,7 @@
     </LinearLayout>
     
     <LinearLayout 
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
+        android:paddingTop="8dp"
         android:gravity="center" 
         android:orientation="horizontal" 
         android:id="@+id/appBtnLayout" 
@@ -145,7 +177,7 @@
             android:id="@+id/appBackupBtn" 
             android:layout_width="fill_parent" 
             android:layout_height="40dp" 
-            android:text="Take Backup" 
+            android:text="@string/takebackup" 
             android:layout_weight="1.0" 
             android:onClick="onClick" />
         <Button 
@@ -155,7 +187,7 @@
             android:id="@+id/appCacheBtn" 
             android:layout_width="fill_parent" 
             android:layout_height="40dp" 
-            android:text="Cancel" 
+            android:text="@string/cancel" 
             android:layout_weight="1.0" />
         
     </LinearLayout>

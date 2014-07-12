@@ -7,7 +7,10 @@ android:layout_width="fill_parent"
 android:layout_height="fill_parent"
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
+
 >
+
+    <!--  
     <com.viewpagerindicator.TitlePageIndicator 
 	android:id="@+id/indicator" 
 	
@@ -18,7 +21,17 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
    	android:padding="10.0dip" 
 	android:layout_width="fill_parent" 
 	android:layout_height="wrap_content" />
-    
+    -->
+    <com.viewpagerindicator.TitlePageIndicator
+        android:id="@+id/indicator"
+        app:footerLineHeight="2dp"
+        app:footerIndicatorHeight="4dp"
+        app:footerIndicatorStyle="underline"
+        app:selectedBold="true"
+        android:padding="10.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
 	<android.support.v4.view.ViewPager 
 	android:id="@+id/pager" 
 	

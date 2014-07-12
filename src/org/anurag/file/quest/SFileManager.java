@@ -20,10 +20,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Stack;
-
 import org.ultimate.root.LinuxShell;
 
-import android.os.Handler;
+
 
 public class SFileManager {
 	public static int SORT_TYPE;
@@ -38,9 +37,7 @@ public class SFileManager {
 		nStack.push("/");
 	}	
 	
-	public SFileManager(Handler handler){
-		//this.mHandler = handler;
-	}
+	
 	/**
 	 * Function to return current path  
 	 * @return

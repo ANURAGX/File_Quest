@@ -44,14 +44,7 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 	public static boolean[] thumbselection;
 	public static boolean MULTI_SELECT;
 	public static int FOLDER_TYPE;
-	public static int[] FOLDERS = {
-		R.drawable.ic_launcher_folder_orange , 
-		R.drawable.ic_launcher_folder_violet,
-		R.drawable.ic_launcher_folder_oxygen ,
-		R.drawable.ic_launcher_folder_yellow,
-		R.drawable.ic_launcher_folder_ubuntu , 
-		R.drawable.ic_launcher_folder_ubuntu_black ,
-		R.drawable.ic_launcher_folder_gnome };
+	
 	private static ArrayList<File> nList;
 	public static ArrayList<File> MULTI_FILES;
 	private static PackageManager mPack;
@@ -148,7 +141,7 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 			if(file.isDirectory()){
 				nHolder.FileType.setText("Directory");
 				//Drawable draw = mContext.getResources().getDrawable(R.drawable.ic_launcher_folder_orange);
-				nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(FOLDERS[FOLDER_TYPE]));
+				nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
 				nHolder.FileName.setText(file.getName());
 				if(!file.canRead()){
 					nHolder.FileSize.setText("Root Access");
@@ -264,7 +257,7 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 		protected Drawable doInBackground(String... arg0) {
 			File file = new File(arg0[0]);
 			if(file.isDirectory()){
-				draw = mContext.getResources().getDrawable(FOLDERS[FOLDER_TYPE]);
+				draw = mContext.getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]);
 			}
 			else if(file.getName().endsWith(".apk")){
 				/**
@@ -313,11 +306,11 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 	@SuppressLint("DefaultLocale")
 	public String size(File f){
 		long size = f.length();
-		if(size>1024*1024*1024)
-			return String.format("%.2f GB", (double)size/(1024*1024*1024));
+		if(size>Constants.GB)
+			return String.format("%.2f GB", (double)size/(Constants.GB));
 		
-		else if(size > 1024*1024)
-			return String.format("%.2f MB", (double)size/(1024*1024));
+		else if(size > Constants.MB)
+			return String.format("%.2f MB", (double)size/(Constants.MB));
 		
 		else if(size>1024)
 			return String.format("%.2f KB", (double)size/(1024));

@@ -3,7 +3,7 @@
      android:onClick="onClick"
      android:gravity="center" 
      android:id="@+id/g_open"
-     android:background="@drawable/blue_button"
+     android:background="@drawable/action_item_btn"
      android:focusable="true"
      android:clickable="true"
      android:orientation="vertical"

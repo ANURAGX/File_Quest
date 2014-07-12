@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_gravity="center">
     
@@ -19,98 +19,90 @@
             
              <ImageButton 
                  	android:onClick="onClick"
-                 	android:layout_margin="2dp"
+                 	
                  	android:padding="2dp"
            			android:id="@+id/bottom_Quit"
-            		android:layout_width="75dp"
+            		android:layout_width="60dp"
             		android:layout_height="wrap_content"
-            		android:background="@drawable/custom_button1"
+            		android:background="@drawable/action_item_btn"
             		android:src="@drawable/ic_launcher_quit"/>       
                        
             
             <ImageButton 
                 	android:visibility="gone"
                  	android:onClick="onClick"
-                 	android:layout_margin="2dp"
+                 	
                  	android:padding="2dp"
            			android:id="@+id/bottom_filter"
-            		android:layout_width="75dp"
+            		android:layout_width="60dp"
             		android:layout_height="wrap_content"
-            		android:background="@drawable/custom_button1"
+            		android:background="@drawable/action_item_btn"
             		android:src="@drawable/ic_launcher_search"/>    
              
              <ImageButton 
                 	android:onClick="onClick"
-           			android:layout_margin="2dp"
+           			
                  	android:padding="2dp"
            			android:id="@+id/bottom_multi"
-            		android:layout_width="75dp"
+            		android:layout_width="60dp"
             		android:layout_height="wrap_content"
-            		android:background="@drawable/custom_button1"
+            		android:background="@drawable/action_item_btn"
             		android:src="@drawable/ic_launcher_multi_select"/>       
                          
              
              <ImageButton 
                 	android:onClick="onClick"
-           			android:layout_margin="2dp"
+           			
                  	android:padding="2dp"
            			android:id="@+id/bottom_multi_send_app"
-            		android:layout_width="75dp"
+            		android:layout_width="60dp"
             		android:layout_height="wrap_content"
-            		android:background="@drawable/custom_button1"
+            		android:background="@drawable/action_item_btn"
             		android:src="@drawable/ic_launcher_share"/>       
                          
              
              <ImageButton 
                  	android:onClick="onClick"
-                 	android:layout_margin="2dp"
+                 	
                  	android:padding="2dp"
            			android:id="@+id/bottom_multi_select_backup"
-            		android:layout_width="75dp"
+            		android:layout_width="60dp"
             		android:layout_height="wrap_content"
-            		android:background="@drawable/custom_button1"
-            		android:src="@drawable/ic_launcher_backupall"/>       
+            		android:background="@drawable/action_item_btn"
+            		android:src="@drawable/ic_launcher_backupall48"/>       
                          
              
              <ImageButton
                  	android:onClick="onClick"
-                 	android:layout_margin="2dp"
+                 	
                  	android:padding="2dp"
            			android:id="@+id/bottom_user_apps"
-            		android:layout_width="75dp"
+            		android:layout_width="60dp"
             		android:layout_height="wrap_content"
-            		android:background="@drawable/custom_button1"
+            		android:background="@drawable/action_item_btn"
             		android:src="@drawable/ic_launcher_user"/>  
             		
              <ImageButton
                  	android:onClick="onClick"
-                 	android:layout_margin="2dp"
+                 	
                  	android:padding="2dp"
            			android:id="@+id/bottom_system_apps"
-            		android:layout_width="75dp"
+            		android:layout_width="60dp"
             		android:layout_height="wrap_content"
-            		android:background="@drawable/custom_button1"
+            		android:background="@drawable/action_item_btn"
             		android:src="@drawable/ic_launcher_system"/>  
             		
              
              <ImageButton
                  	android:onClick="onClick"
-                 	android:layout_margin="2dp"
+                 	
                  	android:padding="2dp"
            			android:id="@+id/bottom_both_apps"
-            		android:layout_width="75dp"
+            		android:layout_width="60dp"
             		android:layout_height="wrap_content"
-            		android:background="@drawable/custom_button1"
+            		android:background="@drawable/action_item_btn"
             		android:src="@drawable/ic_launcher_both"/>  
-             <ImageButton
-                    android:onClick="onClick"
-                 	android:layout_margin="2dp"
-                 	android:padding="2dp"
-           			android:id="@+id/bottom_refresh"
-            		android:layout_width="75dp"
-            		android:layout_height="wrap_content"
-            		android:background="@drawable/custom_button1"
-            		android:src="@drawable/ic_launcher_refresh"/>    
+             
        </LinearLayout>
    </HorizontalScrollView>
 </LinearLayout>
