@@ -344,6 +344,15 @@
     <string name="ok">Ok</string>
     <string name="appname">APP NAME :-</string>
     <string name="backupinterrupted">Backup operation was interrupted</string>
+    <string name="zerosize">0.0 MB</string>
+    <string name="zerofiles">0 Items</string>
+    
+    
+    
+    
+    
+    
+    
     
     
     
