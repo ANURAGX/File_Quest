@@ -115,7 +115,6 @@
             android:layout_weight="2.0">
             <TextView 
                 android:textStyle="bold" 
-                android:gravity="center_horizontal" 
                 android:id="@+id/zipLoc" 
                 android:layout_width="fill_parent" 
                 android:layout_height="wrap_content" 
@@ -133,7 +132,6 @@
             <TextView 
                 android:visibility="gone"
                 android:textStyle="bold" 
-                android:gravity="center_horizontal" 
                 android:id="@+id/zipSize" 
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content" 
@@ -149,7 +147,6 @@
             <TextView 
                 android:visibility="gone"
                 android:textStyle="bold" 
-                android:gravity="center_horizontal" 
                 android:id="@+id/zipNoOfFiles" 
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content" 
