@@ -1,3 +1,19 @@
+/**
+ * Copyright(c) 2013 ANURAG 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *                             
+ *                             anurag.dev1512@gmail.com
+ *
+ */
+
 package org.anurag.file.quest;
 
 import java.io.File;
@@ -11,7 +27,7 @@ import android.widget.TextView;
 
 @SuppressLint("HandlerLeak")
 public class Utils {
-	View v;
+	static View v;
 	public static boolean loaded;
 	public static ArrayList<File> music;
 	public static ArrayList<File> apps;
@@ -21,13 +37,23 @@ public class Utils {
 	public static ArrayList<File> mis;
 	public static ArrayList<File> img;
 	
-	long musicsize=0;
-	long apksize=0;
-	long vidsize=0;
-	long docsize=0;
-	long zipsize=0;
-	long missize=0;
-	long imgsize=0;
+	
+	static String msize;
+	static String asize;
+	static String psize;
+	static String dsize;
+	static String vsize;
+	static String zsize;
+	static String misize;
+	
+	
+	static long musicsize=0;
+	static long apksize=0;
+	static long vidsize=0;
+	static long docsize=0;
+	static long zipsize=0;
+	static long missize=0;
+	static long imgsize=0;
 	int size = 0;
 	File file; 	
 	String message;
@@ -45,6 +71,15 @@ public class Utils {
 		zip = new ArrayList<File>();
 		mis = new ArrayList<File>();
 		img = new ArrayList<File>();
+		
+		
+		musicsize=0;
+		apksize=0;
+		vidsize=0;
+		docsize=0;
+		zipsize=0;
+		missize=0;
+		imgsize=0;
 	}
 	
 	public void load(){
@@ -61,7 +96,7 @@ public class Utils {
 					case 2:
 							//DISLPAYS MUSIC SIZE..
 							TextView mSize= (TextView)v.findViewById(R.id.mSize);
-							mSize.setText(message);
+							mSize.setText(msize);
 							
 							count = (TextView)v.findViewById(R.id.mFiles);
 							count.setText(music.size() + " Items");
@@ -70,7 +105,7 @@ public class Utils {
 					case 3:
 							//DISPLAYS APPS SIZE...
 							TextView aSize= (TextView)v.findViewById(R.id.aSize);
-							aSize.setText(message);
+							aSize.setText(asize);
 							
 							
 							count = (TextView)v.findViewById(R.id.aFiles);
@@ -81,7 +116,7 @@ public class Utils {
 						
 							//DSIPLAYS DOCS SIZE...
 							TextView dSize= (TextView)v.findViewById(R.id.dSize);
-							dSize.setText(message);
+							dSize.setText(dsize);
 							
 							count = (TextView)v.findViewById(R.id.dFile);
 							count.setText(doc.size() + " Items");
@@ -89,7 +124,7 @@ public class Utils {
 					case 5:
 							//displays IMAGE SIZE..
 							TextView iSize= (TextView)v.findViewById(R.id.pSize);
-							iSize.setText(message);
+							iSize.setText(psize);
 							
 							count = (TextView)v.findViewById(R.id.pFiles);
 							count.setText(img.size() + " Items");
@@ -98,7 +133,7 @@ public class Utils {
 					case 6:
 							//displays video size...
 							TextView vSize= (TextView)v.findViewById(R.id.vSize);
-							vSize.setText(message);
+							vSize.setText(vsize);
 							
 							
 							count = (TextView)v.findViewById(R.id.vFiles);
@@ -110,7 +145,7 @@ public class Utils {
 						
 							//displays archive size...
 							TextView zSize= (TextView)v.findViewById(R.id.zSize);
-							zSize.setText(message);
+							zSize.setText(zsize);
 							
 							count = (TextView)v.findViewById(R.id.zFiles);
 							count.setText(zip.size() + " Items");
@@ -119,7 +154,7 @@ public class Utils {
 					case 8:
 							//displays miscellaneous size...
 							TextView mmSize= (TextView)v.findViewById(R.id.misSize);
-							mmSize.setText(message);
+							mmSize.setText(misize);
 							
 							count = (TextView)v.findViewById(R.id.misFiles);
 							count.setText(mis.size() + " Items");
@@ -168,41 +203,41 @@ public class Utils {
 			if(SimpleAdapter.getFileType(file)==null){
 				mis.add(file);
 				missize+=file.length();
-				message = size(missize);
+				misize = size(missize);
 				size = mis.size();
 				handle.sendEmptyMessage(8);
 			}	
 			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("song")){
 				music.add(file);
 				musicsize+=file.length();
-				message = size(musicsize);
+				msize = size(musicsize);
 				size = music.size();
 				handle.sendEmptyMessage(2);
 			}	
 			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("image")){
 				img.add(file);
 				imgsize+=file.length();
-				message = size(imgsize);
+				psize = size(imgsize);
 				size = img.size();
 				handle.sendEmptyMessage(5);
 			}	
 			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("video")){
 				vids.add(file);
 				vidsize+=file.length();
-				message = size(vidsize);
+				vsize = size(vidsize);
 				size = vids.size();
 				handle.sendEmptyMessage(6);
 			}	
 			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("zip")||SimpleAdapter.getFileType(file).equalsIgnoreCase("compressed")){
 				zip.add(file);
 				zipsize+=file.length();
-				message = size(zipsize);
+				zsize = size(zipsize);
 				size = zip.size();
 				handle.sendEmptyMessage(7);
 			}else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("apk")){
 				apps.add(file);
 				apksize+=file.length();
-				message = size(apksize);
+				asize = size(apksize);
 				size = apps.size();
 				handle.sendEmptyMessage(3);
 			}	
@@ -210,7 +245,7 @@ public class Utils {
 					SimpleAdapter.getFileType(file).equalsIgnoreCase("text")){
 				doc.add(file);
 				docsize+=file.length();
-				message = size(docsize);
+				dsize = size(docsize);
 				size = doc.size();
 				handle.sendEmptyMessage(4);
 			}	
