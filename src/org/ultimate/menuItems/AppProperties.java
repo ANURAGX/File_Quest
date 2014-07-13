@@ -1,23 +1,3 @@
-package org.ultimate.menuItems;
-
-import java.io.File;
-
-
-import org.anurag.file.quest.R;
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Point;
-import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-
 /**
  * Copyright(c) 2013 ANURAG 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,6 +12,19 @@ import android.widget.TextView;
  * anurag.dev1512@gmail.com
  *
  */
+package org.ultimate.menuItems;
+
+import java.io.File;
+import org.anurag.file.quest.R;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 public class AppProperties {
     private PackageInfo info;
     private ImageView image;

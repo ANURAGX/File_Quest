@@ -1,24 +1,3 @@
-package org.ultimate.menuItems;
-
-import java.io.File;
-
-import java.sql.Date;
-
-import org.anurag.file.quest.R;
-
-
-
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.graphics.Point;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.StatFs;
-import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Copyright(c) 2013 ANURAG 
@@ -34,6 +13,19 @@ import android.widget.Toast;
  * anurag.dev1512@gmail.com
  *
  */
+package org.ultimate.menuItems;
+
+import java.io.File;
+import java.sql.Date;
+import org.anurag.file.quest.R;
+import android.app.Dialog;
+import android.content.Context;
+import android.os.Environment;
+import android.os.StatFs;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 public class FileProperties{
 	private File file;
 	private long size;

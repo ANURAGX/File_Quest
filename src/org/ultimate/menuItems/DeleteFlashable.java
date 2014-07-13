@@ -1,34 +1,3 @@
-package org.ultimate.menuItems;
-
-import java.io.File;
-
-
-import org.anurag.file.quest.R;
-import org.anurag.file.quest.RFileManager;
-
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Point;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.WindowManager;
-import android.webkit.WebView;
-import android.widget.Button;
-import android.widget.DialerFilter;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
 /**
  * Copyright(c) 2013 ANURAG 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,6 +12,24 @@ import android.widget.Toast;
  * anurag.dev1512@gmail.com
  *
  */
+package org.ultimate.menuItems;
+
+import java.io.File;
+import org.anurag.file.quest.R;
+import org.anurag.file.quest.RFileManager;
+import android.app.Dialog;
+import android.content.Context;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+
+
 public class DeleteFlashable{
 
 	private File file;
