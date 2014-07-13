@@ -52,13 +52,13 @@
     	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:text="@string/calc"/>
+    	        				android:text="@string/zerosize"/>
     						<TextView 
     						    android:id="@+id/mFiles"
     	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:text="@string/calc"/>
+    	        				android:text="@string/zerofiles"/>
     	    				
     						
     					</LinearLayout>
@@ -91,13 +91,13 @@
     	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:text="@string/calc"/>
+    	        				android:text="@string/zerosize"/>
     						<TextView 
     						    android:id="@+id/aFiles"
     	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:text="@string/calc"/>
+    	        				android:text="@string/zerofiles"/>
     					
     					</LinearLayout>
     				</LinearLayout>
@@ -135,13 +135,13 @@
     	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:text="@string/calc"/>
+    	        				android:text="@string/zerosize"/>
     						<TextView 
     						    android:id="@+id/dFile"
     	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:text="@string/calc"/>
+    	        				android:text="@string/zerofiles"/>
     	</LinearLayout>
     	
     					<LinearLayout 
@@ -173,13 +173,13 @@
     	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:text="@string/calc"/>
+    	        				android:text="@string/zerosize"/>
     						<TextView 
     						    android:id="@+id/pFiles"
     	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:text="@string/calc"/>
+    	        				android:text="@string/zerofiles"/>
     	</LinearLayout>
     </LinearLayout>
     
@@ -216,13 +216,13 @@
     	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:text="@string/calc"/>
+    	        				android:text="@string/zerosize"/>
     						<TextView 
     						    android:id="@+id/vFiles"
     	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:text="@string/calc"/>
+    	        				android:text="@string/zerofiles"/>
     	</LinearLayout>
     	
     	<LinearLayout 
@@ -253,13 +253,13 @@
     	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:text="@string/calc"/>
+    	        				android:text="@string/zerosize"/>
     						<TextView 
     						    android:id="@+id/zFiles"
     	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:text="@string/calc"/>
+    	        				android:text="@string/zerofiles"/>
     	</LinearLayout>
     </LinearLayout>
 <LinearLayout
@@ -295,13 +295,13 @@
     	        	android:textStyle="bold"
     	        	android:layout_width="wrap_content"
     	        	android:layout_height="wrap_content"
-    	        	android:text="@string/calc"/>
+    	        	android:text="@string/zerosize"/>
     		<TextView 
     	    		android:id="@+id/misSize"
     	    		android:textStyle="bold"
     	    		android:layout_width="wrap_content"
     	        	android:layout_height="wrap_content"
-    	        	android:text="@string/calc"/>
+    	        	android:text="@string/zerofiles"/>
     	</LinearLayout>
     	
     	<LinearLayout 
@@ -331,14 +331,14 @@
     	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:text="Files"/>
+    	        				android:text="@string/zerosize"/>
     	    
     	    <TextView 
     	        android:id="@+id/lsSdcard2"
     	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:text="Files"/>
+    	        				android:text="@string/zerofiles"/>
     	    
     						
     	</LinearLayout>
