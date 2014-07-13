@@ -161,7 +161,8 @@
             android:paddingBottom="3dp"
             android:layout_weight="2.0">
             <TextView 
-                android:visibility="gone"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"                
                 android:textStyle="bold" 
                 android:id="@+id/zipFileLocation" 
                 android:layout_width="wrap_content" 
