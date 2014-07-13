@@ -359,7 +359,7 @@
     <string name="zipinterrupted">Zip operation was interrupted</string> 
     <string name="dest">DESTINATION :-</string>
     <string name="currentfile">CURRENT FILE :-</string>
-    
+    <string name="deleteingfile">Deleting files</string>
     
     
     
