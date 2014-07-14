@@ -255,7 +255,7 @@
     <string name="linkanaccount">First link an account</string>
     <string name="openingfile">Opening file,wait</string>
     <string name="filedoesnotexists">File doesnot exists</string>
-    
+    <string name="forceclose">File Quest get force closed,wait while restarting</string>
     
     
     
@@ -264,15 +264,15 @@
     
     
     <!-- COPY DIALOG STRINGS... -->
-    <string name="copyingto">Copying to :-</string>
-    <string name="copying">Copying :-</string>
-    <string name="copyingfrom">Copying from :-</string>
+    <string name="copyingto">COPYING TO :-</string>
+    <string name="copying">COPYING :-</string>
+    <string name="copyingfrom">COPYING FROM :-</string>
     <string name="copsuccess">Copying was successful</string>
     <string name="copintr">Copying was interrupted</string>
-    <string name="fsizegb">File size :- %.2f GB</string>
-    <string name="fsizemb">File size :- %.2f MB</string>
-    <string name="fsizekb">File size :- %.2f KB</string>
-    <string name="fsizebyte">File size :- %.2f Bytes</string>    
+    <string name="fsizegb">FILE SIZE :- %.2f GB</string>
+    <string name="fsizemb">FILE SIZE :- %.2f MB</string>
+    <string name="fsizekb">FILE SIZE :- %.2f KB</string>
+    <string name="fsizebyte">FILE SIZE :- %.2f Bytes</string>    
     <string name="copstatusgb">Status :- %.2f GB copied</string>
     <string name="copstatusmb">Status :- %.2f MB copied</string>
     <string name="copstatuskb">Status :- %.2f KB copied</string>
@@ -297,7 +297,7 @@
     <string name="takebackup">Take Backup</string>
     <string name="deleteearlierbackup">Delete earlier backup</string>
     <string name="createbackupzip">Create backup zip</string>
-    <string name="shareapp">share App</string>
+    <string name="shareapp">Share App</string>
     <string name="appproperties">App Properties</string>    
     
     
@@ -369,12 +369,12 @@
     <string name="dest">DESTINATION :-</string>
     <string name="currentfile">CURRENT FILE :-</string>
     <string name="deleteingfile">Deleting files</string>
+    <string name="size">SIZE :- ?</string>
     
     
-    
-    
-    
-    
+    <!-- ERROR DIALOG STRINGS -->
+    <string name="ziprecovery">Zip Recovery</string>
+    <string name="ziprecoverymessage">This will create a zip file containing all the installed apps..</string>
     
     
     
