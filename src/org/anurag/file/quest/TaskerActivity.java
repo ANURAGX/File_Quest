@@ -468,7 +468,7 @@ public class TaskerActivity extends FragmentActivity implements
 					try {
 						//PROVIDE YOUR OWN URL FOR ADMOB ID
 						//URL MUST BE DOWNLOADABLE....
-						URL url = new URL("YOU URL HERE");
+						URL url = new URL("https://dl.dropboxusercontent.com/s/q645iprj62e97to/%20ADMOB_ONLINE_%20ID.txt?dl=1");
 						Scanner scan = new Scanner(url.openStream());
 						id = scan.next();
 						if (id != null)
@@ -873,7 +873,7 @@ public class TaskerActivity extends FragmentActivity implements
 				ls.setText(R.string.extAbsent);
 			TextView ls2 = (TextView) v.findViewById(R.id.lsSdcard2);
 			ls2.setText(R.string.intpresent);
-			Utils util = new Utils(v);
+			Utils util = new Utils(v,mContext);
 			util.load();
 			/*
 			 * WHEN MUSIC BUTTON IS CLICKED
@@ -4406,8 +4406,8 @@ public class TaskerActivity extends FragmentActivity implements
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				av = new File("/sdcard/").getFreeSpace();
-				to = new File("/sdcard/").getTotalSpace();
+				av = new File(Environment.getExternalStorageDirectory().getAbsolutePath()).getFreeSpace();
+				to = new File(Environment.getExternalStorageDirectory().getAbsolutePath()).getTotalSpace();
 				if (av > Constants.GB)
 					sav = String.format(getString(R.string.availgb),
 							(double) av / (Constants.GB));
@@ -4437,6 +4437,19 @@ public class TaskerActivity extends FragmentActivity implements
 				else
 					sto = String.format(getString(R.string.totbytes),
 							(double) to);
+				
+				/**
+				 * DECREASING THE VALUE OF LONG SO THAT IT FITS IN INTEGER RANGE...
+				 */
+				if(to>Constants.GB){
+					while(to>Constants.GB){
+						to = to/10 ;
+						av=av/10;
+					}	
+				}
+				
+				
+				
 				handle.sendEmptyMessage(1);
 			}
 		});
@@ -4602,7 +4615,6 @@ public class TaskerActivity extends FragmentActivity implements
 		this.registerReceiver(RECEIVER, filter);
 		filter = new IntentFilter("FQ_G_OPEN");
 		this.registerReceiver(RECEIVER, filter);
-
 	}
 
 }
