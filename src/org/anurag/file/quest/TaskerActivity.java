@@ -1031,10 +1031,13 @@ public class TaskerActivity extends FragmentActivity implements
 						new CreateZip(mContext, size.x * 8 / 9, temp);
 						break;
 					case 6:
-						new PopupDialog(mContext, size.x * 4 / 5, file0
-								.getAbsolutePath());
-						// DELETE
-						break;
+							//DELETE
+							{
+								ArrayList<File> te = new ArrayList<File>();
+								te.add(file0);
+								new DeleteFiles(mContext, size.x*8/9, te);
+							}
+							break;
 					case 7:
 						// RENAME
 						COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
@@ -1238,10 +1241,13 @@ public class TaskerActivity extends FragmentActivity implements
 						break;
 
 					case 6:
-						new PopupDialog(mContext, size.x * 4 / 5, file
-								.getAbsolutePath());
-						// DELETE
-						break;
+							//DELETE
+							{
+								ArrayList<File> te = new ArrayList<File>();
+								te.add(file);
+								new DeleteFiles(mContext, size.x*8/9, te);
+							}
+							break;
 					case 7:
 						// RENAME
 						/*
@@ -1410,10 +1416,13 @@ public class TaskerActivity extends FragmentActivity implements
 						new CreateZip(mContext, size.x * 8 / 9, temp);
 						break;
 					case 6:
-						new PopupDialog(mContext, size.x * 4 / 5, file2
-								.getAbsolutePath());
-						// DELETE
-						break;
+							//DELETE
+							{
+								ArrayList<File> te = new ArrayList<File>();
+								te.add(file2);
+								new DeleteFiles(mContext, size.x*8/9, te);
+							}
+							break;
 					case 7:
 						// RENAME
 						COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
@@ -4204,8 +4213,7 @@ public class TaskerActivity extends FragmentActivity implements
 			if (action == 4 && MediaElementAdapter.C != 0) {// DELETE THE
 															// MULTIPLE FILES IF
 															// ACTIONID = 4
-				new DeleteMultipleFiles(mContext, size.x * 4 / 5,
-						MediaElementAdapter.MULTI_FILES, "simple");
+				new DeleteFiles(mContext, size.x*8/9, MediaElementAdapter.MULTI_FILES);
 			} else if (action == 5 && MediaElementAdapter.C != 0) {
 				MULTIPLE_COPY_GALLERY = true;
 				MULTIPLE_COPY = MULTIPLE_CUT = COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = MULTIPLE_CUT_GALLERY = SEARCH_FLAG = false;
@@ -4232,8 +4240,7 @@ public class TaskerActivity extends FragmentActivity implements
 		} else if (ITEM == 1 && SimpleAdapter.MULTI_SELECT) {
 			if (action == 4 && SimpleAdapter.c != 0) {// DELETE THE MULTIPLE
 														// FILES IF ACTIONID = 4
-				new DeleteMultipleFiles(mContext, size.x * 4 / 5,
-						SimpleAdapter.MULTI_FILES, "root");
+				new DeleteFiles(mContext, size.x*8/9, SimpleAdapter.MULTI_FILES);
 			} else if (action == 5 && SimpleAdapter.c > 0) {
 				MULTIPLE_COPY = true;
 				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
@@ -4266,8 +4273,7 @@ public class TaskerActivity extends FragmentActivity implements
 		} else if (ITEM == 2 && RootAdapter.MULTI_SELECT) {
 			if (action == 4 && RootAdapter.C != 0) {
 				// DELETE THE MULTIPLE FILES IF ACTIONID = 4
-				new DeleteMultipleFiles(mContext, size.x * 4 / 5,
-						RootAdapter.MULTI_FILES, "simple");
+				new DeleteFiles(mContext, size.x*8/9, RootAdapter.MULTI_FILES);
 			} else if (action == 5 && RootAdapter.C != 0) {
 				MULTIPLE_COPY = true;
 				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;

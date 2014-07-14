@@ -64,7 +64,7 @@ public class EditorActivity extends Activity {
 		main = (EditText)findViewById(R.id.note);
 		main.setText("");
 		dialog = new Dialog(getApplicationContext(), R.style.custom_dialog_theme);
-		dialog.setContentView(R.layout.popup_dialog);
+		dialog.setContentView(R.layout.delete_files);
 		//dialog.getWindow().getAttributes().width = size.x*4/5;
 		main.setLinksClickable(true);
 		intent = getIntent();

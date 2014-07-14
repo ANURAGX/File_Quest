@@ -378,7 +378,11 @@
     
     
     
-    
+    <!-- DELETE_FILES DIALOG STRINGS... -->
+    <string name="deletefiles">Delete files ?</string>
+    <string name="confirmdelete">Are you sure to delete the files of folder :-</string>
+    <string name="waitwhiledeleting">Please wait while deleting files or folders</string>
+    <string name="deleted">Files deleted successfully</string>
     
     
     

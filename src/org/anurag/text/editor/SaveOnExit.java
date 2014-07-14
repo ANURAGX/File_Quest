@@ -1,21 +1,12 @@
 package org.anurag.text.editor;
 
 import org.anurag.file.quest.R;
-
-import android.app.ActionBar.LayoutParams;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Point;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,7 +19,7 @@ public class SaveOnExit{
 		// TODO Auto-generated constructor stub
 		mContext = con;		
 		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
-		dialog.setContentView(R.layout.popup_dialog);
+		dialog.setContentView(R.layout.delete_files);
 		dialog.getWindow().getAttributes().width = w;
 		onCreate();
 	}

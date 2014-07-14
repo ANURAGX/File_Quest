@@ -46,7 +46,7 @@ public class ImageViewer extends Activity{
 							public void onClick(View v) {
 								// TODO Auto-generated method stub
 								final Dialog dialog = new Dialog(ImageViewer.this,R.style.custom_dialog_theme);
-								dialog.setContentView(R.layout.popup_dialog);
+								dialog.setContentView(R.layout.delete_files);
 								dialog.getWindow().getAttributes().width = TaskerActivity.size.x*5/6;
 								
 								ImageView ic = (ImageView)dialog.findViewById(R.id.popupImage);

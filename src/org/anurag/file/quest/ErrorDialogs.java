@@ -37,7 +37,7 @@ public class ErrorDialogs {
 	public ErrorDialogs(Context context,int width,String action) {
 		// TODO Auto-generated constructor stub
 		dialog = new Dialog(context, R.style.custom_dialog_theme);
-		dialog.setContentView(R.layout.popup_dialog);
+		dialog.setContentView(R.layout.delete_files);
 		dialog.setCancelable(true);
 		data = action;
 		dialog.getWindow().getAttributes().width = width;		

@@ -48,7 +48,7 @@ public class DeleteFlashable{
 		// TODO Auto-generated constructor stub
 		mContext = context;
 		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
-		dialog.setContentView(R.layout.popup_dialog);
+		dialog.setContentView(R.layout.delete_files);
 		dialog.getWindow().getAttributes().width = width;
 		dialog.setCancelable(false);
 		onCreate();
