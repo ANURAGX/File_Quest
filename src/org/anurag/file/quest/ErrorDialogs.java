@@ -42,10 +42,10 @@ public class ErrorDialogs {
 		data = action;
 		dialog.getWindow().getAttributes().width = width;		
 		mContext = context;
-		onCreate();
+		onCreate(context);
 	}
 	
-	protected void onCreate() {
+	protected void onCreate(Context ctx) {
 		//params.width = size.x*4/5;
 		
 		tv = (TextView)dialog.findViewById(R.id.textMessage);
@@ -58,11 +58,10 @@ public class ErrorDialogs {
 			tv.setText(R.string.flashable);
 			b = (Button)dialog.findViewById(R.id.popupCancel);
 			b.setVisibility(View.GONE);
-			iTv.setText("   Recovery Zip");
-			tv.setText("This Option will give a zip file having all the user apps bundled such that " +
-					"it can be flashed in recover mode to make it user or system apps ");
+			iTv.setText("   "+ctx.getString(R.string.ziprecovery));
+			tv.setText(ctx.getString(R.string.ziprecoverymessage));
 			b= (Button)dialog.findViewById(R.id.popupOk);
-			b.setText("Ok");
+			b.setText(ctx.getString(R.string.ok));
 			b.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
@@ -71,15 +70,6 @@ public class ErrorDialogs {
 					dialog.dismiss();
 				}
 			});
-		}else if(data.equals("CopyToNextPanel")){
-			iTv.setText("Copy");
-			iView.setBackgroundResource(R.drawable.ic_launcher_file_task);
-			tv.setText(R.string.copynextpanel);
-			
-		}else if(data.equals("CutFile")){
-			iTv.setText("Cut");
-			iView.setBackgroundResource(R.drawable.ic_launcher_file_task);
-			tv.setText(R.string.removenextpanel);
 		}else if(data.equalsIgnoreCase("homeError")){
 			b = (Button)dialog.findViewById(R.id.popupCancel);
 			b.setVisibility(View.GONE);
@@ -87,7 +77,7 @@ public class ErrorDialogs {
 			iView.setBackgroundResource(R.drawable.ic_launcher_droid_home);
 			tv.setText(R.string.nohomeerror);
 			b= (Button)dialog.findViewById(R.id.popupOk);
-			b.setText("Ok");
+			b.setText(ctx.getString(R.string.ok));
 			b.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
@@ -102,7 +92,7 @@ public class ErrorDialogs {
 			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_rename));
 			tv.setText(R.string.renameerror);
 			b= (Button)dialog.findViewById(R.id.popupOk);
-			b.setText("Ok");
+			b.setText(ctx.getString(R.string.ok));
 			b.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
@@ -117,7 +107,7 @@ public class ErrorDialogs {
 			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_file_task));
 			tv.setText(R.string.copyerror);
 			b= (Button)dialog.findViewById(R.id.popupOk);
-			b.setText("Ok");
+			b.setText(ctx.getString(R.string.ok));
 			b.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
@@ -132,7 +122,7 @@ public class ErrorDialogs {
 			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_file_task));
 			tv.setText(R.string.noapperror);
 			b= (Button)dialog.findViewById(R.id.popupOk);
-			b.setText("Ok");
+			b.setText(ctx.getString(R.string.ok));
 			b.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
@@ -141,25 +131,6 @@ public class ErrorDialogs {
 				}
 			});
 		}
-		
-		else if(data.contains("unsupportedScreenSize")){
-			b = (Button)dialog.findViewById(R.id.popupCancel);
-			b.setVisibility(View.GONE);
-			iTv.setText(R.string.usize);
-			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_file_task));
-			tv.setText(R.string.usizeerror);
-			b= (Button)dialog.findViewById(R.id.popupOk);
-			b.setText("Ok");
-			b.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					// TODO Auto-generated method stub
-					//setResult(RESULT_OK);
-					dialog.dismiss();
-				}
-			});
-		}
-		
 		else if(data.contains("Security")){
 			b = (Button)dialog.findViewById(R.id.popupCancel);
 			b.setVisibility(View.GONE);
@@ -167,7 +138,7 @@ public class ErrorDialogs {
 			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_file_task));
 			tv.setText(R.string.secerror);
 			b= (Button)dialog.findViewById(R.id.popupOk);
-			b.setText("Ok");
+			b.setText(ctx.getString(R.string.ok));
 			b.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
@@ -176,24 +147,7 @@ public class ErrorDialogs {
 					dialog.dismiss();
 				}
 			});
-		}else if(data.contains("cloud")){
-			b = (Button)dialog.findViewById(R.id.popupCancel);
-			b.setVisibility(View.GONE);
-			iTv.setText(R.string.clod);
-			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_drop_box));
-			tv.setText(R.string.cloderror);
-			b= (Button)dialog.findViewById(R.id.popupOk);
-			b.setText("Ok");
-			b.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					// TODO Auto-generated method stub
-					//setResult(RESULT_OK);
-					dialog.dismiss();
-				}
-			});
-		}
-		
+		}		
 		else{
 			b = (Button)dialog.findViewById(R.id.popupCancel);
 			b.setVisibility(View.GONE);
@@ -201,7 +155,7 @@ public class ErrorDialogs {
 			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_file_task));
 			tv.setText(R.string.cantcopyerror);
 			b= (Button)dialog.findViewById(R.id.popupOk);
-			b.setText("Ok");
+			b.setText(ctx.getString(R.string.ok));
 			b.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
