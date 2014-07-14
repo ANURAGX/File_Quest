@@ -10,6 +10,7 @@
 	xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads">
     
 	<LinearLayout 
+	android:paddingTop="10dp"    
 	android:id="@+id/menuLayout" 
 	android:layout_width="fill_parent" 
 	android:layout_height="wrap_content" 
