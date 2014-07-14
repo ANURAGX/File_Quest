@@ -18,7 +18,9 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -28,7 +30,7 @@ import android.widget.TextView;
 @SuppressLint("HandlerLeak")
 public class Utils {
 	static View v;
-	public static boolean loaded;
+	public static boolean loaded = false;
 	public static ArrayList<File> music;
 	public static ArrayList<File> apps;
 	public static ArrayList<File> vids;
@@ -59,10 +61,11 @@ public class Utils {
 	String message;
 	Handler handle;
 	TextView count;
-	public Utils(View view) {
+	
+	Context ctx;
+	public Utils(View view,Context cont) {
 		// TODO Auto-generated constructor stub
 		v = view;
-		loaded = false;
 		file = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
 		music = new ArrayList<File>();
 		apps = new ArrayList<File>();
@@ -71,7 +74,7 @@ public class Utils {
 		zip = new ArrayList<File>();
 		mis = new ArrayList<File>();
 		img = new ArrayList<File>();
-		
+		ctx = cont;
 		
 		musicsize=0;
 		apksize=0;
@@ -153,10 +156,10 @@ public class Utils {
 							
 					case 8:
 							//displays miscellaneous size...
-							TextView mmSize= (TextView)v.findViewById(R.id.misSize);
+							TextView mmSize= (TextView)v.findViewById(R.id.misFiles);
 							mmSize.setText(misize);
 							
-							count = (TextView)v.findViewById(R.id.misFiles);
+							count = (TextView)v.findViewById(R.id.misSize);
 							count.setText(mis.size() + " Items");
 							break;
 				}
@@ -182,16 +185,16 @@ public class Utils {
 	 */
 	public String size(long size){
 		if(size>Constants.GB)
-			return String.format("%.2f GB", (double)size/(Constants.GB));
+			return String.format(ctx.getString(R.string.appsizegb), (double)size/(Constants.GB));
 		
 		else if(size > Constants.MB)
-			return String.format("%.2f MB", (double)size/(Constants.MB));
+			return String.format(ctx.getString(R.string.appsizemb), (double)size/(Constants.MB));
 		
 		else if(size>1024)
-			return String.format("%.2f KB", (double)size/(1024));
+			return String.format(ctx.getString(R.string.appsizekb), (double)size/(1024));
 		
 		else
-			return String.format("%.2f Bytes", (double)size);
+			return String.format(ctx.getString(R.string.appsizebytes), (double)size);
 	}
 	
 	/**
