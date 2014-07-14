@@ -84,6 +84,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -381,8 +382,10 @@ public class TaskerActivity extends FragmentActivity implements
 				}
 
 				if (page == 2 && LAST_PAGE == 0) {
-					// mFlipperBottom.showPrevious();
-					// mFlipperBottom.setAnimation(prevAnim());
+					if(!elementInFocus){
+						mFlipperBottom.showPrevious();
+						mFlipperBottom.setAnimation(prevAnim());
+					}					
 					LAST_PAGE = 2;
 				}
 
@@ -2877,7 +2880,7 @@ public class TaskerActivity extends FragmentActivity implements
 				+1.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
 				Animation.RELATIVE_TO_PARENT, 0.0f,
 				Animation.RELATIVE_TO_PARENT, 0.0f);
-		anim.setDuration(100);
+		anim.setDuration(50);
 		anim.setInterpolator(new AccelerateInterpolator());
 		return anim;
 	}
@@ -2892,7 +2895,7 @@ public class TaskerActivity extends FragmentActivity implements
 				-1.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
 				Animation.RELATIVE_TO_PARENT, 0.0f,
 				Animation.RELATIVE_TO_PARENT, 0.0f);
-		anim.setDuration(100);
+		anim.setDuration(50);
 		anim.setInterpolator(new AccelerateInterpolator());
 		return anim;
 	}
@@ -4447,9 +4450,6 @@ public class TaskerActivity extends FragmentActivity implements
 						av=av/10;
 					}	
 				}
-				
-				
-				
 				handle.sendEmptyMessage(1);
 			}
 		});
