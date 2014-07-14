@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.anurag.compress.CreateZip;
+import org.anurag.compress.CreateZipApps;
 import org.anurag.gesture.AddGesture;
 import org.anurag.gesture.G_Open;
 import org.anurag.inherited.sony.ListView3D;
@@ -84,7 +85,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -228,11 +228,9 @@ public class TaskerActivity extends FragmentActivity implements
 		SHOW_APP = preferences.getInt("SHOW_APP", 1);
 		CURRENT_ITEM = CURRENT_PREF_ITEM = preferences.getInt("CURRENT_PREF_ITEM", 0);
 		TRANSPRA_LEVEL = preferences.getFloat("TRANSPRA_LEVEL", 0.9f);
-		SHOW_HIDDEN_FOLDERS = preferences.getBoolean("SHOW_HIDDEN_FOLDERS",
-				false);
+		SHOW_HIDDEN_FOLDERS = preferences.getBoolean("SHOW_HIDDEN_FOLDERS",false);
 		SORT_TYPE = preferences.getInt("SORT_TYPE", 2);
-		RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = preferences
-				.getInt("FOLDER_TYPE", 1);
+		RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = preferences.getInt("FOLDER_TYPE", 0);
 		HOME_DIRECTORY = preferences.getString("HOME_DIRECTORY", null);
 		ENABLE_ON_LAUNCH = preferences.getBoolean("ENABLE_ON_LAUNCH", false);
 		edit = preferences.edit();
@@ -243,6 +241,23 @@ public class TaskerActivity extends FragmentActivity implements
 
 		}
 
+		
+		/**
+		 * THIS THREAD CATCHES THE UNCAUGHT EXCEPTIONS...
+		 * IF APP CRASHES IT RESTARTS THE APP ......
+		 */
+		
+		/**Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+			@Override
+			public void uncaughtException(Thread arg0, Throwable arg1) {
+				// TODO Auto-generated method stub
+				Log.e("Alert","Lets See if it Works !!!" +"paramThread:::" +arg0 +"paramThrowable:::" +arg1);
+				startActivity(new Intent(TaskerActivity.this, TaskerActivity.class));
+				finish();
+				android.os.Process.killProcess(android.os.Process.myPid());
+			}
+		});		
+		*/
 		SEARCH_FLAG = RENAME_COMMAND = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = CREATE_FILE = false;
 		fPos = 0;
 		params = this.getWindow().getAttributes();
@@ -263,14 +278,8 @@ public class TaskerActivity extends FragmentActivity implements
 		total = (TextView) findViewById(R.id.total);
 
 		error = false;
-
 		mContext = TaskerActivity.this;
-
-		if (size.x < 480 && size.y < 800)
-			new ErrorDialogs(mContext, size.x * 4 / 5, "unsupportedScreenSize");
-
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager());
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		indicator = (TitlePageIndicator) findViewById(R.id.indicator);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -535,7 +544,12 @@ public class TaskerActivity extends FragmentActivity implements
 		params.alpha = 0.85f;
 		super.onResume();
 		REGISTER_RECEIVER();
+	}
 
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
 	}
 
 	@Override
@@ -1605,10 +1619,9 @@ public class TaskerActivity extends FragmentActivity implements
 						break;
 					case 4:
 						// CREATE FLASHABLE ZIP
-						ArrayList<File> t = new ArrayList<File>();
-						File fi = new File(info.sourceDir);
-						t.add(fi);
-						new CreateZip(mContext, size.x * 8 / 9, t);
+						ArrayList<ApplicationInfo> t = new ArrayList<ApplicationInfo>();
+						t.add(info);
+						new CreateZipApps(mContext, size.x * 8 / 9, t);
 						break;
 					case 5:
 						// SEND APPS
@@ -2690,6 +2703,7 @@ public class TaskerActivity extends FragmentActivity implements
 
 						}
 						TaskerActivity.this.finish();
+						android.os.Process.killProcess(android.os.Process.myPid());
 					}
 
 				}
@@ -2725,6 +2739,7 @@ public class TaskerActivity extends FragmentActivity implements
 
 						}
 						TaskerActivity.this.finish();
+						android.os.Process.killProcess(android.os.Process.myPid());
 					}
 				}
 				/**
@@ -2819,6 +2834,7 @@ public class TaskerActivity extends FragmentActivity implements
 
 						}
 						TaskerActivity.this.finish();
+						android.os.Process.killProcess(android.os.Process.myPid());
 					}
 				}
 				/**
@@ -2856,6 +2872,7 @@ public class TaskerActivity extends FragmentActivity implements
 
 						}
 						TaskerActivity.this.finish();
+						android.os.Process.killProcess(android.os.Process.myPid());
 					}
 				}
 				/**
@@ -4572,9 +4589,7 @@ public class TaskerActivity extends FragmentActivity implements
 					refreshList(CURRENT_ITEM);
 				} else if (ACTION.equalsIgnoreCase("FQ_FLASHZIP")) {
 					// FLASHABLE ZIP DIALOG IS FIRED FROM HERE
-					Toast.makeText(mContext, "Fix it", Toast.LENGTH_SHORT)
-							.show();
-					// new ZipDialog(mContext, size.x*7/9, "FlashableZips");
+					 new CreateZipApps(mContext, size.x*8/9, nList);
 				} else if (ACTION.equalsIgnoreCase("FQ_DROPBOX_STARTLINK")) {
 					// LINK A USER....
 					Toast.makeText(mContext, R.string.linkanaccount,
