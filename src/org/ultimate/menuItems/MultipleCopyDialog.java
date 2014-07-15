@@ -29,12 +29,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
 import org.ultimate.root.LinuxShell;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -44,6 +47,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.stericson.RootTools.RootTools;
 
 @SuppressLint("HandlerLeak")
@@ -73,7 +77,6 @@ public class MultipleCopyDialog {
 	ImageView iM;
 	static Handler handle;
 	static boolean running ;
-	
 	
 	
 	
@@ -145,6 +148,7 @@ public class MultipleCopyDialog {
 							if(dialog.isShowing()){
 								dialog.dismiss();
 								if(running){
+									mContext.sendBroadcast(new Intent("FQ_DELETE"));
 									Toast.makeText(mContext, mContext.getResources().getString(R.string.copsuccess), Toast.LENGTH_SHORT).show();
 									running = false;
 								}else
@@ -267,6 +271,22 @@ public class MultipleCopyDialog {
 				copyToDirectory(old + "/" + files[i], dir);
 
 		} else if (old_file.isFile() && !temp_dir.canWrite()) {
+			
+			//sending file name that is being copied...
+			cop = old_file.getName();
+			handle.sendEmptyMessage(0);
+			
+			//sending file that is being copied...
+			copFrom = old_file.getAbsolutePath();
+			copFrom = copFrom.substring(0,copFrom.lastIndexOf("/"));
+			handle.sendEmptyMessage(1);
+			max = old_file.length();
+			copSize = size(max);
+			handle.sendEmptyMessage(2);
+			si = 0;
+			handle.sendEmptyMessage(4);
+			status = mContext.getString(R.string.reqroot);
+			handle.sendEmptyMessage(3);
 			int root = moveCopyRoot(old, newDir);
 
 			if (root == 0)
