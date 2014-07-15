@@ -16,7 +16,6 @@ package org.anurag.file.quest;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -52,25 +51,7 @@ public class ErrorDialogs {
 		iView = (ImageView)dialog.findViewById(R.id.popupImage);
 		iTv = (TextView)dialog.findViewById(R.id.popupTitle);
 		
-		if(data.equals("FlashableZips")||data.equalsIgnoreCase("FlashableZip")){
-			iTv.setText("Flashable Zip");
-			iView.setBackgroundResource(R.drawable.ic_launcher_zip_it);
-			tv.setText(R.string.flashable);
-			b = (Button)dialog.findViewById(R.id.popupCancel);
-			b.setVisibility(View.GONE);
-			iTv.setText("   "+ctx.getString(R.string.ziprecovery));
-			tv.setText(ctx.getString(R.string.ziprecoverymessage));
-			b= (Button)dialog.findViewById(R.id.popupOk);
-			b.setText(ctx.getString(R.string.ok));
-			b.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					// TODO Auto-generated method stub
-					mContext.sendBroadcast(new Intent("FQ_FLASHZIP"));
-					dialog.dismiss();
-				}
-			});
-		}else if(data.equalsIgnoreCase("homeError")){
+		if(data.equalsIgnoreCase("homeError")){
 			b = (Button)dialog.findViewById(R.id.popupCancel);
 			b.setVisibility(View.GONE);
 			iTv.setText(R.string.nohome);
