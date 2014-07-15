@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout 
+    android:paddingTop="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/black"
     android:layout_width="match_parent"
@@ -72,6 +73,7 @@
      <LinearLayout 
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
+        android:paddingBottom="10dp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
    		<ImageView 
@@ -84,13 +86,14 @@
     </LinearLayout>
     
     <LinearLayout 
+        android:paddingBottom="5dp"
         android:gravity="center"
-        android:paddingTop="0dp"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:orientation="horizontal">
       
         <Button 
+           
             android:textStyle="bold"
             android:onClick="onClick"
             android:textColor="@android:color/white"

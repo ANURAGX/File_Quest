@@ -132,7 +132,7 @@
 	<string name="supporttakenBack">Support Taken Back</string>
 	<string name="compressandsend">Compress and sent it</string>
 	<string name="nobackuptodelete">No backup to delete</string>
-	<string name="quit">Quit File Quest</string>
+	<string name="quit">Quit</string>
 	<string name="pastenotallowed">Paste operation not allowed here</string>
 	<string name="enablemultiselect">First enable multi select mode</string>
 	<string name="multiforgallery">Enable multi select for File Gallery</string>
@@ -413,6 +413,18 @@
     <string name="failtodeleteimage">Failed to delete image file</string>
     <string name="wrongselec">Selected file is invalid image file</string>
     <string name="failtoopenimage">Failed to open the image file</string>
+    
+    
+    
+    <!-- OPEN AS FILE DIALOG STRINGS... -->
+    <string name="textfile">Text file</string>
+    <string name="musicfile">Music file</string>
+    <string name="videofile">Video file</string>
+    <string name="docfile">Document file</string>
+    <string name="pdffile">Pdf file</string>
+    <string name="arcfile">Archive file</string>
+    <string name="openas">Opan file as</string>
+    <string name="makeaselection">Make a selection first</string>
     
     
     
