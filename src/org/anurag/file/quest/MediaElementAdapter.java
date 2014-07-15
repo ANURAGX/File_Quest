@@ -1,3 +1,19 @@
+/**
+ * Copyright(c) 2013 ANURAG 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *                             
+ *                             anurag.dev1512@gmail.com
+ *
+ */
+
 package org.anurag.file.quest;
 
 import java.io.File;
@@ -26,10 +42,8 @@ public class MediaElementAdapter extends ArrayAdapter<File>{
 	public static ArrayList<File> MULTI_FILES;
 	public static boolean MULTI_SELECT;
 	public static boolean[] thumbselection;
-	
-	
-	private static Context context;
-	private static ArrayList<File> list;
+	static Context context;
+	private ArrayList<File> list;
 	private static PackageManager manager;
 	public static long C;
 	static LayoutInflater inflater;
@@ -113,7 +127,7 @@ public class MediaElementAdapter extends ArrayAdapter<File>{
 		
 		h.fName.setText(f.getName());		
 		if(getExt(f).equalsIgnoreCase(".apk")){
-			h.fType.setText("Application");
+			h.fType.setText(context.getString(R.string.application));
 			h.fSize.setText(size(f));
 			new ApkImage(h.icon).execute(f.getPath());
 		}
@@ -121,7 +135,7 @@ public class MediaElementAdapter extends ArrayAdapter<File>{
 				getExt(f).equalsIgnoreCase(".jpg")||
 				getExt(f).equalsIgnoreCase(".jpeg")){
 			h.fSize.setText(size(f));
-			h.fType.setText("Image");
+			h.fType.setText(context.getString(R.string.image));
 			new Image(h.icon).execute(f.getPath());
 		}else{
 			h.fSize.setText(size(f));
@@ -132,39 +146,39 @@ public class MediaElementAdapter extends ArrayAdapter<File>{
 						getExt(f).equalsIgnoreCase(".m4a")||
 						getExt(f).equalsIgnoreCase(".wav")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_music));
-					h.fType.setText("Music");
+					h.fType.setText(context.getString(R.string.music));
 				}else if(getExt(f).equalsIgnoreCase(".zip")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_zip_it));
-					h.fType.setText("Zip");
+					h.fType.setText(context.getString(R.string.zip));
 				}else if(getExt(f).equalsIgnoreCase(".mp4")||
 						getExt(f).equalsIgnoreCase(".3gp")||
 						getExt(f).equalsIgnoreCase(".flv")||
 						getExt(f).equalsIgnoreCase(".avi")||
 						getExt(f).equalsIgnoreCase(".mkv")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_video));
-					h.fType.setText("Video");
+					h.fType.setText(context.getString(R.string.vids));
 				}else if(getExt(f).equalsIgnoreCase(".rar")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_rar));
-					h.fType.setText("Compressed");
+					h.fType.setText(context.getString(R.string.compr));
 				}else if(getExt(f).equalsIgnoreCase(".htm")||
 						getExt(f).equalsIgnoreCase(".html")||
 						getExt(f).equalsIgnoreCase(".mhtml")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_web_pages));
-					h.fType.setText("Web");
+					h.fType.setText(context.getString(R.string.web));
 				}else if(getExt(f).equalsIgnoreCase(".pdf")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_adobe));
-					h.fType.setText("Pdf");
+					h.fType.setText(context.getString(R.string.pdf));
 				}else if(getExt(f).equalsIgnoreCase(".doc")||
 						getExt(f).equalsIgnoreCase(".docx")||
 						getExt(f).equalsIgnoreCase(".ppt")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_ppt));
-					h.fType.setText("Document");
+					h.fType.setText(context.getString(R.string.document));
 				}else if(getExt(f).equalsIgnoreCase(".txt")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_text));
-					h.fType.setText("Text");
+					h.fType.setText(context.getString(R.string.text));
 				}else {
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_unknown));
-					h.fType.setText("Unknown");
+					h.fType.setText(context.getString(R.string.unknown));
 				}
 		}
 		
@@ -192,17 +206,17 @@ public class MediaElementAdapter extends ArrayAdapter<File>{
 	 */
 	public static String size(File f){
 		long size = f.length();
-		if(size>1024*1024*1024)
-			return String.format("%.2f GB", (double)size/(1024*1024*1024));
+		if(size>Constants.GB)
+			return String.format(context.getString(R.string.sizegb), (double)size/(Constants.GB));
 		
-		else if(size > 1024*1024)
-			return String.format("%.2f MB", (double)size/(1024*1024));
+		else if(size > Constants.MB)
+			return String.format(context.getString(R.string.sizemb), (double)size/(Constants.MB));
 		
 		else if(size>1024)
-			return String.format("%.2f KB", (double)size/(1024));
+			return String.format(context.getString(R.string.sizekb), (double)size/(1024));
 		
 		else
-			return String.format("%.2f Bytes", (double)size);
+			return String.format(context.getString(R.string.sizebytes), (double)size);
 	}
 	
 	/**
