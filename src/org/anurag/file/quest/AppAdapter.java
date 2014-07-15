@@ -27,7 +27,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,60 +112,6 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 			nHolder.box.setChecked(thumbSelection[position]);
 		}else
 			nHolder.box.setVisibility(View.GONE);
-		/*
-		final Handler handle = new Handler(){
-			@Override
-			public void handleMessage(Message msg) {
-				// TODO Auto-generated method stub
-				super.handleMessage(msg);
-				switch(msg.what){
-					case 1:
-						Drawable im = (Drawable) msg.obj;
-						nHolder.FileIcon.setBackgroundDrawable(im);
-						break;	
-					case 2:
-						nHolder.FileName.setText((CharSequence) msg.obj);
-						break;
-					case 3:
-						nHolder.FileSize.setText((CharSequence) msg.obj);
-						break;
-					case 4:
-						
-						break;
-				}
-			}			
-		};
-		Thread thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				msg = new Message();
-				msg.what = 1;
-				msg.obj = nPManager.getApplicationIcon(info);
-				handle.sendMessage(msg);
-				
-				msg = new Message();
-				msg.what = 2;
-				msg.obj = nPManager.getApplicationLabel(info).toString();
-				handle.sendMessage(msg);
-				
-				msg = new Message();
-				msg.what = 3;
-				msg.obj = size(new File(info.sourceDir));
-				handle.sendMessage(msg);
-				
-				msg = new Message();
-				msg.what = 4;
-				long date = backupExists(info);
-				if(date == 0)
-					msg.obj = "No Backup";
-				else
-					msg.obj = new Date(date);
-				handle.sendMessage(msg);
-				
-			}
-		});
-		thread.run();*/
 		new AppLoader(nHolder.FileIcon , nHolder.FileName , nHolder.FileSize , nHolder.FileType).execute(info);
 		return convertView;
 	}
@@ -196,10 +141,10 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 			iTv.setText(name);
 			iTv2.setText(size);
 			if(date == 0){
-				iTv3.setText("No Backup");
+				iTv3.setText(mContext.getString(R.string.nobackup));
 				iTv.setTextColor(Color.WHITE);
 			}else{
-				iTv3.setText("Backup On :" + new Date(date));
+				iTv3.setText(mContext.getString(R.string.backupon) + " " + new Date(date));
 				iTv.setTextColor(Color.GREEN);
 			}
 			super.onPostExecute(result);
@@ -248,16 +193,16 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 	public static String size(File f){
 		long size = f.length();
 		if(size>Constants.GB)
-			return String.format("%.2f GB", (double)size/(Constants.GB));
+			return String.format(mContext.getString(R.string.sizegb), (double)size/(Constants.GB));
 		
 		else if(size > Constants.MB)
-			return String.format("%.2f MB", (double)size/(Constants.MB));
+			return String.format(mContext.getString(R.string.sizemb), (double)size/(Constants.MB));
 		
 		else if(size>1024)
-			return String.format("%.2f KB", (double)size/(1024));
+			return String.format(mContext.getString(R.string.sizekb), (double)size/(1024));
 		
 		else
-			return String.format("%.2f Bytes", (double)size);
+			return String.format(mContext.getString(R.string.sizebytes), (double)size);
 	}
 
 }
