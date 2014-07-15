@@ -277,7 +277,7 @@
     <string name="copstatusmb">Status :- %.2f MB copied</string>
     <string name="copstatuskb">Status :- %.2f KB copied</string>
     <string name="copstatusbyte">Status :- %.2f Bytes copied</string>
-    
+    <string name="reqroot">Waiting for ROOT ACCESS</string>
     
     
     <!-- ADAPTER LOADERS.. -->
