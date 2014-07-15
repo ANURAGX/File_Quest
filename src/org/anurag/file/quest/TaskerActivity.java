@@ -187,7 +187,6 @@ public class TaskerActivity extends FragmentActivity implements
 	/**
 	 * Media Panel Variables
 	 */
-	private static MediaManager manager;
 	private static MediaElementAdapter element;
 	private static ArrayList<File> mediaFileList;
 	private static boolean elementInFocus = false;
@@ -358,7 +357,7 @@ public class TaskerActivity extends FragmentActivity implements
 			}
 		}
 
-		manager = new MediaManager();
+		
 		file = new File("/");
 		file2 = new File(PATH);
 		indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -681,7 +680,7 @@ public class TaskerActivity extends FragmentActivity implements
 					nFiles = RFileManager.giveMeFileList();
 					sFiles = SFileManager.giveMeFileList();
 					if (ITEM == 0)
-						loadMediaList(pos);
+						load_FIle_Gallery(pos);
 				} catch (IndexOutOfBoundsException e) {
 					nFiles = RFileManager.giveMeFileList();
 					sFiles = SFileManager.giveMeFileList();
@@ -737,30 +736,7 @@ public class TaskerActivity extends FragmentActivity implements
 		thread.start();
 	}
 
-	/**
-	 * This Function Generate The List Of Current Selected File Types In Media
-	 * Panel
-	 * 
-	 * @param pos
-	 */
-	public static void loadMediaList(int pos) {
-		file0 = new File(PATH);
-		manager.clearList();
-		if ((pos) == 0)
-			mediaFileList = MediaManager.getAudioFiles(file0);
-		else if ((pos) == 1)
-			mediaFileList = MediaManager.getApkFiles(file0);
-		else if ((pos) == 2)
-			mediaFileList = MediaManager.getDocumentFiles(file0);
-		else if ((pos) == 3)
-			mediaFileList = MediaManager.getImageFiles(file0);
-		else if ((pos) == 4)
-			mediaFileList = MediaManager.getVideoFiles(file0);
-		else if ((pos) == 5)
-			mediaFileList = MediaManager.getZipFiles(file0);
-		else if ((pos) == 6)
-			mediaFileList = MediaManager.getCompressedFiles(file0);
-	}
+	
 
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
