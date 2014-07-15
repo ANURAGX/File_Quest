@@ -1,3 +1,18 @@
+/**
+ * Copyright(c) 2013 ANURAG 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *                             
+ *                             anurag.dev1512@gmail.com
+ *
+ */
 package org.anurag.file.quest;
 
 import java.io.File;
@@ -27,8 +42,7 @@ public class OpenAs {
 	PackageManager manager;
 	Context mContext; 
 	Dialog dialog;
-	String list[] = {"Text File","Music File","Video File","Document File",
-			"Pdf File","Compressed File"};
+	String list[];
 	List<ResolveInfo> rList;
 	int p = -1;
 	Intent intent;
@@ -42,6 +56,13 @@ public class OpenAs {
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.launch_file);
 		dialog.getWindow().getAttributes().width = width;
+		String lit[] = {mContext.getString(R.string.textfile),
+				mContext.getString(R.string.musicfile),
+				mContext.getString(R.string.videofile),
+				mContext.getString(R.string.docfile),
+				mContext.getString(R.string.pdffile),
+				mContext.getString(R.string.arcfile)};
+		list = lit;
 		
 		ImageView im = (ImageView)dialog.findViewById(R.id.launchImage);
 		im.setBackgroundResource(R.drawable.ic_launcher_file_task);
@@ -49,11 +70,11 @@ public class OpenAs {
 		Button q = (Button)dialog.findViewById(R.id.justOnce);
 		Button s = (Button) dialog.findViewById(R.id.always);
 		TextView tv = (TextView)dialog.findViewById(R.id.open);
-		tv.setText("Open file as");
+		tv.setText(mContext.getString(R.string.openas));
 		
 		final ListView lv = (ListView)dialog.findViewById(R.id.launch_list);
-		q.setText("Quit");
-		s.setText("Use");
+		q.setText(mContext.getString(R.string.quit));
+		s.setText(mContext.getString(R.string.use));
 		lv.setAdapter(new Adapter(con, R.layout.row_list_2, list));
 		lv.setSelector(R.drawable.blue_button);
 		lv.setOnItemClickListener(new OnItemClickListener() {
@@ -77,7 +98,7 @@ public class OpenAs {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				if(p==-1)
-					Toast.makeText(con, "Make a selection first", Toast.LENGTH_SHORT).show();
+					Toast.makeText(con, con.getString(R.string.makeaselection), Toast.LENGTH_SHORT).show();
 				else{
 					File file = new File(uri.toString());
 					if(!appSelected){							
