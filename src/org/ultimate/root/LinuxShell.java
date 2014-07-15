@@ -20,11 +20,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import android.util.Log;
 
 public class LinuxShell
 {
+	private static Process process = null;
     public static String getCmdPath(String path)
     {
         return path.replace(" ", "\\ ").replace("'", "\\'");
@@ -39,12 +39,9 @@ public class LinuxShell
     {
         BufferedReader reader = null; //errReader = null;
         try
-        {
-            Process process = Runtime.getRuntime().exec("su");
+        {	process = Runtime.getRuntime().exec("su");
             DataOutputStream os = new DataOutputStream(process.getOutputStream());
             os.writeBytes("mount -o remount,rw /dev/block/mtdblock3 / \n");
-            //os.writeBytes("busybox cp /data/data/com.koushikdutta.superuser/su /system/bin/su\n");
-            //os.writeBytes("mount -o remount,rw /data\n");
             os.writeBytes(cmd+"\n");
             os.writeBytes("exit\n");
             reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -70,8 +67,11 @@ public class LinuxShell
         return null;
     }
     
+    
     public static boolean isRoot()
     {
+    	
+    	
         boolean retval = false;
         Process suProcess;
         
@@ -127,22 +127,9 @@ public class LinuxShell
           Log.d("ROOT", "Root access rejected [" +
                 e.getClass().getName() + "] : " + e.getMessage());
         }
-
         return retval;
     }
-    
-/*    public static Process exec(String cmd)
-    {
-        try
-        {
-            return Runtime.getRuntime().exec(cmd);
-        }catch (IOException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return null;
-    }*/
+
 }
 
 
