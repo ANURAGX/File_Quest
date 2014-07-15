@@ -27,7 +27,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -45,14 +44,13 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 	public static boolean MULTI_SELECT;
 	public static int FOLDER_TYPE;
 	
-	private static ArrayList<File> nList;
+	private ArrayList<File> nList;
 	public static ArrayList<File> MULTI_FILES;
 	private static PackageManager mPack;
-	private static File file;
+	private File file;
 	private static Context mContext;
-	private static LayoutInflater inflater;
-	private static PackageInfo pi;
-	//private static long size;
+	private LayoutInflater inflater;
+	
 	public SimpleAdapter(Context context, int textViewResourceId ,ArrayList<File> objects) {
 		super(context,textViewResourceId,objects);
 		nList = objects;
@@ -124,7 +122,7 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 		nHolder.FileName.setText(file.getName());
 		
 		if(getExt(file).equalsIgnoreCase(".apk")){
-			nHolder.FileType.setText("Application");
+			nHolder.FileType.setText(mContext.getString(R.string.application));
 			nHolder.FileSize.setText(size(file));
 			new ApkImage(nHolder.FileIcon).execute(file.getPath());
 		}
@@ -132,57 +130,57 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 				getExt(file).equalsIgnoreCase(".jpg")||
 				getExt(file).equalsIgnoreCase(".jpeg")){
 			nHolder.FileSize.setText(size(file));
-			nHolder.FileType.setText("Image");
+			nHolder.FileType.setText(mContext.getString(R.string.image));
 			new Image(nHolder.FileIcon).execute(file.getPath());
 		}
 		
 		
 		else{
 			if(file.isDirectory()){
-				nHolder.FileType.setText("Directory");
+				nHolder.FileType.setText(mContext.getString(R.string.directory));
 				//Drawable draw = mContext.getResources().getDrawable(R.drawable.ic_launcher_folder_orange);
 				nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
 				nHolder.FileName.setText(file.getName());
 				if(!file.canRead()){
-					nHolder.FileSize.setText("Root Access");
+					nHolder.FileSize.setText(mContext.getString(R.string.rootd));
 					nHolder.FileSize.setTextColor(Color.RED);
 				}else {
-					nHolder.FileSize.setText(file.listFiles().length + " Items");
+					nHolder.FileSize.setText(file.listFiles().length + " "+mContext.getString(R.string.items));
 					nHolder.FileSize.setTextColor(Color.WHITE);
 				}	
 			}else if(file.isFile()){
 				nHolder.FileSize.setText(AppAdapter.size(file));
 				if( getFileType(file) == "song"){
-					nHolder.FileType.setText("Music");
+					nHolder.FileType.setText(mContext.getString(R.string.music));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_music));
 				}else if(file.getName().endsWith(".pdf") || file.getName().endsWith(".PDF")){
-					nHolder.FileType.setText("Pdf");
+					nHolder.FileType.setText(mContext.getString(R.string.pdf));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_adobe));
 				}else if(file.getName().endsWith(".txt") || file.getName().endsWith(".TXT")
 						|| file.getName().endsWith(".inf") || file.getName().endsWith(".INF")){
-					nHolder.FileType.setText("Text");
+					nHolder.FileType.setText(mContext.getString(R.string.text));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_text));
 				}else if( getFileType(file) == "zip"){
-					nHolder.FileType.setText("Zip");
+					nHolder.FileType.setText(mContext.getString(R.string.zip));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_zip_it));
 				}else if( getFileType(file) == "video"){
-					nHolder.FileType.setText("Video");
+					nHolder.FileType.setText(mContext.getString(R.string.vids));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_video));
 				}else if( getFileType(file) == "compressed"){
-					nHolder.FileType.setText("Archive");
+					nHolder.FileType.setText(mContext.getString(R.string.compr));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_misce_file_gallery));
 				}else if( getFileType(file) == "document"){
-					nHolder.FileType.setText("Document");
+					nHolder.FileType.setText(mContext.getString(R.string.document));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_ppt));
 				}else if( getFileType(file) == "web"){
-					nHolder.FileType.setText("Saved Web Page");
+					nHolder.FileType.setText(mContext.getString(R.string.web));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_web_pages));
 				}
 				else if(getFileType(file)=="sh"){
-					nHolder.FileType.setText("Script");
+					nHolder.FileType.setText(mContext.getString(R.string.script));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_sh));
 				}else{
-					nHolder.FileType.setText("Unknown");
+					nHolder.FileType.setText(mContext.getString(R.string.unknown));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_unknown));
 				}
 			}
@@ -226,78 +224,7 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 			return "sh";
 		return null;
 	}
-	
-	/**
-	 * 
-	 * @author Anurag
-	 *
-	 */
-	public static class AppImageLoader extends AsyncTask<String , Void , Drawable>{
-		Drawable draw = null;
-		ImageView image;
-		public AppImageLoader(ImageView view) {
-			image = view;
-		}
-		@Override
-		protected void onPostExecute(Drawable result) {
-			if(draw != null)
-				image.setImageDrawable(draw);
-			else
-			{
-				draw = mContext.getResources().getDrawable(R.drawable.ic_launcher_unknown);
-				image.setImageDrawable(draw);
-			}
-			super.onPostExecute(result);
-		}
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-		}
-		@Override
-		protected Drawable doInBackground(String... arg0) {
-			File file = new File(arg0[0]);
-			if(file.isDirectory()){
-				draw = mContext.getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]);
-			}
-			else if(file.getName().endsWith(".apk")){
-				/**
-				 * There is a bug in loading app icon needs to be fixed
-				 */
-				try{
-					pi = mPack.getPackageArchiveInfo(arg0[0], 0 );
-					//pi.applicationInfo.sourceDir = arg0[0];
-					pi.applicationInfo.publicSourceDir = arg0[0];
-					draw = pi.applicationInfo.loadIcon(mPack);	
-				}catch(Exception e){
-					draw = mContext.getResources().getDrawable(R.drawable.ic_launcher_apk);
-				}
-				Bitmap bitmap = ((BitmapDrawable) draw).getBitmap();
-		        //int dp5 = (int)(75*getResources().getDisplayMetrics().density);
-				draw= new BitmapDrawable(Bitmap.createScaledBitmap(bitmap, 65, 65, true));	
-			}else if(file.isFile() && getFileType(file)=="song")
-				draw = mContext.getResources().getDrawable(R.drawable.ic_launcher_music);
-			else if(file.isFile() && getFileType(file)=="zip")
-				draw = mContext.getResources().getDrawable(R.drawable.ic_launcher_zip_it);
-			else if(file.isFile() && getFileType(file)=="compressed")
-				draw = mContext.getResources().getDrawable(R.drawable.ic_launcher_rar);
-			else if(file.isFile() && file.getName().endsWith(".pdf"))
-				draw = mContext.getResources().getDrawable(R.drawable.ic_launcher_adobe);
-			else if(file.isFile() && getFileType(file)=="image"){
-				Bitmap b = BitmapFactory.decodeFile(file.getPath());
-				draw = new BitmapDrawable(b);
-			}else if(file.isFile() && getFileType(file)=="video")
-				draw = mContext.getResources().getDrawable(R.drawable.ic_launcher_video );
-			else if(file.isFile() && getFileType(file) == "text")
-				draw = mContext.getResources().getDrawable(R.drawable.ic_launcher_text);
-			else if(file.isFile() && getFileType(file) == "web")
-				draw = mContext.getResources().getDrawable(R.drawable.ic_launcher_web_pages);
-			else if(file.isFile()&&getFileType(file)=="sh")
-				draw = mContext.getResources().getDrawable(R.drawable.ic_launcher_sh);
-			return null;
-		}
-	}
-	
-	
+		
 	/**
 	 * THIS FUNCTION RETURN THE SIZE IF THE GIVEN FIZE IN PARAMETER
 	 * @param f
@@ -307,16 +234,16 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 	public String size(File f){
 		long size = f.length();
 		if(size>Constants.GB)
-			return String.format("%.2f GB", (double)size/(Constants.GB));
+			return String.format(mContext.getString(R.string.sizegb), (double)size/(Constants.GB));
 		
 		else if(size > Constants.MB)
-			return String.format("%.2f MB", (double)size/(Constants.MB));
+			return String.format(mContext.getString(R.string.sizemb), (double)size/(Constants.MB));
 		
 		else if(size>1024)
-			return String.format("%.2f KB", (double)size/(1024));
+			return String.format(mContext.getString(R.string.sizekb), (double)size/(1024));
 		
 		else
-			return String.format("%.2f Bytes", (double)size);
+			return String.format(mContext.getString(R.string.sizebytes), (double)size);
 	}
 	
 	
