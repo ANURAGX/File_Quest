@@ -92,6 +92,8 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout 
+        android:padding="5dp"
+        android:paddingTop="10dp"
         android:gravity="center"
         android:background="@drawable/ic_launcher_viewer_background"
         android:layout_width="fill_parent"

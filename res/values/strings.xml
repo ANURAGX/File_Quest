@@ -299,6 +299,18 @@
     <string name="createbackupzip">Create backup zip</string>
     <string name="shareapp">Share App</string>
     <string name="appproperties">App Properties</string>    
+    <string name="nobackup">No Baclup</string>
+    <string name="backupon">Backup on :-</string>
+    <string name="sizegb">%.2f GB</string>
+    <string name="sizemb">%.2f MB</string>
+    <string name="sizekb">%.2f KB</string>
+    <string name="sizebytes">%.2f Bytes</string>
+    
+    
+    
+    
+    
+    
     
     
     
@@ -385,8 +397,8 @@
     <string name="deleted">Files deleted successfully</string>
     
     
-    
-    
+    <!-- EDITOR STRINGS -->
+    <string name="errorinopening">An error encountered while opening file...</string>
     
     
     
