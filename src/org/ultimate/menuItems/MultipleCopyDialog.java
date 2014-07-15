@@ -294,7 +294,7 @@ public class MultipleCopyDialog {
 				} else {
 					return -1;
 				}
-			} catch (Exception e) {
+			} catch (Exception e){
 				return -1;
 			}
 		}
