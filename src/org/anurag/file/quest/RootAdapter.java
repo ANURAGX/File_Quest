@@ -149,7 +149,7 @@ public class RootAdapter extends ArrayAdapter<File>{
 		}else{
 			if(f.isDirectory()){
 				h.icon.setImageDrawable(context.getResources().getDrawable(FOLDERS[FOLDER_TYPE]));
-				h.fSize.setText(f.list().length +  " Items");
+				h.fSize.setText(f.list().length +  " "+context.getString(R.string.items));
 				h.fType.setText(context.getString(R.string.directory));
 			}else if(f.isFile()){
 				h.fSize.setText(size(f));
