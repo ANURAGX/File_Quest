@@ -1137,7 +1137,7 @@ public class TaskerActivity extends FragmentActivity implements
 					if (file.isFile())
 						new OpenFileDialog(mContext, Uri.parse(file
 								.getAbsolutePath()), size.x * 4 / 5);
-					else if (file.isDirectory()) {
+					else if (file.isDirectory()){
 						SFileManager.nStack.push(file.getAbsolutePath());
 						setAdapter(1);
 					}
