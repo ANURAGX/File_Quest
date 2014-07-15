@@ -232,6 +232,8 @@ public class SFileManager {
 						.execute("IFS='\n';CURDIR='"
 								+ LinuxShell.getCmdPath(f.getAbsolutePath())
 								+ "';for i in `ls $CURDIR`; do if [ -d $CURDIR/$i ]; then echo \"d $CURDIR/$i\";else echo \"f $CURDIR/$i\"; fi; done");
+				if(reader==null)
+					return new File[0];				
 				File f2;
 				String line;
 				while ((line = reader.readLine()) != null) {
