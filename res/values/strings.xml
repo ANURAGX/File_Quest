@@ -455,6 +455,46 @@
     <string name="selectapp">Select an application</string>
     
     
+    <!-- FILE PROPERTIES DIALOG STRING... -->
+    <string name="modon">Modified on :-</string>
+    <string name="free">Free</string>
+    <string name="total">Total</string>
+    <string name="folder">Folder</string>
+    <string name="foldername">Folder Name :-</string>
+    <string name="folderpath">Folder Path :-</string>
+    <string name="hiddentype">Hidden type</string>
+    <string name="nonhiddentype">Non hidden type</string>
+    <string name="foldersize">Folder size</string>
+    <string name="foldersizegb">Folder size :- %.2f GB</string>
+    <string name="foldersizemb">Folder size :- %.2f MB</string>
+    <string name="foldersizekb">Folder size :- %.2f KB</string>
+    <string name="foldersizebytes">Folder size :- %.2f Bytes</string>
+    <string name="file">File</string>
+    <string name="filename">File Name :-</string>
+    <string name="filepath">File Path :-</string>
+    <string name="filesize">File size</string>
+    <string name="filesizegb">File size :- %.2f GB</string>
+    <string name="filesizemb">File size :- %.2f MB</string>
+    <string name="filesizekb">File size :- %.2f KB</string>
+    <string name="filesizebytes">File size :- %.2f Bytes</string>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
