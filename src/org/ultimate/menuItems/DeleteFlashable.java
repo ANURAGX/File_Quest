@@ -57,43 +57,37 @@ public class DeleteFlashable{
 	
 	
 	protected void onCreate() {
-		//params.width = size.x*4/5;
 		
 		String PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
 		btn1 = (Button)dialog.findViewById(R.id.popupOk);
 		btn2 = (Button)dialog.findViewById(R.id.popupCancel);
 		popupTitle = (TextView)dialog.findViewById(R.id.popupTitle);
 		
-		//final WebView web = (WebView)dialog.findViewById(R.id.popup_Web_View);
-		//web.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
-		//web.setEnabled(false);
-		
 		popupMessage = (TextView)dialog.findViewById(R.id.textMessage);
 		ImageView v = (ImageView)dialog.findViewById(R.id.popupImage);
 		v.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_delete));
 		file = new File(PATH +  "/File Quest");
 		if(file.exists()){
-			file = new File(PATH + "/File Quest/Flashable.zip");
-			if(file.exists()){
+			file = new File(PATH + "/File Quest/Zip Backup");
+			if(file.exists()&&file.listFiles().length>0){
 				
-				popupTitle.setText("Confirm Deletion");
-				popupMessage.setText("All Your Flashable Zip Of Installed " +
-						"Apps Will Be Deleted,Are You Sure To Delete Them");
+				popupTitle.setText(mContext.getString(R.string.deleteimage));
+				popupMessage.setText(mContext.getString(R.string.deletezipbackups));
 				final Handler mHandler = new Handler(){
 					public void handleMessage(Message msg){
 						switch(msg.what){
 							case 0 :
-								popupMessage.setText("Please Wait While Deleting File");
+								popupMessage.setText(mContext.getString(R.string.waitwhiledeleting) );
 								//web.setVisibility(View.VISIBLE);
 								btn1.setVisibility(View.GONE);
 								btn2.setVisibility(View.GONE);
 								break;
 							case 2 :  	
 								btn1.setVisibility(View.VISIBLE);
-								btn1.setText("Ok");
+								btn1.setText(mContext.getString(R.string.ok));
 								btn2.setVisibility(View.GONE);
 								//web.setVisibility(View.GONE);
-								popupMessage.setText("Earlier Flashable Zip Has Been Deleted");
+								popupMessage.setText(mContext.getString(R.string.backupdeleted));
 								
 								
 						}
@@ -126,11 +120,10 @@ public class DeleteFlashable{
 				});
 			}
 			else{
-				popupTitle.setText("Messsge");
-				popupMessage.setText("Unable To Locate Earlier Flashable Zip,Probably" +
-						" No Zip Was Created");
+				popupTitle.setText(mContext.getString(R.string.message));
+				popupMessage.setText(mContext.getString(R.string.failtolocate));
 				btn2.setVisibility(View.GONE);
-				btn1.setText("Ok");
+				btn1.setText(mContext.getString(R.string.ok));
 				dialog.setCancelable(true);
 				btn1.setOnClickListener(new OnClickListener() {
 					@Override
@@ -141,12 +134,11 @@ public class DeleteFlashable{
 			}
 		}
 		else{
-			popupTitle.setText("Messsge");
-			popupMessage.setText("Unable To Locate Earlier Backups,Probably" +
-					" No Backup Was Taken");
+			popupTitle.setText(mContext.getString(R.string.message));
+			popupMessage.setText(mContext.getString(R.string.failtolocate));
 			btn2.setVisibility(View.GONE);
 			dialog.setCancelable(true);
-			btn1.setText("Ok");
+			btn1.setText(mContext.getString(R.string.ok));
 			btn1.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {

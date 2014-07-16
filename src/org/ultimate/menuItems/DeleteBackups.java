@@ -86,7 +86,7 @@ public class DeleteBackups{
 								break;
 							case 2 :  	
 								btn1.setVisibility(View.VISIBLE);
-								btn1.setText("Ok");
+								btn1.setText(mContext.getString(R.string.ok));
 								btn2.setVisibility(View.GONE);
 							//	web.setVisibility(View.GONE);
 								popupMessage.setText(mContext.getString(R.string.backupdeleted));
@@ -125,7 +125,7 @@ public class DeleteBackups{
 				popupTitle.setText(mContext.getString(R.string.message));
 				popupMessage.setText(mContext.getString(R.string.failtolocate));
 				btn2.setVisibility(View.GONE);
-				btn1.setText("Ok");
+				btn1.setText(mContext.getString(R.string.ok));
 				dialog.setCancelable(true);
 				btn1.setOnClickListener(new OnClickListener() {
 					@Override
@@ -139,7 +139,7 @@ public class DeleteBackups{
 			popupTitle.setText(mContext.getString(R.string.message));
 			popupMessage.setText(mContext.getString(R.string.failtolocate));
 			btn2.setVisibility(View.GONE);
-			btn1.setText("Ok");
+			btn1.setText(mContext.getString(R.string.ok));
 			dialog.setCancelable(true);
 			btn1.setOnClickListener(new OnClickListener() {
 				@Override
