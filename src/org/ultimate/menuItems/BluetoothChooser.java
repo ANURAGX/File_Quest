@@ -79,7 +79,7 @@ public class BluetoothChooser{
 		Button q = (Button)dialog.findViewById(R.id.justOnce);
 		Button s = (Button) dialog.findViewById(R.id.always);
 		TextView tv = (TextView)dialog.findViewById(R.id.open);
-		tv.setText("Select An Application");
+		tv.setText(mContext.getString(R.string.selectapp));
 		
 		
 		final List<ResolveInfo> list  = pack.queryIntentActivities(i, 0);
