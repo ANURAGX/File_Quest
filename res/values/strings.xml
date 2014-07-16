@@ -173,7 +173,7 @@
     <string name="backupsystemapp">Backup system apps</string>
     <string name="backupboth">Backup system and user apps</string>
     <string name="whatsnew">What\'s New</string>
-    <string name="deletezipbackup">Delete zipped backups</string> 
+    
     <string name="dropbox">DropBox</string>
     <string name="googledrive">Google Drive</string>
 	<string name="skydrive">Sky Drive</string>
@@ -407,9 +407,15 @@
     <string name="waitwhiledeleting">Please wait while deleting files or folders</string>
     <string name="deleted">Files deleted successfully</string>
     <string name="deletebackupmsg">All your earlier backup of installed apps will be deleted,are you sure to delete them</string>
-    <string name="backupdeleted">All Earlier Backup Of Apps Have Been Deleted</string>
+    <string name="backupdeleted">All earlier backups of apps have been deleted</string>
     <string name="message">Message</string>
     <string name="failtolocate">Unable to locate earlier backups,probably no backup was taken</string>
+    <string name="deletezipbackup">Delete zipped backups</string>
+    <string name="deletezipbackups">All your zip backups of app will be deleted,are you sure to delete them</string>
+    
+    
+    
+    
     
     
     
