@@ -79,25 +79,28 @@
     </LinearLayout>
      
      <LinearLayout 
+         android:paddingBottom="5dp"
          android:paddingTop="5dp"
          android:layout_width="fill_parent"
          android:layout_height="wrap_content"
          android:orientation="horizontal">
         
           <Button 
+              android:textStyle="bold"
              android:textColor="@android:color/white"
              android:background="@drawable/action_item_btn"
              android:layout_height="40dp"
              android:layout_width="fill_parent"
-             android:text="Quit"
+             android:text="@string/quit"
              android:id="@+id/quit"
              android:layout_weight="1"/>
          <Button 
+              android:textStyle="bold"
              android:textColor="@android:color/white"
              android:background="@drawable/action_item_btn"
              android:layout_height="40dp"
              android:layout_width="fill_parent"
-             android:text="Clear Default"
+             android:text="@string/cleardefault"
              android:id="@+id/set"
              android:layout_weight="1"/>
         

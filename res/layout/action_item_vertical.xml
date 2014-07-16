@@ -22,7 +22,7 @@
 		android:paddingLeft="5dip"
 		android:textSize="15dip"
 		android:paddingRight="10dip"
-		android:text="Chart"
+		android:text="@string/chart"
 		android:textColor="#fff"/>
 									         
 </LinearLayout>         

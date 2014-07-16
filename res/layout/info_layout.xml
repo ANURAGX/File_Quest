@@ -36,7 +36,7 @@
             android:textSize="15dip"
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content" 
-            android:text="About Me And My App" />
+            android:text="@string/abtme" />
     </LinearLayout>
     
     <LinearLayout 
@@ -52,7 +52,7 @@
          	   android:layout_width="wrap_content" 
           	   android:layout_height="wrap_content" 
           	   android:textSize="20dip"
-          	   android:text="Developer" />
+          	   android:text="@string/developer" />
     	 
     	 <TextView 
     	       android:id="@+id/copyright"
@@ -62,7 +62,7 @@
          	   android:paddingLeft="10.0dip" 
          	   android:layout_width="wrap_content" 
           	   android:layout_height="wrap_content" 
-          	   android:text="     Copyright 2014" />
+          	   android:text="@string/copyright" />
     	 
     	 <TextView 
     	       android:id="@+id/name"
@@ -72,7 +72,7 @@
          	   android:paddingLeft="10.0dip" 
          	   android:layout_width="wrap_content" 
           	   android:layout_height="wrap_content" 
-          	   android:text="     ANURAG" />
+          	   android:text="@string/anurag" />
     	 
     	 
     	 <TextView 
@@ -84,7 +84,7 @@
           	   android:layout_width="wrap_content" 
           	   android:layout_height="wrap_content"
           	   android:textSize="20dip" 
-          	   android:text="Version" />
+          	   android:text="@string/version2" />
     	 <TextView 
     	       android:id="@+id/versionCode"
          	   android:gravity="center_vertical"
@@ -92,7 +92,7 @@
          	   android:paddingLeft="10.0dip" 
          	   android:layout_width="wrap_content" 
           	   android:layout_height="wrap_content" 
-          	   android:text="     0.1.6" />
+          	   android:text="@string/version" />
     	 
     	 <TextView 
          	   android:id="@+id/size"
@@ -103,7 +103,7 @@
           	   android:layout_width="wrap_content" 
           	   android:layout_height="wrap_content"
           	   android:textSize="20dip" 
-          	   android:text="Released Status" />
+          	   android:text="@string/released" />
     	 <TextView 
     	       android:id="@+id/sizeLenth"
          	   android:gravity="center_vertical"
@@ -111,7 +111,7 @@
          	   android:paddingLeft="10.0dip" 
           	   android:layout_width="wrap_content" 
           	   android:layout_height="wrap_content" 
-          	   android:text="     Experimental-Beta" />
+          	   android:text="@string/beta" />
     
     	  <TextView 
     	       android:id="@+id/packageT"
@@ -122,7 +122,7 @@
           	   android:layout_width="wrap_content" 
           	   android:layout_height="wrap_content"
           	   android:textSize="20dip" 
-          	   android:text="License" />
+          	   android:text="@string/license" />
     	 <TextView 
     	       android:id="@+id/pName"
     	       android:singleLine="true"
@@ -131,7 +131,7 @@
          	   android:paddingLeft="10.0dip" 
          	   android:layout_width="wrap_content" 
           	   android:layout_height="wrap_content"
-          	   android:text="     Apache v2.0" />
+          	   android:text="@string/apache" />
     	 
     	 <TextView 
          	   android:id="@+id/process"
@@ -142,7 +142,7 @@
           	   android:layout_width="wrap_content" 
           	   android:layout_height="wrap_content"
           	   android:textSize="20dip" 
-          	   android:text="Contact" />
+          	   android:text="@string/contact" />
     	 <TextView 
     	      android:id="@+id/proName"
     	      android:singleLine="true"
@@ -151,7 +151,7 @@
          	   android:paddingLeft="10.0dip" 
          	   android:layout_width="wrap_content" 
           	   android:layout_height="wrap_content"
-          	   android:text="     anurag.dev1512@gmail.com" />
+          	   android:text="@string/email" />
     	
     	 
     	 

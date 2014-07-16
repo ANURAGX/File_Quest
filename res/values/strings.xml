@@ -30,7 +30,6 @@
 	<string name="use">Use</string>
 	<string name="noApp">No such application is found</string>
 	<string name="selectFirst">First select an application</string>
-	<string name="Openwith">Open file with</string>
 	<string name="always">Always</string>
 	<string name="once">Once</string>
 	<string name="nohome">Home Directory Not Found</string>
@@ -214,7 +213,7 @@
     <string name="copstatuskb">Status :- %.2f KB copied</string>
     <string name="copstatusbyte">Status :- %.2f Bytes copied</string>
     <string name="reqroot">Waiting for ROOT ACCESS</string>
-    
+    <string name="time">Time left</string>
     
     <!-- ADAPTER LOADERS.. -->
     <string name="open">Open</string>
@@ -308,14 +307,30 @@
     <string name="backupinterrupted">Backup operation was interrupted</string>
     <string name="zerosize">SIZE :- 0.0 MB</string>
     <string name="zerofiles">0 Items</string>
-    
-    
-    
-    
-    
-    
-    
-    
+    <string name="chart">Chart</string>
+    <string name="action">Action</string>
+    <string name="backup">Backup</string>
+    <string name="clean">Clean</string>
+    <string name="entername">Enter new name</string>
+    <string name="fqeditor">File Quest Text Editor</string>
+    <string name="gopen">G-Open</string>
+    <string name="home">Home</string>
+    <string name="fqviewer">File Quest Image Viewer</string>
+    <string name="developer">Developer</string>
+    <string name="copyright">Copyright 2014</string>
+    <string name="anurag">ANURAG</string>
+    <string name="version2">Version</string>
+    <string name="released">Released Status</string>
+    <string name="beta">Experimental-Beta</string>
+    <string name="license">License</string>
+    <string name="apache">Apache v2.0</string>
+    <string name="contact">Contact</string>
+    <string name="email">anurag.dev1512@gmail.com</string>
+    <string name="share">Share</string>
+    <string name="goback">Go back</string>
+    <string name="available">Available</string>
+    <string name="cleardefault">Clear default</string>
+    <string name="settings">Settings</string>
     
     
     <!-- ZIP DIALOG -->
@@ -438,8 +453,6 @@
     <!-- SET LAUNCH DIR DIALOG STRINGS... -->
     <string name="setstartupdir">Choose any directory for startup</string>
     <string name="startupset">Directory set for launch on startup</string>
-    
-    
     
     
     

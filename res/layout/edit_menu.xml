@@ -22,7 +22,7 @@
            android:id="@+id/editBox"
            android:layout_width="fill_parent"
            android:layout_height="wrap_content"
-           android:hint="Enter New Name"/>
+           android:hint="@string/entername"/>
        <LinearLayout 
            android:layout_width="5dp"
            android:layout_height="fill_parent">

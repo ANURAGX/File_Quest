@@ -41,7 +41,7 @@
                 android:textStyle="bold"
                 android:singleLine="true"
                 android:ellipsize="end"
-                android:text="Anurag"/>
+                android:text="@string/anurag"/>
             <LinearLayout 
                 android:paddingLeft="10dp"
                 android:id="@+id/row1BtnLayout"
@@ -55,13 +55,13 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
-                    android:text="File Type"/>
+                    android:text="@string/anurag"/>
                 <TextView 
                     android:id="@+id/fileSize"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
-                    android:text="File Size"/>
+                    android:text="@string/anurag"/>
                 
             </LinearLayout> 
             

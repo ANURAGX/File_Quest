@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="Copying To"/>
+        android:text="@string/copyingto"/>
     <TextView 
         android:paddingLeft="20dp"
     	android:paddingRight="20dp"
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="Copying From"/>
+        android:text="@string/copyingfrom"/>
     <TextView 
         android:paddingLeft="20dp"
     	android:paddingRight="20dp"
@@ -78,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="File Size"/>
+        android:text="@string/size"/>
     <TextView 
         android:paddingLeft="20dp"
     	android:paddingRight="20dp"
@@ -89,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="Current File"/>
+        android:text="@string/currentfile"/>
     <LinearLayout 
         android:paddingLeft="20dp"
     	android:paddingRight="20dp"
@@ -107,7 +107,7 @@
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:textStyle="bold"
-        	android:text="Time Left"/>
+        	android:text="@string/time"/>
     </LinearLayout>
     
      <LinearLayout 

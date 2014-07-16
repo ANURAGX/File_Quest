@@ -36,6 +36,6 @@
             android:gravity="center" 
             android:layout_width="fill_parent" 
             android:layout_height="fill_parent" 
-            android:text="Rename" />
+            android:text="@string/rename" />
     </LinearLayout>
 </LinearLayout>

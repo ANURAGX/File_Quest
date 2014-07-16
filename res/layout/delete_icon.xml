@@ -34,6 +34,6 @@
             android:gravity="center" 
             android:layout_width="fill_parent" 
             android:layout_height="fill_parent" 
-            android:text="Delete" />
+            android:text="@string/delete" />
     </LinearLayout>
 </LinearLayout>

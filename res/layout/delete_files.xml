@@ -101,7 +101,7 @@
             android:id="@+id/popupOk" 
             android:layout_width="fill_parent" 
             android:layout_height="40dp" 
-            android:text="Yes" 
+            android:text="@string/yes" 
             android:layout_weight="1.0" />
         <Button 
             android:textStyle="bold"
@@ -111,7 +111,7 @@
             android:id="@+id/popupCancel" 
             android:layout_width="fill_parent" 
             android:layout_height="40dp" 
-            android:text="No" 
+            android:text="@string/no" 
             android:layout_weight="1.0" />
         
     </LinearLayout>

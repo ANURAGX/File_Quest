@@ -16,14 +16,14 @@
             android:typeface="monospace"
             android:textColor="@android:color/darker_gray"
             android:textStyle="bold"
-            android:text="File Quest Image Viewer"
+            android:text="@string/fqviewer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         
         <TextView 
             android:paddingTop="2dp"
             android:textColor="@android:color/darker_gray"
-            android:text="File Quest Image Viewer"
+            android:text="@string/fqviewer"
             android:id="@+id/viewer_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -58,7 +58,7 @@
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Delete"
+                android:text="@string/delete"
                 android:textStyle="bold"/>
         </LinearLayout>
         
@@ -81,7 +81,7 @@
                 android:paddingRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Share"
+                android:text="@string/share"
                 android:textStyle="bold"/>
               <ImageButton 
                   android:clickable="false"
