@@ -73,14 +73,13 @@ public class DeleteBackups{
 		if(file.exists()){
 			file = new File(PATH + "/File Quest/AppBackup");
 			if(file.exists() && file.listFiles().length !=0){
-				popupTitle.setText("Confirm Deletion");
-				popupMessage.setText("All Your Earlier Backup Of Installed " +
-						"Apps Will Be Deleted,Are You Sure To Delete Them");
+				popupTitle.setText(mContext.getString(R.string.deleteimage));
+				popupMessage.setText(mContext.getString(R.string.deletebackupmsg));
 				final Handler mHandler = new Handler(){
 					public void handleMessage(Message msg){
 						switch(msg.what){
 							case 0 :
-								popupMessage.setText("Please Wait While Deleting File");
+								popupMessage.setText(mContext.getString(R.string.waitwhiledeleting));
 							//	web.setVisibility(View.VISIBLE);
 								btn1.setVisibility(View.GONE);
 								btn2.setVisibility(View.GONE);
@@ -90,7 +89,7 @@ public class DeleteBackups{
 								btn1.setText("Ok");
 								btn2.setVisibility(View.GONE);
 							//	web.setVisibility(View.GONE);
-								popupMessage.setText("All Earlier Backup Of Apps Have Been Deleted");
+								popupMessage.setText(mContext.getString(R.string.backupdeleted));
 								mContext.sendBroadcast(new Intent("FQ_BACKUP"));
 								
 						}
@@ -123,9 +122,8 @@ public class DeleteBackups{
 				});
 			}
 			else{
-				popupTitle.setText("Messsge");
-				popupMessage.setText("Unable To Locate Earlier Backups,Probably" +
-						" No Backup Was Taken");
+				popupTitle.setText(mContext.getString(R.string.message));
+				popupMessage.setText(mContext.getString(R.string.failtolocate));
 				btn2.setVisibility(View.GONE);
 				btn1.setText("Ok");
 				dialog.setCancelable(true);
@@ -138,9 +136,8 @@ public class DeleteBackups{
 			}
 		}
 		else{
-			popupTitle.setText("Messsge");
-			popupMessage.setText("Unable To Locate Earlier Backups,Probably" +
-					" No Backup Was Taken");
+			popupTitle.setText(mContext.getString(R.string.message));
+			popupMessage.setText(mContext.getString(R.string.failtolocate));
 			btn2.setVisibility(View.GONE);
 			btn1.setText("Ok");
 			dialog.setCancelable(true);

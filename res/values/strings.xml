@@ -79,7 +79,6 @@
 	<string name="condelete">Confirm Deletion</string>
 	<string name="suredelete">Are You Sure to Delete The Folder :-</string>
 	<string name="noactivity">This App Donot Have Activity To Launch</string>
-	<string name="backupdeleted">Backup Has Been Deleted</string>
 	<string name="failtodeletebackup">Unable To Delete The Backup</string>
 	<string name="noitems">No file is selected to copy</string>
 	<string name="senderror">An error encountered while sending files,try later</string>
@@ -407,6 +406,12 @@
     <string name="confirmdelete">Are you sure to delete the files of folder :-</string>
     <string name="waitwhiledeleting">Please wait while deleting files or folders</string>
     <string name="deleted">Files deleted successfully</string>
+    <string name="deletebackupmsg">All your earlier backup of installed apps will be deleted,are you sure to delete them</string>
+    <string name="backupdeleted">All Earlier Backup Of Apps Have Been Deleted</string>
+    <string name="message">Message</string>
+    <string name="failtolocate">Unable to locate earlier backups,probably no backup was taken</string>
+    
+    
     
     
     <!-- EDITOR STRINGS -->
