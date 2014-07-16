@@ -435,6 +435,14 @@
     
     
     
+    <!-- APP PROPERTIES DIALOG... -->
+    <string name="applicationname">App name</string>
+    <string name="appsize">Size</string>
+    <string name="noappversion">Unable to find app version</string>
+    <string name="apppackage">Package name</string>
+    <string name="appprocess">Process name</string>
+    
+    
     
     
     
