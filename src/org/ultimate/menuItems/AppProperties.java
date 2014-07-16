@@ -15,7 +15,11 @@
 package org.ultimate.menuItems;
 
 import java.io.File;
+
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
+import org.anurag.file.quest.R.string;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -66,7 +70,7 @@ public class AppProperties {
 		infoName.setText(pack.getApplicationLabel(info.applicationInfo));
 		
 		infoName = (TextView)dialog.findViewById(R.id.developer);
-		infoName.setText("Application Name");
+		infoName.setText(mContext.getString(R.string.applicationname));
     
 		infoName = (TextView)dialog.findViewById(R.id.copyright);
 		infoName.setVisibility(View.GONE);
@@ -79,36 +83,36 @@ public class AppProperties {
 			PackageInfo pi = pack.getPackageInfo(info.packageName, 0);
 			infoName.setText("    "+pi.versionName);
 		} catch (NameNotFoundException e) {
-			infoName.setText("Unable To Find Version Of The App");
+			infoName.setText(mContext.getString(R.string.noappversion));
 			e.printStackTrace();
 		}
 		infoName = (TextView)dialog.findViewById(R.id.size);
-		infoName.setText("Size");
+		infoName.setText(mContext.getString(R.string.appsize));
 		
 		infoName = (TextView)dialog.findViewById(R.id.sizeLenth);
 		File f = new File(info.applicationInfo.sourceDir);
 		long len = f.length();
-		if(len>1024*1024*1024){
-			len = len/(1024*1024*1024);
-			infoName.setText(String.format("    %.2f GB", (double)len));
-		}else if(len>1024*1024){
-			len = len/(1024*1024);
-			infoName.setText(String.format("    %.2f MB", (double)len));
+		if(len>Constants.GB){
+			len = len/(Constants.GB);
+			infoName.setText(String.format("    "+mContext.getString(R.string.sizegb), (double)len));
+		}else if(len>Constants.MB){
+			len = len/(Constants.MB);
+			infoName.setText(String.format("    "+mContext.getString(R.string.sizemb), (double)len));
 		}else if(len>1024){
 			len = len/(1024);
-			infoName.setText(String.format("    %.2f KB",(double)len));
+			infoName.setText(String.format("    "+mContext.getString(R.string.sizekb),(double)len));
 		}else{
-			infoName.setText("    "+len+" Bytes");
+			infoName.setText(String.format("    "+mContext.getString(R.string.sizebytes),(double)len));
 		}
 		
 		infoName = (TextView)dialog.findViewById(R.id.packageT);
-		infoName.setText("Package Name");
+		infoName.setText(mContext.getString(R.string.apppackage));
 		
 		infoName = (TextView)dialog.findViewById(R.id.pName);
 		infoName.setText("    " + info.packageName);
 		
 		infoName = (TextView)dialog.findViewById(R.id.process);
-		infoName.setText("Process Name");
+		infoName.setText(mContext.getString(R.string.appprocess));
 		
 		infoName = (TextView)dialog.findViewById(R.id.proName);
 		infoName.setText("    " + info.applicationInfo.processName);
