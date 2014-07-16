@@ -75,37 +75,37 @@ public class SelectApp{
 		TextView tv = (TextView)dialog.findViewById(R.id.open);
 		
 		if(action.equals("MUSIC")){
-			tv.setText("Select App For Music Files");
+			tv.setText(mContext.getString(R.string.selectmusicapp));
 			iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_music));
 			file = new File("/sdcard/a.mp3");
 			i.setDataAndType(Uri.fromFile(file) , "audio/*");
 		}else if(action.equals("IMAGE")){
-			tv.setText("Select App For Image Files");
+			tv.setText(mContext.getString(R.string.selectimageapp));
 			iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_images));
 			file = new File("/sdcard/a.png");
 			i.setDataAndType(Uri.fromFile(file) , "image/*");
 		}else if(action.equals("VIDEO")){
-			tv.setText("Select App For Video Files");
+			tv.setText(mContext.getString(R.string.selectvideoapp));
 			iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_video));
 			file = new File("/sdcard/a.mp4");
 			i.setDataAndType(Uri.fromFile(file) , "video/*");
 		}else if(action.equals("PDF")){
-			tv.setText("Select App For Pdf Files");
+			tv.setText(mContext.getString(R.string.selectpdfapp));
 			iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_adobe));
 			file = new File("/sdcard/a.pdf");
 			i.setDataAndType(Uri.fromFile(file) , "application/pdf");
 		}else if(action.equals("RAR")){
-			tv.setText("Select App For Rar Files");
+			tv.setText(mContext.getString(R.string.selectrarapp));
 			iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_rar));
 			file = new File("/sdcard/a.rar");
 			i.setDataAndType(Uri.fromFile(file) , "application/rar");
 		}else if(action.equals("ZIP")){
-			tv.setText("Select App For ZiP Files");
+			tv.setText(mContext.getString(R.string.selectzipapp));
 			iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_zip_it));
 			file = new File("/sdcard/a.zip");
 			i.setDataAndType(Uri.fromFile(file) , "application/zip");
 		}else if(action.equals("TEXT")){
-			tv.setText("Select App For Text Files");
+			tv.setText(mContext.getString(R.string.selectdocsapp));
 			iv.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_text));
 			file = new File("/sdcard/a.txt");
 			i.setDataAndType(Uri.fromFile(file) , "text/plain");

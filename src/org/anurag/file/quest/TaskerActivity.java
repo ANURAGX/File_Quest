@@ -2117,7 +2117,7 @@ public class TaskerActivity extends FragmentActivity implements
 		case R.id.homeDirBtn:
 			HOME_DIRECTORY = preferences.getString("HOME_DIRECTORY", null);
 			if (HOME_DIRECTORY == null) {
-				new GetHomeDirectory(mContext, size.x * 4 / 5, preferences);
+				new GetHomeDirectory(mContext, size.x*8/9, preferences);
 			} else if (new File(HOME_DIRECTORY).exists()) {
 				if (CURRENT_ITEM == 2) {
 					nRFileManager = new RFileManager();
@@ -2404,10 +2404,10 @@ public class TaskerActivity extends FragmentActivity implements
 					// TODO Auto-generated method stub
 					switch (actionId) {
 					case 100:
-						new DeleteBackups(mContext, size.x * 4 / 5);
+						new DeleteBackups(mContext, size.x *8/9);
 						break;
 					case 200:
-						new DeleteFlashable(mContext, size.x * 4 / 5);
+						new DeleteFlashable(mContext, size.x*8/9);
 					}
 				}
 			});
@@ -2415,7 +2415,7 @@ public class TaskerActivity extends FragmentActivity implements
 
 		case R.id.zipItBtn:
 			if (CURRENT_ITEM == 3)
-				new ErrorDialogs(mContext, size.x * 4 / 5, "FlashableZips");
+				new ErrorDialogs(mContext, size.x*8/9, "FlashableZips");
 			break;
 		}
 	}
@@ -3194,7 +3194,7 @@ public class TaskerActivity extends FragmentActivity implements
 		case 400:
 			// LAUNCHES AN INTERFACE FOR SELECTING A DIRECTORY FOR HOME
 			// WITH REQUEST CODE 400
-			new GetHomeDirectory(mContext, size.x * 4 / 5, preferences);
+			new GetHomeDirectory(mContext, size.x *8/9, preferences);
 			break;
 		case 500:
 			// RESETS APP SETTINGS TO DEFAULT
@@ -3525,13 +3525,13 @@ public class TaskerActivity extends FragmentActivity implements
 			// LAUNCHES AN ACTIVITY TO SELECT THE DIRECTORY FOR INTERNAL STORAGE
 			// 1
 			// DIRECTED FROM CASE 900
-			new SetLaunchDir(mContext, size.x * 4 / 5, preferences, 1);
+			new SetLaunchDir(mContext, size.x *8/9, preferences, 1);
 			break;
 		case 2700:
 			// LAUNCHES AN ACTIVITY TO SELECT THE DIRECTORY FOR INTERNAL STORAGE
 			// 2
 			// DIRECTED FROM CASE 900
-			new SetLaunchDir(mContext, size.x * 4 / 5, preferences, 2);
+			new SetLaunchDir(mContext, size.x *8/9, preferences, 2);
 			break;
 
 		case 2800:

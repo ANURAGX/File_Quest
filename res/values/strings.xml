@@ -334,6 +334,7 @@
     <string name="size">SIZE :- ?</string>
     
     
+    
     <!-- ERROR DIALOG STRINGS -->
     <string name="ziprecovery">Zip Recovery</string>
     <string name="ziprecoverymessage">This will create a zip file containing all the installed apps..</string>
@@ -435,8 +436,8 @@
     
     
     <!-- SET LAUNCH DIR DIALOG STRINGS... -->
-    <string name="setstartupdir"></string>
-    
+    <string name="setstartupdir">Choose any directory for startup</string>
+    <string name="startupset">Directory set for launch on startup</string>
     
     
     

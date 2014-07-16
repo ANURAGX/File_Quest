@@ -67,13 +67,7 @@ public class SetLaunchDir{
 	
 	protected void onCreate() {
 		// TODO Auto-generated method stub
-		
-			//params.width = size.x*4/5;
-		
-		
-		
 		final ListView lv;
-		//intent = getIntent();
 		Button ju = (Button)dialog.findViewById(R.id.justOnce);
 		Button on = (Button)dialog.findViewById(R.id.always);
 		file = new File(Environment.getExternalStorageDirectory().getPath());
@@ -82,11 +76,11 @@ public class SetLaunchDir{
 		stack = new Stack<File>();
 		stack.push(file);
 		t = (TextView)dialog.findViewById(R.id.open);
-		t.setText("Choose Any Directory For Home");
+		t.setText(mContext.getString(R.string.setstartupdir));
 		lv = (ListView)dialog.findViewById(R.id.open_list);
 		image= (ImageView)dialog.findViewById(R.id.getImage);
 		
-		image.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_file_task));
+		image.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_file_task));
 		list = file.listFiles();
 		lv.setAdapter(new Adapter(mContext, R.layout.row_list_2, list));
 		go = (Button)dialog.findViewById(R.id.goBack);
@@ -132,7 +126,7 @@ public class SetLaunchDir{
 				else
 					ed.putString("INTERNAL_PATH_TWO", file.getAbsolutePath());
 				ed.commit();
-				Toast.makeText(mContext, "Directory set for launch on startup",
+				Toast.makeText(mContext, mContext.getString(R.string.startupset),
 						Toast.LENGTH_SHORT).show();
 				dialog.dismiss();
 			}

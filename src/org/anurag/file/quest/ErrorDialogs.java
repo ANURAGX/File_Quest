@@ -16,6 +16,7 @@ package org.anurag.file.quest;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -51,42 +52,29 @@ public class ErrorDialogs {
 		iView = (ImageView)dialog.findViewById(R.id.popupImage);
 		iTv = (TextView)dialog.findViewById(R.id.popupTitle);
 		
-		if(data.equalsIgnoreCase("homeError")){
+		if(data.equals("FlashableZips")||data.equalsIgnoreCase("FlashableZip")){
+			iView.setBackgroundResource(R.drawable.ic_launcher_zip_it);
+			b = (Button)dialog.findViewById(R.id.popupCancel);
+			b.setVisibility(View.GONE);
+			iTv.setText("  "+mContext.getString(R.string.ziprecovery));
+			tv.setText(mContext.getString(R.string.ziprecoverymessage));
+			b= (Button)dialog.findViewById(R.id.popupOk);
+			b.setText("Ok");
+			b.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					mContext.sendBroadcast(new Intent("FQ_FLASHZIP"));
+					dialog.dismiss();
+				}
+			});
+		}
+		else if(data.equalsIgnoreCase("homeError")){
 			b = (Button)dialog.findViewById(R.id.popupCancel);
 			b.setVisibility(View.GONE);
 			iTv.setText(R.string.nohome);
 			iView.setBackgroundResource(R.drawable.ic_launcher_droid_home);
 			tv.setText(R.string.nohomeerror);
-			b= (Button)dialog.findViewById(R.id.popupOk);
-			b.setText(ctx.getString(R.string.ok));
-			b.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					// TODO Auto-generated method stub
-					dialog.dismiss();
-				}
-			});
-		}else if(data.equalsIgnoreCase("renameError")){
-			b = (Button)dialog.findViewById(R.id.popupCancel);
-			b.setVisibility(View.GONE);
-			iTv.setText(R.string.cantrename);
-			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_rename));
-			tv.setText(R.string.renameerror);
-			b= (Button)dialog.findViewById(R.id.popupOk);
-			b.setText(ctx.getString(R.string.ok));
-			b.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					// TODO Auto-generated method stub
-					dialog.dismiss();
-				}
-			});
-		}else if(data.contains("Null")){
-			b = (Button)dialog.findViewById(R.id.popupCancel);
-			b.setVisibility(View.GONE);
-			iTv.setText(R.string.cantcopy);
-			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_file_task));
-			tv.setText(R.string.copyerror);
 			b= (Button)dialog.findViewById(R.id.popupOk);
 			b.setText(ctx.getString(R.string.ok));
 			b.setOnClickListener(new View.OnClickListener() {
@@ -112,39 +100,8 @@ public class ErrorDialogs {
 				}
 			});
 		}
-		else if(data.contains("Security")){
-			b = (Button)dialog.findViewById(R.id.popupCancel);
-			b.setVisibility(View.GONE);
-			iTv.setText(R.string.sec);
-			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_file_task));
-			tv.setText(R.string.secerror);
-			b= (Button)dialog.findViewById(R.id.popupOk);
-			b.setText(ctx.getString(R.string.ok));
-			b.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					// TODO Auto-generated method stub
-					//setResult(RESULT_OK);
-					dialog.dismiss();
-				}
-			});
-		}		
-		else{
-			b = (Button)dialog.findViewById(R.id.popupCancel);
-			b.setVisibility(View.GONE);
-			iTv.setText(R.string.cantcopy);
-			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_file_task));
-			tv.setText(R.string.cantcopyerror);
-			b= (Button)dialog.findViewById(R.id.popupOk);
-			b.setText(ctx.getString(R.string.ok));
-			b.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					// TODO Auto-generated method stub
-					dialog.dismiss();
-				}
-			});
-		}
+				
+		
 		dialog.show();
 	}
 
