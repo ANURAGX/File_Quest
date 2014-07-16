@@ -479,9 +479,9 @@
     <string name="filesizebytes">File size :- %.2f Bytes</string>
     
     
-    
-    
-    
+    <!-- GET HOME DIRECTORY DIALOG... -->
+    <string name="choosehome">Choose any directory for home</string>
+    <string name="homeset">Home directory successfully set</string>
     
     
     

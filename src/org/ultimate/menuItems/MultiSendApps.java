@@ -61,7 +61,7 @@ public class MultiSendApps{
 		dialog.setContentView(R.layout.launch_file);
 		ImageView view = (ImageView)dialog.findViewById(R.id.launchImage);
 		view.setBackgroundResource(R.drawable.ic_launcher_file_task);
-		dialog.getWindow().getAttributes().width = width.x*5/6;
+		dialog.getWindow().getAttributes().width = width.x*8/9;
 		onCreate();
 	}
 	protected void onCreate() {
@@ -102,8 +102,8 @@ public class MultiSendApps{
 				seleted = true;
 			}
 		});
-		s.setText("Use");
-		q.setText("Quit");
+		s.setText(mContext.getString(R.string.use));
+		q.setText(mContext.getString(R.string.quit));
 		s.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
