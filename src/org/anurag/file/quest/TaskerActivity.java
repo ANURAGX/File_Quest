@@ -1155,8 +1155,9 @@ public class TaskerActivity extends FragmentActivity implements
 						if (CREATE_FILE || RENAME_COMMAND || SEARCH_FLAG) {
 							mVFlipper.setAnimation(nextAnim());
 							mVFlipper.showNext();
-							CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = RENAME_COMMAND = false;
-							;
+							CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = 
+									MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = 
+									RENAME_COMMAND = false;
 						}
 						if (file.isFile())
 							new OpenFileDialog(mContext, Uri.parse(file
@@ -1433,16 +1434,18 @@ public class TaskerActivity extends FragmentActivity implements
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						final int position, long arg3) {
 					// TODO Auto-generated method stub
+					
+					if (SEARCH_FLAG) {
+						file2 = searchList.get(position);
+					} else {
+						file2 = nFiles.get(position);
+					}
+					
 					if (CREATE_FILE || RENAME_COMMAND || SEARCH_FLAG) {
 						mVFlipper.setAnimation(nextAnim());
 						mVFlipper.showNext();
 						CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = RENAME_COMMAND = false;
 						;
-					}
-					if (SEARCH_FLAG) {
-						file2 = searchList.get(position);
-					} else {
-						file2 = nFiles.get(position);
 					}
 					if (file2.isFile()) {
 						// Toast.makeText(getActivity(), "Done",
@@ -1926,55 +1929,8 @@ public class TaskerActivity extends FragmentActivity implements
 			break;
 
 		case R.id.searchBtn:
-			try {
-				if (CURRENT_ITEM == 0 && !elementInFocus) {
-					QuickAction ac = new QuickAction(getBaseContext());
-					ActionItem i = new ActionItem(1,
-							getString(R.string.filtermusic), getResources()
-									.getDrawable(R.drawable.ic_launcher_music));
-					ac.addActionItem(i);
-
-					i = new ActionItem(2, getString(R.string.filterapk),
-							getResources().getDrawable(
-									R.drawable.ic_launcher_apk));
-					ac.addActionItem(i);
-
-					i = new ActionItem(3, getString(R.string.filterdocs),
-							getResources().getDrawable(
-									R.drawable.ic_launcher_ppt));
-					ac.addActionItem(i);
-
-					i = new ActionItem(4, getString(R.string.filterimage),
-							getResources().getDrawable(
-									R.drawable.ic_launcher_images));
-					ac.addActionItem(i);
-
-					i = new ActionItem(5, getString(R.string.filtervideo),
-							getResources().getDrawable(
-									R.drawable.ic_launcher_video));
-					ac.addActionItem(i);
-
-					i = new ActionItem(6, getString(R.string.filterzip),
-							getResources().getDrawable(
-									R.drawable.ic_launcher_zip_it));
-					ac.addActionItem(i);
-
-					i = new ActionItem(7, getString(R.string.filtermisc),
-							getResources().getDrawable(
-									R.drawable.ic_launcher_rar));
-					ac.addActionItem(i);
-					ac.setOnActionItemClickListener(this);
-					ac.show(v);
-
-				} else {
-					search();
-
-				}
-			} catch (IllegalStateException e) {
-
-			}
-
-			break;
+				search();
+				break;
 
 		case R.id.applyBtn:
 			// rename the file with given name from editBox
@@ -3778,6 +3734,7 @@ public class TaskerActivity extends FragmentActivity implements
 	 * SEARCH IS IN PROGRESS
 	 */
 	public void search() {
+		SEARCH_FLAG = true;
 		searchList = new ArrayList<File>();
 		try {
 			LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
