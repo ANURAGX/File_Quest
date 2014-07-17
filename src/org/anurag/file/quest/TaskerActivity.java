@@ -342,10 +342,10 @@ public class TaskerActivity extends FragmentActivity implements
 				R.layout.row_list_1, sFiles);
 		RootAdapter = new RootAdapter(getApplicationContext(),
 				R.layout.row_list_1, nFiles);
-		nManager = new AppManager(getBaseContext());
+		nManager = new AppManager(mContext);
 		nManager.SHOW_APP = SHOW_APP;
 		nList = nManager.giveMeAppList();
-		nAppAdapter = new AppAdapter(getBaseContext(), R.layout.row_list_1,
+		nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,
 				nList);
 
 		for (int i = 0; i < 15; ++i) {
@@ -945,7 +945,7 @@ public class TaskerActivity extends FragmentActivity implements
 			AdapterLoaders loaders = new AdapterLoaders(getActivity(), false);
 			lo.setAdapter(loaders.getLongClickAdapter());
 			lo.setSelector(getResources().getDrawable(R.drawable.blue_button));
-			d.getWindow().getAttributes().width = size.x * 4 / 5;
+			d.getWindow().getAttributes().width = size.x*8/9;
 			LIST_VIEW_3D
 					.setOnItemLongClickListener(new OnItemLongClickListener() {
 						@Override
@@ -971,13 +971,11 @@ public class TaskerActivity extends FragmentActivity implements
 					switch (position) {
 					case 0:
 						// OPEN THE SELECTED FILE
-						new OpenFileDialog(mContext, Uri.parse(file0
-								.getAbsolutePath()), size.x * 4 / 5);
+						new OpenFileDialog(mContext, Uri.parse(file0.getAbsolutePath()), size.x*8/9);
 						break;
 					case 1:
 						// CLOUD.....
-						Toast.makeText(mContext, R.string.supporttakenBack,
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, R.string.supporttakenBack,	Toast.LENGTH_SHORT).show();
 						break;
 
 					case 2:
@@ -997,8 +995,7 @@ public class TaskerActivity extends FragmentActivity implements
 						break;
 					case 4:
 						// PASTE
-						Toast.makeText(mContext, R.string.pasteNotAllowed,
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, R.string.pasteNotAllowed,Toast.LENGTH_SHORT).show();
 						break;
 					case 5:
 						// ZIP
@@ -1025,16 +1022,15 @@ public class TaskerActivity extends FragmentActivity implements
 
 					case 8:
 						// SEND
-						new BluetoothChooser(getActivity(), file0
-								.getAbsolutePath(), size.x * 5 / 6, null);
+						new BluetoothChooser(mContext, file0.getAbsolutePath(), size.x*8/9, null);
 						break;
 					case 9:
-						new AddGesture(mContext, size.x, size.y * 8 / 9, file0
+						new AddGesture(mContext, size.x, size.y*8/9, file0
 								.getPath());
 						break;
 					case 10:
 						// PROPERTIES
-						new FileProperties(getActivity(), size.x * 5 / 6, file0);
+						new FileProperties(mContext, size.x*8/9, file0);
 					}
 				}
 			});
@@ -1052,8 +1048,7 @@ public class TaskerActivity extends FragmentActivity implements
 						if (LongClick) {
 							LongClick = false;
 						} else
-							new OpenFileDialog(mContext, Uri.parse(file0
-									.getAbsolutePath()), size.x * 4 / 5);
+							new OpenFileDialog(mContext, Uri.parse(file0.getAbsolutePath()), size.x*8/9);
 					}
 				}
 			});
@@ -1112,7 +1107,7 @@ public class TaskerActivity extends FragmentActivity implements
 
 					if (file.isFile())
 						new OpenFileDialog(mContext, Uri.parse(file
-								.getAbsolutePath()), size.x * 4 / 5);
+								.getAbsolutePath()), size.x*8/9);
 					else if (file.isDirectory()){
 						SFileManager.nStack.push(file.getAbsolutePath());
 						setAdapter(1);
@@ -1126,7 +1121,7 @@ public class TaskerActivity extends FragmentActivity implements
 			AdapterLoaders loaders = new AdapterLoaders(getActivity(), false);
 			lo.setAdapter(loaders.getLongClickAdapter());
 			lo.setSelector(getResources().getDrawable(R.drawable.blue_button));
-			d.getWindow().getAttributes().width = size.x * 4 / 5;
+			d.getWindow().getAttributes().width = size.x*8/9;
 			simple.setOnItemLongClickListener(new OnItemLongClickListener() {
 				@Override
 				public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
@@ -1160,8 +1155,7 @@ public class TaskerActivity extends FragmentActivity implements
 									RENAME_COMMAND = false;
 						}
 						if (file.isFile())
-							new OpenFileDialog(mContext, Uri.parse(file
-									.getAbsolutePath()), size.x * 4 / 5);
+							new OpenFileDialog(mContext, Uri.parse(file.getAbsolutePath()), size.x*8/9);
 						else if (file.isDirectory()) {
 							SFileManager.nStack.push(file.getAbsolutePath());
 							setAdapter(1);
@@ -1171,8 +1165,7 @@ public class TaskerActivity extends FragmentActivity implements
 
 					case 1:
 						// COPY TO CLOUD
-						Toast.makeText(mContext, R.string.supporttakenBack,
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, R.string.supporttakenBack,Toast.LENGTH_SHORT).show();
 						break;
 
 					case 2:
@@ -1208,12 +1201,11 @@ public class TaskerActivity extends FragmentActivity implements
 					case 5:
 						// ZIP
 						if (!file.canRead())
-							Toast.makeText(mContext, R.string.serviceUnavaila,
-									Toast.LENGTH_SHORT).show();
+							Toast.makeText(mContext, R.string.serviceUnavaila,Toast.LENGTH_SHORT).show();
 						else if (file.canRead()) {
 							ArrayList<File> temp = new ArrayList<File>();
 							temp.add(file);
-							new CreateZip(mContext, size.x * 8 / 9, temp);
+							new CreateZip(mContext, size.x*8/9, temp);
 						}
 						break;
 
@@ -1236,28 +1228,23 @@ public class TaskerActivity extends FragmentActivity implements
 						 * editBox.setText(file.getName());
 						 * editBox.setSelected(true);
 						 */
-						Toast.makeText(
-								mContext,
-								"Yet to implement rename command for root files",
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext,"Yet to implement rename command for root files",Toast.LENGTH_SHORT).show();
 						break;
 
 					case 8:
 						// SEND
 						if (file.isFile())
-							new BluetoothChooser(getActivity(), file
-									.getAbsolutePath(), size.x * 5 / 6, null);
+							new BluetoothChooser(mContext, file.getAbsolutePath(), size.x*8/9, null);
 						else
 							showToast(getString(R.string.compressandsend));
 						break;
 
 					case 9:
-						new AddGesture(mContext, size.x, size.y * 8 / 9, file
-								.getPath());
+						new AddGesture(mContext, size.x, size.y*8/9, file.getPath());
 						break;
 					case 10:
 						// PROPERTIES
-						new FileProperties(getActivity(), size.x * 5 / 6, file);
+						new FileProperties(getActivity(), size.x*8/9, file);
 					}
 				}
 			});
@@ -1304,7 +1291,7 @@ public class TaskerActivity extends FragmentActivity implements
 			AdapterLoaders loaders = new AdapterLoaders(getActivity(), false);
 			lo.setAdapter(loaders.getLongClickAdapter());
 			lo.setSelector(getResources().getDrawable(R.drawable.blue_button));
-			dialog.getWindow().getAttributes().width = size.x * 4 / 5;
+			dialog.getWindow().getAttributes().width = size.x*8/9;
 
 			root.setOnItemLongClickListener(new OnItemLongClickListener() {
 				@Override
@@ -1336,8 +1323,7 @@ public class TaskerActivity extends FragmentActivity implements
 							CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = RENAME_COMMAND = false;
 						}
 						if (file2.isFile()) {
-							new OpenFileDialog(getActivity(), Uri.parse(file2
-									.getAbsolutePath()), size.x * 4 / 5);
+							new OpenFileDialog(mContext, Uri.parse(file2.getAbsolutePath()), size.x*8/9);
 						} else if (file2.isDirectory()) {
 							RFileManager.nStack.push(file2.getAbsolutePath());
 							setAdapter(2);
@@ -1355,8 +1341,7 @@ public class TaskerActivity extends FragmentActivity implements
 						 * fired listing the account and asking user to select a
 						 * directory to paste...
 						 */
-						Toast.makeText(mContext, R.string.supporttakenBack,
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, R.string.supporttakenBack,Toast.LENGTH_SHORT).show();
 						break;
 
 					case 2:
@@ -1390,7 +1375,7 @@ public class TaskerActivity extends FragmentActivity implements
 						// ZIP
 						ArrayList<File> temp = new ArrayList<File>();
 						temp.add(file2);
-						new CreateZip(mContext, size.x * 8 / 9, temp);
+						new CreateZip(mContext, size.x*8/9, temp);
 						break;
 					case 6:
 							//DELETE
@@ -1413,19 +1398,17 @@ public class TaskerActivity extends FragmentActivity implements
 					case 8:
 						// SEND
 						if (file2.isFile())
-							new BluetoothChooser(getActivity(), file2
-									.getAbsolutePath(), size.x * 5 / 6, null);
+							new BluetoothChooser(getActivity(), file2.getAbsolutePath(), size.x*8/9  , null);
 						else
 							showToast(getString(R.string.compressandsend));
 						break;
 					case 9:
 						// gesture to the selected file....
-						new AddGesture(mContext, size.x, size.y * 8 / 9, file2
-								.getPath());
+						new AddGesture(mContext, size.x, size.y*8/9,file2.getPath());
 						break;
 					case 10:
 						// PROPERTIES
-						new FileProperties(getActivity(), size.x * 5 / 6, file2);
+						new FileProperties(getActivity(), size.x*8/9, file2);
 					}
 				}
 			});
@@ -1448,13 +1431,9 @@ public class TaskerActivity extends FragmentActivity implements
 						;
 					}
 					if (file2.isFile()) {
-						// Toast.makeText(getActivity(), "Done",
-						// Toast.LENGTH_SHORT).show();
-						new OpenFileDialog(getActivity(), Uri.parse(file2
-								.getAbsolutePath()), size.x * 4 / 5);
+						new OpenFileDialog(mContext, Uri.parse(file2.getAbsolutePath()), size.x*8/9);
 					} else if (file2.isDirectory()) {
 						RFileManager.nStack.push(file2.getAbsolutePath());
-						// setAdapterAgain(2, mContext);
 						setAdapter(2);
 					}
 				}
@@ -1506,7 +1485,7 @@ public class TaskerActivity extends FragmentActivity implements
 					pos = position;
 					ArrayList<ApplicationInfo> temp = new ArrayList<ApplicationInfo>();
 					temp.add(info);
-					new AppBackup(mContext, size.x * 8 / 9, temp);
+					new AppBackup(mContext, size.x*8/9, temp);
 				}
 			});
 			final Dialog dia = new Dialog(getActivity(),
@@ -1516,7 +1495,7 @@ public class TaskerActivity extends FragmentActivity implements
 			AdapterLoaders loaders = new AdapterLoaders(getActivity(), true);
 			lo.setAdapter(loaders.getLongClickAdapter());
 			lo.setSelector(getResources().getDrawable(R.drawable.blue_button));
-			dia.getWindow().getAttributes().width = size.x * 4 / 5;
+			dia.getWindow().getAttributes().width = size.x*8/9;
 			APP_LIST_VIEW
 					.setOnItemLongClickListener(new OnItemLongClickListener() {
 						@Override
@@ -1550,8 +1529,7 @@ public class TaskerActivity extends FragmentActivity implements
 							 * RUNTIME ERROR
 							 */
 						} catch (RuntimeException e) {
-							Toast.makeText(getActivity(), R.string.noactivity,
-									Toast.LENGTH_SHORT).show();
+							Toast.makeText(mContext, R.string.noactivity,Toast.LENGTH_SHORT).show();
 						}
 						break;
 
@@ -1559,22 +1537,19 @@ public class TaskerActivity extends FragmentActivity implements
 						// UNINSTALL APP
 						LAUNCH_INTENT = new Intent();
 						LAUNCH_INTENT.setAction(Intent.ACTION_DELETE);
-						LAUNCH_INTENT.setData(Uri.parse("package:"
-								+ info.packageName));
+						LAUNCH_INTENT.setData(Uri.parse("package:"+info.packageName));
 						startActivity(LAUNCH_INTENT);
 						break;
 					case 2:
 						// LAUNCH DIALOG TO TAKE BACKUP
 						ArrayList<ApplicationInfo> temp = new ArrayList<ApplicationInfo>();
 						temp.add(info);
-						new AppBackup(mContext, size.x * 8 / 9, temp);
+						new AppBackup(mContext, size.x*8/9, temp);
 						break;
 					case 3:
 						// DELETE BACKUP IF EXISTS
 						if (nManager.backupExists(info) == 0) {
-							Toast.makeText(getActivity(),
-									R.string.nobackuptodelete,
-									Toast.LENGTH_SHORT).show();
+							Toast.makeText(getActivity(),R.string.nobackuptodelete,Toast.LENGTH_SHORT).show();
 						} else {
 							PackageInfo i = null;
 							PackageManager m = getActivity()
@@ -1585,41 +1560,32 @@ public class TaskerActivity extends FragmentActivity implements
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							File del = new File(PATH + "/File Quest/AppBackup/"
-									+ info.loadLabel(m) + "-v" + i.versionName
-									+ ".apk");
+							File del = new File(PATH + "/File Quest/AppBackup/"+info.loadLabel(m) + "-v" + i.versionName+".apk");
 							if (del.delete()) {
-								Toast.makeText(getActivity(),
-										R.string.backupdeleted,
-										Toast.LENGTH_SHORT).show();
+								Toast.makeText(mContext,R.string.backupdeleted,Toast.LENGTH_SHORT).show();
 								nList = nManager.giveMeAppList();
-								nAppAdapter = new AppAdapter(getActivity(),
-										R.layout.row_list_1, nList);
+								nAppAdapter = new AppAdapter(mContext,R.layout.row_list_1, nList);
 								if (MULTI_SELECT_APPS)
 									nAppAdapter.MULTI_SELECT = true;
 								APP_LIST_VIEW.setAdapter(nAppAdapter);
 								APP_LIST_VIEW.setSelection(pos);
 							} else
-								Toast.makeText(getActivity(),
-										R.string.failtodeletebackup,
-										Toast.LENGTH_SHORT).show();
+								Toast.makeText(mContext,R.string.failtodeletebackup,Toast.LENGTH_SHORT).show();
 						}
 						break;
 					case 4:
 						// CREATE FLASHABLE ZIP
 						ArrayList<ApplicationInfo> t = new ArrayList<ApplicationInfo>();
 						t.add(info);
-						new CreateZipApps(mContext, size.x * 8 / 9, t);
+						new CreateZipApps(mContext, size.x*8/9, t);
 						break;
 					case 5:
 						// SEND APPS
-						new BluetoothChooser(mContext, info.sourceDir,
-								size.x * 5 / 6, null);
+						new BluetoothChooser(mContext, info.sourceDir,size.x*8/9, null);
 						break;
 					case 6:
 						// APP PROPERTIES
-						new AppProperties(mContext, size.x * 5 / 6,
-								info.packageName);
+						new AppProperties(mContext, size.x*8/9,	info.packageName);
 					}
 				}
 			});
@@ -1640,14 +1606,11 @@ public class TaskerActivity extends FragmentActivity implements
 			QuickAction ad = new QuickAction(getApplicationContext());
 			ActionItem adi = new ActionItem(0, getString(R.string.quit));
 			ad.addActionItem(adi);
-			adi = new ActionItem(getResources().getDrawable(
-					R.drawable.org_anurag_questbrowser_underline));
+			adi = new ActionItem(getResources().getDrawable(R.drawable.org_anurag_questbrowser_underline));
 			ad.addActionItem(adi);
-			adi = new ActionItem(1, getString(R.string.yes), getResources()
-					.getDrawable(R.drawable.ic_launcher_apply));
+			adi = new ActionItem(1, getString(R.string.yes), getResources().getDrawable(R.drawable.ic_launcher_apply));
 			ad.addActionItem(adi);
-			adi = new ActionItem(2, getString(R.string.no), getResources()
-					.getDrawable(R.drawable.ic_launcher_quit));
+			adi = new ActionItem(2, getString(R.string.no), getResources().getDrawable(R.drawable.ic_launcher_quit));
 			ad.addActionItem(adi);
 			ad.setOnActionItemClickListener(new OnActionItemClickListener() {
 				@Override
@@ -1664,9 +1627,8 @@ public class TaskerActivity extends FragmentActivity implements
 
 		case R.id.bottom_paste:
 			if (CURRENT_ITEM == 0) {
-				QuickAction ac = new QuickAction(getBaseContext());
-				ActionItem it = new ActionItem(0,
-						getString(R.string.pastenotallowed));
+				QuickAction ac = new QuickAction(mContext);
+				ActionItem it = new ActionItem(0,getString(R.string.pastenotallowed));
 				ac.addActionItem(it);
 				ac.show(v);
 			} else {
@@ -1675,23 +1637,19 @@ public class TaskerActivity extends FragmentActivity implements
 			break;
 
 		case R.id.bottom_copy:
-			OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 5,
-					getString(R.string.enablemultiselect));
+			OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 5,getString(R.string.enablemultiselect));
 			break;
 
 		case R.id.bottom_cut:
-			OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 2,
-					getString(R.string.enablemultiselect));
+			OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 2,getString(R.string.enablemultiselect));
 			break;
 
 		case R.id.bottom_zip:
-			OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 3,
-					getString(R.string.enablemultiselect));
+			OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 3,getString(R.string.enablemultiselect));
 			break;
 
 		case R.id.bottom_delete:
-			OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 4,
-					getString(R.string.enablemultiselect));
+			OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 4,getString(R.string.enablemultiselect));
 			break;
 
 		case R.id.appSettings:
@@ -1699,53 +1657,36 @@ public class TaskerActivity extends FragmentActivity implements
 			break;
 
 		case R.id.bottom_multi: {
-			QuickAction action = new QuickAction(getBaseContext());
+			QuickAction action = new QuickAction(mContext);
 			ActionItem item = new ActionItem();
 
 			if (element == null || !elementInFocus) {
-				item = new ActionItem(-1, getString(R.string.multiforgallery),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_images));
+				item = new ActionItem(-1, getString(R.string.multiforgallery),getResources().getDrawable(R.drawable.ic_launcher_images));
 				action.addActionItem(item);
 			} else {
 				if (MediaElementAdapter.MULTI_SELECT)
-					item = new ActionItem(0,
-							getString(R.string.multiforgallery), getResources()
-									.getDrawable(R.drawable.ic_launcher_apply));
+					item = new ActionItem(0,getString(R.string.multiforgallery), getResources().getDrawable(R.drawable.ic_launcher_apply));
 				else
-					item = new ActionItem(0,
-							getString(R.string.multiforgallery), getResources()
-									.getDrawable(R.drawable.ic_launcher_images));
+					item = new ActionItem(0,getString(R.string.multiforgallery), getResources().getDrawable(R.drawable.ic_launcher_images));
 				action.addActionItem(item);
 			}
 
 			if ((SimpleAdapter.MULTI_SELECT))
-				item = new ActionItem(1, getString(R.string.multiforroot),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				item = new ActionItem(1, getString(R.string.multiforroot),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				item = new ActionItem(1, getString(R.string.multiforroot),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_system));
+				item = new ActionItem(1, getString(R.string.multiforroot),getResources().getDrawable(R.drawable.ic_launcher_system));
 			action.addActionItem(item);
 
 			if ((RootAdapter.MULTI_SELECT))
-				item = new ActionItem(2, getString(R.string.multiforsd),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				item = new ActionItem(2, getString(R.string.multiforsd),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				item = new ActionItem(2, getString(R.string.multiforsd),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_sdcard));
+				item = new ActionItem(2, getString(R.string.multiforsd),getResources().getDrawable(R.drawable.ic_launcher_sdcard));
 			action.addActionItem(item);
 
 			if (MULTI_SELECT_APPS)
-				item = new ActionItem(3, getString(R.string.multiforapp),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				item = new ActionItem(3, getString(R.string.multiforapp),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				item = new ActionItem(3, getString(R.string.multiforapp),
-						getResources().getDrawable(R.drawable.ic_launcher_apk));
+				item = new ActionItem(3, getString(R.string.multiforapp),getResources().getDrawable(R.drawable.ic_launcher_apk));
 			action.addActionItem(item);
 			action.show(v);
 			action.setOnActionItemClickListener(new OnActionItemClickListener() {
@@ -1756,26 +1697,21 @@ public class TaskerActivity extends FragmentActivity implements
 					switch (actionId) {
 
 					case -1: {
-						QuickAction ac = new QuickAction(getBaseContext());
-						ActionItem it = new ActionItem(0,
-								getString(R.string.selectcategoryfromgallery));
+						QuickAction ac = new QuickAction(mContext);
+						ActionItem it = new ActionItem(0,getString(R.string.selectcategoryfromgallery));
 						ac.addActionItem(it);
 						ac.show(v);
 					}
 						break;
 					case 0:
 						if (MediaElementAdapter.MULTI_SELECT) {
-							element = new MediaElementAdapter(getBaseContext(),
-									R.layout.row_list_1, mediaFileList);
-							MediaElementAdapter.thumbselection = new boolean[mediaFileList
-									.size()];
+							element = new MediaElementAdapter(mContext,R.layout.row_list_1, mediaFileList);
+							MediaElementAdapter.thumbselection = new boolean[mediaFileList.size()];
 							MediaElementAdapter.MULTI_SELECT = false;
 							LIST_VIEW_3D.setAdapter(element);
 						} else {
-							element = new MediaElementAdapter(getBaseContext(),
-									R.layout.row_list_1, mediaFileList);
-							MediaElementAdapter.thumbselection = new boolean[mediaFileList
-									.size()];
+							element = new MediaElementAdapter(mContext,R.layout.row_list_1, mediaFileList);
+							MediaElementAdapter.thumbselection = new boolean[mediaFileList.size()];
 							MediaElementAdapter.MULTI_SELECT = true;
 							LIST_VIEW_3D.setAdapter(element);
 							if (CURRENT_ITEM == 3) {
@@ -1790,18 +1726,14 @@ public class TaskerActivity extends FragmentActivity implements
 
 					case 1:
 						if (SimpleAdapter.MULTI_SELECT) {
-							nSimple = new SimpleAdapter(getBaseContext(),
-									R.layout.row_list_1, sFiles);
-							SimpleAdapter.thumbselection = new boolean[sFiles
-									.size()];
+							nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
+							SimpleAdapter.thumbselection = new boolean[sFiles.size()];
 							SimpleAdapter.MULTI_SELECT = false;
 							simple.setAdapter(nSimple);
 
 						} else {
-							nSimple = new SimpleAdapter(getBaseContext(),
-									R.layout.row_list_1, sFiles);
-							SimpleAdapter.thumbselection = new boolean[sFiles
-									.size()];
+							nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
+							SimpleAdapter.thumbselection = new boolean[sFiles.size()];
 							SimpleAdapter.MULTI_SELECT = true;
 							mViewPager.setCurrentItem(1);
 							simple.setAdapter(nSimple);
@@ -1809,17 +1741,13 @@ public class TaskerActivity extends FragmentActivity implements
 						break;
 					case 2:
 						if (RootAdapter.MULTI_SELECT) {
-							RootAdapter = new RootAdapter(getBaseContext(),
-									R.layout.row_list_1, nFiles);
-							RootAdapter.thumbselection = new boolean[nFiles
-									.size()];
+							RootAdapter = new RootAdapter(mContext,R.layout.row_list_1, nFiles);
+							RootAdapter.thumbselection = new boolean[nFiles.size()];
 							RootAdapter.MULTI_SELECT = false;
 							root.setAdapter(RootAdapter);
 						} else {
-							RootAdapter = new RootAdapter(getBaseContext(),
-									R.layout.row_list_1, nFiles);
-							RootAdapter.thumbselection = new boolean[nFiles
-									.size()];
+							RootAdapter = new RootAdapter(mContext,R.layout.row_list_1, nFiles);
+							RootAdapter.thumbselection = new boolean[nFiles.size()];
 							RootAdapter.MULTI_SELECT = true;
 							mViewPager.setCurrentItem(2);
 							root.setAdapter(RootAdapter);
@@ -1848,20 +1776,16 @@ public class TaskerActivity extends FragmentActivity implements
 			if (MULTI_SELECT_APPS) {
 				if (nAppAdapter.C > 0) {
 					try {
-						new MultiSendApps(mContext, size,
-								nAppAdapter.MULTI_APPS);
+						new MultiSendApps(mContext, size,nAppAdapter.MULTI_APPS);
 					} catch (Exception e) {
-						Toast.makeText(getBaseContext(), R.string.unabletosend,
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, R.string.unabletosend,Toast.LENGTH_SHORT).show();
 					}
 				} else {
-					Toast.makeText(getBaseContext(), R.string.someapps,
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(mContext, R.string.someapps,Toast.LENGTH_SHORT).show();
 				}
 			} else {
-				QuickAction ac = new QuickAction(getBaseContext());
-				ActionItem it = new ActionItem(0, getResources().getString(
-						(R.string.enablefirstforappstore)));
+				QuickAction ac = new QuickAction(mContext);
+				ActionItem it = new ActionItem(0, getResources().getString((R.string.enablefirstforappstore)));
 				ac.addActionItem(it);
 				ac.show(v);
 			}
@@ -1869,19 +1793,13 @@ public class TaskerActivity extends FragmentActivity implements
 		case R.id.bottom_multi_select_backup:
 			if (MULTI_SELECT_APPS) {
 				if (nAppAdapter.C > 0) {
-					// new MultileAppBackup(mContext, size.x*7/9,
-					// nAppAdapter.MULTI_APPS, nAppAdapter.C, sto, sav,
-					// nAppAdapter.C);
-					new AppBackup(mContext, size.x * 8 / 9,
-							nAppAdapter.MULTI_APPS);
+					new AppBackup(mContext, size.x*8/9,nAppAdapter.MULTI_APPS);
 				} else {
-					Toast.makeText(getBaseContext(), R.string.someapps,
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(mContext, R.string.someapps,Toast.LENGTH_SHORT).show();
 				}
 			} else {
-				QuickAction ac = new QuickAction(getBaseContext());
-				ActionItem it = new ActionItem(0, getResources().getString(
-						R.string.enablefirstforappstore));
+				QuickAction ac = new QuickAction(mContext);
+				ActionItem it = new ActionItem(0, getResources().getString(R.string.enablefirstforappstore));
 				ac.addActionItem(it);
 				ac.show(v);
 			}
@@ -1892,11 +1810,9 @@ public class TaskerActivity extends FragmentActivity implements
 			edit.putInt("SHOW_APP", 1);
 			edit.commit();
 			SHOW_APP = nManager.SHOW_APP = 1;
-			Toast.makeText(getBaseContext(),
-					getString(R.string.showinguserapps), Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(mContext,getString(R.string.showinguserapps), Toast.LENGTH_SHORT).show();
 			nList = nManager.giveMeAppList();
-			nAppAdapter = new AppAdapter(getBaseContext(), R.layout.row_list_1,
+			nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,
 					nList);
 			APP_LIST_VIEW.setAdapter(nAppAdapter);
 			break;
@@ -1905,12 +1821,9 @@ public class TaskerActivity extends FragmentActivity implements
 			edit.putInt("SHOW_APP", 2);
 			edit.commit();
 			SHOW_APP = nManager.SHOW_APP = 2;
-			Toast.makeText(getBaseContext(),
-					getString(R.string.showingsystemapps), Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(mContext,getString(R.string.showingsystemapps), Toast.LENGTH_SHORT).show();
 			nList = nManager.giveMeAppList();
-			nAppAdapter = new AppAdapter(getBaseContext(), R.layout.row_list_1,
-					nList);
+			nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
 			APP_LIST_VIEW.setAdapter(nAppAdapter);
 			break;
 
@@ -1919,12 +1832,9 @@ public class TaskerActivity extends FragmentActivity implements
 			edit.putInt("SHOW_APP", 3);
 			edit.commit();
 			SHOW_APP = nManager.SHOW_APP = 3;
-			Toast.makeText(getBaseContext(),
-					getString(R.string.showinguserandsystemapps),
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext,getString(R.string.showinguserandsystemapps),Toast.LENGTH_SHORT).show();
 			nList = nManager.giveMeAppList();
-			nAppAdapter = new AppAdapter(getBaseContext(), R.layout.row_list_1,
-					nList);
+			nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
 			APP_LIST_VIEW.setAdapter(nAppAdapter);
 			break;
 
@@ -1934,7 +1844,7 @@ public class TaskerActivity extends FragmentActivity implements
 
 		case R.id.applyBtn:
 			// rename the file with given name from editBox
-			editBox = new EditText(getBaseContext());
+			editBox = new EditText(mContext);
 			editBox = (EditText) findViewById(R.id.editBox);
 			String name = editBox.getText().toString();
 			// String ext = extBox.getText().toString();
@@ -1954,28 +1864,16 @@ public class TaskerActivity extends FragmentActivity implements
 							 */
 							LinuxShell.execute("mkdir " + name + "\n");
 							if (new File(name).exists()) {
-								Toast.makeText(
-										mContext,
-										getString(R.string.foldercreated)
-												+ name, Toast.LENGTH_SHORT)
-										.show();
+								Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_SHORT).show();
 								setAdapter(CURRENT_ITEM);
 							} else
-								Toast.makeText(mContext,
-										getString(R.string.foldernotcreated),
-										Toast.LENGTH_SHORT).show();
+								Toast.makeText(mContext,getString(R.string.foldernotcreated),Toast.LENGTH_SHORT).show();
 						} else if (CURRENT_ITEM == 2) {
 							if (new File(name).mkdir()) {
-								Toast.makeText(
-										getApplicationContext(),
-										getString(R.string.foldercreated)
-												+ name, Toast.LENGTH_LONG)
-										.show();
+								Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_LONG).show();
 								setAdapter(CURRENT_ITEM);
 							} else if (!new File(name).mkdir())
-								Toast.makeText(getApplicationContext(),
-										getString(R.string.foldernotcreated),
-										Toast.LENGTH_LONG).show();
+								Toast.makeText(mContext,getString(R.string.foldernotcreated),Toast.LENGTH_LONG).show();
 						}
 						RENAME_COMMAND = CREATE_FILE = SEARCH_FLAG = CUT_COMMAND = COPY_COMMAND = false;
 					}
@@ -1988,29 +1886,16 @@ public class TaskerActivity extends FragmentActivity implements
 							 */
 							LinuxShell.execute("mkdir " + name + "\n");
 							if (new File(name).exists()) {
-								Toast.makeText(
-										mContext,
-										getString(R.string.foldercreated)
-												+ name, Toast.LENGTH_SHORT)
-										.show();
+								Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_SHORT).show();
 								setAdapter(CURRENT_ITEM);
 							} else
-								Toast.makeText(mContext,
-										getString(R.string.foldernotcreated),
-										Toast.LENGTH_SHORT).show();
-
+								Toast.makeText(mContext,getString(R.string.foldernotcreated),Toast.LENGTH_SHORT).show();
 						} else if (CURRENT_ITEM == 2) {
 							if (new File(name).mkdir()) {
-								Toast.makeText(
-										getApplicationContext(),
-										getString(R.string.foldercreated)
-												+ name, Toast.LENGTH_LONG)
-										.show();
+								Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_LONG).show();
 								setAdapter(CURRENT_ITEM);
 							} else if (!new File(name).mkdir())
-								Toast.makeText(getApplicationContext(),
-										getString(R.string.foldernotcreated),
-										Toast.LENGTH_LONG).show();
+								Toast.makeText(mContext,getString(R.string.foldernotcreated),Toast.LENGTH_LONG).show();
 						}
 						RENAME_COMMAND = CREATE_FILE = SEARCH_FLAG = CUT_COMMAND = COPY_COMMAND = false;
 					}
@@ -2019,32 +1904,22 @@ public class TaskerActivity extends FragmentActivity implements
 						try {
 
 							if (CURRENT_ITEM == 1) {
-								name = SFileManager.getCurrentDirectory() + "/"
-										+ editBox.getText().toString();
+								name = SFileManager.getCurrentDirectory() + "/"	+ editBox.getText().toString();
 								File f = new File(name);
 								if (f.exists()) {
-									Toast.makeText(getBaseContext(),
-											getString(R.string.fileexists),
-											Toast.LENGTH_SHORT).show();
+									Toast.makeText(mContext,getString(R.string.fileexists),Toast.LENGTH_SHORT).show();
 								} else if (!f.exists()) {
 									LinuxShell.execute("cat > " + name);
 									setAdapter(CURRENT_ITEM);
 								}
-
 							} else if (CURRENT_ITEM == 2) {
 								if (new File(name).createNewFile()) {
-									Toast.makeText(
-											getApplicationContext(),
-											getString(R.string.foldercreated)
-													+ name, Toast.LENGTH_LONG)
-											.show();
+									Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_LONG).show();
 									setAdapter(CURRENT_ITEM);
 								}
 							}
 						} catch (IOException e) {
-							Toast.makeText(getApplicationContext(),
-									getString(R.string.foldernotcreated),
-									Toast.LENGTH_LONG).show();
+							Toast.makeText(mContext,getString(R.string.foldernotcreated),Toast.LENGTH_LONG).show();
 						}
 					}
 					// AFTER CREATING FILES OR FOLDER AGAIN FLIPPER IS SET TO
@@ -2055,21 +1930,15 @@ public class TaskerActivity extends FragmentActivity implements
 				// THIS FLIPPER IS SET FOR RENAMING
 				else if (RENAME_COMMAND) {
 					if (CURRENT_ITEM == 0) {
-						name = getPathWithoutFilename(file0).getPath() + "/"
-								+ name;
+						name = getPathWithoutFilename(file0).getPath() + "/"+ name;
 						if (file0.renameTo(new File(name))) {
-							Toast.makeText(
-									getBaseContext(),
-									getString(R.string.renamed)
-											+ new File(name).getName(),
-									Toast.LENGTH_SHORT).show();
+							Toast.makeText(mContext,getString(R.string.renamed)+ new File(name).getName(),Toast.LENGTH_SHORT).show();
 						} else {
 							/**
 							 * THIS INTENT IS FIRED WHEN RENAMING OF FILE FAILS
 							 * SHOWING POSSIBLE ERROR
 							 */
-							new ErrorDialogs(mContext, size.x * 4 / 5,
-									"renameError");
+							new ErrorDialogs(mContext,size.x*8/9,"renameError");
 						}
 					} else if (CURRENT_ITEM == 1) {
 						name = SFileManager.getCurrentDirectory() + "/" + name;
@@ -2082,24 +1951,18 @@ public class TaskerActivity extends FragmentActivity implements
 							 * THIS INTENT IS FIRED WHEN RENAMING OF FILE FAILS
 							 * SHOWING POSSIBLE ERROR
 							 */
-							new ErrorDialogs(mContext, size.x * 4 / 5,
-									"renameError");
+							new ErrorDialogs(mContext, size.x*8/9,"renameError");
 						}
 					} else if (CURRENT_ITEM == 2) {
 						name = RFileManager.getCurrentDirectory() + "/" + name;
 						if (file2.renameTo(new File(name))) {
-							Toast.makeText(
-									getBaseContext(),
-									getString(R.string.renamed)
-											+ new File(name).getName(),
-									Toast.LENGTH_SHORT).show();
+							Toast.makeText(mContext,getString(R.string.renamed)	+ new File(name).getName(),Toast.LENGTH_SHORT).show();
 						} else {
 							/**
 							 * THIS INTENT IS FIRED WHEN RENAMING OF FILE FAILS
 							 * SHOWING POSSIBLE ERROR
 							 */
-							new ErrorDialogs(mContext, size.x * 4 / 5,
-									"renameError");
+							new ErrorDialogs(mContext, size.x*8/9,"renameError");
 						}
 					}
 					// AFTER RENAMING THE FOLDER OR FILES THE FLIPPER IS SET
@@ -2110,8 +1973,7 @@ public class TaskerActivity extends FragmentActivity implements
 				setAdapter(CURRENT_ITEM);
 				RENAME_COMMAND = CREATE_FILE = SEARCH_FLAG = CUT_COMMAND = COPY_COMMAND = false;
 			} else if (name.length() == 0)
-				Toast.makeText(getBaseContext(), R.string.entervalidname,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, R.string.entervalidname,Toast.LENGTH_SHORT).show();
 			break;
 
 		case R.id.homeDirBtn:
@@ -2125,8 +1987,7 @@ public class TaskerActivity extends FragmentActivity implements
 					RFileManager.SORT_TYPE = SORT_TYPE;
 					RFileManager.nStack.push(HOME_DIRECTORY);
 					nFiles = RFileManager.giveMeFileList();
-					RootAdapter = new RootAdapter(getBaseContext(),
-							R.layout.row_list_1, nFiles);
+					RootAdapter = new RootAdapter(mContext,R.layout.row_list_1, nFiles);
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(2);
 				} else if (CURRENT_ITEM == 1) {
@@ -2135,18 +1996,14 @@ public class TaskerActivity extends FragmentActivity implements
 					SFileManager.SORT_TYPE = SORT_TYPE;
 					SFileManager.nStack.push(HOME_DIRECTORY);
 					sFiles = SFileManager.giveMeFileList();
-					nSimple = new SimpleAdapter(getBaseContext(),
-							R.layout.row_list_1, sFiles);
+					nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(1);
 				} else if (CURRENT_ITEM == 0) {
-					QuickAction d = new QuickAction(getBaseContext());
-					ActionItem df = new ActionItem(8, "/", getResources()
-							.getDrawable(R.drawable.ic_launcher_droid_home));
+					QuickAction d = new QuickAction(mContext);
+					ActionItem df = new ActionItem(8, "/", getResources().getDrawable(R.drawable.ic_launcher_droid_home));
 					d.addActionItem(df);
-					df = new ActionItem(9, getString(R.string.sd),
-							getResources().getDrawable(
-									R.drawable.ic_launcher_droid_home));
+					df = new ActionItem(9, getString(R.string.sd),getResources().getDrawable(R.drawable.ic_launcher_droid_home));
 					d.addActionItem(df);
 					d.show(v);
 					d.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
@@ -2173,7 +2030,7 @@ public class TaskerActivity extends FragmentActivity implements
 				HOME_DIRECTORY = PATH;
 				edit.putString("HOME_DIRECTORY", PATH);
 				edit.commit();
-				new ErrorDialogs(mContext, size.x * 4 / 5, "homeError");
+				new ErrorDialogs(mContext, size.x*8/9, "homeError");
 			}
 
 			break;
@@ -2184,37 +2041,26 @@ public class TaskerActivity extends FragmentActivity implements
 				// IF CURRENT ITEM == 0
 				// DISPLAYS LIST THAT IS APPLICABLE TO ONLY ALL FILE PANEL
 
-				QuickAction ac = new QuickAction(getBaseContext());
-				ActionItem i = new ActionItem(8, getString(R.string.jmpmusic),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_music));
+				QuickAction ac = new QuickAction(mContext);
+				ActionItem i = new ActionItem(8, getString(R.string.jmpmusic),getResources().getDrawable(R.drawable.ic_launcher_music));
 				ac.addActionItem(i);
 
-				i = new ActionItem(9, getString(R.string.jmpapk),
-						getResources().getDrawable(R.drawable.ic_launcher_apk));
+				i = new ActionItem(9, getString(R.string.jmpapk),getResources().getDrawable(R.drawable.ic_launcher_apk));
 				ac.addActionItem(i);
 
-				i = new ActionItem(10, getString(R.string.jmpdocs),
-						getResources().getDrawable(R.drawable.ic_launcher_ppt));
+				i = new ActionItem(10, getString(R.string.jmpdocs),getResources().getDrawable(R.drawable.ic_launcher_ppt));
 				ac.addActionItem(i);
 
-				i = new ActionItem(11, getString(R.string.jmpimg),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_images));
+				i = new ActionItem(11, getString(R.string.jmpimg),getResources().getDrawable(R.drawable.ic_launcher_images));
 				ac.addActionItem(i);
 
-				i = new ActionItem(12, getString(R.string.jmpvids),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_video));
+				i = new ActionItem(12, getString(R.string.jmpvids),getResources().getDrawable(R.drawable.ic_launcher_video));
 				ac.addActionItem(i);
 
-				i = new ActionItem(13, getString(R.string.jmpzip),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_zip_it));
+				i = new ActionItem(13, getString(R.string.jmpzip),getResources().getDrawable(R.drawable.ic_launcher_zip_it));
 				ac.addActionItem(i);
 
-				i = new ActionItem(14, getString(R.string.jmpmisc),
-						getResources().getDrawable(R.drawable.ic_launcher_rar));
+				i = new ActionItem(14, getString(R.string.jmpmisc),getResources().getDrawable(R.drawable.ic_launcher_rar));
 				ac.addActionItem(i);
 				ac.setOnActionItemClickListener(this);
 				ac.show(v);
@@ -2224,29 +2070,14 @@ public class TaskerActivity extends FragmentActivity implements
 				// This option allows user to directly go to specified directory
 				// from any directory
 				final QuickAction actionJump = new QuickAction(
-						getBaseContext(), 1);
-				ActionItem paste = new ActionItem(900,
-						getString(R.string.pastehere), getResources()
-								.getDrawable(R.drawable.ic_launcher_paste));
-				ActionItem download = new ActionItem(1000,
-						getString(R.string.jmpdown), getResources()
-								.getDrawable(R.drawable.ic_launcher_downloads));
-				ActionItem camera = new ActionItem(1100,
-						getString(R.string.jmpcam), getResources().getDrawable(
-								R.drawable.ic_launcher_camera));
-				ActionItem songs = new ActionItem(1200,
-						getString(R.string.jmpmusfo), getResources()
-								.getDrawable(
-										R.drawable.ic_launcher_music_folder));
-				ActionItem vid = new ActionItem(1201,
-						getString(R.string.jmpvidfo), getResources()
-								.getDrawable(R.drawable.ic_launcher_video));
-				ActionItem pro = new ActionItem(1300, getString(R.string.prop),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_stats));
-				ActionItem apps = new ActionItem(1400,
-						getString(R.string.selecteddefaultapp), getResources()
-								.getDrawable(R.drawable.ic_launcher_select_app));
+						mContext, 1);
+				ActionItem paste = new ActionItem(900,getString(R.string.pastehere), getResources().getDrawable(R.drawable.ic_launcher_paste));
+				ActionItem download = new ActionItem(1000,getString(R.string.jmpdown), getResources().getDrawable(R.drawable.ic_launcher_downloads));
+				ActionItem camera = new ActionItem(1100,getString(R.string.jmpcam), getResources().getDrawable(R.drawable.ic_launcher_camera));
+				ActionItem songs = new ActionItem(1200,getString(R.string.jmpmusfo), getResources().getDrawable(R.drawable.ic_launcher_music_folder));
+				ActionItem vid = new ActionItem(1201,getString(R.string.jmpvidfo), getResources().getDrawable(R.drawable.ic_launcher_video));
+				ActionItem pro = new ActionItem(1300, getString(R.string.prop),getResources().getDrawable(R.drawable.ic_launcher_stats));
+				ActionItem apps = new ActionItem(1400,getString(R.string.selecteddefaultapp), getResources().getDrawable(R.drawable.ic_launcher_select_app));
 				actionJump.addActionItem(paste);
 				actionJump.addActionItem(download);
 				actionJump.addActionItem(camera);
@@ -2270,11 +2101,9 @@ public class TaskerActivity extends FragmentActivity implements
 									if (!fJump.exists())
 										fJump.mkdir();
 									if (CURRENT_ITEM == 2)
-										RFileManager.nStack.push(fJump
-												.getAbsolutePath());
+										RFileManager.nStack.push(fJump.getAbsolutePath());
 									else if (CURRENT_ITEM == 1)
-										SFileManager.nStack.push(fJump
-												.getAbsolutePath());
+										SFileManager.nStack.push(fJump.getAbsolutePath());
 									setAdapter(CURRENT_ITEM);
 									break;
 								case 1100:
@@ -2282,11 +2111,9 @@ public class TaskerActivity extends FragmentActivity implements
 									if (!fJump.exists())
 										fJump.mkdir();
 									if (CURRENT_ITEM == 2)
-										RFileManager.nStack.push(fJump
-												.getAbsolutePath());
+										RFileManager.nStack.push(fJump.getAbsolutePath());
 									else if (CURRENT_ITEM == 1)
-										SFileManager.nStack.push(fJump
-												.getAbsolutePath());
+										SFileManager.nStack.push(fJump.getAbsolutePath());
 									setAdapter(CURRENT_ITEM);
 									break;
 								case 1200:
@@ -2294,11 +2121,9 @@ public class TaskerActivity extends FragmentActivity implements
 									if (!fJump.exists())
 										fJump.mkdir();
 									if (CURRENT_ITEM == 2)
-										RFileManager.nStack.push(fJump
-												.getAbsolutePath());
+										RFileManager.nStack.push(fJump.getAbsolutePath());
 									else if (CURRENT_ITEM == 1)
-										SFileManager.nStack.push(fJump
-												.getAbsolutePath());
+										SFileManager.nStack.push(fJump.getAbsolutePath());
 									setAdapter(CURRENT_ITEM);
 									break;
 
@@ -2307,20 +2132,17 @@ public class TaskerActivity extends FragmentActivity implements
 									if (!fJump.exists())
 										fJump.mkdir();
 									if (CURRENT_ITEM == 2)
-										RFileManager.nStack.push(fJump
-												.getAbsolutePath());
+										RFileManager.nStack.push(fJump.getAbsolutePath());
 									else if (CURRENT_ITEM == 1)
-										SFileManager.nStack.push(fJump
-												.getAbsolutePath());
+										SFileManager.nStack.push(fJump.getAbsolutePath());
 									setAdapter(CURRENT_ITEM);
 									break;
 								case 1300:
 									if (CURRENT_ITEM == 1) {
-										new FileProperties(getBaseContext(),
-												size.x * 5 / 6, file);
+										new FileProperties(mContext,size.x *8/9, file);
 										/*
 										 * LAUNCH_INTENT = new
-										 * Intent(getBaseContext(),
+										 * Intent(mContext,
 										 * FileProperties.class);
 										 * LAUNCH_INTENT.setData
 										 * (Uri.parse(nSFManager
@@ -2328,8 +2150,7 @@ public class TaskerActivity extends FragmentActivity implements
 										 * startActivity(LAUNCH_INTENT);
 										 */
 									} else if (CURRENT_ITEM == 2) {
-										new FileProperties(mContext,
-												size.x * 5 / 6, file2);
+										new FileProperties(mContext,size.x*8/9, file2);
 									}
 									break;
 								case 1400:
@@ -2352,16 +2173,12 @@ public class TaskerActivity extends FragmentActivity implements
 			break;
 
 		case R.id.backupAll:
-			QuickAction as = new QuickAction(getBaseContext());
-			ActionItem o = new ActionItem(100,
-					getString(R.string.backupuserapp), getResources()
-							.getDrawable(R.drawable.ic_launcher_user));
+			QuickAction as = new QuickAction(mContext);
+			ActionItem o = new ActionItem(100,getString(R.string.backupuserapp), getResources().getDrawable(R.drawable.ic_launcher_user));
 			as.addActionItem(o);
-			o = new ActionItem(200, getString(R.string.backupsystemapp),
-					getResources().getDrawable(R.drawable.ic_launcher_system));
+			o = new ActionItem(200, getString(R.string.backupsystemapp),getResources().getDrawable(R.drawable.ic_launcher_system));
 			as.addActionItem(o);
-			o = new ActionItem(300, getString(R.string.backupboth),
-					getResources().getDrawable(R.drawable.ic_launcher_both));
+			o = new ActionItem(300, getString(R.string.backupboth),getResources().getDrawable(R.drawable.ic_launcher_both));
 			as.addActionItem(o);
 			as.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
 				@Override
@@ -2370,15 +2187,13 @@ public class TaskerActivity extends FragmentActivity implements
 					// ArrayList<ApplicationInfo> li;
 					switch (Id) {
 					case 100:
-						new AppBackup(mContext, size.x * 8 / 9, nList);
+						new AppBackup(mContext, size.x*8/9, nList);
 						break;
 					case 200:
-						new AppBackup(mContext, size.x * 8 / 9, nManager
-								.getSysApps());
+						new AppBackup(mContext, size.x*8/9, nManager.getSysApps());
 						break;
 					case 300:
-						new AppBackup(mContext, size.x * 8 / 9, nManager
-								.getAllApps());
+						new AppBackup(mContext, size.x*8/9, nManager.getAllApps());
 					}
 				}
 			});
@@ -2388,13 +2203,10 @@ public class TaskerActivity extends FragmentActivity implements
 		case R.id.cleanBackups:
 			// THIS BUTTON DISPLAYS TWO OPTIONS -1.TO DELETED THE BACKUPS
 			// 2. DELETE THE FLASHABLE ZIPS CREATED
-			QuickAction c = new QuickAction(getBaseContext());
-			ActionItem i = new ActionItem(100,
-					getString(R.string.deleteearlierbackup), getResources()
-							.getDrawable(R.drawable.ic_launcher_backupall));
+			QuickAction c = new QuickAction(mContext);
+			ActionItem i = new ActionItem(100,getString(R.string.deleteearlierbackup), getResources().getDrawable(R.drawable.ic_launcher_backupall));
 			c.addActionItem(i);
-			i = new ActionItem(200, getString(R.string.deletezipbackup),
-					getResources().getDrawable(R.drawable.ic_launcher_zip_it));
+			i = new ActionItem(200, getString(R.string.deletezipbackup),getResources().getDrawable(R.drawable.ic_launcher_zip_it));
 			c.addActionItem(i);
 			c.show(v);
 			c.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
@@ -2428,30 +2240,20 @@ public class TaskerActivity extends FragmentActivity implements
 	 */
 	private void NEW_OPTIONS(View v) {
 		// TODO Auto-generated method stub
-		final QuickAction action = new QuickAction(getBaseContext(), 1);
-		ActionItem hiddenItem = new ActionItem(-10000,
-				getString(R.string.dropbox), getResources().getDrawable(
-						R.drawable.ic_launcher_drop_box));
+		final QuickAction action = new QuickAction(mContext, 1);
+		ActionItem hiddenItem = new ActionItem(-10000,getString(R.string.dropbox), getResources().getDrawable(R.drawable.ic_launcher_drop_box));
 		action.addActionItem(hiddenItem);
-		hiddenItem = new ActionItem(-9000, getString(R.string.googledrive),
-				getResources().getDrawable(R.drawable.ic_launcher_google_drive));
+		hiddenItem = new ActionItem(-9000, getString(R.string.googledrive),getResources().getDrawable(R.drawable.ic_launcher_google_drive));
 		action.addActionItem(hiddenItem);
 
-		hiddenItem = new ActionItem(-7000, getString(R.string.skydrive),
-				getResources().getDrawable(R.drawable.ic_launcher_sky_drive));
+		hiddenItem = new ActionItem(-7000, getString(R.string.skydrive),getResources().getDrawable(R.drawable.ic_launcher_sky_drive));
 		action.addActionItem(hiddenItem);
 
-		hiddenItem = new ActionItem(500,
-				getString(R.string.createhiddenfolder), getResources()
-						.getDrawable(R.drawable.ic_launcher_add_new));
+		hiddenItem = new ActionItem(500,getString(R.string.createhiddenfolder), getResources().getDrawable(R.drawable.ic_launcher_add_new));
 		action.addActionItem(hiddenItem);
-		ActionItem folderItem = new ActionItem(600,
-				getString(R.string.createfolder), getResources().getDrawable(
-						R.drawable.ic_launcher_add_new));
+		ActionItem folderItem = new ActionItem(600,getString(R.string.createfolder), getResources().getDrawable(R.drawable.ic_launcher_add_new));
 		action.addActionItem(folderItem);
-		ActionItem fileItem = new ActionItem(700,
-				getString(R.string.createfile), getResources().getDrawable(
-						R.drawable.ic_launcher_new_file));
+		ActionItem fileItem = new ActionItem(700,getString(R.string.createfile), getResources().getDrawable(R.drawable.ic_launcher_new_file));
 		action.addActionItem(fileItem);
 		action.show(v);
 		action.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
@@ -2517,23 +2319,15 @@ public class TaskerActivity extends FragmentActivity implements
 					 * CLOUD STORAGE OPTIONS
 					 */
 					switch (actionId) {
-					case -10000:
+					default:
 						/*
 						 * DROPBOX INFO STUFF
 						 */
-						Toast.makeText(mContext, R.string.supporttakenBack,
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, R.string.supporttakenBack,Toast.LENGTH_SHORT).show();
 						break;
-
-					case -80001:
-						// BOX
-
-					default:
-						new ErrorDialogs(mContext, size.x * 4 / 5, "cloud");
 					}
 				}
 			}
-
 		});
 	}
 
@@ -2567,8 +2361,7 @@ public class TaskerActivity extends FragmentActivity implements
 					HOME_DIRECTORY = data.getData().toString();
 				edit.putString("HOME_DIRECTORY", HOME_DIRECTORY);
 				edit.commit();
-				Toast.makeText(getBaseContext(), R.string.settingsapplied,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			}
 		} else if (requestCode == 2600) {
 			if (resultCode == RESULT_OK) {
@@ -2578,8 +2371,7 @@ public class TaskerActivity extends FragmentActivity implements
 					INTERNAL_PATH_ONE = data.getData().toString();
 				edit.putString("INTERNAL_PATH_ONE", INTERNAL_PATH_ONE);
 				edit.commit();
-				Toast.makeText(getBaseContext(), R.string.settingsapplied,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			}
 		} else if (requestCode == 2700) {
 			if (resultCode == RESULT_OK) {
@@ -2589,8 +2381,7 @@ public class TaskerActivity extends FragmentActivity implements
 					INTERNAL_PATH_TWO = data.getData().toString();
 				edit.putString("INTERNAL_PATH_TWO", INTERNAL_PATH_TWO);
 				edit.commit();
-				Toast.makeText(getBaseContext(), R.string.settingsapplied,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			}
 		}
 
@@ -2630,11 +2421,8 @@ public class TaskerActivity extends FragmentActivity implements
 				 */
 				if (CURRENT_PREF_ITEM == 0) {
 					if (!mUseBackKey) {
-						Toast.makeText(getBaseContext(),
-								R.string.pressbackagain, Toast.LENGTH_SHORT)
-								.show();
+						Toast.makeText(mContext,R.string.pressbackagain, Toast.LENGTH_SHORT).show();
 						mUseBackKey = true;
-
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
 						try {
@@ -2666,9 +2454,7 @@ public class TaskerActivity extends FragmentActivity implements
 				 */
 				if (CURRENT_PREF_ITEM == 3) {
 					if (!mUseBackKey) {
-						Toast.makeText(getBaseContext(),
-								R.string.pressbackagain, Toast.LENGTH_SHORT)
-								.show();
+						Toast.makeText(mContext,R.string.pressbackagain, Toast.LENGTH_SHORT).show();
 						mUseBackKey = true;
 
 					} else if (mUseBackKey) {
@@ -2701,19 +2487,14 @@ public class TaskerActivity extends FragmentActivity implements
 					}
 					mViewPager.setCurrentItem(CURRENT_PREF_ITEM);
 				}
-			} else if (CURRENT_ITEM == 1
-					&& !SFileManager.getCurrentDirectory().equals("/")) {
+			} else if (CURRENT_ITEM == 1&& !SFileManager.getCurrentDirectory().equals("/")) {
 				SFileManager.nStack.pop();
 				File fi = new File(SFileManager.nStack.peek());
 				if (!fi.canRead()) {
 					sFiles.clear();
 					BufferedReader reader = null; // errReader = null;
 					try {
-						reader = LinuxShell
-								.execute("IFS='\n';CURDIR='"
-										+ LinuxShell.getCmdPath(fi
-												.getAbsolutePath())
-										+ "';for i in `ls $CURDIR`; do if [ -d $CURDIR/$i ]; then echo \"d $CURDIR/$i\";else echo \"f $CURDIR/$i\"; fi; done");
+						reader = LinuxShell.execute("IFS='\n';CURDIR='"+LinuxShell.getCmdPath(fi.getAbsolutePath())+ "';for i in `ls $CURDIR`; do if [ -d $CURDIR/$i ]; then echo \"d $CURDIR/$i\";else echo \"f $CURDIR/$i\"; fi; done");
 						File f;
 						String line;
 						while ((line = reader.readLine()) != null) {
@@ -2721,51 +2502,40 @@ public class TaskerActivity extends FragmentActivity implements
 							sFiles.add(f);
 						}
 						if (SimpleAdapter.MULTI_SELECT) {
-							nSimple = new SimpleAdapter(getBaseContext(),
-									R.layout.row_list_1, sFiles);
+							nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
 							SimpleAdapter.MULTI_SELECT = true;
-							SimpleAdapter.thumbselection = new boolean[sFiles
-									.size()];
+							SimpleAdapter.thumbselection = new boolean[sFiles.size()];
 							SimpleAdapter.MULTI_FILES = new ArrayList<File>();
 						} else
-							nSimple = new SimpleAdapter(getBaseContext(),
-									R.layout.row_list_1, sFiles);
+							nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
 						mViewPager.setAdapter(mSectionsPagerAdapter);
 						mViewPager.setCurrentItem(1);
 					} catch (Exception e) {
-						Toast.makeText(mContext, R.string.rootaccessfailed,
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, R.string.rootaccessfailed,Toast.LENGTH_SHORT).show();
 					}
 				} else {
 					sFiles = SFileManager.giveMeFileList();
 					if (SimpleAdapter.MULTI_SELECT) {
-						nSimple = new SimpleAdapter(getBaseContext(),
-								R.layout.row_list_1, sFiles);
+						nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
 						SimpleAdapter.MULTI_SELECT = true;
-						SimpleAdapter.thumbselection = new boolean[sFiles
-								.size()];
+						SimpleAdapter.thumbselection = new boolean[sFiles.size()];
 						SimpleAdapter.MULTI_FILES = new ArrayList<File>();
 					} else
-						nSimple = new SimpleAdapter(getBaseContext(),
-								R.layout.row_list_1, sFiles);
+						nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(1);
 					file = new File(SFileManager.getCurrentDirectory());
 				}
 
-			} else if (CURRENT_ITEM == 1
-					&& SFileManager.getCurrentDirectory().endsWith("/")) {
+			} else if (CURRENT_ITEM == 1&&SFileManager.getCurrentDirectory().endsWith("/")) {
 				/**
 				 * CHECKS WHETHER THE CURRENT PREF IS 1 IF IT IS FOUND 3 THEN IT
 				 * TAKES ACTION TO EXIT ON CURRENT ITEM = 1
 				 */
 				if (CURRENT_PREF_ITEM == 1) {
 					if (!mUseBackKey) {
-						Toast.makeText(getBaseContext(),
-								R.string.pressbackagain, Toast.LENGTH_SHORT)
-								.show();
+						Toast.makeText(mContext,R.string.pressbackagain, Toast.LENGTH_SHORT).show();
 						mUseBackKey = true;
-
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
 						try {
@@ -2799,11 +2569,8 @@ public class TaskerActivity extends FragmentActivity implements
 				 */
 				if (CURRENT_PREF_ITEM == 2) {
 					if (!mUseBackKey) {
-						Toast.makeText(getBaseContext(),
-								R.string.pressbackagain, Toast.LENGTH_SHORT)
-								.show();
+						Toast.makeText(mContext,R.string.pressbackagain, Toast.LENGTH_SHORT).show();
 						mUseBackKey = true;
-
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
 						try {
@@ -2961,7 +2728,7 @@ public class TaskerActivity extends FragmentActivity implements
 			// SECOND LOCATION IS CASE 9
 			// loadMediaList(pos=1);
 			// elementInFocus = true;
-			// media.setAdapter(new MediaElementAdapter(getBaseContext(),
+			// media.setAdapter(new MediaElementAdapter(mContext,
 			// R.layout.row_list_1, mediaFileList));
 			load_FIle_Gallery(1);
 			break;
@@ -3003,15 +2770,11 @@ public class TaskerActivity extends FragmentActivity implements
 
 		case 80:
 			// SHOWING THE OPTIONS AVAILABLE FOR CHANGING APPREANCE
-			QuickAction q = new QuickAction(getBaseContext());
-			ActionItem q1 = new ActionItem(100,
-					getString(R.string.adjusttrans), getResources()
-							.getDrawable(R.drawable.ic_launcher_appreance));
+			QuickAction q = new QuickAction(mContext);
+			ActionItem q1 = new ActionItem(100,getString(R.string.adjusttrans), getResources().getDrawable(R.drawable.ic_launcher_appreance));
 			q.addActionItem(q1);
 			if (CURRENT_ITEM != 3) {
-				q1 = new ActionItem(90, getString(R.string.setfoldericn),
-						getResources().getDrawable(
-								RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+				q1 = new ActionItem(90, getString(R.string.setfoldericn),getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
 				q.addActionItem(q1);
 			}
 			q.setOnActionItemClickListener(this);
@@ -3022,77 +2785,49 @@ public class TaskerActivity extends FragmentActivity implements
 			// DIRECTED FROM CASE 80
 			// DISPLAYS THE OPTIONS AVAILABLE FOR CHANGING FOLDER ICON TO SHOW
 			int FOLDER_TYPE = RootAdapter.FOLDER_TYPE;
-			QuickAction ac = new QuickAction(getBaseContext());
+			QuickAction ac = new QuickAction(mContext);
 			ActionItem it;
 
 			if (FOLDER_TYPE == 0)
-				it = new ActionItem(2800, getString(R.string.orangefolder),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				it = new ActionItem(2800, getString(R.string.orangefolder),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				it = new ActionItem(2800, getString(R.string.orangefolder),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_orange_folder));
+				it = new ActionItem(2800, getString(R.string.orangefolder),getResources().getDrawable(R.drawable.ic_launcher_orange_folder));
 			ac.addActionItem(it);
 
 			if (FOLDER_TYPE == 1)
-				it = new ActionItem(2900, getString(R.string.greenfolder),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				it = new ActionItem(2900, getString(R.string.greenfolder),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				it = new ActionItem(2900, getString(R.string.greenfolder),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_green_folder));
+				it = new ActionItem(2900, getString(R.string.greenfolder),getResources().getDrawable(R.drawable.ic_launcher_green_folder));
 			ac.addActionItem(it);
 
 			if (FOLDER_TYPE == 2)
-				it = new ActionItem(3000, getString(R.string.yellowfolder),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				it = new ActionItem(3000, getString(R.string.yellowfolder),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				it = new ActionItem(3000, getString(R.string.yellowfolder),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_yellow_folder));
+				it = new ActionItem(3000, getString(R.string.yellowfolder),getResources().getDrawable(R.drawable.ic_launcher_yellow_folder));
 			ac.addActionItem(it);
 
 			if (FOLDER_TYPE == 3)
-				it = new ActionItem(3100, getString(R.string.violetfolder),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				it = new ActionItem(3100, getString(R.string.violetfolder),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				it = new ActionItem(3100, getString(R.string.violetfolder),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_violet_folder));
+				it = new ActionItem(3100, getString(R.string.violetfolder),getResources().getDrawable(R.drawable.ic_launcher_violet_folder));
 			ac.addActionItem(it);
 
 			if (FOLDER_TYPE == 4)
-				it = new ActionItem(3101, getString(R.string.redfolder),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				it = new ActionItem(3101, getString(R.string.redfolder),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				it = new ActionItem(3101, getString(R.string.redfolder),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_red_folder));
+				it = new ActionItem(3101, getString(R.string.redfolder),getResources().getDrawable(R.drawable.ic_launcher_red_folder));
 			ac.addActionItem(it);
 
 			if (FOLDER_TYPE == 5)
-				it = new ActionItem(3102, getString(R.string.brownfolder),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				it = new ActionItem(3102, getString(R.string.brownfolder),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				it = new ActionItem(3102, getString(R.string.brownfolder),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_brown_folder));
+				it = new ActionItem(3102, getString(R.string.brownfolder),getResources().getDrawable(R.drawable.ic_launcher_brown_folder));
 			ac.addActionItem(it);
 
 			if (FOLDER_TYPE == 6)
-				it = new ActionItem(3103, getString(R.string.bluefolder),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				it = new ActionItem(3103, getString(R.string.bluefolder),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				it = new ActionItem(3103, getString(R.string.bluefolder),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_blue_folder));
+				it = new ActionItem(3103, getString(R.string.bluefolder),getResources().getDrawable(R.drawable.ic_launcher_blue_folder));
 			ac.addActionItem(it);
 
 			ac.setOnActionItemClickListener(this);
@@ -3101,71 +2836,47 @@ public class TaskerActivity extends FragmentActivity implements
 		case 100:
 			// DIRECTED FROM CASE 80
 			// SHOWING ALL THE TRANSPARENCY LEVEL AVAILABLE
-			QuickAction d = new QuickAction(getBaseContext());
+			QuickAction d = new QuickAction(mContext);
 			ActionItem l;
 			if (TRANSPRA_LEVEL == 0.6f)
-				l = new ActionItem(1700, getString(R.string.opaque60),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				l = new ActionItem(1700, getString(R.string.opaque60),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				l = new ActionItem(1700, getString(R.string.opaque60),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_appreance));
+				l = new ActionItem(1700, getString(R.string.opaque60),getResources().getDrawable(R.drawable.ic_launcher_appreance));
 			d.addActionItem(l);
 
 			if (TRANSPRA_LEVEL == 0.7f)
-				l = new ActionItem(1800, getString(R.string.opaque70),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				l = new ActionItem(1800, getString(R.string.opaque70),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				l = new ActionItem(1800, getString(R.string.opaque70),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_appreance));
+				l = new ActionItem(1800, getString(R.string.opaque70),getResources().getDrawable(R.drawable.ic_launcher_appreance));
 			d.addActionItem(l);
 
 			if (TRANSPRA_LEVEL == 0.8f)
-				l = new ActionItem(1900, getString(R.string.opaque80),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				l = new ActionItem(1900, getString(R.string.opaque80),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				l = new ActionItem(1900, getString(R.string.opaque80),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_appreance));
+				l = new ActionItem(1900, getString(R.string.opaque80),getResources().getDrawable(R.drawable.ic_launcher_appreance));
 			d.addActionItem(l);
 
 			if (TRANSPRA_LEVEL == 0.9f)
-				l = new ActionItem(2000, getString(R.string.opaque90),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				l = new ActionItem(2000, getString(R.string.opaque90),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				l = new ActionItem(2000, getString(R.string.opaque90),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_appreance));
+				l = new ActionItem(2000, getString(R.string.opaque90),getResources().getDrawable(R.drawable.ic_launcher_appreance));
 			d.addActionItem(l);
 
 			if (TRANSPRA_LEVEL == 1.0f)
-				l = new ActionItem(2100, getString(R.string.opaque100),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				l = new ActionItem(2100, getString(R.string.opaque100),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				l = new ActionItem(2100, getString(R.string.opaque100),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_appreance));
+				l = new ActionItem(2100, getString(R.string.opaque100),getResources().getDrawable(R.drawable.ic_launcher_appreance));
 			d.addActionItem(l);
 			d.setOnActionItemClickListener(this);
 			d.show(indicator);
 			break;
 		case 200:
 			// DISPLAYS OPTIONS AVAILABLE IF USER SELECTS FOLDER OPTIONS
-			QuickAction a = new QuickAction(getBaseContext());
-			ActionItem i = new ActionItem(800,
-					getString(R.string.setstartpanel), getResources()
-							.getDrawable(R.drawable.ic_launcher_startup));
+			QuickAction a = new QuickAction(mContext);
+			ActionItem i = new ActionItem(800,getString(R.string.setstartpanel), getResources().getDrawable(R.drawable.ic_launcher_startup));
 			a.addActionItem(i);
 			if (mViewPager.getCurrentItem() != 3) {
-				i = new ActionItem(900, getString(R.string.setstartdir),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_startup));
+				i = new ActionItem(900, getString(R.string.setstartdir),getResources().getDrawable(R.drawable.ic_launcher_startup));
 				a.addActionItem(i);
 			}
 			a.setOnActionItemClickListener(this);
@@ -3173,19 +2884,14 @@ public class TaskerActivity extends FragmentActivity implements
 			break;
 
 		case 300:
-			QuickAction b = new QuickAction(getBaseContext());
+			QuickAction b = new QuickAction(mContext);
 			ActionItem j;
 			if (SHOW_HIDDEN_FOLDERS)
-				j = new ActionItem(1000, getString(R.string.showhidden),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				j = new ActionItem(1000, getString(R.string.showhidden),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				j = new ActionItem(1000, getString(R.string.showhidden),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_disabled));
+				j = new ActionItem(1000, getString(R.string.showhidden),getResources().getDrawable(R.drawable.ic_launcher_disabled));
 			b.addActionItem(j);
-			j = new ActionItem(1100, getString(R.string.sort), getResources()
-					.getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+			j = new ActionItem(1100, getString(R.string.sort), getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
 			b.addActionItem(j);
 			b.setOnActionItemClickListener(this);
 			b.show(indicator);
@@ -3212,14 +2918,21 @@ public class TaskerActivity extends FragmentActivity implements
 			edit.commit();
 
 			// CLEARING THE DEFAULT SELECTED APPS
-			SharedPreferences pr = getSharedPreferences("DEFAULT_APPS",
-					MODE_PRIVATE);
+			SharedPreferences pr = getSharedPreferences("DEFAULT_APPS",MODE_PRIVATE);
 			SharedPreferences.Editor ed = pr.edit();
 			ed.clear();
 			ed.commit();
-			Toast.makeText(getBaseContext(), getString(R.string.restored),
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, getString(R.string.restored),Toast.LENGTH_SHORT).show();
 			break;
+		case 501:
+			try{
+				new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/File Quest/.gesture").delete();
+			}catch(Exception e){
+				
+			}
+			Toast.makeText(mContext, mContext.getString(R.string.gesturedatacleared),Toast.LENGTH_SHORT).show();
+			break;
+			
 		case 600:
 			CURRENT_ITEM = mViewPager.getCurrentItem();
 			setAdapter(CURRENT_ITEM);
@@ -3227,7 +2940,7 @@ public class TaskerActivity extends FragmentActivity implements
 		case 700: {
 			Dialog as = new Dialog(mContext, R.style.custom_dialog_theme);
 			as.setContentView(R.layout.info_layout);
-			as.getWindow().getAttributes().width = size.x * 5 / 6;
+			as.getWindow().getAttributes().width = size.x*8/9;
 			as.setCancelable(true);
 			as.show();
 		}
@@ -3235,43 +2948,29 @@ public class TaskerActivity extends FragmentActivity implements
 		case 800:
 			// DIRECTED FROM CASE 200
 			// IT IS FIRST OPTION AVAILABLE UNDER STARTUP
-			QuickAction e = new QuickAction(getBaseContext());
+			QuickAction e = new QuickAction(mContext);
 			ActionItem m;
 			if (CURRENT_PREF_ITEM == 0)
-				m = new ActionItem(2200, getString(R.string.filegallery),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				m = new ActionItem(2200, getString(R.string.filegallery),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				m = new ActionItem(2200, getString(R.string.filegallery),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_startup));
+				m = new ActionItem(2200, getString(R.string.filegallery),getResources().getDrawable(R.drawable.ic_launcher_startup));
 			e.addActionItem(m);
 
 			if (CURRENT_PREF_ITEM == 1)
-				m = new ActionItem(2300, getString(R.string.rootpanel),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				m = new ActionItem(2300, getString(R.string.rootpanel),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				m = new ActionItem(2300, getString(R.string.rootpanel),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_startup));
+				m = new ActionItem(2300, getString(R.string.rootpanel),getResources().getDrawable(R.drawable.ic_launcher_startup));
 			e.addActionItem(m);
 			if (CURRENT_PREF_ITEM == 2)
-				m = new ActionItem(2400, getString(R.string.sd), getResources()
-						.getDrawable(R.drawable.ic_launcher_apply));
+				m = new ActionItem(2400, getString(R.string.sd), getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				m = new ActionItem(2400, getString(R.string.sd), getResources()
-						.getDrawable(R.drawable.ic_launcher_startup));
+				m = new ActionItem(2400, getString(R.string.sd), getResources().getDrawable(R.drawable.ic_launcher_startup));
 			e.addActionItem(m);
 
 			if (CURRENT_PREF_ITEM == 3)
-				m = new ActionItem(2500, getString(R.string.appstore),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				m = new ActionItem(2500, getString(R.string.appstore),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				m = new ActionItem(2500, getString(R.string.appstore),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_startup));
+				m = new ActionItem(2500, getString(R.string.appstore),getResources().getDrawable(R.drawable.ic_launcher_startup));
 			e.addActionItem(m);
 			e.setOnActionItemClickListener(this);
 			e.show(indicator);
@@ -3279,24 +2978,17 @@ public class TaskerActivity extends FragmentActivity implements
 		case 900:
 			// DIRECTED FROM CASE 200
 			// IT IS SECOND OPTION AVAILABLE UNDER STARTUP
-			QuickAction f = new QuickAction(getBaseContext());
-			ActionItem n = new ActionItem(2600, getString(R.string.rootpanel),
-					getResources().getDrawable(R.drawable.ic_launcher_startup));
+			QuickAction f = new QuickAction(mContext);
+			ActionItem n = new ActionItem(2600, getString(R.string.rootpanel),getResources().getDrawable(R.drawable.ic_launcher_startup));
 			f.addActionItem(n);
-			n = new ActionItem(2700, getString(R.string.sd), getResources()
-					.getDrawable(R.drawable.ic_launcher_startup));
+			n = new ActionItem(2700, getString(R.string.sd), getResources().getDrawable(R.drawable.ic_launcher_startup));
 			f.addActionItem(n);
 
 			if (ENABLE_ON_LAUNCH)
-				n = new ActionItem(3600, getString(R.string.enableonlaunch),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				n = new ActionItem(3600, getString(R.string.enableonlaunch),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				n = new ActionItem(3600, getString(R.string.enableonlaunch),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_disabled));
+				n = new ActionItem(3600, getString(R.string.enableonlaunch),getResources().getDrawable(R.drawable.ic_launcher_disabled));
 			f.addActionItem(n);
-
 			f.setOnActionItemClickListener(this);
 			f.show(indicator);
 			break;
@@ -3315,62 +3007,40 @@ public class TaskerActivity extends FragmentActivity implements
 			}
 			edit.commit();
 			setAdapter(CURRENT_ITEM);
-			Toast.makeText(getBaseContext(),
-					getString(R.string.settingsapplied), Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(mContext,getString(R.string.settingsapplied), Toast.LENGTH_SHORT).show();
 			break;
 		case 1100:
 			// DISPLAYS THE AVAILABLE SORTING METHODS AVAILABLE
-			QuickAction c = new QuickAction(getBaseContext());
+			QuickAction c = new QuickAction(mContext);
 			ActionItem k;
 			if (SORT_TYPE == 1)
-				k = new ActionItem(1200, getString(R.string.alphafirst),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				k = new ActionItem(1200, getString(R.string.alphafirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1200, getString(R.string.alphafirst),
-						getResources().getDrawable(
-								RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+				k = new ActionItem(1200, getString(R.string.alphafirst),getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
 			c.addActionItem(k);
 
 			if (SORT_TYPE == 2)
-				k = new ActionItem(1300, getString(R.string.folderfirst),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				k = new ActionItem(1300, getString(R.string.folderfirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1300, getString(R.string.folderfirst),
-						getResources().getDrawable(
-								RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+				k = new ActionItem(1300, getString(R.string.folderfirst),getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
 			c.addActionItem(k);
 
 			if (SORT_TYPE == 3)
-				k = new ActionItem(1400, getString(R.string.filefirst),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				k = new ActionItem(1400, getString(R.string.filefirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1400, getString(R.string.filefirst),
-						getResources().getDrawable(
-								RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+				k = new ActionItem(1400, getString(R.string.filefirst),getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
 			c.addActionItem(k);
 
 			if (SORT_TYPE == 4)
-				k = new ActionItem(1500, getString(R.string.hidfirst),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				k = new ActionItem(1500, getString(R.string.hidfirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1500, getString(R.string.hidfirst),
-						getResources().getDrawable(
-								RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+				k = new ActionItem(1500, getString(R.string.hidfirst),getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
 			c.addActionItem(k);
 
 			if (SORT_TYPE == 5)
-				k = new ActionItem(1600, getString(R.string.nonhidfirst),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				k = new ActionItem(1600, getString(R.string.nonhidfirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1600, getString(R.string.nonhidfirst),
-						getResources().getDrawable(
-								RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+				k = new ActionItem(1600, getString(R.string.nonhidfirst),getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
 			c.addActionItem(k);
 			c.setOnActionItemClickListener(this);
 			c.show(indicator);
@@ -3382,9 +3052,7 @@ public class TaskerActivity extends FragmentActivity implements
 			SORT_TYPE = RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = 1;
 			edit.putInt("SORT_TYPE", 1);
 			edit.commit();
-			Toast.makeText(getBaseContext(),
-					getString(R.string.settingsapplied), Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(mContext,getString(R.string.settingsapplied), Toast.LENGTH_SHORT).show();
 			setAdapter(CURRENT_ITEM);
 			break;
 
@@ -3394,8 +3062,7 @@ public class TaskerActivity extends FragmentActivity implements
 			SORT_TYPE = RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = 2;
 			edit.putInt("SORT_TYPE", 2);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			setAdapter(CURRENT_ITEM);
 			break;
 
@@ -3405,8 +3072,7 @@ public class TaskerActivity extends FragmentActivity implements
 			SORT_TYPE = RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = 3;
 			edit.putInt("SORT_TYPE", 3);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			setAdapter(CURRENT_ITEM);
 			break;
 
@@ -3416,8 +3082,7 @@ public class TaskerActivity extends FragmentActivity implements
 			SORT_TYPE = RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = 4;
 			edit.putInt("SORT_TYPE", 4);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			setAdapter(CURRENT_ITEM);
 			break;
 
@@ -3427,8 +3092,7 @@ public class TaskerActivity extends FragmentActivity implements
 			SORT_TYPE = RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = 5;
 			edit.putInt("SORT_TYPE", 5);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			setAdapter(CURRENT_ITEM);
 			break;
 
@@ -3439,8 +3103,7 @@ public class TaskerActivity extends FragmentActivity implements
 			edit.putFloat("TRANSPRA_LEVEL", 0.6f);
 			edit.commit();
 			this.getWindow().getAttributes().alpha = TRANSPRA_LEVEL;
-			Toast.makeText(getBaseContext(), R.string.settingssaved,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingssaved,Toast.LENGTH_SHORT).show();
 			break;
 		case 1800:
 			// DIRECTED FROM CASE 100
@@ -3449,8 +3112,7 @@ public class TaskerActivity extends FragmentActivity implements
 			edit.putFloat("TRANSPRA_LEVEL", 0.7f);
 			edit.commit();
 			this.getWindow().getAttributes().alpha = TRANSPRA_LEVEL;
-			Toast.makeText(getBaseContext(), R.string.settingssaved,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingssaved,Toast.LENGTH_SHORT).show();
 			break;
 
 		case 1900:
@@ -3460,8 +3122,7 @@ public class TaskerActivity extends FragmentActivity implements
 			edit.putFloat("TRANSPRA_LEVEL", 0.8f);
 			edit.commit();
 			this.getWindow().getAttributes().alpha = TRANSPRA_LEVEL;
-			Toast.makeText(getBaseContext(), R.string.settingssaved,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingssaved,Toast.LENGTH_SHORT).show();
 			break;
 		case 2000:
 			// DIRECTED FROM CASE 100
@@ -3470,8 +3131,7 @@ public class TaskerActivity extends FragmentActivity implements
 			edit.putFloat("TRANSPRA_LEVEL", 0.9f);
 			edit.commit();
 			this.getWindow().getAttributes().alpha = TRANSPRA_LEVEL;
-			Toast.makeText(getBaseContext(), R.string.settingssaved,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingssaved,Toast.LENGTH_SHORT).show();
 			break;
 		case 2100:
 			// DIRECTED FROM CASE 100
@@ -3480,8 +3140,7 @@ public class TaskerActivity extends FragmentActivity implements
 			edit.putFloat("TRANSPRA_LEVEL", 1.0f);
 			edit.commit();
 			this.getWindow().getAttributes().alpha = TRANSPRA_LEVEL;
-			Toast.makeText(getBaseContext(), R.string.settingssaved,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingssaved,Toast.LENGTH_SHORT).show();
 			break;
 
 		case 2200:
@@ -3490,8 +3149,7 @@ public class TaskerActivity extends FragmentActivity implements
 			CURRENT_PREF_ITEM = 0;
 			edit.putInt("CURRENT_PREF_ITEM", 0);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingssaved,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingssaved,Toast.LENGTH_SHORT).show();
 			break;
 		case 2300:
 			// DIRECTED FROM CASE 800
@@ -3499,8 +3157,7 @@ public class TaskerActivity extends FragmentActivity implements
 			CURRENT_PREF_ITEM = 1;
 			edit.putInt("CURRENT_PREF_ITEM", 1);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			break;
 		case 2400:
 			// DIRECTED FROM CASE 800
@@ -3508,8 +3165,7 @@ public class TaskerActivity extends FragmentActivity implements
 			CURRENT_PREF_ITEM = 2;
 			edit.putInt("CURRENT_PREF_ITEM", 2);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			break;
 		case 2500:
 			// DIRECTED FROM CASE 800
@@ -3517,8 +3173,7 @@ public class TaskerActivity extends FragmentActivity implements
 			// CURRENT_PREF_ITEM = 3;
 			edit.putInt("CURRENT_PREF_ITEM", 3);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			break;
 
 		case 2600:
@@ -3540,8 +3195,7 @@ public class TaskerActivity extends FragmentActivity implements
 			RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = 0;
 			edit.putInt("FOLDER_TYPE", 0);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			setAdapter(CURRENT_ITEM);
 			break;
 
@@ -3551,8 +3205,7 @@ public class TaskerActivity extends FragmentActivity implements
 			RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = 1;
 			edit.putInt("FOLDER_TYPE", 1);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			setAdapter(CURRENT_ITEM);
 			break;
 
@@ -3562,8 +3215,7 @@ public class TaskerActivity extends FragmentActivity implements
 			RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = 2;
 			edit.putInt("FOLDER_TYPE", 2);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			setAdapter(CURRENT_ITEM);
 			break;
 
@@ -3573,8 +3225,7 @@ public class TaskerActivity extends FragmentActivity implements
 			RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = 3;
 			edit.putInt("FOLDER_TYPE", 3);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			setAdapter(CURRENT_ITEM);
 			break;
 
@@ -3584,8 +3235,7 @@ public class TaskerActivity extends FragmentActivity implements
 			RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = 4;
 			edit.putInt("FOLDER_TYPE", 4);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			setAdapter(CURRENT_ITEM);
 			break;
 
@@ -3595,8 +3245,7 @@ public class TaskerActivity extends FragmentActivity implements
 			RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = 5;
 			edit.putInt("FOLDER_TYPE", 5);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			setAdapter(CURRENT_ITEM);
 			break;
 		case 3103:
@@ -3605,42 +3254,32 @@ public class TaskerActivity extends FragmentActivity implements
 			RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = 6;
 			edit.putInt("FOLDER_TYPE", 6);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			setAdapter(CURRENT_ITEM);
 			break;
 		case 3200:
 			// DIRECTED FROM CASE 400 ONLY FOR APP PANEL
 			// DISPLAYS OPTION FOR SETTING TO SHOW USER OR SYSTEM OR BOTH TYPES
 			// OF APP
-			QuickAction s = new QuickAction(getBaseContext());
+			QuickAction s = new QuickAction(mContext);
 			ActionItem ti;
 			if (SHOW_APP == 1)
-				ti = new ActionItem(3300, getString(R.string.showdownapp),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				ti = new ActionItem(3300, getString(R.string.showdownapp),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				ti = new ActionItem(3300, getString(R.string.showdownapp),
-						getResources().getDrawable(R.drawable.ic_launcher_user));
+				ti = new ActionItem(3300, getString(R.string.showdownapp),getResources().getDrawable(R.drawable.ic_launcher_user));
+			
 			s.addActionItem(ti);
 
 			if (SHOW_APP == 2)
-				ti = new ActionItem(3400, getString(R.string.showsysapp),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				ti = new ActionItem(3400, getString(R.string.showsysapp),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				ti = new ActionItem(3400, getString(R.string.showsysapp),
-						getResources().getDrawable(
-								R.drawable.ic_launcher_system));
+				ti = new ActionItem(3400, getString(R.string.showsysapp),getResources().getDrawable(R.drawable.ic_launcher_system));
 			s.addActionItem(ti);
 
 			if (SHOW_APP == 3)
-				ti = new ActionItem(3500, getString(R.string.showboth),
-						getResources()
-								.getDrawable(R.drawable.ic_launcher_apply));
+				ti = new ActionItem(3500, getString(R.string.showboth),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				ti = new ActionItem(3500, getString(R.string.showboth),
-						getResources().getDrawable(R.drawable.ic_launcher_both));
+				ti = new ActionItem(3500, getString(R.string.showboth),getResources().getDrawable(R.drawable.ic_launcher_both));
 			s.addActionItem(ti);
 			s.setOnActionItemClickListener(this);
 			s.show(indicator);
@@ -3651,11 +3290,9 @@ public class TaskerActivity extends FragmentActivity implements
 			edit.putInt("SHOW_APP", 1);
 			edit.commit();
 			SHOW_APP = nManager.SHOW_APP = 1;
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			nList = nManager.giveMeAppList();
-			nAppAdapter = new AppAdapter(getBaseContext(), R.layout.row_list_1,
-					nList);
+			nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
 			APP_LIST_VIEW.setAdapter(nAppAdapter);
 			break;
 		case 3400:
@@ -3664,11 +3301,9 @@ public class TaskerActivity extends FragmentActivity implements
 			edit.putInt("SHOW_APP", 2);
 			edit.commit();
 			SHOW_APP = nManager.SHOW_APP = 2;
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			nList = nManager.giveMeAppList();
-			nAppAdapter = new AppAdapter(getBaseContext(), R.layout.row_list_1,
-					nList);
+			nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
 			APP_LIST_VIEW.setAdapter(nAppAdapter);
 			break;
 
@@ -3678,11 +3313,9 @@ public class TaskerActivity extends FragmentActivity implements
 			edit.putInt("SHOW_APP", 3);
 			edit.commit();
 			SHOW_APP = nManager.SHOW_APP = 3;
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			nList = nManager.giveMeAppList();
-			nAppAdapter = new AppAdapter(getBaseContext(), R.layout.row_list_1,
-					nList);
+			nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
 			APP_LIST_VIEW.setAdapter(nAppAdapter);
 			break;
 
@@ -3694,8 +3327,7 @@ public class TaskerActivity extends FragmentActivity implements
 			else
 				edit.putBoolean("ENABLE_ON_LAUNCH", ENABLE_ON_LAUNCH = true);
 			edit.commit();
-			Toast.makeText(getBaseContext(), R.string.settingsapplied,
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 			break;
 
 		}
@@ -3781,19 +3413,12 @@ public class TaskerActivity extends FragmentActivity implements
 						protected void onPostExecute(Void result) {
 							if (SEARCH_FLAG) {
 								if (CURRENT_ITEM == 2) {
-									root.setAdapter(new RootAdapter(
-											getBaseContext(),
-											R.layout.row_list_1, searchList));
+									root.setAdapter(new RootAdapter(mContext,R.layout.row_list_1, searchList));
 								} else if (CURRENT_ITEM == 1) {
-									simple.setAdapter(new SimpleAdapter(
-											getBaseContext(),
-											R.layout.row_list_1, searchList));
+									simple.setAdapter(new SimpleAdapter(mContext,R.layout.row_list_1, searchList));
 								} else
 									LIST_VIEW_3D
-											.setAdapter(new MediaElementAdapter(
-													getBaseContext(),
-													R.layout.row_list_1,
-													searchList));
+											.setAdapter(new MediaElementAdapter(mContext,R.layout.row_list_1,searchList));
 							}
 						}
 
@@ -3866,21 +3491,18 @@ public class TaskerActivity extends FragmentActivity implements
 		 */
 		PackageInfo in;
 		PackageManager man = getPackageManager();
-		QuickAction q = new QuickAction(getBaseContext());
-		final SharedPreferences p = getSharedPreferences("DEFAULT_APPS",
-				MODE_PRIVATE);
+		QuickAction q = new QuickAction(mContext);
+		final SharedPreferences p = getSharedPreferences("DEFAULT_APPS",MODE_PRIVATE);
 		final SharedPreferences.Editor ed = p.edit();
 		final String MUSIC = p.getString("MUSIC", null);
 		ActionItem it = new ActionItem();
 		try {
 			in = man.getPackageInfo(MUSIC, 0);
-			it.setTitle(getString(R.string.music) + " - "
-					+ in.applicationInfo.loadLabel(man));
+			it.setTitle(getString(R.string.music) + " - "+ in.applicationInfo.loadLabel(man));
 			it.setIcon(in.applicationInfo.loadIcon(man));
 			it.setActionId(500);
 		} catch (NameNotFoundException e) {
-			it = new ActionItem(600, getString(R.string.nomusicapp),
-					getResources().getDrawable(R.drawable.ic_launcher_music));
+			it = new ActionItem(600, getString(R.string.nomusicapp),getResources().getDrawable(R.drawable.ic_launcher_music));
 			ed.putString("MUSIC", null);
 			ed.commit();
 		}
@@ -3890,15 +3512,13 @@ public class TaskerActivity extends FragmentActivity implements
 		final String IMAGE = p.getString("IMAGE", null);
 		try {
 			in = man.getPackageInfo(IMAGE, 0);
-			it.setTitle(getString(R.string.image) + " - "
-					+ in.applicationInfo.loadLabel(man));
+			it.setTitle(getString(R.string.image) + " - "+ in.applicationInfo.loadLabel(man));
 			it.setIcon(in.applicationInfo.loadIcon(man));
 			it.setActionId(700);
 		} catch (NameNotFoundException e) {
 			ed.putString("IMAGE", null);
 			ed.commit();
-			it = new ActionItem(800, getString(R.string.noimgapp),
-					getResources().getDrawable(R.drawable.ic_launcher_images));
+			it = new ActionItem(800, getString(R.string.noimgapp),getResources().getDrawable(R.drawable.ic_launcher_images));
 
 		}
 		q.addActionItem(it);
@@ -3907,15 +3527,13 @@ public class TaskerActivity extends FragmentActivity implements
 		final String VIDEO = p.getString("VIDEO", null);
 		try {
 			in = man.getPackageInfo(VIDEO, 0);
-			it.setTitle(getString(R.string.vids) + " - "
-					+ in.applicationInfo.loadLabel(man));
+			it.setTitle(getString(R.string.vids) + " - "+ in.applicationInfo.loadLabel(man));
 			it.setIcon(in.applicationInfo.loadIcon(man));
 			it.setActionId(900);
 		} catch (NameNotFoundException e) {
 			ed.putString("VIDEO", null);
 			ed.commit();
-			it = new ActionItem(1000, getString(R.string.novidapp),
-					getResources().getDrawable(R.drawable.ic_launcher_video));
+			it = new ActionItem(1000, getString(R.string.novidapp),getResources().getDrawable(R.drawable.ic_launcher_video));
 
 		}
 		q.addActionItem(it);
@@ -3924,15 +3542,13 @@ public class TaskerActivity extends FragmentActivity implements
 		final String ZIP = p.getString("ZIP", null);
 		try {
 			in = man.getPackageInfo(ZIP, 0);
-			it.setTitle(getString(R.string.zip) + " - "
-					+ in.applicationInfo.loadLabel(man));
+			it.setTitle(getString(R.string.zip) + " - "	+ in.applicationInfo.loadLabel(man));
 			it.setIcon(in.applicationInfo.loadIcon(man));
 			it.setActionId(1100);
 		} catch (NameNotFoundException e) {
 			ed.putString("ZIP", null);
 			ed.commit();
-			it = new ActionItem(1200, getString(R.string.nozipapp),
-					getResources().getDrawable(R.drawable.ic_launcher_zip_it));
+			it = new ActionItem(1200, getString(R.string.nozipapp),getResources().getDrawable(R.drawable.ic_launcher_zip_it));
 
 		}
 		q.addActionItem(it);
@@ -3941,15 +3557,13 @@ public class TaskerActivity extends FragmentActivity implements
 		final String PDF = p.getString("PDF", null);
 		try {
 			in = man.getPackageInfo(PDF, 0);
-			it.setTitle(getString(R.string.pdf) + " - "
-					+ in.applicationInfo.loadLabel(man));
+			it.setTitle(getString(R.string.pdf) + " - "	+ in.applicationInfo.loadLabel(man));
 			it.setIcon(in.applicationInfo.loadIcon(man));
 			it.setActionId(1300);
 		} catch (NameNotFoundException e) {
 			ed.putString("PDF", null);
 			ed.commit();
-			it = new ActionItem(1400, getString(R.string.nopdfapp),
-					getResources().getDrawable(R.drawable.ic_launcher_adobe));
+			it = new ActionItem(1400, getString(R.string.nopdfapp),getResources().getDrawable(R.drawable.ic_launcher_adobe));
 
 		}
 		q.addActionItem(it);
@@ -3958,15 +3572,13 @@ public class TaskerActivity extends FragmentActivity implements
 		final String TEXT = p.getString("TEXT", null);
 		try {
 			in = man.getPackageInfo(TEXT, 0);
-			it.setTitle(getString(R.string.docs) + " - "
-					+ in.applicationInfo.loadLabel(man));
+			it.setTitle(getString(R.string.docs) + " - "+in.applicationInfo.loadLabel(man));
 			it.setIcon(in.applicationInfo.loadIcon(man));
 			it.setActionId(1500);
 		} catch (NameNotFoundException e) {
 			ed.putString("TEXT", null);
 			ed.commit();
-			it = new ActionItem(1600, getString(R.string.nodocapp),
-					getResources().getDrawable(R.drawable.ic_launcher_text));
+			it = new ActionItem(1600, getString(R.string.nodocapp),getResources().getDrawable(R.drawable.ic_launcher_text));
 
 		}
 		q.addActionItem(it);
@@ -3975,20 +3587,17 @@ public class TaskerActivity extends FragmentActivity implements
 		final String RAR = p.getString("RAR", null);
 		try {
 			in = man.getPackageInfo(RAR, 0);
-			it.setTitle(getString(R.string.rar) + " - "
-					+ in.applicationInfo.loadLabel(man));
+			it.setTitle(getString(R.string.rar) + " - "	+ in.applicationInfo.loadLabel(man));
 			it.setIcon(in.applicationInfo.loadIcon(man));
 			it.setActionId(1700);
 		} catch (NameNotFoundException e) {
 			ed.putString("RAR", null);
 			ed.commit();
-			it = new ActionItem(1800, getString(R.string.norarapp),
-					getResources().getDrawable(R.drawable.ic_launcher_rar));
+			it = new ActionItem(1800, getString(R.string.norarapp),getResources().getDrawable(R.drawable.ic_launcher_rar));
 
 		}
 		q.addActionItem(it);
-		it = new ActionItem(1900, getString(R.string.cleardefaults),
-				getResources().getDrawable(R.drawable.ic_launcher_delete));
+		it = new ActionItem(1900, getString(R.string.cleardefaults),getResources().getDrawable(R.drawable.ic_launcher_delete));
 		q.addActionItem(it);
 		q.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
 			@Override
@@ -4000,65 +3609,52 @@ public class TaskerActivity extends FragmentActivity implements
 					 * MUSIC APP HAS BEEN SET TO DEFAULT THEN DISPLAY ITS INFO
 					 * AND GIVE OPTION TO CLEAR DEFAULT
 					 */
-					new SelectedApp(mContext, size.x * 5 / 6, MODE_PRIVATE,
-							MUSIC, "MUSIC");
+					new SelectedApp(mContext, size.x*8/9, MODE_PRIVATE,	MUSIC, "MUSIC");
 					break;
 				case 600:
-					new SelectApp(mContext, size.x * 5 / 6, "MUSIC",
-							MODE_PRIVATE);
+					new SelectApp(mContext, size.x*8/9, "MUSIC",MODE_PRIVATE);
 					break;
 				case 700:
-					new SelectedApp(mContext, size.x * 5 / 6, MODE_PRIVATE,
-							IMAGE, "IMAGE");
+					new SelectedApp(mContext, size.x*8/9, MODE_PRIVATE,	IMAGE, "IMAGE");
 					break;
 				case 800:
-					new SelectApp(mContext, size.x * 5 / 6, "IMAGE",
-							MODE_PRIVATE);
+					new SelectApp(mContext, size.x*8/9, "IMAGE",MODE_PRIVATE);
 					break;
 				case 900:
-					new SelectedApp(mContext, size.x * 5 / 6, MODE_PRIVATE,
-							VIDEO, "VIDEO");
+					new SelectedApp(mContext, size.x*8/9, MODE_PRIVATE,	VIDEO, "VIDEO");
 					break;
-
 				case 1000:
-					new SelectApp(mContext, size.x * 5 / 6, "VIDEO",
-							MODE_PRIVATE);
+					new SelectApp(mContext, size.x*8/9, "VIDEO",MODE_PRIVATE);
 					break;
 				case 1100:
-					new SelectedApp(mContext, size.x * 5 / 6, MODE_PRIVATE,
-							ZIP, "ZIP");
+					new SelectedApp(mContext, size.x*8/9, MODE_PRIVATE,	ZIP, "ZIP");
 					break;
 				case 1200:
-					new SelectApp(mContext, size.x * 5 / 6, "ZIP", MODE_PRIVATE);
+					new SelectApp(mContext, size.x*8/9, "ZIP", MODE_PRIVATE);
 					break;
 				case 1300:
-					new SelectedApp(mContext, size.x * 5 / 6, MODE_PRIVATE,
-							PDF, "PDF");
+					new SelectedApp(mContext, size.x*8/9, MODE_PRIVATE,	PDF, "PDF");
 					break;
 				case 1400:
-					new SelectApp(mContext, size.x * 5 / 6, "PDF", MODE_PRIVATE);
+					new SelectApp(mContext, size.x*8/9, "PDF", MODE_PRIVATE);
 					break;
 				case 1500:
-					new SelectedApp(mContext, size.x * 5 / 6, MODE_PRIVATE,
-							TEXT, "TEXT");
+					new SelectedApp(mContext, size.x*8/9, MODE_PRIVATE,	TEXT, "TEXT");
 					break;
 				case 1600:
-					new SelectApp(mContext, size.x * 5 / 6, "TEXT",
-							MODE_PRIVATE);
+					new SelectApp(mContext, size.x*8/9, "TEXT",MODE_PRIVATE);
 					break;
 				case 1700:
-					new SelectedApp(mContext, size.x * 5 / 6, MODE_PRIVATE,
-							RAR, "RAR");
+					new SelectedApp(mContext, size.x*8/9, MODE_PRIVATE,RAR, "RAR");
 					break;
 				case 1800:
-					new SelectApp(mContext, size.x * 5 / 6, "RAR", MODE_PRIVATE);
+					new SelectApp(mContext, size.x*8/9, "RAR", MODE_PRIVATE);
 					break;
 				case 1900:
 					SharedPreferences.Editor ed = p.edit();
 					ed.clear();
 					ed.commit();
-					Toast.makeText(getBaseContext(), R.string.settingsapplied,
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
 					break;
 				}
 			}
@@ -4071,38 +3667,28 @@ public class TaskerActivity extends FragmentActivity implements
 	 */
 	private void ShowMenu() {
 		QuickAction action = new QuickAction(getApplicationContext(), 1);
-		ActionItem item = new ActionItem(80, getString(R.string.appearance),
-				getResources().getDrawable(R.drawable.ic_launcher_appreance));
+		ActionItem item = new ActionItem(80, getString(R.string.appearance),getResources().getDrawable(R.drawable.ic_launcher_appreance));
 		action.addActionItem(item);
-		item = new ActionItem(200, getString(R.string.startup), getResources()
-				.getDrawable(R.drawable.ic_launcher_startup));
+		item = new ActionItem(200, getString(R.string.startup), getResources().getDrawable(R.drawable.ic_launcher_startup));
 		action.addActionItem(item);
 		if (mViewPager.getCurrentItem() != 3) {
-			item = new ActionItem(300, getString(R.string.folderopt),
-					getResources().getDrawable(
-							RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+			item = new ActionItem(300, getString(R.string.folderopt),getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
 			action.addActionItem(item);
-			item = new ActionItem(400, getString(R.string.sethomdir),
-					getResources().getDrawable(
-							R.drawable.ic_launcher_droid_home));
+			item = new ActionItem(400, getString(R.string.sethomdir),getResources().getDrawable(R.drawable.ic_launcher_droid_home));
 			action.addActionItem(item);
 		} else if (mViewPager.getCurrentItem() == 3) {
-			item = new ActionItem(3200, getString(R.string.apps),
-					getResources().getDrawable(R.drawable.ic_launcher_apk));
+			item = new ActionItem(3200, getString(R.string.apps),getResources().getDrawable(R.drawable.ic_launcher_apk));
 			action.addActionItem(item);
 		}
-		item = new ActionItem(500, getString(R.string.restoretodefault),
-				getResources().getDrawable(R.drawable.ic_launcher_delete));
+		item = new ActionItem(500, getString(R.string.restoretodefault),getResources().getDrawable(R.drawable.ic_launcher_delete));
 		action.addActionItem(item);
 
-		// yet to be implemented
+		item = new ActionItem(501, getString(R.string.cleargesturedata),getResources().getDrawable(R.drawable.ic_launcher_gesture));
+		action.addActionItem(item);
 
-		// item = new ActionItem(-1, "Urgent Message",
-		// getResources().getDrawable(R.drawable.ic_launcher_message));
-		// action.addActionItem(item);
-
-		item = new ActionItem(700, getString(R.string.abtme), getResources()
-				.getDrawable(R.drawable.ic_launcher_info));
+		
+		
+		item = new ActionItem(700, getString(R.string.abtme), getResources().getDrawable(R.drawable.ic_launcher_info));
 		action.addActionItem(item);
 		action.setAnimStyle(3);
 		action.setOnActionItemClickListener(this);
@@ -4120,7 +3706,7 @@ public class TaskerActivity extends FragmentActivity implements
 		if (CURRENT_ITEM == 3)
 			v = (HorizontalScrollView) findViewById(R.id.hscrollView2);
 		ImageButton btn = (ImageButton) findViewById(R.id.bottom_multi);
-		QuickAction action = new QuickAction(getBaseContext());
+		QuickAction action = new QuickAction(mContext);
 		ActionItem item = new ActionItem(1, str);
 		action.addActionItem(item);
 		v.scrollTo(0, 0);
@@ -4152,23 +3738,19 @@ public class TaskerActivity extends FragmentActivity implements
 				MULTIPLE_COPY = MULTIPLE_CUT = COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = MULTIPLE_CUT_GALLERY = SEARCH_FLAG = false;
 				COPY_FILES = new ArrayList<File>();
 				COPY_FILES = MediaElementAdapter.MULTI_FILES;
-				showToast(MediaElementAdapter.C + " "
-						+ getString(R.string.selectedforcopy));
+				showToast(MediaElementAdapter.C + " "+ getString(R.string.selectedforcopy));
 			} else if (action == 2 && MediaElementAdapter.C != 0) {
 				MULTIPLE_CUT_GALLERY = true;
 				COPY_FILES = new ArrayList<File>();
 				COPY_FILES = MediaElementAdapter.MULTI_FILES;
 				MULTIPLE_COPY = MULTIPLE_CUT = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY_GALLERY = RENAME_COMMAND = SEARCH_FLAG = false;
-				showToast(MediaElementAdapter.C + " "
-						+ getString(R.string.selectedformove));
+				showToast(MediaElementAdapter.C + " "+ getString(R.string.selectedformove));
 			} else if (action == 3 && MediaElementAdapter.C != 0) {
 				COPY_FILES = new ArrayList<File>();
 				COPY_FILES = MediaElementAdapter.MULTI_FILES;
-				// new MultiZip(mContext, size.x*4/5, COPY_FILES,
-				// COPY_FILES.size(), "/sdcard", "/sdcard");
 				new CreateZip(mContext, size.x * 8 / 9, COPY_FILES);
 			} else
-				Toast.makeText(getBaseContext(), R.string.firstselectsomefiles,
+				Toast.makeText(mContext, R.string.firstselectsomefiles,
 						Toast.LENGTH_SHORT).show();
 		} else if (ITEM == 1 && SimpleAdapter.MULTI_SELECT) {
 			if (action == 4 && SimpleAdapter.c != 0) {// DELETE THE MULTIPLE
@@ -4179,15 +3761,13 @@ public class TaskerActivity extends FragmentActivity implements
 				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
 				COPY_FILES = new ArrayList<File>();
 				COPY_FILES = SimpleAdapter.MULTI_FILES;
-				showToast(SimpleAdapter.c + " "
-						+ getString(R.string.selectedforcopy));
+				showToast(SimpleAdapter.c + " "+ getString(R.string.selectedforcopy));
 			} else if (action == 2 && SimpleAdapter.c > 0) {
 				MULTIPLE_CUT = true;
 				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
 				COPY_FILES = new ArrayList<File>();
 				COPY_FILES = SimpleAdapter.MULTI_FILES;
-				showToast(SimpleAdapter.c + " "
-						+ getString(R.string.selectedformove));
+				showToast(SimpleAdapter.c + " "+ getString(R.string.selectedformove));
 			} else if (action == 3 && SimpleAdapter.c > 0) {
 				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
 				COPY_FILES = new ArrayList<File>();
@@ -4197,11 +3777,9 @@ public class TaskerActivity extends FragmentActivity implements
 				 * FOR NOW SHOWING TOAST MESSAGE SHOWING BCS OF INTERNAL ERROR
 				 * COPYING FAILED
 				 */
-				Toast.makeText(getBaseContext(), R.string.serviceUnavaila,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, R.string.serviceUnavaila,Toast.LENGTH_SHORT).show();
 			} else
-				Toast.makeText(getBaseContext(), R.string.firstselectsomefiles,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, R.string.firstselectsomefiles,Toast.LENGTH_SHORT).show();
 
 		} else if (ITEM == 2 && RootAdapter.MULTI_SELECT) {
 			if (action == 4 && RootAdapter.C != 0) {
@@ -4212,26 +3790,20 @@ public class TaskerActivity extends FragmentActivity implements
 				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
 				COPY_FILES = new ArrayList<File>();
 				COPY_FILES = RootAdapter.MULTI_FILES;
-				showToast(RootAdapter.C + " "
-						+ getString(R.string.selectedforcopy));
+				showToast(RootAdapter.C + " "+ getString(R.string.selectedforcopy));
 			} else if (action == 2 && RootAdapter.C != 0) {
 				MULTIPLE_CUT = true;
 				COPY_FILES = new ArrayList<File>();
 				COPY_FILES = RootAdapter.MULTI_FILES;
 				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
-				showToast(RootAdapter.C + " "
-						+ getString(R.string.selectedformove));
+				showToast(RootAdapter.C + " "+ getString(R.string.selectedformove));
 			} else if (action == 3 && RootAdapter.C != 0) {
 				COPY_FILES = new ArrayList<File>();
 				COPY_FILES = RootAdapter.MULTI_FILES;
 				MULTIPLE_COPY = MULTIPLE_CUT = COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
-				// new MultiZip(mContext, size.x*7/9, COPY_FILES, RootAdapter.C,
-				// RFileManager.getCurrentDirectory(),
-				// nRFileManager.getCurrentDirectory());
 				new CreateZip(mContext, size.x * 8 / 9, COPY_FILES);
 			} else
-				Toast.makeText(getBaseContext(), R.string.firstselectsomefiles,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, R.string.firstselectsomefiles,Toast.LENGTH_SHORT).show();
 		} else
 			MultiModeDisabled(str);
 	}
@@ -4252,7 +3824,7 @@ public class TaskerActivity extends FragmentActivity implements
 					try {
 						pDialog.setContentView(R.layout.p_dialog);
 						pDialog.setCancelable(false);
-						pDialog.getWindow().getAttributes().width = size.x * 4 / 5;
+						pDialog.getWindow().getAttributes().width = size.x*8/9;
 						WebView web = (WebView) pDialog
 								.findViewById(R.id.p_Web_View);
 						web.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
@@ -4368,34 +3940,26 @@ public class TaskerActivity extends FragmentActivity implements
 				av = new File(Environment.getExternalStorageDirectory().getAbsolutePath()).getFreeSpace();
 				to = new File(Environment.getExternalStorageDirectory().getAbsolutePath()).getTotalSpace();
 				if (av > Constants.GB)
-					sav = String.format(getString(R.string.availgb),
-							(double) av / (Constants.GB));
+					sav = String.format(getString(R.string.availgb),(double) av / (Constants.GB));
 
 				else if (av > Constants.MB)
-					sav = String.format(getString(R.string.availmb),
-							(double) av / (Constants.MB));
+					sav = String.format(getString(R.string.availmb),(double) av / (Constants.MB));
 
 				else if (av > 1024)
-					sav = String.format(getString(R.string.availkb),
-							(double) av / (1024));
+					sav = String.format(getString(R.string.availkb),(double) av / (1024));
 				else
-					sav = String.format(getString(R.string.availbytes),
-							(double) av);
+					sav = String.format(getString(R.string.availbytes),	(double) av);
 
 				if (to > Constants.GB)
-					sto = String.format(getString(R.string.totgb), (double) to
-							/ (Constants.GB));
+					sto = String.format(getString(R.string.totgb), (double) to/ (Constants.GB));
 
 				else if (to > Constants.MB)
-					sto = String.format(getString(R.string.totmb), (double) to
-							/ (Constants.MB));
+					sto = String.format(getString(R.string.totmb), (double) to/ (Constants.MB));
 
 				else if (to > 1024)
-					sto = String.format(getString(R.string.totkb),
-							(double) to / (1024));
+					sto = String.format(getString(R.string.totkb),(double) to / (1024));
 				else
-					sto = String.format(getString(R.string.totbytes),
-							(double) to);
+					sto = String.format(getString(R.string.totbytes),(double) to);
 				
 				/**
 				 * DECREASING THE VALUE OF LONG SO THAT IT FITS IN INTEGER RANGE...
@@ -4429,19 +3993,15 @@ public class TaskerActivity extends FragmentActivity implements
 			 */
 			if (COPY_COMMAND) {
 				if (CURRENT_ITEM == 1) {
-					new MultipleCopyDialog(mContext, COPY_FILES,
-							size.x * 8 / 9, file.getAbsolutePath(), false);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x * 8 / 9, file.getAbsolutePath(), false);
 				} else if (CURRENT_ITEM == 2) {
-					new MultipleCopyDialog(mContext, COPY_FILES,
-							size.x * 8 / 9, file2.getAbsolutePath(), false);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x * 8 / 9, file2.getAbsolutePath(), false);
 				}
 			} else if (CUT_COMMAND) {
 				if (CURRENT_ITEM == 1) {
-					new MultipleCopyDialog(mContext, COPY_FILES,
-							size.x * 8 / 9, file.getAbsolutePath(), true);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x * 8 / 9, file.getAbsolutePath(), true);
 				} else if (CURRENT_ITEM == 2) {
-					new MultipleCopyDialog(mContext, COPY_FILES,
-							size.x * 8 / 9, file2.getAbsolutePath(), true);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x * 8 / 9, file2.getAbsolutePath(), true);
 				}
 			}
 			COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_CUT = CREATE_FILE = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = false;
@@ -4457,11 +4017,9 @@ public class TaskerActivity extends FragmentActivity implements
 				else
 					dest = RFileManager.getCurrentDirectory();
 				if (MULTIPLE_COPY)
-					new MultipleCopyDialog(mContext, COPY_FILES,
-							size.x * 4 / 5, dest, false);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, dest, false);
 				else if (MULTIPLE_CUT)
-					new MultipleCopyDialog(mContext, COPY_FILES,
-							size.x * 4 / 5, dest, true);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, dest, true);
 
 			} else if (CURRENT_ITEM == 1) {
 				if (longC)
@@ -4469,11 +4027,9 @@ public class TaskerActivity extends FragmentActivity implements
 				else
 					dest = SFileManager.getCurrentDirectory();
 				if (MULTIPLE_COPY)
-					new MultipleCopyDialog(mContext, COPY_FILES,
-							size.x * 4 / 5, dest, false);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, dest, false);
 				else if (MULTIPLE_CUT)
-					new MultipleCopyDialog(mContext, COPY_FILES,
-							size.x * 4 / 5, dest, true);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, dest, true);
 
 			}
 			COPY_COMMAND = CUT_COMMAND = CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = false;
@@ -4483,30 +4039,20 @@ public class TaskerActivity extends FragmentActivity implements
 			 */
 			if (CURRENT_ITEM == 2) {
 				if (MULTIPLE_COPY_GALLERY) {
-					new MultipleCopyDialog(mContext, COPY_FILES,
-							size.x * 4 / 5, RFileManager.getCurrentDirectory(),
-							false);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, RFileManager.getCurrentDirectory(),	false);
 				} else if (MULTIPLE_CUT_GALLERY) {
-					new MultipleCopyDialog(mContext, COPY_FILES,
-							size.x * 4 / 5, RFileManager.getCurrentDirectory(),
-							true);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, RFileManager.getCurrentDirectory(),	true);
 				}
 			} else if (CURRENT_ITEM == 1) {
 				if (MULTIPLE_COPY_GALLERY) {
-					new MultipleCopyDialog(mContext, COPY_FILES,
-							size.x * 4 / 5, SFileManager.getCurrentDirectory(),
-							false);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, SFileManager.getCurrentDirectory(),false);
 				} else if (MULTIPLE_CUT_GALLERY) {
-					new MultipleCopyDialog(mContext, COPY_FILES,
-							size.x * 4 / 5, SFileManager.getCurrentDirectory(),
-							true);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, SFileManager.getCurrentDirectory(),	true);
 				}
 			}
 			COPY_COMMAND = CUT_COMMAND = CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = false;
-
 		} else {
-			Toast.makeText(mContext, R.string.selectFiles, Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(mContext, R.string.selectFiles, Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -4520,8 +4066,7 @@ public class TaskerActivity extends FragmentActivity implements
 			public void onReceive(Context arg0, Intent it) {
 				// TODO Auto-generated method stub
 				String ACTION = it.getAction();
-				if (ACTION.equalsIgnoreCase("FQ_BACKUP")
-						|| ACTION.equals(Intent.ACTION_UNINSTALL_PACKAGE))
+				if (ACTION.equalsIgnoreCase("FQ_BACKUP")|| ACTION.equals(Intent.ACTION_UNINSTALL_PACKAGE))
 					refreshList(CURRENT_ITEM);
 				else if (ACTION.equalsIgnoreCase("FQ_DELETE")) {
 					// setAdapter(CURRENT_ITEM);
@@ -4531,12 +4076,10 @@ public class TaskerActivity extends FragmentActivity implements
 					 new CreateZipApps(mContext, size.x*8/9, nList);
 				} else if (ACTION.equalsIgnoreCase("FQ_DROPBOX_STARTLINK")) {
 					// LINK A USER....
-					Toast.makeText(mContext, R.string.linkanaccount,
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(mContext, R.string.linkanaccount,Toast.LENGTH_SHORT).show();
 					NEW_OPTIONS(indicator);
 				} else if (ACTION.equalsIgnoreCase("FQ_G_OPEN")) {
-					Toast.makeText(mContext, R.string.openingfile,
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(mContext, R.string.openingfile,Toast.LENGTH_SHORT).show();
 					if (CURRENT_ITEM == 0 || CURRENT_ITEM == 3)
 						CURRENT_ITEM = 2;
 					String value = it.getStringExtra("gesture_path");
@@ -4553,8 +4096,7 @@ public class TaskerActivity extends FragmentActivity implements
 							setAdapter(CURRENT_ITEM);
 						}
 					} else
-						Toast.makeText(mContext, R.string.filedoesnotexists,
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, R.string.filedoesnotexists,Toast.LENGTH_SHORT).show();
 
 				}
 			}
