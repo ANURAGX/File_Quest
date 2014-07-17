@@ -76,7 +76,7 @@ public class OpenAs {
 		q.setText(mContext.getString(R.string.quit));
 		s.setText(mContext.getString(R.string.use));
 		lv.setAdapter(new Adapter(con, R.layout.row_list_2, list));
-		lv.setSelector(R.drawable.blue_button);
+		lv.setSelector(R.drawable.action_item_btn2);
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
