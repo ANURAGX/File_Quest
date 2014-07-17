@@ -68,6 +68,21 @@ public class ErrorDialogs {
 					dialog.dismiss();
 				}
 			});
+		}else if(data.equalsIgnoreCase("renameError")){
+			b = (Button)dialog.findViewById(R.id.popupCancel);
+			b.setVisibility(View.GONE);
+			iTv.setText(R.string.cantrename);
+			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_rename));
+			tv.setText(R.string.renameerror);
+			b= (Button)dialog.findViewById(R.id.popupOk);
+			b.setText("Ok");
+			b.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+				}
+			});
 		}
 		else if(data.equalsIgnoreCase("homeError")){
 			b = (Button)dialog.findViewById(R.id.popupCancel);
