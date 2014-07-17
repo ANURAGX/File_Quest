@@ -65,8 +65,8 @@
 	<string name="selectFiles">पहले कुछ फ़ाइलों का चयन करें  </string>
 	<string name="failedToRetrieve">फ़ाइल गुणों को पाने में विफल</string>
 	<string name="p_String">सूची लोड करने के दौरान कृपया प्रतीक्षा करेंt</string>
-	
-	
+	<string name="cleargesturedata">जेस्चर डेटा नष्ट करें</string>
+	<string name="gesturedatacleared">सभी जेस्चर डेटा नस्ट कर दिया गया है</string>
 	
 	
 	
@@ -124,8 +124,8 @@
     <string name="dropbox">ड्रॉपबॉक्स  </string>
     <string name="googledrive">गूगल ड्राइव</string>
 	<string name="skydrive">स्काई ड्राइव</string>
-    <string name="createfolder">फोल्डर बनाया गया</string>
-    <string name="createhiddenfolder">छुपा हुआ फोल्डर बनाया गयाr</string>
+    <string name="createfolder">फोल्डर बनाये </string>
+    <string name="createhiddenfolder">छिपा हुआ फोल्डर बनाये</string>
     <string name="createfile">खाली फाइल बनायें </string>
     <string name="enterfoldername">फ़ोल्डर का नाम दर्ज करें</string>
     <string name="enterfilename">फ़ाइल का नाम दर्ज करें</string>
@@ -361,8 +361,8 @@
     <!-- ERROR DIALOG STRINGS -->
     <string name="ziprecovery">ज़िप रिकवरी</string>
     <string name="ziprecoverymessage">यह विकल्प सभी ऐप्प्स को एक ज़िप फाइल में स्थापित कर देगा।।।</string>
-    
-    
+    <string name="cantrename">नाम बदलने में असक्षम</string>
+    <string name="renameerror">नाम बदलते समय एक त्रुटि का सामना करना पड़ा </string>
     
     <!-- DELETE_FILES DIALOG STRINGS... -->
     <string name="deletefiles">फाइल्स नष्ट करें ?</string>
