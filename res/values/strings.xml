@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+ Copyright(c) 2013 ANURAG 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+     http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+                             
+                            anurag.dev1512@gmail.com
+ 
+ -->
+
 <resources>
 
     <!--APP MANIFEST RELATED STRINGS.... -->
-	<string name="version">0.2.0</string>
+	<string name="version">0.2.5</string>
     <string name="app_name">File Quest</string>
-   
+    <string name="versioncode">025</string>
 	
 	<!-- Editor Activity -->
 	<string name="empty">No Files</string>
 	<string name="New">New</string>
 	<string name="overwrite">Overwrite</string>
 	<string name="search_hint">Enter Text To Search</string>
-	<string name="label">File Quest Editor</string>
+	<string name="label">File Quest Text Editor</string>
 	<string name="failtowrite">Unable To Save File</string>
-	<string name="invalid">Invalid File Selected</string>
+	<string name="invalid">Selected file is invalid</string>
 	<string name="readerror">Unable To Read The File</string>
 	<string name="xerror">Unknown Error Encountered</string>
-	<string name="saved">File Successfully Saved</string>
+	<string name="saved">File saved successfully</string>
 	<string name="yes">Yes</string>
 	<string name="no">No</string>
 	<string name="openwith">Open with</string>
@@ -32,19 +49,19 @@
 	<string name="selectFirst">First select an application</string>
 	<string name="always">Always</string>
 	<string name="once">Once</string>
-	<string name="nohome">Home Directory Not Found</string>
-	<string name="nohomeerror">It Seems That The Defined Path For Home Directory Deosnot Exists,Setting Home Directory To Default Location /sdcard,You Can Change The Default Location</string>
-	<string name="noapperror">Currently There Is No App Installed On This Device That Can Handle This Type Of File</string>
-	<string name="noactivity">This App Donot Have Activity To Launch</string>
-	<string name="failtodeletebackup">Unable To Delete The Backup</string>
+	<string name="nohome">Home directory not found</string>
+	<string name="nohomeerror">It seems that the defined path for home directory deosnot exists,setting home directory to default location /sdcard,you can change the default location</string>
+	<string name="noapperror">Currently there is no app installed on this device that can handle this type of file</string>
+	<string name="noactivity">This app donot have activity to launch</string>
+	<string name="failtodeletebackup">Unable to delete the backup</string>
 	<string name="senderror">An error encountered while sending files,try later</string>
-	<string name="unabletosend">Unable To Send Right now try later</string>
+	<string name="unabletosend">Unable to send right now try later</string>
 	<string name="someapps">First select some apps</string>
-	<string name="enablefirstforappstore">First Enable Multi Select mode for Your App Store then you can send multiple apps</string>
+	<string name="enablefirstforappstore">First enable multi select mode for your app store then you can send multiple apps</string>
 	<string name="serviceUnavaila">This service is unavailable for system files</string>
 	<string name="pasteNotAllowed">Paste not allowed here</string>
 	<string name="fsaved">File have been saved</string>
-	<string name="saveOnExit">Save File Before Quiting</string>
+	<string name="saveOnExit">Save file before quiting</string>
 	<string name="saveMesage">Do you want to save the file before quiting?</string>
 	<string name="selectFiles">First select some files</string>
 	<string name="failedToRetrieve">Failed to retrieve file properties</string>
@@ -80,13 +97,6 @@
 	<string name="showinguserapps">Now showing user apps</string>
 	<string name="showingsystemapps">Now showing system apps</string>
 	<string name="showinguserandsystemapps">Now showing user and system apps</string>
-	<string name="filtermusic">File music files</string>
-	<string name="filterapk">File apk files</string>
-	<string name="filterzip">File zip files</string>
-	<string name="filtervideo">File video files</string>
-	<string name="filterdocs">Filter document files</string>
-	<string name="filterimage">Filter image files</string>
-	<string name="filtermisc">Filter miscellaneous files</string>
 	<string name="foldercreated">Folder created at : </string>
 	<string name="foldernotcreated">Failed to create folder</string>
 	<string name="fileexists">File with same name already exists</string>
@@ -106,7 +116,7 @@
     <string name="jmpmusfo">Jump to music folder</string>
     <string name="jmpvidfo">Jump to video folder</string>
     <string name="prop">Properties</string>
-    <string name="selecteddefaultapp">Selected defaul appst</string>
+    <string name="selecteddefaultapp">Selected defaul apps</string>
     <string name="backupuserapp">Backup user apps</string>
     <string name="backupsystemapp">Backup system apps</string>
     <string name="backupboth">Backup both of them</string>
@@ -162,7 +172,7 @@
 	
     <string name="rar">Rar</string>
     <string name="norarapp">Rar - No rar app set as default</string>    
-    <string name="nomusicapp">Music - No musicapp set as default</string>
+    <string name="nomusicapp">Music - No music app set as default</string>
     <string name="novidapp">Video - No video app set as default</string>
     <string name="noimgapp">Image - No image app set as default</string>
     <string name="nozipapp">Zip - No zip app set as default</string>
@@ -234,7 +244,7 @@
     <string name="createbackupzip">Create backup zip</string>
     <string name="shareapp">Share App</string>
     <string name="appproperties">App Properties</string>    
-    <string name="nobackup">No Baclup</string>
+    <string name="nobackup">No Backup</string>
     <string name="backupon">Backup on :-</string>
     <string name="sizegb">%.2f GB</string>
     <string name="sizemb">%.2f MB</string>
@@ -289,7 +299,7 @@
     <string name="backupexists">Last Backup On :-</string>
     <string name="nobackupexists">No Earlier backup Exists</string>
     <string name="totalapps">Total apps to backup :-</string>
-   	<string name="appstatusgb">Status :- %.2f MB done</string>
+   	<string name="appstatusgb">Status :- %.2f GB done</string>
    	<string name="appstatusmb">Status :- %.2f MB done</string>
     <string name="appstatuskb">Status :- %.2f KB done</string>
     <string name="appstatusbytes">Status :- %.2f Bytes done</string> 
@@ -396,7 +406,7 @@
     <string name="docfile">Document file</string>
     <string name="pdffile">Pdf file</string>
     <string name="arcfile">Archive file</string>
-    <string name="openas">Opan file as</string>
+    <string name="openas">Open file as</string>
     <string name="makeaselection">Make a selection first</string>
     
     

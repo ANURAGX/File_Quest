@@ -102,7 +102,7 @@ public class Utils {
 							mSize.setText(msize);
 							
 							count = (TextView)v.findViewById(R.id.mFiles);
-							count.setText(music.size() + " Items");
+							count.setText(music.size() + " "+ctx.getString(R.string.items));
 							break;
 							
 					case 3:
@@ -112,7 +112,7 @@ public class Utils {
 							
 							
 							count = (TextView)v.findViewById(R.id.aFiles);
-							count.setText(apps.size() + " Items");
+							count.setText(apps.size() + " "+ctx.getString(R.string.items));
 							break;
 							
 					case 4:
@@ -122,7 +122,7 @@ public class Utils {
 							dSize.setText(dsize);
 							
 							count = (TextView)v.findViewById(R.id.dFile);
-							count.setText(doc.size() + " Items");
+							count.setText(doc.size() + " "+ctx.getString(R.string.items));
 							break;
 					case 5:
 							//displays IMAGE SIZE..
@@ -130,7 +130,7 @@ public class Utils {
 							iSize.setText(psize);
 							
 							count = (TextView)v.findViewById(R.id.pFiles);
-							count.setText(img.size() + " Items");
+							count.setText(img.size() + " "+ctx.getString(R.string.items));
 							break;
 							
 					case 6:
@@ -140,7 +140,7 @@ public class Utils {
 							
 							
 							count = (TextView)v.findViewById(R.id.vFiles);
-							count.setText(vids.size() + " Items");
+							count.setText(vids.size() + " "+ctx.getString(R.string.items));
 							break;
 							
 							
@@ -151,7 +151,7 @@ public class Utils {
 							zSize.setText(zsize);
 							
 							count = (TextView)v.findViewById(R.id.zFiles);
-							count.setText(zip.size() + " Items");
+							count.setText(zip.size() + " "+ctx.getString(R.string.items));
 							break;
 							
 					case 8:
@@ -160,7 +160,7 @@ public class Utils {
 							mmSize.setText(misize);
 							
 							count = (TextView)v.findViewById(R.id.misSize);
-							count.setText(mis.size() + " Items");
+							count.setText(mis.size() + " "+ctx.getString(R.string.items));
 							break;
 				}
 			}
