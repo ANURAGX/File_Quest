@@ -40,7 +40,7 @@
    		<ImageView 
    		android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:background="#ff33b5e5" 
+        android:background="@android:color/holo_purple" 
         android:layout_width="fill_parent" 
         android:layout_height="3.0dip" 
          />     
@@ -147,8 +147,7 @@
     
     
     
-    <LinearLayout 
-        android:id="@+id/strip"
+     <LinearLayout 
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:layout_width="fill_parent"
@@ -156,7 +155,7 @@
    		<ImageView 
    		android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:background="#ff33b5e5" 
+        android:background="@android:color/holo_purple" 
         android:layout_width="fill_parent" 
         android:layout_height="3.0dip" 
          />     

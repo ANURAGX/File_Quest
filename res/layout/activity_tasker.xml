@@ -23,6 +23,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_height="wrap_content" />
     -->
     <com.viewpagerindicator.TitlePageIndicator
+        app:footerColor="@android:color/holo_purple"
         android:id="@+id/indicator"
         app:footerLineHeight="2dp"
         app:footerIndicatorHeight="4dp"
