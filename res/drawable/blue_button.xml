@@ -4,28 +4,18 @@
     <item android:state_pressed="true" >
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="#FF5882FA" android:endColor="#084B8A" />
+                android:startColor="@android:color/holo_purple"
+                android:endColor="#5f3d70" />
             <stroke android:color="#3d4544" android:width="1dp" />
             <padding android:bottom="5dp"/>
-           
-              
-           
-           
         </shape>
     </item>
 
-   
-    
-<item>
-<shape android:shape="rectangle">
-    
-    <gradient android:startColor="#00000000" android:endColor="#00000000"/>
-    
-    <stroke android:color="#3d4544" android:width="1dp" />
-    <padding android:bottom="5dp"/>
-    
-   
-      
-</shape>
-</item>
+   <item>
+		<shape android:shape="rectangle">
+    		<gradient android:startColor="#00000000" android:endColor="#00000000"/>    
+    		<stroke android:color="#3d4544" android:width="1dp" />
+    		<padding android:bottom="5dp"/>
+    	</shape>
+	</item>
 </selector>
