@@ -48,7 +48,7 @@
             <TextView android:textSize="15.0sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="  -> G Open " />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="     -> Add gesture to file or folder." />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="     -> Open any folder or file by drawing gesture." />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="     -> G Open widget for homescreen to draw gestures and open folder or file." />
+            
             <TextView android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="" />
             <TextView android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="" />
             <TextView android:textSize="15.0sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="  -> Hindi Language Support" />
