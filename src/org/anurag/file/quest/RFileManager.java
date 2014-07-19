@@ -21,8 +21,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Stack;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
+
 
 public class RFileManager {
 	private static String PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -42,9 +41,7 @@ public class RFileManager {
 		nStack.push(Environment.getExternalStorageDirectory().getAbsolutePath());
 	}	
 	
-	public RFileManager(Handler handler){
-		//this.mHandler = handler;
-	}
+	
 	/**
 	 * Function to return current path  
 	 * @return
@@ -254,20 +251,14 @@ public class RFileManager {
 	 * @return
 	 */
 	public static void deleteTarget(File file) {
-		Message msg = new Message();
-		msg.what = 0;
-		
 		File target = file;
 		if(target.exists() && target.isFile() && target.canWrite())
 			target.delete();
-		
 		else if(target.exists() && target.isDirectory() && target.canRead()) {
 			String[] file_list = target.list();
-			
 			if(file_list != null && file_list.length == 0) {
 				target.delete();
 			} else if(file_list != null && file_list.length > 0) {
-				
 				for(int i = 0; i < file_list.length; i++) {
 					File temp_f = new File(target.getAbsolutePath() + "/" + file_list[i]);
 					if(temp_f.isDirectory())
