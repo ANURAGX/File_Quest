@@ -38,7 +38,6 @@ public class DeleteBackups{
 	private TextView popupMessage;
 	private Button btn1;
 	private Button btn2;
-	private RFileManager  mManager;
 	private Thread thread;
 	Context mContext;
 	Dialog dialog;
@@ -98,11 +97,11 @@ public class DeleteBackups{
 				thread = new Thread(new Runnable() {
 					@Override
 					public void run() {
-						mManager.deleteTarget(file);
+						RFileManager.deleteTarget(file);
 						mHandler.sendEmptyMessage(2);
 					}
 				});
-				mManager = new RFileManager(mHandler);
+				
 				btn1.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
