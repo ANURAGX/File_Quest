@@ -1131,7 +1131,7 @@ public class TaskerActivity extends FragmentActivity implements
 					if(ZIP_SIMPLE){
 						if(zFileSimple.isFile()){
 							//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
-							new ExtractZipFile(mContext, zFileSimple, size.x*8/9 , null , file);
+							new ExtractZipFile(mContext, zFileSimple, size.x*8/9 , null , file,0);
 						}else{
 							//DIRECTORY HAS TO BE OPENED....
 							zipPathSimple = zFileSimple.getPath();
@@ -1368,7 +1368,7 @@ public class TaskerActivity extends FragmentActivity implements
 						if(ZIP_ROOT){
 							if(zFileRoot.isFile()){
 								//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
-								new ExtractZipFile(mContext, zFileRoot, size.x*8/9 , null , file2);
+								new ExtractZipFile(mContext, zFileRoot, size.x*8/9 , null , file2,0);
 							}else{
 								//DIRECTORY HAS TO BE OPENED....
 								zipPathRoot = zFileRoot.getPath();
@@ -1405,10 +1405,21 @@ public class TaskerActivity extends FragmentActivity implements
 							mVFlipper.showNext();
 							mVFlipper.setAnimation(nextAnim());
 						}
-						CREATE_FILE = RENAME_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
-						COPY_COMMAND = true;
-						COPY_FILES = new ArrayList<File>();
-						COPY_FILES.add(file2);
+						
+						if(ZIP_ROOT){
+							//ZIP CONTENTS HAS TO EXTRACTED AT USER SPECIFIED LOCATION.....
+							
+							/**
+							 * 
+							 */
+							
+						}else{
+							//ORDINARI FILE EXLORING...
+							CREATE_FILE = RENAME_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+							COPY_COMMAND = true;
+							COPY_FILES = new ArrayList<File>();
+							COPY_FILES.add(file2);
+						}						
 						break;
 
 					case 3:
@@ -1417,10 +1428,20 @@ public class TaskerActivity extends FragmentActivity implements
 							mVFlipper.showNext();
 							mVFlipper.setAnimation(nextAnim());
 						}
-						CREATE_FILE = RENAME_COMMAND = COPY_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
-						CUT_COMMAND = true;
-						COPY_FILES = new ArrayList<File>();
-						COPY_FILES.add(file2);
+						
+						if(ZIP_ROOT){
+							//ZIP FILE IS OPENED....
+							//SELECTED FILE HAS TO BE EXTRACTED...
+							
+							//FILE HAS TO BE EXTRACTED IN CURRENT DIRECTORY....
+							new ExtractZipFile(mContext, zFileRoot, size.x*8/9, file2.getParent(), file2 , 1);
+						}else{
+							//ORDINARY FILE EXPLORING.... 
+							CREATE_FILE = RENAME_COMMAND = COPY_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+							CUT_COMMAND = true;
+							COPY_FILES = new ArrayList<File>();
+							COPY_FILES.add(file2);
+						}						
 						break;
 					case 4:
 						// PASTE
@@ -1494,7 +1515,7 @@ public class TaskerActivity extends FragmentActivity implements
 					if(ZIP_ROOT){
 						if(zFileRoot.isFile()){
 							//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
-							new ExtractZipFile(mContext, zFileRoot, size.x*8/9 , null , file2);
+							new ExtractZipFile(mContext, zFileRoot, size.x*8/9 , null , file2 , 0);
 						}else{
 							//DIRECTORY HAS TO BE OPENED....
 							zipPathRoot = zFileRoot.getPath();
