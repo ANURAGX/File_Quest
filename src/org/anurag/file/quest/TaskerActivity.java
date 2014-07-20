@@ -23,9 +23,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.zip.ZipFile;
 
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
+import org.anurag.compress.ExtractZipFile;
+import org.anurag.compress.ZipAdapter;
+import org.anurag.compress.ZipManager;
+import org.anurag.compress.ZipObj;
 import org.anurag.gesture.AddGesture;
 import org.anurag.gesture.G_Open;
 import org.anurag.inherited.sony.ListView3D;
@@ -124,8 +129,16 @@ public class TaskerActivity extends FragmentActivity implements
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
-
-	// DROPBOX RELATED VARIABLES
+	private static String zipPathSimple;
+	private static String zipPathRoot;
+	public static boolean ZIP_ROOT;	
+	public static boolean ZIP_SIMPLE;
+	private static ArrayList<ZipObj> zListSimple;
+	private static ArrayList<ZipObj> zListRoot;	
+	private static ZipObj zFileRoot;
+	private static ZipObj zFileSimple;
+	
+	
 	static int fPos;
 	private BroadcastReceiver RECEIVER;
 	private static Dialog dialog;
@@ -257,7 +270,11 @@ public class TaskerActivity extends FragmentActivity implements
 			}
 		});		
 		*/
-		SEARCH_FLAG = RENAME_COMMAND = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = CREATE_FILE = false;
+		
+		zipPathRoot = null;
+		zipPathSimple = null;
+		
+		ZIP_SIMPLE = ZIP_ROOT = SEARCH_FLAG = RENAME_COMMAND = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = CREATE_FILE = false;
 		fPos = 0;
 		params = this.getWindow().getAttributes();
 		size = new Point();
@@ -582,8 +599,7 @@ public class TaskerActivity extends FragmentActivity implements
 					break;
 
 				case 4:
-					nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,
-							nList);
+					nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
 					APP_LIST_VIEW.setAdapter(nAppAdapter);
 				}
 			}
@@ -628,9 +644,7 @@ public class TaskerActivity extends FragmentActivity implements
 				// TODO Auto-generated method stub
 				switch (msg.what) {
 				case 1:
-					root.setAdapter(new EmptyAdapter(mContext
-							.getApplicationContext(), R.layout.empty_adapter,
-							EMPTY));
+					root.setAdapter(new EmptyAdapter(mContext, R.layout.empty_adapter,EMPTY));
 					root.setEnabled(false);
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(ITEM);
@@ -638,9 +652,7 @@ public class TaskerActivity extends FragmentActivity implements
 
 				case 2:
 
-					simple.setAdapter(new EmptyAdapter(mContext
-							.getApplicationContext(), R.layout.empty_adapter,
-							EMPTY));
+					simple.setAdapter(new EmptyAdapter(mContext, R.layout.empty_adapter,EMPTY));
 					simple.setEnabled(false);
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(ITEM);
@@ -1074,8 +1086,7 @@ public class TaskerActivity extends FragmentActivity implements
 			super.onResume();
 			if (simple != null && sFiles != null)
 				if (sFiles.size() == 0) {
-					simple.setAdapter(new EmptyAdapter(getActivity(),
-							R.layout.empty_adapter, EMPTY));
+					simple.setAdapter(new EmptyAdapter(getActivity(),R.layout.empty_adapter, EMPTY));
 					simple.setEnabled(false);
 				}
 		}
@@ -1088,15 +1099,24 @@ public class TaskerActivity extends FragmentActivity implements
 			simple.setSelector(R.drawable.blue_button);
 			ColorDrawable color = new ColorDrawable(android.R.color.black);
 			simple.setDivider(color);
-			setListAdapter(nSimple);
+			if(ZIP_SIMPLE)
+				setListAdapter(new ZipAdapter(zListSimple, mContext));
+			else
+				setListAdapter(nSimple);
 			simple.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View view,
 						final int position, long id) {
 					if (SEARCH_FLAG && searchList.size() > 0) {
-						file = searchList.get(position);
+						if(ZIP_SIMPLE)
+							zFileSimple = zListSimple.get(position);
+						else
+							file = searchList.get(position);
 					} else {
-						file = sFiles.get(position);
+						if(ZIP_SIMPLE)
+							zFileSimple = zListSimple.get(position);
+						else
+							file = sFiles.get(position);
 					}
 					if (CREATE_FILE || RENAME_COMMAND || SEARCH_FLAG) {
 						mVFlipper.setAnimation(nextAnim());
@@ -1105,13 +1125,29 @@ public class TaskerActivity extends FragmentActivity implements
 						;
 					}
 
-					if (file.isFile())
-						new OpenFileDialog(mContext, Uri.parse(file
-								.getAbsolutePath()), size.x*8/9);
-					else if (file.isDirectory()){
-						SFileManager.nStack.push(file.getAbsolutePath());
-						setAdapter(1);
-					}
+					/*
+					 *ZIP FILE IS OPEN,HANDLE IT HERE... 
+					 */
+					if(ZIP_SIMPLE){
+						if(zFileSimple.isFile()){
+							//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
+							new ExtractZipFile(mContext, zFileSimple, size.x*8/9 , null , file);
+						}else{
+							//DIRECTORY HAS TO BE OPENED....
+							zipPathSimple = zFileSimple.getPath();
+							if(zipPathSimple.startsWith("/"))
+								zipPathSimple = zipPathSimple.substring(1, zipPathSimple.length());
+							setZipAdapter();
+						}	
+					}else{
+						//HANDLING ORDINARY FILE EXLORING....
+						if (file.isFile())
+							new OpenFileDialog(mContext, Uri.parse(file.getAbsolutePath()), size.x*8/9);
+						else if (file.isDirectory()){
+							SFileManager.nStack.push(file.getAbsolutePath());
+							setAdapter(1);
+						}
+					}					
 				}
 			});
 
@@ -1266,11 +1302,8 @@ public class TaskerActivity extends FragmentActivity implements
 			// TODO Auto-generated method stub
 			if (root != null && nFiles != null)
 				if (nFiles.size() == 0) {
-					root.setAdapter(new EmptyAdapter(getActivity(),
-							R.layout.empty_adapter, EMPTY));
+					root.setAdapter(new EmptyAdapter(mContext,R.layout.empty_adapter, EMPTY));
 					root.setEnabled(false);
-					// Toast.makeText(getActivity(), "LOAad",
-					// Toast.LENGTH_SHORT).show();
 				}
 			super.onResume();
 		}
@@ -1283,7 +1316,10 @@ public class TaskerActivity extends FragmentActivity implements
 			root.setSelector(R.drawable.blue_button);
 			ColorDrawable color = new ColorDrawable(android.R.color.black);
 			root.setDivider(color);
-			setListAdapter(RootAdapter);
+			if(ZIP_ROOT){
+				setListAdapter(new ZipAdapter(zListRoot,mContext));
+			}else
+				setListAdapter(RootAdapter);
 
 			dialog = new Dialog(getActivity(), R.style.custom_dialog_theme);
 			dialog.setContentView(R.layout.long_click_dialog);
@@ -1295,13 +1331,19 @@ public class TaskerActivity extends FragmentActivity implements
 
 			root.setOnItemLongClickListener(new OnItemLongClickListener() {
 				@Override
-				public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-						int arg2, long arg3) {
+				public boolean onItemLongClick(AdapterView<?> arg0, View arg1,int arg2, long arg3) {
 					// TODO Auto-generated method stub
-					if (SEARCH_FLAG) {
-						file2 = searchList.get(arg2);
+					
+					if (SEARCH_FLAG){
+						if(ZIP_ROOT)
+							zFileRoot = zListRoot.get(arg2);
+						else
+							file2 = searchList.get(arg2);
 					} else {
-						file2 = nFiles.get(arg2);
+						if(ZIP_ROOT)
+							zFileRoot = zListRoot.get(arg2);
+						else
+							file2 = nFiles.get(arg2);
 					}
 					dialog.show();
 					return true;
@@ -1322,13 +1364,26 @@ public class TaskerActivity extends FragmentActivity implements
 							mVFlipper.showNext();
 							CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = RENAME_COMMAND = false;
 						}
-						if (file2.isFile()) {
-							new OpenFileDialog(mContext, Uri.parse(file2.getAbsolutePath()), size.x*8/9);
-						} else if (file2.isDirectory()) {
-							RFileManager.nStack.push(file2.getAbsolutePath());
-							setAdapter(2);
+						
+						if(ZIP_ROOT){
+							if(zFileRoot.isFile()){
+								//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
+								new ExtractZipFile(mContext, zFileRoot, size.x*8/9 , null , file2);
+							}else{
+								//DIRECTORY HAS TO BE OPENED....
+								zipPathRoot = zFileRoot.getPath();
+								if(zipPathRoot.startsWith("/"))
+									zipPathRoot = zipPathRoot.substring(1, zipPathRoot.length());
+								setZipAdapter();
+							}	
+						}else{
+							if (file2.isFile()) {
+								new OpenFileDialog(mContext, Uri.parse(file2.getAbsolutePath()), size.x*8/9);
+							} else if (file2.isDirectory()) {
+								RFileManager.nStack.push(file2.getAbsolutePath());
+								setAdapter(2);
+							}
 						}
-
 						break;
 
 					case 1:
@@ -1417,11 +1472,16 @@ public class TaskerActivity extends FragmentActivity implements
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						final int position, long arg3) {
 					// TODO Auto-generated method stub
-					
-					if (SEARCH_FLAG) {
-						file2 = searchList.get(position);
-					} else {
-						file2 = nFiles.get(position);
+					if(SEARCH_FLAG){
+						if(ZIP_ROOT)
+							zFileRoot = zListRoot.get(position);
+						else
+							file2 = searchList.get(position);
+					}else{
+						if(ZIP_ROOT)
+							zFileRoot = zListRoot.get(position);
+						else
+							file2 = nFiles.get(position);
 					}
 					
 					if (CREATE_FILE || RENAME_COMMAND || SEARCH_FLAG) {
@@ -1430,11 +1490,25 @@ public class TaskerActivity extends FragmentActivity implements
 						CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = RENAME_COMMAND = false;
 						;
 					}
-					if (file2.isFile()) {
-						new OpenFileDialog(mContext, Uri.parse(file2.getAbsolutePath()), size.x*8/9);
-					} else if (file2.isDirectory()) {
-						RFileManager.nStack.push(file2.getAbsolutePath());
-						setAdapter(2);
+					
+					if(ZIP_ROOT){
+						if(zFileRoot.isFile()){
+							//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
+							new ExtractZipFile(mContext, zFileRoot, size.x*8/9 , null , file2);
+						}else{
+							//DIRECTORY HAS TO BE OPENED....
+							zipPathRoot = zFileRoot.getPath();
+							if(zipPathRoot.startsWith("/"))
+								zipPathRoot = zipPathRoot.substring(1, zipPathRoot.length());
+							setZipAdapter();
+						}						
+					}else{
+						if(file2.isFile())
+							new OpenFileDialog(mContext, Uri.parse(file2.getAbsolutePath()), size.x*8/9);
+						else if (file2.isDirectory()){
+							RFileManager.nStack.push(file2.getAbsolutePath());
+							setAdapter(2);
+						}
 					}
 				}
 			});
@@ -1604,13 +1678,13 @@ public class TaskerActivity extends FragmentActivity implements
 
 		case R.id.bottom_Quit:
 			QuickAction ad = new QuickAction(getApplicationContext());
-			ActionItem adi = new ActionItem(0, getString(R.string.quit));
+			ActionItem adi = new ActionItem(0, getString(R.string.quittheapp));
 			ad.addActionItem(adi);
 			adi = new ActionItem(getResources().getDrawable(R.drawable.org_anurag_questbrowser_underline));
 			ad.addActionItem(adi);
-			adi = new ActionItem(1, getString(R.string.yes), getResources().getDrawable(R.drawable.ic_launcher_apply));
+			adi = new ActionItem(1, getString(R.string.yes), getResources().getDrawable(R.drawable.ic_launcher_quit));
 			ad.addActionItem(adi);
-			adi = new ActionItem(2, getString(R.string.no), getResources().getDrawable(R.drawable.ic_launcher_quit));
+			adi = new ActionItem(2, getString(R.string.no), getResources().getDrawable(R.drawable.ic_launcher_apply));
 			ad.addActionItem(adi);
 			ad.setOnActionItemClickListener(new OnActionItemClickListener() {
 				@Override
@@ -2487,7 +2561,39 @@ public class TaskerActivity extends FragmentActivity implements
 					}
 					mViewPager.setCurrentItem(CURRENT_PREF_ITEM);
 				}
-			} else if (CURRENT_ITEM == 1&& !SFileManager.getCurrentDirectory().equals("/")) {
+			}else if(ZIP_SIMPLE){
+				/**
+				 * ZIP FILE IS OPENED IN SDCARD_PANEL...
+				 * HANDLE IT HERE.....
+				 * WHEN ZIP FILE IS CLOSED THEN SET THE ZIP PATH TO NULL.....
+				 */
+				if(zipPathSimple.equals("/")){
+					/*
+					 * WE ARE ALREADY IN TOP OF ZIP FILE
+					 * NOW QUIT THE ZIP FILE....
+					 */
+					ZIP_SIMPLE = false;
+					zipPathSimple = null;
+					mViewPager.setAdapter(mSectionsPagerAdapter);
+					mViewPager.setCurrentItem(CURRENT_ITEM);
+				}
+				
+				/*
+				 * TRY BLOCK IS USED BECAUSE WHEN USER NAVIGATES TO TOP DIRECTORY IN ZIP FILE
+				 * CAUSES STRINGINDEXOUTOFBOUND EXCEPTION....
+				 * AND FAILS TO GENERATE THE "/" PATH FOR ZIP FILE...
+				 * SO MANUALLY GENERATING THE "/" PATH.... 
+				 */
+				try{
+					zipPathSimple = zipPathSimple.substring(0, zipPathSimple.lastIndexOf("/"));
+					setZipAdapter();
+				}catch(Exception e){
+					zipPathSimple = "/";
+					setZipAdapter();
+				}
+				
+			}		
+			else if (CURRENT_ITEM == 1&& !SFileManager.getCurrentDirectory().equals("/")) {
 				SFileManager.nStack.pop();
 				File fi = new File(SFileManager.nStack.peek());
 				if (!fi.canRead()) {
@@ -2554,7 +2660,39 @@ public class TaskerActivity extends FragmentActivity implements
 				 */
 				else
 					mViewPager.setCurrentItem(CURRENT_PREF_ITEM);
-			} else if (CURRENT_ITEM == 2 && (RFileManager.nStack.size() >= 2)) {
+			} 
+			else if(ZIP_ROOT){
+				/**
+				 * ZIP FILE IS OPENED IN SDCARD_PANEL...
+				 * HANDLE IT HERE.....
+				 * WHEN ZIP FILE IS CLOSED THEN SET THE ZIP PATH TO NULL.....
+				 */
+				if(zipPathRoot.equals("/")){
+					/*
+					 * WE ARE ALREADY IN TOP OF ZIP FILE
+					 * NOW QUIT THE ZIP FILE....
+					 */
+					ZIP_ROOT = false;
+					zipPathRoot = null;
+					mViewPager.setAdapter(mSectionsPagerAdapter);
+					mViewPager.setCurrentItem(CURRENT_ITEM);
+				}
+				
+				/*
+				 * TRY BLOCK IS USED BECAUSE WHEN USER NAVIGATES TO TOP DIRECTORY IN ZIP FILE
+				 * CAUSES STRINGINDEXOUTOFBOUND EXCEPTION....
+				 * AND FAILS TO GENERATE THE "/" PATH FOR ZIP FILE...
+				 * SO MANUALLY GENERATING THE "/" PATH.... 
+				 */
+				try{
+					zipPathRoot = zipPathRoot.substring(0, zipPathRoot.lastIndexOf("/"));
+					setZipAdapter();
+				}catch(Exception e){
+					zipPathRoot = "/";
+					setZipAdapter();
+				}
+				
+			}else if (CURRENT_ITEM == 2 && (RFileManager.nStack.size() >= 2)) {
 				nFiles = RFileManager.getPreviousFileList();
 				// RootAdapter = new RootAdapter(getApplicationContext(),
 				// R.layout.row_list_1, nFiles);
@@ -4098,6 +4236,12 @@ public class TaskerActivity extends FragmentActivity implements
 					} else
 						Toast.makeText(mContext, R.string.filedoesnotexists,Toast.LENGTH_SHORT).show();
 
+				}else if(ACTION.equalsIgnoreCase("FQ_ZIP_OPEN")){
+					if(CURRENT_ITEM==0||CURRENT_ITEM==2)
+						ZIP_ROOT = true;
+					else
+						ZIP_SIMPLE = true;
+					setZipAdapter();
 				}
 			}
 		};
@@ -4111,6 +4255,65 @@ public class TaskerActivity extends FragmentActivity implements
 		this.registerReceiver(RECEIVER, filter);
 		filter = new IntentFilter("FQ_G_OPEN");
 		this.registerReceiver(RECEIVER, filter);
+		filter = new IntentFilter("FQ_ZIP_OPEN");
+		this.registerReceiver(RECEIVER, filter);
 	}
-
+	
+	
+	/**
+	 * 
+	 */
+	private static void setZipAdapter(){
+		final Handler handle = new Handler(){
+			@Override
+			public void handleMessage(Message msg){
+				if(msg.what==0 && (ZIP_ROOT||ZIP_SIMPLE)){
+					mViewPager.setAdapter(mSectionsPagerAdapter);
+					mViewPager.setCurrentItem(CURRENT_ITEM);
+				}else if(ZIP_ROOT){
+					/**
+					 * ZIP ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
+					 */
+					Toast.makeText(mContext, R.string.zipexception, Toast.LENGTH_SHORT).show();
+				}
+			}
+		};
+		Thread thr = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				if(CURRENT_ITEM==0||CURRENT_ITEM==3)
+					CURRENT_ITEM = 2;
+				
+				if(zipPathRoot==null)
+					zipPathRoot = "/";
+				
+				if(zipPathSimple == null)
+					zipPathSimple = "/";
+				
+				if(CURRENT_ITEM==2){
+					try {
+						ZipFile zf = new ZipFile(file2);
+						zListRoot = new ZipManager(zf, zipPathRoot, mContext).generateList();
+						handle.sendEmptyMessage(0);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						ZIP_ROOT = false;
+						handle.sendEmptyMessage(1);
+					} 
+				}else if(CURRENT_ITEM==1){
+					try{
+						ZipFile zFile = new ZipFile(file);
+						zListSimple = new ZipManager(zFile, zipPathSimple, mContext).generateList();
+						handle.sendEmptyMessage(0);
+					}catch(IOException e){
+						ZIP_SIMPLE = false;
+						handle.sendEmptyMessage(1);
+					}
+				}
+			}
+		});		
+		thr.start();
+	}
 }
