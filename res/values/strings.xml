@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- 
- Copyright(c) 2013 ANURAG 
+ Copyright(c) 2014 ANURAG 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
@@ -69,7 +69,7 @@
 	<string name="cleargesturedata">Clear gesture data</string>
 	<string name="gesturedatacleared">All gesture data has been cleared</string>
 	<string name="quittheapp">Quit File Quest</string>
-	
+	<string name="zipexception">Corrupt or protected archive,failed to open</string>
 	
 	
 	
@@ -465,6 +465,43 @@
     <!-- SET LAUNCH DIR DIALOG STRINGS... -->
     <string name="setstartupdir">Choose any directory for startup</string>
     <string name="startupset">Directory set for launch on startup</string>
+    
+    
+    <!-- EXTRACT ZIP FILE DIALOG... -->
+    <string name="archiveoperation">Archive Operation</string>
+    <string name="extract">Extract</string>
+    <string name="extractingto">EXTRACTING TO :-</string>
+    <string name="extractingfrom">EXTRACTING FROM :-</string>
+    <string name="extractingfile">EXTRACTING FILE :-</string>
+    <string name="extstatusgb">Status :- %.2f GB extracted</string>
+   	<string name="extstatusmb">Status :- %.2f MB extracted</string>
+    <string name="extstatuskb">Status :- %.2f KB extracted</string>
+    <string name="extstatusbytes">Status :- %.2f Bytes extracted</string> 
+    <string name="extractto">Extract to</string>
+    <string name="extracthere">Extract here</string>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
