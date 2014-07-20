@@ -69,7 +69,7 @@
 	<string name="gesturedatacleared">सभी जेस्चर डेटा नस्ट कर दिया गया है</string>
 	<string name="quittheapp">फाइल क्वेस्ट से बहार निकलें</string>
 	<string name="zipexception">Corrupt or protected archive,failed to open</string>
-	
+	<string name="fileextracted">Files extracted successfully</string>
 	
 	
 	

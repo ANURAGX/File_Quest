@@ -70,6 +70,9 @@
 	<string name="gesturedatacleared">All gesture data has been cleared</string>
 	<string name="quittheapp">Quit File Quest</string>
 	<string name="zipexception">Corrupt or protected archive,failed to open</string>
+	<string name="fileextracted">Files extracted successfully</string>
+	
+	
 	
 	
 	
