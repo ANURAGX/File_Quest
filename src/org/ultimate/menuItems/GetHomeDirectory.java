@@ -53,6 +53,13 @@ public class GetHomeDirectory {
 	ImageView image;
 	Context mContext;
 	Dialog dialog;
+	
+	/**
+	 * 
+	 * @param context
+	 * @param width
+	 * @param edit ,if null means pass the selected path to extract files of an archive...
+	 */
 	public GetHomeDirectory(Context context,int width,SharedPreferences edit) {
 		// TODO Auto-generated constructor stub
 		mContext = context;
