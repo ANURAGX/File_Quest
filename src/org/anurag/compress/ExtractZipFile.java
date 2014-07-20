@@ -39,6 +39,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 
@@ -54,8 +55,8 @@ public class ExtractZipFile {
 	int read ;
 	String DEST;
 	String name;
-	
-	public ExtractZipFile(final Context ctx ,final ZipObj zFile , final int width , String extractDir , File file) {
+	long max;
+	public ExtractZipFile(final Context ctx ,final ZipObj zFile , final int width , String extractDir , File file ,final int mode) {
 		// TODO Auto-generated constructor stub
 		running = false;
 		prog = 0;
@@ -112,7 +113,17 @@ public class ExtractZipFile {
 							progress.setProgress((int)prog);
 							break;
 					case 2:
-							new OpenFileDialog(ctx, Uri.parse(DEST), width);
+							dialog.dismiss();
+						    if(mode==0){
+						    	//after extracting file ,it has to be opened....
+						    	new OpenFileDialog(ctx, Uri.parse(DEST), width);
+						    }else{
+						    	Toast.makeText(ctx, ctx.getString(R.string.fileextracted),Toast.LENGTH_SHORT).show();
+						    }
+						    
+						    break;
+					case 3:
+							progress.setMax((int)max);
 				}
 			}
 		};
@@ -134,17 +145,17 @@ public class ExtractZipFile {
 							if(ze.getName().equalsIgnoreCase(zFile.getEntry())){
 								try {
 									FileOutputStream out = new FileOutputStream((DEST));
+									max = ze.getSize();
+									handle.sendEmptyMessage(3);
 									while((read=zis.read(data))!=-1){
 										out.write(data, 0, read);
 										prog+=read;
-										name = AppBackup.size(ze.getSize(), ctx);
+										name = AppBackup.status(prog, ctx);
 										handle.sendEmptyMessage(1);
-									}	
-									
+									}										
 									out.flush();
 									out.close();
 									zis.close();
-									handle.sendEmptyMessage(2);
 								} catch (FileNotFoundException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -153,28 +164,20 @@ public class ExtractZipFile {
 								}
 							}
 						}
+						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					handle.sendEmptyMessage(2);
 				}
 			}
 		});
 		
-		
-		final Button start = (Button)dialog.findViewById(R.id.extractButton);
-		start.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				running = true;
-				thread.start();
-				dialog.setCancelable(false);
-				progress.setVisibility(View.VISIBLE);
-				start.setVisibility(View.GONE);
-			}
-		});
 		dialog.show();
+		running = true;
+		thread.start();
+		dialog.setCancelable(false);
+		progress.setVisibility(View.VISIBLE);
 	}
-
 }
