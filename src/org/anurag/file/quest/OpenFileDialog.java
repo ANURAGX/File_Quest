@@ -43,18 +43,15 @@ import android.widget.AdapterView.OnItemClickListener;
 public class OpenFileDialog {
 	
 	Intent intent;
-	
 	static Context mContext;
 	String mData;
 	Dialog dialog;
-	
 	static PackageManager manager;
 	ResolveInfo info;
 	List<ResolveInfo> list;
-	
 	SharedPreferences prefs;
 	SharedPreferences.Editor edit;
-	
+	boolean showDialog;
 	String NAME;
 	String CLASS_NAME;
 	String MUSIC;
@@ -82,11 +79,21 @@ public class OpenFileDialog {
 	ImageView header;
 	public OpenFileDialog(Context context,Uri uri,int width ) {
 		// TODO Auto-generated constructor stub
+		showDialog = true;
 		try{
 			wi = width;
 			mData = uri.toString();
 			file = new File(mData);
 			mContext = context;
+			
+			/**
+			 * IF ZIP FILE IS SELECTED TO OPEN OPEN THE ZIP FILE THIS APP....
+			 */
+			if(file.getName().endsWith(".zip")||file.getName().endsWith(".ZIP")){
+				mContext.sendBroadcast(new Intent("FQ_ZIP_OPEN"));
+				showDialog = false;
+			}
+			
 			dialog = new Dialog(mContext, R.style.custom_dialog_theme);
 			dialog.setCancelable(true);
 			dialog.setContentView(R.layout.launch_file);
@@ -118,7 +125,8 @@ public class OpenFileDialog {
 			view = (ListView)dialog.findViewById(R.id.launch_list);
 			justOnce = (Button)dialog.findViewById(R.id.justOnce);
 			always = (Button)dialog.findViewById(R.id.always);
-			init();
+			if(showDialog)
+				init();
 		}catch(RuntimeException e){
 			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
 		}
