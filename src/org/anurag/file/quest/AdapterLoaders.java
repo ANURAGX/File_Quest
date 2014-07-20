@@ -164,11 +164,19 @@ public class AdapterLoaders {
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_open);
 					ho.Name.setText(mContext.getString(R.string.open));
 				}else if(position == 2){
+					if(TaskerActivity.ZIP_ROOT || TaskerActivity.ZIP_SIMPLE){
+						ho.Name.setText(mContext.getString(R.string.extractto));
+					}else
+						ho.Name.setText(mContext.getString(R.string.copy));
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_copy);
-					ho.Name.setText(mContext.getString(R.string.copy));
 				}else if(position == 3){
-					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_cut);
-					ho.Name.setText(mContext.getString(R.string.cut));
+					if(TaskerActivity.ZIP_ROOT || TaskerActivity.ZIP_SIMPLE){
+						ho.Icon.setBackgroundResource(R.drawable.ic_launcher_copy);
+						ho.Name.setText(mContext.getString(R.string.extracthere));
+					}else{
+						ho.Icon.setBackgroundResource(R.drawable.ic_launcher_cut);
+						ho.Name.setText(mContext.getString(R.string.cut));
+					}					
 				}else if(position == 5){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_zip_it);
 					ho.Name.setText(mContext.getString(R.string.archive));
