@@ -55,10 +55,13 @@ public class ExtractZipFile {
 	int read ;
 	String DEST;
 	String name;
+	String size;
 	long max;
+	boolean errors;
 	public ExtractZipFile(final Context ctx ,final ZipObj zFile , final int width , String extractDir , File file ,final int mode) {
 		// TODO Auto-generated constructor stub
 		running = false;
+		errors = false;
 		prog = 0;
 		read = 0;
 		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
@@ -81,14 +84,7 @@ public class ExtractZipFile {
 		
 		from.setText(ctx.getString(R.string.extractingfrom)+" "+file.getName());
 		
-		Button cancel = (Button)dialog.findViewById(R.id.calcelButton);
-		cancel.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				dialog.dismiss();
-			}
-		});
+		
 		
 		try {
 			zis = new ZipInputStream(new FileInputStream(file));
@@ -113,17 +109,29 @@ public class ExtractZipFile {
 							progress.setProgress((int)prog);
 							break;
 					case 2:
-							dialog.dismiss();
-						    if(mode==0){
-						    	//after extracting file ,it has to be opened....
-						    	new OpenFileDialog(ctx, Uri.parse(DEST), width);
-						    }else{
-						    	Toast.makeText(ctx, ctx.getString(R.string.fileextracted),Toast.LENGTH_SHORT).show();
-						    }
+							if(running){
+								dialog.dismiss();
+							    if(mode==0){
+							    	//after extracting file ,it has to be opened....
+							    	new OpenFileDialog(ctx, Uri.parse(DEST), width);
+							    }else{
+							    	if(errors)
+							    		Toast.makeText(ctx, ctx.getString(R.string.errorinext), Toast.LENGTH_SHORT).show();
+							    	Toast.makeText(ctx, ctx.getString(R.string.fileextracted),Toast.LENGTH_SHORT).show();
+							    }
+							}
 						    
 						    break;
 					case 3:
+							zsize.setText(size);
 							progress.setMax((int)max);
+							break;
+					case 4:
+							status.setText(ctx.getString(R.string.preparing));
+							break;
+					case 5:
+							running = false;
+							Toast.makeText(ctx, ctx.getString(R.string.extaborted),Toast.LENGTH_SHORT).show();
 				}
 			}
 		};
@@ -133,21 +141,28 @@ public class ExtractZipFile {
 			public void run() {
 				// TODO Auto-generated method stub
 				if(running){
-					if(DEST==null)
+					if(DEST==null){
 						DEST = Environment.getExternalStorageDirectory()+"/Android/data/org.anurag.file.quest";
-					new File(DEST).mkdirs();
-					name = zFile.getEntry().substring(zFile.getEntry().lastIndexOf("/"), zFile.getEntry().length());
+						new File(DEST).mkdirs();
+					}
+					try{
+						name = zFile.getEntry().substring(zFile.getEntry().lastIndexOf("/"), zFile.getEntry().length());
+					}catch(Exception e){
+						name = zFile.getEntry();
+					}
 					handle.sendEmptyMessage(0);
 					DEST = DEST + "/" + name;
 					ZipEntry ze;
 					try {
 						while((ze=zis.getNextEntry())!=null){
+							handle.sendEmptyMessage(4);
 							if(ze.getName().equalsIgnoreCase(zFile.getEntry())){
 								try {
 									FileOutputStream out = new FileOutputStream((DEST));
 									max = ze.getSize();
+									size =AppBackup.size(max, ctx);
 									handle.sendEmptyMessage(3);
-									while((read=zis.read(data))!=-1){
+									while((read=zis.read(data))!=-1&&running){
 										out.write(data, 0, read);
 										prog+=read;
 										name = AppBackup.status(prog, ctx);
@@ -159,8 +174,9 @@ public class ExtractZipFile {
 								} catch (FileNotFoundException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
+									errors = true;
 								} catch(IOException e){
-									
+									errors = true;
 								}
 							}
 						}
@@ -173,6 +189,18 @@ public class ExtractZipFile {
 				}
 			}
 		});
+		
+		Button cancel = (Button)dialog.findViewById(R.id.calcelButton);
+		cancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				dialog.dismiss();
+				handle.sendEmptyMessage(5);
+			}
+		});
+		Button st = (Button)dialog.findViewById(R.id.extractButton);
+		st.setVisibility(View.GONE);
 		
 		dialog.show();
 		running = true;
