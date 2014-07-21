@@ -110,6 +110,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+
 import com.viewpagerindicator.TitlePageIndicator;
 
 @SuppressLint({ "HandlerLeak", "SdCardPath" })
@@ -137,6 +138,7 @@ public class TaskerActivity extends FragmentActivity implements
 	private static ArrayList<ZipObj> zListRoot;	
 	private static ZipObj zFileRoot;
 	private static ZipObj zFileSimple;
+	
 	
 	
 	static int fPos;
@@ -808,7 +810,7 @@ public class TaskerActivity extends FragmentActivity implements
 				return getString(R.string.appstore);
 			}
 			return null;
-		}
+		}			
 	}
 
 	/**
@@ -817,9 +819,7 @@ public class TaskerActivity extends FragmentActivity implements
 	 *
 	 */
 	public static class MediaPanel extends Fragment {
-		public MediaPanel() {
-
-		}
+		public MediaPanel(){}
 
 		@Override
 		public void onResume() {
