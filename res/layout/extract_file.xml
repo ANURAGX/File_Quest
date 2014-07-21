@@ -130,7 +130,7 @@
     <ProgressBar 
         android:visibility="gone"
         android:id="@+id/zipProgressBar" 
-        android:padding="5.0dip" 
+        android:padding="2.0dip" 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content" 
         android:progress="100" 
@@ -138,7 +138,7 @@
         style="?android:attr/progressBarStyleHorizontal" />
     
     <LinearLayout 
-        android:paddingTop="10dp"
+        android:paddingTop="5dp"
         android:paddingLeft="15.0dip" 
         android:paddingRight="15.0dip" 
         android:layout_width="fill_parent" 
