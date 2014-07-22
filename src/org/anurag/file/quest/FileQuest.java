@@ -1163,10 +1163,16 @@ public class FileQuest extends FragmentActivity implements
 				public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 						int position, long id) {
 					spos = position;
-					if (SEARCH_FLAG) {
-						file = searchList.get(position);
+					if(SEARCH_FLAG){
+						if(ZIP_SIMPLE)
+							zFileSimple = zListSimple.get(position);
+						else
+							file = searchList.get(position);
 					} else {
-						file = sFiles.get(position);
+						if(ZIP_SIMPLE)
+							zFileSimple = zListSimple.get(position);
+						else
+							file = sFiles.get(position);
 					}
 					d.show();
 					return true;
@@ -1190,13 +1196,30 @@ public class FileQuest extends FragmentActivity implements
 									MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = 
 									RENAME_COMMAND = false;
 						}
-						if (file.isFile())
-							new OpenFileDialog(mContext, Uri.parse(file.getAbsolutePath()), size.x*8/9);
-						else if (file.isDirectory()) {
-							SFileManager.nStack.push(file.getAbsolutePath());
-							setAdapter(1);
+						
+						/*
+						 *ZIP FILE IS OPEN,HANDLE IT HERE... 
+						 */
+						if(ZIP_SIMPLE){
+							if(zFileSimple.isFile()){
+								//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
+								new ExtractZipFile(mContext, zFileSimple, size.x*8/9 , null , file,0);
+							}else{
+								//DIRECTORY HAS TO BE OPENED....
+								zipPathSimple = zFileSimple.getPath();
+								if(zipPathSimple.startsWith("/"))
+									zipPathSimple = zipPathSimple.substring(1, zipPathSimple.length());
+								setZipAdapter();
+							}	
+						}else{
+							//ORDINARY FILE EXPLORING..
+							if (file.isFile())
+								new OpenFileDialog(mContext, Uri.parse(file.getAbsolutePath()), size.x*8/9);
+							else if (file.isDirectory()) {
+								SFileManager.nStack.push(file.getAbsolutePath());
+								setAdapter(1);
+							}
 						}
-
 						break;
 
 					case 1:
@@ -1211,10 +1234,18 @@ public class FileQuest extends FragmentActivity implements
 							mVFlipper.setAnimation(nextAnim());
 						}
 
-						CREATE_FILE = RENAME_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
-						COPY_COMMAND = true;
-						COPY_FILES = new ArrayList<File>();
-						COPY_FILES.add(file);
+						if(ZIP_SIMPLE){
+							//CURRENTLY WE ARE INSIDE OF ZIP ARCHIVE...
+							//EXTRACT FILES TO USER SPECIFIED PATH....
+							new GetHomeDirectory(mContext, size.x*8/9, null);
+						}else{
+							//ORDINARY FILE OPERATIONS....
+							CREATE_FILE = RENAME_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+							COPY_COMMAND = true;
+							COPY_FILES = new ArrayList<File>();
+							COPY_FILES.add(file);
+						}
+						
 						break;
 
 					case 3:
@@ -1224,10 +1255,21 @@ public class FileQuest extends FragmentActivity implements
 							mVFlipper.setAnimation(nextAnim());
 						}
 
-						CREATE_FILE = RENAME_COMMAND = COPY_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
-						CUT_COMMAND = true;
-						COPY_FILES = new ArrayList<File>();
-						COPY_FILES.add(file);
+						if(ZIP_SIMPLE){
+							//WE ARE CURRENTLY INSIDE ZIP ARCHIVE...
+							//FILES HAVE TO BE EXTRACTED IN THE CURRENT DIRECTORY
+							if(new File(file.getParent()).canRead())
+								new ExtractZipFile(mContext, zFileSimple, size.x*8/9, file.getParent(), file, 1);
+							else
+								//CURRENT DIRECTORY IS UN-WRITABLE...OR WE DONT HAVE WRITE PERMISSION HERE...
+								Toast.makeText(mContext, R.string.cannotexthere, Toast.LENGTH_SHORT).show();
+						}else{
+							//ORDINARY FILE OPERATIONS....
+							CREATE_FILE = RENAME_COMMAND = COPY_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+							CUT_COMMAND = true;
+							COPY_FILES = new ArrayList<File>();
+							COPY_FILES.add(file);
+						}						
 						break;
 
 					case 4:
@@ -4264,9 +4306,14 @@ public class FileQuest extends FragmentActivity implements
 					setZipAdapter();
 				}else if(ACTION.equalsIgnoreCase("FQ_EXTRACT_PATH")){
 					String path = it.getStringExtra("extract_path");
-					if(CURRENT_ITEM==1)
-						new ExtractZipFile(mContext, zFileSimple, size.x*8/9, path, file, 1);
-					else if(CURRENT_ITEM == 2)
+					if(CURRENT_ITEM==1){
+						if(new File(path).canWrite())
+							//IF WE HAVE WRITE PERMISSION THEN EXTRACT HERE....
+							new ExtractZipFile(mContext, zFileSimple, size.x*8/9, path, file, 1);
+						else
+							//WE DONT HAVE WRITE PERMISSION..... 
+							Toast.makeText(mContext, R.string.cannotexthere, Toast.LENGTH_SHORT).show();
+					}else if(CURRENT_ITEM == 2)
 						new ExtractZipFile(mContext, zFileRoot, size.x*8/9, path, file2, 1);
 				}
 			}
