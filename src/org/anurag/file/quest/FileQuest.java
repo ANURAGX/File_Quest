@@ -114,8 +114,7 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.viewpagerindicator.TitlePageIndicator;
 
 @SuppressLint({ "HandlerLeak", "SdCardPath" })
-public class FileQuest extends FragmentActivity implements
-		OnClickListener, QuickAction.OnActionItemClickListener {
+public class FileQuest extends FragmentActivity implements OnClickListener, QuickAction.OnActionItemClickListener {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -138,7 +137,7 @@ public class FileQuest extends FragmentActivity implements
 	private static ArrayList<ZipObj> zListRoot;	
 	private static ZipObj zFileRoot;
 	private static ZipObj zFileSimple;
-	
+	private static ArrayList<ZipObj> zSearch;
 	
 	
 	static int fPos;
@@ -3584,15 +3583,12 @@ public class FileQuest extends FragmentActivity implements
 			editBox.setHint(R.string.nametofilterout);
 			editBox.addTextChangedListener(new TextWatcher() {
 				@Override
-				public void onTextChanged(CharSequence arg0, int arg1,
-						int arg2, int arg3) {
+				public void onTextChanged(CharSequence arg0, int arg1,int arg2, int arg3) {
 					searchList.clear();
 					// TODO Auto-generated method stub
 				}
-
 				@Override
-				public void beforeTextChanged(CharSequence arg0, int arg1,
-						int arg2, int arg3) {
+				public void beforeTextChanged(CharSequence arg0, int arg1,int arg2, int arg3) {
 					searchList.clear();
 					// TODO Auto-generated method stub
 				}
@@ -3600,7 +3596,6 @@ public class FileQuest extends FragmentActivity implements
 				@Override
 				public void afterTextChanged(Editable text) {
 					// TODO Auto-generated method stub
-					searchList.clear();
 					File f = new File(PATH);
 					if (CURRENT_ITEM == 2)
 						f = new File(RFileManager.getCurrentDirectory());
@@ -3643,26 +3638,19 @@ public class FileQuest extends FragmentActivity implements
 									int len = mediaFileList.size();
 									for (int i = 0; i < len; ++i) {
 										File file = mediaFileList.get(i);
-										if (file.canRead())
-											if (file.getName().toLowerCase()
-													.contains(search))
-												searchList.add(file);
+										if (file.getName().toLowerCase().contains(search))
+											searchList.add(file);
 									}
 								}
 								// SEARCH IS PERFORMED FOR CURRENT ITEM = 1,2
 								else
 									for (int i = 0; i < fList.length; ++i) {
 										if (CURRENT_ITEM == 2) {
-											if (list[i].canRead()) {
-												if ((fList[i].toLowerCase())
-														.contains(search
-																.toLowerCase()))
-													searchList.add(list[i]);
-											}
+											if ((fList[i].toLowerCase()).contains(search.toLowerCase()))
+												searchList.add(list[i]);
+											
 										} else if (CURRENT_ITEM == 1) {
-											if ((fList[i].toLowerCase())
-													.contains(search
-															.toLowerCase()))
+											if ((fList[i].toLowerCase()).contains(search.toLowerCase()))
 												searchList.add(list[i]);
 										}
 									}
