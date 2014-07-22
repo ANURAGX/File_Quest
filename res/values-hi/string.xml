@@ -72,7 +72,7 @@
 	<string name="fileextracted">Files extracted successfully</string>
 	<string name="preparing">Preparing,please wait</string>
 	<string name="extaborted">Extraction was interrupted</string>
-	
+	<string name="cannotexthere">Cannot extract files here</string>
 	
 	
 	

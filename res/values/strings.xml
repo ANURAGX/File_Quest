@@ -74,6 +74,9 @@
 	<string name="preparing">Preparing,please wait</string>
 	<string name="extaborted">Extraction was interrupted</string>
 	<string name="errorinext">There were few errors while extracting</string>
+	<string name="cannotexthere">Cannot extract files here</string>
+	
+	
 	
 	
 	
