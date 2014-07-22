@@ -23,12 +23,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
@@ -146,7 +144,7 @@ public class ExtractZipFile {
 						new File(DEST).mkdirs();
 					}
 					try{
-						name = zFile.getEntry().substring(zFile.getEntry().lastIndexOf("/"), zFile.getEntry().length());
+						name = zFile.getName();
 					}catch(Exception e){
 						name = zFile.getEntry();
 					}
@@ -156,28 +154,33 @@ public class ExtractZipFile {
 					try {
 						while((ze=zis.getNextEntry())!=null){
 							handle.sendEmptyMessage(4);
-							if(ze.getName().equalsIgnoreCase(zFile.getEntry())){
-								try {
-									FileOutputStream out = new FileOutputStream((DEST));
-									max = ze.getSize();
-									size =AppBackup.size(max, ctx);
-									handle.sendEmptyMessage(3);
-									while((read=zis.read(data))!=-1&&running){
-										out.write(data, 0, read);
-										prog+=read;
-										name = AppBackup.status(prog, ctx);
-										handle.sendEmptyMessage(1);
-									}										
-									out.flush();
-									out.close();
-									zis.close();
-								} catch (FileNotFoundException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-									errors = true;
-								} catch(IOException e){
-									errors = true;
+							if(zFile.isFile()){
+								//EXTRACTING A SINGLE FILE FROM AN ARCHIVE....
+								if(ze.getName().equalsIgnoreCase(zFile.getEntry())){
+									try {
+										FileOutputStream out = new FileOutputStream((DEST));
+										max = ze.getSize();
+										size =AppBackup.size(max, ctx);
+										handle.sendEmptyMessage(3);
+										while((read=zis.read(data))!=-1&&running){
+											out.write(data, 0, read);
+											prog+=read;
+											name = AppBackup.status(prog, ctx);
+											handle.sendEmptyMessage(1);
+										}										
+										out.flush();
+										out.close();
+										zis.close();
+									} catch (FileNotFoundException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+										errors = true;
+									} catch(IOException e){
+										errors = true;
+									}
 								}
+							}else{
+								//EXTRACTING A DIRECTORY FROM ZIP ARCHIVE....
 							}
 						}
 						
