@@ -65,7 +65,7 @@ public class ImageViewer extends Activity{
 								// TODO Auto-generated method stub
 								final Dialog dialog = new Dialog(ImageViewer.this,R.style.custom_dialog_theme);
 								dialog.setContentView(R.layout.delete_files);
-								dialog.getWindow().getAttributes().width = TaskerActivity.size.x*5/6;
+								dialog.getWindow().getAttributes().width = FileQuest.size.x*8/9;
 								
 								ImageView ic = (ImageView)dialog.findViewById(R.id.popupImage);
 								ic.setBackgroundResource(R.drawable.ic_launcher_delete);
@@ -126,7 +126,7 @@ public class ImageViewer extends Activity{
 							public void onClick(View arg0) {
 								// TODO Auto-generated method stub
 								new BluetoothChooser(ImageViewer.this, (file.getAbsolutePath()),
-										TaskerActivity.size.x*8/9,null );
+										FileQuest.size.x*8/9,null );
 							}
 						});
 					}catch(RuntimeException e){

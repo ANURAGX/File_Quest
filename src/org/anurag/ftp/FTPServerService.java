@@ -26,6 +26,18 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.anurag.file.quest.FileQuest;
+import org.anurag.file.quest.R;
+import org.swiftp.Defaults;
+import org.swiftp.Globals;
+import org.swiftp.MyLog;
+import org.swiftp.ProxyConnector;
+import org.swiftp.SessionThread;
+import org.swiftp.TcpListener;
+import org.swiftp.UiUpdater;
+import org.swiftp.Util;
+
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -41,16 +53,6 @@ import android.net.wifi.WifiManager.WifiLock;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
-import org.anurag.file.quest.R;
-import org.anurag.file.quest.TaskerActivity;
-import org.swiftp.Defaults;
-import org.swiftp.Globals;
-import org.swiftp.MyLog;
-import org.swiftp.ProxyConnector;
-import org.swiftp.SessionThread;
-import org.swiftp.TcpListener;
-import org.swiftp.UiUpdater;
-import org.swiftp.Util;
 
 
 public class FTPServerService extends Service implements Runnable {
@@ -261,7 +263,7 @@ public class FTPServerService extends Service implements Runnable {
             contentText = "ftp://" + address.getHostAddress() + (FTPServerService.getPort() == 21 ? "" : port);
         }
 
-        Intent notificationIntent = new Intent(this, TaskerActivity.class);
+        Intent notificationIntent = new Intent(this, FileQuest.class);
        // notificationIntent.putExtra(GlobalConsts.INTENT_EXTRA_TAB, 2);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         notification.setLatestEventInfo(getApplicationContext(), contentTitle, contentText, contentIntent);

@@ -164,13 +164,13 @@ public class AdapterLoaders {
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_open);
 					ho.Name.setText(mContext.getString(R.string.open));
 				}else if(position == 2){
-					if(TaskerActivity.ZIP_ROOT || TaskerActivity.ZIP_SIMPLE){
+					if(FileQuest.ZIP_ROOT || FileQuest.ZIP_SIMPLE){
 						ho.Name.setText(mContext.getString(R.string.extractto));
 					}else
 						ho.Name.setText(mContext.getString(R.string.copy));
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_copy);
 				}else if(position == 3){
-					if(TaskerActivity.ZIP_ROOT || TaskerActivity.ZIP_SIMPLE){
+					if(FileQuest.ZIP_ROOT || FileQuest.ZIP_SIMPLE){
 						ho.Icon.setBackgroundResource(R.drawable.ic_launcher_copy);
 						ho.Name.setText(mContext.getString(R.string.extracthere));
 					}else{

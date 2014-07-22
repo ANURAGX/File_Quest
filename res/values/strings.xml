@@ -451,7 +451,7 @@
     
     <!-- GET HOME DIRECTORY DIALOG... -->
     <string name="choosehome">Choose any directory for home</string>
-    <string name="homeset">Home directory successfully set</string>
+    <string name="homeset">Home directory got set successfully</string>
     
     
     <!-- SELECT APP DIALOG STRINGS.... -->
