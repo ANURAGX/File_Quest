@@ -1412,9 +1412,9 @@ public class FileQuest extends FragmentActivity implements
 							/**
 							 * 
 							 */
-							
+							new GetHomeDirectory(mContext, size.x*8/9, null);
 						}else{
-							//ORDINARI FILE EXLORING...
+							//ORDINARY FILE EXLORING...
 							CREATE_FILE = RENAME_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 							COPY_COMMAND = true;
 							COPY_FILES = new ArrayList<File>();
@@ -4245,8 +4245,7 @@ public class FileQuest extends FragmentActivity implements
 					if (new File(value).exists()) {
 						if (new File(value).isFile()) {
 							mViewPager.setCurrentItem(CURRENT_ITEM);
-							new OpenFileDialog(mContext, Uri.parse(value),
-									size.x * 8 / 9);
+							new OpenFileDialog(mContext, Uri.parse(value),size.x*8/9);
 						} else {
 							if (CURRENT_ITEM == 1) {
 								SFileManager.nStack.push(value);
@@ -4263,6 +4262,12 @@ public class FileQuest extends FragmentActivity implements
 					else
 						ZIP_SIMPLE = true;
 					setZipAdapter();
+				}else if(ACTION.equalsIgnoreCase("FQ_EXTRACT_PATH")){
+					String path = it.getStringExtra("extract_path");
+					if(CURRENT_ITEM==1)
+						new ExtractZipFile(mContext, zFileSimple, size.x*8/9, path, file, 1);
+					else if(CURRENT_ITEM == 2)
+						new ExtractZipFile(mContext, zFileRoot, size.x*8/9, path, file2, 1);
 				}
 			}
 		};
@@ -4277,6 +4282,8 @@ public class FileQuest extends FragmentActivity implements
 		filter = new IntentFilter("FQ_G_OPEN");
 		this.registerReceiver(RECEIVER, filter);
 		filter = new IntentFilter("FQ_ZIP_OPEN");
+		this.registerReceiver(RECEIVER, filter);
+		filter = new IntentFilter("FQ_EXTRACT_PATH");
 		this.registerReceiver(RECEIVER, filter);
 	}
 	

@@ -25,6 +25,7 @@ import org.anurag.file.quest.RootAdapter;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -66,7 +67,8 @@ public class GetHomeDirectory {
 		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
 		dialog.setContentView(R.layout.open_file_dialog);
 		dialog.getWindow().getAttributes().width = width;
-		ed = edit.edit();
+		if(edit !=null)
+			ed = edit.edit();
 		onCreate();
 	}
 	
@@ -113,8 +115,7 @@ public class GetHomeDirectory {
 				stack.pop();
 				file = stack.peek();
 				t.setText(file.getPath());
-				lv.setAdapter(new Adapter(mContext , R.layout.row_list_2,
-						file.listFiles()));
+				lv.setAdapter(new Adapter(mContext , R.layout.row_list_2,file.listFiles()));
 				if(stack.size()<2)
 					go.setVisibility(View.GONE);
 			}
@@ -125,11 +126,17 @@ public class GetHomeDirectory {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				ed.putString("HOME_DIRECTORY", file.getAbsolutePath());
-				ed.commit();
-				Toast.makeText(mContext, mContext.getString(R.string.homeset),
-						Toast.LENGTH_SHORT).show();
-				dialog.dismiss();
+				if(ed!=null){
+					ed.putString("HOME_DIRECTORY", file.getAbsolutePath());
+					ed.commit();
+					Toast.makeText(mContext, mContext.getString(R.string.homeset),Toast.LENGTH_SHORT).show();
+					dialog.dismiss();
+				}else{
+					Intent it = new Intent("FQ_EXTRACT_PATH");
+					it.putExtra("extract_path", file.getAbsolutePath());
+					mContext.sendBroadcast(it);
+					dialog.dismiss();
+				}				
 			}
 		});
 		
