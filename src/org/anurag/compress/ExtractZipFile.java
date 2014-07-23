@@ -17,12 +17,13 @@
 package org.anurag.compress;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import java.util.zip.ZipFile;
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.OpenFileDialog;
@@ -47,7 +48,7 @@ import android.widget.Toast;
 public class ExtractZipFile {
 	
 	boolean running ;
-	ZipInputStream zis;
+	//ZipInputStream zis;
 	byte data[] = new byte[Constants.BUFFER];
 	long prog ;
 	int read ;
@@ -56,12 +57,17 @@ public class ExtractZipFile {
 	String size;
 	long max;
 	boolean errors;
-	public ExtractZipFile(final Context ctx ,final ZipObj zFile , final int width , String extractDir , File file ,final int mode) {
+	long count ;
+	Enumeration<? extends ZipEntry> zList;
+	int i;
+	
+	public ExtractZipFile(final Context ctx ,final ZipObj zFile , final int width , String extractDir ,final File file ,final int mode) {
 		// TODO Auto-generated constructor stub
 		running = false;
 		errors = false;
 		prog = 0;
 		read = 0;
+		i = 0;
 		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.extract_file);
@@ -82,15 +88,21 @@ public class ExtractZipFile {
 		
 		from.setText(ctx.getString(R.string.extractingfrom)+" "+file.getName());
 		
-		
-		
 		try {
+			zList = new ZipFile(file).entries();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			zList = null;
+		}
+		
+	/*	try {
 			zis = new ZipInputStream(new FileInputStream(file));
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			zis = null;
-		}
+		}*/
 		
 		final Handler handle = new Handler(){
 			@Override
@@ -143,51 +155,62 @@ public class ExtractZipFile {
 						DEST = Environment.getExternalStorageDirectory()+"/Android/data/org.anurag.file.quest";
 						new File(DEST).mkdirs();
 					}
-					try{
-						name = zFile.getName();
-					}catch(Exception e){
-						name = zFile.getEntry();
-					}
-					handle.sendEmptyMessage(0);
-					DEST = DEST + "/" + name;
+					
+					
 					ZipEntry ze;
-					try {
-						while((ze=zis.getNextEntry())!=null){
-							handle.sendEmptyMessage(4);
-							if(zFile.isFile()){
-								//EXTRACTING A SINGLE FILE FROM AN ARCHIVE....
-								if(ze.getName().equalsIgnoreCase(zFile.getEntry())){
-									try {
-										FileOutputStream out = new FileOutputStream((DEST));
-										max = ze.getSize();
-										size =AppBackup.size(max, ctx);
-										handle.sendEmptyMessage(3);
-										while((read=zis.read(data))!=-1&&running){
-											out.write(data, 0, read);
-											prog+=read;
-											name = AppBackup.status(prog, ctx);
-											handle.sendEmptyMessage(1);
-										}										
-										out.flush();
-										out.close();
-										zis.close();
-									} catch (FileNotFoundException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-										errors = true;
-									} catch(IOException e){
-										errors = true;
+					while((ze=zList.nextElement())!=null){
+					//	++count;
+						handle.sendEmptyMessage(4);
+						if(zFile.isFile()){
+							//EXTRACTING A SINGLE FILE FROM AN ARCHIVE....
+							if(ze.getName().equalsIgnoreCase(zFile.getEntry())){
+								try {
+								    
+									//SENDING CURRENT FILE NAME....
+									try{
+										name = zFile.getName();
+									}catch(Exception e){
+										name = zFile.getEntry();
 									}
+									handle.sendEmptyMessage(0);
+									DEST = DEST + "/"+name;
+									FileOutputStream out = new FileOutputStream((DEST));
+									max = ze.getSize();
+									size =AppBackup.size(max, ctx);
+									handle.sendEmptyMessage(3);
+								//	for(;i<count;++i)
+								//		zis.getNextEntry();
+									InputStream fin = (new ZipFile(file).getInputStream(ze));
+									while((read=fin.read(data))!=-1&&running){
+										out.write(data, 0, read);
+										prog+=read;
+										name = AppBackup.status(prog, ctx);
+										handle.sendEmptyMessage(1);
+									}										
+									out.flush();
+									out.close();
+									fin.close();
+									break;
+								} catch (FileNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+									errors = true;
+								} catch(IOException e){
+									errors = true;
 								}
-							}else{
-								//EXTRACTING A DIRECTORY FROM ZIP ARCHIVE....
 							}
+						}else{
+							//EXTRACTING A DIRECTORY FROM ZIP ARCHIVE....
+							
 						}
-						
+					}				
+					
+				/*	try {
+						zis.close();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
+					}*/
 					handle.sendEmptyMessage(2);
 				}
 			}
