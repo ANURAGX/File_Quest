@@ -17,91 +17,209 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">       
             
-             <ImageButton 
-                 	android:onClick="onClick"
-                 	
-                 	android:padding="2dp"
-           			android:id="@+id/bottom_Quit"
-            		android:layout_width="60dp"
-            		android:layout_height="wrap_content"
-            		android:background="@drawable/action_item_btn"
-            		android:src="@drawable/ic_launcher_quit"/>       
-                       
             
-            <ImageButton 
-                	android:visibility="gone"
+             <LinearLayout 
+        	    android:paddingTop="2dp"
+        	    android:background="@drawable/action_item_btn"
+        	    android:onClick="onClick"
+        	    android:id="@+id/bottom_Quit"
+        	    android:clickable="true"
+        	    android:focusable="true"
+        	    android:layout_width="60dp"
+        	    android:layout_height="wrap_content"
+        	    android:orientation="vertical">
+        	     <Button 
+        	        android:layout_gravity="center" 
                  	android:onClick="onClick"
-                 	
-                 	android:padding="2dp"
-           			android:id="@+id/bottom_filter"
-            		android:layout_width="60dp"
+                 	android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
-            		android:background="@drawable/action_item_btn"
-            		android:src="@drawable/ic_launcher_search"/>    
-             
-             <ImageButton 
-                	android:onClick="onClick"
-           			
-                 	android:padding="2dp"
-           			android:id="@+id/bottom_multi"
-            		android:layout_width="60dp"
-            		android:layout_height="wrap_content"
-            		android:background="@drawable/action_item_btn"
-            		android:src="@drawable/ic_launcher_multi_select"/>       
-                         
-             
-             <ImageButton 
-                	android:onClick="onClick"
-           			
-                 	android:padding="2dp"
-           			android:id="@+id/bottom_multi_send_app"
-            		android:layout_width="60dp"
-            		android:layout_height="wrap_content"
-            		android:background="@drawable/action_item_btn"
-            		android:src="@drawable/ic_launcher_share"/>       
-                         
-             
-             <ImageButton 
-                 	android:onClick="onClick"
-                 	
-                 	android:padding="2dp"
-           			android:id="@+id/bottom_multi_select_backup"
-            		android:layout_width="60dp"
-            		android:layout_height="wrap_content"
-            		android:background="@drawable/action_item_btn"
-            		android:src="@drawable/ic_launcher_backupall48"/>       
-                         
-             
-             <ImageButton
-                 	android:onClick="onClick"
-                 	
-                 	android:padding="2dp"
-           			android:id="@+id/bottom_user_apps"
-            		android:layout_width="60dp"
-            		android:layout_height="wrap_content"
-            		android:background="@drawable/action_item_btn"
-            		android:src="@drawable/ic_launcher_user"/>  
+            		android:clickable="false"
+            		android:background="@drawable/ic_launcher_quit"/>   
             		
-             <ImageButton
-                 	android:onClick="onClick"
-                 	
-                 	android:padding="2dp"
-           			android:id="@+id/bottom_system_apps"
-            		android:layout_width="60dp"
-            		android:layout_height="wrap_content"
-            		android:background="@drawable/action_item_btn"
-            		android:src="@drawable/ic_launcher_system"/>  
-            		
+        	     <TextView
+        	         android:textStyle="bold"
+        	         android:clickable="false"
+        	         android:layout_gravity="center"
+        	         android:layout_width="wrap_content"
+        	         android:layout_height="wrap_content"
+        	         android:text="@string/quit"/>
+        	    
+        	</LinearLayout>    
              
-             <ImageButton
+            <LinearLayout 
+        	    android:paddingTop="2dp"
+        	    android:background="@drawable/action_item_btn"
+        	    android:onClick="onClick"
+        	    android:id="@+id/bottom_multi"
+        	    android:clickable="true"
+        	    android:focusable="true"
+        	    android:layout_width="60dp"
+        	    android:layout_height="wrap_content"
+        	    android:orientation="vertical">
+        	     <Button 
+        	        android:layout_gravity="center" 
                  	android:onClick="onClick"
-                 	
-                 	android:padding="2dp"
-           			android:id="@+id/bottom_both_apps"
-            		android:layout_width="60dp"
+                 	android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
-            		android:background="@drawable/action_item_btn"
-            		android:src="@drawable/ic_launcher_both"/>  
+            		android:clickable="false"
+            		android:background="@drawable/ic_launcher_multi_select"/>   
+            		
+        	     <TextView
+        	         android:textStyle="bold"
+        	         android:clickable="false"
+        	         android:layout_gravity="center"
+        	         android:layout_width="wrap_content"
+        	         android:layout_height="wrap_content"
+        	         android:text="@string/multi"/>
+        	    
+        	</LinearLayout>    
+                        
+                
+             <LinearLayout 
+        	    android:paddingTop="2dp"
+        	    android:background="@drawable/action_item_btn"
+        	    android:onClick="onClick"
+        	    android:id="@+id/bottom_multi_send_app"
+        	    android:clickable="true"
+        	    android:focusable="true"
+        	    android:layout_width="60dp"
+        	    android:layout_height="wrap_content"
+        	    android:orientation="vertical">
+        	     <Button 
+        	        android:layout_gravity="center" 
+                 	android:onClick="onClick"
+                 	android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:clickable="false"
+            		android:background="@drawable/ic_launcher_share"/>   
+            		
+        	     <TextView
+        	         android:textStyle="bold"
+        	         android:clickable="false"
+        	         android:layout_gravity="center"
+        	         android:layout_width="wrap_content"
+        	         android:layout_height="wrap_content"
+        	         android:text="@string/share"/>
+        	    
+        	</LinearLayout>    
+                        
+            
+           
+            <LinearLayout 
+        	    android:paddingTop="2dp"
+        	    android:background="@drawable/action_item_btn"
+        	    android:onClick="onClick"
+        	    android:id="@+id/bottom_multi_select_backup"
+        	    android:clickable="true"
+        	    android:focusable="true"
+        	    android:layout_width="65dp"
+        	    android:layout_height="wrap_content"
+        	    android:orientation="vertical">
+        	     <Button 
+        	        android:layout_gravity="center" 
+                 	android:onClick="onClick"
+                 	android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:clickable="false"
+            		android:background="@drawable/ic_launcher_backupall48"/>   
+            		
+        	     <TextView
+        	         android:textStyle="bold"
+        	         android:clickable="false"
+        	         android:layout_gravity="center"
+        	         android:layout_width="wrap_content"
+        	         android:layout_height="wrap_content"
+        	         android:text="@string/multiback"/>
+        	    
+        	</LinearLayout> 
+                         
+             
+              <LinearLayout 
+        	    android:paddingTop="2dp"
+        	    android:background="@drawable/action_item_btn"
+        	    android:onClick="onClick"
+        	    android:id="@+id/bottom_user_apps"
+        	    android:clickable="true"
+        	    android:focusable="true"
+        	    android:layout_width="60dp"
+        	    android:layout_height="wrap_content"
+        	    android:orientation="vertical">
+        	     <Button 
+        	        android:layout_gravity="center" 
+                 	android:onClick="onClick"
+                 	android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:clickable="false"
+            		android:background="@drawable/ic_launcher_user"/>   
+            		
+        	     <TextView
+        	         android:textStyle="bold"
+        	         android:clickable="false"
+        	         android:layout_gravity="center"
+        	         android:layout_width="wrap_content"
+        	         android:layout_height="wrap_content"
+        	         android:text="@string/userapp"/>
+        	    
+        	</LinearLayout>     
+                         
+             
+              <LinearLayout 
+        	    android:paddingTop="2dp"
+        	    android:background="@drawable/action_item_btn"
+        	    android:onClick="onClick"
+        	    android:id="@+id/bottom_system_apps"
+        	    android:clickable="true"
+        	    android:focusable="true"
+        	    android:layout_width="60dp"
+        	    android:layout_height="wrap_content"
+        	    android:orientation="vertical">
+        	     <Button 
+        	        android:layout_gravity="center" 
+                 	android:onClick="onClick"
+                 	android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:clickable="false"
+            		android:background="@drawable/ic_launcher_system"/>   
+            		
+        	     <TextView
+        	         android:textStyle="bold"
+        	         android:clickable="false"
+        	         android:layout_gravity="center"
+        	         android:layout_width="wrap_content"
+        	         android:layout_height="wrap_content"
+        	         android:text="@string/sysapp"/>
+        	    
+        	</LinearLayout>    
+                         
+              <LinearLayout 
+        	    android:paddingTop="2dp"
+        	    android:background="@drawable/action_item_btn"
+        	    android:onClick="onClick"
+        	    android:id="@+id/bottom_both_apps"
+        	    android:clickable="true"
+        	    android:focusable="true"
+        	    android:layout_width="60dp"
+        	    android:layout_height="wrap_content"
+        	    android:orientation="vertical">
+        	     <Button 
+        	        android:layout_gravity="center" 
+                 	android:onClick="onClick"
+                 	android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:clickable="false"
+            		android:background="@drawable/ic_launcher_both"/>   
+            		
+        	     <TextView
+        	         android:textStyle="bold"
+        	         android:clickable="false"
+        	         android:layout_gravity="center"
+        	         android:layout_width="wrap_content"
+        	         android:layout_height="wrap_content"
+        	         android:text="@string/allapp"/>
+        	    
+        	</LinearLayout> 
+             
+            	
              
        </LinearLayout>
    </HorizontalScrollView>

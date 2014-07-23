@@ -78,8 +78,10 @@
 	<string name="search">Search</string>
 	<string name="multi">Multi-sel</string>
 	<string name="copybottom">Copy</string>
-	
-	
+	<string name="multiback">Multi-bac</string>
+	<string name="sysapp">Sys-app</string>
+	<string name="userapp">User-app</string>
+	<string name="allapp">All-app</string>
 	
 	
 	
