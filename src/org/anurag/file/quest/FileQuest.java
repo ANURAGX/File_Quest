@@ -110,7 +110,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-
 import com.viewpagerindicator.TitlePageIndicator;
 
 @SuppressLint({ "HandlerLeak", "SdCardPath" })
@@ -1377,7 +1376,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					
 					if (SEARCH_FLAG){
 						if(ZIP_ROOT)
-							zFileRoot = zListRoot.get(arg2);
+							zFileRoot = zSearch.get(arg2);
 						else
 							file2 = searchList.get(arg2);
 					} else {
@@ -1536,7 +1535,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					// TODO Auto-generated method stub
 					if(SEARCH_FLAG){
 						if(ZIP_ROOT)
-							zFileRoot = zListRoot.get(position);
+							zFileRoot = zSearch.get(position);
 						else
 							file2 = searchList.get(position);
 					}else{
@@ -1902,10 +1901,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							APP_LIST_VIEW.setSelection(pos);
 						}
 						break;
+						}
 					}
-				}
-			});
-		}
+				});
+			}
 			break;
 
 		case R.id.bottom_multi_send_app:
@@ -1975,7 +1974,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			break;
 
 		case R.id.searchBtn:
-				search();
+				if(ZIP_ROOT||ZIP_SIMPLE)
+					zipSearch();
+				else
+					search();
 				break;
 
 		case R.id.applyBtn:
@@ -2367,6 +2369,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			break;
 		}
 	}
+
+	
 
 	/**
 	 * THIS FUNCTION SHOWS THE BOX GINIG THE OPTIONS TO ADD NEW FOLDER AND CLOUD
@@ -3579,7 +3583,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			// PREVIOUS COMMANDS ARE OVERWRITTEN
 			COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = CREATE_FILE = false;
 			editBox.setTextColor(Color.WHITE);
-			editBox.setText(null);
 			editBox.setHint(R.string.nametofilterout);
 			editBox.addTextChangedListener(new TextWatcher() {
 				@Override
@@ -4324,7 +4327,80 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	
 	
 	/**
-	 * 
+	 * PERFORMS SEARCH INSIDE OF ZIP ARCHIVE FILE...
+	 */
+	private void zipSearch() {
+		// TODO Auto-generated method stub
+		zSearch = new ArrayList<ZipObj>();
+		try{
+			LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
+			a.setVisibility(View.GONE);
+			// Search Flipper is loaded
+			mVFlipper.setAnimation(nextAnim());
+			mVFlipper.showNext();
+			mVFlipper.showNext();
+			SEARCH_FLAG = true;
+			// PREVIOUS COMMANDS ARE OVERWRITTEN
+			COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = CREATE_FILE = false;
+			editBox.setTextColor(Color.WHITE);
+			editBox.setHint(R.string.nametofilterout);
+			editBox.addTextChangedListener(new TextWatcher() {
+				@Override
+				public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,int arg3) {
+					// TODO Auto-generated method stub
+					zSearch.clear();
+				}
+				
+				@Override
+				public void afterTextChanged(final Editable ed) {
+					// TODO Auto-generated method stub
+					new AsyncTask<Void, Void, Void>() {
+						
+						@Override
+						protected void onPostExecute(Void result) {
+							// TODO Auto-generated method stub
+							super.onPostExecute(result);
+							if(CURRENT_ITEM==2)
+								root.setAdapter(new ZipAdapter(zSearch, mContext));
+						}
+
+						@Override
+						protected void onPreExecute() {
+							// TODO Auto-generated method stub
+							super.onPreExecute();
+							if(CURRENT_ITEM==2)
+								root.setAdapter(null);
+						}
+
+						@Override
+						protected Void doInBackground(Void... arg0) {
+							// TODO Auto-generated method stub
+							if(CURRENT_ITEM==2){
+								String text = ed.toString().toLowerCase();
+								int len = zListRoot.size();
+								for(int i=0;i<len;++i){
+									if(zListRoot.get(i).getName().toLowerCase().contains(text))
+										zSearch.add(zListRoot.get(i));
+								}
+							}
+							return null;
+						}
+					}.execute();
+				}
+			});
+		}catch(Exception e){
+			
+		}
+	}
+	
+	/**
+	 *THIS FUNCTION SETS THE ADAPTER WHEN ZIP FILE IS OPERATED.... 
 	 */
 	private static void setZipAdapter(){
 		final Handler handle = new Handler(){
