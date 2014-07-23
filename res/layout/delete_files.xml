@@ -9,6 +9,7 @@
      >
     
     <LinearLayout 
+        android:padding="10dp"
         android:layout_width="fill_parent"
         android:layout_gravity="center_vertical"
         android:layout_height="0dp"
@@ -89,10 +90,10 @@
     </LinearLayout>
     
     <LinearLayout 
-        android:paddingTop="2dp"
+        android:padding="5dp"
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.2">
+        android:layout_height="wrap_content"
+       >
         <Button 
             android:textStyle="bold"
             android:textColor="@android:color/white"
