@@ -731,13 +731,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					handle.sendEmptyMessage(3);
 				else if (ITEM == 3) {
 					if (MULTI_SELECT_APPS) {
-						nAppAdapter = new AppAdapter(mContext,
-								R.layout.row_list_1, nList);
+						nAppAdapter = new AppAdapter(mContext,R.layout.row_list_1, nList);
 						nAppAdapter.MULTI_SELECT = true;
 						handle.sendEmptyMessage(4);
 					} else if (!MULTI_SELECT_APPS) {
-						nAppAdapter = new AppAdapter(mContext,
-								R.layout.row_list_1, nList);
+						nAppAdapter = new AppAdapter(mContext,R.layout.row_list_1, nList);
 						nAppAdapter.MULTI_SELECT = false;
 						handle.sendEmptyMessage(4);
 					}
@@ -825,8 +823,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			super.onResume();
 			if (LIST_VIEW_3D != null && mediaFileList != null) {
 				if (mediaFileList.size() == 0 && elementInFocus) {
-					LIST_VIEW_3D.setAdapter(new EmptyAdapter(getActivity(),
-							R.layout.empty_adapter, EMPTY));
+					LIST_VIEW_3D.setAdapter(new EmptyAdapter(mContext,R.layout.empty_adapter, EMPTY));
 					LIST_VIEW_3D.setEnabled(false);
 				}
 				if (elementInFocus) {
@@ -848,15 +845,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				final ViewGroup container, Bundle savedInstanceState) {
 			// TODO Auto-generated method stub
 			// mContext = getActivity();
-			inflater = (LayoutInflater) mContext
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View v = inflater.inflate(R.layout.custom_list_view, container,
-					false);
+			inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View v = inflater.inflate(R.layout.custom_list_view, container,false);
 			LIST_VIEW_3D = (ListView3D) v.findViewById(R.id.customListView);
 			// LIST_VIEW_3D.setAdapter(adapter);
 			LIST_VIEW_3D.setDynamics(new SimpleDynamics(0.7f, 0.6f));
-			FILE_GALLEY = (LinearLayout) v
-					.findViewById(R.id.file_gallery_layout);
+			FILE_GALLEY = (LinearLayout)v.findViewById(R.id.file_gallery_layout);
 
 			LinearLayout music = (LinearLayout) v.findViewById(R.id.music);
 			LinearLayout app = (LinearLayout) v.findViewById(R.id.apps);
@@ -948,16 +942,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}
 			});
 
-			final Dialog d = new Dialog(getActivity(),
-					R.style.custom_dialog_theme);
+			final Dialog d = new Dialog(mContext,R.style.custom_dialog_theme);
 			d.setContentView(R.layout.long_click_dialog);
 			ListView lo = (ListView) d.findViewById(R.id.list);
 			AdapterLoaders loaders = new AdapterLoaders(getActivity(), false);
 			lo.setAdapter(loaders.getLongClickAdapter());
 			lo.setSelector(getResources().getDrawable(R.drawable.blue_button));
 			d.getWindow().getAttributes().width = size.x*8/9;
-			LIST_VIEW_3D
-					.setOnItemLongClickListener(new OnItemLongClickListener() {
+			LIST_VIEW_3D.setOnItemLongClickListener(new OnItemLongClickListener() {
 						@Override
 						public boolean onItemLongClick(AdapterView<?> arg0,
 								View arg1, int position, long arg3) {
@@ -4017,15 +4009,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						pDialog.setContentView(R.layout.p_dialog);
 						pDialog.setCancelable(false);
 						pDialog.getWindow().getAttributes().width = size.x*8/9;
-						WebView web = (WebView) pDialog
-								.findViewById(R.id.p_Web_View);
+						WebView web = (WebView)pDialog.findViewById(R.id.p_Web_View);
 						web.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
 						web.setEnabled(false);
 						pDialog.show();
 					} catch (InflateException e) {
 						error = true;
-						Toast.makeText(mContext, R.string.errorinloadingfiles,
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, R.string.errorinloadingfiles,Toast.LENGTH_SHORT).show();
 					}
 					break;
 				case 1:
@@ -4036,20 +4026,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if (mediaFileList.size() > 0) {
 						FILE_GALLEY.setVisibility(View.GONE);
 						LIST_VIEW_3D.setVisibility(View.VISIBLE);
-						element = new MediaElementAdapter(mContext,
-								R.layout.row_list_1, mediaFileList);
-						// AT THE PLACE OF ELEMENT YOU CAN USE MUSIC ADAPTER....
-						// AND SEE WHAT HAPPENS
-						if (mediaFileList.size() > 0) {
-							LIST_VIEW_3D.setAdapter(element);
-							LIST_VIEW_3D.setEnabled(true);
-						} else if (mediaFileList.size() == 0) {
-							LIST_VIEW_3D.setAdapter(new EmptyAdapter(mContext,
-									R.layout.row_list_3, EMPTY));
-							LIST_VIEW_3D.setEnabled(false);
-						}
-						LIST_VIEW_3D
-								.setDynamics(new SimpleDynamics(0.7f, 0.6f));
+						element = new MediaElementAdapter(mContext,R.layout.row_list_1, mediaFileList);
+						LIST_VIEW_3D.setAdapter(element);
+						LIST_VIEW_3D.setEnabled(true);
+						LIST_VIEW_3D.setDynamics(new SimpleDynamics(0.7f, 0.6f));
 						if (!elementInFocus) {
 							mFlipperBottom.showPrevious();
 							mFlipperBottom.setAnimation(prevAnim());
@@ -4421,18 +4401,20 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				if(CURRENT_ITEM==0||CURRENT_ITEM==3)
-					CURRENT_ITEM = 2;
-				
 				if(zipPathRoot==null)
 					zipPathRoot = "/";
 				
 				if(zipPathSimple == null)
 					zipPathSimple = "/";
 				
-				if(CURRENT_ITEM==2){
+				if(CURRENT_ITEM==2||CURRENT_ITEM==0){
 					try {
-						ZipFile zf = new ZipFile(file2);
+						File fi = file2;
+						if(CURRENT_ITEM==0){
+							CURRENT_ITEM = 2;
+							fi = file0;
+						}
+						ZipFile zf = new ZipFile(fi);
 						zListRoot = new ZipManager(zf, zipPathRoot, mContext).generateList();
 						handle.sendEmptyMessage(0);
 					} catch (IOException e) {
