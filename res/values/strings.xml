@@ -75,6 +75,9 @@
 	<string name="extaborted">Extraction was interrupted</string>
 	<string name="errorinext">There were few errors while extracting</string>
 	<string name="cannotexthere">Cannot extract files here</string>
+	<string name="search">Search</string>
+	<string name="multi">Multi-sel</string>
+	<string name="copybottom">Copy</string>
 	
 	
 	
