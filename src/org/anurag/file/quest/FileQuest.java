@@ -24,7 +24,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.zip.ZipFile;
-
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
 import org.anurag.compress.ExtractZipFile;
@@ -50,7 +49,6 @@ import org.ultimate.quickaction3D.ActionItem;
 import org.ultimate.quickaction3D.QuickAction;
 import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
 import org.ultimate.root.LinuxShell;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -105,11 +103,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.viewpagerindicator.TitlePageIndicator;
 
 @SuppressLint({ "HandlerLeak", "SdCardPath" })
@@ -226,8 +219,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	static int rSize = 0;
 	static int sSize = 0;
 	static int mSize = 0;
-	AdView ad;
-	InterstitialAd interad;
+	
 
 	@SuppressWarnings("static-access")
 	@SuppressLint({ "NewApi", "SdCardPath" })
@@ -463,53 +455,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				// TODO Auto-generated method stub
 			}
 		});
-		// new DropBoxGuide(this.getSupportFragmentManager());
-
+		
+		//LOADS THE SD CARD STATUS...
 		new load().execute();
-
-		final Handler handle = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				LinearLayout ll = (LinearLayout) findViewById(R.id.ui);
-				interad = new InterstitialAd(FileQuest.this);
-				interad.setAdUnitId(id);
-				interad.loadAd(new AdRequest.Builder().build());
-
-				if (!added) {
-					added = true;
-					ad = new AdView(FileQuest.this);
-					ad.setAdUnitId(id);
-					ad.setAdSize(AdSize.SMART_BANNER);
-					ad.loadAd(new AdRequest.Builder().build());
-					ll.addView(ad);
-
-				}
-			}
-		};
-
-		Thread adThread = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				if (!added)
-					try {
-						//PROVIDE YOUR OWN URL FOR ADMOB ID
-						//URL MUST BE DOWNLOADABLE....
-						URL url = new URL("https://dl.dropboxusercontent.com/s/q645iprj62e97to/%20ADMOB_ONLINE_%20ID.txt?dl=1");
-						Scanner scan = new Scanner(url.openStream());
-						id = scan.next();
-						if (id != null)
-							handle.sendEmptyMessage(0);
-					} catch (MalformedURLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-
-					}
-			}
-		});
-		adThread.start();
 
 		/**
 		 * CHECKS WHETHER APP IS UPDATED OR NOT IF UPDATED THEN DISPLAYS THE NEW
@@ -1735,12 +1683,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			break;
 
 		case R.id.bottom_paste:
-			if (CURRENT_ITEM == 0) {
-				QuickAction ac = new QuickAction(mContext);
-				ActionItem it = new ActionItem(0,getString(R.string.pastenotallowed));
-				ac.addActionItem(it);
-				ac.show(v);
-			} else {
+			if (CURRENT_ITEM == 0||ZIP_ROOT||ZIP_SIMPLE) {
+				Toast.makeText(mContext, getString(R.string.pastenotallowed), Toast.LENGTH_SHORT).show();
+			}else{
 				pasteCommand(false);
 			}
 			break;
@@ -2550,12 +2495,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						mUseBackKey = true;
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
-						try {
-							if (interad.isLoaded())
-								interad.show();
-						} catch (Exception e) {
-
-						}
 						FileQuest.this.finish();
 						android.os.Process.killProcess(android.os.Process.myPid());
 					}
@@ -2584,12 +2523,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
-						try {
-							if (interad.isLoaded())
-								interad.show();
-						} catch (Exception e) {
-
-						}
 						FileQuest.this.finish();
 						android.os.Process.killProcess(android.os.Process.myPid());
 					}
@@ -2695,12 +2628,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						mUseBackKey = true;
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
-						try {
-							if (interad.isLoaded())
-								interad.show();
-						} catch (Exception e) {
-
-						}
 						FileQuest.this.finish();
 						android.os.Process.killProcess(android.os.Process.myPid());
 					}
@@ -2762,12 +2689,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						mUseBackKey = true;
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
-						try {
-							if (interad.isLoaded())
-								interad.show();
-						} catch (Exception e) {
-
-						}
 						FileQuest.this.finish();
 						android.os.Process.killProcess(android.os.Process.myPid());
 					}
