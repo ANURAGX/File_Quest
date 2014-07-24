@@ -68,7 +68,6 @@
 	<string name="p_String">Please wait while loading list</string>
 	<string name="cleargesturedata">Clear gesture data</string>
 	<string name="gesturedatacleared">All gesture data has been cleared</string>
-	<string name="quittheapp">Quit File Quest</string>
 	<string name="zipexception">Corrupt or protected archive,failed to open</string>
 	<string name="fileextracted">Files extracted successfully</string>
 	<string name="preparing">Preparing,please wait</string>
