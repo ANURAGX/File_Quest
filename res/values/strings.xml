@@ -22,6 +22,55 @@
 	<string name="version">0.2.5</string>
     <string name="app_name">File Quest</string>
     <string name="versioncode">025</string>
+    
+    
+    
+    <!-- STRING ARRAYS.... -->
+    <string-array name="effects">
+        <item>Standard</item>
+        <item>Tablet</item>
+         <item>CubeIn</item>
+        <item>CubeOut</item>
+        <item>FlipVertical</item>
+        <item>FlipHorizontal</item>
+        <item>Stack</item>
+        <item>ZoomIn</item>
+        <item>ZoomOut</item>
+    	<item>RotateUp</item>
+        <item>RotateDown</item>
+    	<item>Accordion</item>
+    </string-array>
+
+    <string-array name="listAnims" >
+        
+        	<item>Standard</item>
+        	<item>Grow</item>
+        	<item>Cards</item>
+        	<item>Curl</item>
+        	<item>Wave</item>
+        	<item>Flip</item>
+        	<item>Fly</item>
+        	<item>Reverse fly</item>
+        	<item>Helix</item>
+        	<item>Fan</item>
+        	<item>Tilt</item>
+        	<item>Zipper</item>
+        	<item>Fade</item>
+        	<item>Twirl</item>
+        	<item>Slide in</item>
+    </string-array>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	
 	<!-- Editor Activity -->
 	<string name="empty">No Files</string>
@@ -81,6 +130,24 @@
 	<string name="sysapp">Sys-app</string>
 	<string name="userapp">User-app</string>
 	<string name="allapp">All-app</string>
+	<string name="animation">Animation Effects</string>
+	<string name="panelanim">Panel Animation</string>
+	<string name="listanim">Listview Animation</string>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
