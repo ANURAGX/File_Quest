@@ -1730,26 +1730,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			break;
 
 		case R.id.bottom_Quit:
-			QuickAction ad = new QuickAction(getApplicationContext());
-			ActionItem adi = new ActionItem(0, getString(R.string.quittheapp));
-			ad.addActionItem(adi);
-			adi = new ActionItem(getResources().getDrawable(R.drawable.org_anurag_questbrowser_underline));
-			ad.addActionItem(adi);
-			adi = new ActionItem(1, getString(R.string.yes), getResources().getDrawable(R.drawable.ic_launcher_quit));
-			ad.addActionItem(adi);
-			adi = new ActionItem(2, getString(R.string.no), getResources().getDrawable(R.drawable.ic_launcher_apply));
-			ad.addActionItem(adi);
-			ad.setOnActionItemClickListener(new OnActionItemClickListener() {
-				@Override
-				public void onItemClick(QuickAction source, int pos,
-						int actionId) {
-					// TODO Auto-generated method stub
-					if (actionId == 1) {
-						FileQuest.this.finish();
-					}
-				}
-			});
-			ad.show(v);
+			FileQuest.this.finish();
+			android.os.Process.killProcess(android.os.Process.myPid());
 			break;
 
 		case R.id.bottom_paste:
