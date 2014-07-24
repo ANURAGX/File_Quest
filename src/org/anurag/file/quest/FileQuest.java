@@ -19,10 +19,7 @@ package org.anurag.file.quest;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.zip.ZipFile;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
@@ -63,6 +60,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -74,7 +72,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -103,6 +100,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+import com.abhi.animated.TransitionViewPager;
+import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.viewpagerindicator.TitlePageIndicator;
 
 @SuppressLint({ "HandlerLeak", "SdCardPath" })
@@ -137,7 +136,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static Dialog dialog;
 	public static Point size;
 	public static Context mContext;
-
+	static int LIST_ANIM;
+	static int PAGER_ANIM;
 	private static ListView root;
 	private static ListView simple;
 	private static ListView3D LIST_VIEW_3D;
@@ -179,7 +179,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ArrayList<File> searchList;
 	private static boolean RENAME_COMMAND = false;
 	private static EditText editBox;
-	private static ViewPager mViewPager;
+	private static TransitionViewPager mViewPager;
 	private static ViewFlipper mFlipperBottom;
 	private static TitlePageIndicator indicator;
 	private static RootAdapter RootAdapter;
@@ -237,6 +237,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = preferences.getInt("FOLDER_TYPE", 0);
 		HOME_DIRECTORY = preferences.getString("HOME_DIRECTORY", null);
 		ENABLE_ON_LAUNCH = preferences.getBoolean("ENABLE_ON_LAUNCH", false);
+		LIST_ANIM = preferences.getInt("LIST_ANIM", 8);
+		PAGER_ANIM = preferences.getInt("PAGER_ANIM", 3);
 		edit = preferences.edit();
 
 		try {
@@ -288,9 +290,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		error = false;
 		mContext = FileQuest.this;
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager = (TransitionViewPager) findViewById(R.id.pager);
 		indicator = (TitlePageIndicator) findViewById(R.id.indicator);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+		
+		String[] te = getResources().getStringArray(R.array.effects);		
+		mViewPager.setTransitionEffect(TransitionEffect.valueOf(te[PAGER_ANIM]));
+		
 		indicator.setViewPager(mViewPager);
 		mViewPager.setCurrentItem(CURRENT_PREF_ITEM);
 		mVFlipper = (ViewFlipper) findViewById(R.id.viewFlipperMenu);
@@ -711,15 +717,19 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			switch (position) {
 			case 0:
 				Fragment fragment0 = new MediaPanel();
+				mViewPager.setObjectForPosition(fragment0, position);
 				return fragment0;
 			case 1:
 				Fragment fragment = new SimplePanel();
+				mViewPager.setObjectForPosition(fragment, position);
 				return fragment;
 			case 2:
 				Fragment fragment1 = new RootPanel();
+				mViewPager.setObjectForPosition(fragment1, position);
 				return fragment1;
 			case 3:
 				Fragment appFragment = new AppPanel();
+				mViewPager.setObjectForPosition(appFragment, position);
 				return appFragment;
 			}
 			return null;
@@ -1012,12 +1022,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @author Anurag
 	 *
 	 */
-	public static class SimplePanel extends ListFragment {
-		public SimplePanel() {
+	public static class SimplePanel extends BaseFragment {
+		public SimplePanel(){
+			//PASSING THE ANIMATION TYPE FOR THE LIST VIEW.....
+			super(LIST_ANIM);
 		}
-
 		int spos;
-
 		@Override
 		public void onResume() {
 			// TODO Auto-generated method stub
@@ -1028,7 +1038,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					simple.setEnabled(false);
 				}
 		}
-
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
@@ -1272,9 +1281,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @author Anurag
 	 *
 	 */
-	public static class RootPanel extends ListFragment {
+	public static class RootPanel extends BaseFragment {
 
 		public RootPanel() {
+			//PASSING THE ANIMATION TYPE FOR THE LIST VIEW.....
+			super(LIST_ANIM);
 		}
 
 		@Override
@@ -1293,6 +1304,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			super.onActivityCreated(savedInstanceState);
 
 			root = getListView();
+			
 			root.setSelector(R.drawable.blue_button);
 			ColorDrawable color = new ColorDrawable(android.R.color.black);
 			root.setDivider(color);
@@ -1522,8 +1534,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @author Anurag
 	 *
 	 */
-	public static class AppPanel extends ListFragment {
-		public AppPanel() {
+	public static class AppPanel extends BaseFragment {
+		public AppPanel(){
+			//PASSING THE ANIMATION TYPE FOR THE LIST VIEW.....
+			super(LIST_ANIM);
 		}
 
 		@Override
@@ -3012,6 +3026,81 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			// WITH REQUEST CODE 400
 			new GetHomeDirectory(mContext, size.x *8/9, preferences);
 			break;
+			
+		case 420:
+			//SHOWS TO SET THE ANIMATION FOR VIEW PAGER AND LIST VIEWS...
+			{
+				QuickAction act = new QuickAction(mContext);
+				ActionItem item = new ActionItem(421,"   "+ getString(R.string.panelanim), getResources().getDrawable(R.drawable.ic_launcher_full));
+				act.addActionItem(item);
+				
+				item = new ActionItem(422,"   "+ getString(R.string.listanim), getResources().getDrawable(R.drawable.ic_launcher_full));
+				act.addActionItem(item);
+				act.setOnActionItemClickListener(this);
+				act.show(indicator);
+			}
+			break;
+			
+		case 421:
+			//SHOWING THE ANIMATION STYLES FOR VIEW PAGER....
+			String[] ls = getResources().getStringArray(R.array.effects);
+			{
+				Drawable dr = getResources().getDrawable(R.drawable.ic_launcher_full);	
+				QuickAction act = new QuickAction(mContext);
+				ActionItem item;
+				for(int m=0;m<ls.length;++m){
+					if(m==PAGER_ANIM)
+						item = new ActionItem(423,"   "+ls[m], getResources().getDrawable(R.drawable.ic_launcher_apply));
+					else
+						item = new ActionItem(423,"   "+ls[m], dr);
+					act.addActionItem(item);
+				}
+				act.setOnActionItemClickListener(new OnActionItemClickListener() {
+					@Override
+					public void onItemClick(QuickAction source, int pos, int actionId) {
+						// TODO Auto-generated method stub
+						PAGER_ANIM = pos;
+						String[] te = getResources().getStringArray(R.array.effects);		
+						mViewPager.setTransitionEffect(TransitionEffect.valueOf(te[PAGER_ANIM]));
+						edit.putInt("PAGER_ANIM", PAGER_ANIM);
+						edit.commit();
+						Toast.makeText(mContext, getString(R.string.settingsapplied), Toast.LENGTH_SHORT).show();
+					}
+				});
+				act.show(indicator);
+			}
+			break;
+			
+		case 422:
+			//ANIMATION STYLES FOR LIST VIEW....
+			{
+				String[] s = getResources().getStringArray(R.array.listAnims);
+				Drawable dra = getResources().getDrawable(R.drawable.ic_launcher_full);
+				QuickAction act = new QuickAction(mContext);
+				ActionItem item;
+				for(int m=0;m<s.length;++m){
+					if(m==LIST_ANIM)
+						item = new ActionItem(424,"   "+s[m], getResources().getDrawable(R.drawable.ic_launcher_apply));
+					else
+						item = new ActionItem(424,"   "+s[m], dra);
+					act.addActionItem(item);
+				}
+				act.setOnActionItemClickListener(new OnActionItemClickListener() {
+					@Override
+					public void onItemClick(QuickAction source, int pos, int actionId) {
+						// TODO Auto-generated method stub
+						LIST_ANIM = pos;
+						edit.putInt("LIST_ANIM", LIST_ANIM);
+						edit.commit();
+						mViewPager.setAdapter(mSectionsPagerAdapter);
+						mViewPager.setCurrentItem(CURRENT_ITEM);
+						Toast.makeText(mContext, getString(R.string.settingsapplied),Toast.LENGTH_SHORT).show();
+					}
+				});
+				act.show(indicator);
+			}
+			break;
+			
 		case 500:
 			// RESETS APP SETTINGS TO DEFAULT
 			edit.clear();
@@ -3765,8 +3854,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 */
 	private void ShowMenu() {
 		QuickAction action = new QuickAction(getApplicationContext(), 1);
-		ActionItem item = new ActionItem(80, getString(R.string.appearance),getResources().getDrawable(R.drawable.ic_launcher_appreance));
+		ActionItem item = new ActionItem(420, getString(R.string.animation),getResources().getDrawable(R.drawable.ic_launcher_full));
 		action.addActionItem(item);
+		
+		
+		item = new ActionItem(80, getString(R.string.appearance),getResources().getDrawable(R.drawable.ic_launcher_appreance));
+		action.addActionItem(item);
+		
 		item = new ActionItem(200, getString(R.string.startup), getResources().getDrawable(R.drawable.ic_launcher_startup));
 		action.addActionItem(item);
 		if (mViewPager.getCurrentItem() != 3) {
@@ -3778,6 +3872,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			item = new ActionItem(3200, getString(R.string.apps),getResources().getDrawable(R.drawable.ic_launcher_apk));
 			action.addActionItem(item);
 		}
+		
+		
+		
 		item = new ActionItem(500, getString(R.string.restoretodefault),getResources().getDrawable(R.drawable.ic_launcher_delete));
 		action.addActionItem(item);
 
