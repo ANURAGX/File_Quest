@@ -1967,9 +1967,20 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 		case R.id.searchBtn:
 				if(ZIP_ROOT||ZIP_SIMPLE)
-					zipSearch();
-				else
-					search();
+					if(SEARCH_FLAG){
+						SEARCH_FLAG = false;
+						mVFlipper.showNext();
+						mVFlipper.setAnimation(nextAnim());
+					}else
+						zipSearch();
+				else{
+					if(SEARCH_FLAG){
+						SEARCH_FLAG = false;
+						mVFlipper.showNext();
+						mVFlipper.setAnimation(nextAnim());
+					}else
+						search();
+				}	
 				break;
 
 		case R.id.applyBtn:
