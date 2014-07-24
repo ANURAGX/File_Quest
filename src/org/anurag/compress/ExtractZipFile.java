@@ -57,17 +57,16 @@ public class ExtractZipFile {
 	String size;
 	long max;
 	boolean errors;
-	long count ;
-	Enumeration<? extends ZipEntry> zList;
-	int i;
 	
+	Enumeration<? extends ZipEntry> zList;
+	
+	String dest;
 	public ExtractZipFile(final Context ctx ,final ZipObj zFile , final int width , String extractDir ,final File file ,final int mode) {
 		// TODO Auto-generated constructor stub
 		running = false;
 		errors = false;
 		prog = 0;
 		read = 0;
-		i = 0;
 		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.extract_file);
@@ -158,8 +157,9 @@ public class ExtractZipFile {
 					
 					
 					ZipEntry ze;
-					while((ze=zList.nextElement())!=null){
+					while(zList.hasMoreElements()){
 					//	++count;
+						ze = zList.nextElement();
 						handle.sendEmptyMessage(4);
 						if(zFile.isFile()){
 							//EXTRACTING A SINGLE FILE FROM AN ARCHIVE....
@@ -173,8 +173,9 @@ public class ExtractZipFile {
 										name = zFile.getEntry();
 									}
 									handle.sendEmptyMessage(0);
-									DEST = DEST + "/"+name;
-									FileOutputStream out = new FileOutputStream((DEST));
+									dest = DEST;
+									dest = dest + "/"+name;
+									FileOutputStream out = new FileOutputStream((dest));
 									max = ze.getSize();
 									size =AppBackup.size(max, ctx);
 									handle.sendEmptyMessage(3);
@@ -201,7 +202,53 @@ public class ExtractZipFile {
 							}
 						}else{
 							//EXTRACTING A DIRECTORY FROM ZIP ARCHIVE....
-							
+							if(ze.getName().startsWith(zFile.getPath())){
+								prog = 0;
+								dest = DEST;
+								name = ze.getName();
+								String path = name;
+								name = name.substring(name.lastIndexOf("/"), name.length());
+								if(!name.startsWith("/"))
+									name = "/"+name;
+								
+								String foname = zFile.getPath();
+								if(!foname.startsWith("/"))
+									foname = "/"+foname;
+								
+								path = path.substring(foname.lastIndexOf("/"), path.lastIndexOf("/"));
+								if(!path.startsWith("/"))
+									path = "/"+path;
+								dest = dest+path;
+								new File(dest).mkdirs();
+								dest = dest+name;
+								
+								FileOutputStream out;
+								try {
+									max = ze.getSize();
+									out = new FileOutputStream((dest));
+									size =AppBackup.size(max, ctx);
+									handle.sendEmptyMessage(3);
+								
+									InputStream fin = (new ZipFile(file).getInputStream(ze));
+									while((read=fin.read(data))!=-1&&running){
+										out.write(data, 0, read);
+										prog+=read;
+										name = AppBackup.status(prog, ctx);
+										handle.sendEmptyMessage(1);
+									}										
+									out.flush();
+									out.close();
+									fin.close();
+								} catch (FileNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+									errors = true;
+								}catch(IOException e){
+									errors = true;
+								}catch(Exception e){
+									errors = true;
+								}								
+							}
 						}
 					}				
 					
