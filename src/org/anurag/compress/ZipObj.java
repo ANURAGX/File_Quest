@@ -16,8 +16,11 @@
 
 package org.anurag.compress;
 
+import java.util.zip.ZipEntry;
+
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
@@ -36,6 +39,7 @@ public class ZipObj {
 	private Drawable icon;
 	private boolean isFile;
 	private String fileType;
+	private ZipEntry z;
 	/**
 	 * 
 	 * @param zPath
@@ -44,7 +48,7 @@ public class ZipObj {
 	 * @param zSize
 	 * @param ctx
 	 */
-	public ZipObj(String zPath,String zName,String zEntry,long zSize,Context ctx) {
+	public ZipObj(String zPath,String zName,String zEntry,long zSize,Context ctx , ZipEntry entry) {
 		// TODO Auto-generated constructor stub
 		this.path = zPath;
 		this.name = zName;
@@ -52,6 +56,7 @@ public class ZipObj {
 		this.size = size(zSize , ctx);
 		isFile = checkForFile();
 		fileType = getType(name, ctx);
+		this.z = entry;
 	}
 	
 	
@@ -109,6 +114,13 @@ public class ZipObj {
 		return this.isFile;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public ZipEntry getZipEntry(){
+		return this.z;
+	}
 	
 	private boolean checkForFile(){
 		String str = entry.substring(path.length(), entry.length());

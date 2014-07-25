@@ -72,7 +72,7 @@ public class ZipManager {
 					}
 				}
 				if(!added){
-					list.add(new ZipObj("", name, entry.getName(), entry.getSize(), ctx));
+					list.add(new ZipObj("", name, entry.getName(), entry.getSize(), ctx , entry) );
 				}				
 			}else{
 				/**
@@ -94,11 +94,11 @@ public class ZipManager {
 							}
 						}						
 						if(!added&&entryname.startsWith(zipPath)){
-							list.add(new ZipObj(zipPath, name, entry.getName(), entry.getSize(), ctx));
+							list.add(new ZipObj(zipPath, name, entry.getName(), entry.getSize(), ctx , entry));
 						}
 					}else{
 						if(entryname.startsWith(zipPath)){
-							list.add(new ZipObj(zipPath, name, entry.getName(), entry.getSize(), ctx));
+							list.add(new ZipObj(zipPath, name, entry.getName(), entry.getSize(), ctx,entry));
 						}
 					}
 				}catch(Exception e){
