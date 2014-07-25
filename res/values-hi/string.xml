@@ -123,7 +123,9 @@
 	<string name="panelanim">Panel Animation</string>
 	<string name="listanim">Listview Animation</string>
 	<string name="operationnotsupported">Operation not allowed</string>
-	
+	<string name="deflated">Deflated</string>
+	<string name="stored">Stored</string>
+	<string name="compmethod">Compression method</string>
 	
 	
 	
