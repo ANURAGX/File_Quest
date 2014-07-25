@@ -1705,19 +1705,31 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			break;
 
 		case R.id.bottom_copy:
-			OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 5,getString(R.string.enablemultiselect));
+			if(ZIP_ROOT||ZIP_SIMPLE){
+				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
+			}else
+				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 5,getString(R.string.enablemultiselect));
 			break;
 
 		case R.id.bottom_cut:
-			OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 2,getString(R.string.enablemultiselect));
+			if(ZIP_ROOT||ZIP_SIMPLE){
+				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
+			}else
+				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 2,getString(R.string.enablemultiselect));
 			break;
 
 		case R.id.bottom_zip:
-			OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 3,getString(R.string.enablemultiselect));
+			if(ZIP_ROOT||ZIP_SIMPLE){
+				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
+			}else
+				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 3,getString(R.string.enablemultiselect));
 			break;
 
 		case R.id.bottom_delete:
-			OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 4,getString(R.string.enablemultiselect));
+			if((ZIP_ROOT||ZIP_SIMPLE)){
+				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
+			}else
+				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 4,getString(R.string.enablemultiselect));
 			break;
 
 		case R.id.appSettings:
@@ -1797,14 +1809,23 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
 							SimpleAdapter.thumbselection = new boolean[sFiles.size()];
 							SimpleAdapter.MULTI_SELECT = false;
-							simple.setAdapter(nSimple);
-
+							if(!ZIP_SIMPLE){
+								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
+								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
+								//OUT OF THE ARCHIVE...
+								simple.setAdapter(nSimple);
+							}	
 						} else {
 							nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
 							SimpleAdapter.thumbselection = new boolean[sFiles.size()];
 							SimpleAdapter.MULTI_SELECT = true;
 							mViewPager.setCurrentItem(1);
-							simple.setAdapter(nSimple);
+							if(!ZIP_SIMPLE){
+								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
+								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
+								//OUT OF THE ARCHIVE...
+								simple.setAdapter(nSimple);
+							}								
 						}
 						break;
 					case 2:
@@ -1812,13 +1833,23 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							RootAdapter = new RootAdapter(mContext,R.layout.row_list_1, nFiles);
 							RootAdapter.thumbselection = new boolean[nFiles.size()];
 							RootAdapter.MULTI_SELECT = false;
-							root.setAdapter(RootAdapter);
+							if(!ZIP_ROOT){
+								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
+								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
+								//OUT OF THE ARCHIVE...
+								root.setAdapter(RootAdapter);
+							}	
 						} else {
 							RootAdapter = new RootAdapter(mContext,R.layout.row_list_1, nFiles);
 							RootAdapter.thumbselection = new boolean[nFiles.size()];
 							RootAdapter.MULTI_SELECT = true;
 							mViewPager.setCurrentItem(2);
-							root.setAdapter(RootAdapter);
+							if(!ZIP_ROOT){
+								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
+								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
+								//OUT OF THE ARCHIVE...
+								root.setAdapter(RootAdapter);
+							}	
 						}
 						break;
 
