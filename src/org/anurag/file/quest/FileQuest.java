@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.zip.ZipFile;
+
+import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
 import org.anurag.compress.ExtractZipFile;
@@ -46,6 +48,7 @@ import org.ultimate.quickaction3D.ActionItem;
 import org.ultimate.quickaction3D.QuickAction;
 import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
 import org.ultimate.root.LinuxShell;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -100,6 +103,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -1269,7 +1273,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 					case 10:
 						// PROPERTIES
-						new FileProperties(getActivity(), size.x*8/9, file);
+						if(ZIP_SIMPLE)//A ZIP FILE IS OPENED....
+							new ArchiveEntryProperties(mContext, zFileSimple, size.x*8/9);
+						else
+							new FileProperties(getActivity(), size.x*8/9, file);
 					}
 				}
 			});
@@ -1476,7 +1483,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 					case 10:
 						// PROPERTIES
-						new FileProperties(getActivity(), size.x*8/9, file2);
+						if(ZIP_ROOT)
+							new ArchiveEntryProperties(mContext, zFileRoot, size.x*8/9);
+						else
+							new FileProperties(getActivity(), size.x*8/9, file2);
 					}
 				}
 			});
