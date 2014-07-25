@@ -16,19 +16,98 @@
 
 package org.anurag.compress;
 
+import java.sql.Date;
+import java.util.zip.ZipEntry;
+
+import org.anurag.file.quest.R;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 
 /**
  * THIS CLASS SHOWS THE PROPERTIES OF A FILE SELECTED FROM INSIDE OF AN ARCHIVE......
- * FOR ALL KINDS OF ARCHIVE...
  * 
- * 
- * @author Anurag
- *
  */
 public class ArchiveEntryProperties {
 	
-	public ArchiveEntryProperties() {
+	public ArchiveEntryProperties(Context ctx , ZipObj file , int width) {
 		// TODO Auto-generated constructor stub
+		Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
+		dialog.setCancelable(true);
+		dialog.setContentView(R.layout.info_layout);
+		dialog.getWindow().getAttributes().width = width;
+		TextView text = (TextView)dialog.findViewById(R.id.infoName);
+		text.setText(ctx.getString(R.string.properties));
+		
+		ImageView icon = (ImageView)dialog.findViewById(R.id.infoIcon);
+		icon.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_stats));
+		
+		text = (TextView)dialog.findViewById(R.id.developer);
+		if(!file.isFile()){
+			text.setText(ctx.getString(R.string.folder));
+			text = (TextView)dialog.findViewById(R.id.copyright);
+			text.setText("   "+ctx.getString(R.string.foldername)+" "+file.getName());
+			text = (TextView)dialog.findViewById(R.id.name);
+			String path = file.getPath();
+			if(!path.startsWith("/"))
+				path="/"+path;
+			path = path.substring(0, path.lastIndexOf("/"));
+			if(path.length()==0)
+				path = "/";
+			text.setText("   "+ctx.getString(R.string.folderpath)+" "+path);
+			
+			text = (TextView)dialog.findViewById(R.id.size);
+			text.setText(ctx.getString(R.string.foldersize));
+			
+			text = (TextView)dialog.findViewById(R.id.sizeLenth);
+			text.setText("   ?");
+		}	
+		else{
+			text.setText(ctx.getString(R.string.file));
+			text = (TextView)dialog.findViewById(R.id.copyright);
+			text.setText("   "+ctx.getString(R.string.filename)+" "+file.getName());
+			text = (TextView)dialog.findViewById(R.id.name);
+			String path = file.getPath();
+			if(!path.startsWith("/"))
+				path="/"+path;
+			path = path.substring(0, path.lastIndexOf("/"));
+			if(path.length()==0)
+				path = "/";
+			text.setText("   "+ctx.getString(R.string.filepath)+" "+path);
+			text = (TextView)dialog.findViewById(R.id.size);
+			text.setText(ctx.getString(R.string.filesize));
+			
+			text = (TextView)dialog.findViewById(R.id.sizeLenth);
+			text.setText("   "+file.getSize());
+		}
+		
+		
+		text = (TextView)dialog.findViewById(R.id.version);
+		text.setText(ctx.getString(R.string.type));
+		text = (TextView)dialog.findViewById(R.id.versionCode );
+		text.setText("   "+file.getFileType());
+		
+		
+		text = (TextView)dialog.findViewById(R.id.packageT);
+		text.setText(ctx.getString(R.string.compmethod));
+		
+		text = (TextView)dialog.findViewById(R.id.pName);
+		int method = file.getZipEntry().getMethod();
+		if(method == ZipEntry.DEFLATED)
+			text.setText("   "+ctx.getString(R.string.deflated));
+		else
+			text.setText("   "+ctx.getString(R.string.stored));
+		
+		text = (TextView)dialog.findViewById(R.id.process);
+		text.setText(ctx.getString(R.string.modified));
+		
+		text = (TextView)dialog.findViewById(R.id.proName);
+		text.setText("   "+ctx.getString(R.string.modon)+ " "+ new Date(file.getZipEntry().getTime()));
+		
+		dialog.show();
 	}
 
 }
