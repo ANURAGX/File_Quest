@@ -122,7 +122,7 @@
 	<string name="animation">Animation Effects</string>
 	<string name="panelanim">Panel Animation</string>
 	<string name="listanim">Listview Animation</string>
-	
+	<string name="operationnotsupported">Operation not allowed</string>
 	
 	
 	
