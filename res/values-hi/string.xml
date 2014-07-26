@@ -23,19 +23,20 @@
     <string name="versioncode">025</string>
     
      <!-- STRING ARRAYS.... -->
-    <string-array name="effects">
-        <item>एकार्डियन</item>
+     
+    <string-array name="effects2">
+        <item>स्टैण्डर्ड</item>
+        <item>टेबलेट</item>
         <item>क्यूब इन </item>
         <item>क्यूब आउट </item>
         <item>फ्लिप वर्टीकल</item>
         <item>फ्लिप हॉरिजॉन्टल</item>
         <item>स्टैक</item>
-        <item>रोटेट उप</item>
-        <item>रोटेट डाउन</item>
-        <item>स्टैण्डर्ड</item>
-        <item>टेबलेट</item>
-    	<item>ज़ूम इन</item>
+        <item>ज़ूम इन</item>
         <item>ज़ूम आउट </item>
+        <item>रोटेट उप</item>
+        <item>रोटेट डाउन</item>   	
+    	<item>एकार्डियन</item>
     </string-array>
 
      <string-array name="listAnims" >
@@ -152,7 +153,7 @@
 	<string name="supporttakenBack">समर्थन वापस ले लिया गया है </string>
 	<string name="compressandsend">संक्षिप्त करें और इसे भेजें</string>
 	<string name="nobackuptodelete">हटाने के लिए कोई बैकअप उपलब्ध नहीं</string>
-	<string name="quit">बहार निकलें</string>
+	<string name="quit">निकास</string>
 	<string name="pastenotallowed">यहाँ पेस्ट करने की अनुमति नहीं है </string>
 	<string name="enablemultiselect">पहले बहु चयन मोड सक्षम करें</string>
 	<string name="multiforgallery">पहले फाइल गैलरी के लिए बहु चयन मोड सक्षम करें </string>
@@ -540,6 +541,6 @@
     <string name="extstatuskb">स्थिति :- %.2f KB एक्सट्रेक्टेड</string>
     <string name="extstatusbytes">स्थिति :- %.2f Bytes एक्सट्रेक्टेड</string> 
     <string name="extractto">एक्सट्रेक्ट टू</string>
-    <string name="extracthere">एक्सट्रेक्ट हियरe</string>
+    <string name="extracthere">एक्सट्रेक्ट हियर</string>
     
 </resources>

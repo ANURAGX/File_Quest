@@ -3127,7 +3127,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			
 		case 421:
 			//SHOWING THE ANIMATION STYLES FOR VIEW PAGER....
-			String[] ls = getResources().getStringArray(R.array.effects);
+			String[] ls = getResources().getStringArray(R.array.effects2);
 			{
 				Drawable dr = getResources().getDrawable(R.drawable.ic_launcher_full);	
 				QuickAction act = new QuickAction(mContext);
