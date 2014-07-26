@@ -208,32 +208,37 @@ public class ExtractZipFile {
 								} catch (FileNotFoundException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
-									errors = true;
+									//errors = true;
 								} catch(IOException e){
 									errors = true;
 								}
 							}
 						}else{
 							//EXTRACTING A DIRECTORY FROM ZIP ARCHIVE....
-							if(ze.getName().startsWith(zFile.getPath())){
+							String p = zFile.getPath();
+							if(p.startsWith("/"))
+								p = p.substring(1, p.length());
+							if(ze.getName().startsWith(p)){
 								prog = 0;
 								dest = DEST;
 								name = ze.getName();
 								String path = name;
-								name = name.substring(name.lastIndexOf("/"), name.length());
-								if(!name.startsWith("/"))
-									name = "/"+name;
+								name = name.substring(name.lastIndexOf("/")+1, name.length());
+								handle.sendEmptyMessage(0);
+								
 								
 								String foname = zFile.getPath();
 								if(!foname.startsWith("/"))
 									foname = "/"+foname;
 								
+								if(!path.startsWith("/"))
+									path = "/"+path;
 								path = path.substring(foname.lastIndexOf("/"), path.lastIndexOf("/"));
 								if(!path.startsWith("/"))
 									path = "/"+path;
 								dest = dest+path;
 								new File(dest).mkdirs();
-								dest = dest+name;
+								dest = dest+"/"+name;
 								
 								FileOutputStream out;
 								try {
@@ -255,11 +260,11 @@ public class ExtractZipFile {
 								} catch (FileNotFoundException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
-									errors = true;
+								//	errors = true;
 								}catch(IOException e){
 									errors = true;
 								}catch(Exception e){
-									errors = true;
+									//errors = true;
 								}								
 							}
 						}
