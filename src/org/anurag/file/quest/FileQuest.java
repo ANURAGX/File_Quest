@@ -1086,6 +1086,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}else{
 							//DIRECTORY HAS TO BE OPENED....
 							zipPathSimple = zFileSimple.getPath();
+							SFileManager.nStack.push(zipPathSimple+" -> Zip");
 							if(zipPathSimple.startsWith("/"))
 								zipPathSimple = zipPathSimple.substring(1, zipPathSimple.length());
 							setZipAdapter();
@@ -1158,6 +1159,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							}else{
 								//DIRECTORY HAS TO BE OPENED....
 								zipPathSimple = zFileSimple.getPath();
+								SFileManager.nStack.push(zipPathSimple+" -> Zip");
 								if(zipPathSimple.startsWith("/"))
 									zipPathSimple = zipPathSimple.substring(1, zipPathSimple.length());
 								setZipAdapter();
@@ -1396,6 +1398,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							}else{
 								//DIRECTORY HAS TO BE OPENED....
 								zipPathRoot = zFileRoot.getPath();
+								RFileManager.nStack.push(zipPathRoot+" -> Zip");
 								if(zipPathRoot.startsWith("/"))
 									zipPathRoot = zipPathRoot.substring(1, zipPathRoot.length());
 								setZipAdapter();
@@ -1572,6 +1575,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}else{
 							//DIRECTORY HAS TO BE OPENED....
 							zipPathRoot = zFileRoot.getPath();
+							RFileManager.nStack.push(zipPathRoot+" -> Zip");
 							if(zipPathRoot.startsWith("/"))
 								zipPathRoot = zipPathRoot.substring(1, zipPathRoot.length());
 							setZipAdapter();
@@ -2652,6 +2656,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					mViewPager.setCurrentItem(CURRENT_PREF_ITEM);
 				}
 			}else if(ZIP_SIMPLE){
+				//POPING OUT THE ZIP PATH.....
+				SFileManager.nStack.pop();
 				/**
 				 * ZIP FILE IS OPENED IN SDCARD_PANEL...
 				 * HANDLE IT HERE.....
@@ -2666,7 +2672,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					zipPathSimple = null;
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
-				}
+				}else
 				
 				/*
 				 * TRY BLOCK IS USED BECAUSE WHEN USER NAVIGATES TO TOP DIRECTORY IN ZIP FILE
@@ -2746,6 +2752,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					mViewPager.setCurrentItem(CURRENT_PREF_ITEM);
 			} 
 			else if(ZIP_ROOT){
+				//POPING OUT THE ZIP PATH....
+				
+				RFileManager.nStack.pop();
 				/**
 				 * ZIP FILE IS OPENED IN SDCARD_PANEL...
 				 * HANDLE IT HERE.....
@@ -2760,7 +2769,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					zipPathRoot = null;
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
-				}
+				}else
 				
 				/*
 				 * TRY BLOCK IS USED BECAUSE WHEN USER NAVIGATES TO TOP DIRECTORY IN ZIP FILE
@@ -4373,10 +4382,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						Toast.makeText(mContext, R.string.filedoesnotexists,Toast.LENGTH_SHORT).show();
 
 				}else if(ACTION.equalsIgnoreCase("FQ_ZIP_OPEN")){
-					if(CURRENT_ITEM==0||CURRENT_ITEM==2)
+					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
 						ZIP_ROOT = true;
-					else
+						RFileManager.nStack.push("/ -> Zip");
+					}	
+					else{
 						ZIP_SIMPLE = true;
+						SFileManager.nStack.push("/ -> Zip");
+					}	
 					setZipAdapter();
 				}else if(ACTION.equalsIgnoreCase("FQ_EXTRACT_PATH")){
 					String path = it.getStringExtra("extract_path");
