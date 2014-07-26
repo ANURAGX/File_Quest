@@ -34,7 +34,7 @@ public class JazzyHelper implements AbsListView.OnScrollListener {
     public static final int STANDARD = 0;
     public static final int GROW = 1;
     public static final int CARDS = 2;
-    public static final int CURL = 3;
+    public static final int CURL = 11;
     public static final int WAVE = 4;
     public static final int FLIP = 5;
     public static final int FLY = 6;
@@ -42,7 +42,7 @@ public class JazzyHelper implements AbsListView.OnScrollListener {
     public static final int HELIX = 8;
     public static final int FAN = 9;
     public static final int TILT = 10;
-    public static final int ZIPPER = 11;
+    public static final int ZIPPER = 3;
     public static final int FADE = 12;
     public static final int TWIRL = 13;
     public static final int SLIDE_IN = 14;
