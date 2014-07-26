@@ -24,37 +24,37 @@
     
      <!-- STRING ARRAYS.... -->
     <string-array name="effects">
-        <item>Accordion</item>
-        <item>CubeIn</item>
-        <item>CubeOut</item>
-        <item>FlipVertical</item>
-        <item>FlipHorizontal</item>
-        <item>Stack</item>
-        <item>RotateUp</item>
-        <item>RotateDown</item>
-        <item>Standard</item>
-        <item>Tablet</item>
-    	<item>ZoomIn</item>
-        <item>ZoomOut</item>
+        <item>एकार्डियन</item>
+        <item>क्यूब इन </item>
+        <item>क्यूब आउट </item>
+        <item>फ्लिप वर्टीकल</item>
+        <item>फ्लिप हॉरिजॉन्टल</item>
+        <item>स्टैक</item>
+        <item>रोटेट उप</item>
+        <item>रोटेट डाउन</item>
+        <item>स्टैण्डर्ड</item>
+        <item>टेबलेट</item>
+    	<item>ज़ूम इन</item>
+        <item>ज़ूम आउट </item>
     </string-array>
 
      <string-array name="listAnims" >
         
-        	<item>Standard</item>
-        	<item>Grow</item>
-        	<item>Cards</item>
-        	<item>Zipper</item>
-        	<item>Helix</item>
-        	<item>Flip</item>
-        	<item>Fly</item>
-        	<item>Reverse fly</item>
-        	<item>Wave</item>
-        	<item>Fan</item>
-        	<item>Tilt</item>        	
-        	<item>Curl</item>
-        	<item>Fade</item>
-        	<item>Twirl</item>
-        	<item>Slide in</item>
+        	<item>स्टैण्डर्ड</item>
+        	<item>ग्रो</item>
+        	<item>कार्ड्स</item>
+        	<item>जिपर </item>
+        	<item>हेलिक्स</item>
+        	<item>फ्लिप</item>
+        	<item>फ्लाई</item>
+        	<item>रिवर्स फ्लाई</item>
+        	<item>वेव</item>
+        	<item>फैन</item>
+        	<item>टिल्ट </item>        	
+        	<item>कर्ल</item>
+        	<item>फेड</item>
+        	<item>ट्विरल</item>
+        	<item>स्लाइड इन</item>
     </string-array>
     
     
@@ -108,27 +108,27 @@
 	<string name="p_String">सूची लोड करने के दौरान कृपया प्रतीक्षा करेंt</string>
 	<string name="cleargesturedata">जेस्चर डेटा नष्ट करें</string>
 	<string name="gesturedatacleared">सभी जेस्चर डेटा नस्ट कर दिया गया है</string>
-	<string name="zipexception">Corrupt or protected archive,failed to open</string>
-	<string name="fileextracted">Files extracted successfully</string>
-	<string name="preparing">Preparing,please wait</string>
-	<string name="extaborted">Extraction was interrupted</string>
-	<string name="cannotexthere">Cannot extract files here</string>
-	<string name="search">Search</string>
-	<string name="multi">Multi-sel</string>
-	<string name="copybottom">Copy</string>
-	<string name="multiback">Multi-bac</string>
-	<string name="sysapp">Sys-app</string>
-	<string name="userapp">User-app</string>
-	<string name="allapp">All-app</string>
-	<string name="animation">Animation Effects</string>
-	<string name="panelanim">Panel Animation</string>
-	<string name="listanim">Listview Animation</string>
-	<string name="operationnotsupported">Operation not allowed</string>
-	<string name="deflated">Deflated</string>
-	<string name="stored">Stored</string>
-	<string name="compmethod">Compression method</string>
-	<string name="preparingtoshare">Preparing to share</string>
-	<string name="cannotsendfolder">Cannot send a folder</string>
+	<string name="zipexception">ज़िप फाइल कर्रुप्त है,खोलने में असमर्थ </string>
+	<string name="fileextracted">फाइल्स सफलतापूर्वक एक्सट्रेक्ट की गईं</string>
+	<string name="preparing">तैयारी की जा रही है, कृपया प्रतीक्षा करें</string>
+	<string name="extaborted">एक्सट्रैक्शन को रोक दिया गया</string>
+	<string name="cannotexthere">फाइल को यहाँ एक्सट्रेक्ट नहीं किया जा सकता</string>
+	<string name="search">खोजें </string>
+	<string name="multi">मल्टी-सेल</string>
+	<string name="copybottom">कॉपी</string>
+	<string name="multiback">मल्टी-बक</string>
+	<string name="sysapp">सीस-ऐप्प</string>
+	<string name="userapp">यूजर-ऐप्प</string>
+	<string name="allapp">सभी-ऐप्प</string>
+	<string name="animation">एनीमेशन इफेक्ट्स</string>
+	<string name="panelanim">पैनल एनीमेशन</string>
+	<string name="listanim">लिस्त्वैव एनीमेशन</string>
+	<string name="operationnotsupported">ऑपरेशन की अनुमति नहीं है</string>
+	<string name="deflated">डेफ़लेटेड</string>
+	<string name="stored">स्टोर्ड</string>
+	<string name="compmethod">कम्प्रेशन मेथड</string>
+	<string name="preparingtoshare">साझा करने के लिए तैयार की जा रही है</string>
+	<string name="cannotsendfolder">फोल्डर नहीं भेज सकते हैं</string>
 	
 	
 	
@@ -529,6 +529,17 @@
     <string name="setstartupdir">स्टार्टअप के लिए एक डायरेक्टरी का चुनाव करें </string>
     <string name="startupset">स्टार्टअप के लांच पर डायरेक्टरी सेट की गई</string>
     
-    
+    <!-- EXTRACT ZIP FILE DIALOG... -->
+    <string name="archiveoperation">आर्चिव ऑपरेशन</string>
+    <string name="extract">एक्सट्रेक्ट</string>
+    <string name="extractingto">एक्सट्रक्टिंग टू :-</string>
+    <string name="extractingfrom">एक्सट्रक्टिंग फ्रॉम :-</string>
+    <string name="extractingfile">एक्सट्रक्टिंग फाइल :-</string>
+    <string name="extstatusgb">स्थिति :- %.2f GB एक्सट्रेक्टेड</string>
+   	<string name="extstatusmb">स्थिति :- %.2f MB एक्सट्रेक्टेड</string>
+    <string name="extstatuskb">स्थिति :- %.2f KB एक्सट्रेक्टेड</string>
+    <string name="extstatusbytes">स्थिति :- %.2f Bytes एक्सट्रेक्टेड</string> 
+    <string name="extractto">एक्सट्रेक्ट टू</string>
+    <string name="extracthere">एक्सट्रेक्ट हियरe</string>
     
 </resources>
