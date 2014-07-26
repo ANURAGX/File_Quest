@@ -238,10 +238,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		TRANSPRA_LEVEL = preferences.getFloat("TRANSPRA_LEVEL", 0.9f);
 		SHOW_HIDDEN_FOLDERS = preferences.getBoolean("SHOW_HIDDEN_FOLDERS",false);
 		SORT_TYPE = preferences.getInt("SORT_TYPE", 2);
-		RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = preferences.getInt("FOLDER_TYPE", 0);
+		RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = preferences.getInt("FOLDER_TYPE", 3);
 		HOME_DIRECTORY = preferences.getString("HOME_DIRECTORY", null);
 		ENABLE_ON_LAUNCH = preferences.getBoolean("ENABLE_ON_LAUNCH", false);
-		LIST_ANIM = preferences.getInt("LIST_ANIM", 8);
+		LIST_ANIM = preferences.getInt("LIST_ANIM", 4);
 		PAGER_ANIM = preferences.getInt("PAGER_ANIM", 3);
 		edit = preferences.edit();
 

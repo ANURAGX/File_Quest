@@ -44,11 +44,11 @@
         	<item>Grow</item>
         	<item>Cards</item>
         	<item>Zipper</item>
-        	<item>Wave</item>
+        	<item>Helix</item>
         	<item>Flip</item>
         	<item>Fly</item>
         	<item>Reverse fly</item>
-        	<item>Helix</item>
+        	<item>Wave</item>
         	<item>Fan</item>
         	<item>Tilt</item>        	
         	<item>Curl</item>
@@ -56,6 +56,7 @@
         	<item>Twirl</item>
         	<item>Slide in</item>
     </string-array>
+    
     
     
     
