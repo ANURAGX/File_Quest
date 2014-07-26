@@ -647,13 +647,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// WITH HINDI LANGAUGE IS CREATED THROWS INDEXOUTOFBOUND
 						// EXCEPTION
 						// I THINK IT IS APPLICABLE TO OTHER LANGUAGES ALSO
-					nFiles = RFileManager.giveMeFileList();
-					sFiles = SFileManager.giveMeFileList();
+					if(!ZIP_ROOT)
+						nFiles = RFileManager.giveMeFileList();
+					if(!ZIP_SIMPLE)
+						sFiles = SFileManager.giveMeFileList();
 					if (ITEM == 0)
 						load_FIle_Gallery(pos);
 				} catch (IndexOutOfBoundsException e) {
-					nFiles = RFileManager.giveMeFileList();
-					sFiles = SFileManager.giveMeFileList();
+					if(!ZIP_ROOT)
+						nFiles = RFileManager.giveMeFileList();
+					if(!ZIP_SIMPLE)
+						sFiles = SFileManager.giveMeFileList();
 				}
 
 				if (RootAdapter.MULTI_SELECT) {
@@ -1032,16 +1036,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			super(LIST_ANIM);
 		}
 		int spos;
-		@Override
-		public void onResume() {
-			// TODO Auto-generated method stub
-			super.onResume();
-			if (simple != null && sFiles != null)
-				if (sFiles.size() == 0) {
-					simple.setAdapter(new EmptyAdapter(getActivity(),R.layout.empty_adapter, EMPTY));
-					simple.setEnabled(false);
-				}
-		}
+		
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
@@ -1321,18 +1316,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			//PASSING THE ANIMATION TYPE FOR THE LIST VIEW.....
 			super(LIST_ANIM);
 		}
-
-		@Override
-		public void onResume() {
-			// TODO Auto-generated method stub
-			if (root != null && nFiles != null)
-				if (nFiles.size() == 0) {
-					root.setAdapter(new EmptyAdapter(mContext,R.layout.empty_adapter, EMPTY));
-					root.setEnabled(false);
-				}
-			super.onResume();
-		}
-
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
@@ -2655,7 +2638,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 					mViewPager.setCurrentItem(CURRENT_PREF_ITEM);
 				}
-			}else if(ZIP_SIMPLE){
+			}else if(ZIP_SIMPLE && CURRENT_ITEM==1){
 				//POPING OUT THE ZIP PATH.....
 				SFileManager.nStack.pop();
 				/**
@@ -2751,7 +2734,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				else
 					mViewPager.setCurrentItem(CURRENT_PREF_ITEM);
 			} 
-			else if(ZIP_ROOT){
+			else if(ZIP_ROOT && CURRENT_ITEM==2){
 				//POPING OUT THE ZIP PATH....
 				
 				RFileManager.nStack.pop();
