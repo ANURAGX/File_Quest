@@ -24,10 +24,13 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
+import org.ultimate.menuItems.BluetoothChooser;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
@@ -87,6 +90,12 @@ public class ExtractZipFile {
 		
 		from.setText(ctx.getString(R.string.extractingfrom)+" "+file.getName());
 		
+		if(mode==2){
+			//ZIP ENTRY HAS TO BE SHARED VIA BLUETOOTH,ETC...
+			TextView t = (TextView)dialog.findViewById(R.id.preparing);
+			t.setText(ctx.getString(R.string.preparingtoshare));
+		}
+		
 		try {
 			zList = new ZipFile(file).entries();
 		} catch (IOException e1) {
@@ -123,7 +132,11 @@ public class ExtractZipFile {
 							    if(mode==0){
 							    	//after extracting file ,it has to be opened....
 							    	new OpenFileDialog(ctx, Uri.parse(DEST), width);
-							    }else{
+							    }else if(mode==2){
+							    	//FILE HAS TO BE SHARED....
+							    	new BluetoothChooser(ctx, new File(dest).getAbsolutePath(), width, null);
+							    }
+							    else{
 							    	if(errors)
 							    		Toast.makeText(ctx, ctx.getString(R.string.errorinext), Toast.LENGTH_SHORT).show();
 							    	Toast.makeText(ctx, ctx.getString(R.string.fileextracted),Toast.LENGTH_SHORT).show();

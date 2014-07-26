@@ -1225,26 +1225,36 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 					case 4:
 						// PASTE
-						pasteCommand(true);
+						if(ZIP_SIMPLE)
+							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
+						else
+							pasteCommand(true);
 						break;
 					case 5:
 						// ZIP
-						if (!file.canRead())
-							Toast.makeText(mContext, R.string.serviceUnavaila,Toast.LENGTH_SHORT).show();
-						else if (file.canRead()) {
-							ArrayList<File> temp = new ArrayList<File>();
-							temp.add(file);
-							new CreateZip(mContext, size.x*8/9, temp);
-						}
+						if(ZIP_SIMPLE)
+							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
+						else{
+							if (!file.canRead())
+								Toast.makeText(mContext, R.string.serviceUnavaila,Toast.LENGTH_SHORT).show();
+							else if (file.canRead()) {
+								ArrayList<File> temp = new ArrayList<File>();
+								temp.add(file);
+								new CreateZip(mContext, size.x*8/9, temp);
+							}
+						}						
 						break;
 
 					case 6:
+							
 							//DELETE
-							{
-								ArrayList<File> te = new ArrayList<File>();
-								te.add(file);
-								new DeleteFiles(mContext, size.x*8/9, te);
-							}
+						if(ZIP_SIMPLE)
+							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
+						else{
+							ArrayList<File> te = new ArrayList<File>();
+							te.add(file);
+							new DeleteFiles(mContext, size.x*8/9, te);
+						}
 							break;
 					case 7:
 						// RENAME
@@ -1257,19 +1267,34 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						 * editBox.setText(file.getName());
 						 * editBox.setSelected(true);
 						 */
-						Toast.makeText(mContext,"Yet to implement rename command for root files",Toast.LENGTH_SHORT).show();
+						if(ZIP_SIMPLE)
+							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
+						else
+							Toast.makeText(mContext,"Yet to implement rename command for root files",Toast.LENGTH_SHORT).show();
 						break;
 
 					case 8:
 						// SEND
-						if (file.isFile())
-							new BluetoothChooser(mContext, file.getAbsolutePath(), size.x*8/9, null);
-						else
-							showToast(getString(R.string.compressandsend));
+						if(ZIP_SIMPLE){
+							if(zFileSimple.isFile())
+								new ExtractZipFile(mContext, zFileSimple, size.x*8/9, null, file, 2);
+							else
+								Toast.makeText(mContext, R.string.cannotsendfolder, Toast.LENGTH_SHORT).show();
+						}else{
+							if (file.isFile())
+								new BluetoothChooser(mContext, file.getAbsolutePath(), size.x*8/9, null);
+							else
+								showToast(getString(R.string.compressandsend));
+						}
+						
 						break;
 
 					case 9:
-						new AddGesture(mContext, size.x, size.y*8/9, file.getPath());
+						//ADD GESTURE...
+						if(ZIP_SIMPLE)
+							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
+						else
+							new AddGesture(mContext, size.x, size.y*8/9, file.getPath());
 						break;
 					case 10:
 						// PROPERTIES
@@ -1444,49 +1469,75 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 					case 4:
 						// PASTE
-						pasteCommand(true);
+						if(ZIP_ROOT)
+							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
+						else
+							pasteCommand(true);
 						break;
 					case 5:
 						// ZIP
-						ArrayList<File> temp = new ArrayList<File>();
-						temp.add(file2);
-						new CreateZip(mContext, size.x*8/9, temp);
+						if(ZIP_ROOT)
+							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
+						else{
+							ArrayList<File> temp = new ArrayList<File>();
+							temp.add(file2);
+							new CreateZip(mContext, size.x*8/9, temp);
+						}
+						
 						break;
 					case 6:
+						
 							//DELETE
-							{
-								ArrayList<File> te = new ArrayList<File>();
-								te.add(file2);
-								new DeleteFiles(mContext, size.x*8/9, te);
-							}
+						if(ZIP_ROOT)
+							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
+						else{
+							ArrayList<File> te = new ArrayList<File>();
+							te.add(file2);
+							new DeleteFiles(mContext, size.x*8/9, te);
+						}
 							break;
 					case 7:
 						// RENAME
-						COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
-						RENAME_COMMAND = true;
-						mVFlipper.showPrevious();
-						mVFlipper.setAnimation(prevAnim());
-						editBox.setText(file2.getName());
-						editBox.setSelected(true);
+						if(ZIP_ROOT)
+							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
+						else{
+							COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+							RENAME_COMMAND = true;
+							mVFlipper.showPrevious();
+							mVFlipper.setAnimation(prevAnim());
+							editBox.setText(file2.getName());
+							editBox.setSelected(true);
+						}						
 						break;
 
 					case 8:
 						// SEND
-						if (file2.isFile())
-							new BluetoothChooser(getActivity(), file2.getAbsolutePath(), size.x*8/9  , null);
-						else
-							showToast(getString(R.string.compressandsend));
+						if(ZIP_ROOT){
+							if(zFileRoot.isFile())
+								new ExtractZipFile(mContext, zFileRoot, size.x*8/9, null, file2, 2);
+							else
+								Toast.makeText(mContext, R.string.cannotsendfolder, Toast.LENGTH_SHORT).show();
+						}else{
+							if (file2.isFile())
+								new BluetoothChooser(mContext, file2.getAbsolutePath(), size.x*8/9  , null);
+							else
+								showToast(getString(R.string.compressandsend));
+						}
+						
 						break;
 					case 9:
 						// gesture to the selected file....
-						new AddGesture(mContext, size.x, size.y*8/9,file2.getPath());
+						if(ZIP_ROOT)
+							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
+						else
+							new AddGesture(mContext, size.x, size.y*8/9,file2.getPath());
 						break;
 					case 10:
 						// PROPERTIES
 						if(ZIP_ROOT)
 							new ArchiveEntryProperties(mContext, zFileRoot, size.x*8/9);
 						else
-							new FileProperties(getActivity(), size.x*8/9, file2);
+							new FileProperties(mContext, size.x*8/9, file2);
 					}
 				}
 			});
