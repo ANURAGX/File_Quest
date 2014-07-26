@@ -43,16 +43,110 @@
                     android:paddingLeft="2.0dip" 
                     android:layout_width="wrap_content" 
                     android:layout_height="wrap_content" 
-                    android:text="Current Release v-0.2.0" />
+                    android:text="Current Release v-0.2.5" />
             </LinearLayout>
-            <TextView android:textSize="15.0sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="  -> G Open " />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="     -> Add gesture to file or folder." />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="     -> Open any folder or file by drawing gesture." />
+            <TextView 
+                android:textSize="15.0sp" 
+                android:textStyle="bold" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="  -> G Open " />
             
-            <TextView android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="" />
-            <TextView android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="" />
-            <TextView android:textSize="15.0sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="  -> Hindi Language Support" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="     -> File Quest now also available in hindi and more languages coming soon." />
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Add gesture to file or folder." />
+            
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Open any folder or file by drawing gesture." />
+            
+            <TextView 
+                android:textStyle="bold" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="" />
+            
+            
+            <!-- ZIP -->
+            <TextView 
+                android:textSize="15.0sp" 
+                android:textStyle="bold" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="  -> Zip Support " />
+            
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> View contents of zip archive." />
+            
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Extract any file of folder from zip file where you like." />
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Directly share a file inside of zip archive." />
+            
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Open a file from zip archive." />
+            
+            
+            
+            
+            <!-- UI CHANGE -->
+            
+            <TextView 
+                android:textSize="15.0sp" 
+                android:textStyle="bold" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="" />
+            <TextView 
+                android:textSize="15.0sp" 
+                android:textStyle="bold" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="  -> UI Change " />
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Humongous change in the interface."/>
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> 15 animations available for the list view."/>
+             <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> 12 animations available for the panels."/>
+            
+            <!-- hindi language... -->
+            
+            <TextView 
+                android:textStyle="bold" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="" />
+            
+            <TextView 
+                android:textSize="15.0sp" 
+                android:textStyle="bold" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="  -> Hindi Language Support" />
+            
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> File Quest now also available in hindi and more languages coming soon." />
+            
+            
         </LinearLayout>
     </ScrollView>
     
