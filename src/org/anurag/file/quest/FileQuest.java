@@ -3984,7 +3984,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		HorizontalScrollView v = (HorizontalScrollView) findViewById(R.id.hscrollView);
 		if (CURRENT_ITEM == 3)
 			v = (HorizontalScrollView) findViewById(R.id.hscrollView2);
-		ImageButton btn = (ImageButton) findViewById(R.id.bottom_multi);
+		LinearLayout btn = (LinearLayout ) findViewById(R.id.bottom_multi);
 		QuickAction action = new QuickAction(mContext);
 		ActionItem item = new ActionItem(1, str);
 		action.addActionItem(item);
