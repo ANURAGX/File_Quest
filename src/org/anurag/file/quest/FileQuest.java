@@ -4353,12 +4353,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if (new File(value).exists()) {
 						if (new File(value).isFile()) {
 							mViewPager.setCurrentItem(CURRENT_ITEM);
+							if(CURRENT_ITEM==1)
+								file = new File(value);
+							else if(CURRENT_ITEM ==2)
+								file2 = new File(value);
 							new OpenFileDialog(mContext, Uri.parse(value),size.x*8/9);
 						} else {
 							if (CURRENT_ITEM == 1) {
 								SFileManager.nStack.push(value);
-							} else if (CURRENT_ITEM == 2)
+							} else if (CURRENT_ITEM == 2){
 								RFileManager.nStack.push(value);
+							}	
 							setAdapter(CURRENT_ITEM);
 						}
 					} else
@@ -4488,10 +4493,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				if(msg.what==0 && (ZIP_ROOT||ZIP_SIMPLE)){
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
-				}else if(ZIP_ROOT){
+				}else{
 					/**
 					 * ZIP ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
 					 */
+					if(CURRENT_ITEM==1)
+						SFileManager.nStack.pop();
+					else if(CURRENT_ITEM==2)
+						RFileManager.nStack.pop();
+					mViewPager.setAdapter(mSectionsPagerAdapter);
+					mViewPager.setCurrentItem(CURRENT_ITEM);
 					Toast.makeText(mContext, R.string.zipexception, Toast.LENGTH_SHORT).show();
 				}
 			}
