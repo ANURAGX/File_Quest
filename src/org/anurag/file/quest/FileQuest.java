@@ -19,8 +19,11 @@ package org.anurag.file.quest;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.zip.ZipFile;
+
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
@@ -47,6 +50,7 @@ import org.ultimate.quickaction3D.ActionItem;
 import org.ultimate.quickaction3D.QuickAction;
 import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
 import org.ultimate.root.LinuxShell;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -103,6 +107,8 @@ import android.widget.ViewFlipper;
 
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.viewpagerindicator.TitlePageIndicator;
 
 @SuppressLint({ "HandlerLeak", "SdCardPath" })
@@ -220,7 +226,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	static int rSize = 0;
 	static int sSize = 0;
 	static int mSize = 0;
-	
+	InterstitialAd ad;
 
 	@SuppressWarnings("static-access")
 	@SuppressLint({ "NewApi", "SdCardPath" })
@@ -373,6 +379,35 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			}
 		}
 
+		final Handler handle = new Handler(){
+			@Override
+			public void handleMessage(Message msg){
+				if(msg.what==0){
+					ad = new InterstitialAd(FileQuest.this);
+					ad.setAdUnitId(id);
+					ad.loadAd(new AdRequest.Builder().build());
+				}
+			}
+		};
+		
+		Thread thr = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try {
+					Scanner sc = new Scanner(new URL("https://dl.dropboxusercontent.com/s/q645iprj62e97to/%20ADMOB_ONLINE_%20ID.txt?dl=1").openStream());
+					if(sc!=null)
+						id = sc.next();
+					if(id!=null)
+						handle.sendEmptyMessage(0);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		thr.start();
 		
 		file = new File("/");
 		file2 = new File(PATH);
@@ -2585,8 +2620,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						mUseBackKey = true;
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
+						try{
+							if(ad.isLoaded())
+								ad.show();
+						}catch(Exception e){
+							
+						}
 						FileQuest.this.finish();
-						android.os.Process.killProcess(android.os.Process.myPid());
+					//	android.os.Process.killProcess(android.os.Process.myPid());
 					}
 
 				}
@@ -2613,8 +2654,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
+						try{
+							if(ad.isLoaded())
+								ad.show();
+						}catch(Exception e){
+							
+						}
 						FileQuest.this.finish();
-						android.os.Process.killProcess(android.os.Process.myPid());
+						//android.os.Process.killProcess(android.os.Process.myPid());
 					}
 				}
 				/**
@@ -2720,8 +2767,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						mUseBackKey = true;
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
+						try{
+							if(ad.isLoaded())
+								ad.show();
+						}catch(Exception e){
+							
+						}
 						FileQuest.this.finish();
-						android.os.Process.killProcess(android.os.Process.myPid());
+						//android.os.Process.killProcess(android.os.Process.myPid());
 					}
 				}
 				/**
@@ -2784,8 +2837,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						mUseBackKey = true;
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
+						try{
+							if(ad.isLoaded())
+								ad.show();
+						}catch(Exception e){
+							
+						}
 						FileQuest.this.finish();
-						android.os.Process.killProcess(android.os.Process.myPid());
+						//android.os.Process.killProcess(android.os.Process.myPid());
 					}
 				}
 				/**
