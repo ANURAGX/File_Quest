@@ -18,7 +18,14 @@
  */
 package org.anurag.compress;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.content.Context;
+
 import com.github.junrar.Archive;
+import com.github.junrar.rarfile.FileHeader;
 
 
 /**
@@ -28,10 +35,27 @@ import com.github.junrar.Archive;
  */
 public class RarManager {
 	
-	
-	public RarManager(Archive file) {
+	ArrayList<RarObj> list;
+	Context ctx;
+	String path;
+	Archive arch;
+	public RarManager(Archive file , String pathToShow , Context context) {
 		// TODO Auto-generated constructor stub
+		list = new ArrayList<RarObj>();
+		path = pathToShow;
+		ctx = context;
+		arch = file;
+	}
+	
+	public ArrayList<RarObj> generateList(){
 		
+		List<FileHeader> fl = arch.getFileHeaders();
+		for(FileHeader header :fl){
+			if(header.isDirectory())
+				continue;
+			list.add(new RarObj(header, header.getFileNameString(), "/"));
+		}
+		return list;
 	}
 
 }
