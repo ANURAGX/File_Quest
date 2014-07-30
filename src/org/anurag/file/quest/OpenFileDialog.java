@@ -87,10 +87,17 @@ public class OpenFileDialog {
 			mContext = context;
 			
 			/**
-			 * IF ZIP FILE IS SELECTED TO OPEN OPEN THE ZIP FILE THIS APP....
+			 * IF ZIP FILE IS SELECTED TO OPEN THE ZIP FILE WITH THIS APP(file quest)....
 			 */
 			if(file.getName().endsWith(".zip")||file.getName().endsWith(".ZIP")){
 				mContext.sendBroadcast(new Intent("FQ_ZIP_OPEN"));
+				showDialog = false;
+			}
+			/**
+			 * IF A RAR FILE IS SELECTED TO OPEN 
+			 */
+			else if(file.getName().endsWith(".rar")||file.getName().endsWith(".RAR")){
+				mContext.sendBroadcast(new Intent("FQ_RAR_OPEN"));
 				showDialog = false;
 			}
 			
