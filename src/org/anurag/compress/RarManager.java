@@ -56,8 +56,8 @@ public class RarManager {
 			int len = list.size();
 			boolean added = false;
 			String name = entry.getName();
-			while(name.contains("/"))
-				name = name.substring(0, name.lastIndexOf("/"));
+			while(name.contains("\\"))
+				name = name.substring(0, name.lastIndexOf("\\"));
 			if(path.equalsIgnoreCase("/")){
 				for(int i = 0;i<len;++i){
 					if(list.get(i).getFileName().equalsIgnoreCase(name)){
@@ -66,7 +66,8 @@ public class RarManager {
 					}
 				}
 				if(!added)
-					list.add(new RarObj(entry, name, ""));
+					list.add(new RarObj(entry, name, "",ctx));
+				
 			}
 		}
 		return list;
