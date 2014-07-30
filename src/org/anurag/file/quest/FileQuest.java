@@ -28,6 +28,9 @@ import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
 import org.anurag.compress.ExtractZipFile;
+import org.anurag.compress.RarAdapter;
+import org.anurag.compress.RarManager;
+import org.anurag.compress.RarObj;
 import org.anurag.compress.ZipAdapter;
 import org.anurag.compress.ZipManager;
 import org.anurag.compress.ZipObj;
@@ -107,6 +110,8 @@ import android.widget.ViewFlipper;
 
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
+import com.github.junrar.Archive;
+import com.github.junrar.exception.RarException;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -127,6 +132,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
+	
+	/**
+	 * ZIP RELATED VARIABLES....
+	 */
 	private static String zipPathSimple;
 	private static String zipPathRoot;
 	public static boolean ZIP_ROOT;	
@@ -136,6 +145,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ZipObj zFileRoot;
 	private static ZipObj zFileSimple;
 	private static ArrayList<ZipObj> zSearch;
+	
+	
+	/**
+	 * RAR RELATED VARIABLES....
+	 */
+	private boolean RAR_SIMPLE;
+	private static boolean RAR_ROOT;
+	private static ArrayList<RarObj> rListRoot;
+	private String rarPathRoot;
+	private String rarPathSimple;
+	private ArrayList<RarObj> rListSimple;
 	
 	
 	static int fPos;
@@ -274,6 +294,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 		zipPathRoot = null;
 		zipPathSimple = null;
+		
+		RAR_ROOT = false;
 		
 		ZIP_SIMPLE = ZIP_ROOT = SEARCH_FLAG = RENAME_COMMAND = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = CREATE_FILE = false;
 		fPos = 0;
@@ -1359,7 +1381,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			root.setDivider(color);
 			if(ZIP_ROOT){
 				setListAdapter(new ZipAdapter(zListRoot,mContext));
-			}else
+			}else if(RAR_ROOT)
+				setListAdapter(new RarAdapter(mContext, rListRoot));
+			else	
 				setListAdapter(RootAdapter);
 
 			dialog = new Dialog(getActivity(), R.style.custom_dialog_theme);
@@ -4446,6 +4470,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							Toast.makeText(mContext, R.string.cannotexthere, Toast.LENGTH_SHORT).show();
 					}else if(CURRENT_ITEM == 2)
 						new ExtractZipFile(mContext, zFileRoot, size.x*8/9, path, file2, 1);
+				}else if(ACTION.equalsIgnoreCase("FQ_RAR_OPEN")){
+					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
+						RAR_ROOT = true;
+						RFileManager.nStack.push("/ -> Rar");
+					}else{
+						RAR_SIMPLE = true;
+						SFileManager.nStack.push("/ -> Rar");
+					}
+					setRarAdapter();
 				}
 			}
 		};
@@ -4462,6 +4495,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		filter = new IntentFilter("FQ_ZIP_OPEN");
 		this.registerReceiver(RECEIVER, filter);
 		filter = new IntentFilter("FQ_EXTRACT_PATH");
+		this.registerReceiver(RECEIVER, filter);
+		filter = new IntentFilter("FQ_RAR_OPEN");
 		this.registerReceiver(RECEIVER, filter);
 	}
 	
@@ -4596,6 +4631,75 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						handle.sendEmptyMessage(0);
 					}catch(IOException e){
 						ZIP_SIMPLE = false;
+						handle.sendEmptyMessage(1);
+					}
+				}
+			}
+		});		
+		thr.start();
+	}
+	
+	private void setRarAdapter(){
+		final Handler handle = new Handler(){
+			@Override
+			public void handleMessage(Message msg){
+				if(msg.what==0 && (RAR_ROOT||RAR_SIMPLE)){
+					mViewPager.setAdapter(mSectionsPagerAdapter);
+					mViewPager.setCurrentItem(CURRENT_ITEM);
+				}else{
+					/**
+					 * ZIP ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
+					 */
+					if(CURRENT_ITEM==1)
+						SFileManager.nStack.pop();
+					else if(CURRENT_ITEM==2)
+						RFileManager.nStack.pop();
+					mViewPager.setAdapter(mSectionsPagerAdapter);
+					mViewPager.setCurrentItem(CURRENT_ITEM);
+					Toast.makeText(mContext, R.string.zipexception, Toast.LENGTH_SHORT).show();
+				}
+			}
+		};
+		
+		Thread thr = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				if(rarPathRoot==null)
+					rarPathRoot = "/";
+				
+				if(rarPathSimple == null)
+					rarPathSimple = "/";
+				
+				if(CURRENT_ITEM==2||CURRENT_ITEM==0){
+					try {
+						File fi = file2;
+						if(CURRENT_ITEM==0){
+							CURRENT_ITEM = 2;
+							fi = file0;
+						}
+						Archive zf = new Archive(fi);
+						rListRoot = new RarManager(zf, rarPathRoot, mContext).generateList();
+						handle.sendEmptyMessage(0);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						RAR_ROOT = false;
+						handle.sendEmptyMessage(1);
+					} catch(RarException e){
+						RAR_ROOT = false;
+						handle.sendEmptyMessage(1);
+					}
+				}else if(CURRENT_ITEM==1){
+					try{
+						Archive zFile = new Archive(file);
+						rListSimple = new RarManager(zFile, rarPathSimple, mContext).generateList();
+						handle.sendEmptyMessage(0);
+					}catch(IOException e){
+						RAR_SIMPLE = false;
+						handle.sendEmptyMessage(1);
+					}catch(RarException e){
+						RAR_SIMPLE = false;
 						handle.sendEmptyMessage(1);
 					}
 				}
