@@ -51,8 +51,8 @@ public class RarObj {
 		this.rarName = name;
 		this.rarPath = path;
 		this.fh = header;
-		fileType = getType(rarName, ctx);
 		isFile = checkForFile();
+		fileType = getType(rarName, ctx);
 	}
 
 	/**
