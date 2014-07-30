@@ -40,6 +40,7 @@ public class ZipObj {
 	private boolean isFile;
 	private String fileType;
 	private ZipEntry z;
+	
 	/**
 	 * 
 	 * @param zPath
@@ -47,6 +48,7 @@ public class ZipObj {
 	 * @param zEntry
 	 * @param zSize
 	 * @param ctx
+	 * @param entry
 	 */
 	public ZipObj(String zPath,String zName,String zEntry,long zSize,Context ctx , ZipEntry entry) {
 		// TODO Auto-generated constructor stub
@@ -54,8 +56,8 @@ public class ZipObj {
 		this.name = zName;
 		this.entry = zEntry;
 		this.size = size(zSize , ctx);
-		isFile = checkForFile();
-		fileType = getType(name, ctx);
+		this.isFile = checkForFile();
+		this.fileType = getType(name, ctx);
 		this.z = entry;
 	}
 	

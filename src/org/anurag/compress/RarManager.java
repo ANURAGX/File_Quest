@@ -20,12 +20,11 @@ package org.anurag.compress;
 
 
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.List;
 
 import android.content.Context;
-
-import com.adarshr.raroscope.RAREntry;
-import com.adarshr.raroscope.RARFile;
+import de.innosystec.unrar.Archive;
+import de.innosystec.unrar.rarfile.FileHeader;
 
 
 
@@ -39,35 +38,39 @@ public class RarManager {
 	ArrayList<RarObj> list;
 	Context ctx;
 	String path;
-	Enumeration<RAREntry> entryList;
-	public RarManager(RARFile rarfile, String pathToShow , Context context) {
+	List<FileHeader> ls;
+	public RarManager(Archive rarfile, String pathToShow , Context context) {
 		// TODO Auto-generated constructor stub
 		list = new ArrayList<RarObj>();
 		path = pathToShow;
 		ctx = context;
-		entryList = rarfile.entries();
+		ls = rarfile.getFileHeaders();
 	}
 	
 	public ArrayList<RarObj> generateList(){
-		while(entryList.hasMoreElements()){
-			RAREntry entry = entryList.nextElement();
-			if(entry.isDirectory())
+		for(FileHeader fh : ls){
+			if(fh.isDirectory())
 				continue;
-			int len = list.size();
 			boolean added = false;
-			String name = entry.getName();
+			String name;
+			if(fh.isUnicode())
+				name = fh.getFileNameW();
+			else 
+				name = fh.getFileNameString();
+			int len = list.size();
+			
 			while(name.contains("\\"))
 				name = name.substring(0, name.lastIndexOf("\\"));
+			
 			if(path.equalsIgnoreCase("/")){
-				for(int i = 0;i<len;++i){
-					if(list.get(i).getFileName().equalsIgnoreCase(name)){
+				for(int i=0;i<len;++i)
+					if(list.get(0).getFileName().equalsIgnoreCase(name)){
 						added = true;
 						break;
 					}
-				}
-				if(!added)
-					list.add(new RarObj(entry, name, "",ctx));
 				
+				if(!added)
+					list.add(new RarObj(fh, name, "", ctx));
 			}
 		}
 		return list;

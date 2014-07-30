@@ -110,10 +110,12 @@ import android.widget.ViewFlipper;
 
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
-import com.adarshr.raroscope.RARFile;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.viewpagerindicator.TitlePageIndicator;
+
+import de.innosystec.unrar.Archive;
+import de.innosystec.unrar.exception.RarException;
 
 @SuppressLint({ "HandlerLeak", "SdCardPath" })
 public class FileQuest extends FragmentActivity implements OnClickListener, QuickAction.OnActionItemClickListener {
@@ -4681,7 +4683,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							CURRENT_ITEM = 2;
 							fi = file0;
 						}
-						RARFile zf = new RARFile(fi);
+						Archive zf = new Archive(fi);
 						rListRoot = new RarManager(zf, rarPathRoot, mContext).generateList();
 						handle.sendEmptyMessage(0);
 					} catch (IOException e) {
@@ -4689,14 +4691,20 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						e.printStackTrace();
 						RAR_ROOT = false;
 						handle.sendEmptyMessage(1);
+					}catch(RarException e){
+						RAR_ROOT = false;
+						handle.sendEmptyMessage(1);
 					}
 				}else if(CURRENT_ITEM==1){
 					try{
-						RARFile zfile = new RARFile(file);
+						Archive zfile = new Archive(file);
 						rListSimple = new RarManager(zfile, rarPathSimple, mContext).generateList();
 						handle.sendEmptyMessage(0);
 					}catch(IOException e){
 						RAR_SIMPLE = false;
+						handle.sendEmptyMessage(1);
+					}catch(RarException e){
+						RAR_ROOT = false;
 						handle.sendEmptyMessage(1);
 					}
 				}

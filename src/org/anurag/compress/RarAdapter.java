@@ -91,6 +91,8 @@ public class RarAdapter extends BaseAdapter{
 			h = (Holder) convertView.getTag();
 		
 		h.fName.setText(rFile.getFileName());
+		h.fType.setText(rFile.getFileType());
+		h.icon.setImageDrawable(rFile.getIcon());
 		return convertView;
 	}
 }

@@ -23,8 +23,8 @@ import org.anurag.file.quest.R;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import de.innosystec.unrar.rarfile.FileHeader;
 
-import com.adarshr.raroscope.RAREntry;
 
 
 /**
@@ -37,18 +37,22 @@ public class RarObj {
 	String rarName;
 	String rarPath;
 	Drawable icon;
-	RAREntry ent;
+	FileHeader fh;
 	boolean isFile;
 	String fileType;
+	String headername;
 	
-	
-	public RarObj(RAREntry entry , String name , String path , Context ctx) {
+	public RarObj(FileHeader header, String name , String path , Context ctx) {
 		// TODO Auto-generated constructor stub
-		this.ent = entry;
+		if(header.isUnicode())
+			this.headername = header.getFileNameW();
+		else
+			this.headername = header.getFileNameString();
 		this.rarName = name;
 		this.rarPath = path;
-		this.isFile = checkForFile();
+		this.fh = header;
 		fileType = getType(rarName, ctx);
+		isFile = checkForFile();
 	}
 
 	/**
@@ -83,13 +87,7 @@ public class RarObj {
 		return this.icon;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public RAREntry getRAREntry(){
-		return this.ent;
-	}
+	
 	
 	/**
 	 * 
@@ -98,14 +96,16 @@ public class RarObj {
 		return this.fileType;
 	}
 	
+	
 	private boolean checkForFile(){
-		String str = ent.getName().substring(rarPath.length(), ent.getName().length());
-		if(str.startsWith("/"))
+		String str = headername.substring(rarPath.length(), headername.length());
+		if(str.startsWith("\\"))
 			str = str.substring(1, str.length());
-		if(str.contains("/"))
+		if(str.contains("\\"))
 			return false;
 		return true;
 	}
+	
 	
 	/**
 	 * 
