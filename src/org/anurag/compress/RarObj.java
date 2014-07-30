@@ -19,6 +19,47 @@
 
 package org.anurag.compress;
 
-public class RarObj {
+import com.github.junrar.rarfile.FileHeader;
 
+/**
+ * 
+ * @author Anurag
+ *
+ */
+public class RarObj {
+	
+	FileHeader rarHeader;
+	String rarName;
+	String rarPath;
+	
+	public RarObj(FileHeader header,String name , String path) {
+		// TODO Auto-generated constructor stub
+		this.rarHeader = header;
+		this.rarName = name;
+		this.rarPath = path;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getFileName(){
+		return this.rarName;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getPath(){
+		return this.rarPath;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public FileHeader getFileHeader(){
+		return this.rarHeader;
+	}
 }
