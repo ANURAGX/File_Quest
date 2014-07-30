@@ -19,7 +19,10 @@
 package org.anurag.compress;
 
 import java.util.ArrayList;
+
 import org.anurag.file.quest.R;
+import org.anurag.file.quest.RootAdapter;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,7 +95,10 @@ public class RarAdapter extends BaseAdapter{
 		
 		h.fName.setText(rFile.getFileName());
 		h.fType.setText(rFile.getFileType());
-		h.icon.setImageDrawable(rFile.getIcon());
+		if(rFile.isFile())
+			h.icon.setImageDrawable(rFile.getIcon());
+		else
+			h.icon.setImageDrawable(ctx.getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
 		return convertView;
 	}
 }
