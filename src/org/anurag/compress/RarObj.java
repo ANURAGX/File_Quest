@@ -19,7 +19,8 @@
 
 package org.anurag.compress;
 
-import com.github.junrar.rarfile.FileHeader;
+import android.graphics.drawable.Drawable;
+
 
 /**
  * 
@@ -28,16 +29,12 @@ import com.github.junrar.rarfile.FileHeader;
  */
 public class RarObj {
 	
-	FileHeader rarHeader;
 	String rarName;
 	String rarPath;
+	Drawable icon;
 	
-	public RarObj(FileHeader header,String name , String path) {
-		// TODO Auto-generated constructor stub
-		this.rarHeader = header;
-		this.rarName = name;
-		this.rarPath = path;
-	}
+	
+	
 
 	/**
 	 * 
@@ -55,11 +52,14 @@ public class RarObj {
 		return this.rarPath;
 	}
 	
+	
+	
 	/**
 	 * 
 	 * @return
 	 */
-	public FileHeader getFileHeader(){
-		return this.rarHeader;
+	public Drawable getIcon(){
+		return this.icon;
 	}
+	
 }

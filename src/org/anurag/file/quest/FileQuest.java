@@ -110,8 +110,7 @@ import android.widget.ViewFlipper;
 
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
-import com.github.junrar.Archive;
-import com.github.junrar.exception.RarException;
+import com.adarshr.raroscope.RARFile;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -156,6 +155,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private String rarPathRoot;
 	private String rarPathSimple;
 	private ArrayList<RarObj> rListSimple;
+	private static RarObj rFileRoot;
+	private static RarObj rFileSimple;
+	
+	
 	
 	
 	static int fPos;
@@ -4678,27 +4681,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							CURRENT_ITEM = 2;
 							fi = file0;
 						}
-						Archive zf = new Archive(fi);
-						rListRoot = new RarManager(zf, rarPathRoot, mContext).generateList();
+						RARFile zf = new RARFile(fi);
+						//rListRoot = new RarManager(zf, rarPathRoot, mContext).generateList();
 						handle.sendEmptyMessage(0);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 						RAR_ROOT = false;
 						handle.sendEmptyMessage(1);
-					} catch(RarException e){
-						RAR_ROOT = false;
-						handle.sendEmptyMessage(1);
 					}
 				}else if(CURRENT_ITEM==1){
 					try{
-						Archive zFile = new Archive(file);
-						rListSimple = new RarManager(zFile, rarPathSimple, mContext).generateList();
+						RARFile zfile = new RARFile(file);
+						//rListSimple = new RarManager(zFile, rarPathSimple, mContext).generateList();
 						handle.sendEmptyMessage(0);
 					}catch(IOException e){
-						RAR_SIMPLE = false;
-						handle.sendEmptyMessage(1);
-					}catch(RarException e){
 						RAR_SIMPLE = false;
 						handle.sendEmptyMessage(1);
 					}
