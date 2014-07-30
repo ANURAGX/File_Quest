@@ -19,6 +19,8 @@
 
 package org.anurag.compress;
 
+import com.adarshr.raroscope.RAREntry;
+
 import android.graphics.drawable.Drawable;
 
 
@@ -32,9 +34,14 @@ public class RarObj {
 	String rarName;
 	String rarPath;
 	Drawable icon;
+	RAREntry ent;
 	
-	
-	
+	public RarObj(RAREntry entry , String name , String path) {
+		// TODO Auto-generated constructor stub
+		this.ent = entry;
+		this.rarName = name;
+		this.rarPath = path;
+	}
 
 	/**
 	 * 
@@ -62,4 +69,11 @@ public class RarObj {
 		return this.icon;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public RAREntry getRAREntry(){
+		return this.ent;
+	}
 }

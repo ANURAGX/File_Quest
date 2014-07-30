@@ -4682,7 +4682,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							fi = file0;
 						}
 						RARFile zf = new RARFile(fi);
-						//rListRoot = new RarManager(zf, rarPathRoot, mContext).generateList();
+						rListRoot = new RarManager(zf, rarPathRoot, mContext).generateList();
 						handle.sendEmptyMessage(0);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -4693,7 +4693,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}else if(CURRENT_ITEM==1){
 					try{
 						RARFile zfile = new RARFile(file);
-						//rListSimple = new RarManager(zFile, rarPathSimple, mContext).generateList();
+						rListSimple = new RarManager(zfile, rarPathSimple, mContext).generateList();
 						handle.sendEmptyMessage(0);
 					}catch(IOException e){
 						RAR_SIMPLE = false;
