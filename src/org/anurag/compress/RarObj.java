@@ -68,7 +68,7 @@ public class RarObj {
 	 * @return
 	 */
 	public String getPath(){
-		return this.rarPath;
+		return this.rarPath+"\\"+this.rarName;
 	}
 	
 	/**
