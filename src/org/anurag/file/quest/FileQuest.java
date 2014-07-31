@@ -151,15 +151,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	/**
 	 * RAR RELATED VARIABLES....
 	 */
-	private boolean RAR_SIMPLE;
+	private static boolean RAR_SIMPLE;
 	private static boolean RAR_ROOT;
 	private static ArrayList<RarObj> rListRoot;
-	private String rarPathRoot;
-	private String rarPathSimple;
-	private ArrayList<RarObj> rListSimple;
+	private static String rarPathRoot;
+	private static String rarPathSimple;
+	private static ArrayList<RarObj> rListSimple;
 	private static RarObj rFileRoot;
 	private static RarObj rFileSimple;
-	
+	private static ArrayList<RarObj> rSearch;
 	
 	
 	
@@ -1407,11 +1407,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if (SEARCH_FLAG){
 						if(ZIP_ROOT)
 							zFileRoot = zSearch.get(arg2);
+						else if(RAR_ROOT)
+							rFileRoot = rSearch.get(arg2);
 						else
 							file2 = searchList.get(arg2);
 					} else {
 						if(ZIP_ROOT)
 							zFileRoot = zListRoot.get(arg2);
+						else if(RAR_ROOT)
+							rFileRoot = rListRoot.get(arg2);
 						else
 							file2 = nFiles.get(arg2);
 					}
@@ -1429,32 +1433,42 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					dialog.dismiss();
 					switch (position) {
 					case 0:
-						if (CREATE_FILE || RENAME_COMMAND || SEARCH_FLAG) {
-							mVFlipper.setAnimation(nextAnim());
-							mVFlipper.showNext();
-							CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = RENAME_COMMAND = false;
-						}
-						
-						if(ZIP_ROOT){
-							if(zFileRoot.isFile()){
-								//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
-								new ExtractZipFile(mContext, zFileRoot, size.x*8/9 , null , file2,0);
-							}else{
-								//DIRECTORY HAS TO BE OPENED....
-								zipPathRoot = zFileRoot.getPath();
-								RFileManager.nStack.push(zipPathRoot+" -> Zip");
-								if(zipPathRoot.startsWith("/"))
-									zipPathRoot = zipPathRoot.substring(1, zipPathRoot.length());
-								setZipAdapter();
-							}	
-						}else{
-							if (file2.isFile()) {
-								new OpenFileDialog(mContext, Uri.parse(file2.getAbsolutePath()), size.x*8/9);
-							} else if (file2.isDirectory()) {
-								RFileManager.nStack.push(file2.getAbsolutePath());
-								setAdapter(2);
+							if (CREATE_FILE || RENAME_COMMAND || SEARCH_FLAG) {
+								mVFlipper.setAnimation(nextAnim());
+								mVFlipper.showNext();
+								CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = RENAME_COMMAND = false;
 							}
-						}
+						
+							if(ZIP_ROOT){//ZIP FILE HANDLING...
+								if(zFileRoot.isFile()){
+									//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
+									new ExtractZipFile(mContext, zFileRoot, size.x*8/9 , null , file2,0);
+								}else{
+									//DIRECTORY HAS TO BE OPENED....
+									zipPathRoot = zFileRoot.getPath();
+									RFileManager.nStack.push(zipPathRoot+" -> Zip");
+									if(zipPathRoot.startsWith("/"))
+										zipPathRoot = zipPathRoot.substring(1, zipPathRoot.length());
+									setZipAdapter();
+								}	
+							}else if(RAR_ROOT){//RAR FILE HANDLING...
+								if(rFileRoot.isFile()){
+									
+								}else{
+									rarPathRoot = rFileRoot.getPath();
+									if(rarPathRoot.startsWith("\\"))
+										rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
+									RFileManager.nStack.push(rarPathRoot+" -> Rar");
+									setRarAdapter();
+								}
+							}else{//ORDINARY FILE HANDLING....
+								if (file2.isFile()) {
+									new OpenFileDialog(mContext, Uri.parse(file2.getAbsolutePath()), size.x*8/9);
+								} else if (file2.isDirectory()) {
+									RFileManager.nStack.push(file2.getAbsolutePath());
+									setAdapter(2);
+								}
+							}
 						break;
 
 					case 1:
@@ -1596,11 +1610,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(SEARCH_FLAG){
 						if(ZIP_ROOT)
 							zFileRoot = zSearch.get(position);
+						else if(RAR_ROOT)
+							rFileRoot = rSearch.get(position);
 						else
 							file2 = searchList.get(position);
 					}else{
 						if(ZIP_ROOT)
 							zFileRoot = zListRoot.get(position);
+						else if(RAR_ROOT)
+							rFileRoot = rListRoot.get(position);
 						else
 							file2 = nFiles.get(position);
 					}
@@ -1612,7 +1630,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						;
 					}
 					
-					if(ZIP_ROOT){
+					if(ZIP_ROOT){//zip file handling...
 						if(zFileRoot.isFile()){
 							//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
 							new ExtractZipFile(mContext, zFileRoot, size.x*8/9 , null , file2 , 0);
@@ -1624,7 +1642,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								zipPathRoot = zipPathRoot.substring(1, zipPathRoot.length());
 							setZipAdapter();
 						}						
-					}else{
+					}else if(RAR_ROOT){//rar file handling....
+						if(rFileRoot.isFile()){
+							
+						}else{
+							rarPathRoot = rFileRoot.getPath();
+							while(rarPathRoot.startsWith("\\"))
+								rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
+							RFileManager.nStack.push(rarPathRoot+" -> Rar");
+							setRarAdapter();
+						}
+					}else{//ordinary file handling...
 						if(file2.isFile())
 							new OpenFileDialog(mContext, Uri.parse(file2.getAbsolutePath()), size.x*8/9);
 						else if (file2.isDirectory()){
@@ -4644,7 +4672,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		thr.start();
 	}
 	
-	private void setRarAdapter(){
+	private static void setRarAdapter(){
 		final Handler handle = new Handler(){
 			@Override
 			public void handleMessage(Message msg){
