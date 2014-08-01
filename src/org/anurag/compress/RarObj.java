@@ -68,6 +68,8 @@ public class RarObj {
 	 * @return
 	 */
 	public String getPath(){
+		if(this.rarPath.equalsIgnoreCase(""))
+			return this.rarName;
 		return this.rarPath+"\\"+this.rarName;
 	}
 	
