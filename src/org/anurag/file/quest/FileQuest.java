@@ -2107,13 +2107,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			break;
 
 		case R.id.searchBtn:
-				if(ZIP_ROOT||ZIP_SIMPLE)
+				if(ZIP_ROOT||ZIP_SIMPLE){
 					if(SEARCH_FLAG){
 						SEARCH_FLAG = false;
 						mVFlipper.showNext();
 						mVFlipper.setAnimation(nextAnim());
 					}else
 						zipSearch();
+				}else if(RAR_ROOT||RAR_SIMPLE){
+					if(SEARCH_FLAG){
+						SEARCH_FLAG = false;
+						mVFlipper.showNext();
+						mVFlipper.setAnimation(nextAnim());
+					}else
+						rarSearch();
+				}
 				else{
 					if(SEARCH_FLAG){
 						SEARCH_FLAG = false;
@@ -4684,7 +4692,89 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		}
 	}
 	
-	
+	/**
+	 * PERFORMS SEARCH INSIDE OF ZIP ARCHIVE FILE...
+	 */
+	private void rarSearch() {
+		// TODO Auto-generated method stub
+		rSearch = new ArrayList<RarObj>();
+		try{
+			LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
+			a.setVisibility(View.GONE);
+			// Search Flipper is loaded
+			mVFlipper.setAnimation(nextAnim());
+			mVFlipper.showNext();
+			mVFlipper.showNext();
+			SEARCH_FLAG = true;
+			// PREVIOUS COMMANDS ARE OVERWRITTEN
+			COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = CREATE_FILE = false;
+			editBox.setTextColor(Color.WHITE);
+			editBox.setHint(R.string.nametofilterout);
+			editBox.addTextChangedListener(new TextWatcher() {
+				@Override
+				public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,int arg3) {
+					// TODO Auto-generated method stub
+					rSearch.clear();
+				}
+				
+				@Override
+				public void afterTextChanged(final Editable ed) {
+					// TODO Auto-generated method stub
+					new AsyncTask<Void, Void, Void>() {
+						
+						@Override
+						protected void onPostExecute(Void result) {
+							// TODO Auto-generated method stub
+							super.onPostExecute(result);
+							if(CURRENT_ITEM==2)
+								root.setAdapter(new RarAdapter(mContext,rSearch));
+							else if(CURRENT_ITEM==1)
+								simple.setAdapter(new RarAdapter(mContext, rSearch));
+						}
+
+						@Override
+						protected void onPreExecute() {
+							// TODO Auto-generated method stub
+							super.onPreExecute();
+							if(CURRENT_ITEM==2)
+								root.setAdapter(null);
+							else if(CURRENT_ITEM ==1)
+								root.setAdapter(null);
+						}
+
+						@Override
+						protected Void doInBackground(Void... arg0) {
+							// TODO Auto-generated method stub
+							if(CURRENT_ITEM==2){
+								String text = ed.toString().toLowerCase();
+								int len = rListRoot.size();
+								for(int i=0;i<len;++i){
+									if(rListRoot.get(i).getFileName().toLowerCase().contains(text))
+										rSearch.add(rListRoot.get(i));
+								}
+							}else if(CURRENT_ITEM==1){
+								String text = ed.toString().toLowerCase();
+								int len = rListSimple.size();
+								for(int i=0;i<len;++i){
+									if(rListSimple.get(i).getFileName().toLowerCase().contains(text))
+										rSearch.add(rListSimple.get(i));
+								}
+							}
+							return null;
+						}
+					}.execute();
+				}
+			});
+		}catch(Exception e){
+			
+		}
+	}
 	
 	
 	/**
