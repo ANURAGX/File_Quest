@@ -85,6 +85,22 @@ public class RarObj {
 	 * 
 	 * @return
 	 */
+	public FileHeader getFileHeader(){
+		return this.fh;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getFileHeaderName(){
+		return this.headername;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public Drawable getIcon(){
 		return this.icon;
 	}
