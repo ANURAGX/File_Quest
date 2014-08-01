@@ -160,7 +160,11 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 						|| file.getName().endsWith(".inf") || file.getName().endsWith(".INF")){
 					nHolder.FileType.setText(mContext.getString(R.string.text));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_text));
-				}else if( getFileType(file) == "zip"){
+				}else if(file.getName().endsWith(".rar")||file.getName().endsWith(".RAR")){
+					nHolder.FileType.setText(mContext.getString(R.string.compr));
+					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_rar));
+				}
+				else if( getFileType(file) == "zip"){
 					nHolder.FileType.setText(mContext.getString(R.string.zip));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_zip_it));
 				}else if( getFileType(file) == "video"){
@@ -168,7 +172,7 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_video));
 				}else if( getFileType(file) == "compressed"){
 					nHolder.FileType.setText(mContext.getString(R.string.compr));
-					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_misce_file_gallery));
+					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_archive_operation));
 				}else if( getFileType(file) == "document"){
 					nHolder.FileType.setText(mContext.getString(R.string.document));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_ppt));
@@ -203,9 +207,9 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 		else if( Name.endsWith("mhtml")||Name.endsWith(".MHTML")||  Name.endsWith(".HTM") || Name.endsWith(".htm") 
 				||Name.endsWith(".html") || Name.endsWith(".HTML"))
 			return "web";
-		
-		else if(Name.endsWith(".tar") || Name.endsWith(".TAR") || Name.endsWith(".rar") 
-				|| Name.endsWith("RAR") || Name.endsWith(".7z") || Name.endsWith(".7Z"))
+		else if(Name.endsWith(".rar")||Name.endsWith("RAR"))
+			return "rar";
+		else if(Name.endsWith(".tar") || Name.endsWith(".TAR") || Name.endsWith(".7z") || Name.endsWith(".7Z"))
 			return "compressed";
 		else if(Name.endsWith(".apk") || Name.endsWith(".APK"))
 			return "apk";
@@ -215,8 +219,6 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 		else if(Name.endsWith(".doc") ||Name.endsWith(".DOC")
 				|| Name.endsWith(".DOCX") || Name.endsWith(".docx") || Name.endsWith(".ppt") || Name.endsWith(".PPT"))
 			return "document";
-		else if(f.getName().endsWith(".txt") || Name.endsWith(".TXT") || Name.endsWith(".inf") || Name.endsWith(".INF"))
-			return "text";
 		else if(Name.endsWith(".mp4") || Name.endsWith(".MP4") || Name.endsWith(".avi") ||Name.endsWith(".AVI")
 				|| Name.endsWith(".FLV") || Name.endsWith(".flv") || Name.endsWith(".3GP") || Name.endsWith(".3gp"))
 			return "video";		
