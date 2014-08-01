@@ -1106,6 +1106,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			simple.setDivider(color);
 			if(ZIP_SIMPLE)
 				setListAdapter(new ZipAdapter(zListSimple, mContext));
+			else if(RAR_SIMPLE)
+				setListAdapter(new RarAdapter(mContext, rListSimple));
 			else
 				setListAdapter(nSimple);
 			simple.setOnItemClickListener(new OnItemClickListener() {
@@ -1115,11 +1117,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if (SEARCH_FLAG && searchList.size() > 0) {
 						if(ZIP_SIMPLE)
 							zFileSimple = zListSimple.get(position);
+						else if(RAR_SIMPLE)
+							rFileSimple = rSearch.get(position);
 						else
 							file = searchList.get(position);
 					} else {
 						if(ZIP_SIMPLE)
 							zFileSimple = zListSimple.get(position);
+						else if(RAR_SIMPLE)
+							rFileSimple = rListSimple.get(position);
 						else
 							file = sFiles.get(position);
 					}
@@ -1145,6 +1151,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								zipPathSimple = zipPathSimple.substring(1, zipPathSimple.length());
 							setZipAdapter();
 						}	
+					}else if(RAR_SIMPLE){//handling rar file.....
+						if(rFileSimple.isFile()){
+							
+						}else{
+							rarPathSimple = rFileSimple.getPath();
+							if(rarPathSimple.startsWith("\\"))
+								rarPathSimple = rarPathSimple.substring(0,rarPathSimple.length());
+							SFileManager.nStack.push(rFileSimple.getFileName()+" -> Rar");
+							setRarAdapter();
+						}
+						
 					}else{
 						//HANDLING ORDINARY FILE EXLORING....
 						if (file.isFile())
@@ -1172,11 +1189,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(SEARCH_FLAG){
 						if(ZIP_SIMPLE)
 							zFileSimple = zListSimple.get(position);
+						else if(RAR_SIMPLE)
+							rFileSimple = rSearch.get(position);
 						else
 							file = searchList.get(position);
 					} else {
 						if(ZIP_SIMPLE)
 							zFileSimple = zListSimple.get(position);
+						else if(RAR_SIMPLE)
+							rFileSimple = rListSimple.get(position);
 						else
 							file = sFiles.get(position);
 					}
@@ -1218,6 +1239,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									zipPathSimple = zipPathSimple.substring(1, zipPathSimple.length());
 								setZipAdapter();
 							}	
+						}else if(RAR_SIMPLE){//handling rar file.....
+							if(rFileSimple.isFile()){
+								
+							}else{
+								rarPathSimple = rFileSimple.getPath();
+								if(rarPathSimple.startsWith("\\"))
+									rarPathSimple = rarPathSimple.substring(0,rarPathSimple.length());
+								SFileManager.nStack.push(rFileSimple.getFileName()+" -> Rar");
+								setRarAdapter();
+							}
+							
 						}else{
 							//ORDINARY FILE EXPLORING..
 							if (file.isFile())
@@ -1458,7 +1490,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									rarPathRoot = rFileRoot.getPath();
 									if(rarPathRoot.startsWith("\\"))
 										rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
-									RFileManager.nStack.push(rarPathRoot+" -> Rar");
+									RFileManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
 									setRarAdapter();
 								}
 							}else{//ORDINARY FILE HANDLING....
@@ -1649,7 +1681,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							rarPathRoot = rFileRoot.getPath();
 							if(rarPathRoot.startsWith("\\"))
 								rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
-							RFileManager.nStack.push(rarPathRoot+" -> Rar");
+							RFileManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
 							setRarAdapter();
 						}
 					}else{//ordinary file handling...
@@ -2048,8 +2080,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			SHOW_APP = nManager.SHOW_APP = 1;
 			Toast.makeText(mContext,getString(R.string.showinguserapps), Toast.LENGTH_SHORT).show();
 			nList = nManager.giveMeAppList();
-			nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,
-					nList);
+			nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
 			APP_LIST_VIEW.setAdapter(nAppAdapter);
 			break;
 		case R.id.bottom_system_apps:
@@ -2098,7 +2129,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			editBox = (EditText) findViewById(R.id.editBox);
 			String name = editBox.getText().toString();
 			// String ext = extBox.getText().toString();
-			if (name.length() > 0) {
+			if (name.length()>0){
 				if (CREATE_FILE) {
 					// GETS THE PATH WHERE FOLDER OR FILE HAS TO BE CREATED
 
@@ -2772,7 +2803,23 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					setZipAdapter();
 				}
 				
-			}		
+			}else if(RAR_SIMPLE&&CURRENT_ITEM==1){//RAR FILE HANDLING ON BACK KEY PRESS...
+				SFileManager.nStack.pop();
+				if(rarPathSimple.equalsIgnoreCase("/")){
+					RAR_SIMPLE = false;
+					rarPathSimple = null;
+					mViewPager.setAdapter(mSectionsPagerAdapter);
+					mViewPager.setCurrentItem(CURRENT_ITEM);
+				}else{
+					try{//no need about the exception...
+						rarPathSimple = rarPathSimple.substring(0, rarPathSimple.lastIndexOf("\\"));
+						setRarAdapter();
+					}catch(Exception e){
+						rarPathSimple = null;
+						setRarAdapter();
+					}
+				}
+			}
 			else if (CURRENT_ITEM == 1&& !SFileManager.getCurrentDirectory().equals("/")) {
 				SFileManager.nStack.pop();
 				File fi = new File(SFileManager.nStack.peek());
@@ -2875,7 +2922,25 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					setZipAdapter();
 				}
 				
-			}else if (CURRENT_ITEM == 2 && (RFileManager.nStack.size() >= 2)) {
+			}else if(RAR_ROOT&&CURRENT_ITEM==2){
+				//BACK KEY HANDLING FOR RAR FILES....
+				RFileManager.nStack.pop();
+				if(rarPathRoot.equalsIgnoreCase("/")){
+					RAR_ROOT = false;
+					rarPathRoot = null;
+					mViewPager.setAdapter(mSectionsPagerAdapter);
+					mViewPager.setCurrentItem(CURRENT_ITEM);
+				}else{
+					try{//NO NEED TO WORRY ABOUT THE EXCEPTION....
+						rarPathRoot = rarPathRoot.substring(0, rarPathRoot.lastIndexOf("\\"));
+						setRarAdapter();
+					}catch(Exception e){
+						rarPathRoot = "/";
+						setRarAdapter();
+					}
+				}
+			}
+			else if (CURRENT_ITEM == 2 && (RFileManager.nStack.size() >= 2)) {
 				nFiles = RFileManager.getPreviousFileList();
 				// RootAdapter = new RootAdapter(getApplicationContext(),
 				// R.layout.row_list_1, nFiles);
