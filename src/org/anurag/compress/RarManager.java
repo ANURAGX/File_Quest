@@ -20,13 +20,13 @@ package org.anurag.compress;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import android.content.Context;
 import de.innosystec.unrar.Archive;
 import de.innosystec.unrar.rarfile.FileHeader;
-
-
 
 /**
  * 
@@ -96,7 +96,29 @@ public class RarManager {
 				}
 			}
 		}
+		sort();
 		return list;
 	}
 
+	
+	/**
+	 * SORTING THE FILES AS PER ALPHABETICAL ORDER...
+	 * FIRST FOLDER AND THEN FILES.....
+	 */
+	private void sort(){
+		Comparator<RarObj> comp = new Comparator<RarObj>() {
+			@Override
+			public int compare(RarObj a, RarObj b) {
+				// TODO Auto-generated method stub
+				boolean aisfolder =!a.isFile();
+				boolean bisfolder = !b.isFile();
+				if(aisfolder==bisfolder)
+					return a.getFileName().compareToIgnoreCase(b.getFileName());
+				else if(bisfolder)
+					return 1;
+				return -1;
+			}
+		};		
+		Collections.sort(list, comp);
+	}
 }
