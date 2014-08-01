@@ -99,6 +99,7 @@ public class RarAdapter extends BaseAdapter{
 			h.icon.setImageDrawable(rFile.getIcon());
 		else
 			h.icon.setImageDrawable(ctx.getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+		h.fSize.setText(rFile.getSize());
 		return convertView;
 	}
 }
