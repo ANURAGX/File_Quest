@@ -30,6 +30,7 @@ import org.anurag.compress.CreateZipApps;
 import org.anurag.compress.ExtractRarFile;
 import org.anurag.compress.ExtractZipFile;
 import org.anurag.compress.RarAdapter;
+import org.anurag.compress.RarFileProperties;
 import org.anurag.compress.RarManager;
 import org.anurag.compress.RarObj;
 import org.anurag.compress.ZipAdapter;
@@ -1391,6 +1392,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// PROPERTIES
 						if(ZIP_SIMPLE)//A ZIP FILE IS OPENED....
 							new ArchiveEntryProperties(mContext, zFileSimple, size.x*8/9);
+						else if(RAR_SIMPLE)
+							new RarFileProperties(mContext, rFileSimple, size.x*8/9);
 						else
 							new FileProperties(getActivity(), size.x*8/9, file);
 					}
@@ -1629,6 +1632,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// PROPERTIES
 						if(ZIP_ROOT)
 							new ArchiveEntryProperties(mContext, zFileRoot, size.x*8/9);
+						else if(RAR_ROOT)
+							new RarFileProperties(mContext, rFileRoot, size.x*8/9);
 						else
 							new FileProperties(mContext, size.x*8/9, file2);
 					}
@@ -3849,6 +3854,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			// PREVIOUS COMMANDS ARE OVERWRITTEN
 			COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = CREATE_FILE = false;
 			editBox.setTextColor(Color.WHITE);
+			editBox.setText(null);
 			editBox.setHint(R.string.nametofilterout);
 			editBox.addTextChangedListener(new TextWatcher() {
 				@Override
@@ -4625,6 +4631,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			// PREVIOUS COMMANDS ARE OVERWRITTEN
 			COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = CREATE_FILE = false;
 			editBox.setTextColor(Color.WHITE);
+			editBox.setText(null);
 			editBox.setHint(R.string.nametofilterout);
 			editBox.addTextChangedListener(new TextWatcher() {
 				@Override
@@ -4709,6 +4716,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			// PREVIOUS COMMANDS ARE OVERWRITTEN
 			COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = CREATE_FILE = false;
 			editBox.setTextColor(Color.WHITE);
+			editBox.setText(null);
 			editBox.setHint(R.string.nametofilterout);
 			editBox.addTextChangedListener(new TextWatcher() {
 				@Override
