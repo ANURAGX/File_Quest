@@ -27,6 +27,7 @@ import java.util.zip.ZipFile;
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
+import org.anurag.compress.ExtractRarFile;
 import org.anurag.compress.ExtractZipFile;
 import org.anurag.compress.RarAdapter;
 import org.anurag.compress.RarManager;
@@ -151,8 +152,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	/**
 	 * RAR RELATED VARIABLES....
 	 */
-	private static boolean RAR_SIMPLE;
-	private static boolean RAR_ROOT;
+	public static boolean RAR_SIMPLE;
+	public static boolean RAR_ROOT;
 	private static ArrayList<RarObj> rListRoot;
 	private static String rarPathRoot;
 	private static String rarPathSimple;
@@ -1114,9 +1115,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View view,
 						final int position, long id) {
-					if (SEARCH_FLAG && searchList.size() > 0) {
+					if (SEARCH_FLAG) {
 						if(ZIP_SIMPLE)
-							zFileSimple = zListSimple.get(position);
+							zFileSimple = zSearch.get(position);
 						else if(RAR_SIMPLE)
 							rFileSimple = rSearch.get(position);
 						else
@@ -1153,7 +1154,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}	
 					}else if(RAR_SIMPLE){//handling rar file.....
 						if(rFileSimple.isFile()){
-							
+							//EXTRACT TO CACHE DIR AND THEN OPEN IT....
+							new ExtractRarFile(mContext, rFileSimple, size.x*8/9, null, file, 0);
 						}else{
 							rarPathSimple = rFileSimple.getPath();
 							if(rarPathSimple.startsWith("\\"))
@@ -1221,7 +1223,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							mVFlipper.showNext();
 							CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = 
 									MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = 
-									RENAME_COMMAND = false;
+									false;
 						}
 						
 						/*
@@ -1241,7 +1243,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							}	
 						}else if(RAR_SIMPLE){//handling rar file.....
 							if(rFileSimple.isFile()){
-								
+								//extract file to cache dir and the open it....
+								new ExtractRarFile(mContext, rFileSimple, size.x*8/9, null, file, 0);
 							}else{
 								rarPathSimple = rFileSimple.getPath();
 								if(rarPathSimple.startsWith("\\"))
@@ -1273,7 +1276,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							mVFlipper.setAnimation(nextAnim());
 						}
 
-						if(ZIP_SIMPLE){
+						if(ZIP_SIMPLE||RAR_SIMPLE){
 							//CURRENTLY WE ARE INSIDE OF ZIP ARCHIVE...
 							//EXTRACT FILES TO USER SPECIFIED PATH....
 							new GetHomeDirectory(mContext, size.x*8/9, null);
@@ -1313,14 +1316,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 					case 4:
 						// PASTE
-						if(ZIP_SIMPLE)
+						if(ZIP_SIMPLE||RAR_SIMPLE)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else
 							pasteCommand(true);
 						break;
 					case 5:
 						// ZIP
-						if(ZIP_SIMPLE)
+						if(ZIP_SIMPLE||RAR_SIMPLE)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
 							if (!file.canRead())
@@ -1336,7 +1339,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					case 6:
 							
 							//DELETE
-						if(ZIP_SIMPLE)
+						if(ZIP_SIMPLE||RAR_SIMPLE)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
 							ArrayList<File> te = new ArrayList<File>();
@@ -1355,7 +1358,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						 * editBox.setText(file.getName());
 						 * editBox.setSelected(true);
 						 */
-						if(ZIP_SIMPLE)
+						if(ZIP_SIMPLE||RAR_SIMPLE)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else
 							Toast.makeText(mContext,"Yet to implement rename command for root files",Toast.LENGTH_SHORT).show();
@@ -1379,7 +1382,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 					case 9:
 						//ADD GESTURE...
-						if(ZIP_SIMPLE)
+						if(ZIP_SIMPLE||RAR_SIMPLE)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else
 							new AddGesture(mContext, size.x, size.y*8/9, file.getPath());
@@ -1411,8 +1414,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 
-			root = getListView();
-			
+			root = getListView();			
 			root.setSelector(R.drawable.blue_button);
 			ColorDrawable color = new ColorDrawable(android.R.color.black);
 			root.setDivider(color);
@@ -1422,7 +1424,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				setListAdapter(new RarAdapter(mContext, rListRoot));
 			else	
 				setListAdapter(RootAdapter);
-
 			dialog = new Dialog(getActivity(), R.style.custom_dialog_theme);
 			dialog.setContentView(R.layout.long_click_dialog);
 			ListView lo = (ListView) dialog.findViewById(R.id.list);
@@ -1430,12 +1431,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			lo.setAdapter(loaders.getLongClickAdapter());
 			lo.setSelector(getResources().getDrawable(R.drawable.blue_button));
 			dialog.getWindow().getAttributes().width = size.x*8/9;
-
 			root.setOnItemLongClickListener(new OnItemLongClickListener() {
 				@Override
 				public boolean onItemLongClick(AdapterView<?> arg0, View arg1,int arg2, long arg3) {
 					// TODO Auto-generated method stub
-					
 					if (SEARCH_FLAG){
 						if(ZIP_ROOT)
 							zFileRoot = zSearch.get(arg2);
@@ -1484,9 +1483,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									setZipAdapter();
 								}	
 							}else if(RAR_ROOT){//RAR FILE HANDLING...
-								if(rFileRoot.isFile()){
-									
+								if(rFileRoot.isFile()){//EXTRATC FILES TO CACHE DIR AND THEN OPEN IT...
+									new ExtractRarFile(mContext, rFileRoot, size.x*8/9, null, file2, 0);
 								}else{
+									//LISTING THE DIRECTORIES....
 									rarPathRoot = rFileRoot.getPath();
 									if(rarPathRoot.startsWith("\\"))
 										rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
@@ -1523,7 +1523,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							mVFlipper.setAnimation(nextAnim());
 						}
 						
-						if(ZIP_ROOT){
+						if(ZIP_ROOT||RAR_ROOT){
 							//ZIP CONTENTS HAS TO EXTRACTED AT USER SPECIFIED LOCATION.....
 							
 							/**
@@ -1562,14 +1562,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 					case 4:
 						// PASTE
-						if(ZIP_ROOT)
+						if(ZIP_ROOT||RAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else
 							pasteCommand(true);
 						break;
 					case 5:
 						// ZIP
-						if(ZIP_ROOT)
+						if(ZIP_ROOT||RAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
 							ArrayList<File> temp = new ArrayList<File>();
@@ -1581,7 +1581,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					case 6:
 						
 							//DELETE
-						if(ZIP_ROOT)
+						if(ZIP_ROOT||RAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
 							ArrayList<File> te = new ArrayList<File>();
@@ -1591,7 +1591,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							break;
 					case 7:
 						// RENAME
-						if(ZIP_ROOT)
+						if(ZIP_ROOT||RAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
 							COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
@@ -1620,7 +1620,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 					case 9:
 						// gesture to the selected file....
-						if(ZIP_ROOT)
+						if(ZIP_ROOT||RAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else
 							new AddGesture(mContext, size.x, size.y*8/9,file2.getPath());
@@ -1675,8 +1675,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							setZipAdapter();
 						}						
 					}else if(RAR_ROOT){//rar file handling....
-						if(rFileRoot.isFile()){
-							
+						if(rFileRoot.isFile()){//EXTRACT THE FILE TO CACHE DIRECTORY AND THEN OPEN IT WITH
+							//APPROPRIATE APP.....
+							new ExtractRarFile(mContext, rFileRoot, size.x*8/9, null, file2, 0);
 						}else{
 							rarPathRoot = rFileRoot.getPath();
 							if(rarPathRoot.startsWith("\\"))
@@ -4641,6 +4642,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							super.onPostExecute(result);
 							if(CURRENT_ITEM==2)
 								root.setAdapter(new ZipAdapter(zSearch, mContext));
+							else if(CURRENT_ITEM==1)
+								simple.setAdapter(new ZipAdapter(zSearch, mContext));
 						}
 
 						@Override
@@ -4649,6 +4652,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							super.onPreExecute();
 							if(CURRENT_ITEM==2)
 								root.setAdapter(null);
+							else if(CURRENT_ITEM==1)
+								simple.setAdapter(null);
 						}
 
 						@Override
@@ -4661,6 +4666,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									if(zListRoot.get(i).getName().toLowerCase().contains(text))
 										zSearch.add(zListRoot.get(i));
 								}
+							}else if(CURRENT_ITEM==1){
+								String text = ed.toString().toLowerCase();
+								int len = zListSimple.size();
+								for(int i=0;i<len;++i){
+									if(zListSimple.get(i).getName().toLowerCase().contains(text))
+										zSearch.add(zListSimple.get(i));
+								}
 							}
 							return null;
 						}
@@ -4671,6 +4683,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			
 		}
 	}
+	
+	
+	
 	
 	/**
 	 *THIS FUNCTION SETS THE ADAPTER WHEN ZIP FILE IS OPERATED.... 
