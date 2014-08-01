@@ -1647,7 +1647,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							
 						}else{
 							rarPathRoot = rFileRoot.getPath();
-							while(rarPathRoot.startsWith("\\"))
+							if(rarPathRoot.startsWith("\\"))
 								rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
 							RFileManager.nStack.push(rarPathRoot+" -> Rar");
 							setRarAdapter();
