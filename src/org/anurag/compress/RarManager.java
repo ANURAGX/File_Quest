@@ -58,11 +58,9 @@ public class RarManager {
 			else 
 				name = fh.getFileNameString();
 			int len = list.size();
-			
-			while(name.contains("\\"))
-				name = name.substring(0, name.lastIndexOf("\\"));
-			
 			if(path.equalsIgnoreCase("/")){
+				while(name.contains("\\"))
+					name = name.substring(0, name.lastIndexOf("\\"));
 				for(int i=0;i<len;++i)
 					if(list.get(0).getFileName().equalsIgnoreCase(name)){
 						added = true;
@@ -71,6 +69,31 @@ public class RarManager {
 				
 				if(!added)
 					list.add(new RarObj(fh, name, "", ctx));
+			}else{
+				try{
+					String headername = name;
+					name = name.substring(path.length()+1, name.length());
+					if(len>0){
+						while(name.contains("\\"))
+							name = name.substring(0, name.lastIndexOf("\\"));
+						for(int i=0;i<len;++i){
+							if(list.get(i).getFileName().equalsIgnoreCase(name)){
+								added = true;
+								break;
+							}
+						}
+						if(!added && headername.startsWith(path))
+							list.add(new RarObj(fh, name, path, ctx));
+					}else{
+						if(headername.startsWith(path)){
+							while(name.contains("\\"))
+								name = name.substring(0, name.lastIndexOf("\\"));
+							list.add(new RarObj(fh, name, path, ctx));
+						}	
+					}
+				}catch(StringIndexOutOfBoundsException e){
+					
+				}
 			}
 		}
 		return list;
