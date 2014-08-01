@@ -19,6 +19,7 @@
 
 package org.anurag.compress;
 
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
 
 import android.content.Context;
@@ -41,6 +42,8 @@ public class RarObj {
 	boolean isFile;
 	String fileType;
 	String headername;
+	String size;
+	
 	
 	public RarObj(FileHeader header, String name , String path , Context ctx) {
 		// TODO Auto-generated constructor stub
@@ -51,6 +54,7 @@ public class RarObj {
 		this.rarName = name;
 		this.rarPath = path;
 		this.fh = header;
+		this.size = size(fh.getFullPackSize(), ctx);
 		isFile = checkForFile();
 		fileType = getType(rarName, ctx);
 	}
@@ -71,6 +75,14 @@ public class RarObj {
 		if(this.rarPath.equalsIgnoreCase(""))
 			return this.rarName;
 		return this.rarPath+"\\"+this.rarName;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getSize(){
+		return this.size;
 	}
 	
 	/**
@@ -191,5 +203,23 @@ public class RarObj {
 		this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_unknown);
 		return ctx.getString(R.string.unknown);
 	}
-	
+	/**
+	 * 
+	 * @param size
+	 * @param mContext
+	 * @return
+	 */
+	private String size(long size , Context mContext){
+		if(size>Constants.GB)
+			return String.format(mContext.getString(R.string.sizegb), (double)size/(Constants.GB));
+		
+		else if(size > Constants.MB)
+			return String.format(mContext.getString(R.string.sizemb), (double)size/(Constants.MB));
+		
+		else if(size>1024)
+			return String.format(mContext.getString(R.string.sizekb), (double)size/(1024));
+		
+		else
+			return String.format(mContext.getString(R.string.sizebytes), (double)size);
+	}
 }
