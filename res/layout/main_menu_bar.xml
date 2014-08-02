@@ -29,6 +29,16 @@
         <include layout="@layout/g_open_btn" />
     </LinearLayout>
     
+      <LinearLayout 
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        
+        <include layout="@layout/http_btn" />
+    </LinearLayout>
+    
+     
+     
      <LinearLayout 
         android:layout_weight="1"
         android:layout_width="fill_parent"
