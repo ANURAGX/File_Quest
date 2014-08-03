@@ -1,9 +1,12 @@
 /**
- * Copyright(c) 2013 ANURAG 
+ * Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
+ *      
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,6 +36,9 @@ import org.anurag.compress.RarAdapter;
 import org.anurag.compress.RarFileProperties;
 import org.anurag.compress.RarManager;
 import org.anurag.compress.RarObj;
+import org.anurag.compress.TarAdapter;
+import org.anurag.compress.TarManager;
+import org.anurag.compress.TarObj;
 import org.anurag.compress.ZipAdapter;
 import org.anurag.compress.ZipManager;
 import org.anurag.compress.ZipObj;
@@ -162,6 +168,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static RarObj rFileRoot;
 	private static RarObj rFileSimple;
 	private static ArrayList<RarObj> rSearch;
+	
+	/**
+	 *TAR RELATED VARIABLES.... 
+	 */
+	private static ArrayList<TarObj> tListRoot;
+	public static boolean TAR_ROOT;
+	
+	
 	
 	private static boolean archive_simple,archive_root;
 	
@@ -302,7 +316,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		zipPathRoot = null;
 		zipPathSimple = null;
 		
-		RAR_ROOT = false;
+		TAR_ROOT = RAR_SIMPLE = RAR_ROOT = false;
 		archive_simple = true;
 		archive_root = true;
 		ZIP_SIMPLE = ZIP_ROOT = SEARCH_FLAG = RENAME_COMMAND = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = CREATE_FILE = false;
@@ -1426,6 +1440,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				setListAdapter(new ZipAdapter(zListRoot,mContext));
 			}else if(RAR_ROOT)
 				setListAdapter(new RarAdapter(mContext, rListRoot));
+			else if(TAR_ROOT)
+				setListAdapter(new TarAdapter(mContext, new TarManager(file2, "/", mContext).generateList()));
 			else	
 				setListAdapter(RootAdapter);
 			dialog = new Dialog(getActivity(), R.style.custom_dialog_theme);
@@ -4620,7 +4636,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						SFileManager.nStack.push("/ -> Rar");
 					}
 					setRarAdapter();
-				}
+				}else if(ACTION.equalsIgnoreCase("FQ_TAR_OPEN")){
+					TAR_ROOT = true;
+					mViewPager.setAdapter(mSectionsPagerAdapter);
+					mViewPager.setCurrentItem(CURRENT_ITEM);
+				}						 
 			}
 		};
 		IntentFilter filter = new IntentFilter("FQ_BACKUP");
@@ -4638,6 +4658,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		filter = new IntentFilter("FQ_EXTRACT_PATH");
 		this.registerReceiver(RECEIVER, filter);
 		filter = new IntentFilter("FQ_RAR_OPEN");
+		this.registerReceiver(RECEIVER, filter);
+		filter = new IntentFilter("FQ_TAR_OPEN");
 		this.registerReceiver(RECEIVER, filter);
 	}
 	

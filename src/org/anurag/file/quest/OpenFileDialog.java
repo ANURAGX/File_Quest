@@ -1,9 +1,12 @@
 /**
- * Copyright(c) 2013 ANURAG 
+ * Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
+ *      
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -98,6 +101,13 @@ public class OpenFileDialog {
 			 */
 			else if(file.getName().endsWith(".rar")||file.getName().endsWith(".RAR")){
 				mContext.sendBroadcast(new Intent("FQ_RAR_OPEN"));
+				showDialog = false;
+			}
+			/**
+			 * IF A TAR FILE IS SELECTED TO OPEN...
+			 */
+			else if(file.getName().endsWith(".tar")||file.getName().endsWith(".TAR")){
+				mContext.sendBroadcast(new Intent("FQ_TAR_OPEN"));
 				showDialog = false;
 			}
 			
