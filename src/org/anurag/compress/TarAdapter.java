@@ -91,11 +91,16 @@ public class TarAdapter extends BaseAdapter{
 			h.fSize = (TextView)convertView.findViewById(R.id.fileSize);
 			h.box = (CheckBox)convertView.findViewById(R.id.checkbox);
 			h.box.setVisibility(View.GONE);
+			if(!t.isFile())
+				h.fSize.setVisibility(View.GONE);
 			convertView.setTag(h);
 		}else
 			h = (Holder) convertView.getTag();
 		
 			h.fName.setText(t.getName());
+			h.icon.setImageDrawable(t.getIcon());
+			h.fSize.setText(t.getSize());
+			h.fType.setText(t.getType());
 		
 		return convertView;
 	}

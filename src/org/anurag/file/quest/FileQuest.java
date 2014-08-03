@@ -174,10 +174,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 */
 	private static ArrayList<TarObj> tListRoot;
 	public static boolean TAR_ROOT;
+	private static String tarPathRoot;
+	private static boolean TAR_SIMPLE;
+	private static ArrayList<TarObj> tListSimple;
+	private static String tarPathSimple;
+	private static TarObj tFileRoot;
+	private static TarObj tFileSimple;
+	private static ArrayList<TarObj> tSearch;
 	
 	
-	
-	private static boolean archive_simple,archive_root;
+	public static boolean archive_simple,archive_root;
 	
 	static int fPos;
 	private BroadcastReceiver RECEIVER;
@@ -1125,6 +1131,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				setListAdapter(new ZipAdapter(zListSimple, mContext));
 			else if(RAR_SIMPLE)
 				setListAdapter(new RarAdapter(mContext, rListSimple));
+			else if(TAR_SIMPLE)
+				setListAdapter(new TarAdapter(mContext, tListSimple));
 			else
 				setListAdapter(nSimple);
 			simple.setOnItemClickListener(new OnItemClickListener() {
@@ -1136,6 +1144,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							zFileSimple = zSearch.get(position);
 						else if(RAR_SIMPLE)
 							rFileSimple = rSearch.get(position);
+						else if(TAR_SIMPLE)
+							tFileSimple = tSearch.get(position);
 						else
 							file = searchList.get(position);
 					} else {
@@ -1143,6 +1153,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							zFileSimple = zListSimple.get(position);
 						else if(RAR_SIMPLE)
 							rFileSimple = rListSimple.get(position);
+						else if(TAR_SIMPLE)
+							tFileSimple = tListSimple.get(position);
 						else
 							file = sFiles.get(position);
 					}
@@ -1180,6 +1192,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							setRarAdapter();
 						}
 						
+					}else if(TAR_SIMPLE){//HANDLING TAR FILE....
+						if(tFileSimple.isFile()){
+							//EXTRACT THE TAR FILE AND OPEN IT USING APPROPRIATE APP....
+							
+						}else{
+							tarPathSimple = tFileSimple.getPath();
+							SFileManager.nStack.push(tFileSimple.getName()+" -> Tar");
+							setTarAdapter();
+						}
 					}else{
 						//HANDLING ORDINARY FILE EXLORING....
 						if (file.isFile())
@@ -1209,6 +1230,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							zFileSimple = zListSimple.get(position);
 						else if(RAR_SIMPLE)
 							rFileSimple = rSearch.get(position);
+						else if(TAR_SIMPLE)
+							tFileSimple = tSearch.get(position);
 						else
 							file = searchList.get(position);
 					} else {
@@ -1216,6 +1239,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							zFileSimple = zListSimple.get(position);
 						else if(RAR_SIMPLE)
 							rFileSimple = rListSimple.get(position);
+						else if(TAR_SIMPLE)
+							tFileSimple = tListSimple.get(position);
 						else
 							file = sFiles.get(position);
 					}
@@ -1269,6 +1294,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								setRarAdapter();
 							}
 							
+						}else if(TAR_SIMPLE){//HANDLING TAR FILE....
+							if(tFileSimple.isFile()){
+								//EXTRACT THE TAR FILE AND OPEN IT USING APPROPRIATE APP....
+								
+							}else{
+								tarPathSimple = tFileSimple.getPath();
+								SFileManager.nStack.push(tFileSimple.getName()+" -> Tar");
+								setTarAdapter();
+							}
 						}else{
 							//ORDINARY FILE EXPLORING..
 							if (file.isFile())
@@ -1441,7 +1475,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			}else if(RAR_ROOT)
 				setListAdapter(new RarAdapter(mContext, rListRoot));
 			else if(TAR_ROOT)
-				setListAdapter(new TarAdapter(mContext, new TarManager(file2, "/", mContext).generateList()));
+				setListAdapter(new TarAdapter(mContext, tListRoot));
 			else	
 				setListAdapter(RootAdapter);
 			dialog = new Dialog(getActivity(), R.style.custom_dialog_theme);
@@ -1460,6 +1494,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							zFileRoot = zSearch.get(arg2);
 						else if(RAR_ROOT)
 							rFileRoot = rSearch.get(arg2);
+						else if(TAR_ROOT)
+							tFileRoot = tSearch.get(arg2);
 						else
 							file2 = searchList.get(arg2);
 					} else {
@@ -1467,6 +1503,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							zFileRoot = zListRoot.get(arg2);
 						else if(RAR_ROOT)
 							rFileRoot = rListRoot.get(arg2);
+						else if(TAR_ROOT)
+							tFileRoot = tListRoot.get(arg2);
 						else
 							file2 = nFiles.get(arg2);
 					}
@@ -1512,6 +1550,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 										rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
 									RFileManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
 									setRarAdapter();
+								}
+							}else if(TAR_ROOT){//HANDLING TAR FILE....
+								if(tFileRoot.isFile()){
+									//EXTRACT THE TAR FILE AND OPEN IT USING APPROPRIATE APP....
+									
+								}else{
+									tarPathRoot = tFileRoot.getPath();
+									RFileManager.nStack.push(tFileRoot.getName()+" -> Tar");
+									setTarAdapter();
 								}
 							}else{//ORDINARY FILE HANDLING....
 								if (file2.isFile()) {
@@ -1666,6 +1713,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							zFileRoot = zSearch.get(position);
 						else if(RAR_ROOT)
 							rFileRoot = rSearch.get(position);
+						else if(TAR_ROOT)
+							tFileRoot = tSearch.get(position);
 						else
 							file2 = searchList.get(position);
 					}else{
@@ -1673,6 +1722,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							zFileRoot = zListRoot.get(position);
 						else if(RAR_ROOT)
 							rFileRoot = rListRoot.get(position);
+						else if(TAR_ROOT)
+							tFileRoot = tListRoot.get(position);
 						else
 							file2 = nFiles.get(position);
 					}
@@ -1707,6 +1758,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							RFileManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
 							setRarAdapter();
 						}
+					}else if(TAR_ROOT){//HANDLING TAR FILE....
+						if(tFileRoot.isFile()){
+							//EXTRACT THE TAR FILE AND OPEN IT USING APPROPRIATE APP....
+							
+						}else{
+							tarPathRoot = tFileRoot.getPath();
+							RFileManager.nStack.push(tFileRoot.getName()+" -> Tar");
+							setTarAdapter();
+						}
 					}else{//ordinary file handling...
 						if(file2.isFile())
 							new OpenFileDialog(mContext, Uri.parse(file2.getAbsolutePath()), size.x*8/9);
@@ -1717,7 +1777,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 				}
 			});
-
 		}
 	}
 
@@ -4637,9 +4696,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 					setRarAdapter();
 				}else if(ACTION.equalsIgnoreCase("FQ_TAR_OPEN")){
-					TAR_ROOT = true;
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(CURRENT_ITEM);
+					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
+						TAR_ROOT = true;
+						archive_root =true;
+						RFileManager.nStack.push("/ -> Tar");
+					}else if(CURRENT_ITEM==1){
+						TAR_SIMPLE = true;
+						archive_simple = true;
+						SFileManager.nStack.push("/ -> Tar");
+					}
+					setTarAdapter();
 				}						 
 			}
 		};
@@ -4902,6 +4968,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		thr.start();
 	}
 	
+	/**
+	 * THIS FUNCTION PREPARED THE LIST OF FILES INSIDE OF RAR ARCHIVE
+	 * AT THE PROVIDED PATH....
+	 */
 	private static void setRarAdapter(){
 		final Handler handle = new Handler(){
 			@Override
@@ -4911,7 +4981,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					mViewPager.setCurrentItem(CURRENT_ITEM);
 				}else{
 					/**
-					 * ZIP ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
+					 * RAR ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
 					 */
 					if(CURRENT_ITEM==1)
 						SFileManager.nStack.pop();
@@ -4966,6 +5036,74 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						handle.sendEmptyMessage(1);
 					}catch(RarException e){
 						RAR_ROOT = false;
+						archive_simple = false;
+						handle.sendEmptyMessage(1);
+					}
+				}
+			}
+		});		
+		thr.start();
+	}
+	
+	
+	/**
+	 * THIS FUNCTION PREPARED THE LIST OF FILES INSIDE OF RAR ARCHIVE
+	 * AT THE PROVIDED PATH....
+	 */
+	private static void setTarAdapter(){
+		final Handler handle = new Handler(){
+			@Override
+			public void handleMessage(Message msg){
+				if(msg.what==0 && (TAR_ROOT||TAR_SIMPLE)){
+					mViewPager.setAdapter(mSectionsPagerAdapter);
+					mViewPager.setCurrentItem(CURRENT_ITEM);
+				}else{
+					/**
+					 * RAR ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
+					 */
+					if(CURRENT_ITEM==1)
+						SFileManager.nStack.pop();
+					else if(CURRENT_ITEM==2)
+						RFileManager.nStack.pop();
+					mViewPager.setAdapter(mSectionsPagerAdapter);
+					mViewPager.setCurrentItem(CURRENT_ITEM);
+					Toast.makeText(mContext, R.string.zipexception, Toast.LENGTH_SHORT).show();
+				}
+			}
+		};
+		
+		Thread thr = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				if(tarPathRoot==null)
+					tarPathRoot = "/";
+				
+				if(tarPathSimple == null)
+					tarPathSimple = "/";
+				
+				if(CURRENT_ITEM==2||CURRENT_ITEM==0){
+					try {
+						File fi = file2;
+						if(CURRENT_ITEM==0){
+							CURRENT_ITEM = 2;
+							fi = file0;
+						}
+						tListRoot = new TarManager(fi, tarPathRoot, mContext).generateList();
+						handle.sendEmptyMessage(0);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						TAR_ROOT = false;
+						archive_root = false;
+						handle.sendEmptyMessage(1);
+					}
+				}else if(CURRENT_ITEM==1){
+					try{
+						tListSimple = new TarManager(file, tarPathSimple, mContext).generateList();
+						handle.sendEmptyMessage(0);
+					}catch(IOException e){
+						TAR_SIMPLE = false;
 						archive_simple = false;
 						handle.sendEmptyMessage(1);
 					}
