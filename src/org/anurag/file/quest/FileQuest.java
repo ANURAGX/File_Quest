@@ -163,7 +163,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static RarObj rFileSimple;
 	private static ArrayList<RarObj> rSearch;
 	
-	
+	private static boolean archive_simple,archive_root;
 	
 	static int fPos;
 	private BroadcastReceiver RECEIVER;
@@ -303,7 +303,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		zipPathSimple = null;
 		
 		RAR_ROOT = false;
-		
+		archive_simple = true;
+		archive_root = true;
 		ZIP_SIMPLE = ZIP_ROOT = SEARCH_FLAG = RENAME_COMMAND = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = CREATE_FILE = false;
 		fPos = 0;
 		params = this.getWindow().getAttributes();
@@ -1639,7 +1640,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 				}
 			});
-			root.setOnItemClickListener(new OnItemClickListener() {
+			root.setOnItemClickListener(new OnItemClickListener(){
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						final int position, long arg3) {
@@ -1862,6 +1863,25 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		CURRENT_ITEM = mViewPager.getCurrentItem();
 		switch (v.getId()) {
 
+		
+		case R.id.http_btn:
+				{
+					QuickAction act = new QuickAction(mContext);
+					ActionItem it = new ActionItem(0, getString(R.string.starthttp),getResources().getDrawable(R.drawable.ic_launcher_http_ftp_server));
+					act.addActionItem(it);
+					it = new ActionItem(0, getString(R.string.startftp),getResources().getDrawable(R.drawable.ic_launcher_http_ftp_server));
+					act.addActionItem(it);
+					act.show(indicator);
+					act.setOnActionItemClickListener(new OnActionItemClickListener() {
+						@Override
+						public void onItemClick(QuickAction source, int pos, int actionId) {
+							// TODO Auto-generated method stub
+							Toast.makeText(mContext, ""+pos, Toast.LENGTH_SHORT).show();
+						}
+					});
+				}
+				break;
+		
 		case R.id.g_open:
 			new G_Open(mContext, size.x, size.y);
 			break;
@@ -1872,7 +1892,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			break;
 
 		case R.id.bottom_paste:
-			if (CURRENT_ITEM == 0||ZIP_ROOT||ZIP_SIMPLE) {
+			if (CURRENT_ITEM == 0||ZIP_ROOT||ZIP_SIMPLE||RAR_ROOT||RAR_SIMPLE) {
 				Toast.makeText(mContext, getString(R.string.pastenotallowed), Toast.LENGTH_SHORT).show();
 			}else{
 				pasteCommand(false);
@@ -1880,28 +1900,28 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			break;
 
 		case R.id.bottom_copy:
-			if(ZIP_ROOT||ZIP_SIMPLE){
+			if(ZIP_ROOT||ZIP_SIMPLE||RAR_ROOT||RAR_SIMPLE){
 				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
 			}else
 				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 5,getString(R.string.enablemultiselect));
 			break;
 
 		case R.id.bottom_cut:
-			if(ZIP_ROOT||ZIP_SIMPLE){
+			if(ZIP_ROOT||ZIP_SIMPLE||RAR_ROOT||RAR_SIMPLE){
 				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
 			}else
 				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 2,getString(R.string.enablemultiselect));
 			break;
 
 		case R.id.bottom_zip:
-			if(ZIP_ROOT||ZIP_SIMPLE){
+			if(ZIP_ROOT||ZIP_SIMPLE||RAR_ROOT||RAR_SIMPLE){
 				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
 			}else
 				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 3,getString(R.string.enablemultiselect));
 			break;
 
 		case R.id.bottom_delete:
-			if((ZIP_ROOT||ZIP_SIMPLE)){
+			if((ZIP_ROOT||ZIP_SIMPLE||RAR_ROOT||RAR_SIMPLE)){
 				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
 			}else
 				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 4,getString(R.string.enablemultiselect));
@@ -1984,7 +2004,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
 							SimpleAdapter.thumbselection = new boolean[sFiles.size()];
 							SimpleAdapter.MULTI_SELECT = false;
-							if(!ZIP_SIMPLE){
+							if(!archive_simple){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
@@ -1995,7 +2015,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							SimpleAdapter.thumbselection = new boolean[sFiles.size()];
 							SimpleAdapter.MULTI_SELECT = true;
 							mViewPager.setCurrentItem(1);
-							if(!ZIP_SIMPLE){
+							if(!archive_simple){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
@@ -2008,7 +2028,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							RootAdapter = new RootAdapter(mContext,R.layout.row_list_1, nFiles);
 							RootAdapter.thumbselection = new boolean[nFiles.size()];
 							RootAdapter.MULTI_SELECT = false;
-							if(!ZIP_ROOT){
+							if(!archive_root){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
@@ -2019,7 +2039,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							RootAdapter.thumbselection = new boolean[nFiles.size()];
 							RootAdapter.MULTI_SELECT = true;
 							mViewPager.setCurrentItem(2);
-							if(!ZIP_ROOT){
+							if(!archive_root){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
@@ -2798,6 +2818,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					 * NOW QUIT THE ZIP FILE....
 					 */
 					ZIP_SIMPLE = false;
+					archive_simple = false;
 					zipPathSimple = null;
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
@@ -2821,6 +2842,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				SFileManager.nStack.pop();
 				if(rarPathSimple.equalsIgnoreCase("/")){
 					RAR_SIMPLE = false;
+					archive_simple = false; 
 					rarPathSimple = null;
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
@@ -2917,6 +2939,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					 * NOW QUIT THE ZIP FILE....
 					 */
 					ZIP_ROOT = false;
+					archive_root = false;
 					zipPathRoot = null;
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
@@ -2941,6 +2964,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				RFileManager.nStack.pop();
 				if(rarPathRoot.equalsIgnoreCase("/")){
 					RAR_ROOT = false;
+					archive_root = false;
 					rarPathRoot = null;
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
@@ -4565,10 +4589,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}else if(ACTION.equalsIgnoreCase("FQ_ZIP_OPEN")){
 					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
 						ZIP_ROOT = true;
+						archive_root = true;
 						RFileManager.nStack.push("/ -> Zip");
 					}	
 					else{
 						ZIP_SIMPLE = true;
+						archive_simple = true;
 						SFileManager.nStack.push("/ -> Zip");
 					}	
 					setZipAdapter();
@@ -4586,9 +4612,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}else if(ACTION.equalsIgnoreCase("FQ_RAR_OPEN")){
 					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
 						RAR_ROOT = true;
+						archive_root = true;
 						RFileManager.nStack.push("/ -> Rar");
 					}else{
 						RAR_SIMPLE = true;
+						archive_simple = true;
 						SFileManager.nStack.push("/ -> Rar");
 					}
 					setRarAdapter();
@@ -4833,6 +4861,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 						ZIP_ROOT = false;
+						archive_root = false;
 						handle.sendEmptyMessage(1);
 					} 
 				}else if(CURRENT_ITEM==1){
@@ -4842,6 +4871,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						handle.sendEmptyMessage(0);
 					}catch(IOException e){
 						ZIP_SIMPLE = false;
+						archive_simple = false; 
 						handle.sendEmptyMessage(1);
 					}
 				}
@@ -4896,9 +4926,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 						RAR_ROOT = false;
+						archive_root = false;
 						handle.sendEmptyMessage(1);
 					}catch(RarException e){
 						RAR_ROOT = false;
+						archive_root = false;
 						handle.sendEmptyMessage(1);
 					}
 				}else if(CURRENT_ITEM==1){
@@ -4908,9 +4940,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						handle.sendEmptyMessage(0);
 					}catch(IOException e){
 						RAR_SIMPLE = false;
+						archive_simple = false;
 						handle.sendEmptyMessage(1);
 					}catch(RarException e){
 						RAR_ROOT = false;
+						archive_simple = false;
 						handle.sendEmptyMessage(1);
 					}
 				}
