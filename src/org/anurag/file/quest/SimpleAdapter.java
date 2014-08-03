@@ -1,15 +1,19 @@
 /**
- * Copyright(c) 2013 ANURAG 
+ * Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
+ *      
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * anurag.dev1512@gmail.com
+ *                             
+ *                             anurag.dev1512@gmail.com
  *
  */
 package org.anurag.file.quest;
@@ -163,6 +167,9 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 				}else if(file.getName().endsWith(".rar")||file.getName().endsWith(".RAR")){
 					nHolder.FileType.setText(mContext.getString(R.string.compr));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_rar));
+				}else if(file.getName().endsWith(".tar")||file.getName().endsWith(".TAR")){
+					nHolder.FileType.setText(mContext.getString(R.string.compr));
+					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_tar));
 				}
 				else if( getFileType(file) == "zip"){
 					nHolder.FileType.setText(mContext.getString(R.string.zip));
@@ -207,9 +214,7 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 		else if( Name.endsWith("mhtml")||Name.endsWith(".MHTML")||  Name.endsWith(".HTM") || Name.endsWith(".htm") 
 				||Name.endsWith(".html") || Name.endsWith(".HTML"))
 			return "web";
-		else if(Name.endsWith(".rar")||Name.endsWith("RAR"))
-			return "rar";
-		else if(Name.endsWith(".tar") || Name.endsWith(".TAR") || Name.endsWith(".7z") || Name.endsWith(".7Z"))
+		else if(Name.endsWith(".7z") || Name.endsWith(".7Z"))
 			return "compressed";
 		else if(Name.endsWith(".apk") || Name.endsWith(".APK"))
 			return "apk";
