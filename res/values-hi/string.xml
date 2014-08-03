@@ -146,8 +146,8 @@
 	<string name="preparingtoshare">साझा करने के लिए तैयार की जा रही है</string>
 	<string name="cannotsendfolder">फोल्डर नहीं भेज सकते हैं</string>
 	<string name="http">Server</string>
-	
-	
+	<string name="starthttp">Start Http Server</string>
+	<string name="startftp">Start Ftp Server</string>
 	
 	
 	
