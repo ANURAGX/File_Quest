@@ -92,9 +92,10 @@ public class ZipAdapter extends BaseAdapter{
 		}else
 			h = (Holder) convertView.getTag();
 		
-		if(!zFile.isFile())
+		if(!zFile.isFile()){
+			h.fSize.setVisibility(View.GONE);
 			h.icon.setImageDrawable(ctx.getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
-		else
+		}else
 			h.icon.setImageDrawable(zFile.getIcon());
 		h.fName.setText(zFile.getName());
 		h.fSize.setText(zFile.getSize());
