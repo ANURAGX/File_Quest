@@ -124,6 +124,10 @@ public class ZipObj {
 		return this.z;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkForFile(){
 		String str = entry.substring(path.length(), entry.length());
 		if(str.startsWith("/"))
