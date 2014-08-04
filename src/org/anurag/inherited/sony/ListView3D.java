@@ -29,7 +29,6 @@ package org.anurag.inherited.sony;
 
 import org.anurag.file.quest.R;
 import org.anurag.inherited.sony.Dynamics;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Camera;
@@ -48,8 +47,6 @@ import android.view.ViewConfiguration;
 import android.view.animation.AnimationUtils;
 import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.Toast;
-
 import java.util.LinkedList;
 
 /**
