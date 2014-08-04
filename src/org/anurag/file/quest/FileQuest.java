@@ -31,6 +31,7 @@ import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
 import org.anurag.compress.ExtractRarFile;
+import org.anurag.compress.ExtractTarFile;
 import org.anurag.compress.ExtractZipFile;
 import org.anurag.compress.RarAdapter;
 import org.anurag.compress.RarFileProperties;
@@ -1196,7 +1197,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}else if(TAR_SIMPLE){//HANDLING TAR FILE....
 						if(tFileSimple.isFile()){
 							//EXTRACT THE TAR FILE AND OPEN IT USING APPROPRIATE APP....
-							
+							new ExtractTarFile(mContext, tFileSimple, size.x*8/9, null, file, 0);	
 						}else{
 							tarPathSimple = tFileSimple.getPath();
 							SFileManager.nStack.push(tFileSimple.getName()+" -> Tar");
@@ -1298,7 +1299,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}else if(TAR_SIMPLE){//HANDLING TAR FILE....
 							if(tFileSimple.isFile()){
 								//EXTRACT THE TAR FILE AND OPEN IT USING APPROPRIATE APP....
-								
+								new ExtractTarFile(mContext, tFileSimple, size.x*8/9, null, file, 0);	
 							}else{
 								tarPathSimple = tFileSimple.getPath();
 								SFileManager.nStack.push(tFileSimple.getName()+" -> Tar");
@@ -1548,7 +1549,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							}else if(TAR_ROOT){//HANDLING TAR FILE....
 								if(tFileRoot.isFile()){
 									//EXTRACT THE TAR FILE AND OPEN IT USING APPROPRIATE APP....
-									
+									new ExtractTarFile(mContext, tFileRoot, size.x*8/9, null, file2, 0);
 								}else{
 									tarPathRoot = tFileRoot.getPath();
 									RFileManager.nStack.push(tFileRoot.getName()+" -> Tar");
@@ -1756,7 +1757,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}else if(TAR_ROOT){//HANDLING TAR FILE....
 						if(tFileRoot.isFile()){
 							//EXTRACT THE TAR FILE AND OPEN IT USING APPROPRIATE APP....
-							
+							new ExtractTarFile(mContext, tFileRoot, size.x*8/9, null, file2, 0);
 						}else{
 							tarPathRoot = tFileRoot.getPath();
 							RFileManager.nStack.push(tFileRoot.getName()+" -> Tar");
