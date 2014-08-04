@@ -54,34 +54,46 @@ public class TarManager {
 		ctx = ct;
 	}
 	
+	
+	/**
+	 * 
+	 * THE DIRECTORY ENTRIES CANNOT BE SKIPPED LIKE WE SKIPPED IN
+	 * RAR OR ZIP MANAGER....
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	public ArrayList<TarObj> generateList() throws IOException{
 		list = new ArrayList<TarObj>();
 		TarArchiveEntry entry;
 		while((entry=tar.getNextTarEntry())!=null){
-			if(entry.isDirectory())
-				continue;
+			
 			boolean added = false;
 			int len = list.size();
 			String name = entry.getName();
 			if(name.startsWith("/"))
 				name = name.substring(1, name.length());
+			if(entry.isDirectory())
+				name = name.substring(0, name.length()-1);
 			
 			if(path.equalsIgnoreCase("/")){
 				while(name.contains("/"))
 					name = name.substring(0,name.lastIndexOf("/"));
+				
 				for(int i=0;i<len;++i){
 					if(list.get(i).getName().equalsIgnoreCase(name)){
 							added = true;
-						break;
+						    break;
 					}
 				}
-				if(!added)
+				if(!added&&!name.equalsIgnoreCase(""))
 					list.add(new TarObj(entry, name, "", ctx));
 			}else{
 				try{
 					name = name.substring(path.length()+1, name.length());
 					while(name.contains("/"))
 						name = name.substring(0, name.lastIndexOf("/"));
+					
 					if(len>0){
 						for(int i=0;i<len;++i)
 							if(list.get(i).getName().equalsIgnoreCase(name)){
