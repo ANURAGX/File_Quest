@@ -134,7 +134,7 @@ public class ExtractZipFile {
 								dialog.dismiss();
 							    if(mode==0){
 							    	//after extracting file ,it has to be opened....
-							    	new OpenFileDialog(ctx, Uri.parse(DEST), width);
+							    	new OpenFileDialog(ctx, Uri.parse(dest), width);
 							    }else if(mode==2){
 							    	//FILE HAS TO BE SHARED....
 							    	new BluetoothChooser(ctx, new File(dest).getAbsolutePath(), width, null);
