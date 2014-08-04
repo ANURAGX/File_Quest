@@ -123,6 +123,7 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import de.innosystec.unrar.Archive;
+import de.innosystec.unrar.MVTest;
 import de.innosystec.unrar.exception.RarException;
 
 @SuppressLint({ "HandlerLeak", "SdCardPath" })
@@ -2926,8 +2927,25 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						rarPathSimple = rarPathSimple.substring(0, rarPathSimple.lastIndexOf("\\"));
 						setRarAdapter();
 					}catch(Exception e){
-						rarPathSimple = null;
+						rarPathSimple = "/";
 						setRarAdapter();
+					}
+				}
+			}else if(TAR_SIMPLE&&CURRENT_ITEM==1){//TAR FILE HANDLING ON BACK KEY PRESS...
+				SFileManager.nStack.pop();
+				if(tarPathSimple.equals("/")){
+					TAR_SIMPLE = false;
+					archive_simple = false;
+					tarPathSimple = null;
+					mViewPager.setAdapter(mSectionsPagerAdapter);
+					mViewPager.setCurrentItem(1);
+				}else{
+					try{
+						tarPathSimple = tarPathSimple.substring(0, tarPathSimple.lastIndexOf("/"));
+						setTarAdapter();
+					}catch(Exception e){
+						tarPathSimple = "/";
+						setTarAdapter();
 					}
 				}
 			}
@@ -3052,8 +3070,24 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						setRarAdapter();
 					}
 				}
-			}
-			else if (CURRENT_ITEM == 2 && (RFileManager.nStack.size() >= 2)) {
+			}else if(TAR_ROOT&&CURRENT_ITEM==2){//TAR FILE HANDLING ON BACK KEY PRESS...
+				RFileManager.nStack.pop();
+				if(tarPathRoot.equals("/")){
+					TAR_ROOT = false;
+					archive_root = false;
+					tarPathRoot = null;
+					mViewPager.setAdapter(mSectionsPagerAdapter);
+					mViewPager.setCurrentItem(2);
+				}else{
+					try{
+						tarPathRoot = tarPathRoot.substring(0, tarPathRoot.lastIndexOf("/"));
+						setTarAdapter();
+					}catch(Exception e){
+						tarPathRoot = "/";
+						setTarAdapter();
+					}
+				}
+			}else if (CURRENT_ITEM == 2 && (RFileManager.nStack.size() >= 2)) {
 				nFiles = RFileManager.getPreviousFileList();
 				// RootAdapter = new RootAdapter(getApplicationContext(),
 				// R.layout.row_list_1, nFiles);
