@@ -730,16 +730,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// WITH HINDI LANGAUGE IS CREATED THROWS INDEXOUTOFBOUND
 						// EXCEPTION
 						// I THINK IT IS APPLICABLE TO OTHER LANGUAGES ALSO
-					if(!ZIP_ROOT)
+					if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT)
 						nFiles = RFileManager.giveMeFileList();
-					if(!ZIP_SIMPLE)
+					if(!ZIP_SIMPLE&&!RAR_SIMPLE&&!TAR_SIMPLE)
 						sFiles = SFileManager.giveMeFileList();
 					if (ITEM == 0)
 						load_FIle_Gallery(pos);
 				} catch (IndexOutOfBoundsException e) {
-					if(!ZIP_ROOT)
+					if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT)
 						nFiles = RFileManager.giveMeFileList();
-					if(!ZIP_SIMPLE)
+					if(!ZIP_SIMPLE&&!RAR_SIMPLE&&!TAR_SIMPLE)
 						sFiles = SFileManager.giveMeFileList();
 				}
 
@@ -2222,6 +2222,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						mVFlipper.setAnimation(nextAnim());
 					}else
 						rarSearch();
+				}else if(TAR_ROOT||TAR_SIMPLE){
+					if(SEARCH_FLAG){
+						SEARCH_FLAG = false;
+						mVFlipper.showNext();
+						mVFlipper.setAnimation(nextAnim());
+					}else
+						tarSearch();
 				}
 				else{
 					if(SEARCH_FLAG){
@@ -4850,7 +4857,93 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	}
 	
 	/**
-	 * PERFORMS SEARCH INSIDE OF ZIP ARCHIVE FILE...
+	 * PERFORMS SEARCH INSIDE OF TAR ARCHIVE FILE...
+	 */
+	private void tarSearch() {
+		// TODO Auto-generated method stub
+		tSearch = new ArrayList<TarObj>();
+		try{
+			LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
+			a.setVisibility(View.GONE);
+			// Search Flipper is loaded
+			mVFlipper.setAnimation(nextAnim());
+			mVFlipper.showNext();
+			mVFlipper.showNext();
+			SEARCH_FLAG = true;
+			// PREVIOUS COMMANDS ARE OVERWRITTEN
+			COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = CREATE_FILE = false;
+			editBox.setTextColor(Color.WHITE);
+			editBox.setText(null);
+			editBox.setHint(R.string.nametofilterout);
+			editBox.addTextChangedListener(new TextWatcher() {
+				@Override
+				public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,int arg3) {
+					// TODO Auto-generated method stub
+					tSearch.clear();
+				}
+				
+				@Override
+				public void afterTextChanged(final Editable ed) {
+					// TODO Auto-generated method stub
+					new AsyncTask<Void, Void, Void>() {
+						
+						@Override
+						protected void onPostExecute(Void result) {
+							// TODO Auto-generated method stub
+							super.onPostExecute(result);
+							if(CURRENT_ITEM==2)
+								root.setAdapter(new TarAdapter(mContext,tSearch));
+							else if(CURRENT_ITEM==1)
+								simple.setAdapter(new TarAdapter(mContext,tSearch));
+						}
+
+						@Override
+						protected void onPreExecute() {
+							// TODO Auto-generated method stub
+							super.onPreExecute();
+							if(CURRENT_ITEM==2)
+								root.setAdapter(null);
+							else if(CURRENT_ITEM==1)
+								simple.setAdapter(null);
+						}
+
+						@Override
+						protected Void doInBackground(Void... arg0) {
+							// TODO Auto-generated method stub
+							if(CURRENT_ITEM==2){
+								String text = ed.toString().toLowerCase();
+								int len = tListRoot.size();
+								for(int i=0;i<len;++i){
+									if(tListRoot.get(i).getName().toLowerCase().contains(text))
+										tSearch.add(tListRoot.get(i));
+								}
+							}else if(CURRENT_ITEM==1){
+								String text = ed.toString().toLowerCase();
+								int len = tListSimple.size();
+								for(int i=0;i<len;++i){
+									if(tListSimple.get(i).getName().toLowerCase().contains(text))
+										tSearch.add(tListSimple.get(i));
+								}
+							}
+							return null;
+						}
+					}.execute();
+				}
+			});
+		}catch(Exception e){
+			
+		}
+	}
+	
+	
+	/**
+	 * PERFORMS SEARCH INSIDE OF RAR ARCHIVE FILE...
 	 */
 	private void rarSearch() {
 		// TODO Auto-generated method stub
