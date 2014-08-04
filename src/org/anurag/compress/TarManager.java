@@ -58,6 +58,8 @@ public class TarManager {
 		list = new ArrayList<TarObj>();
 		TarArchiveEntry entry;
 		while((entry=tar.getNextTarEntry())!=null){
+			if(entry.isDirectory())
+				continue;
 			boolean added = false;
 			int len = list.size();
 			String name = entry.getName();
