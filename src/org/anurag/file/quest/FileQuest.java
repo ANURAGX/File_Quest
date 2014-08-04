@@ -1414,7 +1414,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								new ExtractZipFile(mContext, zFileSimple, size.x*8/9, null, file, 2);
 							else
 								Toast.makeText(mContext, R.string.cannotsendfolder, Toast.LENGTH_SHORT).show();
-						}else{
+						}else if(RAR_SIMPLE){
+							
+						}else if(TAR_SIMPLE){
+							if(tFileSimple.isFile())//the mode is 2 to share it via bluetooth....
+								new ExtractTarFile(mContext, tFileSimple, size.x*8/9, null, file, 2);
+							else
+								Toast.makeText(mContext, R.string.cannotsendfolder, Toast.LENGTH_SHORT).show();
+						}
+						else{
 							if (file.isFile())
 								new BluetoothChooser(mContext, file.getAbsolutePath(), size.x*8/9, null);
 							else
@@ -1672,13 +1680,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								new ExtractZipFile(mContext, zFileRoot, size.x*8/9, null, file2, 2);
 							else
 								Toast.makeText(mContext, R.string.cannotsendfolder, Toast.LENGTH_SHORT).show();
-						}else{
+						}else if(RAR_ROOT){
+							
+						}else if(TAR_ROOT){
+							if(tFileRoot.isFile()){
+								//mode is 2 share the file ...
+								new ExtractTarFile(mContext, tFileRoot, size.x*8/9, null, file2, 2);
+							}else
+								Toast.makeText(mContext, R.string.cannotsendfolder, Toast.LENGTH_SHORT).show();
+						}
+						else{
 							if (file2.isFile())
 								new BluetoothChooser(mContext, file2.getAbsolutePath(), size.x*8/9  , null);
 							else
 								showToast(getString(R.string.compressandsend));
-						}
-						
+						}						
 						break;
 					case 9:
 						// gesture to the selected file....
