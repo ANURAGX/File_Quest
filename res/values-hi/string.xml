@@ -148,7 +148,7 @@
 	<string name="http">Server</string>
 	<string name="starthttp">Start Http Server</string>
 	<string name="startftp">Start Ftp Server</string>
-	
+	<string name="none">None</string>
 	
 	
 	
