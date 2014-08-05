@@ -26,7 +26,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.zip.ZipFile;
-
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
@@ -117,15 +116,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.viewpagerindicator.TitlePageIndicator;
-
 import de.innosystec.unrar.Archive;
 import de.innosystec.unrar.exception.RarException;
 
@@ -5251,7 +5246,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	}
 	
 	/**
-	 * 
+	 * THIS FUNCTION CLOSES THE CURRENTLY OPENED ARCHIVE TO OPEN 
+	 * THE NEW ARCHIVE IN THE SAME PANEL...
 	 * @param p
 	 */
 	private void cleanStack(String p){
