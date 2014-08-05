@@ -93,21 +93,27 @@ public class OpenFileDialog {
 			 * IF ZIP FILE IS SELECTED TO OPEN THE ZIP FILE WITH THIS APP(file quest)....
 			 */
 			if(file.getName().endsWith(".zip")||file.getName().endsWith(".ZIP")){
-				mContext.sendBroadcast(new Intent("FQ_ZIP_OPEN"));
+				Intent intent = new Intent("FQ_ZIP_OPEN");
+				intent.putExtra("open_path", file.getAbsolutePath());
+				mContext.sendBroadcast(intent);
 				showDialog = false;
 			}
 			/**
 			 * IF A RAR FILE IS SELECTED TO OPEN 
 			 */
 			else if(file.getName().endsWith(".rar")||file.getName().endsWith(".RAR")){
-				mContext.sendBroadcast(new Intent("FQ_RAR_OPEN"));
+				Intent intent = new Intent("FQ_RAR_OPEN");
+				intent.putExtra("open_path", file.getAbsolutePath());
+				mContext.sendBroadcast(intent);
 				showDialog = false;
 			}
 			/**
 			 * IF A TAR FILE IS SELECTED TO OPEN...
 			 */
 			else if(file.getName().endsWith(".tar")||file.getName().endsWith(".TAR")){
-				mContext.sendBroadcast(new Intent("FQ_TAR_OPEN"));
+				Intent intent = new Intent("FQ_TAR_OPEN");
+				intent.putExtra("open_path", file.getAbsolutePath());
+				mContext.sendBroadcast(intent);
 				showDialog = false;
 			}
 			
