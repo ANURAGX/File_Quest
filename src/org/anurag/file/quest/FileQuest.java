@@ -121,6 +121,8 @@ import android.widget.ViewFlipper;
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -4699,6 +4701,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						Toast.makeText(mContext, R.string.filedoesnotexists,Toast.LENGTH_SHORT).show();
 
 				}else if(ACTION.equalsIgnoreCase("FQ_ZIP_OPEN")){
+					//CHECKING WHETHER ANY ARCHIVE IS ALREADY OPENED OR NOT...
+					//IF OPENED THEN CLOSING THE ARCHIVE AND OPENING THE NEW ARCHIVE REQUEST....
+					cleanStack(it.getStringExtra("open_path"));
+					
 					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
 						ZIP_ROOT = true;
 						archive_root = true;
@@ -4722,6 +4728,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}else if(CURRENT_ITEM == 2)
 						new ExtractZipFile(mContext, zFileRoot, size.x*8/9, path, file2, 1);
 				}else if(ACTION.equalsIgnoreCase("FQ_RAR_OPEN")){
+					//CHECKING WHETHER ANY ARCHIVE IS ALREADY OPENED OR NOT...
+					//IF OPENED THEN CLOSING THE ARCHIVE AND OPENING THE NEW ARCHIVE REQUEST....
+					cleanStack(it.getStringExtra("open_path"));
+					
 					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
 						RAR_ROOT = true;
 						archive_root = true;
@@ -4733,6 +4743,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 					setRarAdapter();
 				}else if(ACTION.equalsIgnoreCase("FQ_TAR_OPEN")){
+					//CHECKING WHETHER ANY ARCHIVE IS ALREADY OPENED OR NOT...
+					//IF OPENED THEN CLOSING THE ARCHIVE AND OPENING THE NEW ARCHIVE REQUEST....
+					cleanStack(it.getStringExtra("open_path"));
+					
 					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
 						TAR_ROOT = true;
 						archive_root =true;
@@ -5234,5 +5248,23 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			}
 		});		
 		thr.start();
+	}
+	
+	/**
+	 * 
+	 * @param p
+	 */
+	private void cleanStack(String p){
+		if(CURRENT_ITEM==1&&(RAR_SIMPLE||ZIP_SIMPLE||TAR_SIMPLE)){
+			while(SFileManager.nStack.peek().contains("->"))
+				SFileManager.nStack.pop();
+			RAR_SIMPLE = TAR_SIMPLE= ZIP_SIMPLE = false;
+			file = new File(p);
+		}else if(CURRENT_ITEM==2&&(RAR_ROOT||TAR_ROOT||ZIP_ROOT)){
+			while(RFileManager.nStack.peek().contains("->"))
+				RFileManager.nStack.pop();
+			RAR_ROOT = ZIP_ROOT = TAR_ROOT = false;
+			file2 = new File(p);
+		}
 	}
 }
