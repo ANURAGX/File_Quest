@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.zip.ZipFile;
+
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
@@ -116,11 +117,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.viewpagerindicator.TitlePageIndicator;
+
 import de.innosystec.unrar.Archive;
 import de.innosystec.unrar.exception.RarException;
 
@@ -174,7 +178,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ArrayList<TarObj> tListRoot;
 	public static boolean TAR_ROOT;
 	private static String tarPathRoot;
-	private static boolean TAR_SIMPLE;
+	public static boolean TAR_SIMPLE;
 	private static ArrayList<TarObj> tListSimple;
 	private static String tarPathSimple;
 	private static TarObj tFileRoot;
@@ -4713,15 +4717,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					setZipAdapter();
 				}else if(ACTION.equalsIgnoreCase("FQ_EXTRACT_PATH")){
 					String path = it.getStringExtra("extract_path");
-					if(CURRENT_ITEM==1){
-						if(new File(path).canWrite())
-							//IF WE HAVE WRITE PERMISSION THEN EXTRACT HERE....
-							new ExtractZipFile(mContext, zFileSimple, size.x*8/9, path, file, 1);
-						else
-							//WE DONT HAVE WRITE PERMISSION..... 
-							Toast.makeText(mContext, R.string.cannotexthere, Toast.LENGTH_SHORT).show();
-					}else if(CURRENT_ITEM == 2)
-						new ExtractZipFile(mContext, zFileRoot, size.x*8/9, path, file2, 1);
+					extractTo(path);
 				}else if(ACTION.equalsIgnoreCase("FQ_RAR_OPEN")){
 					//CHECKING WHETHER ANY ARCHIVE IS ALREADY OPENED OR NOT...
 					//IF OPENED THEN CLOSING THE ARCHIVE AND OPENING THE NEW ARCHIVE REQUEST....
@@ -5261,6 +5257,36 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				RFileManager.nStack.pop();
 			RAR_ROOT = ZIP_ROOT = TAR_ROOT = false;
 			file2 = new File(p);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param p
+	 */
+	private void extractTo(String p){
+		if(ZIP_ROOT||ZIP_SIMPLE){//EXTRACTING FILE FROM ZIP ARCHIVE...
+			if(CURRENT_ITEM==1){
+				if(new File(p).canWrite())
+					//IF WE HAVE WRITE PERMISSION THEN EXTRACT HERE....
+					new ExtractZipFile(mContext, zFileSimple, size.x*8/9, p, file, 1);
+				else
+					//WE DONT HAVE WRITE PERMISSION..... 
+					Toast.makeText(mContext, R.string.cannotexthere, Toast.LENGTH_SHORT).show();
+			}else if(CURRENT_ITEM == 2)
+				new ExtractZipFile(mContext, zFileRoot, size.x*8/9, p, file2, 1);
+		}else if(RAR_ROOT||RAR_SIMPLE){//EXTRACTING FILE FROM RAR ARCHIVE...
+			
+		}else if(TAR_ROOT||TAR_SIMPLE){//EXTRACTING FILES FROM TAR ARCHIVE...
+			if(CURRENT_ITEM==1){
+				if(new File(p).canWrite())
+					//IF WE HAVE WRITE PERMISSION THEN EXTRACT HERE....
+					new ExtractTarFile(mContext, tFileSimple, size.x*8/9, p, file, 1);
+				else
+					//WE DONT HAVE WRITE PERMISSION..... 
+					Toast.makeText(mContext, R.string.cannotexthere, Toast.LENGTH_SHORT).show();
+			}else if(CURRENT_ITEM == 2)
+				new ExtractTarFile(mContext, tFileRoot, size.x*8/9, p, file2, 1);
 		}
 	}
 }

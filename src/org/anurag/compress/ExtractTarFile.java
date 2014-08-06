@@ -53,7 +53,6 @@ import android.widget.Toast;
 public class ExtractTarFile {
 	
 	boolean running ;
-	//ZipInputStream zis;
 	byte data[] = new byte[Constants.BUFFER];
 	long prog ;
 	int read ;
@@ -91,7 +90,7 @@ public class ExtractTarFile {
 		from.setText(ctx.getString(R.string.extractingfrom)+" "+file.getName());
 		
 		if(mode==2){
-			//ZIP ENTRY HAS TO BE SHARED VIA BLUETOOTH,ETC...
+			//TAR ENTRY HAS TO BE SHARED VIA BLUETOOTH,ETC...
 			TextView t = (TextView)dialog.findViewById(R.id.preparing);
 			t.setText(ctx.getString(R.string.preparingtoshare));
 		}
@@ -103,14 +102,7 @@ public class ExtractTarFile {
 			e1.printStackTrace();
 			tar = null;
 		}
-		
-	/*	try {
-			zis = new ZipInputStream(new FileInputStream(file));
-		}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			zis = null;
-		}*/
+	
 		
 		final Handler handle = new Handler(){
 			@Override
@@ -174,8 +166,6 @@ public class ExtractTarFile {
 						while((ze=tar.getNextTarEntry())!=null){
 							if(ze.isDirectory())
 								continue;
-						//	++count;
-							//ze = zList.nextElement();
 							handle.sendEmptyMessage(4);
 							if(zFile.isFile()){
 								//EXTRACTING A SINGLE FILE FROM AN ARCHIVE....
@@ -195,8 +185,6 @@ public class ExtractTarFile {
 										max = ze.getSize();
 										size =AppBackup.size(max, ctx);
 										handle.sendEmptyMessage(3);
-									//	for(;i<count;++i)
-									//		zis.getNextEntry();
 										InputStream fin = tar;
 										while((read=fin.read(data))!=-1&&running){
 											out.write(data, 0, read);
@@ -217,7 +205,7 @@ public class ExtractTarFile {
 									}
 								}
 							}else{
-								//EXTRACTING A DIRECTORY FROM ZIP ARCHIVE....
+								//EXTRACTING A DIRECTORY FROM TAR ARCHIVE....
 								String p = zFile.getPath();
 								if(p.startsWith("/"))
 									p = p.substring(1, p.length());
@@ -250,8 +238,8 @@ public class ExtractTarFile {
 										size =AppBackup.size(max, ctx);
 										handle.sendEmptyMessage(3);
 									
-										InputStream fin = tar;
-										while((read=fin.read(data))!=-1&&running){
+									//	InputStream fin = tar;
+										while((read=tar.read(data))!=-1&&running){
 											out.write(data, 0, read);
 											prog+=read;
 											name = AppBackup.status(prog, ctx);
@@ -259,7 +247,7 @@ public class ExtractTarFile {
 										}										
 										out.flush();
 										out.close();
-										fin.close();
+										//fin.close();
 									} catch (FileNotFoundException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
@@ -275,14 +263,8 @@ public class ExtractTarFile {
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+						errors = true;
 					}				
-					
-				/*	try {
-						zis.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
 					handle.sendEmptyMessage(2);
 				}
 			}
