@@ -16,7 +16,9 @@
 
 package org.anurag.file.quest;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -164,13 +166,15 @@ public class AdapterLoaders {
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_open);
 					ho.Name.setText(mContext.getString(R.string.open));
 				}else if(position == 2){
-					if(FileQuest.ZIP_ROOT || FileQuest.ZIP_SIMPLE ||FileQuest.RAR_ROOT||FileQuest.RAR_SIMPLE){
+					if(FileQuest.ZIP_ROOT || FileQuest.ZIP_SIMPLE ||FileQuest.RAR_ROOT||FileQuest.RAR_SIMPLE
+							||FileQuest.TAR_ROOT||FileQuest.TAR_SIMPLE){
 						ho.Name.setText(mContext.getString(R.string.extractto));
 					}else
 						ho.Name.setText(mContext.getString(R.string.copy));
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_copy);
 				}else if(position == 3){
-					if(FileQuest.ZIP_ROOT || FileQuest.ZIP_SIMPLE ||FileQuest.RAR_ROOT||FileQuest.RAR_SIMPLE){
+					if(FileQuest.ZIP_ROOT || FileQuest.ZIP_SIMPLE ||FileQuest.RAR_ROOT||FileQuest.RAR_SIMPLE
+							||FileQuest.TAR_ROOT||FileQuest.TAR_SIMPLE){
 						ho.Icon.setBackgroundResource(R.drawable.ic_launcher_copy);
 						ho.Name.setText(mContext.getString(R.string.extracthere));
 					}else{
