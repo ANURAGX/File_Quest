@@ -198,6 +198,9 @@ public class RootAdapter extends ArrayAdapter<File>{
 				}else if(Ext.equalsIgnoreCase(".tar")||Ext.equalsIgnoreCase(".TAR")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_tar));
 					h.fType.setText(context.getString(R.string.compr));
+				}else if(Ext.equalsIgnoreCase(".7z")||Ext.equalsIgnoreCase(".7Z")){
+					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_7zip));
+					h.fType.setText(context.getString(R.string.compr));
 				}else {
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_unknown));
 					h.fType.setText(context.getString(R.string.unknown));
