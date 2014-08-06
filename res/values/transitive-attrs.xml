@@ -16,7 +16,7 @@
             <enum name="rotatedown" value="10" />
             <enum name="accordion" value="11" />
         </attr>
-        <attr name="fadeEnabled" format="boolean" />
+        <attr name="fadeEnable" format="boolean" />
         <attr name="outlineEnabled" format="boolean" />
         <attr name="outlineColor" format="color|reference" />
     </declare-styleable>
