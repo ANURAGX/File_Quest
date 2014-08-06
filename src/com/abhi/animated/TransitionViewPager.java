@@ -57,7 +57,7 @@ public class TransitionViewPager extends ViewPager {
 		String[] transitions = getResources().getStringArray(R.array.effects);
 		setTransitionEffect(TransitionEffect.valueOf(transitions[effect]));
 		setFadeEnabled(ta.getBoolean(
-				R.styleable.TransitionViewPager_fadeEnabled, false));
+				R.styleable.TransitionViewPager_fadeEnable, false));
 		setOutlineEnabled(ta.getBoolean(
 				R.styleable.TransitionViewPager_outlineEnabled, false));
 		setOutlineColor(ta.getColor(
