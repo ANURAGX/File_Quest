@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.zip.ZipFile;
+
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
@@ -36,6 +37,8 @@ import org.anurag.compress.RarAdapter;
 import org.anurag.compress.RarFileProperties;
 import org.anurag.compress.RarManager;
 import org.anurag.compress.RarObj;
+import org.anurag.compress.SZipAdapter;
+import org.anurag.compress.SZipManager;
 import org.anurag.compress.TarAdapter;
 import org.anurag.compress.TarFileProperties;
 import org.anurag.compress.TarManager;
@@ -62,6 +65,7 @@ import org.ultimate.quickaction3D.ActionItem;
 import org.ultimate.quickaction3D.QuickAction;
 import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
 import org.ultimate.root.LinuxShell;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -115,11 +119,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.viewpagerindicator.TitlePageIndicator;
+
 import de.innosystec.unrar.Archive;
 import de.innosystec.unrar.exception.RarException;
 
@@ -4743,7 +4749,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						SFileManager.nStack.push("/ -> Tar");
 					}
 					setTarAdapter();
-				}						 
+				}else if(ACTION.equalsIgnoreCase("FQ_7Z_OPEN")){
+					try {
+						root.setAdapter(new SZipAdapter(mContext, new SZipManager(file2, "/", mContext).generateList()));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		};
 		IntentFilter filter = new IntentFilter("FQ_BACKUP");
@@ -4763,6 +4776,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		filter = new IntentFilter("FQ_RAR_OPEN");
 		this.registerReceiver(RECEIVER, filter);
 		filter = new IntentFilter("FQ_TAR_OPEN");
+		this.registerReceiver(RECEIVER, filter);
+		filter = new IntentFilter("FQ_7Z_OPEN");
 		this.registerReceiver(RECEIVER, filter);
 	}
 	

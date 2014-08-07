@@ -19,6 +19,71 @@
 
 package org.anurag.compress;
 
-public class SZipObj {
+import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
+import android.content.Context;
 
+/**
+ * 
+ * @author ANURAG
+ *
+ */
+public class SZipObj {
+	
+	String name,filepath,entryname;
+	SevenZArchiveEntry enrt;
+	Context ctx;
+	boolean isFile;
+	
+	public SZipObj(SevenZArchiveEntry entry , String nam , String path , Context ct) {
+		// TODO Auto-generated constructor stub
+		this.ctx = ct;
+		this.name = nam;
+		this.filepath = path;
+		this.enrt = entry;
+		this.entryname = entry.getName();
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getName(){
+		return this.name;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getPath(){
+		if(filepath.equalsIgnoreCase(""))
+			return this.name;
+		return this.filepath;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isFile(){
+		return this.isFile;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public SevenZArchiveEntry getEntry(){
+		return this.enrt;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getEntryName(){
+		return this.entryname;
+	}
+	
 }

@@ -117,6 +117,7 @@ public class OpenFileDialog {
 				showDialog = false;
 			}
 			
+			
 			dialog = new Dialog(mContext, R.style.custom_dialog_theme);
 			dialog.setCancelable(true);
 			dialog.setContentView(R.layout.launch_file);

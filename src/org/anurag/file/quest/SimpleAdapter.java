@@ -170,6 +170,9 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 				}else if(file.getName().endsWith(".tar")||file.getName().endsWith(".TAR")){
 					nHolder.FileType.setText(mContext.getString(R.string.compr));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_tar));
+				}else if(file.getName().endsWith(".7z")||file.getName().endsWith(".7Z")){
+					nHolder.FileType.setText(mContext.getString(R.string.compr));
+					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_7zip));
 				}
 				else if( getFileType(file) == "zip"){
 					nHolder.FileType.setText(mContext.getString(R.string.zip));
@@ -177,9 +180,6 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 				}else if( getFileType(file) == "video"){
 					nHolder.FileType.setText(mContext.getString(R.string.vids));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_video));
-				}else if( getFileType(file) == "compressed"){
-					nHolder.FileType.setText(mContext.getString(R.string.compr));
-					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_archive_operation));
 				}else if( getFileType(file) == "document"){
 					nHolder.FileType.setText(mContext.getString(R.string.document));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_ppt));
@@ -196,17 +196,11 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 				}
 			}
 		}
-		
-		
-		//new AppImageLoader(nHolder.FileIcon).execute(file.getPath());
 		return convertView;
 	}
 	
 	public static String getFileType(File f){
 		String Name = f.getName();
-		if(Name.endsWith("jpg")||Name.endsWith(".JPG")|| Name.endsWith(".png") || Name.endsWith(".PNG") || Name.endsWith(".gif") || Name.endsWith(".GIF")
-				|| Name.endsWith(".JPEG") || Name.endsWith(".jpeg") ||Name.endsWith(".bmp") ||Name.endsWith(".BMP"))
-			return "image";
 		if(f.isDirectory())
 			return "folder";
 		else if(Name.endsWith(".zip") || Name.endsWith(".ZIP"))
@@ -214,10 +208,6 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 		else if( Name.endsWith("mhtml")||Name.endsWith(".MHTML")||  Name.endsWith(".HTM") || Name.endsWith(".htm") 
 				||Name.endsWith(".html") || Name.endsWith(".HTML"))
 			return "web";
-		else if(Name.endsWith(".7z") || Name.endsWith(".7Z"))
-			return "compressed";
-		else if(Name.endsWith(".apk") || Name.endsWith(".APK"))
-			return "apk";
 		else if(Name.endsWith(".mp3") || Name.endsWith(".MP3") || Name.endsWith(".amr") || Name.endsWith(".AMR")
 				|| Name.endsWith(".ogg") || Name.endsWith(".OGG")||Name.endsWith(".m4a")||Name.endsWith(".M4A"))
 			return "song";
@@ -225,7 +215,8 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 				|| Name.endsWith(".DOCX") || Name.endsWith(".docx") || Name.endsWith(".ppt") || Name.endsWith(".PPT"))
 			return "document";
 		else if(Name.endsWith(".mp4") || Name.endsWith(".MP4") || Name.endsWith(".avi") ||Name.endsWith(".AVI")
-				|| Name.endsWith(".FLV") || Name.endsWith(".flv") || Name.endsWith(".3GP") || Name.endsWith(".3gp"))
+				|| Name.endsWith(".FLV") || Name.endsWith(".flv") || Name.endsWith(".3GP") || Name.endsWith(".3gp")
+				|| Name.endsWith(".MKV") || Name.endsWith(".mkv"))
 			return "video";		
 		else if(Name.endsWith(".default")||Name.endsWith(".prop")||Name.endsWith(".rc")||Name.endsWith(".sh")||Name.endsWith("init"))
 			return "sh";
