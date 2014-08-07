@@ -1,0 +1,20 @@
+
+<com.rey.slidelayout.SlideLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/SlideLayoutStyleDefault"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:sl_contentChild="1"
+    app:sl_leftMenuChild="0"
+    >
+    
+    <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Left Menu"/>
+    
+    <include 
+        layout="@layout/fargment_ui"/>
+    
+</com.rey.slidelayout.SlideLayout>
