@@ -124,6 +124,8 @@ import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.rey.slidelayout.SlideLayout;
+
 import com.viewpagerindicator.TitlePageIndicator;
 
 import de.innosystec.unrar.Archive;
@@ -141,7 +143,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
 	private static SectionsPagerAdapter mSectionsPagerAdapter;
-
+	SlideLayout sl_activity;
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
@@ -335,7 +337,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(size);
 
-		setContentView(R.layout.fargment_ui);
+		setContentView(R.layout.new_ui);
 
 		EMPTY = new ArrayList<String>();
 		EMPTY_APPS = new ArrayList<String>();
@@ -567,7 +569,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		}
 
 		super.onCreate(savedInstanceState);
-
+		
 	}
 
 	@Override
@@ -5299,4 +5301,5 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				new ExtractTarFile(mContext, tFileRoot, size.x*8/9, p, file2, 1);
 		}
 	}
+		
 }
