@@ -26,6 +26,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.zip.GZIPInputStream;
+
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.OpenFileDialog;
@@ -33,6 +35,7 @@ import org.anurag.file.quest.R;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.ultimate.menuItems.BluetoothChooser;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
@@ -96,7 +99,10 @@ public class ExtractTarFile {
 		}
 		
 		try {
-			tar = new TarArchiveInputStream(new BufferedInputStream(new FileInputStream(file)));
+			if(file.getName().endsWith(".tar.gz"))
+				tar = new TarArchiveInputStream(new GZIPInputStream(new FileInputStream(file)));
+			else
+				tar = new TarArchiveInputStream(new BufferedInputStream(new FileInputStream(file)));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
