@@ -122,14 +122,13 @@ import android.widget.ViewFlipper;
 
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
+import com.github.junrar.Archive;
+import com.github.junrar.exception.RarException;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.rey.slidelayout.SlideLayout;
-
 import com.viewpagerindicator.TitlePageIndicator;
 
-import de.innosystec.unrar.Archive;
-import de.innosystec.unrar.exception.RarException;
 
 @SuppressLint({ "HandlerLeak", "SdCardPath" })
 public class FileQuest extends FragmentActivity implements OnClickListener, QuickAction.OnActionItemClickListener {
@@ -143,7 +142,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
 	private static SectionsPagerAdapter mSectionsPagerAdapter;
-	SlideLayout sl_activity;
+	private SlideLayout left_menu;
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
@@ -341,8 +340,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 		EMPTY = new ArrayList<String>();
 		EMPTY_APPS = new ArrayList<String>();
-		// searchList = new ArrayList<File>();
-		// mediaFileList = new ArrayList<File>();
+		
 
 		editBox = (EditText) findViewById(R.id.editBox);
 
@@ -5274,7 +5272,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	
 	/**
 	 * 
-	 * @param p
+	 * @param p	
 	 */
 	private void extractTo(String p){
 		if(ZIP_ROOT||ZIP_SIMPLE){//EXTRACTING FILE FROM ZIP ARCHIVE...
@@ -5301,5 +5299,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				new ExtractTarFile(mContext, tFileRoot, size.x*8/9, p, file2, 1);
 		}
 	}
+	
+	private void initLeftMenu(){
+		left_menu = (SlideLayout)findViewById(R.id.slide_left_menu);
 		
+	}		
 }
