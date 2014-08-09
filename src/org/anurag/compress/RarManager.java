@@ -23,10 +23,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
 import android.content.Context;
-import de.innosystec.unrar.Archive;
-import de.innosystec.unrar.rarfile.FileHeader;
+import com.github.junrar.Archive;
+import com.github.junrar.rarfile.FileHeader;
+
 
 /**
  * 
