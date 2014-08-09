@@ -173,8 +173,10 @@ public class SimpleAdapter extends ArrayAdapter<File>{
 				}else if(file.getName().endsWith(".7z")||file.getName().endsWith(".7Z")){
 					nHolder.FileType.setText(mContext.getString(R.string.compr));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_7zip));
-				}
-				else if( getFileType(file) == "zip"){
+				}else if(file.getName().endsWith(".gz")||file.getName().endsWith(".GZ")){
+					nHolder.FileType.setText(mContext.getString(R.string.compr));
+					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_gzip));
+				}else if( getFileType(file) == "zip"){
 					nHolder.FileType.setText(mContext.getString(R.string.zip));
 					nHolder.FileIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_zip_it));
 				}else if( getFileType(file) == "video"){
