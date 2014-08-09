@@ -1,9 +1,12 @@
 /**
- * Copyright(c) 2014 ANURAG 
+ * Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
+ *      
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,6 +16,7 @@
  *                             anurag.dev1512@gmail.com
  *
  */
+
 
 package org.anurag.compress;
 
@@ -171,7 +175,8 @@ public class ZipObj {
 			return ctx.getString(R.string.web);
 		}			
 		else if(Name.endsWith(".tar") || Name.endsWith(".TAR") || Name.endsWith(".rar") 
-				|| Name.endsWith("RAR") || Name.endsWith(".7z") || Name.endsWith(".7Z")){
+				|| Name.endsWith("RAR") || Name.endsWith(".7z") || Name.endsWith(".7Z")
+				||Name.endsWith(".gz") || Name.endsWith(".GZ")){
 			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_rar);
 			return ctx.getString(R.string.compr);
 		}	
@@ -194,7 +199,8 @@ public class ZipObj {
 			return ctx.getString(R.string.text);
 		}	
 		else if(Name.endsWith(".mp4") || Name.endsWith(".MP4") || Name.endsWith(".avi") ||Name.endsWith(".AVI")
-				|| Name.endsWith(".FLV") || Name.endsWith(".flv") || Name.endsWith(".3GP") || Name.endsWith(".3gp")){
+				|| Name.endsWith(".FLV") || Name.endsWith(".flv") || Name.endsWith(".3GP") || Name.endsWith(".3gp")
+				||Name.endsWith(".mkv") || Name.endsWith(".MKV")){
 			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_video);
 			return ctx.getString(R.string.vids);		
 		}	

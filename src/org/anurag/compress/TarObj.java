@@ -184,8 +184,9 @@ public class TarObj {
 			return ctx.getString(R.string.web);
 		}			
 		else if(Name.endsWith(".tar") || Name.endsWith(".TAR") || Name.endsWith(".rar") 
-				|| Name.endsWith("RAR") || Name.endsWith(".7z") || Name.endsWith(".7Z")){
-			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_rar);
+				|| Name.endsWith("RAR") || Name.endsWith(".7z") || Name.endsWith(".7Z")||
+				Name.endsWith(".GZ") || Name.endsWith(".gz")){
+			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_archive_operation);
 			return ctx.getString(R.string.compr);
 		}	
 		else if(Name.endsWith(".apk") || Name.endsWith(".APK")){
@@ -207,7 +208,8 @@ public class TarObj {
 			return ctx.getString(R.string.text);
 		}	
 		else if(Name.endsWith(".mp4") || Name.endsWith(".MP4") || Name.endsWith(".avi") ||Name.endsWith(".AVI")
-				|| Name.endsWith(".FLV") || Name.endsWith(".flv") || Name.endsWith(".3GP") || Name.endsWith(".3gp")){
+				|| Name.endsWith(".FLV") || Name.endsWith(".flv") || Name.endsWith(".3GP") || Name.endsWith(".3gp")
+				||Name.endsWith(".mkv") || Name.endsWith(".MKV")){
 			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_video);
 			return ctx.getString(R.string.vids);		
 		}	
