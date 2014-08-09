@@ -22,13 +22,12 @@ package org.anurag.compress;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
+import java.util.zip.GZIPInputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 
@@ -47,9 +46,12 @@ public class TarManager {
 	String path;
 	TarArchiveInputStream tar;
 	List<TarArchiveEntry> ls;
-	public TarManager(File file,String pathToShow , Context ct) throws FileNotFoundException {
+	public TarManager(File file,String pathToShow , Context ct) throws IOException {
 		// TODO Auto-generated constructor stub
-		tar = new TarArchiveInputStream(new BufferedInputStream(new FileInputStream(file)));
+		if(file.getName().endsWith(".tar.gz"))
+			tar = new TarArchiveInputStream(new GZIPInputStream(new FileInputStream(file)));
+		else
+			tar = new TarArchiveInputStream(new BufferedInputStream(new FileInputStream(file)));
 		path = pathToShow;
 		ctx = ct;
 	}
@@ -109,6 +111,7 @@ public class TarManager {
 				}
 			}
 		}	
+		tar.close();
 		sort();
 		return list;
 	}
