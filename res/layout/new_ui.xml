@@ -28,11 +28,15 @@
     app:sl_leftMenuChild="0"
     >
     
-    <TextView 
-        	android:background="@drawable/popup_black"
-            android:layout_width="match_parent"
+   <LinearLayout
+       android:background="@android:color/background_dark" 
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+        <TextView 
+        	android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Left Menu"/>
+   </LinearLayout> 
     
     <include 
         layout="@layout/fargment_ui"/>
