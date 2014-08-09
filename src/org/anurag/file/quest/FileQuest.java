@@ -554,7 +554,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 		//LOADS THE SD CARD STATUS...
 		new load().execute();
-
+		initLeftMenu();
 		/**
 		 * CHECKS WHETHER APP IS UPDATED OR NOT IF UPDATED THEN DISPLAYS THE NEW
 		 * ADDED FEATURES
@@ -5043,12 +5043,22 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 *THIS FUNCTION SETS THE ADAPTER WHEN ZIP FILE IS OPERATED.... 
 	 */
 	private static void setZipAdapter(){
+		final Dialog progDial = new Dialog(mContext, R.style.custom_dialog_theme);
+		progDial.setContentView(R.layout.p_dialog);
+		progDial.setCancelable(false);
+		progDial.getWindow().getAttributes().width = size.x*8/9;
+		WebView web = (WebView)progDial.findViewById(R.id.p_Web_View);
+		web.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
+		web.setEnabled(false);
+		progDial.show();
 		final Handler handle = new Handler(){
 			@Override
 			public void handleMessage(Message msg){
 				if(msg.what==0 && (ZIP_ROOT||ZIP_SIMPLE)){
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
+					if(progDial.isShowing())
+						progDial.dismiss();
 				}else{
 					/**
 					 * ZIP ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
@@ -5111,12 +5121,22 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * AT THE PROVIDED PATH....
 	 */
 	private static void setRarAdapter(){
+		final Dialog progDial = new Dialog(mContext, R.style.custom_dialog_theme);
+		progDial.setContentView(R.layout.p_dialog);
+		progDial.setCancelable(false);
+		progDial.getWindow().getAttributes().width = size.x*8/9;
+		WebView web = (WebView)progDial.findViewById(R.id.p_Web_View);
+		web.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
+		web.setEnabled(false);
+		progDial.show();
 		final Handler handle = new Handler(){
 			@Override
 			public void handleMessage(Message msg){
 				if(msg.what==0 && (RAR_ROOT||RAR_SIMPLE)){
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
+					if(progDial.isShowing())
+						progDial.dismiss();
 				}else{
 					/**
 					 * RAR ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
@@ -5189,12 +5209,22 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * AT THE PROVIDED PATH....
 	 */
 	private static void setTarAdapter(){
+		final Dialog progDial = new Dialog(mContext, R.style.custom_dialog_theme);
+		progDial.setContentView(R.layout.p_dialog);
+		progDial.setCancelable(false);
+		progDial.getWindow().getAttributes().width = size.x*8/9;
+		WebView web = (WebView)progDial.findViewById(R.id.p_Web_View);
+		web.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
+		web.setEnabled(false);
+		progDial.show();
 		final Handler handle = new Handler(){
 			@Override
 			public void handleMessage(Message msg){
 				if(msg.what==0 && (TAR_ROOT||TAR_SIMPLE)){
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
+					if(progDial.isShowing())
+						progDial.dismiss();
 				}else{
 					/**
 					 * RAR ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
@@ -5302,6 +5332,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	
 	private void initLeftMenu(){
 		left_menu = (SlideLayout)findViewById(R.id.slide_left_menu);
-		
+		left_menu.setAlpha(1.0f);
 	}		
 }
