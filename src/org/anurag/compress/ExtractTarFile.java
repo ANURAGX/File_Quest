@@ -125,6 +125,12 @@ public class ExtractTarFile {
 							progress.setProgress((int)prog);
 							break;
 					case 2:
+							try {
+								tar.close();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							if(running){
 								dialog.dismiss();
 							    if(mode==0){
