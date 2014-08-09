@@ -17,6 +17,7 @@
  
  -->
 <com.rey.slidelayout.SlideLayout
+    android:background="@android:color/background_dark"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/SlideLayoutStyleDefault"
@@ -28,6 +29,7 @@
     >
     
     <TextView 
+        	android:background="@drawable/popup_black"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Left Menu"/>
