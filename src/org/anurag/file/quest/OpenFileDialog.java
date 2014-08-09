@@ -110,7 +110,8 @@ public class OpenFileDialog {
 			/**
 			 * IF A TAR FILE IS SELECTED TO OPEN...
 			 */
-			else if(file.getName().endsWith(".tar")||file.getName().endsWith(".TAR")){
+			else if(file.getName().endsWith(".tar")||file.getName().endsWith(".TAR")
+					||file.getName().endsWith(".tar.gz")||file.getName().endsWith(".TAR.GZ")){
 				Intent intent = new Intent("FQ_TAR_OPEN");
 				intent.putExtra("open_path", file.getAbsolutePath());
 				mContext.sendBroadcast(intent);
