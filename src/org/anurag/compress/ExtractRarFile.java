@@ -20,12 +20,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
 import org.ultimate.menuItems.BluetoothChooser;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
@@ -37,9 +40,13 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import de.innosystec.unrar.Archive;
-import de.innosystec.unrar.exception.RarException;
-import de.innosystec.unrar.rarfile.FileHeader;
+
+import com.github.junrar.Archive;
+import com.github.junrar.exception.RarException;
+import com.github.junrar.rarfile.FileHeader;
+import com.github.junrar.unpack.ComprDataIO;
+import com.github.junrar.unpack.Unpack;
+
 
 /**
  * 
@@ -104,20 +111,12 @@ public class ExtractRarFile {
 			zList = null;
 		}
 		
-	/*	try {
-			zis = new ZipInputStream(new FileInputStream(file));
-		}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			zis = null;
-		}*/
-		
 		final Handler handle = new Handler(){
 			@Override
 			public void handleMessage(Message msg){
 				switch(msg.what){
 					case 0:
-						
+							prog = 0;
 							progress.setProgress(0);
 							cfile.setText(ctx.getString(R.string.extractingfile)+" "+name);
 							break;
@@ -167,11 +166,7 @@ public class ExtractRarFile {
 						DEST = Environment.getExternalStorageDirectory()+"/Android/data/org.anurag.file.quest";
 						new File(DEST).mkdirs();
 					}
-					
-					
-					//ZipEntry ze;
 					for(FileHeader ze:zList){
-					//	++count;
 						handle.sendEmptyMessage(4);
 						if(zFile.isFile()){
 							//EXTRACTING A SINGLE FILE FROM AN ARCHIVE....
@@ -195,18 +190,19 @@ public class ExtractRarFile {
 									max = ze.getFullPackSize();
 									size =AppBackup.size(max, ctx);
 									handle.sendEmptyMessage(3);
-								//	for(;i<count;++i)
-								//		zis.getNextEntry();
-									new Archive(file).extractFile(ze, out);
-								/*	while((read=fin.read(data))!=-1&&running){
+								
+									InputStream in = new Archive(file).getInputStream(ze);
+									while((read=in.read(data,0,Constants.BUFFER))!=-1 && running){
 										out.write(data, 0, read);
 										prog+=read;
 										name = AppBackup.status(prog, ctx);
 										handle.sendEmptyMessage(1);
-									}					*/					
+										if(read==0||read==-1)
+											break;
+									}			
+									in.close();
 									out.flush();
 									out.close();
-								//	fin.close();
 									break;
 								} catch (FileNotFoundException e) {
 									// TODO Auto-generated catch block
@@ -215,7 +211,7 @@ public class ExtractRarFile {
 								} catch(IOException e){
 									errors = true;
 								}catch(RarException e){
-									
+									errors = true;
 								}
 							}
 						}else{
@@ -279,13 +275,6 @@ public class ExtractRarFile {
 							}
 						}
 					}				
-					
-				/*	try {
-						zis.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
 					handle.sendEmptyMessage(2);
 				}
 			}
