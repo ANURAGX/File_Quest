@@ -70,6 +70,8 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -81,6 +83,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -5211,7 +5214,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static void setTarAdapter(){
 		final Dialog progDial = new Dialog(mContext, R.style.custom_dialog_theme);
 		progDial.setContentView(R.layout.p_dialog);
-		progDial.setCancelable(false);
 		progDial.getWindow().getAttributes().width = size.x*8/9;
 		WebView web = (WebView)progDial.findViewById(R.id.p_Web_View);
 		web.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
@@ -5258,7 +5260,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							fi = file0;
 						}
 						tListRoot = new TarManager(fi, tarPathRoot, mContext).generateList();
-						handle.sendEmptyMessage(0);
+						if(progDial.isShowing())
+							handle.sendEmptyMessage(0);
+						else{
+							TAR_ROOT = false;
+							archive_root = false;
+						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -5269,7 +5276,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}else if(CURRENT_ITEM==1){
 					try{
 						tListSimple = new TarManager(file, tarPathSimple, mContext).generateList();
-						handle.sendEmptyMessage(0);
+						if(progDial.isShowing())
+							handle.sendEmptyMessage(0);
+						else{
+							TAR_SIMPLE = false;
+							archive_simple = false;
+						}
 					}catch(IOException e){
 						TAR_SIMPLE = false;
 						archive_simple = false;

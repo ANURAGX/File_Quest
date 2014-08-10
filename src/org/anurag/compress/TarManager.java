@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.zip.GZIPInputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-
+import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import android.content.Context;
 
 
@@ -49,7 +49,9 @@ public class TarManager {
 	public TarManager(File file,String pathToShow , Context ct) throws IOException {
 		// TODO Auto-generated constructor stub
 		if(file.getName().endsWith(".tar.gz"))
-			tar = new TarArchiveInputStream(new GZIPInputStream(new FileInputStream(file)));
+			tar = new TarArchiveInputStream(new GZIPInputStream(new BufferedInputStream(new FileInputStream(file))));
+		else if(file.getName().endsWith(".tar.bz2")||file.getName().endsWith(".TAR.BZ2"))
+			tar = new TarArchiveInputStream(new BZip2CompressorInputStream(new BufferedInputStream(new FileInputStream(file))));
 		else
 			tar = new TarArchiveInputStream(new BufferedInputStream(new FileInputStream(file)));
 		path = pathToShow;
