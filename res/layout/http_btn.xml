@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout 
+    android:visibility="gone"
      android:onClick="onClick"
      android:gravity="center" 
      android:id="@+id/http_btn"

@@ -8,7 +8,7 @@
     android:orientation="vertical" >
     
     <LinearLayout
-        
+        android:gravity="center_horizontal"
         android:orientation="horizontal" 
         android:layout_width="match_parent"
         android:layout_height="64dp">
@@ -27,4 +27,10 @@
             android:text="@string/manage"/>
     </LinearLayout>
 
+    <com.tjerkw.slideexpandable.library.SlideExpandableListView
+        android:id="@+id/actionSlideExpandableListView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </com.tjerkw.slideexpandable.library.SlideExpandableListView>
+    
 </LinearLayout>

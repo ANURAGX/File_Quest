@@ -23,6 +23,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
+import android.os.Handler;
+
 import com.github.junrar.exception.RarException;
 import com.github.junrar.unpack.decode.Compress;
 import com.github.junrar.unpack.ppm.BlockTypes;
@@ -79,6 +81,8 @@ public final class Unpack extends Unpack20 {
 
     private int lowDistRepCount;
 
+    private Handler handler;
+    
     public static int[] DBitLengthCounts = { 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
 	    2, 2, 2, 2, 2, 14, 0, 12 };
 
@@ -90,6 +94,17 @@ public final class Unpack extends Unpack20 {
 	unpAllBuf = false;
 	unpSomeRead = false;
     }
+    
+    public Unpack(ComprDataIO DataIO , Handler handle) {
+		// TODO Auto-generated constructor stub
+    	unpIO = DataIO;
+    	window = null;
+    	externalWindow = false;
+    	suspended = false;
+    	unpAllBuf = false;
+    	unpSomeRead = false;
+    	this.handler = handle;
+	}
 
     public void init(byte[] window) {
 	if (window == null) {

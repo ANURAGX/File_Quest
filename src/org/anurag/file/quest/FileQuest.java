@@ -339,7 +339,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(size);
 
-		setContentView(R.layout.new_ui);
+		setContentView(R.layout.fargment_ui);
 
 		EMPTY = new ArrayList<String>();
 		EMPTY_APPS = new ArrayList<String>();
@@ -5344,6 +5344,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	
 	private void initLeftMenu(){
 		left_menu = (SlideLayout)findViewById(R.id.slide_left_menu);
-		left_menu.setAlpha(1.0f);
+		
 	}		
 }
