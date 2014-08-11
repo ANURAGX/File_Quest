@@ -22,9 +22,7 @@ package org.anurag.file.quest;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.zip.ZipFile;
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
@@ -121,9 +119,6 @@ import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.github.junrar.Archive;
 import com.github.junrar.exception.RarException;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
-import com.rey.slidelayout.SlideLayout;
 import com.viewpagerindicator.TitlePageIndicator;
 
 
@@ -198,9 +193,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ListView simple;
 	private static ListView3D LIST_VIEW_3D;
 	private static LinearLayout FILE_GALLEY;
-
 	static ArrayList<File> COPY_FILES;
-
 	private static boolean MULTIPLE_COPY;
 	private static boolean MULTIPLE_CUT;
 	private static boolean MULTIPLE_COPY_GALLERY;
@@ -211,9 +204,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private String sav, sto;
 	public static ArrayList<String> EMPTY;
 	private static ArrayList<String> EMPTY_APPS;
-
 	private static boolean MULTI_SELECT_APPS;
-
 	private static boolean ENABLE_ON_LAUNCH;
 	private static String INTERNAL_PATH_ONE;
 	private static String INTERNAL_PATH_TWO;
@@ -271,11 +262,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	static boolean error;
 
 	boolean added = false;
-	String id;
 	static int rSize = 0;
 	static int sSize = 0;
 	static int mSize = 0;
-	InterstitialAd ad;
+	
 
 	@SuppressWarnings("static-access")
 	@SuppressLint({ "NewApi", "SdCardPath" })
@@ -430,35 +420,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			}
 		}
 
-		final Handler handle = new Handler(){
-			@Override
-			public void handleMessage(Message msg){
-				if(msg.what==0){
-					ad = new InterstitialAd(FileQuest.this);
-					ad.setAdUnitId(id);
-					ad.loadAd(new AdRequest.Builder().build());
-				}
-			}
-		};
 		
-		Thread thr = new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				try {
-					Scanner sc = new Scanner(new URL("https://dl.dropboxusercontent.com/s/q645iprj62e97to/%20ADMOB_ONLINE_%20ID.txt?dl=1").openStream());
-					if(sc!=null)
-						id = sc.next();
-					if(id!=null)
-						handle.sendEmptyMessage(0);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-		thr.start();
 		
 		file = new File("/");
 		file2 = new File(PATH);
@@ -2823,12 +2785,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						mUseBackKey = true;
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
-						try{
-							if(ad.isLoaded())
-								ad.show();
-						}catch(Exception e){
-							
-						}
 						FileQuest.this.finish();
 					//	android.os.Process.killProcess(android.os.Process.myPid());
 					}
@@ -2857,12 +2813,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
-						try{
-							if(ad.isLoaded())
-								ad.show();
-						}catch(Exception e){
-							
-						}
 						FileQuest.this.finish();
 						//android.os.Process.killProcess(android.os.Process.myPid());
 					}
@@ -3005,12 +2955,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						mUseBackKey = true;
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
-						try{
-							if(ad.isLoaded())
-								ad.show();
-						}catch(Exception e){
-							
-						}
 						FileQuest.this.finish();
 						//android.os.Process.killProcess(android.os.Process.myPid());
 					}
@@ -3111,12 +3055,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						mUseBackKey = true;
 					} else if (mUseBackKey) {
 						mUseBackKey = false;
-						try{
-							if(ad.isLoaded())
-								ad.show();
-						}catch(Exception e){
-							
-						}
 						FileQuest.this.finish();
 						//android.os.Process.killProcess(android.os.Process.myPid());
 					}
