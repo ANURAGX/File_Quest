@@ -1,9 +1,12 @@
 /**
- * Copyright(c) 2013 ANURAG 
+ * Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
+ *      
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -203,6 +206,8 @@ public class Utils {
 	 */
 	void makelist(File file){
 		if(file.isFile()){
+			identifyType(file);
+			/*
 			if(SimpleAdapter.getFileType(file)==null){
 				mis.add(file);
 				missize+=file.length();
@@ -251,11 +256,80 @@ public class Utils {
 				dsize = size(docsize);
 				size = doc.size();
 				handle.sendEmptyMessage(4);
-			}	
+			}	*/
 			
 		}else if(file.isDirectory()){
 			for(File f:file.listFiles())
 				makelist(f);
 		}
+	}
+	
+	/**
+	 * 
+	 * @param file
+	 * @return
+	 */
+	private void identifyType(File file){
+		String name = file.getName();
+		if(name.endsWith(".zip")||name.endsWith(".tar")||name.endsWith(".rar")||name.endsWith(".7z")
+				||name.endsWith(".tar.gz")||name.endsWith(".tar.bz2")||name.endsWith(".ZIP")||name.endsWith(".TAR")||
+				name.endsWith(".RAR")||name.endsWith(".7Z")||name.endsWith(".TAR.GZ")||name.endsWith(".TAR.BZ2")){
+			zip.add(file);
+			zipsize+=file.length();
+			zsize = size(zipsize);
+			size = zip.size();
+			handle.sendEmptyMessage(7);
+		}
+		else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
+				||name.endsWith(".amr")||name.endsWith(".MP3")||name.endsWith(".OGG")||name.endsWith(".M4A")||
+				name.endsWith(".WAV")||name.endsWith(".AMR")){
+			music.add(file);
+			musicsize+=file.length();
+			msize = size(musicsize);
+			size = music.size();
+			handle.sendEmptyMessage(2);
+		}
+		else if(name.endsWith(".apk")||name.endsWith(".APK")){
+			apps.add(file);
+			apksize+=file.length();
+			asize = size(apksize);
+			size = apps.size();
+			handle.sendEmptyMessage(3);
+		}		
+		else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
+				||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
+				||name.endsWith(".MKV")){
+			vids.add(file);
+			vidsize+=file.length();
+			vsize = size(vidsize);
+			size = vids.size();
+			handle.sendEmptyMessage(6);
+		}	
+		else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
+				||name.endsWith(".png")||name.endsWith(".BMP")||name.endsWith(".GIF")||name.endsWith(".JPEG")||name.endsWith(".JPG")
+				||name.endsWith(".PNG")){
+			img.add(file);
+			imgsize+=file.length();
+			psize = size(imgsize);
+			size = img.size();
+			handle.sendEmptyMessage(5);
+		}
+		else if(name.endsWith(".txt")||name.endsWith(".log")||name.endsWith(".ini")||name.endsWith(".doc")
+				||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".TXT")||name.endsWith(".LOG")||name.endsWith(".INI")||name.endsWith(".DOC")
+				||name.endsWith(".PPT")||name.endsWith(".DOCX")){
+			doc.add(file);
+			docsize+=file.length();
+			dsize = size(docsize);
+			size = doc.size();
+			handle.sendEmptyMessage(4);
+		}
+		else{
+			mis.add(file);
+			missize+=file.length();
+			misize = size(missize);
+			size = mis.size();
+			handle.sendEmptyMessage(8);
+		}
+		
 	}
 }
