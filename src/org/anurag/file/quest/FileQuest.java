@@ -2506,10 +2506,25 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									setAdapter(CURRENT_ITEM);
 									break;
 								case 1300:
-									if (CURRENT_ITEM == 1) {
-										new FileProperties(mContext,size.x *8/9, file);
+									//getting the current properties for opened path.....
+									if (CURRENT_ITEM == 1){
+										if(ZIP_SIMPLE && zFileSimple !=null)
+											new ArchiveEntryProperties(mContext, zFileSimple, size.x*8/9);
+										else if(TAR_SIMPLE && tFileSimple !=null)
+											new TarFileProperties(mContext, tFileSimple, size.x*8/9);
+										else if(RAR_SIMPLE && rFileSimple !=null)
+											new RarFileProperties(mContext, rFileSimple, size.x*8/9);
+										else
+											new FileProperties(mContext,size.x *8/9, file);
 									} else if (CURRENT_ITEM == 2) {
-										new FileProperties(mContext,size.x*8/9, file2);
+										if(ZIP_ROOT && zFileRoot != null)
+											new ArchiveEntryProperties(mContext, zFileRoot, size.x*8/9);
+										else if(TAR_ROOT && tFileRoot!=null)
+											new TarFileProperties(mContext, tFileRoot, size.x*8/9);
+										else if(RAR_ROOT && rFileRoot !=null)
+											new RarFileProperties(mContext, rFileRoot, size.x*8/9);
+										else
+											new FileProperties(mContext,size.x*8/9, file2);
 									}
 									break;
 								case 1400:
@@ -5272,7 +5287,5 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			}else if(CURRENT_ITEM == 2)
 				new ExtractTarFile(mContext, tFileRoot, size.x*8/9, p, file2, 1);
 		}
-	}
-	
-		
+	}		
 }
