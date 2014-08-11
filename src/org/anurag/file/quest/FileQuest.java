@@ -26,7 +26,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.zip.ZipFile;
-
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
@@ -65,13 +64,10 @@ import org.ultimate.quickaction3D.ActionItem;
 import org.ultimate.quickaction3D.QuickAction;
 import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
 import org.ultimate.root.LinuxShell;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -83,7 +79,6 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -122,7 +117,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.github.junrar.Archive;
@@ -145,7 +139,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
 	private static SectionsPagerAdapter mSectionsPagerAdapter;
-	private SlideLayout left_menu;
+	
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
@@ -557,7 +551,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 		//LOADS THE SD CARD STATUS...
 		new load().execute();
-		initLeftMenu();
+		
 		/**
 		 * CHECKS WHETHER APP IS UPDATED OR NOT IF UPDATED THEN DISPLAYS THE NEW
 		 * ADDED FEATURES
@@ -5342,8 +5336,5 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		}
 	}
 	
-	private void initLeftMenu(){
-		left_menu = (SlideLayout)findViewById(R.id.slide_left_menu);
 		
-	}		
 }
