@@ -210,7 +210,7 @@
     <string name="jmpmusfo">Jump to music folder</string>
     <string name="jmpvidfo">Jump to video folder</string>
     <string name="prop">Properties</string>
-    <string name="selecteddefaultapp">Selected defaul apps</string>
+    <string name="selecteddefaultapp">Selected default apps</string>
     <string name="backupuserapp">Backup user apps</string>
     <string name="backupsystemapp">Backup system apps</string>
     <string name="backupboth">Backup both of them</string>
