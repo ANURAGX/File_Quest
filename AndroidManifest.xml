@@ -21,7 +21,7 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.anurag.file.quest"
-    android:versionCode="025"
+    android:versionCode="030"
     android:installLocation="auto"
     android:versionName="@string/version" >
     

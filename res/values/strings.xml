@@ -19,9 +19,9 @@
 <resources>
 
     <!--APP MANIFEST RELATED STRINGS.... -->
-	<string name="version">0.2.5</string>
+	<string name="version">0.3.0</string>
     <string name="app_name">File Quest</string>
-    <string name="versioncode">025</string>
+    <string name="versioncode">030</string>
     
    
     
