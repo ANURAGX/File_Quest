@@ -101,12 +101,12 @@ public class OpenFileDialog {
 			/**
 			 * IF A RAR FILE IS SELECTED TO OPEN 
 			 */
-		/*	else if(file.getName().endsWith(".rar")||file.getName().endsWith(".RAR")){
+			else if(file.getName().endsWith(".rar")||file.getName().endsWith(".RAR")){
 				Intent intent = new Intent("FQ_RAR_OPEN");
 				intent.putExtra("open_path", file.getAbsolutePath());
 				mContext.sendBroadcast(intent);
 				showDialog = false;
-			}*/
+			}
 			/**
 			 * IF A TAR FILE IS SELECTED TO OPEN...
 			 */
