@@ -61,7 +61,7 @@ public class MultipleCopyDialog {
 	static String status;
 	ProgressBar progress;
 	static Context mContext;
-	static int BUFFER = 256;
+	//static int BUFFER = 256;
 	Dialog dialog;
 	ArrayList<File> list;
 	static long si = 0;
@@ -86,7 +86,7 @@ public class MultipleCopyDialog {
 		DEST = dest;
 		command = comm;
 		si = 0;
-		BUFFER = 256;
+	//	BUFFER = 256;
 		list = obj;
 		running = true;
 		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
@@ -204,7 +204,7 @@ public class MultipleCopyDialog {
 	public static int copyToDirectory(String old, String newDir) {
 		File old_file = new File(old);
 		File temp_dir = new File(newDir);
-		byte[] data = new byte[BUFFER];
+		byte[] data = new byte[Constants.BUFFER];
 		int read = 0;
 
 		if (old_file.isFile() && temp_dir.isDirectory() && temp_dir.canWrite()) {
@@ -236,7 +236,7 @@ public class MultipleCopyDialog {
 				handle.sendEmptyMessage(2);
 				si = 0;
 				handle.sendEmptyMessage(4);
-				while ((read = i_stream.read(data, 0, BUFFER)) != -1 && running){
+				while ((read = i_stream.read(data, 0, Constants.BUFFER)) != -1 && running){
 					o_stream.write(data, 0, read);
 					si=si+read;
 					status = status(si);
