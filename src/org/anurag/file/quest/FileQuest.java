@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.zip.ZipFile;
+
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
@@ -121,6 +122,7 @@ import com.github.junrar.Archive;
 import com.github.junrar.exception.RarException;
 import com.rey.slidelayout.SlideLayout;
 import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
+import com.twotoasters.jazzylistview.JazzyHelper;
 import com.viewpagerindicator.TitlePageIndicator;
 
 
@@ -842,9 +844,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				if (elementInFocus) {
 					LIST_VIEW_3D.setVisibility(View.VISIBLE);
 					FILE_GALLEY.setVisibility(View.GONE);
-					// load_FIle_Gallery(fPos, mContext);
 					LIST_VIEW_3D.setAdapter(element);
-					//LIST_VIEW_3D.setDynamics(new SimpleDynamics(0.7f, 0.6f));
 				} else if (!elementInFocus) {
 					LIST_VIEW_3D.setVisibility(View.GONE);
 					FILE_GALLEY.setVisibility(View.VISIBLE);
@@ -861,10 +861,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View v = inflater.inflate(R.layout.custom_list_view, container,false);
 			LIST_VIEW_3D = (ListView) v.findViewById(R.id.customListView);
-			// LIST_VIEW_3D.setAdapter(adapter);
-			//LIST_VIEW_3D.setDynamics(new SimpleDynamics(0.7f, 0.6f));
+			
 			FILE_GALLEY = (LinearLayout)v.findViewById(R.id.file_gallery_layout);
 
+			JazzyHelper helper = new JazzyHelper(mContext, null);
+			helper.setTransitionEffect(LIST_ANIM);
+			LIST_VIEW_3D.setOnScrollListener(helper);
+			
 			LinearLayout music = (LinearLayout) v.findViewById(R.id.music);
 			LinearLayout app = (LinearLayout) v.findViewById(R.id.apps);
 			LinearLayout docs = (LinearLayout) v.findViewById(R.id.docs);
