@@ -24,7 +24,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.zip.ZipFile;
-
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
@@ -46,8 +45,6 @@ import org.anurag.compress.ZipManager;
 import org.anurag.compress.ZipObj;
 import org.anurag.gesture.AddGesture;
 import org.anurag.gesture.G_Open;
-import org.anurag.inherited.sony.ListView3D;
-import org.anurag.inherited.sony.SimpleDynamics;
 import org.ultimate.menuItems.AppProperties;
 import org.ultimate.menuItems.BluetoothChooser;
 import org.ultimate.menuItems.DeleteBackups;
@@ -196,7 +193,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	static int PAGER_ANIM;
 	private static ListView root;
 	private static ListView simple;
-	private static ListView3D LIST_VIEW_3D;
+	private static ListView LIST_VIEW_3D;
 	private static LinearLayout FILE_GALLEY;
 	static ArrayList<File> COPY_FILES;
 	private static boolean MULTIPLE_COPY;
@@ -847,7 +844,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					FILE_GALLEY.setVisibility(View.GONE);
 					// load_FIle_Gallery(fPos, mContext);
 					LIST_VIEW_3D.setAdapter(element);
-					LIST_VIEW_3D.setDynamics(new SimpleDynamics(0.7f, 0.6f));
+					//LIST_VIEW_3D.setDynamics(new SimpleDynamics(0.7f, 0.6f));
 				} else if (!elementInFocus) {
 					LIST_VIEW_3D.setVisibility(View.GONE);
 					FILE_GALLEY.setVisibility(View.VISIBLE);
@@ -863,9 +860,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			// mContext = getActivity();
 			inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View v = inflater.inflate(R.layout.custom_list_view, container,false);
-			LIST_VIEW_3D = (ListView3D) v.findViewById(R.id.customListView);
+			LIST_VIEW_3D = (ListView) v.findViewById(R.id.customListView);
 			// LIST_VIEW_3D.setAdapter(adapter);
-			LIST_VIEW_3D.setDynamics(new SimpleDynamics(0.7f, 0.6f));
+			//LIST_VIEW_3D.setDynamics(new SimpleDynamics(0.7f, 0.6f));
 			FILE_GALLEY = (LinearLayout)v.findViewById(R.id.file_gallery_layout);
 
 			LinearLayout music = (LinearLayout) v.findViewById(R.id.music);
@@ -4410,7 +4407,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						element = new MediaElementAdapter(mContext,R.layout.row_list_1, mediaFileList);
 						LIST_VIEW_3D.setAdapter(element);
 						LIST_VIEW_3D.setEnabled(true);
-						LIST_VIEW_3D.setDynamics(new SimpleDynamics(0.7f, 0.6f));
+						//LIST_VIEW_3D.setDynamics(new SimpleDynamics(0.7f, 0.6f));
 						if (!elementInFocus) {
 							mFlipperBottom.showPrevious();
 							mFlipperBottom.setAnimation(prevAnim());
