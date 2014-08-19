@@ -1,9 +1,12 @@
 /**
- * Copyright(c) 2013 ANURAG 
+ * Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
+ *      
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,7 +16,6 @@
  *                             anurag.dev1512@gmail.com
  *
  */
-
 package org.anurag.compress;
 
 import java.io.BufferedOutputStream;
@@ -285,10 +287,10 @@ public class CreateZip {
 				max = file.length();
 				handle.sendEmptyMessage(0);
 				while((read=fin.read(data, 0, Constants.BUFFER))!=-1 && running){
-					zout.write(data, 0, read);
 					prog+=read;
 					stat = AppBackup.status(prog, ctx);
 					handle.sendEmptyMessage(1);
+					zout.write(data, 0, read);
 				}
 				fin.close();
 			} catch (IOException e) {
