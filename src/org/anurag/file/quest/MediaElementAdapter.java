@@ -1,9 +1,12 @@
 /**
- * Copyright(c) 2013 ANURAG 
+ * Copyright(c) 2013 DRAWNZER.ORG PROJECTS -> ANURAG
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
+ *      
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,6 +17,7 @@
  *
  */
 
+
 package org.anurag.file.quest;
 
 import java.io.File;
@@ -21,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -47,6 +52,7 @@ public class MediaElementAdapter extends ArrayAdapter<File>{
 	private static PackageManager manager;
 	public static long C;
 	static LayoutInflater inflater;
+	Image img;
 	public MediaElementAdapter(Context con, int textViewResourceId, ArrayList<File> objects) {
 		super(con , textViewResourceId, objects);
 		// TODO Auto-generated constructor stub
@@ -125,63 +131,76 @@ public class MediaElementAdapter extends ArrayAdapter<File>{
 		
 		
 		
-		h.fName.setText(f.getName());		
-		if(getExt(f).equalsIgnoreCase(".apk")){
+		h.fName.setText(f.getName());
+		
+		String Ext = getExt(f);
+		
+		if(Ext.equalsIgnoreCase(".apk")){
 			h.fType.setText(context.getString(R.string.application));
 			h.fSize.setText(size(f));
 			new ApkImage(h.icon).execute(f.getPath());
 		}
-		else if(getExt(f).equalsIgnoreCase(".png")||
-				getExt(f).equalsIgnoreCase(".jpg")||
-				getExt(f).equalsIgnoreCase(".jpeg")){
+		else if(Ext.equalsIgnoreCase(".png")||
+				Ext.equalsIgnoreCase(".jpg")||
+				Ext.equalsIgnoreCase(".jpeg")){
 			h.fSize.setText(size(f));
 			h.fType.setText(context.getString(R.string.image));
 			new Image(h.icon).execute(f.getPath());
 		}else{
-			h.fSize.setText(size(f));
-				if(getExt(f).equalsIgnoreCase(".mp3")||
-						getExt(f).equalsIgnoreCase(".ogg")||
-						getExt(f).equalsIgnoreCase(".amr")||
-						getExt(f).equalsIgnoreCase(".acc")||
-						getExt(f).equalsIgnoreCase(".m4a")||
-						getExt(f).equalsIgnoreCase(".wav")){
+			if(f.isFile()){
+				h.fSize.setText(size(f));
+				if(Ext.equalsIgnoreCase(".mp3")||
+						Ext.equalsIgnoreCase(".ogg")||
+						Ext.equalsIgnoreCase(".amr")||
+						Ext.equalsIgnoreCase(".acc")||
+						Ext.equalsIgnoreCase(".m4a")||
+						Ext.equalsIgnoreCase(".wav")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_music));
 					h.fType.setText(context.getString(R.string.music));
-				}else if(getExt(f).equalsIgnoreCase(".zip")){
+				}else if(Ext.equalsIgnoreCase(".zip")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_zip_it));
-					h.fType.setText(context.getString(R.string.zip));
-				}else if(getExt(f).equalsIgnoreCase(".mp4")||
-						getExt(f).equalsIgnoreCase(".3gp")||
-						getExt(f).equalsIgnoreCase(".flv")||
-						getExt(f).equalsIgnoreCase(".avi")||
-						getExt(f).equalsIgnoreCase(".mkv")){
+					h.fType.setText("Zip");
+				}else if(Ext.equalsIgnoreCase(".mp4")||
+						Ext.equalsIgnoreCase(".3gp")||
+						Ext.equalsIgnoreCase(".flv")||
+						Ext.equalsIgnoreCase(".avi")||
+						Ext.equalsIgnoreCase(".mkv")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_video));
 					h.fType.setText(context.getString(R.string.vids));
-				}else if(getExt(f).equalsIgnoreCase(".rar")){
+				}else if(Ext.equalsIgnoreCase(".rar")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_rar));
 					h.fType.setText(context.getString(R.string.compr));
-				}else if(getExt(f).equalsIgnoreCase(".htm")||
-						getExt(f).equalsIgnoreCase(".html")||
-						getExt(f).equalsIgnoreCase(".mhtml")){
+				}else if(Ext.equalsIgnoreCase(".htm")||
+						Ext.equalsIgnoreCase(".html")||
+						Ext.equalsIgnoreCase(".mhtml")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_web_pages));
 					h.fType.setText(context.getString(R.string.web));
-				}else if(getExt(f).equalsIgnoreCase(".pdf")){
+				}else if(Ext.equalsIgnoreCase(".pdf")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_adobe));
 					h.fType.setText(context.getString(R.string.pdf));
-				}else if(getExt(f).equalsIgnoreCase(".doc")||
-						getExt(f).equalsIgnoreCase(".docx")||
-						getExt(f).equalsIgnoreCase(".ppt")){
+				}else if(Ext.equalsIgnoreCase(".doc")||
+						Ext.equalsIgnoreCase(".docx")||
+						Ext.equalsIgnoreCase(".ppt")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_ppt));
 					h.fType.setText(context.getString(R.string.document));
-				}else if(getExt(f).equalsIgnoreCase(".txt")){
+				}else if(Ext.equalsIgnoreCase(".txt")||Ext.equalsIgnoreCase(".log")||Ext.equalsIgnoreCase(".ini")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_text));
 					h.fType.setText(context.getString(R.string.text));
+				}else if(Ext.equalsIgnoreCase(".tar")||Ext.equalsIgnoreCase(".TAR")){
+					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_tar));
+					h.fType.setText(context.getString(R.string.compr));
+				}else if(Ext.equalsIgnoreCase(".7z")||Ext.equalsIgnoreCase(".7Z")){
+					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_7zip));
+					h.fType.setText(context.getString(R.string.compr));
+				}else if(Ext.equalsIgnoreCase(".gz")||Ext.equalsIgnoreCase(".GZ")){
+					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_gzip));
+					h.fType.setText(context.getString(R.string.compr));
 				}else {
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_unknown));
 					h.fType.setText(context.getString(R.string.unknown));
-				}
-		}
-		
+				}				
+			}
+		}		
 		return convertView;
 	}
 	

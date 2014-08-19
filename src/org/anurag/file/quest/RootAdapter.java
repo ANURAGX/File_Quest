@@ -192,7 +192,7 @@ public class RootAdapter extends ArrayAdapter<File>{
 						Ext.equalsIgnoreCase(".ppt")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_ppt));
 					h.fType.setText(context.getString(R.string.document));
-				}else if(Ext.equalsIgnoreCase(".txt")||Ext.equalsIgnoreCase(".log")){
+				}else if(Ext.equalsIgnoreCase(".txt")||Ext.equalsIgnoreCase(".log")||Ext.equalsIgnoreCase(".ini")){
 					h.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_text));
 					h.fType.setText(context.getString(R.string.text));
 				}else if(Ext.equalsIgnoreCase(".tar")||Ext.equalsIgnoreCase(".TAR")){
