@@ -323,7 +323,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		fPos = 0;
 		params = this.getWindow().getAttributes();
 		size = new Point();
-		getWindowManager().getDefaultDisplay().getSize(size);
+		try{
+			getWindowManager().getDefaultDisplay().getSize(size);
+		}catch(NoSuchMethodError e){
+			size.x = getWindowManager().getDefaultDisplay().getWidth();
+			size.y = getWindowManager().getDefaultDisplay().getHeight();
+		}
+		
 
 		setContentView(R.layout.new_ui);
 
