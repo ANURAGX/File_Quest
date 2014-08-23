@@ -20,7 +20,6 @@
 package org.anurag.dropbox;
 
 public class DropBoxConstant {
-	public static String appKey = "YOUR_KEY";
-	public static String appSecretKey = "YOUR_KEY";
-
+	public static String appKey = "ai6fnjtat01j6x9";
+	public static String appSecretKey = "er31re0hkb9yka7";
 }

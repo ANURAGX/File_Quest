@@ -20,10 +20,12 @@
 package org.anurag.dropbox;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
+import com.dropbox.client2.exception.DropboxException;
 import com.dropbox.client2.session.AppKeyPair;
 
 
@@ -38,7 +40,7 @@ public class DBoxAuth {
 	 */
 	public static void DoAuth(Context ctx){
 		if(DropBoxConstant.appKey.startsWith("YOUR_KEY")||DropBoxConstant.appSecretKey.startsWith("YOUR_KEY")){
-			Toast.makeText(ctx, "Provide your app key in DropboxConstant file", Toast.LENGTH_SHORT).show();
+			Toast.makeText(ctx, "Provide your own app key in DropboxConstant file", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		AUTH = true;
@@ -52,5 +54,19 @@ public class DBoxAuth {
 		AndroidAuthSession session = new AndroidAuthSession(pair);
 		
 		return session;
+	}
+	
+	public static void storeAuth(String session , Context ctx){
+		//String auth2Token = session.getOAuth2AccessToken();
+		if(session!=null){
+			DBoxUsersDB db = new DBoxUsersDB(ctx);
+			try {
+				db.addUser(mApi.accountInfo().displayName,"oauth2:", session);
+			} catch (DropboxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				Log.e("DROP_BOX", "DROP_DB");
+			}
+		}
 	}
 }

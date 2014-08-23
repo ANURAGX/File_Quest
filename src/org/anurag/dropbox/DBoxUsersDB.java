@@ -19,21 +19,58 @@
 
 package org.anurag.dropbox;
 
+import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.database.sqlite.SQLiteOpenHelper;
 
-public class DBoxUsersDB {
+/**
+ * 
+ * @author Anurag
+ *
+ */
+public class DBoxUsersDB extends SQLiteOpenHelper{
+
+	
+	String CREATE = "CREATE TABLE DROPBOX_USER (ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+			+ "USER_NAME TEXT,KEY_NAME TEXT,SECRET_NAME TEXT)";
+	
+	public DBoxUsersDB(Context ctx){
+		super(ctx,"DROP_BOX_DB",null,3);
+	}
+	
+	public DBoxUsersDB(Context context, String name, CursorFactory factory,int version) {
+		super(context, name, factory, version);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void onCreate(SQLiteDatabase db) {
+		// TODO Auto-generated method stub
+		db.execSQL(CREATE);
+	}
+
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	/**
 	 * 
-	 * @param ctx
-	 * @return
+	 * @param acctname
+	 * @param key
+	 * @param secret
 	 */
-	public static int getTotalUsers(Context ctx){
-		SharedPreferences prefs = ctx.getSharedPreferences("TOTAL_DBOX_USERS", 0);
-		return prefs.getInt("TOTAL_USERS", 0);
+	public void addUser(String acctname,String key,String secret){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("USER_NAME", acctname);
+		values.put("KEY_NAME", key);
+		values.put("SECRET_KEY", secret);
+		db.insert("DROPBOX_USER", null , values);
+		db.close();
 	}
-	
-	
 	
 }

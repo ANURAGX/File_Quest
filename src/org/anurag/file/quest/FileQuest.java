@@ -581,6 +581,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		if(DBoxAuth.AUTH){
 			AndroidAuthSession session = DBoxAuth.mApi.getSession();
 			if(session.authenticationSuccessful()){
+				DBoxAuth.storeAuth(session.getOAuth2AccessToken(), FileQuest.this);
 				session.finishAuthentication();
 				Toast.makeText(mContext, "Authenticated", Toast.LENGTH_SHORT).show();
 			}else
