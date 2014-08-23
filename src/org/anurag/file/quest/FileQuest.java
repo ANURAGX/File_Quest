@@ -1,5 +1,5 @@
 /**
- * Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+ * Copyright(c) 2013 DRAWNZER.ORG PROJECTS -> ANURAG
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -326,6 +326,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		try{
 			getWindowManager().getDefaultDisplay().getSize(size);
 		}catch(NoSuchMethodError e){
+			//OVERCOMING FROM EXCEPTION OCCURING IN ANDROID 2.3.5(API 10)
 			size.x = getWindowManager().getDefaultDisplay().getWidth();
 			size.y = getWindowManager().getDefaultDisplay().getHeight();
 		}
