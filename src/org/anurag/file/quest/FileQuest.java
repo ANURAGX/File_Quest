@@ -44,6 +44,7 @@ import org.anurag.compress.TarObj;
 import org.anurag.compress.ZipAdapter;
 import org.anurag.compress.ZipManager;
 import org.anurag.compress.ZipObj;
+import org.anurag.dropbox.DBoxAuth;
 import org.anurag.gesture.AddGesture;
 import org.anurag.gesture.G_Open;
 import org.ultimate.menuItems.AppProperties;
@@ -118,6 +119,7 @@ import android.widget.ViewFlipper;
 
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
+import com.dropbox.client2.android.AndroidAuthSession;
 import com.github.junrar.Archive;
 import com.github.junrar.exception.RarException;
 import com.rey.slidelayout.SlideLayout;
@@ -572,6 +574,19 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		params.alpha = 0.85f;
 		super.onResume();
 		REGISTER_RECEIVER();
+		
+		/**
+		 * There was dropbox authentication request by user....
+		 */
+		if(DBoxAuth.AUTH){
+			AndroidAuthSession session = DBoxAuth.mApi.getSession();
+			if(session.authenticationSuccessful()){
+				session.finishAuthentication();
+				Toast.makeText(mContext, "Authenticated", Toast.LENGTH_SHORT).show();
+			}else
+				Toast.makeText(mContext, "Failed to authenticate", Toast.LENGTH_SHORT).show();
+			DBoxAuth.AUTH = false;
+		}
 	}
 
 	@Override
@@ -2705,12 +2720,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					 * CLOUD STORAGE OPTIONS
 					 */
 					switch (actionId) {
-					default:
-						/*
-						 * DROPBOX INFO STUFF
-						 */
-						Toast.makeText(mContext, R.string.supporttakenBack,Toast.LENGTH_SHORT).show();
-						break;
+						case -10000:
+									/*
+								 	* DROPBOX STUFF
+								 	*/
+									DBoxAuth.DoAuth(FileQuest.this);
+									break;
+									
+						default:
+									Toast.makeText(mContext, R.string.supporttakenBack,Toast.LENGTH_SHORT).show();
+									break;
 					}
 				}
 			}

@@ -19,6 +19,46 @@
 
 package org.anurag.dropbox;
 
-public class DBoxManager {
+import java.util.ArrayList;
+import java.util.List;
+import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.DropboxAPI.Entry;
+import com.dropbox.client2.exception.DropboxException;
 
+
+/**
+ * 
+ * @author Anurag
+ *
+ */
+public class DBoxManager {
+	
+	public static boolean DBOX_ROOT = false;
+	public static boolean DBOX_SIMPLE = false;
+    public static String rootPath = "/";
+    public static String simplePath = "/";
+
+    
+    /**
+     * 
+     * @return
+     */
+    public static ArrayList<DBoxObj> generateListForRoot(){
+    	DropboxAPI<?> api = DBoxAuth.mApi;
+    	try {
+			Entry list = api.metadata(rootPath, 1000, "", true, null);
+			if(list.isDir){
+				ArrayList<DBoxObj> mainList = new ArrayList<DBoxObj>();
+				List<Entry> entries = list.contents;
+				for(Entry ent:entries)
+					mainList.add(new DBoxObj(ent));
+				return mainList;
+			}
+		} catch (DropboxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    	return null;
+    }
 }
