@@ -74,6 +74,29 @@ public class DBoxManager {
     	return new ArrayList<DBoxObj>();
     }
     
+    /**
+     * 
+     * @return
+     */
+    public static ArrayList<DBoxObj> generateListForSimple(Context ctx){
+    	DropboxAPI<?> api = DBoxAuth.mApi;
+    	try {
+    		com.dropbox.client2.DropboxAPI.Entry list = api.metadata(simplePath, 1000, "", true, null);
+			if(list.isDir){
+				ArrayList<DBoxObj> mainList = new ArrayList<DBoxObj>();
+				List<com.dropbox.client2.DropboxAPI.Entry> entries = list.contents;
+				for(Entry ent:entries)
+					mainList.add(new DBoxObj(ent,ctx));
+				return mainList;
+			}
+		} catch (DropboxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ArrayList<DBoxObj>();
+		}
+    	return new ArrayList<DBoxObj>();
+    }
+    
     public static void setDropBoxAdapter(final int ITEM ,final Context ctx){
     	final Dialog dialog = new Dialog(ctx , R.style.custom_dialog_theme);
     	dialog.setCancelable(false);
@@ -115,11 +138,13 @@ public class DBoxManager {
 				
 				//sending initial message to open loading dialog...
 				handle.sendEmptyMessage(0);
-				if(ITEM==2){
+				if(ITEM==2)
 					dListRoot = generateListForRoot(ctx);
-					sort(ITEM);
-					handle.sendEmptyMessage(1);
-				}	
+				else if(ITEM==1)
+					dListSimple = generateListForRoot(ctx);
+				sort(ITEM);
+				handle.sendEmptyMessage(1);
+					
 			}
 		});
     	thread.start();
