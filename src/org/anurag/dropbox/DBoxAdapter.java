@@ -21,15 +21,22 @@ package org.anurag.dropbox;
 
 import java.util.ArrayList;
 
+import org.anurag.file.quest.R;
+import org.anurag.file.quest.RootAdapter;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class DBoxAdapter extends BaseAdapter{
 
 	Context ctx;
+	DBoxObj file;
 	LayoutInflater inflater;
 	ArrayList<DBoxObj> list;
 	public DBoxAdapter(Context ct , ArrayList<DBoxObj> ls) {
@@ -56,10 +63,37 @@ public class DBoxAdapter extends BaseAdapter{
 		// TODO Auto-generated method stub
 		return arg0;
 	}
+	
+	class Holder{
+		ImageView icon;
+		TextView fName;
+		TextView fType;
+		TextView fSize;
+		CheckBox box;
+	}
 
 	@Override
 	public View getView(int pos, View convertView, ViewGroup arg2) {
 		// TODO Auto-generated method stub
+		file = list.get(pos);
+		Holder hold = new Holder();
+		if(convertView==null){
+			convertView = inflater.inflate(R.layout.row_list_1, arg2,false);
+			hold.icon = (ImageView)convertView.findViewById(R.id.fileIcon);
+			hold.fName = (TextView)convertView.findViewById(R.id.fileName);
+			hold.fType = (TextView)convertView.findViewById(R.id.fileType);
+			hold.fSize = (TextView)convertView.findViewById(R.id.fileSize);
+			hold.box = (CheckBox)convertView.findViewById(R.id.checkbox);
+			hold.box.setVisibility(View.GONE);
+		}else
+			hold = (Holder) convertView.getTag();
+		if(file.isDir())
+			hold.icon.setImageDrawable(ctx.getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+		else
+			hold.icon.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_unknown));
+		hold.fName.setText(file.getName());
+		hold.fSize.setText(file.getSize());
+		hold.fType.setText(file.getType());
 		return convertView;
 	}
 
