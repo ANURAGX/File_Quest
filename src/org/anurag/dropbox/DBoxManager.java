@@ -20,8 +20,16 @@
 package org.anurag.dropbox;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import org.anurag.file.quest.R;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.webkit.WebView;
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.exception.DropboxException;
@@ -33,7 +41,10 @@ import com.dropbox.client2.exception.DropboxException;
  *
  */
 public class DBoxManager {
-	
+
+	public static ArrayList<DBoxObj> dListRoot;
+	public static ArrayList<DBoxObj> dListSimple;
+	public static ArrayList<DBoxObj> dSearch;
 	public static boolean DBOX_ROOT = false;
 	public static boolean DBOX_SIMPLE = false;
     public static String rootPath = "/";
@@ -62,4 +73,80 @@ public class DBoxManager {
 		}
     	return new ArrayList<DBoxObj>();
     }
+    
+    public static void setDropBoxAdapter(final int ITEM ,final Context ctx){
+    	final Dialog dialog = new Dialog(ctx , R.style.custom_dialog_theme);
+    	dialog.setCancelable(false);
+    	dialog.setContentView(R.layout.p_dialog);
+    	WebView prog = (WebView)dialog.findViewById(R.id.p_Web_View);
+    	prog.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
+		prog.setEnabled(false);
+    	final Handler handle = new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				switch(msg.what){
+				
+					case 0:
+							try{
+								dialog.show();
+							}catch(Exception e){
+								
+							}
+							break;
+							
+					case 1:
+							try{
+								ctx.sendBroadcast(new Intent("FQ_DROPBOX_OPEN_FOLDER"));
+								dialog.dismiss();								
+							}catch(Exception e){
+								
+							}
+							break;
+ 				}
+			}
+    		
+    	};
+    	
+    	Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+				//sending initial message to open loading dialog...
+				handle.sendEmptyMessage(0);
+				if(ITEM==2){
+					dListRoot = generateListForRoot(ctx);
+					sort(ITEM);
+					handle.sendEmptyMessage(1);
+				}	
+			}
+		});
+    	thread.start();
+    }    
+    
+    /**
+	 * SORTING THE FILES AS PER ALPHABETICAL ORDER...
+	 * FIRST FOLDER AND THEN FILES.....
+	 */
+	private static void sort(int item){
+		Comparator<DBoxObj> comp = new Comparator<DBoxObj>() {
+			@Override
+			public int compare(DBoxObj a, DBoxObj b) {
+				// TODO Auto-generated method stub
+				boolean aisfolder =a.isDir();
+				boolean bisfolder = b.isDir();
+				if(aisfolder==bisfolder)
+					return a.getName().compareToIgnoreCase(b.getName());
+				else if(bisfolder)
+					return 1;
+				return -1;
+			}
+		};		
+		if(item==2)
+			Collections.sort(dListRoot, comp);
+		else
+			Collections.sort(dListSimple, comp);
+	}
+    
 }
