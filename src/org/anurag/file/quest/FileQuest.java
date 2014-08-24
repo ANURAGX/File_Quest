@@ -44,7 +44,9 @@ import org.anurag.compress.TarObj;
 import org.anurag.compress.ZipAdapter;
 import org.anurag.compress.ZipManager;
 import org.anurag.compress.ZipObj;
+import org.anurag.dropbox.DBoxAdapter;
 import org.anurag.dropbox.DBoxAuth;
+import org.anurag.dropbox.DBoxManager;
 import org.anurag.dropbox.DBoxUsers;
 import org.anurag.gesture.AddGesture;
 import org.anurag.gesture.G_Open;
@@ -585,6 +587,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				DBoxAuth.storeAuth(session.getOAuth2AccessToken(), FileQuest.this);
 				session.finishAuthentication();
 				Toast.makeText(mContext, "Authenticated", Toast.LENGTH_SHORT).show();
+				if(CURRENT_ITEM==2)
+					DBoxManager.DBOX_ROOT=true;
+				else if(CURRENT_ITEM==1)
+					DBoxManager.DBOX_SIMPLE = true;
+				DBoxManager.setDropBoxAdapter(CURRENT_ITEM, mContext);
 			}else
 				Toast.makeText(mContext, "Failed to authenticate", Toast.LENGTH_SHORT).show();
 			DBoxAuth.AUTH = false;
@@ -1461,7 +1468,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			root.setSelector(R.drawable.blue_button);
 			ColorDrawable color = new ColorDrawable(android.R.color.black);
 			root.setDivider(color);
-			if(ZIP_ROOT){
+			if(DBoxManager.DBOX_ROOT)
+				setListAdapter(new DBoxAdapter(mContext, DBoxManager.dListRoot));
+			else if(ZIP_ROOT){
 				setListAdapter(new ZipAdapter(zListRoot,mContext));
 			}else if(RAR_ROOT)
 				setListAdapter(new RarAdapter(mContext, rListRoot));
@@ -4727,6 +4736,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				}else if(ACTION.equals("FQ_DROPBOX_OPEN_FOLDER")){
+					mViewPager.setAdapter(mSectionsPagerAdapter);
+					mViewPager.setCurrentItem(CURRENT_ITEM);
 				}
 			}
 		};
@@ -4749,6 +4761,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		filter = new IntentFilter("FQ_TAR_OPEN");
 		this.registerReceiver(RECEIVER, filter);
 		filter = new IntentFilter("FQ_7Z_OPEN");
+		this.registerReceiver(RECEIVER, filter);
+		filter = new IntentFilter("FQ_DROPBOX_OPEN_FOLDER");
 		this.registerReceiver(RECEIVER, filter);
 	}
 	
