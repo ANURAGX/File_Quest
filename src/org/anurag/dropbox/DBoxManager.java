@@ -21,9 +21,7 @@ package org.anurag.dropbox;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
-
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.exception.DropboxException;
@@ -49,10 +47,10 @@ public class DBoxManager {
     public static ArrayList<DBoxObj> generateListForRoot(Context ctx){
     	DropboxAPI<?> api = DBoxAuth.mApi;
     	try {
-			Entry list = api.metadata(rootPath, 1000, "", true, null);
+    		com.dropbox.client2.DropboxAPI.Entry list = api.metadata(rootPath, 1000, "", true, null);
 			if(list.isDir){
 				ArrayList<DBoxObj> mainList = new ArrayList<DBoxObj>();
-				List<Entry> entries = list.contents;
+				List<com.dropbox.client2.DropboxAPI.Entry> entries = list.contents;
 				for(Entry ent:entries)
 					mainList.add(new DBoxObj(ent,ctx));
 				return mainList;

@@ -21,7 +21,7 @@ package org.anurag.dropbox;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import com.dropbox.client2.DropboxAPI.Entry;
+
 
 /**
  * 
@@ -37,7 +37,7 @@ public class DBoxObj {
 	Context ctx;
 	String size;
 	boolean isFile;
-	public DBoxObj(Entry entry , Context cont) {
+	public DBoxObj(com.dropbox.client2.DropboxAPI.Entry entry , Context cont) {
 		// TODO Auto-generated constructor stub
 		this.ctx = cont;
 		this.name = entry.fileName();
