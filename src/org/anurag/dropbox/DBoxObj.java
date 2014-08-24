@@ -61,6 +61,13 @@ public class DBoxObj {
 		return this.name;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isDir(){
+		return !this.isFile;
+	}
 	
 	/**
 	 * 
