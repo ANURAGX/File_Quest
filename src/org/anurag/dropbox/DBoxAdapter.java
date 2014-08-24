@@ -19,34 +19,48 @@
 
 package org.anurag.dropbox;
 
+import java.util.ArrayList;
+
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 public class DBoxAdapter extends BaseAdapter{
 
+	Context ctx;
+	LayoutInflater inflater;
+	ArrayList<DBoxObj> list;
+	public DBoxAdapter(Context ct , ArrayList<DBoxObj> ls) {
+		// TODO Auto-generated constructor stub
+		ctx = ct;
+		list = ls;
+		inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	}
+	
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return list.size();
 	}
 
 	@Override
 	public Object getItem(int arg0) {
 		// TODO Auto-generated method stub
-		return null;
+		return list.get(arg0);
 	}
 
 	@Override
 	public long getItemId(int arg0) {
 		// TODO Auto-generated method stub
-		return 0;
+		return arg0;
 	}
 
 	@Override
 	public View getView(int pos, View convertView, ViewGroup arg2) {
 		// TODO Auto-generated method stub
-		return null;
+		return convertView;
 	}
 
 }

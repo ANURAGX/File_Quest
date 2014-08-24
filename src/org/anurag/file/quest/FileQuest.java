@@ -45,6 +45,7 @@ import org.anurag.compress.ZipAdapter;
 import org.anurag.compress.ZipManager;
 import org.anurag.compress.ZipObj;
 import org.anurag.dropbox.DBoxAuth;
+import org.anurag.dropbox.DBoxUsers;
 import org.anurag.gesture.AddGesture;
 import org.anurag.gesture.G_Open;
 import org.ultimate.menuItems.AppProperties;
@@ -2729,7 +2730,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									break;
 									
 						default:
-									Toast.makeText(mContext, R.string.supporttakenBack,Toast.LENGTH_SHORT).show();
+									Toast.makeText(mContext, ""+DBoxUsers.getTotalUsers(mContext),
+											Toast.LENGTH_SHORT).show();
+									//Toast.makeText(mContext, R.string.supporttakenBack,Toast.LENGTH_SHORT).show();
 									break;
 					}
 				}

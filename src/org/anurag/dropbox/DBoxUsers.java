@@ -19,11 +19,8 @@
 
 package org.anurag.dropbox;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.content.SharedPreferences;
 
 /**
  * 
@@ -32,7 +29,34 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DBoxUsers{
 
+	/**
+	 * THIS FUNCTION IS TO GET TOTAL NUMBER OF DROPBOX USER WHO WERE SUCCESSFULLY AUTHENTICATED
+	 * TO THE CURRENT DEVICE...
+	 * @param ctx
+	 * @return
+	 */
+	public static int getTotalUsers(Context ctx){
+		SharedPreferences prefs = ctx.getSharedPreferences("DROPBOX_PREFS", 0);
+		return prefs.getInt("TOTAL_USERS", 0);
+	}
 	
-	
+	/**
+	 * this function saves the details of dropbox user provided key and secret key.
+	 * this avoids repeated authentication of user by password and username... 
+	 * 
+	 * @param key
+	 * @param secret
+	 * @param ctx
+	 */
+	public static void saveUser(String key , String secret , Context ctx){
+		SharedPreferences prefs = ctx.getSharedPreferences("DROPBOX_PREFS", 0);
+		int total = prefs.getInt("TOTAL_USERS", 0);
+		String CURRENT_USER = "USER"+(total+1);
+		SharedPreferences.Editor edit = prefs.edit();
+		edit.putString(CURRENT_USER+"_KEY", key);
+		edit.putString(CURRENT_USER+"_SECRET", secret);
+		edit.putInt("TOTAL_USERS", (total+1));
+		edit.commit();
+	}
 	
 }

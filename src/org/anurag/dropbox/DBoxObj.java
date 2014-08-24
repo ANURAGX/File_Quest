@@ -19,13 +19,66 @@
 
 package org.anurag.dropbox;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import com.dropbox.client2.DropboxAPI.Entry;
 
+/**
+ * 
+ * @author Anurag
+ * 
+ */
 public class DBoxObj {
 	
-	public DBoxObj(Entry entry) {
+	String name;
+	String type;
+	String path;
+	Drawable icon;
+	Context ctx;
+	String size;
+	boolean isFile;
+	public DBoxObj(Entry entry , Context cont) {
 		// TODO Auto-generated constructor stub
-		
+		this.ctx = cont;
+		this.name = entry.fileName();
+		this.type = entry.mimeType;
+		this.path = entry.path;
+		this.size = entry.size;
+		this.isFile = !entry.isDir;
+		this.icon = getIcon();
+	}
+	
+	public Drawable getIcon() {
+		// TODO Auto-generated method stub
+		return this.icon;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public String getName(){
+		return this.name;
+	}
+
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getPath(){
+		return this.path;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getSize(){
+		return this.size;
+	}
+	
+	public String getType(){
+		return this.type;
+	}
 }

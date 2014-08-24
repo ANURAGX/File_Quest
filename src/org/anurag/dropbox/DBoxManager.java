@@ -21,6 +21,9 @@ package org.anurag.dropbox;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import android.content.Context;
+
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.exception.DropboxException;
@@ -43,7 +46,7 @@ public class DBoxManager {
      * 
      * @return
      */
-    public static ArrayList<DBoxObj> generateListForRoot(){
+    public static ArrayList<DBoxObj> generateListForRoot(Context ctx){
     	DropboxAPI<?> api = DBoxAuth.mApi;
     	try {
 			Entry list = api.metadata(rootPath, 1000, "", true, null);
@@ -51,14 +54,14 @@ public class DBoxManager {
 				ArrayList<DBoxObj> mainList = new ArrayList<DBoxObj>();
 				List<Entry> entries = list.contents;
 				for(Entry ent:entries)
-					mainList.add(new DBoxObj(ent));
+					mainList.add(new DBoxObj(ent,ctx));
 				return mainList;
 			}
 		} catch (DropboxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+			return new ArrayList<DBoxObj>();
 		}
-    	return null;
+    	return new ArrayList<DBoxObj>();
     }
 }
