@@ -24,65 +24,22 @@ import java.io.File;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-public class FileObj {
+public class FileObj extends File{
 
-	File file;
-	String name;
-	String parent;
-	String path;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4723396612036576710L;
 	Drawable icon;
 	String type;
 	String size;
-	boolean isDir;
-	public FileObj(File fi,Context ctx) {
+	public FileObj(File fi) {
 		// TODO Auto-generated constructor stub
-		this.file = fi;
-		this.name = file.getName();
-		this.parent = file.getParent();
-		this.path = file.getPath();
-		this.isDir = file.isDirectory();
-		this.size = size(fi, ctx);
+		super(fi.getAbsolutePath());
+		//this.size = size(fi, ctx);
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public File getFile(){
-		return this.file;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String getName(){
-		return this.name;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String getParent(){
-		return this.parent;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String getPath(){
-		return this.path;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isDirectory(){
-		return this.isDir;
-	}	
+		
 	
 	/**
 	 * 
