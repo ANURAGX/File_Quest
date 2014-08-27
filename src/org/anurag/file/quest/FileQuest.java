@@ -890,7 +890,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View v = inflater.inflate(R.layout.custom_list_view, container,false);
 			LIST_VIEW_3D = (ListView) v.findViewById(R.id.customListView);
-			
+			LIST_VIEW_3D.setSelector(R.drawable.blue_button);
 			FILE_GALLEY = (LinearLayout)v.findViewById(R.id.file_gallery_layout);
 
 			JazzyHelper helper = new JazzyHelper(mContext, null);
