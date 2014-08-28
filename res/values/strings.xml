@@ -56,6 +56,18 @@
         <item>RotateDown</item>
     	<item>Accordion</item>
     </string-array>
+    
+    
+    <string-array name="slideList">
+        <item>Music Files</item>
+        <item>Apk Files</item>
+        <item>Documents</item>
+        <item>Image File</item>
+        <item>Video Files</item>
+        <item>Archives</item>
+        <item>Miscellaneous Files</item>
+    </string-array>
+    
 
     <string-array name="listAnims" >
         
