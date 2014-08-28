@@ -1,5 +1,7 @@
 package com.tjerkw.slideexpandable.library;
 
+import org.anurag.file.quest.R;
+
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -82,6 +84,13 @@ class SlideExpandableListView extends ListView {
 	public void setDivider(Drawable divider) {
 		// TODO Auto-generated method stub
 		super.setDivider(new ColorDrawable(android.R.color.black));
+	}
+
+
+	@Override
+	public void setSelector(Drawable sel) {
+		// TODO Auto-generated method stub
+		super.setSelector(getResources().getDrawable(R.drawable.blue_button));
 	}
 
 	@Override
