@@ -499,6 +499,8 @@ public class Archive implements Closeable {
 				throw new RarException(e);
 			}
 		}
+		os.flush();
+		os.close();
 	}
 
 	/**
