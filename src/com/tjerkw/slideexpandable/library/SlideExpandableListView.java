@@ -7,6 +7,8 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 
 /**
  * Simple subclass of listview which does nothing more than wrap
@@ -14,6 +16,8 @@ import android.content.Context;
  */
 class SlideExpandableListView extends ListView {
 	private SlideExpandableListAdapter adapter;
+	
+	
 
 	public SlideExpandableListView(Context context) {
 		super(context);
@@ -71,6 +75,13 @@ class SlideExpandableListView extends ListView {
 	@Override
 	public Parcelable onSaveInstanceState() {
 		return adapter.onSaveInstanceState(super.onSaveInstanceState());
+	}
+
+	
+	@Override
+	public void setDivider(Drawable divider) {
+		// TODO Auto-generated method stub
+		super.setDivider(new ColorDrawable(android.R.color.black));
 	}
 
 	@Override
