@@ -5321,15 +5321,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 		ActionSlideExpandableListView lsView = (ActionSlideExpandableListView)findViewById(R.id.actionSlideExpandableListView1);
 		
-			final int SIZE = 20;
-			String[] values = new String[SIZE];
-			for(int i=0;i<SIZE;i++) {
-				values[i] = "Item "+i;
-			}
-		lsView.setAdapter(new ArrayAdapter<String>(this,R.layout.expandable_row_list,
-				R.id.expandable_toggle_button,
-				values
-		));	
+		String[] values = getResources().getStringArray(R.array.slideList);
+		lsView.setAdapter(new ExpandableAdapter(this,R.layout.expandable_row_list,
+				R.id.expandable_toggle_button,values));	
 			
 		
 	}
