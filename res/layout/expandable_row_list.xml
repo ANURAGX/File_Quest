@@ -16,10 +16,13 @@
                               anurag.dev1512@gmail.com
  
  -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+<LinearLayout 
+    
+    	android:padding="3dp"
+    	xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 	<RelativeLayout
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
@@ -28,6 +31,7 @@
 
 	    
 	    <LinearLayout 
+	        android:gravity="center_vertical"
 	        android:layout_width="fill_parent"
 	        android:layout_height="fill_parent"
 	        android:orientation="horizontal">
@@ -36,9 +40,10 @@
 	            android:layout_height="40dp"
 	            android:id="@+id/expImage"/>
 	    	<TextView
+	    	    android:textStyle="bold"
+	    	    android:gravity="center_vertical"
 	    	    android:paddingLeft="10dp"
-		        android:textSize="25sp"
-				android:layout_width="wrap_content"
+		        android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:id="@+id/expandable_toggle_button"
 				android:text="@string/anurag"/>    
@@ -56,8 +61,8 @@
 			android:background="#000000">
 
 		<TextView
-		        android:textSize="20sp" 
-				android:layout_width="wrap_content"
+		        android:textStyle="bold"
+		        android:layout_width="wrap_content"
 				android:layout_height="fill_parent"
 				android:id="@+id/expanded_toggle_button"
 				android:text="@string/deleteall"/>
