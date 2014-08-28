@@ -434,20 +434,13 @@ public class Archive implements Closeable {
 	 * @param os
 	 *            the outputstream
 	 * @throws RarException
+	 * @throws IOException 
 	 */
-	public void extractFile(FileHeader hd, OutputStream os) throws RarException {
+	public void extractFile(FileHeader hd, OutputStream os) throws RarException, IOException {
 		if (!headers.contains(hd)) {
 			throw new RarException(RarExceptionType.headerNotInArchive);
 		}
-		try {
-			doExtractFile(hd, os);
-		} catch (Exception e) {
-			if (e instanceof RarException) {
-				throw (RarException) e;
-			} else {
-				throw new RarException(e);
-			}
-		}
+		doExtractFile(hd, os);		
 	}
 
 	/**
@@ -465,23 +458,7 @@ public class Archive implements Closeable {
 			IOException {
 		final PipedInputStream in = new PipedInputStream(32 * 1024);
 		final PipedOutputStream out = new PipedOutputStream(in);
-
-		// creates a new thread that will write data to the pipe. Data will be
-		// available in another InputStream, connected to the OutputStream.
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					extractFile(hd, out);
-				} catch (RarException e) {
-				} finally {
-					try {
-						out.close();
-					} catch (IOException e) {
-					}
-				}
-			}
-		}).start();
-
+		extractFile(hd, out);
 		return in;
 	}
 
