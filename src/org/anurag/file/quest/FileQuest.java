@@ -110,10 +110,12 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -538,7 +540,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			edit.commit();
 			new WhatsNew(mContext, size.x * 8 / 9, size.y * 8 / 9);
 		}
-
+        initLeftMenu();
 		super.onCreate(savedInstanceState);
 		
 	}
@@ -5318,6 +5320,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		SlideLayout slidemenu = (SlideLayout)findViewById(R.id.slide_left_menu);
 		
 		ActionSlideExpandableListView lsView = (ActionSlideExpandableListView)findViewById(R.id.actionSlideExpandableListView1);
+		
+			final int SIZE = 20;
+			String[] values = new String[SIZE];
+			for(int i=0;i<SIZE;i++) {
+				values[i] = "Item "+i;
+			}
+		lsView.setAdapter(new ArrayAdapter<String>(this,R.layout.expandable_row_list,
+				R.id.expandable_toggle_button,
+				values
+		));	
+			
 		
 	}
 }
