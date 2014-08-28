@@ -22,13 +22,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
 import org.ultimate.menuItems.BluetoothChooser;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
@@ -40,12 +38,9 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.github.junrar.Archive;
 import com.github.junrar.exception.RarException;
 import com.github.junrar.rarfile.FileHeader;
-import com.github.junrar.unpack.ComprDataIO;
-import com.github.junrar.unpack.Unpack;
 
 
 /**
@@ -166,6 +161,7 @@ public class ExtractRarFile {
 						DEST = Environment.getExternalStorageDirectory()+"/Android/data/org.anurag.file.quest";
 						new File(DEST).mkdirs();
 					}
+					if(zList!=null)
 					for(FileHeader ze:zList){
 						handle.sendEmptyMessage(4);
 						if(zFile.isFile()){
@@ -191,7 +187,7 @@ public class ExtractRarFile {
 									size =AppBackup.size(max, ctx);
 									handle.sendEmptyMessage(3);
 								
-									InputStream in = new Archive(file).getInputStream(ze);
+								/*	InputStream in = new Archive(file).getInputStream(ze);
 									while((read=in.read(data,0,Constants.BUFFER))!=-1 && running){
 										out.write(data, 0, read);
 										prog+=read;
@@ -202,7 +198,8 @@ public class ExtractRarFile {
 									}			
 									in.close();
 									out.flush();
-									out.close();
+									out.close();*/
+									new Archive(file).extractFile(ze, out);
 									break;
 								} catch (FileNotFoundException e) {
 									// TODO Auto-generated catch block
