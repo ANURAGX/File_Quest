@@ -186,6 +186,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ArrayList<TarObj> tSearch;
 	
 	
+	/**
+	 * 
+	 */
+	private static SDManager sdManager;
+	private static ArrayList<Item> sdItemsList;
 	
 	static int fPos;
 	private BroadcastReceiver RECEIVER;
@@ -285,7 +290,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		TRANSPRA_LEVEL = preferences.getFloat("TRANSPRA_LEVEL", 0.9f);
 		SHOW_HIDDEN_FOLDERS = preferences.getBoolean("SHOW_HIDDEN_FOLDERS",false);
 		SORT_TYPE = preferences.getInt("SORT_TYPE", 2);
-		RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = preferences.getInt("FOLDER_TYPE", 3);
+		Constants.FOLDER_TYPE = RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = preferences.getInt("FOLDER_TYPE", 3);
 		HOME_DIRECTORY = preferences.getString("HOME_DIRECTORY", null);
 		ENABLE_ON_LAUNCH = preferences.getBoolean("ENABLE_ON_LAUNCH", false);
 		LIST_ANIM = preferences.getInt("LIST_ANIM", 4);
@@ -298,6 +303,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 		}
 
+		sdManager = new SDManager(FileQuest.this);
 		
 		/**
 		 * THIS THREAD CATCHES THE UNCAUGHT EXCEPTIONS...
@@ -405,8 +411,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			mFlipperBottom.setAnimation(prevAnim());
 		}
 
-		RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = SORT_TYPE;
+		SDManager.SORT_TYPE = RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = SORT_TYPE;
 		if (SHOW_HIDDEN_FOLDERS) {
+			SDManager.SHOW_HIDDEN_FOLDER = true;
 			SFileManager.SHOW_HIDDEN_FOLDER = true;
 			RFileManager.SHOW_HIDDEN_FOLDER = true;
 		}
@@ -1473,8 +1480,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				setListAdapter(new RarAdapter(mContext, rListSD));
 			else if(TAR_SD)
 				setListAdapter(new TarAdapter(mContext, tListSD));
-			else	
-				setListAdapter(RootAdapter);
+			else{	
+				sdItemsList = sdManager.getList();
+				setListAdapter(new SDAdapter(mContext, sdItemsList));
+			}	
 			dialog = new Dialog(getActivity(), R.style.custom_dialog_theme);
 			dialog.setContentView(R.layout.long_click_dialog);
 			ListView lo = (ListView) dialog.findViewById(R.id.list);

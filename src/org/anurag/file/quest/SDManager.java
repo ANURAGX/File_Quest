@@ -248,11 +248,14 @@ public class SDManager {
 	 * @return
 	 */
 	private Drawable buildIcon(File f){
+		if(f.isDirectory()){
+			type = ctx.getString(R.string.directory);
+			return res.getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]);
+		}
 		String name = f.getName();
 		if(name.endsWith(".zip")||name.endsWith(".ZIP")){
 			type=ctx.getString(R.string.zip);
-			return res.getDrawable(R.drawable.ic_launcher_zip_it);
-			
+			return res.getDrawable(R.drawable.ic_launcher_zip_it);			
 		}else if(name.endsWith(".7z")||name.endsWith(".7Z")){
 			type=ctx.getString(R.string.zip7);
 			return res.getDrawable(R.drawable.ic_launcher_7zip);
@@ -314,7 +317,7 @@ public class SDManager {
 	 */
 	static String getSize(File f){
 		if(f.isDirectory())
-			return ctx.getString(R.string.directory);
+			return f.list().length+""+ctx.getString(R.string.items);
 		long size = f.length();
 		if(size>Constants.GB)
 			return String.format(ctx.getString(R.string.sizegb), (double)size/(Constants.GB));

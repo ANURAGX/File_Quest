@@ -35,10 +35,13 @@ public class Item {
 	
 	public Item(File fi , Drawable img , String typ , String si) {
 		// TODO Auto-generated constructor stub
-		file = fi;
-		parent = file.getParent();
-		path = file.getPath();
-		name = file.getName();
+		this.file = fi;
+		this.parent = file.getParent();
+		this.path = file.getPath();
+		this.name = file.getName();
+		this.icon = img;
+		this.type = typ;
+		this.size = si;
 	}
 	
 	/**
