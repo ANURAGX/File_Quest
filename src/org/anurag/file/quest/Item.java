@@ -88,4 +88,36 @@ public class Item {
 	public Drawable getIcon(){
 		return this.icon;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean canRead(){
+		return file.canRead();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean canWrite(){
+		return file.canWrite();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean canExecute(){
+		return file.canExecute();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isDirectory(){
+		return file.isDirectory();
+	}
 }
