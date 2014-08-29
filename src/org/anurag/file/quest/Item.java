@@ -123,4 +123,12 @@ public class Item {
 	public boolean isDirectory(){
 		return file.isDirectory();
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public File getFile(){
+		return this.file;
+	}
 }
