@@ -387,4 +387,32 @@ public class RootManager {
 			return r;
 		}
 	}
+	
+	/**
+	 * Function To Delete The Given File And Returns Message To Handler
+	 * If Deletion is successful returns 0 else returns -1
+	 * @param path
+	 * @return
+	 */
+	public static void deleteTarget(File file) {
+		File target = file;
+		if(target.exists() && target.isFile() && target.canWrite())
+			target.delete();
+		else if(target.exists() && target.isDirectory() && target.canRead()) {
+			String[] file_list = target.list();
+			if(file_list != null && file_list.length == 0) {
+				target.delete();
+			} else if(file_list != null && file_list.length > 0) {
+				for(int i = 0; i < file_list.length; i++) {
+					File temp_f = new File(target.getAbsolutePath() + "/" + file_list[i]);
+					if(temp_f.isDirectory())
+						deleteTarget(temp_f);
+					else if(temp_f.isFile())
+						temp_f.delete();
+				}
+			}
+			if(target.exists())
+				if(target.delete()){}
+		}
+	}
 }

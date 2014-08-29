@@ -20,8 +20,10 @@
 package org.ultimate.menuItems;
 
 import java.io.File;
+
 import org.anurag.file.quest.R;
-import org.anurag.file.quest.RFileManager;
+import org.anurag.file.quest.RootManager;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Environment;
@@ -98,7 +100,7 @@ public class DeleteFlashable{
 				thread = new Thread(new Runnable() {
 					@Override
 					public void run() {
-						RFileManager.deleteTarget(file);
+						RootManager.deleteTarget(file);
 						mHandler.sendEmptyMessage(2);
 					}
 				});
