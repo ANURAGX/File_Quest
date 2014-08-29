@@ -16,8 +16,8 @@
  *                             anurag.dev1512@gmail.com
  *
  */
-package org.anurag.compress;
 
+package org.anurag.compress;
 
 import java.util.ArrayList;
 import java.util.Collections;
