@@ -22,8 +22,13 @@ package org.anurag.file.quest;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Stack;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 
 /**
  * 
@@ -35,9 +40,15 @@ public class SDManager {
 	
 	public static int SORT_TYPE;
 	public static Stack<String> nStack;
-	ArrayList<Item> items;
-	public SDManager() {
+	static ArrayList<Item> items;
+	private static Context ctx;
+	private File file;
+	public static boolean SHOW_HIDDEN_FOLDER = false;
+	String type;
+	private static Resources res;
+	public SDManager(Context context) {
 		// TODO Auto-generated constructor stub
+		ctx = context;
 		nStack = new Stack<String>();
 		if(new File("/storage").exists()){
 			nStack.push("/storage");
@@ -45,6 +56,7 @@ public class SDManager {
 			nStack.push(Constants.PATH);		
 		nStack.push(Constants.PATH);
 		items = new ArrayList<Item>();
+		res = ctx.getResources();
 	}
 	
 	/**
@@ -94,9 +106,9 @@ public class SDManager {
 	/**
 	 * SORTS THE FILE[] ALPHABETICALLY WITH HAVING FOLDERS FIRST
 	 */
-	public static Comparator<Item> alphaFolderFirst = new Comparator<Item>() {
+	public static Comparator<File> alphaFolderFirst = new Comparator<File>() {
 		@Override
-		public int compare(Item a, Item b) {
+		public int compare(File a, File b) {
 			boolean aIsFolder = a.isDirectory();
 			boolean bIsFolder = b.isDirectory();
 			if(bIsFolder == aIsFolder )
@@ -111,9 +123,9 @@ public class SDManager {
 	/**
 	 * SORTS THE FILE[] ALPHABETICALLY WITH HAVING FILES FIRST
 	 */
-	public static Comparator<Item> alphaFileFirst = new Comparator<Item>() {
+	public static Comparator<File> alphaFileFirst = new Comparator<File>() {
 		@Override
-		public int compare(Item a, Item b) {
+		public int compare(File a, File b) {
 			boolean aIsFolder = a.isDirectory();
 			boolean bIsFolder = b.isDirectory();
 			if(bIsFolder == aIsFolder )
@@ -128,10 +140,125 @@ public class SDManager {
 	 * SORTS THE FILE[] ALPHABETICALLY IRRESPECTIVE OF FILE OR FOLDER
 	 */
 	
-	public static Comparator<Item> alpha = new Comparator<Item>() {
+	public static Comparator<File> alpha = new Comparator<File>() {
 		@Override
-		public int compare(Item a, Item b) {
+		public int compare(File a, File b) {
 				return a.getName().compareToIgnoreCase(b.getName());
 		}
 	}; 
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Item> getList(){
+		items.clear();
+		file = new File(nStack.peek());
+		if(SORT_TYPE == 4)
+			return getCurrentFileListWithHiddenItemFirst();
+		else if(SORT_TYPE == 5)
+			return getCurrentFileListWithHiddenItemFirst();
+		if(file.canRead() && file.exists()){
+			File[] files = null;
+			if(!SHOW_HIDDEN_FOLDER)
+				files = file.listFiles(new HiddenFileFilter());
+			else
+				files = file.listFiles(new ReadFileFilter());
+			if(SORT_TYPE == 1)
+				Arrays.sort(files,alpha);
+			else if(SORT_TYPE == 2)
+				Arrays.sort(files,alphaFolderFirst);
+			else if(SORT_TYPE == 3)
+				Arrays.sort(files,alphaFileFirst);
+			int l = files.length;
+			for(int i = 0 ;i<l ; ++i){
+				File f = files[i];
+				items.add(new Item(f,buildIcon(f),type,getSize(f)));
+			}	
+		}
+		return items;
+	}
+
+	private ArrayList<Item> getCurrentFileListWithHiddenItemFirst() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private Drawable buildIcon(File f){
+		String name = f.getName();
+		if(name.endsWith(".zip")||name.endsWith(".ZIP")){
+			type=ctx.getString(R.string.zip);
+			return res.getDrawable(R.drawable.ic_launcher_zip_it);
+			
+		}else if(name.endsWith(".7z")||name.endsWith(".7Z")){
+			type=ctx.getString(R.string.zip7);
+			return res.getDrawable(R.drawable.ic_launcher_7zip);
+		}else if(name.endsWith(".rar")||name.endsWith(".RAR")){
+			type=ctx.getString(R.string.rar);
+			return res.getDrawable(R.drawable.ic_launcher_rar);
+		}else if(name.endsWith(".tar")||name.endsWith(".TAR")||name.endsWith(".tar.gz")||name.endsWith(".TAR.GZ")
+				||name.endsWith(".TAT.BZ2")||name.endsWith(".tar.bz2")){
+			type=ctx.getString(R.string.tar);
+			return res.getDrawable(R.drawable.ic_launcher_tar);
+		}
+		else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
+				||name.endsWith(".amr")||name.endsWith(".MP3")||name.endsWith(".OGG")||name.endsWith(".M4A")||
+				name.endsWith(".WAV")||name.endsWith(".AMR")){
+			type=ctx.getString(R.string.music);
+			return res.getDrawable(R.drawable.ic_launcher_music);
+		}
+		else if(name.endsWith(".apk")||name.endsWith(".APK")){
+			type=ctx.getString(R.string.application);
+			return res.getDrawable(R.drawable.ic_launcher_apk);
+		}		
+		else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
+				||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
+				||name.endsWith(".MKV")){
+			type=ctx.getString(R.string.vids);
+			return res.getDrawable(R.drawable.ic_launcher_video);
+		}	
+		else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
+				||name.endsWith(".png")||name.endsWith(".BMP")||name.endsWith(".GIF")||name.endsWith(".JPEG")||name.endsWith(".JPG")
+				||name.endsWith(".PNG")){
+			type=ctx.getString(R.string.image);
+			return res.getDrawable(R.drawable.ic_launcher_images);
+		}
+		else if(name.endsWith(".txt")||name.endsWith(".log")||name.endsWith(".ini")||name.endsWith(".doc")
+				||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".TXT")||name.endsWith(".LOG")||name.endsWith(".INI")||name.endsWith(".DOC")
+				||name.endsWith(".PPT")||name.endsWith(".DOCX")){
+			type=ctx.getString(R.string.docs);
+			return res.getDrawable(R.drawable.ic_launcher_ppt);
+		}
+		else{
+			type=ctx.getString(R.string.unknown);
+			return res.getDrawable(R.drawable.ic_launcher_unknown);
+		}		
+	}
+	
+	/**
+	 * THIS FUNCTION RETURN THE SIZE IF THE GIVEN FIZE IN PARAMETER
+	 * @param f
+	 * @return
+	 */
+	static String getSize(File f){
+		if(f.isDirectory())
+			return ctx.getString(R.string.directory);
+		long size = f.length();
+		if(size>Constants.GB)
+			return String.format(ctx.getString(R.string.sizegb), (double)size/(Constants.GB));
+		
+		else if(size > Constants.MB)
+			return String.format(ctx.getString(R.string.sizemb), (double)size/(Constants.MB));
+		
+		else if(size>1024)
+			return String.format(ctx.getString(R.string.sizekb), (double)size/(1024));
+		
+		else
+			return String.format(ctx.getString(R.string.sizebytes), (double)size);
+	}
+	
 }
