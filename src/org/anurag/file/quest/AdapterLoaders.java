@@ -34,9 +34,11 @@ public class AdapterLoaders {
 	static String list[];
 	static Context mContext;
 	boolean status; 
-	public AdapterLoaders(Context context,boolean st){
+	int PANEL;
+	public AdapterLoaders(Context context,boolean st,int panel){
 		mContext = context;
 		status =st;
+		PANEL = panel;
 	}	
 	
 	public static Adapter getCloudAdapter(Context con){
@@ -168,15 +170,15 @@ public class AdapterLoaders {
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_open);
 					ho.Name.setText(mContext.getString(R.string.open));
 				}else if(position == 2){
-					if(FileQuest.ZIP_SD || FileQuest.ZIP_ROOT ||FileQuest.RAR_ROOT||FileQuest.RAR_SIMPLE
-							||FileQuest.TAR_ROOT||FileQuest.TAR_SIMPLE){
+					if((FileQuest.ZIP_SD &&PANEL==2)|| (FileQuest.ZIP_ROOT && PANEL==1)||(FileQuest.RAR_ROOT && PANEL==2)||(FileQuest.RAR_SIMPLE && PANEL==1)
+							||(FileQuest.TAR_ROOT && PANEL==2)||(FileQuest.TAR_SIMPLE && PANEL==1)){
 						ho.Name.setText(mContext.getString(R.string.extractto));
 					}else
 						ho.Name.setText(mContext.getString(R.string.copy));
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_copy);
 				}else if(position == 3){
-					if(FileQuest.ZIP_SD || FileQuest.ZIP_ROOT ||FileQuest.RAR_ROOT||FileQuest.RAR_SIMPLE
-							||FileQuest.TAR_ROOT||FileQuest.TAR_SIMPLE){
+					if((FileQuest.ZIP_SD &&PANEL==2)|| (FileQuest.ZIP_ROOT && PANEL==1)||(FileQuest.RAR_ROOT && PANEL==2)||(FileQuest.RAR_SIMPLE && PANEL==1)
+							||(FileQuest.TAR_ROOT && PANEL==2)||(FileQuest.TAR_SIMPLE && PANEL==1)){
 						ho.Icon.setBackgroundResource(R.drawable.ic_launcher_copy);
 						ho.Name.setText(mContext.getString(R.string.extracthere));
 					}else{

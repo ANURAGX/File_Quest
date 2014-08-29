@@ -987,7 +987,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			final Dialog d = new Dialog(mContext,R.style.custom_dialog_theme);
 			d.setContentView(R.layout.long_click_dialog);
 			ListView lo = (ListView) d.findViewById(R.id.list);
-			AdapterLoaders loaders = new AdapterLoaders(getActivity(), false);
+			AdapterLoaders loaders = new AdapterLoaders(getActivity(), false,0);
 			lo.setAdapter(loaders.getLongClickAdapter());
 			lo.setSelector(getResources().getDrawable(R.drawable.blue_button));
 			d.getWindow().getAttributes().width = size.x*8/9;
@@ -1210,7 +1210,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			final Dialog d = new Dialog(mContext, R.style.custom_dialog_theme);
 			d.setContentView(R.layout.long_click_dialog);
 			ListView lo = (ListView) d.findViewById(R.id.list);
-			AdapterLoaders loaders = new AdapterLoaders(getActivity(), false);
+			AdapterLoaders loaders = new AdapterLoaders(getActivity(), false , 1);
 			lo.setAdapter(loaders.getLongClickAdapter());
 			lo.setSelector(getResources().getDrawable(R.drawable.blue_button));
 			d.getWindow().getAttributes().width = size.x*8/9;
@@ -1478,7 +1478,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			dialog = new Dialog(getActivity(), R.style.custom_dialog_theme);
 			dialog.setContentView(R.layout.long_click_dialog);
 			ListView lo = (ListView) dialog.findViewById(R.id.list);
-			AdapterLoaders loaders = new AdapterLoaders(getActivity(), false);
+			AdapterLoaders loaders = new AdapterLoaders(mContext, false , 2);
 			lo.setAdapter(loaders.getLongClickAdapter());
 			lo.setSelector(getResources().getDrawable(R.drawable.blue_button));
 			dialog.getWindow().getAttributes().width = size.x*8/9;
@@ -1838,7 +1838,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					R.style.custom_dialog_theme);
 			dia.setContentView(R.layout.long_click_dialog);
 			ListView lo = (ListView) dia.findViewById(R.id.list);
-			AdapterLoaders loaders = new AdapterLoaders(getActivity(), true);
+			AdapterLoaders loaders = new AdapterLoaders(mContext, true , 3);
 			lo.setAdapter(loaders.getLongClickAdapter());
 			lo.setSelector(getResources().getDrawable(R.drawable.blue_button));
 			dia.getWindow().getAttributes().width = size.x*8/9;
