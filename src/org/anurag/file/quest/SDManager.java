@@ -332,4 +332,13 @@ public class SDManager {
 			return String.format(ctx.getString(R.string.sizebytes), (double)size);
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Item> getPreviousList(){
+		nStack.pop();
+		return getList();
+	}
+	
 }
