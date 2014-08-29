@@ -162,14 +162,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	/**
 	 * RAR RELATED VARIABLES....
 	 */
-	public static boolean RAR_SIMPLE;
 	public static boolean RAR_ROOT;
-	private static ArrayList<RarObj> rListRoot;
+	public static boolean RAR_SD;
+	private static ArrayList<RarObj> rListSD;
+	private static String rarPathSD;
 	private static String rarPathRoot;
-	private static String rarPathSimple;
-	private static ArrayList<RarObj> rListSimple;
+	private static ArrayList<RarObj> rListRoot;
+	private static RarObj rarFileSD;
 	private static RarObj rFileRoot;
-	private static RarObj rFileSimple;
 	private static ArrayList<RarObj> rSearch;
 	
 	/**
@@ -319,7 +319,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		zipPathSD = null;
 		zipPathRoot = null;
 		
-		TAR_ROOT = RAR_SIMPLE = RAR_ROOT = false;
+		TAR_ROOT = RAR_ROOT = RAR_SD = false;
 	
 		ZIP_ROOT = ZIP_SD = SEARCH_FLAG = RENAME_COMMAND = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = CREATE_FILE = false;
 		fPos = 0;
@@ -722,16 +722,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// WITH HINDI LANGAUGE IS CREATED THROWS INDEXOUTOFBOUND
 						// EXCEPTION
 						// I THINK IT IS APPLICABLE TO OTHER LANGUAGES ALSO
-					if(!ZIP_SD&&!RAR_ROOT&&!TAR_ROOT)
+					if(!ZIP_SD&&!RAR_SD&&!TAR_ROOT)
 						nFiles = RFileManager.giveMeFileList();
-					if(!ZIP_ROOT&&!RAR_SIMPLE&&!TAR_SIMPLE)
+					if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_SIMPLE)
 						sFiles = SFileManager.giveMeFileList();
 					if (ITEM == 0)
 						load_FIle_Gallery(pos);
 				} catch (IndexOutOfBoundsException e) {
-					if(!ZIP_SD&&!RAR_ROOT&&!TAR_ROOT)
+					if(!ZIP_SD&&!RAR_SD&&!TAR_ROOT)
 						nFiles = RFileManager.giveMeFileList();
-					if(!ZIP_ROOT&&!RAR_SIMPLE&&!TAR_SIMPLE)
+					if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_SIMPLE)
 						sFiles = SFileManager.giveMeFileList();
 				}
 
@@ -1123,8 +1123,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			simple.setDivider(color);
 			if(ZIP_ROOT)
 				setListAdapter(new ZipAdapter(zListRoot, mContext));
-			else if(RAR_SIMPLE)
-				setListAdapter(new RarAdapter(mContext, rListSimple));
+			else if(RAR_ROOT)
+				setListAdapter(new RarAdapter(mContext, rListRoot));
 			else if(TAR_SIMPLE)
 				setListAdapter(new TarAdapter(mContext, tListSimple));
 			else
@@ -1136,8 +1136,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if (SEARCH_FLAG) {
 						if(ZIP_ROOT)
 							zFileSimple = zSearch.get(position);
-						else if(RAR_SIMPLE)
-							rFileSimple = rSearch.get(position);
+						else if(RAR_ROOT)
+							rFileRoot = rSearch.get(position);
 						else if(TAR_SIMPLE)
 							tFileSimple = tSearch.get(position);
 						else
@@ -1145,8 +1145,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					} else {
 						if(ZIP_ROOT)
 							zFileSimple = zListRoot.get(position);
-						else if(RAR_SIMPLE)
-							rFileSimple = rListSimple.get(position);
+						else if(RAR_ROOT)
+							rFileRoot = rListRoot.get(position);
 						else if(TAR_SIMPLE)
 							tFileSimple = tListSimple.get(position);
 						else
@@ -1174,15 +1174,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								zipPathRoot = zipPathRoot.substring(1, zipPathRoot.length());
 							setZipAdapter();
 						}	
-					}else if(RAR_SIMPLE){//handling rar file.....
-						if(rFileSimple.isFile()){
+					}else if(RAR_ROOT){//handling rar file.....
+						if(rFileRoot.isFile()){
 							//EXTRACT TO CACHE DIR AND THEN OPEN IT....
-							new ExtractRarFile(mContext, rFileSimple, size.x*8/9, null, file, 0);
+							new ExtractRarFile(mContext, rFileRoot, size.x*8/9, null, file, 0);
 						}else{
-							rarPathSimple = rFileSimple.getPath();
-							if(rarPathSimple.startsWith("\\"))
-								rarPathSimple = rarPathSimple.substring(0,rarPathSimple.length());
-							SFileManager.nStack.push(rFileSimple.getFileName()+" -> Rar");
+							rarPathRoot = rFileRoot.getPath();
+							if(rarPathRoot.startsWith("\\"))
+								rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
+							SFileManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
 							setRarAdapter();
 						}
 						
@@ -1222,8 +1222,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(SEARCH_FLAG){
 						if(ZIP_ROOT)
 							zFileSimple = zListRoot.get(position);
-						else if(RAR_SIMPLE)
-							rFileSimple = rSearch.get(position);
+						else if(RAR_ROOT)
+							rFileRoot = rSearch.get(position);
 						else if(TAR_SIMPLE)
 							tFileSimple = tSearch.get(position);
 						else
@@ -1231,8 +1231,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					} else {
 						if(ZIP_ROOT)
 							zFileSimple = zListRoot.get(position);
-						else if(RAR_SIMPLE)
-							rFileSimple = rListSimple.get(position);
+						else if(RAR_ROOT)
+							rFileRoot = rListRoot.get(position);
 						else if(TAR_SIMPLE)
 							tFileSimple = tListSimple.get(position);
 						else
@@ -1276,15 +1276,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									zipPathRoot = zipPathRoot.substring(1, zipPathRoot.length());
 								setZipAdapter();
 							}	
-						}else if(RAR_SIMPLE){//handling rar file.....
-							if(rFileSimple.isFile()){
+						}else if(RAR_ROOT){//handling rar file.....
+							if(rFileRoot.isFile()){
 								//extract file to cache dir and the open it....
-								new ExtractRarFile(mContext, rFileSimple, size.x*8/9, null, file, 0);
+								new ExtractRarFile(mContext, rFileRoot, size.x*8/9, null, file, 0);
 							}else{
-								rarPathSimple = rFileSimple.getPath();
-								if(rarPathSimple.startsWith("\\"))
-									rarPathSimple = rarPathSimple.substring(0,rarPathSimple.length());
-								SFileManager.nStack.push(rFileSimple.getFileName()+" -> Rar");
+								rarPathRoot = rFileRoot.getPath();
+								if(rarPathRoot.startsWith("\\"))
+									rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
+								SFileManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
 								setRarAdapter();
 							}
 							
@@ -1320,7 +1320,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							mVFlipper.setAnimation(nextAnim());
 						}
 
-						if(ZIP_ROOT||RAR_SIMPLE||TAR_SIMPLE){
+						if(ZIP_ROOT||RAR_ROOT||TAR_SIMPLE){
 							//CURRENTLY WE ARE INSIDE OF ZIP ARCHIVE...
 							//EXTRACT FILES TO USER SPECIFIED PATH....
 							new GetHomeDirectory(mContext, size.x*8/9, null);
@@ -1360,14 +1360,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 					case 4:
 						// PASTE
-						if(ZIP_ROOT||RAR_SIMPLE||TAR_SIMPLE)
+						if(ZIP_ROOT||RAR_ROOT||TAR_SIMPLE)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else
 							pasteCommand(true);
 						break;
 					case 5:
 						// ZIP
-						if(ZIP_ROOT||RAR_SIMPLE||TAR_SIMPLE)
+						if(ZIP_ROOT||RAR_ROOT||TAR_SIMPLE)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
 							if (!file.canRead())
@@ -1383,7 +1383,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					case 6:
 							
 							//DELETE
-						if(ZIP_ROOT||RAR_SIMPLE||TAR_SIMPLE)
+						if(ZIP_ROOT||RAR_ROOT||TAR_SIMPLE)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
 							ArrayList<File> te = new ArrayList<File>();
@@ -1393,7 +1393,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							break;
 					case 7:
 						// RENAME
-						if(ZIP_ROOT||RAR_SIMPLE||TAR_SIMPLE)
+						if(ZIP_ROOT||RAR_ROOT||TAR_SIMPLE)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else
 							Toast.makeText(mContext,"Yet to implement rename command for root files",Toast.LENGTH_SHORT).show();
@@ -1406,7 +1406,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								new ExtractZipFile(mContext, zFileSimple, size.x*8/9, null, file, 2);
 							else
 								Toast.makeText(mContext, R.string.cannotsendfolder, Toast.LENGTH_SHORT).show();
-						}else if(RAR_SIMPLE){
+						}else if(RAR_ROOT){
 							
 						}else if(TAR_SIMPLE){
 							if(tFileSimple.isFile())//the mode is 2 to share it via bluetooth....
@@ -1425,7 +1425,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 					case 9:
 						//ADD GESTURE...
-						if(ZIP_ROOT||RAR_SIMPLE||TAR_SIMPLE)
+						if(ZIP_ROOT||RAR_ROOT||TAR_SIMPLE)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else
 							new AddGesture(mContext, size.x, size.y*8/9, file.getPath());
@@ -1434,8 +1434,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// PROPERTIES
 						if(ZIP_ROOT)//A ZIP FILE IS OPENED....
 							new ArchiveEntryProperties(mContext, zFileSimple, size.x*8/9);
-						else if(RAR_SIMPLE)
-							new RarFileProperties(mContext, rFileSimple, size.x*8/9);
+						else if(RAR_ROOT)
+							new RarFileProperties(mContext, rFileRoot, size.x*8/9);
 						else if(TAR_SIMPLE)
 							new TarFileProperties(mContext, tFileSimple, size.x*8/9);
 						else
@@ -1469,8 +1469,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				setListAdapter(new DBoxAdapter(mContext, DBoxManager.dListRoot));
 			else if(ZIP_SD){
 				setListAdapter(new ZipAdapter(zListSD,mContext));
-			}else if(RAR_ROOT)
-				setListAdapter(new RarAdapter(mContext, rListRoot));
+			}else if(RAR_SD)
+				setListAdapter(new RarAdapter(mContext, rListSD));
 			else if(TAR_ROOT)
 				setListAdapter(new TarAdapter(mContext, tListRoot));
 			else	
@@ -1489,8 +1489,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if (SEARCH_FLAG){
 						if(ZIP_SD)
 							zFileSD = zSearch.get(arg2);
-						else if(RAR_ROOT)
-							rFileRoot = rSearch.get(arg2);
+						else if(RAR_SD)
+							rarFileSD = rSearch.get(arg2);
 						else if(TAR_ROOT)
 							tFileRoot = tSearch.get(arg2);
 						else
@@ -1498,8 +1498,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					} else {
 						if(ZIP_SD)
 							zFileSD = zListSD.get(arg2);
-						else if(RAR_ROOT)
-							rFileRoot = rListRoot.get(arg2);
+						else if(RAR_SD)
+							rarFileSD = rListSD.get(arg2);
 						else if(TAR_ROOT)
 							tFileRoot = tListRoot.get(arg2);
 						else
@@ -1537,15 +1537,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 										zipPathSD = zipPathSD.substring(1, zipPathSD.length());
 									setZipAdapter();
 								}	
-							}else if(RAR_ROOT){//RAR FILE HANDLING...
-								if(rFileRoot.isFile()){//EXTRATC FILES TO CACHE DIR AND THEN OPEN IT...
-									new ExtractRarFile(mContext, rFileRoot, size.x*8/9, null, file2, 0);
+							}else if(RAR_SD){//RAR FILE HANDLING...
+								if(rarFileSD.isFile()){//EXTRATC FILES TO CACHE DIR AND THEN OPEN IT...
+									new ExtractRarFile(mContext, rarFileSD, size.x*8/9, null, file2, 0);
 								}else{
 									//LISTING THE DIRECTORIES....
-									rarPathRoot = rFileRoot.getPath();
-									if(rarPathRoot.startsWith("\\"))
-										rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
-									RFileManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
+									rarPathSD = rarFileSD.getPath();
+									if(rarPathSD.startsWith("\\"))
+										rarPathSD = rarPathSD.substring(0,rarPathSD.length());
+									RFileManager.nStack.push(rarFileSD.getFileName()+" -> Rar");
 									setRarAdapter();
 								}
 							}else if(TAR_ROOT){//HANDLING TAR FILE....
@@ -1587,7 +1587,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							mVFlipper.setAnimation(nextAnim());
 						}
 						
-						if(ZIP_SD||RAR_ROOT||TAR_ROOT){
+						if(ZIP_SD||RAR_SD||TAR_ROOT){
 							//ZIP CONTENTS HAS TO EXTRACTED AT USER SPECIFIED LOCATION.....
 							
 							/**
@@ -1626,14 +1626,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 					case 4:
 						// PASTE
-						if(ZIP_SD||RAR_ROOT||TAR_ROOT)
+						if(ZIP_SD||RAR_SD||TAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else
 							pasteCommand(true);
 						break;
 					case 5:
 						// ZIP
-						if(ZIP_SD||RAR_ROOT||TAR_ROOT)
+						if(ZIP_SD||RAR_SD||TAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
 							ArrayList<File> temp = new ArrayList<File>();
@@ -1645,7 +1645,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					case 6:
 						
 							//DELETE
-						if(ZIP_SD||RAR_ROOT||TAR_ROOT)
+						if(ZIP_SD||RAR_SD||TAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
 							ArrayList<File> te = new ArrayList<File>();
@@ -1655,7 +1655,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							break;
 					case 7:
 						// RENAME
-						if(ZIP_SD||RAR_ROOT||TAR_ROOT)
+						if(ZIP_SD||RAR_SD||TAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
 							COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
@@ -1674,7 +1674,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								new ExtractZipFile(mContext, zFileSD, size.x*8/9, null, file2, 2);
 							else
 								Toast.makeText(mContext, R.string.cannotsendfolder, Toast.LENGTH_SHORT).show();
-						}else if(RAR_ROOT){
+						}else if(RAR_SD){
 							
 						}else if(TAR_ROOT){
 							if(tFileRoot.isFile()){
@@ -1692,7 +1692,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 					case 9:
 						// gesture to the selected file....
-						if(ZIP_SD||RAR_ROOT||TAR_ROOT)
+						if(ZIP_SD||RAR_SD||TAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else
 							new AddGesture(mContext, size.x, size.y*8/9,file2.getPath());
@@ -1701,8 +1701,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// PROPERTIES
 						if(ZIP_SD)
 							new ArchiveEntryProperties(mContext, zFileSD, size.x*8/9);
-						else if(RAR_ROOT)
-							new RarFileProperties(mContext, rFileRoot, size.x*8/9);
+						else if(RAR_SD)
+							new RarFileProperties(mContext, rarFileSD, size.x*8/9);
 						else if(TAR_ROOT)
 							new TarFileProperties(mContext, tFileRoot, size.x*8/9);
 						else
@@ -1717,8 +1717,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(SEARCH_FLAG){
 						if(ZIP_SD)
 							zFileSD = zSearch.get(position);
-						else if(RAR_ROOT)
-							rFileRoot = rSearch.get(position);
+						else if(RAR_SD)
+							rarFileSD = rSearch.get(position);
 						else if(TAR_ROOT)
 							tFileRoot = tSearch.get(position);
 						else
@@ -1726,8 +1726,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}else{
 						if(ZIP_SD)
 							zFileSD = zListSD.get(position);
-						else if(RAR_ROOT)
-							rFileRoot = rListRoot.get(position);
+						else if(RAR_SD)
+							rarFileSD = rListSD.get(position);
 						else if(TAR_ROOT)
 							tFileRoot = tListRoot.get(position);
 						else
@@ -1753,15 +1753,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								zipPathSD = zipPathSD.substring(1, zipPathSD.length());
 							setZipAdapter();
 						}						
-					}else if(RAR_ROOT){//rar file handling....
-						if(rFileRoot.isFile()){//EXTRACT THE FILE TO CACHE DIRECTORY AND THEN OPEN IT WITH
+					}else if(RAR_SD){//rar file handling....
+						if(rarFileSD.isFile()){//EXTRACT THE FILE TO CACHE DIRECTORY AND THEN OPEN IT WITH
 							//APPROPRIATE APP.....
-							new ExtractRarFile(mContext, rFileRoot, size.x*8/9, null, file2, 0);
+							new ExtractRarFile(mContext, rarFileSD, size.x*8/9, null, file2, 0);
 						}else{
-							rarPathRoot = rFileRoot.getPath();
-							if(rarPathRoot.startsWith("\\"))
-								rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
-							RFileManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
+							rarPathSD = rarFileSD.getPath();
+							if(rarPathSD.startsWith("\\"))
+								rarPathSD = rarPathSD.substring(0,rarPathSD.length());
+							RFileManager.nStack.push(rarFileSD.getFileName()+" -> Rar");
 							setRarAdapter();
 						}
 					}else if(TAR_ROOT){//HANDLING TAR FILE....
@@ -1973,7 +1973,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			break;
 
 		case R.id.bottom_paste:
-			if (CURRENT_ITEM == 0||ZIP_SD||ZIP_ROOT||RAR_ROOT||RAR_SIMPLE) {
+			if (CURRENT_ITEM == 0||ZIP_SD||ZIP_ROOT||RAR_SD||RAR_ROOT) {
 				Toast.makeText(mContext, getString(R.string.pastenotallowed), Toast.LENGTH_SHORT).show();
 			}else{
 				pasteCommand(false);
@@ -1981,28 +1981,28 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			break;
 
 		case R.id.bottom_copy:
-			if(ZIP_SD||ZIP_ROOT||RAR_ROOT||RAR_SIMPLE){
+			if(ZIP_SD||ZIP_ROOT||RAR_SD||RAR_ROOT){
 				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
 			}else
 				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 5,getString(R.string.enablemultiselect));
 			break;
 
 		case R.id.bottom_cut:
-			if(ZIP_SD||ZIP_ROOT||RAR_ROOT||RAR_SIMPLE){
+			if(ZIP_SD||ZIP_ROOT||RAR_SD||RAR_ROOT){
 				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
 			}else
 				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 2,getString(R.string.enablemultiselect));
 			break;
 
 		case R.id.bottom_zip:
-			if(ZIP_SD||ZIP_ROOT||RAR_ROOT||RAR_SIMPLE){
+			if(ZIP_SD||ZIP_ROOT||RAR_SD||RAR_ROOT){
 				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
 			}else
 				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 3,getString(R.string.enablemultiselect));
 			break;
 
 		case R.id.bottom_delete:
-			if((ZIP_SD||ZIP_ROOT||RAR_ROOT||RAR_SIMPLE)){
+			if((ZIP_SD||ZIP_ROOT||RAR_SD||RAR_ROOT)){
 				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
 			}else
 				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 4,getString(R.string.enablemultiselect));
@@ -2085,7 +2085,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
 							SimpleAdapter.thumbselection = new boolean[sFiles.size()];
 							SimpleAdapter.MULTI_SELECT = false;
-							if(!ZIP_ROOT&&!RAR_SIMPLE&&!TAR_SIMPLE){
+							if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_SIMPLE){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
@@ -2096,7 +2096,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							SimpleAdapter.thumbselection = new boolean[sFiles.size()];
 							SimpleAdapter.MULTI_SELECT = true;
 							mViewPager.setCurrentItem(1);
-							if(!ZIP_ROOT&&!RAR_SIMPLE&&!TAR_SIMPLE){
+							if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_SIMPLE){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
@@ -2109,7 +2109,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							RootAdapter = new RootAdapter(mContext,R.layout.row_list_1, nFiles);
 							RootAdapter.thumbselection = new boolean[nFiles.size()];
 							RootAdapter.MULTI_SELECT = false;
-							if(!ZIP_SD&&!RAR_ROOT&&!TAR_ROOT){
+							if(!ZIP_SD&&!RAR_SD&&!TAR_ROOT){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
@@ -2120,7 +2120,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							RootAdapter.thumbselection = new boolean[nFiles.size()];
 							RootAdapter.MULTI_SELECT = true;
 							mViewPager.setCurrentItem(2);
-							if(!ZIP_SD&&!RAR_ROOT&&!TAR_ROOT){
+							if(!ZIP_SD&&!RAR_SD&&!TAR_ROOT){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
@@ -2220,7 +2220,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						mVFlipper.setAnimation(nextAnim());
 					}else//SEARCH INSIDE ZIP ARCHIVE...
 						zipSearch();
-				}else if(RAR_ROOT||RAR_SIMPLE){
+				}else if(RAR_SD||RAR_ROOT){
 					if(SEARCH_FLAG){//DISABLING SEARCH COMMAND....
 						SEARCH_FLAG = false;
 						mVFlipper.showNext();
@@ -2545,8 +2545,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 											new ArchiveEntryProperties(mContext, zFileSimple, size.x*8/9);
 										else if(TAR_SIMPLE && tFileSimple !=null)
 											new TarFileProperties(mContext, tFileSimple, size.x*8/9);
-										else if(RAR_SIMPLE && rFileSimple !=null)
-											new RarFileProperties(mContext, rFileSimple, size.x*8/9);
+										else if(RAR_ROOT && rFileRoot !=null)
+											new RarFileProperties(mContext, rFileRoot, size.x*8/9);
 										else
 											new FileProperties(mContext,size.x *8/9, file);
 									} else if (CURRENT_ITEM == 2) {
@@ -2554,8 +2554,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 											new ArchiveEntryProperties(mContext, zFileSD, size.x*8/9);
 										else if(TAR_ROOT && tFileRoot!=null)
 											new TarFileProperties(mContext, tFileRoot, size.x*8/9);
-										else if(RAR_ROOT && rFileRoot !=null)
-											new RarFileProperties(mContext, rFileRoot, size.x*8/9);
+										else if(RAR_SD && rarFileSD !=null)
+											new RarFileProperties(mContext, rarFileSD, size.x*8/9);
 										else
 											new FileProperties(mContext,size.x*8/9, file2);
 									}
@@ -2922,19 +2922,19 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					setZipAdapter();
 				}
 				
-			}else if(RAR_SIMPLE&&CURRENT_ITEM==1){//RAR FILE HANDLING ON BACK KEY PRESS...
+			}else if(RAR_ROOT&&CURRENT_ITEM==1){//RAR FILE HANDLING ON BACK KEY PRESS...
 				SFileManager.nStack.pop();
-				if(rarPathSimple.equalsIgnoreCase("/")){
-					RAR_SIMPLE = false;
-					rarPathSimple = null;
+				if(rarPathRoot.equalsIgnoreCase("/")){
+					RAR_ROOT = false;
+					rarPathRoot = null;
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
 				}else{
 					try{//no need about the exception...
-						rarPathSimple = rarPathSimple.substring(0, rarPathSimple.lastIndexOf("\\"));
+						rarPathRoot = rarPathRoot.substring(0, rarPathRoot.lastIndexOf("\\"));
 						setRarAdapter();
 					}catch(Exception e){
-						rarPathSimple = "/";
+						rarPathRoot = "/";
 						setRarAdapter();
 					}
 				}
@@ -3051,20 +3051,20 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					setZipAdapter();
 				}
 				
-			}else if(RAR_ROOT&&CURRENT_ITEM==2){
+			}else if(RAR_SD&&CURRENT_ITEM==2){
 				//BACK KEY HANDLING FOR RAR FILES....
 				RFileManager.nStack.pop();
-				if(rarPathRoot.equalsIgnoreCase("/")){
-					RAR_ROOT = false;
-					rarPathRoot = null;
+				if(rarPathSD.equalsIgnoreCase("/")){
+					RAR_SD = false;
+					rarPathSD = null;
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
 				}else{
 					try{//NO NEED TO WORRY ABOUT THE EXCEPTION....
-						rarPathRoot = rarPathRoot.substring(0, rarPathRoot.lastIndexOf("\\"));
+						rarPathSD = rarPathSD.substring(0, rarPathSD.lastIndexOf("\\"));
 						setRarAdapter();
 					}catch(Exception e){
-						rarPathRoot = "/";
+						rarPathSD = "/";
 						setRarAdapter();
 					}
 				}
@@ -4706,10 +4706,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					cleanStack(it.getStringExtra("open_path"));
 					
 					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
-						RAR_ROOT = true;
+						RAR_SD = true;
 						RFileManager.nStack.push("/ -> Rar");
 					}else{
-						RAR_SIMPLE = true;
+						RAR_ROOT = true;
 						SFileManager.nStack.push("/ -> Rar");
 					}
 					setRarAdapter();
@@ -4997,17 +4997,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							// TODO Auto-generated method stub
 							if(CURRENT_ITEM==2){
 								String text = ed.toString().toLowerCase();
+								int len = rListSD.size();
+								for(int i=0;i<len;++i){
+									if(rListSD.get(i).getFileName().toLowerCase().contains(text))
+										rSearch.add(rListSD.get(i));
+								}
+							}else if(CURRENT_ITEM==1){
+								String text = ed.toString().toLowerCase();
 								int len = rListRoot.size();
 								for(int i=0;i<len;++i){
 									if(rListRoot.get(i).getFileName().toLowerCase().contains(text))
 										rSearch.add(rListRoot.get(i));
-								}
-							}else if(CURRENT_ITEM==1){
-								String text = ed.toString().toLowerCase();
-								int len = rListSimple.size();
-								for(int i=0;i<len;++i){
-									if(rListSimple.get(i).getFileName().toLowerCase().contains(text))
-										rSearch.add(rListSimple.get(i));
 								}
 							}
 							return null;
@@ -5112,7 +5112,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		final Handler handle = new Handler(){
 			@Override
 			public void handleMessage(Message msg){
-				if(msg.what==0 && (RAR_ROOT||RAR_SIMPLE)){
+				if(msg.what==0 && (RAR_SD||RAR_ROOT)){
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
 					if(progDial.isShowing())
@@ -5136,11 +5136,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				if(rarPathRoot==null)
-					rarPathRoot = "/";
+				if(rarPathSD==null)
+					rarPathSD = "/";
 				
-				if(rarPathSimple == null)
-					rarPathSimple = "/";
+				if(rarPathRoot == null)
+					rarPathRoot = "/";
 				
 				if(CURRENT_ITEM==2||CURRENT_ITEM==0){
 					try {
@@ -5150,27 +5150,27 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							fi = file0;
 						}
 						Archive zf = new Archive(fi);
-						rListRoot = new RarManager(zf, rarPathRoot, mContext).generateList();
+						rListSD = new RarManager(zf, rarPathSD, mContext).generateList();
 						handle.sendEmptyMessage(0);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						RAR_ROOT = false;
+						RAR_SD = false;
 						handle.sendEmptyMessage(1);
 					}catch(RarException e){
-						RAR_ROOT = false;
+						RAR_SD = false;
 						handle.sendEmptyMessage(1);
 					}
 				}else if(CURRENT_ITEM==1){
 					try{
 						Archive zfile = new Archive(file);
-						rListSimple = new RarManager(zfile, rarPathSimple, mContext).generateList();
+						rListRoot = new RarManager(zfile, rarPathRoot, mContext).generateList();
 						handle.sendEmptyMessage(0);
 					}catch(IOException e){
-						RAR_SIMPLE = false;
+						RAR_ROOT = false;
 						handle.sendEmptyMessage(1);
 					}catch(RarException e){
-						RAR_ROOT = false;
+						RAR_SD = false;
 						handle.sendEmptyMessage(1);
 					}
 				}
@@ -5268,15 +5268,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @param p
 	 */
 	private void cleanStack(String p){
-		if(CURRENT_ITEM==1&&(RAR_SIMPLE||ZIP_ROOT||TAR_SIMPLE)){
+		if(CURRENT_ITEM==1&&(RAR_ROOT||ZIP_ROOT||TAR_SIMPLE)){
 			while(SFileManager.nStack.peek().contains("->"))
 				SFileManager.nStack.pop();
-			RAR_SIMPLE = TAR_SIMPLE= ZIP_ROOT = false;
+			RAR_ROOT = TAR_SIMPLE= ZIP_ROOT = false;
 			file = new File(p);
-		}else if(CURRENT_ITEM==2&&(RAR_ROOT||TAR_ROOT||ZIP_SD)){
+		}else if(CURRENT_ITEM==2&&(RAR_SD||TAR_ROOT||ZIP_SD)){
 			while(RFileManager.nStack.peek().contains("->"))
 				RFileManager.nStack.pop();
-			RAR_ROOT = ZIP_SD = TAR_ROOT = false;
+			RAR_SD = ZIP_SD = TAR_ROOT = false;
 			file2 = new File(p);
 		}
 	}
@@ -5296,7 +5296,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					Toast.makeText(mContext, R.string.cannotexthere, Toast.LENGTH_SHORT).show();
 			}else if(CURRENT_ITEM == 2)
 				new ExtractZipFile(mContext, zFileSD, size.x*8/9, p, file2, 1);
-		}else if(RAR_ROOT||RAR_SIMPLE){//EXTRACTING FILE FROM RAR ARCHIVE...
+		}else if(RAR_SD||RAR_ROOT){//EXTRACTING FILE FROM RAR ARCHIVE...
 			
 		}else if(TAR_ROOT||TAR_SIMPLE){//EXTRACTING FILES FROM TAR ARCHIVE...
 			if(CURRENT_ITEM==1){

@@ -170,15 +170,17 @@ public class AdapterLoaders {
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_open);
 					ho.Name.setText(mContext.getString(R.string.open));
 				}else if(position == 2){
-					if((FileQuest.ZIP_SD &&PANEL==2)|| (FileQuest.ZIP_ROOT && PANEL==1)||(FileQuest.RAR_ROOT && PANEL==2)||(FileQuest.RAR_SIMPLE && PANEL==1)
-							||(FileQuest.TAR_ROOT && PANEL==2)||(FileQuest.TAR_SIMPLE && PANEL==1)){
+					if((FileQuest.ZIP_SD &&PANEL==2)|| (FileQuest.ZIP_ROOT && PANEL==1)||(FileQuest.RAR_SD && PANEL==2)
+							||(FileQuest.RAR_ROOT && PANEL==1)||(FileQuest.TAR_ROOT && PANEL==2)||
+							(FileQuest.TAR_SIMPLE && PANEL==1)){
 						ho.Name.setText(mContext.getString(R.string.extractto));
 					}else
 						ho.Name.setText(mContext.getString(R.string.copy));
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_copy);
 				}else if(position == 3){
-					if((FileQuest.ZIP_SD &&PANEL==2)|| (FileQuest.ZIP_ROOT && PANEL==1)||(FileQuest.RAR_ROOT && PANEL==2)||(FileQuest.RAR_SIMPLE && PANEL==1)
-							||(FileQuest.TAR_ROOT && PANEL==2)||(FileQuest.TAR_SIMPLE && PANEL==1)){
+					if((FileQuest.ZIP_SD &&PANEL==2)|| (FileQuest.ZIP_ROOT && PANEL==1)||(FileQuest.RAR_SD && PANEL==2)
+							||(FileQuest.RAR_ROOT && PANEL==1)||(FileQuest.TAR_ROOT && PANEL==2)||
+							(FileQuest.TAR_SIMPLE && PANEL==1)){
 						ho.Icon.setBackgroundResource(R.drawable.ic_launcher_copy);
 						ho.Name.setText(mContext.getString(R.string.extracthere));
 					}else{
