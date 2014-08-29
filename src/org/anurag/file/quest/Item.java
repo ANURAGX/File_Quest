@@ -33,7 +33,7 @@ public class Item {
 	String size;
 	String type;
 	
-	public Item(File fi) {
+	public Item(File fi , Drawable img , String typ , String si) {
 		// TODO Auto-generated constructor stub
 		file = fi;
 		parent = file.getParent();
