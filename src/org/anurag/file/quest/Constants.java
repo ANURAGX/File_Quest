@@ -27,6 +27,16 @@ import android.os.Environment;
  *
  */
 public class Constants {
+	
+	public static int FOLDER_TYPE;
+	public static int[] FOLDERS = {R.drawable.ic_launcher_orange_folder ,
+		   R.drawable.ic_launcher_green_folder,
+		   R.drawable.ic_launcher_yellow_folder , 
+		   R.drawable.ic_launcher_violet_folder,
+		   R.drawable.ic_launcher_red_folder ,
+		   R.drawable.ic_launcher_brown_folder,
+		   R.drawable.ic_launcher_blue_folder};	
+	
 	public static boolean LOAD_THUMBNAILS=false;
 	public static long GB = 1024*1024*1024;
 	public static long MB = 1024*1024;
