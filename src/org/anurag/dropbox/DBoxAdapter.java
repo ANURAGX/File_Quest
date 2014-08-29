@@ -21,8 +21,8 @@ package org.anurag.dropbox;
 
 import java.util.ArrayList;
 
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
-import org.anurag.file.quest.RootAdapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -88,7 +88,7 @@ public class DBoxAdapter extends BaseAdapter{
 		}else
 			hold = (Holder) convertView.getTag();
 		if(file.isDir())
-			hold.icon.setImageDrawable(ctx.getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+			hold.icon.setImageDrawable(ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
 		else
 			hold.icon.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_unknown));
 		hold.fName.setText(file.getName());
