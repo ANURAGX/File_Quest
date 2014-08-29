@@ -19,6 +19,8 @@
 
 package org.anurag.file.quest;
 
+import android.os.Environment;
+
 /**
  * THIS FILE CONTAINS THE CONSTANTS THAT ARE USED ALL OVER THE PROGRAM...
  * @author Anurag
@@ -29,4 +31,5 @@ public class Constants {
 	public static long GB = 1024*1024*1024;
 	public static long MB = 1024*1024;
 	public static int BUFFER = 1024*1024;
+	public static String PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
 }
