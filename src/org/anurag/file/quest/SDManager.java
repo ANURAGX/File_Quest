@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Stack;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -272,8 +273,13 @@ public class SDManager {
 		else if(name.endsWith(".apk")||name.endsWith(".APK")){
 			type=ctx.getString(R.string.application);
 			return res.getDrawable(R.drawable.ic_launcher_apk);
-		}		
-		else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
+		}else if(name.endsWith(".pdf")||name.endsWith(".PDF")){
+			type=ctx.getString(R.string.pdf);
+			return res.getDrawable(R.drawable.ic_launcher_adobe);
+		}else if(name.endsWith(".htm")||name.endsWith(".html")||name.endsWith(".mhtml")){
+			type=ctx.getString(R.string.web);
+			return res.getDrawable(R.drawable.ic_launcher_web_pages);
+		}else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
 				||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
 				||name.endsWith(".MKV")){
 			type=ctx.getString(R.string.vids);
@@ -284,10 +290,14 @@ public class SDManager {
 				||name.endsWith(".PNG")){
 			type=ctx.getString(R.string.image);
 			return res.getDrawable(R.drawable.ic_launcher_images);
+		}else if(name.endsWith(".txt")||name.endsWith(".TXT")||name.endsWith(".log")||name.endsWith(".LOG")
+				||name.endsWith(".ini")||name.endsWith(".INI")){
+			type=ctx.getString(R.string.text);
+			return res.getDrawable(R.drawable.ic_launcher_text);
 		}
-		else if(name.endsWith(".txt")||name.endsWith(".log")||name.endsWith(".ini")||name.endsWith(".doc")
-				||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".TXT")||name.endsWith(".LOG")||name.endsWith(".INI")||name.endsWith(".DOC")
-				||name.endsWith(".PPT")||name.endsWith(".DOCX")){
+		else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
+				||name.endsWith(".PPT")||name.endsWith(".DOCX")||name.endsWith(".pptx")||name.endsWith(".PPTX")
+				||name.endsWith(".csv")||name.endsWith(".CSV")){
 			type=ctx.getString(R.string.docs);
 			return res.getDrawable(R.drawable.ic_launcher_ppt);
 		}
