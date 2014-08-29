@@ -19,6 +19,8 @@
 
 package org.anurag.file.quest;
 
+import android.content.Context;
+
 /**
  * 
  * @author Anurag
@@ -26,6 +28,16 @@ package org.anurag.file.quest;
  */
 public class AdapterThread {
 
+	Context ctx;
+	
+	/**
+	 * THE CONTEXT SHOULD BE FILEQUEST....
+	 * @param context
+	 */
+	public AdapterThread(Context context) {
+		// TODO Auto-generated constructor stub
+		this.ctx = context;
+	}
 	
 	
 }
