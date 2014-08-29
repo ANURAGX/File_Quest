@@ -30,7 +30,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class SlashAdapter extends BaseAdapter{
+public class RootAdapter extends BaseAdapter{
 	
 	public boolean MULTI_SELECT;
 	public boolean[] thumbselection;
@@ -40,7 +40,7 @@ public class SlashAdapter extends BaseAdapter{
 	ArrayList<Item> list; 
 	LayoutInflater inflater;
 	ArrayList<Item> MULTI_FILES;
-	public SlashAdapter(Context context,ArrayList<Item> object) {
+	public RootAdapter(Context context,ArrayList<Item> object) {
 		// TODO Auto-generated constructor stub
 		ctx = context;
 		MULTI_FILES = new ArrayList<Item>();
