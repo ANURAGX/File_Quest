@@ -98,7 +98,7 @@ public class RootManager {
 		@Override
 		public boolean accept(File f) {
 			// TODO Auto-generated method stub
-			return f.canRead() && !f.isHidden();
+			return !f.isHidden();
 		}
 		
 	}
@@ -158,7 +158,7 @@ public class RootManager {
 			return getCurrentFileListWithHiddenItemFirst();
 		else if(SORT_TYPE == 5)
 			return getCurrentFileListWithHiddenItemLast();
-		if(file.canRead() && file.exists()){
+		{
 			File[] files = null;
 			if(!SHOW_HIDDEN_FOLDER)
 				files = file.listFiles(new HiddenFileFilter());
@@ -187,7 +187,7 @@ public class RootManager {
 	public ArrayList<Item> getCurrentFileListWithoutHiddenFolders(){
 		items.clear();
 		file = new File(nStack.peek());
-		if(file.canRead() && file.exists()){
+		{
 			File[] files = file.listFiles(new HiddenFileFilter());
 			int l = files.length;
 			for(int i = 0 ;i<l ; ++i)
@@ -204,16 +204,16 @@ public class RootManager {
 	public ArrayList<Item> getCurrentFileListWithHiddenItemFirst(){
 		items.clear();
 		file = new File(nStack.peek());
-		if(file.canRead() && file.exists()){
+		{
 			File[] files = file.listFiles();
 			Arrays.sort(files,alphaFolderFirst);
 			int l = files.length;
 			if(SHOW_HIDDEN_FOLDER)
 				for(int i = 0 ;i<l ; ++i)
-					if(files[i].getName().startsWith(".") && files[i].canRead())
+					if(files[i].getName().startsWith("."))
 						items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
 			for(int i = 0 ;i<l ; ++i)
-				if(!files[i].getName().startsWith(".") && files[i].canRead())
+				if(!files[i].getName().startsWith("."))
 					items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
 		}
 		
@@ -229,15 +229,15 @@ public class RootManager {
 	public ArrayList<Item> getCurrentFileListWithHiddenItemLast(){
 		items.clear();
 		file = new File(nStack.peek());
-		if(file.canRead() && file.exists()){
+		{
 			File[] files = file.listFiles();
 			Arrays.sort(files,alphaFolderFirst);
 			for(int i = 0 ;i<files.length ; ++i)
-				if(!files[i].getName().startsWith(".") && files[i].canRead())
+				if(!files[i].getName().startsWith("."))
 					items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
 			if(SHOW_HIDDEN_FOLDER)
 				for(int i = 0 ;i<files.length ; ++i)
-					if( files[i].getName().startsWith(".") && files[i].canRead())
+					if( files[i].getName().startsWith("."))
 						items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
 		}
 		return items;
@@ -276,6 +276,10 @@ public class RootManager {
 		else if(name.endsWith(".apk")||name.endsWith(".APK")){
 			type=ctx.getString(R.string.application);
 			return res.getDrawable(R.drawable.ic_launcher_apk);
+		}else if(name.endsWith(".sh")||name.endsWith(".SH")||name.endsWith(".prop")||name.endsWith("init")
+				||name.endsWith(".default")||name.endsWith(".rc")){
+			type=ctx.getString(R.string.script);
+			return res.getDrawable(R.drawable.ic_launcher_sh);
 		}else if(name.endsWith(".pdf")||name.endsWith(".PDF")){
 			type=ctx.getString(R.string.pdf);
 			return res.getDrawable(R.drawable.ic_launcher_adobe);
