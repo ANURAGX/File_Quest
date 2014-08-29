@@ -21,9 +21,7 @@ package org.anurag.compress;
 
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
-import org.anurag.file.quest.RootAdapter;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
@@ -161,7 +159,7 @@ public class TarObj {
 		 * ITS DIRECTORY CHECK......
 		 */
 		if(!isFile()){
-			this.icon = ctx.getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]);
+			this.icon = ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]);
 			return ctx.getString(R.string.directory);
 		}	
 		

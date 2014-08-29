@@ -16,12 +16,13 @@
  *                             anurag.dev1512@gmail.com
  *
  */
+
 package org.anurag.compress;
 
 import java.util.ArrayList;
 
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
-import org.anurag.file.quest.RootAdapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -98,7 +99,7 @@ public class RarAdapter extends BaseAdapter{
 		if(rFile.isFile())
 			h.icon.setImageDrawable(rFile.getIcon());
 		else{
-			h.icon.setImageDrawable(ctx.getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+			h.icon.setImageDrawable(ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
 			h.fSize.setVisibility(View.GONE);
 		}h.fSize.setText(rFile.getSize());
 		return convertView;
