@@ -191,6 +191,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 */
 	private static SDManager sdManager;
 	private static ArrayList<Item> sdItemsList;
+	private static RootManager rootManager;
+	private static ArrayList<Item> rootItemList;
+	
+	
+	
+	
 	
 	static int fPos;
 	private BroadcastReceiver RECEIVER;
@@ -304,7 +310,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		}
 
 		sdManager = new SDManager(FileQuest.this);
-		
+		rootManager = new RootManager(FileQuest.this);
 		/**
 		 * THIS THREAD CATCHES THE UNCAUGHT EXCEPTIONS...
 		 * IF APP CRASHES IT RESTARTS THE APP ......
@@ -411,34 +417,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			mFlipperBottom.setAnimation(prevAnim());
 		}
 
-		SDManager.SORT_TYPE = RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = SORT_TYPE;
+		RootManager.SORT_TYPE = SDManager.SORT_TYPE = RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = SORT_TYPE;
 		if (SHOW_HIDDEN_FOLDERS) {
+			RootManager.SHOW_HIDDEN_FOLDER = true;
 			SDManager.SHOW_HIDDEN_FOLDER = true;
 			SFileManager.SHOW_HIDDEN_FOLDER = true;
 			RFileManager.SHOW_HIDDEN_FOLDER = true;
 		}
 		nFiles = RFileManager.giveMeFileList();
 		sFiles = SFileManager.giveMeFileList();
-		nSimple = new SimpleAdapter(getApplicationContext(),
-				R.layout.row_list_1, sFiles);
-		RootAdapter = new RootAdapter(getApplicationContext(),
-				R.layout.row_list_1, nFiles);
+		nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
+		RootAdapter = new RootAdapter(mContext,R.layout.row_list_1, nFiles);
 		nManager = new AppManager(mContext);
 		nManager.SHOW_APP = SHOW_APP;
 		nList = nManager.giveMeAppList();
-		nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,
-				nList);
-
-		for (int i = 0; i < 15; ++i) {
-			EMPTY.add("  ");
-			EMPTY_APPS.add("  ");
-			if (i == 9) {
-				EMPTY.add(getString(R.string.nofilesavailable));
-				EMPTY_APPS.add(getString(R.string.noappsinstalled));
-			}
-		}
-
-		
+		nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
 		
 		file = new File("/");
 		file2 = new File(PATH);
@@ -1134,8 +1127,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				setListAdapter(new RarAdapter(mContext, rListRoot));
 			else if(TAR_ROOT)
 				setListAdapter(new TarAdapter(mContext, tListRoot));
-			else
-				setListAdapter(nSimple);
+			else{
+				rootItemList = rootManager.getList();
+				setListAdapter(new SlashAdapter(mContext, rootItemList));
+			}	
 			simple.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View view,
