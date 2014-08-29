@@ -19,12 +19,15 @@
 
 package org.anurag.file.quest;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Stack;
+
+import org.ultimate.root.LinuxShell;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -50,11 +53,8 @@ public class RootManager {
 		// TODO Auto-generated constructor stub
 		ctx = context;
 		nStack = new Stack<String>();
-		if(new File("/storage").exists()){
-			nStack.push("/storage");
-		}else
-			nStack.push(Constants.PATH);		
-		nStack.push(Constants.PATH);
+		nStack.push("/");
+		nStack.push("/");
 		items = new ArrayList<Item>();
 		res = ctx.getResources();
 	}
@@ -158,12 +158,9 @@ public class RootManager {
 			return getCurrentFileListWithHiddenItemFirst();
 		else if(SORT_TYPE == 5)
 			return getCurrentFileListWithHiddenItemLast();
-		{
+		if(file.exists()){
 			File[] files = null;
-			if(!SHOW_HIDDEN_FOLDER)
-				files = file.listFiles(new HiddenFileFilter());
-			else
-				files = file.listFiles(new ReadFileFilter());
+			files = listFiles(file);			
 			if(SORT_TYPE == 1)
 				Arrays.sort(files,alpha);
 			else if(SORT_TYPE == 2)
@@ -187,8 +184,8 @@ public class RootManager {
 	public ArrayList<Item> getCurrentFileListWithoutHiddenFolders(){
 		items.clear();
 		file = new File(nStack.peek());
-		{
-			File[] files = file.listFiles(new HiddenFileFilter());
+		if(file.exists()){
+			File[] files = listFiles(file);
 			int l = files.length;
 			for(int i = 0 ;i<l ; ++i)
 				items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
@@ -204,8 +201,8 @@ public class RootManager {
 	public ArrayList<Item> getCurrentFileListWithHiddenItemFirst(){
 		items.clear();
 		file = new File(nStack.peek());
-		{
-			File[] files = file.listFiles();
+		if(file.exists()){
+			File[] files = listFiles(file);
 			Arrays.sort(files,alphaFolderFirst);
 			int l = files.length;
 			if(SHOW_HIDDEN_FOLDER)
@@ -229,8 +226,8 @@ public class RootManager {
 	public ArrayList<Item> getCurrentFileListWithHiddenItemLast(){
 		items.clear();
 		file = new File(nStack.peek());
-		{
-			File[] files = file.listFiles();
+		if(file.exists()){
+			File[] files = listFiles(file);
 			Arrays.sort(files,alphaFolderFirst);
 			for(int i = 0 ;i<files.length ; ++i)
 				if(!files[i].getName().startsWith("."))
@@ -320,8 +317,11 @@ public class RootManager {
 	 * @return
 	 */
 	static String getSize(File f){
-		if(f.isDirectory())
+		if(f.isDirectory()){
+			if(!f.canRead())
+				return ctx.getString(R.string.rootd);
 			return f.list().length+""+ctx.getString(R.string.items);
+		}	
 		long size = f.length();
 		if(size>Constants.GB)
 			return String.format(ctx.getString(R.string.sizegb), (double)size/(Constants.GB));
@@ -345,4 +345,46 @@ public class RootManager {
 		return getList();
 	}
 	
+	/**
+	 * FUNCTION LISTS THE ARRAY OF FILE ....
+	 * IF ITS ROOT DIRECTORY NEEDED PERMISSION TO READ THEN SEEKS FOR ROOT ACCESS
+	 * @param f
+	 * @return
+	 */
+	public File[] listFiles(File f){
+		if(f.canRead()){
+			if(!SHOW_HIDDEN_FOLDER)
+				return f.listFiles(new HiddenFileFilter());
+			else 
+				return f.listFiles(new ReadFileFilter());
+		}else{
+			ArrayList<File> tList = new ArrayList<File>();
+			BufferedReader reader = null; // errReader = null;
+			try {
+				reader = LinuxShell
+						.execute("IFS='\n';CURDIR='"
+								+ LinuxShell.getCmdPath(f.getAbsolutePath())
+								+ "';for i in `ls $CURDIR`; do if [ -d $CURDIR/$i ]; then echo \"d $CURDIR/$i\";else echo \"f $CURDIR/$i\"; fi; done");
+				if(reader==null)
+					return new File[0];				
+				File f2;
+				String line;
+				while ((line = reader.readLine()) != null) {
+					f2 = new File(line.substring(2));
+					tList.add(f2);
+				}
+			}catch(Exception e){
+				nStack.pop();
+				if(!SHOW_HIDDEN_FOLDER)
+					return f.listFiles(new HiddenFileFilter());
+				else 
+					return f.listFiles(new ReadFileFilter());
+			}	
+			int l = tList.size();
+			File[] r = new File[l];
+			for(int i = 0 ; i<l;++i)
+				r[i]=tList.get(i);
+			return r;
+		}
+	}
 }
