@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Stack;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -40,7 +39,7 @@ public class SDManager {
 	
 	public static int SORT_TYPE;
 	public static Stack<String> nStack;
-	static ArrayList<Item> items;
+	ArrayList<Item> items;
 	private static Context ctx;
 	private File file;
 	public static boolean SHOW_HIDDEN_FOLDER = false;
@@ -157,7 +156,7 @@ public class SDManager {
 		if(SORT_TYPE == 4)
 			return getCurrentFileListWithHiddenItemFirst();
 		else if(SORT_TYPE == 5)
-			return getCurrentFileListWithHiddenItemFirst();
+			return getCurrentFileListWithHiddenItemLast();
 		if(file.canRead() && file.exists()){
 			File[] files = null;
 			if(!SHOW_HIDDEN_FOLDER)
@@ -179,9 +178,68 @@ public class SDManager {
 		return items;
 	}
 
-	private ArrayList<Item> getCurrentFileListWithHiddenItemFirst() {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * Function to Generate Current Directory File List Without Having Hidden Folders In List
+	 * Sorted in alphabetical order
+	 * @return
+	 */
+	public ArrayList<Item> getCurrentFileListWithoutHiddenFolders(){
+		items.clear();
+		file = new File(nStack.peek());
+		if(file.canRead() && file.exists()){
+			File[] files = file.listFiles(new HiddenFileFilter());
+			int l = files.length;
+			for(int i = 0 ;i<l ; ++i)
+				items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
+		}
+		return  items;
+	}
+
+	/**
+	 * function sorting files in alphabetical order
+	 * keeping hidden items first
+	 * @return
+	 */
+	public ArrayList<Item> getCurrentFileListWithHiddenItemFirst(){
+		items.clear();
+		file = new File(nStack.peek());
+		if(file.canRead() && file.exists()){
+			File[] files = file.listFiles();
+			Arrays.sort(files,alphaFolderFirst);
+			int l = files.length;
+			if(SHOW_HIDDEN_FOLDER)
+				for(int i = 0 ;i<l ; ++i)
+					if(files[i].getName().startsWith(".") && files[i].canRead())
+						items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
+			for(int i = 0 ;i<l ; ++i)
+				if(!files[i].getName().startsWith(".") && files[i].canRead())
+					items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
+		}
+		
+		return items;
+	}
+	
+	
+	/**
+	 * function sorting files in alphabetical order
+	 * keeping hidden items first
+	 * @return
+	 */
+	public ArrayList<Item> getCurrentFileListWithHiddenItemLast(){
+		items.clear();
+		file = new File(nStack.peek());
+		if(file.canRead() && file.exists()){
+			File[] files = file.listFiles();
+			Arrays.sort(files,alphaFolderFirst);
+			for(int i = 0 ;i<files.length ; ++i)
+				if(!files[i].getName().startsWith(".") && files[i].canRead())
+					items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
+			if(SHOW_HIDDEN_FOLDER)
+				for(int i = 0 ;i<files.length ; ++i)
+					if( files[i].getName().startsWith(".") && files[i].canRead())
+						items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
+		}
+		return items;
 	}
 	
 	/**
