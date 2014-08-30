@@ -19,7 +19,6 @@
 
 package org.anurag.file.quest;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -193,8 +192,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ArrayList<Item> sdItemsList;
 	private static RootManager rootManager;
 	private static ArrayList<Item> rootItemList;
-	
-	
+	private static ArrayList<Item> fileSearch;
+	private static RootAdapter rootAdapter;
+	private static SDAdapter sdAdapter;
 	
 	
 	
@@ -209,7 +209,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ListView simple;
 	private static ListView LIST_VIEW_3D;
 	private static LinearLayout FILE_GALLEY;
-	static ArrayList<File> COPY_FILES;
+	static ArrayList<Item> COPY_FILES;
 	private static boolean MULTIPLE_COPY;
 	private static boolean MULTIPLE_CUT;
 	private static boolean MULTIPLE_COPY_GALLERY;
@@ -245,10 +245,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static TransitionViewPager mViewPager;
 	private static ViewFlipper mFlipperBottom;
 	private static TitlePageIndicator indicator;
-	private static RootAdapter RootAdapter;
-	private static SimpleAdapter nSimple;
-	private static RFileManager nRFileManager;
-	private static SFileManager nSFManager;
+	
 	private static Intent LAUNCH_INTENT;
 	private static boolean COPY_COMMAND = false;
 	private static boolean CUT_COMMAND = false;
@@ -260,16 +257,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ArrayList<File> mediaFileList;
 	private static boolean elementInFocus = false;
 	private static int pos = 0;
-	private static ArrayList<File> nFiles;
-	private static ArrayList<File> sFiles;
 	private static AppManager nManager;
 
 	private static ArrayList<ApplicationInfo> nList;
 	private static ApplicationInfo info;
 	private static AppAdapter nAppAdapter;
 	private static ListView APP_LIST_VIEW;
-	private static File file;
-	private static File file2;
+	private static Item file;
+	private static Item file2;
 	private static File file0;
 	private static boolean mUseBackKey = false;
 	private static ViewFlipper mVFlipper;
@@ -282,8 +277,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	static int sSize = 0;
 	static int mSize = 0;
 	
-
-	@SuppressWarnings("static-access")
 	@SuppressLint({ "NewApi", "SdCardPath" })
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -296,7 +289,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		TRANSPRA_LEVEL = preferences.getFloat("TRANSPRA_LEVEL", 0.9f);
 		SHOW_HIDDEN_FOLDERS = preferences.getBoolean("SHOW_HIDDEN_FOLDERS",false);
 		SORT_TYPE = preferences.getInt("SORT_TYPE", 2);
-		Constants.FOLDER_TYPE = RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = preferences.getInt("FOLDER_TYPE", 3);
+		Constants.FOLDER_TYPE = preferences.getInt("FOLDER_TYPE", 3);
 		HOME_DIRECTORY = preferences.getString("HOME_DIRECTORY", null);
 		ENABLE_ON_LAUNCH = preferences.getBoolean("ENABLE_ON_LAUNCH", false);
 		LIST_ANIM = preferences.getInt("LIST_ANIM", 4);
@@ -308,9 +301,18 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		} catch (Exception e) {
 
 		}
-
+		mContext = FileQuest.this;
 		sdManager = new SDManager(FileQuest.this);
 		rootManager = new RootManager(FileQuest.this);
+		RootManager.SORT_TYPE = SDManager.SORT_TYPE = SORT_TYPE;
+		if (SHOW_HIDDEN_FOLDERS) {
+			RootManager.SHOW_HIDDEN_FOLDER = true;
+			SDManager.SHOW_HIDDEN_FOLDER = true;
+		}
+		sdItemsList = sdManager.getList();
+		rootItemList = rootManager.getList();
+		sdAdapter = new SDAdapter(mContext, sdItemsList);
+		rootAdapter = new RootAdapter(mContext, rootItemList);
 		/**
 		 * THIS THREAD CATCHES THE UNCAUGHT EXCEPTIONS...
 		 * IF APP CRASHES IT RESTARTS THE APP ......
@@ -348,8 +350,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 		setContentView(R.layout.new_ui);
 
-		EMPTY = new ArrayList<String>();
-		EMPTY_APPS = new ArrayList<String>();
+	
 		
 
 		editBox = (EditText) findViewById(R.id.editBox);
@@ -359,7 +360,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		total = (TextView) findViewById(R.id.total);
 
 		error = false;
-		mContext = FileQuest.this;
+		
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 		mViewPager = (TransitionViewPager) findViewById(R.id.pager);
 		indicator = (TitlePageIndicator) findViewById(R.id.indicator);
@@ -372,12 +373,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		mViewPager.setCurrentItem(CURRENT_PREF_ITEM);
 		mVFlipper = (ViewFlipper) findViewById(R.id.viewFlipperMenu);
 		mFlipperBottom = (ViewFlipper) findViewById(R.id.viewFlipperMenuBottom);
-		nSFManager = new SFileManager();
-		nRFileManager = new RFileManager();
+		
 		if (ENABLE_ON_LAUNCH) {
 			if (new File(INTERNAL_PATH_TWO).exists()) {
 				if (PATH != INTERNAL_PATH_TWO)
-					RFileManager.nStack.push(INTERNAL_PATH_TWO);
+					SDManager.nStack.push(INTERNAL_PATH_TWO);
 			} else {
 				edit.putString("INTERNAL_PATH_TWO", PATH);
 				edit.commit();
@@ -386,7 +386,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			}
 			if (new File(INTERNAL_PATH_ONE).exists()) {
 				if (PATH != INTERNAL_PATH_ONE)
-					SFileManager.nStack.push(INTERNAL_PATH_ONE);
+					RootManager.nStack.push(INTERNAL_PATH_ONE);
 			} else {
 				edit.putString("INTERNAL_PATH_ONE", PATH);
 				edit.commit();
@@ -417,24 +417,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			mFlipperBottom.setAnimation(prevAnim());
 		}
 
-		RootManager.SORT_TYPE = SDManager.SORT_TYPE = RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = SORT_TYPE;
-		if (SHOW_HIDDEN_FOLDERS) {
-			RootManager.SHOW_HIDDEN_FOLDER = true;
-			SDManager.SHOW_HIDDEN_FOLDER = true;
-			SFileManager.SHOW_HIDDEN_FOLDER = true;
-			RFileManager.SHOW_HIDDEN_FOLDER = true;
-		}
-		nFiles = RFileManager.giveMeFileList();
-		sFiles = SFileManager.giveMeFileList();
-		nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
-		RootAdapter = new RootAdapter(mContext,R.layout.row_list_1, nFiles);
+		
+		
+		
 		nManager = new AppManager(mContext);
 		nManager.SHOW_APP = SHOW_APP;
 		nList = nManager.giveMeAppList();
 		nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
 		
-		file = new File("/");
-		file2 = new File(PATH);
+		file = new Item(new File("/"), null, null, null);
+		file2 = new Item(new File(PATH),null,null,null);
 		indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageSelected(int page) {
@@ -621,11 +613,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				super.handleMessage(msg);
 				switch (msg.what) {
 				case 1:
-					root.setAdapter(RootAdapter);
+					root.setAdapter(sdAdapter);
 					break;
 
 				case 2:
-					simple.setAdapter(nSimple);
+					simple.setAdapter(sdAdapter);
 					break;
 				case 3:
 					load_FIle_Gallery(fPos);
@@ -643,18 +635,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			public void run() {
 				// TODO Auto-generated method stub
 				if (ITEM == 1) {
-					sFiles = SFileManager.giveMeFileList();
+					rootItemList = rootManager.getList();
 					handle.sendEmptyMessage(2);
-					if (SimpleAdapter.MULTI_SELECT) {
-						SimpleAdapter.thumbselection = new boolean[sFiles
-								.size()];
-						SimpleAdapter.c = 0;
+					if (sdAdapter.MULTI_SELECT) {
+						sdAdapter.thumbselection = new boolean[rootItemList.size()];
+						sdAdapter.C = 0;
 					}
 				} else if (ITEM == 2) {
-					nFiles = RFileManager.giveMeFileList();
-					if (RootAdapter.MULTI_SELECT) {
-						RootAdapter.thumbselection = new boolean[nFiles.size()];
-						RootAdapter.C = 0;
+					sdItemsList = sdManager.getList();
+					if (SDAdapter.MULTI_SELECT) {
+						SDAdapter.thumbselection = new boolean[sdItemsList.size()];
+						SDAdapter.C = 0;
 					}
 					handle.sendEmptyMessage(1);
 				} else if (ITEM == 0) {
@@ -714,8 +705,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			public void run() {
 				// TODO Auto-generated method stub
 				if (SHOW_HIDDEN_FOLDERS) {
-					RFileManager.SHOW_HIDDEN_FOLDER = true;
-					SFileManager.SHOW_HIDDEN_FOLDER = true;
+					SDManager.SHOW_HIDDEN_FOLDER = true;
+					RootManager.SHOW_HIDDEN_FOLDER = true;
 				}
 
 				try {// TRY BLOCK IS USED BECAUSE I NOTICED THAT WHEN NEW FOLDER
@@ -723,30 +714,30 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// EXCEPTION
 						// I THINK IT IS APPLICABLE TO OTHER LANGUAGES ALSO
 					if(!ZIP_SD&&!RAR_SD&&!TAR_SD)
-						nFiles = RFileManager.giveMeFileList();
+						sdItemsList = sdManager.getList();
 					if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT)
-						sFiles = SFileManager.giveMeFileList();
+						rootItemList = rootManager.getList();
 					if (ITEM == 0)
 						load_FIle_Gallery(pos);
 				} catch (IndexOutOfBoundsException e) {
 					if(!ZIP_SD&&!RAR_SD&&!TAR_SD)
-						nFiles = RFileManager.giveMeFileList();
+						sdItemsList = sdManager.getList();
 					if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT)
-						sFiles = SFileManager.giveMeFileList();
+						rootItemList = rootManager.getList();
 				}
 
-				if (RootAdapter.MULTI_SELECT) {
-					RootAdapter.thumbselection = new boolean[nFiles.size()];
-					RootAdapter.MULTI_FILES = new ArrayList<File>();
-					RootAdapter.C = 0;
+				if (SDAdapter.MULTI_SELECT) {
+					SDAdapter.thumbselection = new boolean[sdItemsList.size()];
+					SDAdapter.MULTI_FILES = new ArrayList<Item>();
+					SDAdapter.C = 0;
 				}
-				if (SimpleAdapter.MULTI_SELECT) {
-					SimpleAdapter.thumbselection = new boolean[sFiles.size()];
-					SimpleAdapter.MULTI_FILES = new ArrayList<File>();
-					SimpleAdapter.c = 0;
+				if (sdAdapter.MULTI_SELECT) {
+					sdAdapter.thumbselection = new boolean[rootItemList.size()];
+					sdAdapter.MULTI_FILES = new ArrayList<Item>();
+					sdAdapter.C = 0;
 				}
-				rSize = nFiles.size();
-				sSize = sFiles.size();
+				rSize = sdItemsList.size();
+				sSize = rootItemList.size();
 				try {
 					mSize = mediaFileList.size();
 				} catch (NullPointerException e) {
@@ -830,19 +821,19 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			case 0:
 				return getString(R.string.filegallery);
 			case 1:
-				if (SFileManager.nStack.size() == 1)
+				if (RootManager.nStack.size() == 1)
 					return "/";
-				else if (SFileManager.getCurrentDirectoryName().equals(
+				else if (RootManager.getCurrentDirectoryName().equals(
 						"sdcard0"))
 					return getString(R.string.sd);
-				return SFileManager.getCurrentDirectoryName();
+				return RootManager.getCurrentDirectoryName();
 			case 2:
-				curr = RFileManager.getCurrentDirectoryName();
+				curr = SDManager.getCurrentDirectoryName();
 				if (curr.equals("sdcard") || curr.equals("sdcard0")
 						|| curr.equalsIgnoreCase("0")
 						|| curr.equalsIgnoreCase(PATH))
 					return getString(R.string.sd);
-				return RFileManager.getCurrentDirectoryName();
+				return SDManager.getCurrentDirectoryName();
 			case 3:
 				return getString(R.string.appstore);
 			}
@@ -1026,16 +1017,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// COPY
 						RENAME_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 						COPY_COMMAND = true;
-						COPY_FILES = new ArrayList<File>();
-						COPY_FILES.add(file0);
+						COPY_FILES = new ArrayList<Item>();
+						COPY_FILES.add(new Item(file0, null, null, null));
 						break;
 
 					case 3:
 						// CUT
 						RENAME_COMMAND = COPY_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 						CUT_COMMAND = true;
-						COPY_FILES = new ArrayList<File>();
-						COPY_FILES.add(file0);
+						COPY_FILES = new ArrayList<Item>();
+						COPY_FILES.add(new Item(file0, null, null, null));
 						break;
 					case 4:
 						// PASTE
@@ -1045,14 +1036,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// ZIP
 						ArrayList<File> temp = new ArrayList<File>();
 						temp.add(file0);
-						new CreateZip(mContext, size.x * 8 / 9, temp);
+						new CreateZip(mContext, size.x * 8 / 9,convertToItem(temp));
 						break;
 					case 6:
 							//DELETE
 							{
 								ArrayList<File> te = new ArrayList<File>();
 								te.add(file0);
-								new DeleteFiles(mContext, size.x*8/9, te);
+								new DeleteFiles(mContext, size.x*8/9, convertToItem(te));
 							}
 							break;
 					case 7:
@@ -1128,8 +1119,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			else if(TAR_ROOT)
 				setListAdapter(new TarAdapter(mContext, tListRoot));
 			else{
-				rootItemList = rootManager.getList();
-				setListAdapter(new SlashAdapter(mContext, rootItemList));
+				setListAdapter(rootAdapter);
 			}	
 			simple.setOnItemClickListener(new OnItemClickListener() {
 				@Override
@@ -1143,7 +1133,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(TAR_ROOT)
 							tFileRoot = tSearch.get(position);
 						else
-							file = searchList.get(position);
+							file = fileSearch.get(position);
 					} else {
 						if(ZIP_ROOT)
 							zFileSimple = zListRoot.get(position);
@@ -1152,7 +1142,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(TAR_ROOT)
 							tFileRoot = tListRoot.get(position);
 						else
-							file = sFiles.get(position);
+							file = rootItemList.get(position);
 					}
 					if (CREATE_FILE || RENAME_COMMAND || SEARCH_FLAG) {
 						mVFlipper.setAnimation(nextAnim());
@@ -1167,11 +1157,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(ZIP_ROOT){
 						if(zFileSimple.isFile()){
 							//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
-							new ExtractZipFile(mContext, zFileSimple, size.x*8/9 , null , file,0);
+							new ExtractZipFile(mContext, zFileSimple, size.x*8/9 , null , file.getFile(),0);
 						}else{
 							//DIRECTORY HAS TO BE OPENED....
 							zipPathRoot = zFileSimple.getPath();
-							SFileManager.nStack.push(zipPathRoot+" -> Zip");
+							RootManager.nStack.push(zipPathRoot+" -> Zip");
 							if(zipPathRoot.startsWith("/"))
 								zipPathRoot = zipPathRoot.substring(1, zipPathRoot.length());
 							setZipAdapter();
@@ -1179,30 +1169,30 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}else if(RAR_ROOT){//handling rar file.....
 						if(rFileRoot.isFile()){
 							//EXTRACT TO CACHE DIR AND THEN OPEN IT....
-							new ExtractRarFile(mContext, rFileRoot, size.x*8/9, null, file, 0);
+							new ExtractRarFile(mContext, rFileRoot, size.x*8/9, null, file.getFile(), 0);
 						}else{
 							rarPathRoot = rFileRoot.getPath();
 							if(rarPathRoot.startsWith("\\"))
 								rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
-							SFileManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
+							RootManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
 							setRarAdapter();
 						}
 						
 					}else if(TAR_ROOT){//HANDLING TAR FILE....
 						if(tFileRoot.isFile()){
 							//EXTRACT THE TAR FILE AND OPEN IT USING APPROPRIATE APP....
-							new ExtractTarFile(mContext, tFileRoot, size.x*8/9, null, file, 0);	
+							new ExtractTarFile(mContext, tFileRoot, size.x*8/9, null, file.getFile(), 0);	
 						}else{
 							tarPathRoot = tFileRoot.getPath();
-							SFileManager.nStack.push(tFileRoot.getName()+" -> Tar");
+							RootManager.nStack.push(tFileRoot.getName()+" -> Tar");
 							setTarAdapter();
 						}
 					}else{
 						//HANDLING ORDINARY FILE EXLORING....
-						if (file.isFile())
-							new OpenFileDialog(mContext, Uri.parse(file.getAbsolutePath()), size.x*8/9);
+						if (!file.isDirectory())
+							new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
 						else if (file.isDirectory()){
-							SFileManager.nStack.push(file.getAbsolutePath());
+							RootManager.nStack.push(file.getPath());
 							setAdapter(1);
 						}
 					}					
@@ -1229,7 +1219,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(TAR_ROOT)
 							tFileRoot = tSearch.get(position);
 						else
-							file = searchList.get(position);
+							file = fileSearch.get(position);
 					} else {
 						if(ZIP_ROOT)
 							zFileSimple = zListRoot.get(position);
@@ -1238,7 +1228,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(TAR_ROOT)
 							tFileRoot = tListRoot.get(position);
 						else
-							file = sFiles.get(position);
+							file = rootItemList.get(position);
 					}
 					d.show();
 					return true;
@@ -1269,11 +1259,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						if(ZIP_ROOT){
 							if(zFileSimple.isFile()){
 								//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
-								new ExtractZipFile(mContext, zFileSimple, size.x*8/9 , null , file,0);
+								new ExtractZipFile(mContext, zFileSimple, size.x*8/9 , null , file.getFile(),0);
 							}else{
 								//DIRECTORY HAS TO BE OPENED....
 								zipPathRoot = zFileSimple.getPath();
-								SFileManager.nStack.push(zipPathRoot+" -> Zip");
+								RootManager.nStack.push(zipPathRoot+" -> Zip");
 								if(zipPathRoot.startsWith("/"))
 									zipPathRoot = zipPathRoot.substring(1, zipPathRoot.length());
 								setZipAdapter();
@@ -1281,30 +1271,30 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}else if(RAR_ROOT){//handling rar file.....
 							if(rFileRoot.isFile()){
 								//extract file to cache dir and the open it....
-								new ExtractRarFile(mContext, rFileRoot, size.x*8/9, null, file, 0);
+								new ExtractRarFile(mContext, rFileRoot, size.x*8/9, null, file.getFile(), 0);
 							}else{
 								rarPathRoot = rFileRoot.getPath();
 								if(rarPathRoot.startsWith("\\"))
 									rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
-								SFileManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
+								RootManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
 								setRarAdapter();
 							}
 							
 						}else if(TAR_ROOT){//HANDLING TAR FILE....
 							if(tFileRoot.isFile()){
 								//EXTRACT THE TAR FILE AND OPEN IT USING APPROPRIATE APP....
-								new ExtractTarFile(mContext, tFileRoot, size.x*8/9, null, file, 0);	
+								new ExtractTarFile(mContext, tFileRoot, size.x*8/9, null, file.getFile(), 0);	
 							}else{
 								tarPathRoot = tFileRoot.getPath();
-								SFileManager.nStack.push(tFileRoot.getName()+" -> Tar");
+								RootManager.nStack.push(tFileRoot.getName()+" -> Tar");
 								setTarAdapter();
 							}
 						}else{
 							//ORDINARY FILE EXPLORING..
-							if (file.isFile())
-								new OpenFileDialog(mContext, Uri.parse(file.getAbsolutePath()), size.x*8/9);
+							if (!file.isDirectory())
+								new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
 							else if (file.isDirectory()) {
-								SFileManager.nStack.push(file.getAbsolutePath());
+								RootManager.nStack.push(file.getPath());
 								setAdapter(1);
 							}
 						}
@@ -1330,7 +1320,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							//ORDINARY FILE OPERATIONS....
 							CREATE_FILE = RENAME_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 							COPY_COMMAND = true;
-							COPY_FILES = new ArrayList<File>();
+							COPY_FILES = new ArrayList<Item>();
 							COPY_FILES.add(file);
 						}
 						
@@ -1347,7 +1337,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							//WE ARE CURRENTLY INSIDE ZIP ARCHIVE...
 							//FILES HAVE TO BE EXTRACTED IN THE CURRENT DIRECTORY
 							if(new File(file.getParent()).canRead())
-								new ExtractZipFile(mContext, zFileSimple, size.x*8/9, file.getParent(), file, 1);
+								new ExtractZipFile(mContext, zFileSimple, size.x*8/9, file.getParent(), file.getFile(), 1);
 							else
 								//CURRENT DIRECTORY IS UN-WRITABLE...OR WE DONT HAVE WRITE PERMISSION HERE...
 								Toast.makeText(mContext, R.string.cannotexthere, Toast.LENGTH_SHORT).show();
@@ -1355,7 +1345,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							//ORDINARY FILE OPERATIONS....
 							CREATE_FILE = RENAME_COMMAND = COPY_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 							CUT_COMMAND = true;
-							COPY_FILES = new ArrayList<File>();
+							COPY_FILES = new ArrayList<Item>();
 							COPY_FILES.add(file);
 						}						
 						break;
@@ -1375,7 +1365,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							if (!file.canRead())
 								Toast.makeText(mContext, R.string.serviceUnavaila,Toast.LENGTH_SHORT).show();
 							else if (file.canRead()) {
-								ArrayList<File> temp = new ArrayList<File>();
+								ArrayList<Item> temp = new ArrayList<Item>();
 								temp.add(file);
 								new CreateZip(mContext, size.x*8/9, temp);
 							}
@@ -1388,7 +1378,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						if(ZIP_ROOT||RAR_ROOT||TAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
-							ArrayList<File> te = new ArrayList<File>();
+							ArrayList<Item> te = new ArrayList<Item>();
 							te.add(file);
 							new DeleteFiles(mContext, size.x*8/9, te);
 						}
@@ -1405,20 +1395,20 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// SEND
 						if(ZIP_ROOT){
 							if(zFileSimple.isFile())
-								new ExtractZipFile(mContext, zFileSimple, size.x*8/9, null, file, 2);
+								new ExtractZipFile(mContext, zFileSimple, size.x*8/9, null, file.getFile(), 2);
 							else
 								Toast.makeText(mContext, R.string.cannotsendfolder, Toast.LENGTH_SHORT).show();
 						}else if(RAR_ROOT){
 							
 						}else if(TAR_ROOT){
 							if(tFileRoot.isFile())//the mode is 2 to share it via bluetooth....
-								new ExtractTarFile(mContext, tFileRoot, size.x*8/9, null, file, 2);
+								new ExtractTarFile(mContext, tFileRoot, size.x*8/9, null, file.getFile(), 2);
 							else
 								Toast.makeText(mContext, R.string.cannotsendfolder, Toast.LENGTH_SHORT).show();
 						}
 						else{
-							if (file.isFile())
-								new BluetoothChooser(mContext, file.getAbsolutePath(), size.x*8/9, null);
+							if (!file.isDirectory())
+								new BluetoothChooser(mContext, file.getPath(), size.x*8/9, null);
 							else
 								showToast(getString(R.string.compressandsend));
 						}
@@ -1441,7 +1431,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(TAR_ROOT)
 							new TarFileProperties(mContext, tFileRoot, size.x*8/9);
 						else
-							new FileProperties(getActivity(), size.x*8/9, file);
+							new FileProperties(getActivity(), size.x*8/9, file.getFile());
 					}
 				}
 			});
@@ -1498,7 +1488,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(TAR_SD)
 							tFileSD = tSearch.get(arg2);
 						else
-							file2 = searchList.get(arg2);
+							file2 = fileSearch.get(arg2);
 					} else {
 						if(ZIP_SD)
 							zFileSD = zListSD.get(arg2);
@@ -1507,7 +1497,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(TAR_SD)
 							tFileSD = tListSD.get(arg2);
 						else
-							file2 = nFiles.get(arg2);
+							file2 = sdItemsList.get(arg2);
 					}
 					dialog.show();
 					return true;
@@ -1532,40 +1522,40 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							if(ZIP_SD){//ZIP FILE HANDLING...
 								if(zFileSD.isFile()){
 									//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
-									new ExtractZipFile(mContext, zFileSD, size.x*8/9 , null , file2,0);
+									new ExtractZipFile(mContext, zFileSD, size.x*8/9 , null , file2.getFile(),0);
 								}else{
 									//DIRECTORY HAS TO BE OPENED....
 									zipPathSD = zFileSD.getPath();
-									RFileManager.nStack.push(zipPathSD+" -> Zip");
+									SDManager.nStack.push(zipPathSD+" -> Zip");
 									if(zipPathSD.startsWith("/"))
 										zipPathSD = zipPathSD.substring(1, zipPathSD.length());
 									setZipAdapter();
 								}	
 							}else if(RAR_SD){//RAR FILE HANDLING...
 								if(rarFileSD.isFile()){//EXTRATC FILES TO CACHE DIR AND THEN OPEN IT...
-									new ExtractRarFile(mContext, rarFileSD, size.x*8/9, null, file2, 0);
+									new ExtractRarFile(mContext, rarFileSD, size.x*8/9, null, file2.getFile(), 0);
 								}else{
 									//LISTING THE DIRECTORIES....
 									rarPathSD = rarFileSD.getPath();
 									if(rarPathSD.startsWith("\\"))
 										rarPathSD = rarPathSD.substring(0,rarPathSD.length());
-									RFileManager.nStack.push(rarFileSD.getFileName()+" -> Rar");
+									SDManager.nStack.push(rarFileSD.getFileName()+" -> Rar");
 									setRarAdapter();
 								}
 							}else if(TAR_SD){//HANDLING TAR FILE....
 								if(tFileSD.isFile()){
 									//EXTRACT THE TAR FILE AND OPEN IT USING APPROPRIATE APP....
-									new ExtractTarFile(mContext, tFileSD, size.x*8/9, null, file2, 0);
+									new ExtractTarFile(mContext, tFileSD, size.x*8/9, null, file2.getFile(), 0);
 								}else{
 									tarPathSD = tFileSD.getPath();
-									RFileManager.nStack.push(tFileSD.getName()+" -> Tar");
+									SDManager.nStack.push(tFileSD.getName()+" -> Tar");
 									setTarAdapter();
 								}
 							}else{//ORDINARY FILE HANDLING....
-								if (file2.isFile()) {
-									new OpenFileDialog(mContext, Uri.parse(file2.getAbsolutePath()), size.x*8/9);
+								if (!file2.isDirectory()) {
+									new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
 								} else if (file2.isDirectory()) {
-									RFileManager.nStack.push(file2.getAbsolutePath());
+									SDManager.nStack.push(file2.getPath());
 									setAdapter(2);
 								}
 							}
@@ -1602,7 +1592,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							//ORDINARY FILE EXLORING...
 							CREATE_FILE = RENAME_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 							COPY_COMMAND = true;
-							COPY_FILES = new ArrayList<File>();
+							COPY_FILES = new ArrayList<Item>();
 							COPY_FILES.add(file2);
 						}						
 						break;
@@ -1619,12 +1609,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							//SELECTED FILE HAS TO BE EXTRACTED...
 							
 							//FILE HAS TO BE EXTRACTED IN CURRENT DIRECTORY....
-							new ExtractZipFile(mContext, zFileSD, size.x*8/9, file2.getParent(), file2 , 1);
+							new ExtractZipFile(mContext, zFileSD, size.x*8/9, file2.getParent(), file2.getFile() , 1);
 						}else{
 							//ORDINARY FILE EXPLORING.... 
 							CREATE_FILE = RENAME_COMMAND = COPY_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 							CUT_COMMAND = true;
-							COPY_FILES = new ArrayList<File>();
+							COPY_FILES = new ArrayList<Item>();
 							COPY_FILES.add(file2);
 						}						
 						break;
@@ -1640,7 +1630,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						if(ZIP_SD||RAR_SD||TAR_SD)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
-							ArrayList<File> temp = new ArrayList<File>();
+							ArrayList<Item> temp = new ArrayList<Item>();
 							temp.add(file2);
 							new CreateZip(mContext, size.x*8/9, temp);
 						}
@@ -1652,7 +1642,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						if(ZIP_SD||RAR_SD||TAR_SD)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
-							ArrayList<File> te = new ArrayList<File>();
+							ArrayList<Item> te = new ArrayList<Item>();
 							te.add(file2);
 							new DeleteFiles(mContext, size.x*8/9, te);
 						}
@@ -1675,7 +1665,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// SEND
 						if(ZIP_SD){
 							if(zFileSD.isFile())
-								new ExtractZipFile(mContext, zFileSD, size.x*8/9, null, file2, 2);
+								new ExtractZipFile(mContext, zFileSD, size.x*8/9, null, file2.getFile(), 2);
 							else
 								Toast.makeText(mContext, R.string.cannotsendfolder, Toast.LENGTH_SHORT).show();
 						}else if(RAR_SD){
@@ -1683,13 +1673,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}else if(TAR_SD){
 							if(tFileSD.isFile()){
 								//mode is 2 share the file ...
-								new ExtractTarFile(mContext, tFileSD, size.x*8/9, null, file2, 2);
+								new ExtractTarFile(mContext, tFileSD, size.x*8/9, null, file2.getFile(), 2);
 							}else
 								Toast.makeText(mContext, R.string.cannotsendfolder, Toast.LENGTH_SHORT).show();
 						}
 						else{
-							if (file2.isFile())
-								new BluetoothChooser(mContext, file2.getAbsolutePath(), size.x*8/9  , null);
+							if (!file2.isDirectory())
+								new BluetoothChooser(mContext, file2.getPath(), size.x*8/9  , null);
 							else
 								showToast(getString(R.string.compressandsend));
 						}						
@@ -1710,7 +1700,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(TAR_SD)
 							new TarFileProperties(mContext, tFileSD, size.x*8/9);
 						else
-							new FileProperties(mContext, size.x*8/9, file2);
+							new FileProperties(mContext, size.x*8/9, file2.getFile());
 					}
 				}
 			});
@@ -1726,7 +1716,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(TAR_SD)
 							tFileSD = tSearch.get(position);
 						else
-							file2 = searchList.get(position);
+							file2 = fileSearch.get(position);
 					}else{
 						if(ZIP_SD)
 							zFileSD = zListSD.get(position);
@@ -1735,7 +1725,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(TAR_SD)
 							tFileSD = tListSD.get(position);
 						else
-							file2 = nFiles.get(position);
+							file2 = sdItemsList.get(position);
 					}
 					
 					if (CREATE_FILE || RENAME_COMMAND || SEARCH_FLAG) {
@@ -1748,11 +1738,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(ZIP_SD){//zip file handling...
 						if(zFileSD.isFile()){
 							//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
-							new ExtractZipFile(mContext, zFileSD, size.x*8/9 , null , file2 , 0);
+							new ExtractZipFile(mContext, zFileSD, size.x*8/9 , null , file2.getFile() , 0);
 						}else{
 							//DIRECTORY HAS TO BE OPENED....
 							zipPathSD = zFileSD.getPath();
-							RFileManager.nStack.push(zipPathSD+" -> Zip");
+							SDManager.nStack.push(zipPathSD+" -> Zip");
 							if(zipPathSD.startsWith("/"))
 								zipPathSD = zipPathSD.substring(1, zipPathSD.length());
 							setZipAdapter();
@@ -1760,28 +1750,28 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}else if(RAR_SD){//rar file handling....
 						if(rarFileSD.isFile()){//EXTRACT THE FILE TO CACHE DIRECTORY AND THEN OPEN IT WITH
 							//APPROPRIATE APP.....
-							new ExtractRarFile(mContext, rarFileSD, size.x*8/9, null, file2, 0);
+							new ExtractRarFile(mContext, rarFileSD, size.x*8/9, null, file2.getFile(), 0);
 						}else{
 							rarPathSD = rarFileSD.getPath();
 							if(rarPathSD.startsWith("\\"))
 								rarPathSD = rarPathSD.substring(0,rarPathSD.length());
-							RFileManager.nStack.push(rarFileSD.getFileName()+" -> Rar");
+							SDManager.nStack.push(rarFileSD.getFileName()+" -> Rar");
 							setRarAdapter();
 						}
 					}else if(TAR_SD){//HANDLING TAR FILE....
 						if(tFileSD.isFile()){
 							//EXTRACT THE TAR FILE AND OPEN IT USING APPROPRIATE APP....
-							new ExtractTarFile(mContext, tFileSD, size.x*8/9, null, file2, 0);
+							new ExtractTarFile(mContext, tFileSD, size.x*8/9, null, file2.getFile(), 0);
 						}else{
 							tarPathSD = tFileSD.getPath();
-							RFileManager.nStack.push(tFileSD.getName()+" -> Tar");
+							SDManager.nStack.push(tFileSD.getName()+" -> Tar");
 							setTarAdapter();
 						}
 					}else{//ordinary file handling...
-						if(file2.isFile())
-							new OpenFileDialog(mContext, Uri.parse(file2.getAbsolutePath()), size.x*8/9);
+						if(!file2.isDirectory())
+							new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
 						else if (file2.isDirectory()){
-							RFileManager.nStack.push(file2.getAbsolutePath());
+							SDManager.nStack.push(file2.getPath());
 							setAdapter(2);
 						}
 					}
@@ -2031,13 +2021,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				action.addActionItem(item);
 			}
 
-			if ((SimpleAdapter.MULTI_SELECT))
+			if ((RootAdapter.MULTI_SELECT))
 				item = new ActionItem(1, getString(R.string.multiforroot),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
 				item = new ActionItem(1, getString(R.string.multiforroot),getResources().getDrawable(R.drawable.ic_launcher_system));
 			action.addActionItem(item);
 
-			if ((RootAdapter.MULTI_SELECT))
+			if ((SDAdapter.MULTI_SELECT))
 				item = new ActionItem(2, getString(R.string.multiforsd),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
 				item = new ActionItem(2, getString(R.string.multiforsd),getResources().getDrawable(R.drawable.ic_launcher_sdcard));
@@ -2085,50 +2075,50 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 
 					case 1:
-						if (SimpleAdapter.MULTI_SELECT) {
-							nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
-							SimpleAdapter.thumbselection = new boolean[sFiles.size()];
-							SimpleAdapter.MULTI_SELECT = false;
+						if (RootAdapter.MULTI_SELECT) {
+							rootAdapter = new RootAdapter(mContext,rootItemList);
+							RootAdapter.thumbselection = new boolean[rootItemList.size()];
+							RootAdapter.MULTI_SELECT = false;
 							if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
-								simple.setAdapter(nSimple);
+								simple.setAdapter(rootAdapter);
 							}	
 						} else {
-							nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
-							SimpleAdapter.thumbselection = new boolean[sFiles.size()];
-							SimpleAdapter.MULTI_SELECT = true;
+							rootAdapter = new RootAdapter(mContext, rootItemList);
+							RootAdapter.thumbselection = new boolean[rootItemList.size()];
+							RootAdapter.MULTI_SELECT = true;
 							mViewPager.setCurrentItem(1);
 							if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
-								simple.setAdapter(nSimple);
+								simple.setAdapter(rootAdapter);
 							}								
 						}
 						break;
 					case 2:
-						if (RootAdapter.MULTI_SELECT) {
-							RootAdapter = new RootAdapter(mContext,R.layout.row_list_1, nFiles);
-							RootAdapter.thumbselection = new boolean[nFiles.size()];
-							RootAdapter.MULTI_SELECT = false;
+						if (SDAdapter.MULTI_SELECT) {
+							sdAdapter = new SDAdapter(mContext,sdItemsList);
+							SDAdapter.thumbselection = new boolean[sdItemsList.size()];
+							SDAdapter.MULTI_SELECT = false;
 							if(!ZIP_SD&&!RAR_SD&&!TAR_SD){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
-								root.setAdapter(RootAdapter);
+								root.setAdapter(sdAdapter);
 							}	
 						} else {
-							RootAdapter = new RootAdapter(mContext,R.layout.row_list_1, nFiles);
-							RootAdapter.thumbselection = new boolean[nFiles.size()];
-							RootAdapter.MULTI_SELECT = true;
+							sdAdapter = new SDAdapter(mContext,sdItemsList);
+							SDAdapter.thumbselection = new boolean[sdItemsList.size()];
+							SDAdapter.MULTI_SELECT = true;
 							mViewPager.setCurrentItem(2);
 							if(!ZIP_SD&&!RAR_SD&&!TAR_SD){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
-								root.setAdapter(RootAdapter);
+								root.setAdapter(sdAdapter);
 							}	
 						}
 						break;
@@ -2311,7 +2301,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						try {
 
 							if (CURRENT_ITEM == 1) {
-								name = SFileManager.getCurrentDirectory() + "/"	+ editBox.getText().toString();
+								name = RootManager.getCurrentDirectory() + "/"	+ editBox.getText().toString();
 								File f = new File(name);
 								if (f.exists()) {
 									Toast.makeText(mContext,getString(R.string.fileexists),Toast.LENGTH_SHORT).show();
@@ -2348,7 +2338,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							new ErrorDialogs(mContext,size.x*8/9,"renameError");
 						}
 					} else if (CURRENT_ITEM == 1) {
-						name = SFileManager.getCurrentDirectory() + "/" + name;
+						name = RootManager.getCurrentDirectory() + "/" + name;
 						try {
 							/*
 							 * yet to implement rename command for root files
@@ -2361,8 +2351,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							new ErrorDialogs(mContext, size.x*8/9,"renameError");
 						}
 					} else if (CURRENT_ITEM == 2) {
-						name = RFileManager.getCurrentDirectory() + "/" + name;
-						if (file2.renameTo(new File(name))) {
+						name = SDManager.getCurrentDirectory() + "/" + name;
+						if (file2.getFile().renameTo(new File(name))) {
 							Toast.makeText(mContext,getString(R.string.renamed)	+ new File(name).getName(),Toast.LENGTH_SHORT).show();
 						} else {
 							/**
@@ -2389,21 +2379,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				new GetHomeDirectory(mContext, size.x*8/9, preferences);
 			} else if (new File(HOME_DIRECTORY).exists()) {
 				if (CURRENT_ITEM == 2) {
-					nRFileManager = new RFileManager();
-					RFileManager.SHOW_HIDDEN_FOLDER = SHOW_HIDDEN_FOLDERS;
-					RFileManager.SORT_TYPE = SORT_TYPE;
-					RFileManager.nStack.push(HOME_DIRECTORY);
-					nFiles = RFileManager.giveMeFileList();
-					RootAdapter = new RootAdapter(mContext,R.layout.row_list_1, nFiles);
+					sdManager = new SDManager(mContext);
+					SDManager.SHOW_HIDDEN_FOLDER = SHOW_HIDDEN_FOLDERS;
+					SDManager.SORT_TYPE = SORT_TYPE;
+					SDManager.nStack.push(HOME_DIRECTORY);
+					sdItemsList = sdManager.getList();
+					sdAdapter = new SDAdapter(mContext,sdItemsList);
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(2);
 				} else if (CURRENT_ITEM == 1) {
-					nSFManager = new SFileManager();
-					SFileManager.SHOW_HIDDEN_FOLDER = SHOW_HIDDEN_FOLDERS;
-					SFileManager.SORT_TYPE = SORT_TYPE;
-					SFileManager.nStack.push(HOME_DIRECTORY);
-					sFiles = SFileManager.giveMeFileList();
-					nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
+					rootManager = new RootManager(mContext);
+					RootManager.SHOW_HIDDEN_FOLDER = SHOW_HIDDEN_FOLDERS;
+					RootManager.SORT_TYPE = SORT_TYPE;
+					RootManager.nStack.push(HOME_DIRECTORY);
+					rootItemList = rootManager.getList();
+					rootAdapter = new RootAdapter(mContext,rootItemList);
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(1);
 				} else if (CURRENT_ITEM == 0) {
@@ -2420,12 +2410,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							// TODO Auto-generated method stub
 							switch (actionId) {
 							case 8:
-								SFileManager.nStack.push(HOME_DIRECTORY);
+								RootManager.nStack.push(HOME_DIRECTORY);
 								setAdapter(1);
 								break;
 							case 9:
 								LAST_PAGE = 0;
-								RFileManager.nStack.push(HOME_DIRECTORY);
+								SDManager.nStack.push(HOME_DIRECTORY);
 								setAdapter(2);
 								break;
 							}
@@ -2506,9 +2496,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									if (!fJump.exists())
 										fJump.mkdir();
 									if (CURRENT_ITEM == 2)
-										RFileManager.nStack.push(fJump.getAbsolutePath());
+										SDManager.nStack.push(fJump.getAbsolutePath());
 									else if (CURRENT_ITEM == 1)
-										SFileManager.nStack.push(fJump.getAbsolutePath());
+										RootManager.nStack.push(fJump.getAbsolutePath());
 									setAdapter(CURRENT_ITEM);
 									break;
 								case 1100:
@@ -2516,9 +2506,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									if (!fJump.exists())
 										fJump.mkdir();
 									if (CURRENT_ITEM == 2)
-										RFileManager.nStack.push(fJump.getAbsolutePath());
+										SDManager.nStack.push(fJump.getAbsolutePath());
 									else if (CURRENT_ITEM == 1)
-										SFileManager.nStack.push(fJump.getAbsolutePath());
+										RootManager.nStack.push(fJump.getAbsolutePath());
 									setAdapter(CURRENT_ITEM);
 									break;
 								case 1200:
@@ -2526,9 +2516,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									if (!fJump.exists())
 										fJump.mkdir();
 									if (CURRENT_ITEM == 2)
-										RFileManager.nStack.push(fJump.getAbsolutePath());
+										SDManager.nStack.push(fJump.getAbsolutePath());
 									else if (CURRENT_ITEM == 1)
-										SFileManager.nStack.push(fJump.getAbsolutePath());
+										RootManager.nStack.push(fJump.getAbsolutePath());
 									setAdapter(CURRENT_ITEM);
 									break;
 
@@ -2537,9 +2527,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									if (!fJump.exists())
 										fJump.mkdir();
 									if (CURRENT_ITEM == 2)
-										RFileManager.nStack.push(fJump.getAbsolutePath());
+										SDManager.nStack.push(fJump.getAbsolutePath());
 									else if (CURRENT_ITEM == 1)
-										SFileManager.nStack.push(fJump.getAbsolutePath());
+										RootManager.nStack.push(fJump.getAbsolutePath());
 									setAdapter(CURRENT_ITEM);
 									break;
 								case 1300:
@@ -2552,7 +2542,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 										else if(RAR_ROOT && rFileRoot !=null)
 											new RarFileProperties(mContext, rFileRoot, size.x*8/9);
 										else
-											new FileProperties(mContext,size.x *8/9, file);
+											new FileProperties(mContext,size.x *8/9, file.getFile());
 									} else if (CURRENT_ITEM == 2) {
 										if(ZIP_SD && zFileSD != null)
 											new ArchiveEntryProperties(mContext, zFileSD, size.x*8/9);
@@ -2561,7 +2551,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 										else if(RAR_SD && rarFileSD !=null)
 											new RarFileProperties(mContext, rarFileSD, size.x*8/9);
 										else
-											new FileProperties(mContext,size.x*8/9, file2);
+											new FileProperties(mContext,size.x*8/9, file2.getFile());
 									}
 									break;
 								case 1400:
@@ -2676,9 +2666,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				if (actionId >= 500) {
 					CREATE_FLAG_PATH = null;
 					if (CURRENT_ITEM == 1)
-						CREATE_FLAG_PATH = SFileManager.getCurrentDirectory();
+						CREATE_FLAG_PATH = RootManager.getCurrentDirectory();
 					else if (CURRENT_ITEM == 2)
-						CREATE_FLAG_PATH = RFileManager.getCurrentDirectory();
+						CREATE_FLAG_PATH = SDManager.getCurrentDirectory();
 					CREATE_FILE = true;
 					editBox.setText(null);
 					switch (actionId) {
@@ -2895,7 +2885,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}
 			}else if(ZIP_ROOT && CURRENT_ITEM==1){
 				//POPING OUT THE ZIP PATH.....
-				SFileManager.nStack.pop();
+				RootManager.nStack.pop();
 				/**
 				 * ZIP FILE IS OPENED IN SDCARD_PANEL...
 				 * HANDLE IT HERE.....
@@ -2927,7 +2917,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}
 				
 			}else if(RAR_ROOT&&CURRENT_ITEM==1){//RAR FILE HANDLING ON BACK KEY PRESS...
-				SFileManager.nStack.pop();
+				RootManager.nStack.pop();
 				if(rarPathRoot.equalsIgnoreCase("/")){
 					RAR_ROOT = false;
 					rarPathRoot = null;
@@ -2943,7 +2933,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 				}
 			}else if(TAR_ROOT&&CURRENT_ITEM==1){//TAR FILE HANDLING ON BACK KEY PRESS...
-				SFileManager.nStack.pop();
+				RootManager.nStack.pop();
 				if(tarPathRoot.equals("/")){
 					TAR_ROOT = false;
 					tarPathRoot = null;
@@ -2959,47 +2949,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 				}
 			}
-			else if (CURRENT_ITEM == 1&& !SFileManager.getCurrentDirectory().equals("/")) {
-				SFileManager.nStack.pop();
-				File fi = new File(SFileManager.nStack.peek());
-				if (!fi.canRead()) {
-					sFiles.clear();
-					BufferedReader reader = null; // errReader = null;
-					try {
-						reader = LinuxShell.execute("IFS='\n';CURDIR='"+LinuxShell.getCmdPath(fi.getAbsolutePath())+ "';for i in `ls $CURDIR`; do if [ -d $CURDIR/$i ]; then echo \"d $CURDIR/$i\";else echo \"f $CURDIR/$i\"; fi; done");
-						File f;
-						String line;
-						while ((line = reader.readLine()) != null) {
-							f = new File(line.substring(2));
-							sFiles.add(f);
-						}
-						if (SimpleAdapter.MULTI_SELECT) {
-							nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
-							SimpleAdapter.MULTI_SELECT = true;
-							SimpleAdapter.thumbselection = new boolean[sFiles.size()];
-							SimpleAdapter.MULTI_FILES = new ArrayList<File>();
-						} else
-							nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
-						mViewPager.setAdapter(mSectionsPagerAdapter);
-						mViewPager.setCurrentItem(1);
-					} catch (Exception e) {
-						Toast.makeText(mContext, R.string.rootaccessfailed,Toast.LENGTH_SHORT).show();
-					}
-				} else {
-					sFiles = SFileManager.giveMeFileList();
-					if (SimpleAdapter.MULTI_SELECT) {
-						nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
-						SimpleAdapter.MULTI_SELECT = true;
-						SimpleAdapter.thumbselection = new boolean[sFiles.size()];
-						SimpleAdapter.MULTI_FILES = new ArrayList<File>();
-					} else
-						nSimple = new SimpleAdapter(mContext,R.layout.row_list_1, sFiles);
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(1);
-					file = new File(SFileManager.getCurrentDirectory());
-				}
-
-			} else if (CURRENT_ITEM == 1&&SFileManager.getCurrentDirectory().endsWith("/")) {
+			else if (CURRENT_ITEM == 1&& !RootManager.getCurrentDirectory().equals("/")) {
+				RootManager.nStack.pop();
+				rootItemList = rootManager.getList();
+				RootAdapter.thumbselection = new boolean[rootItemList.size()];
+				mViewPager.setAdapter(mSectionsPagerAdapter);
+				mViewPager.setCurrentItem(CURRENT_ITEM);
+			} else if (CURRENT_ITEM == 1&&RootManager.getCurrentDirectory().endsWith("/")) {
 				/**
 				 * CHECKS WHETHER THE CURRENT PREF IS 1 IF IT IS FOUND 3 THEN IT
 				 * TAKES ACTION TO EXIT ON CURRENT ITEM = 1
@@ -3024,7 +2980,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			else if(ZIP_SD && CURRENT_ITEM==2){
 				//POPING OUT THE ZIP PATH....
 				
-				RFileManager.nStack.pop();
+				SDManager.nStack.pop();
 				/**
 				 * ZIP FILE IS OPENED IN SDCARD_PANEL...
 				 * HANDLE IT HERE.....
@@ -3057,7 +3013,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				
 			}else if(RAR_SD&&CURRENT_ITEM==2){
 				//BACK KEY HANDLING FOR RAR FILES....
-				RFileManager.nStack.pop();
+				SDManager.nStack.pop();
 				if(rarPathSD.equalsIgnoreCase("/")){
 					RAR_SD = false;
 					rarPathSD = null;
@@ -3073,7 +3029,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 				}
 			}else if(TAR_SD&&CURRENT_ITEM==2){//TAR FILE HANDLING ON BACK KEY PRESS...
-				RFileManager.nStack.pop();
+				SDManager.nStack.pop();
 				if(tarPathSD.equals("/")){
 					TAR_SD = false;
 					tarPathSD = null;
@@ -3088,15 +3044,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						setTarAdapter();
 					}
 				}
-			}else if (CURRENT_ITEM == 2 && (RFileManager.nStack.size() >= 2)) {
-				nFiles = RFileManager.getPreviousFileList();
-				// RootAdapter = new RootAdapter(getApplicationContext(),
+			}else if (CURRENT_ITEM == 2 && (SDManager.nStack.size() >= 2)) {
+				sdItemsList = sdManager.getPreviousList();
+				// sdAdapter = new sdAdapter(getApplicationContext(),
 				// R.layout.row_list_1, nFiles);
-				RootAdapter.thumbselection = new boolean[nFiles.size()];
+				SDAdapter.thumbselection = new boolean[sdItemsList.size()];
 				mViewPager.setAdapter(mSectionsPagerAdapter);
 				mViewPager.setCurrentItem(2);
-				file2 = new File(RFileManager.getCurrentDirectory());
-			} else if (CURRENT_ITEM == 2 && RFileManager.nStack.size() < 2) {
+				//file2 = new File(RFileManager.getCurrentDirectory());
+			} else if (CURRENT_ITEM == 2 && SDManager.nStack.size() < 2) {
 				/**
 				 * CHECKS WHETHER THE CURRENT PREF IS 2 IF IT IS FOUND 3 THEN IT
 				 * TAKES ACTION TO EXIT ON CURRENT ITEM = 2
@@ -3302,7 +3258,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			ActionItem q1 = new ActionItem(100,getString(R.string.adjusttrans), getResources().getDrawable(R.drawable.ic_launcher_appreance));
 			q.addActionItem(q1);
 			if (CURRENT_ITEM != 3) {
-				q1 = new ActionItem(90, getString(R.string.setfoldericn),getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+				q1 = new ActionItem(90, getString(R.string.setfoldericn),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
 				q.addActionItem(q1);
 			}
 			q.setOnActionItemClickListener(this);
@@ -3312,7 +3268,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 90:
 			// DIRECTED FROM CASE 80
 			// DISPLAYS THE OPTIONS AVAILABLE FOR CHANGING FOLDER ICON TO SHOW
-			int FOLDER_TYPE = RootAdapter.FOLDER_TYPE;
+			int FOLDER_TYPE = Constants.FOLDER_TYPE;
 			QuickAction ac = new QuickAction(mContext);
 			ActionItem it;
 
@@ -3419,7 +3375,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			else
 				j = new ActionItem(1000, getString(R.string.showhidden),getResources().getDrawable(R.drawable.ic_launcher_disabled));
 			b.addActionItem(j);
-			j = new ActionItem(1100, getString(R.string.sort), getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+			j = new ActionItem(1100, getString(R.string.sort), getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
 			b.addActionItem(j);
 			b.setOnActionItemClickListener(this);
 			b.show(indicator);
@@ -3603,9 +3559,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			// VISIBLE
 			if (SHOW_HIDDEN_FOLDERS) {
 				edit.putBoolean("SHOW_HIDDEN_FOLDERS", false);
-				SHOW_HIDDEN_FOLDERS = RFileManager.SHOW_HIDDEN_FOLDER = SFileManager.SHOW_HIDDEN_FOLDER = false;
+				SHOW_HIDDEN_FOLDERS = sdManager.SHOW_HIDDEN_FOLDER = rootManager.SHOW_HIDDEN_FOLDER = false;
 			} else {
-				SHOW_HIDDEN_FOLDERS = RFileManager.SHOW_HIDDEN_FOLDER = SFileManager.SHOW_HIDDEN_FOLDER = true;
+				SHOW_HIDDEN_FOLDERS = sdManager.SHOW_HIDDEN_FOLDER = rootManager.SHOW_HIDDEN_FOLDER = true;
 				edit.putBoolean("SHOW_HIDDEN_FOLDERS", true);
 			}
 			edit.commit();
@@ -3619,31 +3575,31 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			if (SORT_TYPE == 1)
 				k = new ActionItem(1200, getString(R.string.alphafirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1200, getString(R.string.alphafirst),getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+				k = new ActionItem(1200, getString(R.string.alphafirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
 			c.addActionItem(k);
 
 			if (SORT_TYPE == 2)
 				k = new ActionItem(1300, getString(R.string.folderfirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1300, getString(R.string.folderfirst),getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+				k = new ActionItem(1300, getString(R.string.folderfirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
 			c.addActionItem(k);
 
 			if (SORT_TYPE == 3)
 				k = new ActionItem(1400, getString(R.string.filefirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1400, getString(R.string.filefirst),getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+				k = new ActionItem(1400, getString(R.string.filefirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
 			c.addActionItem(k);
 
 			if (SORT_TYPE == 4)
 				k = new ActionItem(1500, getString(R.string.hidfirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1500, getString(R.string.hidfirst),getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+				k = new ActionItem(1500, getString(R.string.hidfirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
 			c.addActionItem(k);
 
 			if (SORT_TYPE == 5)
 				k = new ActionItem(1600, getString(R.string.nonhidfirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1600, getString(R.string.nonhidfirst),getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+				k = new ActionItem(1600, getString(R.string.nonhidfirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
 			c.addActionItem(k);
 			c.setOnActionItemClickListener(this);
 			c.show(indicator);
@@ -3652,7 +3608,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 1200:
 			// DIRECTED FROM CASE 1100
 			// SETS SORTING IN ALPHABETICAL ORDER
-			SORT_TYPE = RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = 1;
+			SORT_TYPE = SDManager.SORT_TYPE = RootManager.SORT_TYPE = 1;
 			edit.putInt("SORT_TYPE", 1);
 			edit.commit();
 			Toast.makeText(mContext,getString(R.string.settingsapplied), Toast.LENGTH_SHORT).show();
@@ -3662,7 +3618,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 1300:
 			// SETS SORTING IN FOLDER FIRST THEN FILE
 			// DIRECTED FROM CASE 1100
-			SORT_TYPE = RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = 2;
+			SORT_TYPE = SDManager.SORT_TYPE = RootManager.SORT_TYPE = 2;
 			edit.putInt("SORT_TYPE", 2);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3672,7 +3628,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 1400:
 			// SETS DORTING IN FILE FIRST THE FOLDER
 			// DIRECTED FROM CASE 1100
-			SORT_TYPE = RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = 3;
+			SORT_TYPE = SDManager.SORT_TYPE = RootManager.SORT_TYPE = 3;
 			edit.putInt("SORT_TYPE", 3);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3682,7 +3638,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 1500:
 			// SETS SORTING IN SHOW HIDDEN ITEM FIRST
 			// DIRECTED FROM CASE 1100
-			SORT_TYPE = RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = 4;
+			SORT_TYPE = SDManager.SORT_TYPE = RootManager.SORT_TYPE = 4;
 			edit.putInt("SORT_TYPE", 4);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3692,7 +3648,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 1600:
 			// SETS SORTING IN SHOW NON HIDDEN ITEMS FIRST
 			// DIRECTED FROM CASE 1100
-			SORT_TYPE = RFileManager.SORT_TYPE = SFileManager.SORT_TYPE = 5;
+			SORT_TYPE = SDManager.SORT_TYPE = RootManager.SORT_TYPE = 5;
 			edit.putInt("SORT_TYPE", 5);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3795,7 +3751,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 2800:
 			// DIRECTED FROM CAE 90
 			// SETS THE FOLDER ICON TO DEFAULT FOLDER ICON
-			RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = 0;
+			Constants.FOLDER_TYPE = 0;
 			edit.putInt("FOLDER_TYPE", 0);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3805,7 +3761,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 2900:
 			// DIRECTED FROM CAE 90
 			// SETS THE FOLDER ICON TO VIOLET FOLDER ICON
-			RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = 1;
+			Constants.FOLDER_TYPE = 1;
 			edit.putInt("FOLDER_TYPE", 1);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3815,7 +3771,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 3000:
 			// DIRECTED FROM CAE 90
 			// SETS THE FOLDER ICON TO OXYGEN FOLDER ICON
-			RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = 2;
+			Constants.FOLDER_TYPE = 2;
 			edit.putInt("FOLDER_TYPE", 2);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3825,7 +3781,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 3100:
 			// DIRECTED FROM CAE 90
 			// SETS THE FOLDER ICON TO YELLOW FOLDER ICON
-			RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = 3;
+			Constants.FOLDER_TYPE = 3;
 			edit.putInt("FOLDER_TYPE", 3);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3835,7 +3791,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 3101:
 			// DIRECTED FROM CAE 90
 			// SETS THE FOLDER ICON TO YELLOW FOLDER ICON
-			RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = 4;
+			Constants.FOLDER_TYPE = 4;
 			edit.putInt("FOLDER_TYPE", 4);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3845,7 +3801,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 3102:
 			// DIRECTED FROM CAE 90
 			// SETS THE FOLDER ICON TO YELLOW FOLDER ICON
-			RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = 5;
+			Constants.FOLDER_TYPE = 5;
 			edit.putInt("FOLDER_TYPE", 5);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3854,7 +3810,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 3103:
 			// DIRECTED FROM CAE 90
 			// SETS THE FOLDER ICON TO YELLOW FOLDER ICON
-			RootAdapter.FOLDER_TYPE = SimpleAdapter.FOLDER_TYPE = 6;
+			Constants.FOLDER_TYPE = 6;
 			edit.putInt("FOLDER_TYPE", 6);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3999,9 +3955,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					// TODO Auto-generated method stub
 					File f = new File(PATH);
 					if (CURRENT_ITEM == 2)
-						f = new File(RFileManager.getCurrentDirectory());
+						f = new File(SDManager.getCurrentDirectory());
 					else if (CURRENT_ITEM == 1)
-						f = new File(SFileManager.getCurrentDirectory());
+						f = new File(RootManager.getCurrentDirectory());
 					final File[] list = f.listFiles();
 					final String search = text.toString();
 					final String[] fList = f.list();
@@ -4010,9 +3966,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						protected void onPostExecute(Void result) {
 							if (SEARCH_FLAG) {
 								if (CURRENT_ITEM == 2) {
-									root.setAdapter(new RootAdapter(mContext,R.layout.row_list_1, searchList));
+									//root.setAdapter(new SDAdapter(mContext,R.layout.row_list_1, searchList));
 								} else if (CURRENT_ITEM == 1) {
-									simple.setAdapter(new SimpleAdapter(mContext,R.layout.row_list_1, searchList));
+									//simple.setAdapter(new SimpleAdapter(mContext,R.layout.row_list_1, searchList));
 								} else
 									LIST_VIEW_3D.setAdapter(new MediaElementAdapter(mContext,R.layout.row_list_1,searchList));
 							}
@@ -4266,7 +4222,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		item = new ActionItem(200, getString(R.string.startup), getResources().getDrawable(R.drawable.ic_launcher_startup));
 		action.addActionItem(item);
 		if (mViewPager.getCurrentItem() != 3) {
-			item = new ActionItem(300, getString(R.string.folderopt),getResources().getDrawable(RootAdapter.FOLDERS[RootAdapter.FOLDER_TYPE]));
+			item = new ActionItem(300, getString(R.string.folderopt),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
 			action.addActionItem(item);
 			item = new ActionItem(400, getString(R.string.sethomdir),getResources().getDrawable(R.drawable.ic_launcher_droid_home));
 			action.addActionItem(item);
@@ -4329,46 +4285,46 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			if (action == 4 && MediaElementAdapter.C != 0) {// DELETE THE
 															// MULTIPLE FILES IF
 															// ACTIONID = 4
-				new DeleteFiles(mContext, size.x*8/9, MediaElementAdapter.MULTI_FILES);
+				new DeleteFiles(mContext, size.x*8/9, convertToItem(MediaElementAdapter.MULTI_FILES));
 			} else if (action == 5 && MediaElementAdapter.C != 0) {
 				MULTIPLE_COPY_GALLERY = true;
 				MULTIPLE_COPY = MULTIPLE_CUT = COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = MULTIPLE_CUT_GALLERY = SEARCH_FLAG = false;
-				COPY_FILES = new ArrayList<File>();
-				COPY_FILES = MediaElementAdapter.MULTI_FILES;
+				COPY_FILES = new ArrayList<Item>();
+				COPY_FILES = convertToItem(MediaElementAdapter.MULTI_FILES);
 				showToast(MediaElementAdapter.C + " "+ getString(R.string.selectedforcopy));
 			} else if (action == 2 && MediaElementAdapter.C != 0) {
 				MULTIPLE_CUT_GALLERY = true;
-				COPY_FILES = new ArrayList<File>();
-				COPY_FILES = MediaElementAdapter.MULTI_FILES;
+				COPY_FILES = new ArrayList<Item>();
+				COPY_FILES = convertToItem(MediaElementAdapter.MULTI_FILES);
 				MULTIPLE_COPY = MULTIPLE_CUT = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY_GALLERY = RENAME_COMMAND = SEARCH_FLAG = false;
 				showToast(MediaElementAdapter.C + " "+ getString(R.string.selectedformove));
 			} else if (action == 3 && MediaElementAdapter.C != 0) {
-				COPY_FILES = new ArrayList<File>();
-				COPY_FILES = MediaElementAdapter.MULTI_FILES;
+				COPY_FILES = new ArrayList<Item>();
+				COPY_FILES = convertToItem(MediaElementAdapter.MULTI_FILES);
 				new CreateZip(mContext, size.x * 8 / 9, COPY_FILES);
 			} else
 				Toast.makeText(mContext, R.string.firstselectsomefiles,
 						Toast.LENGTH_SHORT).show();
-		} else if (ITEM == 1 && SimpleAdapter.MULTI_SELECT) {
-			if (action == 4 && SimpleAdapter.c != 0) {// DELETE THE MULTIPLE
+		} else if (ITEM == 1 && SDAdapter.MULTI_SELECT) {
+			if (action == 4 && SDAdapter.C != 0) {// DELETE THE MULTIPLE
 														// FILES IF ACTIONID = 4
-				new DeleteFiles(mContext, size.x*8/9, SimpleAdapter.MULTI_FILES);
-			} else if (action == 5 && SimpleAdapter.c > 0) {
+				new DeleteFiles(mContext, size.x*8/9, SDAdapter.MULTI_FILES);
+			} else if (action == 5 && SDAdapter.C > 0) {
 				MULTIPLE_COPY = true;
 				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
-				COPY_FILES = new ArrayList<File>();
-				COPY_FILES = SimpleAdapter.MULTI_FILES;
-				showToast(SimpleAdapter.c + " "+ getString(R.string.selectedforcopy));
-			} else if (action == 2 && SimpleAdapter.c > 0) {
+				COPY_FILES = new ArrayList<Item>();
+				COPY_FILES = SDAdapter.MULTI_FILES;
+				showToast(SDAdapter.C + " "+ getString(R.string.selectedforcopy));
+			} else if (action == 2 && SDAdapter.C > 0) {
 				MULTIPLE_CUT = true;
 				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
-				COPY_FILES = new ArrayList<File>();
-				COPY_FILES = SimpleAdapter.MULTI_FILES;
-				showToast(SimpleAdapter.c + " "+ getString(R.string.selectedformove));
-			} else if (action == 3 && SimpleAdapter.c > 0) {
+				COPY_FILES = new ArrayList<Item>();
+				COPY_FILES = SDAdapter.MULTI_FILES;
+				showToast(SDAdapter.C + " "+ getString(R.string.selectedformove));
+			} else if (action == 3 && SDAdapter.C > 0) {
 				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
-				COPY_FILES = new ArrayList<File>();
-				COPY_FILES = SimpleAdapter.MULTI_FILES;
+				COPY_FILES = new ArrayList<Item>();
+				COPY_FILES = SDAdapter.MULTI_FILES;
 				/*
 				 * BUG HAS TO BE FIXED WHILE ZIPPING FILES UNDER ROOT DIRECTORY
 				 * FOR NOW SHOWING TOAST MESSAGE SHOWING BCS OF INTERNAL ERROR
@@ -4378,25 +4334,25 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			} else
 				Toast.makeText(mContext, R.string.firstselectsomefiles,Toast.LENGTH_SHORT).show();
 
-		} else if (ITEM == 2 && RootAdapter.MULTI_SELECT) {
-			if (action == 4 && RootAdapter.C != 0) {
+		} else if (ITEM == 2 && SDAdapter.MULTI_SELECT) {
+			if (action == 4 && SDAdapter.C != 0) {
 				// DELETE THE MULTIPLE FILES IF ACTIONID = 4
-				new DeleteFiles(mContext, size.x*8/9, RootAdapter.MULTI_FILES);
-			} else if (action == 5 && RootAdapter.C != 0) {
+				new DeleteFiles(mContext, size.x*8/9, SDAdapter.MULTI_FILES);
+			} else if (action == 5 && SDAdapter.C != 0) {
 				MULTIPLE_COPY = true;
 				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
-				COPY_FILES = new ArrayList<File>();
-				COPY_FILES = RootAdapter.MULTI_FILES;
-				showToast(RootAdapter.C + " "+ getString(R.string.selectedforcopy));
-			} else if (action == 2 && RootAdapter.C != 0) {
+				COPY_FILES = new ArrayList<Item>();
+				COPY_FILES = SDAdapter.MULTI_FILES;
+				showToast(SDAdapter.C + " "+ getString(R.string.selectedforcopy));
+			} else if (action == 2 && SDAdapter.C != 0) {
 				MULTIPLE_CUT = true;
-				COPY_FILES = new ArrayList<File>();
-				COPY_FILES = RootAdapter.MULTI_FILES;
+				COPY_FILES = new ArrayList<Item>();
+				COPY_FILES = SDAdapter.MULTI_FILES;
 				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
-				showToast(RootAdapter.C + " "+ getString(R.string.selectedformove));
-			} else if (action == 3 && RootAdapter.C != 0) {
-				COPY_FILES = new ArrayList<File>();
-				COPY_FILES = RootAdapter.MULTI_FILES;
+				showToast(SDAdapter.C + " "+ getString(R.string.selectedformove));
+			} else if (action == 3 && SDAdapter.C != 0) {
+				COPY_FILES = new ArrayList<Item>();
+				COPY_FILES = SDAdapter.MULTI_FILES;
 				MULTIPLE_COPY = MULTIPLE_CUT = COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
 				new CreateZip(mContext, size.x * 8 / 9, COPY_FILES);
 			} else
@@ -4578,15 +4534,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			 */
 			if (COPY_COMMAND) {
 				if (CURRENT_ITEM == 1) {
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x * 8 / 9, file.getAbsolutePath(), false);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x * 8 / 9, file.getFile().getAbsolutePath(), false);
 				} else if (CURRENT_ITEM == 2) {
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x * 8 / 9, file2.getAbsolutePath(), false);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x * 8 / 9, file2.getFile().getAbsolutePath(), false);
 				}
 			} else if (CUT_COMMAND) {
 				if (CURRENT_ITEM == 1) {
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x * 8 / 9, file.getAbsolutePath(), true);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x * 8 / 9, file.getFile().getAbsolutePath(), true);
 				} else if (CURRENT_ITEM == 2) {
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x * 8 / 9, file2.getAbsolutePath(), true);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x * 8 / 9, file2.getFile().getAbsolutePath(), true);
 				}
 			}
 			COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_CUT = CREATE_FILE = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = false;
@@ -4598,9 +4554,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			String dest;
 			if (CURRENT_ITEM == 2) {
 				if (longC)
-					dest = file2.getAbsolutePath();
+					dest = file2.getFile().getAbsolutePath();
 				else
-					dest = RFileManager.getCurrentDirectory();
+					dest = SDManager.getCurrentDirectory();
 				if (MULTIPLE_COPY)
 					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, dest, false);
 				else if (MULTIPLE_CUT)
@@ -4608,9 +4564,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 			} else if (CURRENT_ITEM == 1) {
 				if (longC)
-					dest = file.getAbsolutePath();
+					dest = file.getFile().getAbsolutePath();
 				else
-					dest = SFileManager.getCurrentDirectory();
+					dest = RootManager.getCurrentDirectory();
 				if (MULTIPLE_COPY)
 					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, dest, false);
 				else if (MULTIPLE_CUT)
@@ -4624,15 +4580,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			 */
 			if (CURRENT_ITEM == 2) {
 				if (MULTIPLE_COPY_GALLERY) {
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, RFileManager.getCurrentDirectory(),	false);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, SDManager.getCurrentDirectory(),	false);
 				} else if (MULTIPLE_CUT_GALLERY) {
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, RFileManager.getCurrentDirectory(),	true);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, SDManager.getCurrentDirectory(),	true);
 				}
 			} else if (CURRENT_ITEM == 1) {
 				if (MULTIPLE_COPY_GALLERY) {
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, SFileManager.getCurrentDirectory(),false);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, RootManager.getCurrentDirectory(),false);
 				} else if (MULTIPLE_CUT_GALLERY) {
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, SFileManager.getCurrentDirectory(),	true);
+					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, RootManager.getCurrentDirectory(),	true);
 				}
 			}
 			COPY_COMMAND = CUT_COMMAND = CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = false;
@@ -4672,15 +4628,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						if (new File(value).isFile()) {
 							mViewPager.setCurrentItem(CURRENT_ITEM);
 							if(CURRENT_ITEM==1)
-								file = new File(value);
+								file = new Item(new File(value), null, null, null);
 							else if(CURRENT_ITEM ==2)
-								file2 = new File(value);
+								file2 = new Item(new File(value), null, null, null);
 							new OpenFileDialog(mContext, Uri.parse(value),size.x*8/9);
 						} else {
 							if (CURRENT_ITEM == 1) {
-								SFileManager.nStack.push(value);
+								RootManager.nStack.push(value);
 							} else if (CURRENT_ITEM == 2){
-								RFileManager.nStack.push(value);
+								SDManager.nStack.push(value);
 							}	
 							setAdapter(CURRENT_ITEM);
 						}
@@ -4694,11 +4650,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					
 					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
 						ZIP_SD = true;
-						RFileManager.nStack.push("/ -> Zip");
+						SDManager.nStack.push("/ -> Zip");
 					}	
 					else{
 						ZIP_ROOT = true;
-						SFileManager.nStack.push("/ -> Zip");
+						RootManager.nStack.push("/ -> Zip");
 					}	
 					setZipAdapter();
 				}else if(ACTION.equalsIgnoreCase("FQ_EXTRACT_PATH")){
@@ -4711,10 +4667,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					
 					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
 						RAR_SD = true;
-						RFileManager.nStack.push("/ -> Rar");
+						SDManager.nStack.push("/ -> Rar");
 					}else{
 						RAR_ROOT = true;
-						SFileManager.nStack.push("/ -> Rar");
+						RootManager.nStack.push("/ -> Rar");
 					}
 					setRarAdapter();
 				}else if(ACTION.equalsIgnoreCase("FQ_TAR_OPEN")){
@@ -4724,15 +4680,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					
 					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
 						TAR_SD = true;
-						RFileManager.nStack.push("/ -> Tar");
+						SDManager.nStack.push("/ -> Tar");
 					}else if(CURRENT_ITEM==1){
 						TAR_ROOT = true;
-						SFileManager.nStack.push("/ -> Tar");
+						RootManager.nStack.push("/ -> Tar");
 					}
 					setTarAdapter();
 				}else if(ACTION.equalsIgnoreCase("FQ_7Z_OPEN")){
 					try {
-						root.setAdapter(new SZipAdapter(mContext, new SZipManager(file2, "/", mContext).generateList()));
+						root.setAdapter(new SZipAdapter(mContext, new SZipManager(file2.getFile(), "/", mContext).generateList()));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -5050,9 +5006,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					 * ZIP ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
 					 */
 					if(CURRENT_ITEM==1)
-						SFileManager.nStack.pop();
+						RootManager.nStack.pop();
 					else if(CURRENT_ITEM==2)
-						RFileManager.nStack.pop();
+						SDManager.nStack.pop();
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
 					Toast.makeText(mContext, R.string.zipexception, Toast.LENGTH_SHORT).show();
@@ -5071,7 +5027,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				
 				if(CURRENT_ITEM==2||CURRENT_ITEM==0){
 					try {
-						File fi = file2;
+						File fi = file2.getFile();
 						if(CURRENT_ITEM==0){
 							CURRENT_ITEM = 2;
 							fi = file0;
@@ -5087,7 +5043,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					} 
 				}else if(CURRENT_ITEM==1){
 					try{
-						ZipFile zFile = new ZipFile(file);
+						ZipFile zFile = new ZipFile(file.getFile());
 						zListRoot = new ZipManager(zFile, zipPathRoot, mContext).generateList();
 						handle.sendEmptyMessage(0);
 					}catch(IOException e){
@@ -5126,9 +5082,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					 * RAR ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
 					 */
 					if(CURRENT_ITEM==1)
-						SFileManager.nStack.pop();
+						RootManager.nStack.pop();
 					else if(CURRENT_ITEM==2)
-						RFileManager.nStack.pop();
+						SDManager.nStack.pop();
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
 					Toast.makeText(mContext, R.string.zipexception, Toast.LENGTH_SHORT).show();
@@ -5148,7 +5104,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				
 				if(CURRENT_ITEM==2||CURRENT_ITEM==0){
 					try {
-						File fi = file2;
+						File fi = file2.getFile();
 						if(CURRENT_ITEM==0){
 							CURRENT_ITEM = 2;
 							fi = file0;
@@ -5167,7 +5123,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 				}else if(CURRENT_ITEM==1){
 					try{
-						Archive zfile = new Archive(file);
+						Archive zfile = new Archive(file.getFile());
 						rListRoot = new RarManager(zfile, rarPathRoot, mContext).generateList();
 						handle.sendEmptyMessage(0);
 					}catch(IOException e){
@@ -5209,9 +5165,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					 * RAR ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
 					 */
 					if(CURRENT_ITEM==1)
-						SFileManager.nStack.pop();
+						RootManager.nStack.pop();
 					else if(CURRENT_ITEM==2)
-						RFileManager.nStack.pop();
+						SDManager.nStack.pop();
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
 					Toast.makeText(mContext, R.string.zipexception, Toast.LENGTH_SHORT).show();
@@ -5231,7 +5187,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				
 				if(CURRENT_ITEM==2||CURRENT_ITEM==0){
 					try {
-						File fi = file2;
+						File fi = file2.getFile();
 						if(CURRENT_ITEM==0){
 							CURRENT_ITEM = 2;
 							fi = file0;
@@ -5250,7 +5206,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 				}else if(CURRENT_ITEM==1){
 					try{
-						tListRoot = new TarManager(file, tarPathRoot, mContext).generateList();
+						tListRoot = new TarManager(file.getFile(), tarPathRoot, mContext).generateList();
 						if(progDial.isShowing())
 							handle.sendEmptyMessage(0);
 						else{
@@ -5273,15 +5229,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 */
 	private void cleanStack(String p){
 		if(CURRENT_ITEM==1&&(RAR_ROOT||ZIP_ROOT||TAR_ROOT)){
-			while(SFileManager.nStack.peek().contains("->"))
-				SFileManager.nStack.pop();
+			while(RootManager.nStack.peek().contains("->"))
+				RootManager.nStack.pop();
 			RAR_ROOT = TAR_ROOT= ZIP_ROOT = false;
-			file = new File(p);
+			file = new Item(new File(p), null, null, null);
 		}else if(CURRENT_ITEM==2&&(RAR_SD||TAR_SD||ZIP_SD)){
-			while(RFileManager.nStack.peek().contains("->"))
-				RFileManager.nStack.pop();
+			while(SDManager.nStack.peek().contains("->"))
+				SDManager.nStack.pop();
 			RAR_SD = ZIP_SD = TAR_SD = false;
-			file2 = new File(p);
+			file2 = new Item(new File(p), null, null, null);
 		}
 	}
 	
@@ -5294,27 +5250,30 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			if(CURRENT_ITEM==1){
 				if(new File(p).canWrite())
 					//IF WE HAVE WRITE PERMISSION THEN EXTRACT HERE....
-					new ExtractZipFile(mContext, zFileSimple, size.x*8/9, p, file, 1);
+					new ExtractZipFile(mContext, zFileSimple, size.x*8/9, p, file.getFile(), 1);
 				else
 					//WE DONT HAVE WRITE PERMISSION..... 
 					Toast.makeText(mContext, R.string.cannotexthere, Toast.LENGTH_SHORT).show();
 			}else if(CURRENT_ITEM == 2)
-				new ExtractZipFile(mContext, zFileSD, size.x*8/9, p, file2, 1);
+				new ExtractZipFile(mContext, zFileSD, size.x*8/9, p, file2.getFile(), 1);
 		}else if(RAR_SD||RAR_ROOT){//EXTRACTING FILE FROM RAR ARCHIVE...
 			
 		}else if(TAR_SD||TAR_ROOT){//EXTRACTING FILES FROM TAR ARCHIVE...
 			if(CURRENT_ITEM==1){
 				if(new File(p).canWrite())
 					//IF WE HAVE WRITE PERMISSION THEN EXTRACT HERE....
-					new ExtractTarFile(mContext, tFileRoot, size.x*8/9, p, file, 1);
+					new ExtractTarFile(mContext, tFileRoot, size.x*8/9, p, file.getFile(), 1);
 				else
 					//WE DONT HAVE WRITE PERMISSION..... 
 					Toast.makeText(mContext, R.string.cannotexthere, Toast.LENGTH_SHORT).show();
 			}else if(CURRENT_ITEM == 2)
-				new ExtractTarFile(mContext, tFileSD, size.x*8/9, p, file2, 1);
+				new ExtractTarFile(mContext, tFileSD, size.x*8/9, p, file2.getFile(), 1);
 		}
 	}		
 	
+	/**
+	 * THIS METHOD INITIALIZES THE SLIDE MENU IN ONCREATE METHOD....
+	 */
 	private void initLeftMenu(){
 		SlideLayout slidemenu = (SlideLayout)findViewById(R.id.slide_left_menu);
 		
@@ -5322,8 +5281,24 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 		String[] values = getResources().getStringArray(R.array.slideList);
 		lsView.setAdapter(new ExpandableAdapter(this,R.layout.expandable_row_list,
-				R.id.expandable_toggle_button,values));	
-			
-		
+				R.id.expandable_toggle_button,values));			
+	}
+	
+	
+	/**
+	 * 
+	 * @param convert
+	 * @return
+	 */
+	private static ArrayList<Item> convertToItem(ArrayList<File> convert){
+		ArrayList<Item> items = new ArrayList<Item>();
+		int l = convert.size();
+		File tfile;
+		for(int i=0;i<l;++i){
+			tfile = convert.get(i);
+			if(tfile!=null)
+				items.add(new Item(tfile,null,null,null));
+		}
+		return items; 
 	}
 }
