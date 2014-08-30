@@ -70,8 +70,7 @@
     
 
     <string-array name="listAnims" >
-        
-        	<item>Standard</item>
+          	<item>Standard</item>
         	<item>Grow</item>
         	<item>Cards</item>
         	<item>Zipper</item>
@@ -88,7 +87,24 @@
         	<item>Slide in</item>
     </string-array>
     
-    
+    <string-array name="emptyList" >
+        	<item></item>
+        	<item></item>
+        	<item></item>
+        	<item></item>
+        	<item></item>
+        	<item></item>
+        	<item></item>
+        	<item></item>
+        	<item>Nothing to show</item>
+        	<item></item>
+        	<item></item>
+        	<item></item>        	
+        	<item></item>
+        	<item></item>
+        	<item></item>
+        	<item></item>
+    </string-array>
     
     
     
