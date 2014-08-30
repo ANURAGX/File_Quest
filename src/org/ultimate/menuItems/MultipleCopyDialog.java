@@ -176,7 +176,7 @@ public class MultipleCopyDialog {
 				File file,Dest = new File(DEST);
 				//String formated = formatsize();
 				for(int i = 0 ; i<len && running;++i){
-					file = (File) list.get(i).getFile();
+					file = list.get(i).getFile();
 					if(file!=null){
 						copyToDirectory(file.getPath(), DEST);
 						if(command){

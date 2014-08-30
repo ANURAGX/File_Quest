@@ -54,7 +54,6 @@ public class RootManager {
 		ctx = context;
 		nStack = new Stack<String>();
 		nStack.push("/");
-		nStack.push("/");
 		items = new ArrayList<Item>();
 		res = ctx.getResources();
 	}
