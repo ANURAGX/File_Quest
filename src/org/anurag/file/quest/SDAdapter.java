@@ -32,14 +32,14 @@ import android.widget.TextView;
 
 public class SDAdapter extends BaseAdapter{
 	
-	public boolean MULTI_SELECT;
-	public boolean[] thumbselection;
-	public long C;
+	public static boolean MULTI_SELECT;
+	public static boolean[] thumbselection;
+	public static long C;
 	Item item;
 	Context ctx;
 	ArrayList<Item> list; 
 	LayoutInflater inflater;
-	ArrayList<Item> MULTI_FILES;
+	static ArrayList<Item> MULTI_FILES;
 	public SDAdapter(Context context,ArrayList<Item> object) {
 		// TODO Auto-generated constructor stub
 		ctx = context;

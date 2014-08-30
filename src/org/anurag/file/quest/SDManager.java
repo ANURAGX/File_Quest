@@ -337,7 +337,7 @@ public class SDManager {
 	 * @return
 	 */
 	public ArrayList<Item> getPreviousList(){
-		nStack.pop();
+	//	nStack.pop();
 		return getList();
 	}
 	

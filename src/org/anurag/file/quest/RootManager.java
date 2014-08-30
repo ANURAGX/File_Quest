@@ -341,7 +341,7 @@ public class RootManager {
 	 * @return
 	 */
 	public ArrayList<Item> getPreviousList(){
-		nStack.pop();
+		//nStack.pop();
 		return getList();
 	}
 	
