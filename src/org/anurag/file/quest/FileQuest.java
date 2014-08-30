@@ -637,9 +637,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				if (ITEM == 1) {
 					rootItemList = rootManager.getList();
 					handle.sendEmptyMessage(2);
-					if (sdAdapter.MULTI_SELECT) {
-						sdAdapter.thumbselection = new boolean[rootItemList.size()];
-						sdAdapter.C = 0;
+					if (RootAdapter.MULTI_SELECT) {
+						RootAdapter.thumbselection = new boolean[rootItemList.size()];
+						RootAdapter.C = 0;
 					}
 				} else if (ITEM == 2) {
 					sdItemsList = sdManager.getList();
@@ -833,6 +833,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						|| curr.equalsIgnoreCase("0")
 						|| curr.equalsIgnoreCase(PATH))
 					return getString(R.string.sd);
+				else if(curr.equals(""))
+					return "/";
 				return SDManager.getCurrentDirectoryName();
 			case 3:
 				return getString(R.string.appstore);
@@ -2952,7 +2954,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			else if (CURRENT_ITEM == 1&& !RootManager.getCurrentDirectory().equals("/")) {
 				RootManager.nStack.pop();
 				rootItemList = rootManager.getList();
-				RootAdapter.thumbselection = new boolean[rootItemList.size()];
+				if(RootAdapter.MULTI_SELECT)	
+					RootAdapter.thumbselection = new boolean[rootItemList.size()];
 				mViewPager.setAdapter(mSectionsPagerAdapter);
 				mViewPager.setCurrentItem(CURRENT_ITEM);
 			} else if (CURRENT_ITEM == 1&&RootManager.getCurrentDirectory().endsWith("/")) {
@@ -3045,10 +3048,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 				}
 			}else if (CURRENT_ITEM == 2 && (SDManager.nStack.size() >= 2)) {
+				SDManager.nStack.pop();
 				sdItemsList = sdManager.getPreviousList();
 				// sdAdapter = new sdAdapter(getApplicationContext(),
 				// R.layout.row_list_1, nFiles);
-				SDAdapter.thumbselection = new boolean[sdItemsList.size()];
+				if(SDAdapter.MULTI_SELECT)
+					SDAdapter.thumbselection = new boolean[sdItemsList.size()];
 				mViewPager.setAdapter(mSectionsPagerAdapter);
 				mViewPager.setCurrentItem(2);
 				//file2 = new File(RFileManager.getCurrentDirectory());

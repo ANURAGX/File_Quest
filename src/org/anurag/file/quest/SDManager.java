@@ -317,7 +317,7 @@ public class SDManager {
 	 */
 	static String getSize(File f){
 		if(f.isDirectory())
-			return f.list().length+""+ctx.getString(R.string.items);
+			return f.list().length+" "+ctx.getString(R.string.items);
 		long size = f.length();
 		if(size>Constants.GB)
 			return String.format(ctx.getString(R.string.sizegb), (double)size/(Constants.GB));
