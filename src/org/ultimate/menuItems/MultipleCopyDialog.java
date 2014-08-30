@@ -33,6 +33,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
 import org.ultimate.root.LinuxShell;
 
@@ -65,7 +66,7 @@ public class MultipleCopyDialog {
 	static Context mContext;
 	//static int BUFFER = 256;
 	Dialog dialog;
-	ArrayList<File> list;
+	ArrayList<Item> list;
 	static long si = 0;
 	String DEST;
 	int len = 0;
@@ -82,7 +83,7 @@ public class MultipleCopyDialog {
 	
 	
 	
-	public MultipleCopyDialog(Context context,ArrayList<File> obj,int windowSize,String dest,boolean comm) {
+	public MultipleCopyDialog(Context context,ArrayList<Item> obj,int windowSize,String dest,boolean comm) {
 		// TODO Auto-generated constructor stub
 		mContext = context;
 		DEST = dest;
@@ -175,7 +176,7 @@ public class MultipleCopyDialog {
 				File file,Dest = new File(DEST);
 				//String formated = formatsize();
 				for(int i = 0 ; i<len && running;++i){
-					file = (File) list.get(i);
+					file = (File) list.get(i).getFile();
 					if(file!=null){
 						copyToDirectory(file.getPath(), DEST);
 						if(command){

@@ -30,6 +30,7 @@ import java.util.zip.ZipOutputStream;
 
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
 
 import android.app.Dialog;
@@ -75,7 +76,7 @@ public class CreateZip {
 	 * @param width
 	 * @param list
 	 */
-	public CreateZip(final Context ctx,int width , final ArrayList<File> list) {
+	public CreateZip(final Context ctx,int width , final ArrayList<Item> list) {
 		// TODO Auto-generated constructor stub
 		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
 		dialog.setCancelable(true);
@@ -122,7 +123,7 @@ public class CreateZip {
 		 */
 		int l=list.size();
 		for(int i=0;i<l;++i){
-			File file = list.get(i);
+			File file = list.get(i).getFile();
 			if(file!=null){
 				DEST = file.getParent();
 				break;
@@ -196,7 +197,7 @@ public class CreateZip {
 				if(running && zout!=null){
 					int len = list.size();
 					for(int i=0;i<len;++i){
-						File file = list.get(i);
+						File file = list.get(i).getFile();
 						if(file!=null){
 							zip_It(file,ctx);
 						}
@@ -210,7 +211,7 @@ public class CreateZip {
 					}
 					if(delete.isChecked() && running)
 						for(int i=0;i<len&&running;++i){
-							File file = list.get(i);
+							File file = list.get(i).getFile();
 								if(file!=null){
 									deleteFile(file , ctx);
 								}						

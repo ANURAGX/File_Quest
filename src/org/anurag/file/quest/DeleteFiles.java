@@ -36,7 +36,7 @@ import android.widget.Toast;
 
 public class DeleteFiles{
 
-	private  ArrayList<File> file;
+	private  ArrayList<Item> file;
 	private  TextView popupMessage;
 	private  Button btn1;
 	private  Button btn2;
@@ -44,7 +44,7 @@ public class DeleteFiles{
 	Context mContext;
 	Dialog dialog;
 	String name;
-	public DeleteFiles(Context context,int width,ArrayList<File> list) {
+	public DeleteFiles(Context context,int width,ArrayList<Item> list) {
 		// TODO Auto-generated constructor stub
 		mContext = context;
 		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
@@ -83,7 +83,7 @@ public class DeleteFiles{
 				mHandler.sendEmptyMessage(0);
 				int len = file.size();
 				for(int i=0;i<len;++i){
-					File f = file.get(i);
+					File f = file.get(i).getFile();
 					if(f!=null){
 						if(f.canWrite())
 							deleteTargetForCut(f);
