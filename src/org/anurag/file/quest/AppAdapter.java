@@ -77,7 +77,7 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 	public View getView( final int position , View convertView, ViewGroup container){
 		info = nList.get(position);
 		if( convertView == null){
-			convertView = inflater.inflate(R.layout.row_list_1, container , false);
+			convertView = inflater.inflate(R.layout.row_list_app, container , false);
 			nHolder = new FileHolder();
 			nHolder.FileIcon = (ImageView)convertView.findViewById(R.id.fileIcon);
 			nHolder.FileName = (TextView)convertView.findViewById(R.id.fileName);

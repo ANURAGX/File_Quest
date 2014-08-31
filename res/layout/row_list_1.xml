@@ -23,7 +23,23 @@
     android:orientation="horizontal"
     android:paddingLeft="10dp">  
     
-       <CheckBox 
+      
+    	 <LinearLayout 
+    	   android:gravity="center"  
+           android:layout_width="25dp"
+           android:layout_height="50dp"
+           android:orientation="vertical">
+            <ImageView 
+            	android:layout_gravity="center_vertical"
+            	android:background="@drawable/ic_launcher_unlocked"
+            	android:paddingTop="5dp"
+            	android:id="@+id/folder_lock"
+            	android:layout_width="25dp"
+            	android:layout_height="25dp"/>
+           
+       </LinearLayout>
+    
+    	<CheckBox 
             android:focusable="false"
             android:focusableInTouchMode="false"    
             android:button="@drawable/btn_check_holo_dark"    
