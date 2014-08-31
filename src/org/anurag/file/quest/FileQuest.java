@@ -192,7 +192,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ArrayList<Item> sdItemsList;
 	private static RootManager rootManager;
 	private static ArrayList<Item> rootItemList;
-	private static ArrayList<Item> fileSearch;
 	private static RootAdapter rootAdapter;
 	private static SDAdapter sdAdapter;
 	
@@ -237,7 +236,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static String CREATE_FLAG_PATH;
 	private WindowManager.LayoutParams params;
 
-	private static ArrayList<File> searchList;
+	private static ArrayList<Item> searchList;
 	private static boolean RENAME_COMMAND = false;
 	private static EditText editBox;
 	private static TransitionViewPager mViewPager;
@@ -948,7 +947,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								View arg1, int position, long arg3) {
 							if (elementInFocus && !LongClick) {
 								if (SEARCH_FLAG)
-									file0 = searchList.get(position);
+									file0 = searchList.get(position).getFile();
 								else
 									file0 = mediaFileList.get(position);
 								LongClick = true;
@@ -1037,7 +1036,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						final int position, long id) {
 					if (elementInFocus) {
 						if (SEARCH_FLAG)
-							file0 = searchList.get(position);
+							file0 = searchList.get(position).getFile();
 						else
 							file0 = mediaFileList.get(position);
 						if (LongClick) {
@@ -1093,7 +1092,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(TAR_ROOT)
 							tFileRoot = tSearch.get(position);
 						else
-							file = fileSearch.get(position);
+							file = searchList.get(position);
 					} else {
 						if(ZIP_ROOT)
 							zFileSimple = zListRoot.get(position);
@@ -1179,7 +1178,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(TAR_ROOT)
 							tFileRoot = tSearch.get(position);
 						else
-							file = fileSearch.get(position);
+							file = searchList.get(position);
 					} else {
 						if(ZIP_ROOT)
 							zFileSimple = zListRoot.get(position);
@@ -1449,7 +1448,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(TAR_SD)
 							tFileSD = tSearch.get(arg2);
 						else
-							file2 = fileSearch.get(arg2);
+							file2 = searchList.get(arg2);
 					} else {
 						if(ZIP_SD)
 							zFileSD = zListSD.get(arg2);
@@ -1677,7 +1676,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(TAR_SD)
 							tFileSD = tSearch.get(position);
 						else
-							file2 = fileSearch.get(position);
+							file2 = searchList.get(position);
 					}else{
 						if(ZIP_SD)
 							zFileSD = zListSD.get(position);
@@ -3867,112 +3866,95 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		return null;
 	}
 
+	
+	
 	/**
-	 * THIS FUNCTION CONTAINS ALL THE ACTION THAT HAS TO BE PERFORMED WHEN
-	 * SEARCH IS IN PROGRESS
+	 * THIS FUNCTION IS TO PERFORM ORDINARY FILE SEARCH.
+	 * THIS FUNCTION PERFORMS SEARCH IN 2 PANELS... 
 	 */
-	public void search() {
-		SEARCH_FLAG = true;
-		searchList = new ArrayList<File>();
-		try {
-			LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
-			a.setVisibility(View.GONE);
-			// Search Flipper is loaded
-			mVFlipper.setAnimation(nextAnim());
-			mVFlipper.showNext();
-			mVFlipper.showNext();
-			SEARCH_FLAG = true;
-			// PREVIOUS COMMANDS ARE OVERWRITTEN
-			COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = CREATE_FILE = false;
-			editBox.setTextColor(Color.WHITE);
-			editBox.setText(null);
-			editBox.setHint(R.string.nametofilterout);
-			editBox.addTextChangedListener(new TextWatcher() {
-				@Override
-				public void onTextChanged(CharSequence arg0, int arg1,int arg2, int arg3) {
-					searchList.clear();
-					// TODO Auto-generated method stub
-				}
-				@Override
-				public void beforeTextChanged(CharSequence arg0, int arg1,int arg2, int arg3) {
-					searchList.clear();
-					// TODO Auto-generated method stub
-				}
-
-				@Override
-				public void afterTextChanged(Editable text) {
-					// TODO Auto-generated method stub
-					File f = new File(PATH);
-					if (CURRENT_ITEM == 2)
-						f = new File(SDManager.getCurrentDirectory());
-					else if (CURRENT_ITEM == 1)
-						f = new File(RootManager.getCurrentDirectory());
-					final File[] list = f.listFiles();
-					final String search = text.toString();
-					final String[] fList = f.list();
-					new AsyncTask<String[], Void, Void>() {
+	private void search(){
+		// TODO Auto-generated method stub
+				searchList = new ArrayList<Item>();
+				try{
+					LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
+					a.setVisibility(View.GONE);
+					// Search Flipper is loaded
+					mVFlipper.setAnimation(nextAnim());
+					mVFlipper.showNext();
+					mVFlipper.showNext();
+					SEARCH_FLAG = true;
+					// PREVIOUS COMMANDS ARE OVERWRITTEN
+					COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = CREATE_FILE = false;
+					editBox.setTextColor(Color.WHITE);
+					editBox.setText(null);
+					editBox.setHint(R.string.nametofilterout);
+					editBox.addTextChangedListener(new TextWatcher() {
 						@Override
-						protected void onPostExecute(Void result) {
-							if (SEARCH_FLAG) {
-								if (CURRENT_ITEM == 2) {
-									//root.setAdapter(new SDAdapter(mContext,R.layout.row_list_1, searchList));
-								} else if (CURRENT_ITEM == 1) {
-									//simple.setAdapter(new SimpleAdapter(mContext,R.layout.row_list_1, searchList));
-								} else
-									LIST_VIEW_3D.setAdapter(new MediaElementAdapter(mContext,R.layout.row_list_1,searchList));
-							}
+						public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+							// TODO Auto-generated method stub
+							
 						}
-
-						protected void onPreExecute() {
-							if (SEARCH_FLAG) {
-								if (CURRENT_ITEM == 2)
-									root.setAdapter(null);
-								else if (CURRENT_ITEM == 1)
-									simple.setAdapter(null);
-								else
-									LIST_VIEW_3D.setAdapter(null);
-							}
-							super.onPreExecute();
-						}
-
+						
 						@Override
-						protected Void doInBackground(String[]... arg0) {
-							if (SEARCH_FLAG) {
-								// SEARCH IS PERFORMED FOR CURRENT ITEM 0
-								if (CURRENT_ITEM == 0) {
-									int len = mediaFileList.size();
-									for (int i = 0; i < len; ++i) {
-										File file = mediaFileList.get(i);
-										if (file.getName().toLowerCase().contains(search))
-											searchList.add(file);
-									}
+						public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,int arg3) {
+							// TODO Auto-generated method stub
+							searchList.clear();
+						}
+						
+						@Override
+						public void afterTextChanged(final Editable ed) {
+							// TODO Auto-generated method stub
+							new AsyncTask<Void, Void, Void>() {
+								
+								@Override
+								protected void onPostExecute(Void result) {
+									// TODO Auto-generated method stub
+									super.onPostExecute(result);
+									if(CURRENT_ITEM==2)
+										root.setAdapter(new SDAdapter(mContext,searchList));
+									else if(CURRENT_ITEM==1)
+										simple.setAdapter(new RootAdapter(mContext,searchList));
 								}
-								// SEARCH IS PERFORMED FOR CURRENT ITEM = 1,2
-								else
-									for (int i = 0; i < fList.length; ++i) {
-										if (CURRENT_ITEM == 2) {
-											if ((fList[i].toLowerCase()).contains(search.toLowerCase()))
-												searchList.add(list[i]);
-											
-										} else if (CURRENT_ITEM == 1) {
-											if ((fList[i].toLowerCase()).contains(search.toLowerCase()))
-												searchList.add(list[i]);
+
+								@Override
+								protected void onPreExecute() {
+									// TODO Auto-generated method stub
+									super.onPreExecute();
+									if(CURRENT_ITEM==2)
+										root.setAdapter(null);
+									else if(CURRENT_ITEM==1)
+										simple.setAdapter(null);
+								}
+
+								@Override
+								protected Void doInBackground(Void... arg0) {
+									// TODO Auto-generated method stub
+									if(CURRENT_ITEM==2){
+										String text = ed.toString().toLowerCase();
+										int len = sdItemsList.size();
+										for(int i=0;i<len;++i){
+											if(sdItemsList.get(i).getName().toLowerCase().contains(text))
+												searchList.add(sdItemsList.get(i));
+										}
+									}else if(CURRENT_ITEM==1){
+										String text = ed.toString().toLowerCase();
+										int len = rootItemList.size();
+										for(int i=0;i<len;++i){
+											if(rootItemList.get(i).getName().toLowerCase().contains(text))
+												searchList.add(rootItemList.get(i));
 										}
 									}
-							}
-							return null;
+									return null;
+								}
+							}.execute();
 						}
-					}.execute();
+					});
+				}catch(Exception e){
+					
 				}
-			});
-		} catch (IllegalStateException e) {
-
-		} catch (RuntimeException e) {
-
-		} catch (Exception e) {
-
-		}
 	}
+	
+	
 
 	/**
 	 * THIS FUNCTION IS USED AT TWO PLACE IN THIS FILE THIS FUNCTION DISPLAYS
