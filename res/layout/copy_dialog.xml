@@ -44,7 +44,7 @@
             android:id="@+id/header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Copying File"
+            android:text="@string/copyingfile"
             android:textStyle="bold"/>
     </LinearLayout>
     

@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <!-- 
  Copyright(c) 2014 ANURAG 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -87,36 +85,7 @@
         	<item>Slide in</item>
     </string-array>
     
-    <string-array name="emptyList" >
-        	<item></item>
-        	<item></item>
-        	<item></item>
-        	<item></item>
-        	<item></item>
-        	<item></item>
-        	<item></item>
-        	<item></item>
-        	<item>Nothing to show</item>
-        	<item></item>
-        	<item></item>
-        	<item></item>        	
-        	<item></item>
-        	<item></item>
-        	<item></item>
-        	<item></item>
-    </string-array>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	
-	<!-- Editor Activity -->
+    <!-- Editor Activity -->
 	<string name="empty">No Files</string>
 	<string name="New">New</string>
 	<string name="overwrite">Overwrite</string>
@@ -191,8 +160,9 @@
 	<string name="deleteall">Delete all files</string>
 	<string name="zip7">7 Zip</string>
 	<string name="tar">Tar</string>
-	
-	
+	<string name="set">Set</string>
+	<string name="setmasterpassword">Set master password</string>
+	<string name="copyingfile">Copying file</string>
 	
 	
 	
