@@ -28,6 +28,7 @@
             android:layout_width="fill_parent"
             android:id="@+id/file_gallery_layout">
   		<ScrollView 
+  		     android:scrollbars="none"
    			 android:layout_width="match_parent"
     		 android:layout_height="match_parent">
 			   <LinearLayout 
