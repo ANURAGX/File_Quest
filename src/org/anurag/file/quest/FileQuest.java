@@ -4152,6 +4152,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 		item = new ActionItem(200, getString(R.string.startup), getResources().getDrawable(R.drawable.ic_launcher_startup));
 		action.addActionItem(item);
+		
+		item = new ActionItem(250, getString(R.string.locker), getResources().getDrawable(R.drawable.ic_launcher_locked));
+		action.addActionItem(item);
+		
 		if (mViewPager.getCurrentItem() != 3) {
 			item = new ActionItem(300, getString(R.string.folderopt),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
 			action.addActionItem(item);
