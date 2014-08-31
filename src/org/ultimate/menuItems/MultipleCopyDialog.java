@@ -176,16 +176,20 @@ public class MultipleCopyDialog {
 				File file,Dest = new File(DEST);
 				//String formated = formatsize();
 				for(int i = 0 ; i<len && running;++i){
-					file = list.get(i).getFile();
-					if(file!=null){
-						copyToDirectory(file.getPath(), DEST);
-						if(command){
-							if(Dest.canWrite())
-								deleteTargetForCut(file);
-							else{
-								RootTools.deleteFileOrDirectory(file.getPath(), false);
-							}
-						}	
+					try{
+						file = list.get(i).getFile();
+						if(file!=null){
+							copyToDirectory(file.getPath(), DEST);
+							if(command){
+								if(Dest.canWrite())
+									deleteTargetForCut(file);
+								else{
+									RootTools.deleteFileOrDirectory(file.getPath(), false);
+								}
+							}	
+						}
+					}catch(NullPointerException e){
+						
 					}
 				}
 				//COPYING DONE NOW EXITING DIALOG....

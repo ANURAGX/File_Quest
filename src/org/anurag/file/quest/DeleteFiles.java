@@ -83,15 +83,19 @@ public class DeleteFiles{
 				mHandler.sendEmptyMessage(0);
 				int len = file.size();
 				for(int i=0;i<len;++i){
-					File f = file.get(i).getFile();
-					if(f!=null){
-						if(f.canWrite())
-							deleteTargetForCut(f);
-						else
-						{					
-							RootTools.deleteFileOrDirectory("'"+f.getAbsolutePath()+"'", false);
-						}
-					}					
+					try{
+						File f = file.get(i).getFile();
+						if(f!=null){
+							if(f.canWrite())
+								deleteTargetForCut(f);
+							else
+							{					
+								RootTools.deleteFileOrDirectory("'"+f.getAbsolutePath()+"'", false);
+							}
+						}	
+					}catch(NullPointerException e){
+						
+					}
 				}				
 				mHandler.sendEmptyMessage(2);
 			}

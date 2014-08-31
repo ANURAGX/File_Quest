@@ -27,12 +27,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -123,10 +121,14 @@ public class CreateZip {
 		 */
 		int l=list.size();
 		for(int i=0;i<l;++i){
-			File file = list.get(i).getFile();
-			if(file!=null){
-				DEST = file.getParent();
-				break;
+			try{
+				File file = list.get(i).getFile();
+				if(file!=null){
+					DEST = file.getParent();
+					break;
+				}
+			}catch(NullPointerException e){
+				
 			}
 		}
 		destination.setText(ctx.getString(R.string.dest)+" "+DEST);
@@ -197,9 +199,13 @@ public class CreateZip {
 				if(running && zout!=null){
 					int len = list.size();
 					for(int i=0;i<len;++i){
-						File file = list.get(i).getFile();
-						if(file!=null){
-							zip_It(file,ctx);
+						try{
+							File file = list.get(i).getFile();
+							if(file!=null){
+								zip_It(file,ctx);
+							}
+						}catch(NullPointerException e){
+							
 						}
 					}
 					try {

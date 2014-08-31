@@ -1836,8 +1836,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							Toast.makeText(getActivity(),R.string.nobackuptodelete,Toast.LENGTH_SHORT).show();
 						} else {
 							PackageInfo i = null;
-							PackageManager m = getActivity()
-									.getPackageManager();
+							PackageManager m = mContext.getPackageManager();
 							try {
 								i = m.getPackageInfo(info.packageName, 0);
 							} catch (NameNotFoundException e) {
