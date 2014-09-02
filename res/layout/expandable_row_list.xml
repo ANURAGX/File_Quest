@@ -56,35 +56,100 @@
 	        android:paddingLeft="20dp" 
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:orientation="horizontal"
+			android:orientation="vertical"
 			android:id="@+id/expandable"
 			android:background="#000000">
 
-		<TextView
-		        android:textStyle="bold"
-		        android:layout_width="wrap_content"
-				android:layout_height="fill_parent"
-				android:id="@+id/expanded_toggle_button"
-				android:text="@string/deleteall"/>
-
+	    
+	    <!-- LAYOUT FOR DELETE.....-->
 		<LinearLayout 
+		        android:paddingLeft="10dp"
         	    android:paddingTop="2dp"
         	    android:background="@drawable/action_item_btn"
         	    android:onClick="onClick"
         	    android:id="@+id/button_delete"
         	    android:clickable="true"
         	    android:focusable="true"
-        	    android:layout_width="60dp"
+        	    android:layout_width="wrap_content"
         	    android:layout_height="wrap_content"
-        	    android:orientation="vertical">
-        	     <Button 
+        	    android:orientation="horizontal">
+        	    <Button 
         	        android:layout_gravity="center" 
                  	android:onClick="onClick"
                  	android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
             		android:clickable="false"
             		android:background="@drawable/ic_launcher_delete48"/>   
+        	    <TextView
+        	        android:gravity="center_vertical"
+        	        android:paddingLeft="5dp"
+        	        android:paddingRight="10dp"
+		       	 	android:textStyle="bold"
+		        	android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:text="@string/deleteall"/>        	     
         </LinearLayout>
+        
+		
+		<!-- LAYOUT FOR COMPRESS ALL FILES.....-->
+		<LinearLayout 
+		        android:paddingLeft="10dp"
+        	    android:paddingTop="2dp"
+        	    android:background="@drawable/action_item_btn"
+        	    android:onClick="onClick"
+        	    android:id="@+id/button_zip_all"
+        	    android:clickable="true"
+        	    android:focusable="true"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="wrap_content"
+        	    android:orientation="horizontal">
+        	    <Button 
+        	        android:layout_gravity="center" 
+                 	android:onClick="onClick"
+                 	android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:clickable="false"
+            		android:background="@drawable/ic_launcher_zip_it48"/>   
+        	    <TextView
+        	        android:gravity="center_vertical"
+        	        android:paddingLeft="5dp"
+        	        android:paddingRight="10dp"
+		       	 	android:textStyle="bold"
+		        	android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:text="@string/compressallfiles"/>        	     
+        </LinearLayout>
+        
+		<!-- LAYOUT FOR MOVING ALL FILES TO ONE LOCATION.....-->
+		<LinearLayout 
+		        android:paddingLeft="10dp"
+        	    android:paddingTop="2dp"
+        	    android:background="@drawable/action_item_btn"
+        	    android:onClick="onClick"
+        	    android:id="@+id/button_move_all"
+        	    android:clickable="true"
+        	    android:focusable="true"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="wrap_content"
+        	    android:orientation="horizontal">
+        	    <Button 
+        	        android:layout_gravity="center" 
+                 	android:onClick="onClick"
+                 	android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:clickable="false"
+            		android:background="@drawable/ic_launcher_cut"/>   
+        	    <TextView
+        	        android:gravity="center_vertical"
+        	        android:paddingLeft="5dp"
+        	        android:paddingRight="10dp"
+		       	 	android:textStyle="bold"
+		        	android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:text="@string/movealltoonelocation"/>        	     
+        </LinearLayout>
+		
+		
 
 	</LinearLayout>
 </LinearLayout>

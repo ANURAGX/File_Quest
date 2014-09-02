@@ -87,6 +87,12 @@ class SlideExpandableListView extends ListView {
 	}
 
 
+ 	@Override
+	public void setSelector(Drawable sel) {
+		// TODO Auto-generated method stub
+		super.setSelector(getResources().getDrawable(R.drawable.blue_button));
+	}
+
 	@Override
 	public void onRestoreInstanceState(Parcelable state) {
 		if(!(state instanceof AbstractSlideExpandableListAdapter.SavedState)) {
