@@ -44,7 +44,7 @@ public class DeleteFiles{
 	Context mContext;
 	Dialog dialog;
 	String name;
-	public DeleteFiles(Context context,int width,ArrayList<Item> list) {
+	public DeleteFiles(Context context,int width,ArrayList<Item> list,String msg) {
 		// TODO Auto-generated constructor stub
 		mContext = context;
 		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
