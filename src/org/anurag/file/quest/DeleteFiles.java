@@ -52,6 +52,7 @@ public class DeleteFiles{
 		dialog.getWindow().getAttributes().width = width;
 		dialog.setCancelable(false);
 		file = list;
+		name=msg;
 		onCreate(context);
 	}
 	
@@ -60,7 +61,10 @@ public class DeleteFiles{
 		btn1 = (Button)dialog.findViewById(R.id.popupOk);
 		btn2 = (Button)dialog.findViewById(R.id.popupCancel);
 		popupMessage = (TextView)dialog.findViewById(R.id.textMessage);
-		popupMessage.setText(ctx.getString(R.string.confirmdelete));
+		if(name==null)
+			popupMessage.setText(ctx.getString(R.string.confirmdelete));
+		else
+			popupMessage.setText(name);
 		final Handler mHandler = new Handler(){
 			public void handleMessage(Message msg){
 				switch(msg.what){

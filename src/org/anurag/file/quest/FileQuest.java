@@ -616,7 +616,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					simple.setAdapter(sdAdapter);
 					break;
 				case 3:
-					load_FIle_Gallery(fPos);
+					if(elementInFocus)
+						load_FIle_Gallery(fPos);
+					else{
+						mViewPager.setAdapter(mSectionsPagerAdapter);
+						mViewPager.setCurrentItem(0);
+					}
 					break;
 
 				case 4:
@@ -5217,7 +5222,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			@Override
 			public void onClick(View itemView, View clickedView, int position) {
 				// TODO Auto-generated method stub
-				ArrayList<Item> itemList;
+				ArrayList<Item> itemList = null;
 				if(position==0)
 					itemList = convertToItem(Utils.music);
 				else if(position==1)
@@ -5232,6 +5237,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					itemList = convertToItem(Utils.zip);
 				else if(position==6)
 					itemList = convertToItem(Utils.mis);
+				
+				/**
+				 * switching to different actions of buttons in expanded list....
+				 */
+				switch(clickedView.getId()){
+					case R.id.button_delete:
+							new DeleteFiles(mContext, size.x*8/9, itemList, getResources().getString(R.string.confirmdeletion));
+							break;
+				}
 			}
 		}, R.id.button_delete,R.id.button_zip_all,R.id.button_move_all);
 	}
