@@ -170,7 +170,7 @@
 	<string name="copyingfile">Copying file</string>
 	<string name="movealltoonelocation">Move all to one location</string>
 	<string name="compressallfiles">Compress all files</string>
-	
+	 <string name="confirmdeletion">Are you sure to delete the files of folder :- All the files in this category will be deleted permanently....</string>
 	
 	
 	
@@ -469,13 +469,13 @@
     <string name="ziprecovery">Zip Recovery</string>
     <string name="ziprecoverymessage">This will create a zip file containing all the installed apps..</string>
     <string name="cantrename">Cannot rename</string>
-    <string name="renameerror">An error encountered while renaming...</string>
+    <string name="renameerror">An error encountered while renaming....</string>
     
     
     
     <!-- DELETE_FILES DIALOG STRINGS... -->
     <string name="deletefiles">Delete files ?</string>
-    <string name="confirmdelete">Are you sure to delete the files of folder :-</string>
+    <string name="confirmdelete">Are you sure to delete the files of folder :- Currently selected files or folders will be deleted permanently....</string>
     <string name="waitwhiledeleting">Please wait while deleting files or folders</string>
     <string name="deleted">Files deleted successfully</string>
     <string name="deletebackupmsg">All your earlier backup of installed apps will be deleted,are you sure to delete them</string>
@@ -493,7 +493,7 @@
     
     
     <!-- EDITOR STRINGS -->
-    <string name="errorinopening">An error encountered while opening file...</string>
+    <string name="errorinopening">An error encountered while opening file....</string>
     
     
     <!-- IMAGE VIEWER STRINGS -->
