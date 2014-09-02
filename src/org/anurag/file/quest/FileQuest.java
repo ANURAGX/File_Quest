@@ -1002,7 +1002,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							{
 								ArrayList<File> te = new ArrayList<File>();
 								te.add(file0);
-								new DeleteFiles(mContext, size.x*8/9, convertToItem(te));
+								new DeleteFiles(mContext, size.x*8/9, convertToItem(te),null);
 							}
 							break;
 					case 7:
@@ -1339,7 +1339,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else{
 							ArrayList<Item> te = new ArrayList<Item>();
 							te.add(file);
-							new DeleteFiles(mContext, size.x*8/9, te);
+							new DeleteFiles(mContext, size.x*8/9, te,null);
 						}
 							break;
 					case 7:
@@ -1604,7 +1604,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else{
 							ArrayList<Item> te = new ArrayList<Item>();
 							te.add(file2);
-							new DeleteFiles(mContext, size.x*8/9, te);
+							new DeleteFiles(mContext, size.x*8/9, te,null);
 						}
 							break;
 					case 7:
@@ -2031,12 +2031,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							rootAdapter = new RootAdapter(mContext, rootItemList);
 							RootAdapter.thumbselection = new boolean[rootItemList.size()];
 							RootAdapter.MULTI_SELECT = true;
-							mViewPager.setCurrentItem(1);
 							if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
-								simple.setAdapter(rootAdapter);
+								mViewPager.setAdapter(mSectionsPagerAdapter);
+								mViewPager.setCurrentItem(1);
 							}								
 						}
 						break;
@@ -2055,12 +2055,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							sdAdapter = new SDAdapter(mContext,sdItemsList);
 							SDAdapter.thumbselection = new boolean[sdItemsList.size()];
 							SDAdapter.MULTI_SELECT = true;
-							mViewPager.setCurrentItem(2);
 							if(!ZIP_SD&&!RAR_SD&&!TAR_SD){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
-								root.setAdapter(sdAdapter);
+								//root.setAdapter(sdAdapter);
+								mViewPager.setAdapter(mSectionsPagerAdapter);
+								mViewPager.setCurrentItem(2);
 							}	
 						}
 						break;
@@ -4220,7 +4221,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			if (action == 4 && MediaElementAdapter.C != 0) {// DELETE THE
 															// MULTIPLE FILES IF
 															// ACTIONID = 4
-				new DeleteFiles(mContext, size.x*8/9, convertToItem(MediaElementAdapter.MULTI_FILES));
+				new DeleteFiles(mContext, size.x*8/9, convertToItem(MediaElementAdapter.MULTI_FILES),null);
 			} else if (action == 5 && MediaElementAdapter.C != 0) {
 				MULTIPLE_COPY_GALLERY = true;
 				MULTIPLE_COPY = MULTIPLE_CUT = COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = MULTIPLE_CUT_GALLERY = SEARCH_FLAG = false;
@@ -4240,7 +4241,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		} else if (ITEM == 1 && RootAdapter.MULTI_SELECT) {
 			if (action == 4 && RootAdapter.C != 0) {// DELETE THE MULTIPLE
 														// FILES IF ACTIONID = 4
-				new DeleteFiles(mContext, size.x*8/9, RootAdapter.MULTI_FILES);
+				new DeleteFiles(mContext, size.x*8/9, RootAdapter.MULTI_FILES,null);
 			} else if (action == 5 && RootAdapter.C > 0) {
 				MULTIPLE_COPY = true;
 				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
@@ -4266,7 +4267,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		} else if (ITEM == 2 && SDAdapter.MULTI_SELECT) {
 			if (action == 4 && SDAdapter.C != 0) {
 				// DELETE THE MULTIPLE FILES IF ACTIONID = 4
-				new DeleteFiles(mContext, size.x*8/9, SDAdapter.MULTI_FILES);
+				new DeleteFiles(mContext, size.x*8/9, SDAdapter.MULTI_FILES,null);
 			} else if (action == 5 && SDAdapter.C != 0) {
 				MULTIPLE_COPY = true;
 				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
@@ -5207,7 +5208,32 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 		String[] values = getResources().getStringArray(R.array.slideList);
 		lsView.setAdapter(new ExpandableAdapter(this,R.layout.expandable_row_list,
-				R.id.expandable_toggle_button,values));			
+				R.id.expandable_toggle_button,values));
+		
+		/**
+		 * click listener for single item inside slide menu list...
+		 */
+		lsView.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
+			@Override
+			public void onClick(View itemView, View clickedView, int position) {
+				// TODO Auto-generated method stub
+				ArrayList<Item> itemList;
+				if(position==0)
+					itemList = convertToItem(Utils.music);
+				else if(position==1)
+					itemList = convertToItem(Utils.apps);
+				else if(position==2)
+					itemList = convertToItem(Utils.doc);
+				else if(position==3)
+					itemList = convertToItem(Utils.img);
+				else if(position==4)
+					itemList = convertToItem(Utils.vids);
+				else if(position==5)
+					itemList = convertToItem(Utils.zip);
+				else if(position==6)
+					itemList = convertToItem(Utils.mis);
+			}
+		}, R.id.button_delete,R.id.button_zip_all,R.id.button_move_all);
 	}
 	
 	
