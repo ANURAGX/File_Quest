@@ -5263,6 +5263,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							tempList = itemList;
 							new GetMoveLocation(mContext, size.x*8/9);
 							break;
+					case R.id.button_zip_all:
+							new CreateZip(mContext, size.x*8/9, itemList);
+							break;
 				}
 			}
 		}, R.id.button_delete,R.id.button_zip_all,R.id.button_move_all);
