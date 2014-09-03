@@ -23,10 +23,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.zip.ZipFile;
+
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
-import org.anurag.compress.ExtractRarFile;
 import org.anurag.compress.ExtractTarFile;
 import org.anurag.compress.ExtractZipFile;
 import org.anurag.compress.RarAdapter;
@@ -63,6 +63,7 @@ import org.ultimate.quickaction3D.ActionItem;
 import org.ultimate.quickaction3D.QuickAction;
 import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
 import org.ultimate.root.LinuxShell;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -116,6 +117,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.dropbox.client2.android.AndroidAuthSession;
@@ -272,7 +274,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	boolean added = false;
 	
 	
-	@SuppressLint({ "NewApi", "SdCardPath" })
+	@SuppressWarnings({ "deprecation" })
+	@SuppressLint({ "NewApi"})
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		PATH = INTERNAL_PATH_ONE = INTERNAL_PATH_TWO = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -1133,7 +1136,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}else if(RAR_ROOT){//handling rar file.....
 						if(rFileRoot.isFile()){
 							//EXTRACT TO CACHE DIR AND THEN OPEN IT....
-							new ExtractRarFile(mContext, rFileRoot, size.x*8/9, null, file.getFile(), 0);
+							//new ExtractRarFile(mContext, rFileRoot, size.x*8/9, null, file.getFile(), 0);
+							Toast.makeText(mContext, R.string.cantextractfromrar, Toast.LENGTH_SHORT).show();
 						}else{
 							rarPathRoot = rFileRoot.getPath();
 							if(rarPathRoot.startsWith("\\"))
@@ -1235,7 +1239,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}else if(RAR_ROOT){//handling rar file.....
 							if(rFileRoot.isFile()){
 								//extract file to cache dir and the open it....
-								new ExtractRarFile(mContext, rFileRoot, size.x*8/9, null, file.getFile(), 0);
+								//new ExtractRarFile(mContext, rFileRoot, size.x*8/9, null, file.getFile(), 0);
+								Toast.makeText(mContext, R.string.cantextractfromrar, Toast.LENGTH_SHORT).show();
 							}else{
 								rarPathRoot = rFileRoot.getPath();
 								if(rarPathRoot.startsWith("\\"))
@@ -1498,7 +1503,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								}	
 							}else if(RAR_SD){//RAR FILE HANDLING...
 								if(rarFileSD.isFile()){//EXTRATC FILES TO CACHE DIR AND THEN OPEN IT...
-									new ExtractRarFile(mContext, rarFileSD, size.x*8/9, null, file2.getFile(), 0);
+									//new ExtractRarFile(mContext, rarFileSD, size.x*8/9, null, file2.getFile(), 0);
+									Toast.makeText(mContext, R.string.cantextractfromrar,Toast.LENGTH_SHORT).show();
 								}else{
 									//LISTING THE DIRECTORIES....
 									rarPathSD = rarFileSD.getPath();
@@ -1715,7 +1721,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}else if(RAR_SD){//rar file handling....
 						if(rarFileSD.isFile()){//EXTRACT THE FILE TO CACHE DIRECTORY AND THEN OPEN IT WITH
 							//APPROPRIATE APP.....
-							new ExtractRarFile(mContext, rarFileSD, size.x*8/9, null, file2.getFile(), 0);
+							//new ExtractRarFile(mContext, rarFileSD, size.x*8/9, null, file2.getFile(), 0);
+							Toast.makeText(mContext, R.string.cantextractfromrar,Toast.LENGTH_SHORT).show();
 						}else{
 							rarPathSD = rarFileSD.getPath();
 							if(rarPathSD.startsWith("\\"))
