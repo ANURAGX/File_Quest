@@ -80,7 +80,7 @@ public class GetMoveLocation {
 		stack = new Stack<File>();
 		stack.push(file);
 		t = (TextView)dialog.findViewById(R.id.open);
-		t.setText(mContext.getString(R.string.choosehome));
+		t.setText(mContext.getString(R.string.choosealocation));
 		lv = (ListView)dialog.findViewById(R.id.open_list);
 		image= (ImageView)dialog.findViewById(R.id.getImage);
 		
@@ -126,7 +126,7 @@ public class GetMoveLocation {
 				// TODO Auto-generated method stub
 				{
 					Intent it = new Intent("FQ_MOVE_LOCATION");
-					it.putExtra("extract_path", file.getAbsolutePath());
+					it.putExtra("move_location", file.getAbsolutePath());
 					mContext.sendBroadcast(it);
 					dialog.dismiss();
 				}				

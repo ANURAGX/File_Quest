@@ -54,6 +54,7 @@ import org.ultimate.menuItems.DeleteBackups;
 import org.ultimate.menuItems.DeleteFlashable;
 import org.ultimate.menuItems.FileProperties;
 import org.ultimate.menuItems.GetHomeDirectory;
+import org.ultimate.menuItems.GetMoveLocation;
 import org.ultimate.menuItems.MultiSendApps;
 import org.ultimate.menuItems.MultipleCopyDialog;
 import org.ultimate.menuItems.SelectApp;
@@ -196,7 +197,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ArrayList<Item> rootItemList;
 	private static RootAdapter rootAdapter;
 	private static SDAdapter sdAdapter;
-	
+	private static ArrayList<Item> tempList;
 	
 	
 	static int fPos;
@@ -4633,8 +4634,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						e.printStackTrace();
 					}
 				}else if(ACTION.equals("FQ_DROPBOX_OPEN_FOLDER")){
+					//action to open drop box location in panel.....
 					mViewPager.setAdapter(mSectionsPagerAdapter);
 					mViewPager.setCurrentItem(CURRENT_ITEM);
+				}else if(ACTION.equalsIgnoreCase("FQ_MOVE_LOCATION")){
+					new MultipleCopyDialog(mContext, tempList, size.x*8/9, it.getStringExtra("move_location"), true);
 				}
 			}
 		};
@@ -5253,6 +5257,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				switch(clickedView.getId()){
 					case R.id.button_delete:
 							new DeleteFiles(mContext, size.x*8/9, itemList, getResources().getString(R.string.confirmdeletion));
+							break;
+							
+					case R.id.button_move_all:
+							tempList = itemList;
+							new GetMoveLocation(mContext, size.x*8/9);
 							break;
 				}
 			}
