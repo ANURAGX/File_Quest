@@ -4660,6 +4660,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		this.registerReceiver(RECEIVER, filter);
 		filter = new IntentFilter("FQ_DROPBOX_OPEN_FOLDER");
 		this.registerReceiver(RECEIVER, filter);
+		filter = new IntentFilter("FQ_MOVE_LOCATION");
+		this.registerReceiver(RECEIVER, filter);
 	}
 	
 	
