@@ -173,8 +173,9 @@
 	<string name="confirmdeletion">Are you sure to delete the files of folder :- All the files in this category will be deleted permanently....</string>
 	<string name="cantextractfromrar">Can\'t extract files from rar archives....</string>
 	<string name="choosealocation">Choose a location</string>
-	
-	
+	<string name="enterPassword">Enter password</string>
+	<string name="confirmPassword">Confirm password</string>
+	<string name="password">Password</string>
 	
 	
 	
