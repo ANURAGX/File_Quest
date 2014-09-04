@@ -42,4 +42,6 @@ public class Constants {
 	public static long MB = 1024*1024;
 	public static int BUFFER = 1024*1024;
 	public static String PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
+	
+	public static ItemDB db;
 }
