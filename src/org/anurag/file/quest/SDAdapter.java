@@ -97,13 +97,27 @@ public class SDAdapter extends BaseAdapter{
 		else
 			h = (Holder)convertView.getTag();
 		
+		
+		if(item.isLocked())
+			h.lockimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_locked));
+		else
+			h.lockimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_unlocked));
+		
 		h.lockimg.setId(pos);
 		h.lockimg.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				ImageView img = (ImageView)v;
-				img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_locked));
+				if(!list.get(img.getId()).isLocked()){
+					list.get(img.getId()).setLockStatus(true);
+					img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_locked));
+					Constants.db.insertNodeToLock(list.get(img.getId()).getFile().getAbsolutePath(), 1, 1);
+				}else{
+					list.get(img.getId()).setLockStatus(false);
+					img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_unlocked));
+					Constants.db.deleteLockedNode(list.get(img.getId()).getFile().getAbsolutePath());
+				}
 			}
 		});
 		

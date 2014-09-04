@@ -302,6 +302,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		}
 		
 		mContext = FileQuest.this;
+		Constants.db = new ItemDB(mContext);
 		sdManager = new SDManager(FileQuest.this);
 		rootManager = new RootManager(FileQuest.this);
 		RootManager.SORT_TYPE = SDManager.SORT_TYPE = SORT_TYPE;
