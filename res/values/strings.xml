@@ -176,8 +176,8 @@
 	<string name="enterPassword">Enter password</string>
 	<string name="confirmPassword">Confirm password</string>
 	<string name="password">Password</string>
-	
-	
+	<string name="minimumpasswordlength">Minimum password length should be 4</string>
+	<string name="passworddidnotmatch">Password didn\'t match</string>
 	
 	
 	<!-- TASKER ACTIVITY STRINGS..... -->

@@ -21,6 +21,10 @@ package org.anurag.file.quest;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * 
@@ -29,9 +33,46 @@ import android.content.Context;
  */
 public class MasterPassword {
 
-	public MasterPassword(Context ctx , int width) {
+	/**
+	 * 
+	 * @param ctx
+	 * @param width of the dialog window....
+	 * @param MODE to specify whether it is for setting master password or verifying password....
+	 * @param item to lock
+	 */
+	public MasterPassword(final Context ctx , int width , int MODE , Item item) {
 		// TODO Auto-generated constructor stub
-		Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
+		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
 		dialog.setCancelable(true);
+		dialog.setContentView(R.layout.master_password);
+		final EditText pass = (EditText)dialog.findViewById(R.id.password);
+		final EditText confirm = (EditText)dialog.findViewById(R.id.confirmpassword);
+		
+		Button cancel = (Button)dialog.findViewById(R.id.copyCancel);
+		cancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				dialog.dismiss();
+			}
+		});
+		
+		Button set = (Button)dialog.findViewById(R.id.copyOk);
+		set.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				if(pass.toString().length()<3){
+					//password length is not appropriate....
+					Toast.makeText(ctx, R.string.minimumpasswordlength, Toast.LENGTH_SHORT).show();
+				}else if(pass.toString().equals(confirm.toString())){
+					//passwords matched...
+					//save the password here....
+				}else if(!pass.toString().equals(confirm.toString())){
+					//passwords didn't matched... 
+					Toast.makeText(ctx, R.string.passworddidnotmatch, Toast.LENGTH_SHORT).show();
+				}
+			}
+		});		
 	}
 }
