@@ -25,23 +25,50 @@
     
       
     	 <LinearLayout 
-    	   android:clickable="true"
-    	   android:onClick="onClick"
-    	   android:focusable="false"
-    	   android:background="@drawable/action_item_btn"  
-    	   android:gravity="center"  
-           android:layout_width="25dp"
-           android:layout_height="50dp"
-           android:orientation="vertical">
-            <ImageView 
-                android:clickable="false"
-            	android:layout_gravity="center_vertical"
-            	android:background="@drawable/ic_launcher_unlocked"
-            	android:id="@+id/folder_lock"
-            	android:layout_width="25dp"
-            	android:layout_height="25dp"/>
+    	     android:orientation="horizontal"
+    	     android:layout_width="50dp"
+    	     android:layout_height="50dp">
+    	     
+    	    <!-- LAYOUT FOR LOCK.... --> 
+    	 	<LinearLayout 
+    	   		android:clickable="true"
+    	   		android:onClick="onClick"
+    	   		android:focusable="false"
+    	   		android:background="@drawable/action_item_btn"  
+    	   		android:layout_gravity="center"  
+           		android:layout_width="25dp"
+           		android:layout_height="30dp"
+           		android:orientation="vertical">
+            	<ImageView 
+                	android:clickable="false"
+            		android:layout_gravity="center_vertical"
+            		android:background="@drawable/ic_launcher_unlocked"
+            		android:id="@+id/folder_lock"
+            		android:layout_width="25dp"
+            		android:layout_height="25dp"/>
            
-       </LinearLayout>
+         	</LinearLayout> 
+         	
+    	 	<!-- LAYOUT FOR FAVORITE ITEM... -->
+    	 	<LinearLayout 
+    	   		android:clickable="true"
+    	   		android:onClick="onClick"
+    	   		android:focusable="false"
+    	   		android:background="@drawable/action_item_btn"  
+    	   		android:layout_gravity="center"  
+           		android:layout_width="25dp"
+           		android:layout_height="30dp"
+           		android:orientation="vertical">
+            	<ImageView 
+                	android:clickable="false"
+            		android:layout_gravity="center_vertical"
+            		android:background="@drawable/ic_launcher_not_favorite"
+            		android:id="@+id/fovorite_item"
+            		android:layout_width="25dp"
+            		android:layout_height="25dp"/>
+           
+         	</LinearLayout> 
+    	 </LinearLayout>
     
     	<CheckBox 
             android:focusable="false"
