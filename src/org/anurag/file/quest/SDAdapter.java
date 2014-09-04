@@ -20,7 +20,6 @@
 package org.anurag.file.quest;
 
 import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +29,9 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 public class SDAdapter extends BaseAdapter{
-	
+	Holder h;
 	public static boolean MULTI_SELECT;
 	public static boolean[] thumbselection;
 	public static long C;
@@ -72,13 +72,15 @@ public class SDAdapter extends BaseAdapter{
 		TextView fType;
 		TextView fSize;
 		CheckBox box;
+		ImageView lockimg;
+		ImageView favimg;
 	}
 	
 	@Override
 	public View getView(int pos, View convertView, ViewGroup arg2) {
 		// TODO Auto-generated method stub
 		item = list.get(pos);
-		Holder h = new Holder();
+		h = new Holder();
 		if(convertView == null){
 			h = new Holder();
 			convertView = inflater.inflate(R.layout.row_list_1, arg2 , false);
@@ -87,10 +89,33 @@ public class SDAdapter extends BaseAdapter{
 			h.fType = (TextView)convertView.findViewById(R.id.fileType);
 			h.fSize = (TextView)convertView.findViewById(R.id.fileSize);
 			h.box = (CheckBox)convertView.findViewById(R.id.checkbox);
+		
+			h.lockimg = (ImageView)convertView.findViewById(R.id.lockimg);
+			h.favimg = (ImageView)convertView.findViewById(R.id.favimg);
 			convertView.setTag(h);
 		}
 		else
 			h = (Holder)convertView.getTag();
+		
+		h.lockimg.setId(pos);
+		h.lockimg.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				ImageView img = (ImageView)v;
+				img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_locked));
+			}
+		});
+		
+		h.favimg.setId(pos);
+		h.favimg.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				ImageView img = (ImageView)v;
+				img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_favorite));
+			}
+		});
 		
 		MULTI_FILES.add(null);
 		if(MULTI_SELECT){
@@ -126,7 +151,5 @@ public class SDAdapter extends BaseAdapter{
 		h.fSize.setText(item.getSize());
 		h.icon.setImageDrawable(item.getIcon());
 		return convertView;
-	}
-
-	
+	}	
 }
