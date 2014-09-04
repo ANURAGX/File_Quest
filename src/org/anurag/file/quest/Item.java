@@ -1,5 +1,5 @@
 /**
- * Copyright(c) 2012-2014 DRAWNZER.ORG PROJECTS -> ANURAG
+ * Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ public class Item {
 	Drawable icon;
 	String size;
 	String type;
-	
+	boolean isLocked;
 	public Item(File fi , Drawable img , String typ , String si) {
 		// TODO Auto-generated constructor stub
 		this.file = fi;
@@ -42,6 +42,7 @@ public class Item {
 		this.icon = img;
 		this.type = typ;
 		this.size = si;
+		isLocked = Constants.db.isLocked(this.path);
 	}
 	
 	/**
@@ -130,5 +131,21 @@ public class Item {
 	 */
 	public File getFile(){
 		return this.file;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isLocked(){
+		return this.isLocked;
+	}
+	
+	/**
+	 * 
+	 * @param lockstatus
+	 */
+	public void setLockStatus(boolean lockstatus){
+		isLocked = lockstatus;
 	}
 }
