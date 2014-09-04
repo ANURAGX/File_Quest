@@ -38,12 +38,12 @@
     	   		android:layout_gravity="center"  
            		android:layout_width="25dp"
            		android:layout_height="30dp"
+           		android:id="@+id/folder_lock"
            		android:orientation="vertical">
             	<ImageView 
                 	android:clickable="false"
             		android:layout_gravity="center_vertical"
             		android:background="@drawable/ic_launcher_unlocked"
-            		android:id="@+id/folder_lock"
             		android:layout_width="25dp"
             		android:layout_height="25dp"/>
            
@@ -58,12 +58,12 @@
     	   		android:layout_gravity="center"  
            		android:layout_width="25dp"
            		android:layout_height="30dp"
+           		android:id="@+id/favorite_item"
            		android:orientation="vertical">
             	<ImageView 
                 	android:clickable="false"
             		android:layout_gravity="center_vertical"
             		android:background="@drawable/ic_launcher_not_favorite"
-            		android:id="@+id/fovorite_item"
             		android:layout_width="25dp"
             		android:layout_height="25dp"/>
            
