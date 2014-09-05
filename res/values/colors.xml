@@ -41,7 +41,7 @@
 	<color name="icswhite">#F9F9F9</color>
 	<color name="transparent_black">#aa000000</color>
     <color name="opaque_black">#9a000000</color>
-     <color name="gesture_color">#FFFFFF00</color>
+    <color name="gesture_color">#FFFFFF00</color>
     
 	
 </resources>
