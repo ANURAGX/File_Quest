@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.zip.ZipFile;
-
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
@@ -64,7 +63,6 @@ import org.ultimate.quickaction3D.ActionItem;
 import org.ultimate.quickaction3D.QuickAction;
 import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
 import org.ultimate.root.LinuxShell;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -118,17 +116,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
+import com.astuetz.PagerSlidingTabStrip;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.github.junrar.Archive;
 import com.github.junrar.exception.RarException;
 import com.rey.slidelayout.SlideLayout;
 import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
 import com.twotoasters.jazzylistview.JazzyHelper;
-import com.viewpagerindicator.TitlePageIndicator;
-
 
 @SuppressLint({ "HandlerLeak", "SdCardPath" })
 public class FileQuest extends FragmentActivity implements OnClickListener, QuickAction.OnActionItemClickListener {
@@ -244,7 +240,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static EditText editBox;
 	private static TransitionViewPager mViewPager;
 	private static ViewFlipper mFlipperBottom;
-	private static TitlePageIndicator indicator;
+	private static PagerSlidingTabStrip indicator;
 	
 	private static Intent LAUNCH_INTENT;
 	private static boolean COPY_COMMAND = false;
@@ -364,7 +360,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 		mViewPager = (TransitionViewPager) findViewById(R.id.pager);
-		indicator = (TitlePageIndicator) findViewById(R.id.indicator);
+		indicator = (PagerSlidingTabStrip) findViewById(R.id.indicator);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		
 		String[] te = getResources().getStringArray(R.array.effects);		
@@ -624,8 +620,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(elementInFocus)
 						load_FIle_Gallery(fPos);
 					else{
-						mViewPager.setAdapter(mSectionsPagerAdapter);
-						mViewPager.setCurrentItem(0);
+						resetPager();
 					}
 					break;
 
@@ -675,12 +670,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				switch (msg.what) {
 				
 				case 3:
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(ITEM);
+					CURRENT_ITEM=ITEM;
+					resetPager();
 					break;
 				case 4:
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(ITEM);
+					CURRENT_ITEM=ITEM;
+					resetPager();
 					APP_LIST_VIEW.setAdapter(nAppAdapter);
 					APP_LIST_VIEW.setSelection(pos);
 					break;
@@ -2049,8 +2044,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
-								mViewPager.setAdapter(mSectionsPagerAdapter);
-								mViewPager.setCurrentItem(1);
+								resetPager();
 							}								
 						}
 						break;
@@ -2074,8 +2068,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
 								//root.setAdapter(sdAdapter);
-								mViewPager.setAdapter(mSectionsPagerAdapter);
-								mViewPager.setCurrentItem(2);
+								resetPager();
 							}	
 						}
 						break;
@@ -2342,8 +2335,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					SDManager.nStack.push(HOME_DIRECTORY);
 					sdItemsList = sdManager.getList();
 					sdAdapter = new SDAdapter(mContext,sdItemsList);
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(2);
+					resetPager();
 				} else if (CURRENT_ITEM == 1) {
 					rootManager = new RootManager(mContext);
 					RootManager.SHOW_HIDDEN_FOLDER = SHOW_HIDDEN_FOLDERS;
@@ -2351,8 +2343,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					RootManager.nStack.push(HOME_DIRECTORY);
 					rootItemList = rootManager.getList();
 					rootAdapter = new RootAdapter(mContext,rootItemList);
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(1);
+					resetPager();
 				} else if (CURRENT_ITEM == 0) {
 					QuickAction d = new QuickAction(mContext);
 					ActionItem df = new ActionItem(8, "/", getResources().getDrawable(R.drawable.ic_launcher_droid_home));
@@ -2778,8 +2769,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}
 			} else if (CURRENT_ITEM == 0 && elementInFocus) {
 				elementInFocus = false;
-				mViewPager.setAdapter(mSectionsPagerAdapter);
-				mViewPager.setCurrentItem(0);
+				CURRENT_ITEM=2;
+				resetPager();
 				mFlipperBottom.showNext();
 				mFlipperBottom.setAnimation(nextAnim());
 			} else if (CURRENT_ITEM == 0 && !elementInFocus) {
@@ -2858,8 +2849,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					 */
 					ZIP_ROOT = false;
 					zipPathRoot = null;
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(CURRENT_ITEM);
+					CURRENT_ITEM=1;
+					resetPager();
 				}else
 				
 				/*
@@ -2881,8 +2872,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				if(rarPathRoot.equalsIgnoreCase("/")){
 					RAR_ROOT = false;
 					rarPathRoot = null;
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(CURRENT_ITEM);
+					CURRENT_ITEM=1;
+					resetPager();
 				}else{
 					try{//no need about the exception...
 						rarPathRoot = rarPathRoot.substring(0, rarPathRoot.lastIndexOf("\\"));
@@ -2897,8 +2888,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				if(tarPathRoot.equals("/")){
 					TAR_ROOT = false;
 					tarPathRoot = null;
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(1);
+					CURRENT_ITEM=1;
+					resetPager();
 				}else{
 					try{
 						tarPathRoot = tarPathRoot.substring(0, tarPathRoot.lastIndexOf("/"));
@@ -2914,8 +2905,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				rootItemList = rootManager.getList();
 				if(RootAdapter.MULTI_SELECT)	
 					RootAdapter.thumbselection = new boolean[rootItemList.size()];
-				mViewPager.setAdapter(mSectionsPagerAdapter);
-				mViewPager.setCurrentItem(CURRENT_ITEM);
+				CURRENT_ITEM=1;
+				resetPager();
 			} else if (CURRENT_ITEM == 1&&RootManager.getCurrentDirectory().endsWith("/")) {
 				/**
 				 * CHECKS WHETHER THE CURRENT PREF IS 1 IF IT IS FOUND 3 THEN IT
@@ -2954,8 +2945,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					 */
 					ZIP_SD = false;
 					zipPathSD = null;
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(CURRENT_ITEM);
+					CURRENT_ITEM=2;
+					resetPager();
 				}else
 				
 				/*
@@ -2978,8 +2969,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				if(rarPathSD.equalsIgnoreCase("/")){
 					RAR_SD = false;
 					rarPathSD = null;
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(CURRENT_ITEM);
+					CURRENT_ITEM=2;
+					resetPager();
 				}else{
 					try{//NO NEED TO WORRY ABOUT THE EXCEPTION....
 						rarPathSD = rarPathSD.substring(0, rarPathSD.lastIndexOf("\\"));
@@ -2994,8 +2985,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				if(tarPathSD.equals("/")){
 					TAR_SD = false;
 					tarPathSD = null;
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(2);
+					CURRENT_ITEM=2;
+					resetPager();
 				}else{
 					try{
 						tarPathSD = tarPathSD.substring(0, tarPathSD.lastIndexOf("/"));
@@ -3012,8 +3003,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				// R.layout.row_list_1, nFiles);
 				if(SDAdapter.MULTI_SELECT)
 					SDAdapter.thumbselection = new boolean[sdItemsList.size()];
-				mViewPager.setAdapter(mSectionsPagerAdapter);
-				mViewPager.setCurrentItem(2);
+				CURRENT_ITEM = 2;
+				resetPager();
 				//file2 = new File(RFileManager.getCurrentDirectory());
 			} else if (CURRENT_ITEM == 2 && SDManager.nStack.size() < 2) {
 				/**
@@ -3415,8 +3406,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						LIST_ANIM = pos;
 						edit.putInt("LIST_ANIM", LIST_ANIM);
 						edit.commit();
-						mViewPager.setAdapter(mSectionsPagerAdapter);
-						mViewPager.setCurrentItem(CURRENT_ITEM);
+						resetPager();
 						Toast.makeText(mContext, getString(R.string.settingsapplied),Toast.LENGTH_SHORT).show();
 					}
 				});
@@ -4636,8 +4626,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 				}else if(ACTION.equals("FQ_DROPBOX_OPEN_FOLDER")){
 					//action to open drop box location in panel.....
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(CURRENT_ITEM);
+					resetPager();
 				}else if(ACTION.equalsIgnoreCase("FQ_MOVE_LOCATION")){
 					new MultipleCopyDialog(mContext, tempList, size.x*8/9, it.getStringExtra("move_location"), true);
 				}else if(ACTION.equalsIgnoreCase("FQ_FILE_LOCKED_OR_UNLOCKED")){
@@ -4964,8 +4953,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			@Override
 			public void handleMessage(Message msg){
 				if(msg.what==0 && (ZIP_SD||ZIP_ROOT)){
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(CURRENT_ITEM);
+					resetPager();
 					if(progDial.isShowing())
 						progDial.dismiss();
 				}else{
@@ -4976,8 +4964,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						RootManager.nStack.pop();
 					else if(CURRENT_ITEM==2)
 						SDManager.nStack.pop();
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(CURRENT_ITEM);
+					resetPager();
 					Toast.makeText(mContext, R.string.zipexception, Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -5040,8 +5027,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			@Override
 			public void handleMessage(Message msg){
 				if(msg.what==0 && (RAR_SD||RAR_ROOT)){
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(CURRENT_ITEM);
+					resetPager();
 					if(progDial.isShowing())
 						progDial.dismiss();
 				}else{
@@ -5052,8 +5038,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						RootManager.nStack.pop();
 					else if(CURRENT_ITEM==2)
 						SDManager.nStack.pop();
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(CURRENT_ITEM);
+					resetPager();
 					Toast.makeText(mContext, R.string.zipexception, Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -5123,8 +5108,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			@Override
 			public void handleMessage(Message msg){
 				if(msg.what==0 && (TAR_SD||TAR_ROOT)){
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(CURRENT_ITEM);
+					resetPager();
 					if(progDial.isShowing())
 						progDial.dismiss();
 				}else{
@@ -5135,8 +5119,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						RootManager.nStack.pop();
 					else if(CURRENT_ITEM==2)
 						SDManager.nStack.pop();
-					mViewPager.setAdapter(mSectionsPagerAdapter);
-					mViewPager.setCurrentItem(CURRENT_ITEM);
+					resetPager();
 					Toast.makeText(mContext, R.string.zipexception, Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -5309,5 +5292,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				items.add(new Item(tfile,null,null,null));
 		}
 		return items; 
+	}
+	
+	/**
+	 * 
+	 */
+	private static void resetPager(){
+		mViewPager.setAdapter(mSectionsPagerAdapter);
+		mViewPager.setCurrentItem(CURRENT_ITEM);
+		indicator.setViewPager(mViewPager);
 	}
 }
