@@ -20,6 +20,7 @@
 package org.anurag.file.quest;
 
 import android.os.Environment;
+import android.widget.ImageView;
 
 /**
  * THIS FILE CONTAINS THE CONSTANTS THAT ARE USED ALL OVER THE PROGRAM...
@@ -43,5 +44,7 @@ public class Constants {
 	public static int BUFFER = 1024*1024;
 	public static String PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
 	
+	public static ImageView lock;
+	public static ImageView fav;
 	public static ItemDB db;
 }
