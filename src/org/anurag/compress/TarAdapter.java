@@ -84,7 +84,7 @@ public class TarAdapter extends BaseAdapter{
 		TarObj t = list.get(arg0);
 		Holder h = new Holder(); 
 		if(convertView==null){
-			convertView = inflater.inflate(R.layout.row_list_1, arg2 , false);
+			convertView = inflater.inflate(R.layout.row_list_app, arg2 , false);
 			h.icon = (ImageView)convertView.findViewById(R.id.fileIcon);
 			h.fName = (TextView)convertView.findViewById(R.id.fileName);
 			h.fType = (TextView)convertView.findViewById(R.id.fileType);
