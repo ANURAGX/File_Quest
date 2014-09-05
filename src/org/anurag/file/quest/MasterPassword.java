@@ -21,6 +21,8 @@ package org.anurag.file.quest;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,13 +40,14 @@ public class MasterPassword {
 	 * @param ctx
 	 * @param width of the dialog window....
 	 * @param MODE to specify whether it is for setting master password or verifying password....
-	 * @param item to lock
+	 * @param item to lock or unlock...
 	 */
-	public MasterPassword(final Context ctx , int width , int MODE , Item item) {
+	public MasterPassword(final Context ctx , int width , int MODE , Item item , final SharedPreferences.Editor editor) {
 		// TODO Auto-generated constructor stub
 		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.master_password);
+		dialog.getWindow().getAttributes().width = width;
 		final EditText pass = (EditText)dialog.findViewById(R.id.password);
 		final EditText confirm = (EditText)dialog.findViewById(R.id.confirmpassword);
 		
@@ -62,17 +65,22 @@ public class MasterPassword {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				if(pass.toString().length()<3){
+				if(pass.getText().toString().length()<3){
 					//password length is not appropriate....
 					Toast.makeText(ctx, R.string.minimumpasswordlength, Toast.LENGTH_SHORT).show();
-				}else if(pass.toString().equals(confirm.toString())){
+				}else if(pass.getText().toString().equals(confirm.getText().toString())){
 					//passwords matched...
 					//save the password here....
-				}else if(!pass.toString().equals(confirm.toString())){
+					editor.putString("MASTER_PASSWORD", pass.toString());
+					editor.commit();
+					ctx.sendBroadcast(new Intent("FQ_FILE_LOCKED_OR_UNLOCKED"));
+					dialog.dismiss();
+				}else if(!pass.getText().toString().equals(confirm.getText().toString())){
 					//passwords didn't matched... 
 					Toast.makeText(ctx, R.string.passworddidnotmatch, Toast.LENGTH_SHORT).show();
 				}
 			}
 		});		
+		dialog.show();
 	}
 }
