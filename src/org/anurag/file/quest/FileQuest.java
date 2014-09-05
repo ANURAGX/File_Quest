@@ -4640,6 +4640,24 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					mViewPager.setCurrentItem(CURRENT_ITEM);
 				}else if(ACTION.equalsIgnoreCase("FQ_MOVE_LOCATION")){
 					new MultipleCopyDialog(mContext, tempList, size.x*8/9, it.getStringExtra("move_location"), true);
+				}else if(ACTION.equalsIgnoreCase("FQ_FILE_LOCKED_OR_UNLOCKED")){
+					int id = Constants.lock.getId();
+					if(CURRENT_ITEM==2){
+						if(!file2.isLocked()){
+							//file is not locked ....
+							//lock the file...
+							Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_locked));
+							Constants.db.insertNodeToLock(sdItemsList.get(id).getFile().getAbsolutePath(), 1, 1);
+							sdItemsList.get(id).setLockStatus(true);
+						}else if(file2.isLocked()){
+							//after password verification was successful,unlock the file...
+							Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_unlocked));
+							Constants.db.deleteLockedNode(sdItemsList.get(id).getFile().getPath());
+							sdItemsList.get(id).setLockStatus(false);
+						}
+					}else if(CURRENT_ITEM==1){
+						
+					}
 				}
 			}
 		};
@@ -4666,6 +4684,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		filter = new IntentFilter("FQ_DROPBOX_OPEN_FOLDER");
 		this.registerReceiver(RECEIVER, filter);
 		filter = new IntentFilter("FQ_MOVE_LOCATION");
+		this.registerReceiver(RECEIVER, filter);
+		
+		filter = new IntentFilter("FQ_FILE_LOCKED_OR_UNLOCKED");
 		this.registerReceiver(RECEIVER, filter);
 	}
 	
