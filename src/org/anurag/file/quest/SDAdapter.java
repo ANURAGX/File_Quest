@@ -20,7 +20,9 @@
 package org.anurag.file.quest;
 
 import java.util.ArrayList;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,13 +112,21 @@ public class SDAdapter extends BaseAdapter{
 				// TODO Auto-generated method stub
 				ImageView img = (ImageView)v;
 				if(!list.get(img.getId()).isLocked()){
-					list.get(img.getId()).setLockStatus(true);
-					img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_locked));
-					Constants.db.insertNodeToLock(list.get(img.getId()).getFile().getAbsolutePath(), 1, 1);
+					//checking for master password is set or not
+					SharedPreferences prefs = ctx.getSharedPreferences("MY_APP_SETTINGS", 0);
+					String passwd = prefs.getString("MASTER_PASSWORD", null);
+					if(passwd==null){
+						Constants.lock = img;
+						new MasterPassword(ctx, FileQuest.size.x*8/9, 0, list.get(img.getId()),prefs.edit());
+					}
+					else{
+						list.get(img.getId()).setLockStatus(true);
+						img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_locked));
+						Constants.db.insertNodeToLock(list.get(img.getId()).getFile().getAbsolutePath(), 1, 1);
+					}					
 				}else{
-					list.get(img.getId()).setLockStatus(false);
-					img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_unlocked));
-					Constants.db.deleteLockedNode(list.get(img.getId()).getFile().getAbsolutePath());
+					//unlocking file,before that asking the password...
+					new MasterPassword(ctx, FileQuest.size.x*8/9, 0, list.get(img.getId()),null);
 				}
 			}
 		});
