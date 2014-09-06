@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -42,7 +43,7 @@ public class MasterPassword {
 	 * @param MODE to specify whether it is for setting master password or verifying password....
 	 * @param item to lock or unlock...
 	 */
-	public MasterPassword(final Context ctx , int width , int MODE , Item item , final SharedPreferences.Editor editor) {
+	public MasterPassword(final Context ctx , int width , int MODE , Item item , final SharedPreferences prefs) {
 		// TODO Auto-generated constructor stub
 		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
 		dialog.setCancelable(true);
@@ -50,6 +51,14 @@ public class MasterPassword {
 		dialog.getWindow().getAttributes().width = width;
 		final EditText pass = (EditText)dialog.findViewById(R.id.password);
 		final EditText confirm = (EditText)dialog.findViewById(R.id.confirmpassword);
+		
+		if(prefs.getString("MASTER_PASSWORD", null) != null){
+			confirm.setVisibility(View.GONE);
+			TextView con = (TextView)dialog.findViewById(R.id.currentFile);
+			con.setVisibility(View.GONE);
+			con = (TextView)dialog.findViewById(R.id.header);
+			con.setText(ctx.getString(R.string.entermaster));
+		}	
 		
 		Button cancel = (Button)dialog.findViewById(R.id.copyCancel);
 		cancel.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +80,7 @@ public class MasterPassword {
 				}else if(pass.getText().toString().equals(confirm.getText().toString())){
 					//passwords matched...
 					//save the password here....
+					SharedPreferences.Editor  editor = prefs.edit();
 					editor.putString("MASTER_PASSWORD", pass.toString());
 					editor.commit();
 					ctx.sendBroadcast(new Intent("FQ_FILE_LOCKED_OR_UNLOCKED"));

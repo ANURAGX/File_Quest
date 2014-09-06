@@ -4634,16 +4634,35 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						if(!file2.isLocked()){
 							//file is not locked ....
 							//lock the file...
+							
+							//this condition is true when user has not up the password and tried to lock the item...
 							Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_locked));
 							Constants.db.insertNodeToLock(sdItemsList.get(id).getFile().getAbsolutePath(), 1, 1);
 							sdItemsList.get(id).setLockStatus(true);
+							Toast.makeText(mContext, R.string.itemlocked, Toast.LENGTH_SHORT).show();
 						}else if(file2.isLocked()){
 							//after password verification was successful,unlock the file...
 							Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_unlocked));
 							Constants.db.deleteLockedNode(sdItemsList.get(id).getFile().getPath());
 							sdItemsList.get(id).setLockStatus(false);
+							Toast.makeText(mContext, R.string.itemunlocked, Toast.LENGTH_SHORT).show();
 						}
 					}else if(CURRENT_ITEM==1){
+						if(!file.isLocked()){
+							//file is not locked ....
+							//lock the file...
+							Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_locked));
+							Constants.db.insertNodeToLock(rootItemList.get(id).getFile().getAbsolutePath(), 1, 1);
+							rootItemList.get(id).setLockStatus(true);
+							Toast.makeText(mContext, R.string.itemlocked, Toast.LENGTH_SHORT).show();
+						}else if(file2.isLocked()){
+							//after password verification was successful,unlock the file...
+							Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_unlocked));
+							Constants.db.deleteLockedNode(rootItemList.get(id).getFile().getPath());
+							rootItemList.get(id).setLockStatus(false);
+							Toast.makeText(mContext, R.string.itemunlocked, Toast.LENGTH_SHORT).show();
+						}
+					}else if(CURRENT_ITEM == 0){
 						
 					}
 				}

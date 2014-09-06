@@ -30,6 +30,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class SDAdapter extends BaseAdapter{
@@ -111,22 +112,24 @@ public class SDAdapter extends BaseAdapter{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				ImageView img = (ImageView)v;
+				SharedPreferences prefs = ctx.getSharedPreferences("MY_APP_SETTINGS", 0);
 				if(!list.get(img.getId()).isLocked()){
 					//checking for master password is set or not
-					SharedPreferences prefs = ctx.getSharedPreferences("MY_APP_SETTINGS", 0);
 					String passwd = prefs.getString("MASTER_PASSWORD", null);
 					if(passwd==null){
 						Constants.lock = img;
-						new MasterPassword(ctx, FileQuest.size.x*8/9, 0, list.get(img.getId()),prefs.edit());
+						new MasterPassword(ctx, FileQuest.size.x*8/9, 0, list.get(img.getId()),prefs);
 					}
 					else{
 						list.get(img.getId()).setLockStatus(true);
 						img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_locked));
 						Constants.db.insertNodeToLock(list.get(img.getId()).getFile().getAbsolutePath(), 1, 1);
+						Toast.makeText(ctx, R.string.itemlocked, Toast.LENGTH_SHORT).show();
 					}					
 				}else{
 					//unlocking file,before that asking the password...
-					new MasterPassword(ctx, FileQuest.size.x*8/9, 0, list.get(img.getId()),null);
+					Constants.lock = img;
+					new MasterPassword(ctx, FileQuest.size.x*8/9, 0, list.get(img.getId()),prefs);
 				}
 			}
 		});
