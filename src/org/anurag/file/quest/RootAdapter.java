@@ -22,6 +22,7 @@ package org.anurag.file.quest;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RootAdapter extends BaseAdapter{
 	
@@ -72,6 +74,8 @@ public class RootAdapter extends BaseAdapter{
 		TextView fType;
 		TextView fSize;
 		CheckBox box;
+		ImageView lockimg;
+		ImageView favimg;
 	}
 	
 	@Override
@@ -87,10 +91,57 @@ public class RootAdapter extends BaseAdapter{
 			h.fType = (TextView)convertView.findViewById(R.id.fileType);
 			h.fSize = (TextView)convertView.findViewById(R.id.fileSize);
 			h.box = (CheckBox)convertView.findViewById(R.id.checkbox);
+
+			h.lockimg = (ImageView)convertView.findViewById(R.id.lockimg);
+			h.favimg = (ImageView)convertView.findViewById(R.id.favimg);
 			convertView.setTag(h);
 		}
 		else
 			h = (Holder)convertView.getTag();
+		
+		
+		if(item.isLocked())
+			h.lockimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_locked));
+		else
+			h.lockimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_unlocked));
+		
+		h.lockimg.setId(pos);
+		h.lockimg.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				ImageView img = (ImageView)v;
+				SharedPreferences prefs = ctx.getSharedPreferences("MY_APP_SETTINGS", 0);
+				if(!list.get(img.getId()).isLocked()){
+					//checking for master password is set or not
+					String passwd = prefs.getString("MASTER_PASSWORD", null);
+					if(passwd==null){
+						Constants.lock = img;
+						new MasterPassword(ctx, FileQuest.size.x*8/9, 0, list.get(img.getId()),prefs);
+					}
+					else{
+						list.get(img.getId()).setLockStatus(true);
+						img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_locked));
+						Constants.db.insertNodeToLock(list.get(img.getId()).getFile().getAbsolutePath(), 1, 1);
+						Toast.makeText(ctx, R.string.itemlocked, Toast.LENGTH_SHORT).show();
+					}					
+				}else{
+					//unlocking file,before that asking the password...
+					Constants.lock = img;
+					new MasterPassword(ctx, FileQuest.size.x*8/9, 0, list.get(img.getId()),prefs);
+				}
+			}
+		});
+		
+		h.favimg.setId(pos);
+		h.favimg.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				ImageView img = (ImageView)v;
+				img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_favorite));
+			}
+		});
 		
 		MULTI_FILES.add(null);
 		if(MULTI_SELECT){
