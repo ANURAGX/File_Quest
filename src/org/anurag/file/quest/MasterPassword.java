@@ -40,10 +40,9 @@ public class MasterPassword {
 	 * 
 	 * @param ctx
 	 * @param width of the dialog window....
-	 * @param MODE to specify whether it is for setting master password or verifying password....
 	 * @param item to lock or unlock...
 	 */
-	public MasterPassword(final Context ctx , int width , int MODE , Item item , final SharedPreferences prefs) {
+	public MasterPassword(final Context ctx , int width , final Item item , final SharedPreferences prefs) {
 		// TODO Auto-generated constructor stub
 		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
 		dialog.setCancelable(true);
@@ -100,7 +99,12 @@ public class MasterPassword {
 						//password length is not appropriate....
 						Toast.makeText(ctx, R.string.minimumpasswordlength, Toast.LENGTH_SHORT).show();
 					}else if(pass.getText().toString().equals(password)){
-						ctx.sendBroadcast(new Intent("FQ_FILE_LOCKED_OR_UNLOCKED"));
+						Intent intent = new Intent("FQ_FILE_LOCKED_OR_UNLOCKED");
+						if(item.isLocked())
+							intent.putExtra("password_verified", "verified");
+						else
+							intent.putExtra("password_verified", "no_need");
+						ctx.sendBroadcast(intent);
 						dialog.dismiss();
 					}else if(!pass.getText().toString().equals(confirm.getText().toString())){
 						//passwords didn't matched... 

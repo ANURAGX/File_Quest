@@ -1154,12 +1154,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}
 					}else{
 						//HANDLING ORDINARY FILE EXLORING....
-						if (!file.isDirectory())
-							new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
-						else if (file.isDirectory()){
-							RootManager.nStack.push(file.getPath());
-							setAdapter(1);
-						}
+						if(!file.isLocked()){
+							//file is not locked,open it as usual....
+							if (!file.isDirectory())
+								new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
+							else if (file.isDirectory()){
+								RootManager.nStack.push(file.getPath());
+								setAdapter(1);
+							}
+						}else
+							new MasterPassword(mContext, size.x*8/9, file, preferences);
 					}					
 				}
 			});
@@ -1257,12 +1261,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							}
 						}else{
 							//ORDINARY FILE EXPLORING..
-							if (!file.isDirectory())
-								new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
-							else if (file.isDirectory()) {
-								RootManager.nStack.push(file.getPath());
-								setAdapter(1);
-							}
+							//HANDLING ORDINARY FILE EXLORING....
+							if(!file.isLocked()){
+								//file is not locked,open it as usual....
+								if (!file.isDirectory())
+									new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
+								else if (file.isDirectory()){
+									RootManager.nStack.push(file.getPath());
+									setAdapter(1);
+								}
+							}else
+								new MasterPassword(mContext, size.x*8/9, file, preferences);
 						}
 						break;
 
@@ -1520,12 +1529,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									setTarAdapter();
 								}
 							}else{//ORDINARY FILE HANDLING....
-								if (!file2.isDirectory()) {
-									new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
-								} else if (file2.isDirectory()) {
-									SDManager.nStack.push(file2.getPath());
-									setAdapter(2);
-								}
+								if(!file2.isLocked()){
+									//this item is unlocked,no need to verify for password....
+									if (!file2.isDirectory()) {
+										new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
+									} else if (file2.isDirectory()) {
+										SDManager.nStack.push(file2.getPath());
+										setAdapter(2);
+									}
+								}else{
+									new MasterPassword(mContext, size.x*8/9, file2, preferences);
+								}	
 							}
 						break;
 
@@ -1737,11 +1751,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							setTarAdapter();
 						}
 					}else{//ordinary file handling...
-						if(!file2.isDirectory())
-							new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
-						else if (file2.isDirectory()){
-							SDManager.nStack.push(file2.getPath());
-							setAdapter(2);
+						if(!file2.isLocked()){
+							//this item is unlocked,no need to verify for password....
+							if (!file2.isDirectory()) {
+								new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
+							} else if (file2.isDirectory()) {
+								SDManager.nStack.push(file2.getPath());
+								setAdapter(2);
+							}
+						}else{
+							new MasterPassword(mContext, size.x*8/9, file2, preferences);
 						}
 					}
 				}
@@ -4629,43 +4648,70 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}else if(ACTION.equalsIgnoreCase("FQ_MOVE_LOCATION")){
 					new MultipleCopyDialog(mContext, tempList, size.x*8/9, it.getStringExtra("move_location"), true);
 				}else if(ACTION.equalsIgnoreCase("FQ_FILE_LOCKED_OR_UNLOCKED")){
-					int id = Constants.lock.getId();
-					if(CURRENT_ITEM==2){
-						if(!sdItemsList.get(id).isLocked()){
-							//file is not locked ....
-							//lock the file...
-							
-							//this condition is true when user has not up the password and tried to lock the item...
-							Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_locked));
-							Constants.db.insertNodeToLock(sdItemsList.get(id).getFile().getAbsolutePath(), 1, 1);
-							sdItemsList.get(id).setLockStatus(true);
-							Toast.makeText(mContext, R.string.itemlocked, Toast.LENGTH_SHORT).show();
-						}else if(sdItemsList.get(id).isLocked()){
-							//after password verification was successful,unlock the file...
-							Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_unlocked));
-							Constants.db.deleteLockedNode(sdItemsList.get(id).getFile().getPath());
-							sdItemsList.get(id).setLockStatus(false);
-							Toast.makeText(mContext, R.string.itemunlocked, Toast.LENGTH_SHORT).show();
+					/**
+					 * item locking and unlocking task is done here....
+					 */
+					if(it.getStringExtra("password_verified").equals("verified")){
+						//THE FILE OPENING AND FILE LISTING OPERATION HAS TO BE
+						//DONE AFTER PASSWORD IS VERIFIED....
+						//USER HAS SELECTED TO OPEN A LOCKED ITEM,
+						//AFTER PASSORD VERIFICATION,SERVE USER'S REQUEST HERE...
+						if(CURRENT_ITEM==2){
+							if (!file2.isDirectory()) {
+								new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
+							} else if (file2.isDirectory()) {
+								SDManager.nStack.push(file2.getPath());
+								setAdapter(2);
+							}
+						}else if(CURRENT_ITEM==1){
+							if(!file.isDirectory()){
+								new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
+							}else if(file.isDirectory()){
+								RootManager.nStack.push(file.getPath());
+								setAdapter(1);
+							}
 						}
-					}else if(CURRENT_ITEM==1){
-						if(!rootItemList.get(id).isLocked()){
-							//file is not locked ....
-							//lock the file...
+					}else{
+						//THE UI HAS TO BE CHANGED BASED ON THE LOCKING AND
+						//UNLOCKING EVENT...
+						int id = Constants.lock.getId();
+						if(CURRENT_ITEM==2){
+							if(!sdItemsList.get(id).isLocked()){
+								//file is not locked ....
+								//lock the file...
+								
+								//this condition is true when user has not up the password and tried to lock the item...
+								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_locked));
+								Constants.db.insertNodeToLock(sdItemsList.get(id).getFile().getAbsolutePath(), 1, 1);
+								sdItemsList.get(id).setLockStatus(true);
+								Toast.makeText(mContext, R.string.itemlocked, Toast.LENGTH_SHORT).show();
+							}else if(sdItemsList.get(id).isLocked()){
+								//after password verification was successful,unlock the file...
+								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_unlocked));
+								Constants.db.deleteLockedNode(sdItemsList.get(id).getFile().getPath());
+								sdItemsList.get(id).setLockStatus(false);
+								Toast.makeText(mContext, R.string.itemunlocked, Toast.LENGTH_SHORT).show();
+							}
+						}else if(CURRENT_ITEM==1){
+							if(!rootItemList.get(id).isLocked()){
+								//file is not locked ....
+								//lock the file...
+								
+								//this condition is true when user has not up the password and tried to lock the item...
+								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_locked));
+								Constants.db.insertNodeToLock(rootItemList.get(id).getFile().getAbsolutePath(), 1, 1);
+								rootItemList.get(id).setLockStatus(true);
+								Toast.makeText(mContext, R.string.itemlocked, Toast.LENGTH_SHORT).show();
+							}else if(rootItemList.get(id).isLocked()){
+								//after password verification was successful,unlock the file...
+								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_unlocked));
+								Constants.db.deleteLockedNode(rootItemList.get(id).getFile().getPath());
+								rootItemList.get(id).setLockStatus(false);
+								Toast.makeText(mContext, R.string.itemunlocked, Toast.LENGTH_SHORT).show();
+							}
+						}else if(CURRENT_ITEM == 0){
 							
-							//this condition is true when user has not up the password and tried to lock the item...
-							Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_locked));
-							Constants.db.insertNodeToLock(rootItemList.get(id).getFile().getAbsolutePath(), 1, 1);
-							rootItemList.get(id).setLockStatus(true);
-							Toast.makeText(mContext, R.string.itemlocked, Toast.LENGTH_SHORT).show();
-						}else if(rootItemList.get(id).isLocked()){
-							//after password verification was successful,unlock the file...
-							Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_unlocked));
-							Constants.db.deleteLockedNode(rootItemList.get(id).getFile().getPath());
-							rootItemList.get(id).setLockStatus(false);
-							Toast.makeText(mContext, R.string.itemunlocked, Toast.LENGTH_SHORT).show();
 						}
-					}else if(CURRENT_ITEM == 0){
-						
 					}
 				}
 			}

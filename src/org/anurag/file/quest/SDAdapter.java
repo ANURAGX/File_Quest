@@ -118,7 +118,7 @@ public class SDAdapter extends BaseAdapter{
 					String passwd = prefs.getString("MASTER_PASSWORD", null);
 					if(passwd==null){
 						Constants.lock = img;
-						new MasterPassword(ctx, FileQuest.size.x*8/9, 0, list.get(img.getId()),prefs);
+						new MasterPassword(ctx, FileQuest.size.x*8/9, list.get(img.getId()),prefs);
 					}
 					else{
 						list.get(img.getId()).setLockStatus(true);
@@ -129,7 +129,7 @@ public class SDAdapter extends BaseAdapter{
 				}else{
 					//unlocking file,before that asking the password...
 					Constants.lock = img;
-					new MasterPassword(ctx, FileQuest.size.x*8/9, 0, list.get(img.getId()),prefs);
+					new MasterPassword(ctx, FileQuest.size.x*8/9,  list.get(img.getId()),prefs);
 				}
 			}
 		});
