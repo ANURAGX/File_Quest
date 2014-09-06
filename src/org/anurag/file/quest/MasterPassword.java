@@ -100,10 +100,15 @@ public class MasterPassword {
 						Toast.makeText(ctx, R.string.minimumpasswordlength, Toast.LENGTH_SHORT).show();
 					}else if(pass.getText().toString().equals(password)){
 						Intent intent = new Intent("FQ_FILE_LOCKED_OR_UNLOCKED");
-						if(item.isLocked())
-							intent.putExtra("password_verified", "verified");
-						else
+						try{
+							//in one case item will always be null...
+							if(item.isLocked())
+								intent.putExtra("password_verified", "verified");
+							else
+								intent.putExtra("password_verified", "no_need");
+						}catch(NullPointerException e){
 							intent.putExtra("password_verified", "no_need");
+						}
 						ctx.sendBroadcast(intent);
 						dialog.dismiss();
 					}else if(!pass.getText().toString().equals(confirm.getText().toString())){
