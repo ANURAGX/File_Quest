@@ -178,6 +178,11 @@
 	<string name="password">Password</string>
 	<string name="minimumpasswordlength">Minimum password length should be 4</string>
 	<string name="passworddidnotmatch">Password didn\'t match</string>
+	<string name="itemlocked">One item locked</string>
+	<string name="itemunlocked">One item unlocked</string>
+	<string name="entermaster">Enter master password</string> 
+	
+	
 	
 	
 	<!-- TASKER ACTIVITY STRINGS..... -->
