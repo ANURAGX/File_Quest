@@ -42,7 +42,7 @@ public class MasterPassword {
 	 * @param width of the dialog window....
 	 * @param item to lock or unlock...
 	 */
-	public MasterPassword(final Context ctx , int width , final Item item , final SharedPreferences prefs) {
+	public MasterPassword(final Context ctx , int width , final Item item , final SharedPreferences prefs ,final int reset) {
 		// TODO Auto-generated constructor stub
 		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
 		dialog.setCancelable(true);
@@ -50,7 +50,7 @@ public class MasterPassword {
 		dialog.getWindow().getAttributes().width = width;
 		final EditText pass = (EditText)dialog.findViewById(R.id.password);
 		final EditText confirm = (EditText)dialog.findViewById(R.id.confirmpassword);
-		
+		final EditText newpass = (EditText)dialog.findViewById(R.id.newpassword);
 		final String password = prefs.getString("MASTER_PASSWORD", null);
 		
 		
@@ -65,7 +65,15 @@ public class MasterPassword {
 		
 		Button set = (Button)dialog.findViewById(R.id.copyOk);
 		
-		if(password != null){
+		if(reset==1){
+			newpass.setVisibility(View.VISIBLE);
+			TextView co = (TextView)dialog.findViewById(R.id.newpasswdtext);
+			co.setVisibility(View.VISIBLE);
+			co = (TextView)dialog.findViewById(R.id.header);
+			co.setText(ctx.getString(R.string.resetmasterpassword));
+		}
+		
+		if(password != null&&reset==0){
 			confirm.setVisibility(View.GONE);
 			TextView con = (TextView)dialog.findViewById(R.id.currentFile);
 			con.setVisibility(View.GONE);
@@ -78,7 +86,7 @@ public class MasterPassword {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				if(password == null){
+				if(password == null||reset==1){
 					if(pass.getText().toString().length()<3){
 						//password length is not appropriate....
 						Toast.makeText(ctx, R.string.minimumpasswordlength, Toast.LENGTH_SHORT).show();
@@ -88,8 +96,15 @@ public class MasterPassword {
 						SharedPreferences.Editor  editor = prefs.edit();
 						editor.putString("MASTER_PASSWORD", pass.getText().toString());
 						editor.commit();
-						ctx.sendBroadcast(new Intent("FQ_FILE_LOCKED_OR_UNLOCKED"));
-						dialog.dismiss();
+						if(reset==0){
+							//main activity has to notified after verification...
+							Intent intent = new Intent("FQ_FILE_LOCKED_OR_UNLOCKED");
+							intent.putExtra("password_verified", "no_need");
+							ctx.sendBroadcast(intent);
+							dialog.dismiss();
+						}else if(reset==1)
+							//it is only to change or set password...
+							Toast.makeText(ctx, R.string.passwdreset, Toast.LENGTH_SHORT).show();
 					}else if(!pass.getText().toString().equals(confirm.getText().toString())){
 						//passwords didn't matched... 
 						Toast.makeText(ctx, R.string.passworddidnotmatch, Toast.LENGTH_SHORT).show();

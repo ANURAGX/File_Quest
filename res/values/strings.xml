@@ -89,6 +89,13 @@
         	<item>Slide in</item>
     </string-array>
     
+    <string-array name="itemlockerlist">
+        <item>Set master password</item>
+        <item>Reset master password</item>
+        <item>Unlock all locked items</item>
+        <item>Lock child items also</item>
+    </string-array>
+    
     <!-- Editor Activity -->
 	<string name="empty">No Files</string>
 	<string name="New">New</string>
@@ -181,6 +188,19 @@
 	<string name="itemlocked">One item locked</string>
 	<string name="itemunlocked">One item unlocked</string>
 	<string name="entermaster">Enter master password</string> 
+	<string name="passwdreset">Password set successfully</string>
+	<string name="lockeditemsunlocked">All locked items unlocked successfully</string>
+	<string name="unabletounlock">Unable to unlock them</string>
+	<string name="enternewpassword">Enter new password</string>
+	<string name="resetmasterpassword">Reset master password</string>
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

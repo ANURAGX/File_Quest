@@ -1163,7 +1163,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								setAdapter(1);
 							}
 						}else
-							new MasterPassword(mContext, size.x*8/9, file, preferences);
+							new MasterPassword(mContext, size.x*8/9, file, preferences,0);
 					}					
 				}
 			});
@@ -1271,7 +1271,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									setAdapter(1);
 								}
 							}else
-								new MasterPassword(mContext, size.x*8/9, file, preferences);
+								new MasterPassword(mContext, size.x*8/9, file, preferences,0);
 						}
 						break;
 
@@ -1538,7 +1538,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 										setAdapter(2);
 									}
 								}else{
-									new MasterPassword(mContext, size.x*8/9, file2, preferences);
+									new MasterPassword(mContext, size.x*8/9, file2, preferences,0);
 								}	
 							}
 						break;
@@ -1760,7 +1760,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								setAdapter(2);
 							}
 						}else{
-							new MasterPassword(mContext, size.x*8/9, file2, preferences);
+							new MasterPassword(mContext, size.x*8/9, file2, preferences,0);
 						}
 					}
 				}
@@ -3338,6 +3338,58 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			a.setOnActionItemClickListener(this);
 			a.show(indicator);
 			break;
+			
+		case 250:
+			//show the sub-menus under item locker....
+				{
+					String[] arr = getResources().getStringArray(R.array.itemlockerlist);
+					int len = arr.length;
+					QuickAction act = new QuickAction(mContext);
+					ActionItem ittt;
+					Drawable dr = getResources().getDrawable(R.drawable.ic_launcher_lock64);
+					for(int itt=0;itt<len;++itt){
+						if(itt==0){
+							if(preferences.getString("MASTER_PASSWORD", null)==null){
+								ittt = new ActionItem(itt, arr[itt], dr);
+								itt=itt+1;
+							}else{
+								itt=itt+1;
+								ittt = new ActionItem(itt-1, arr[itt], dr);
+							}
+							act.addActionItem(ittt);
+						}else if(itt==3){
+							if(Constants.LOCK_CHILD){
+								ittt = new ActionItem(itt, arr[itt], getResources().getDrawable(R.drawable.ic_launcher_apply));
+							}else
+								ittt = new ActionItem(itt, arr[itt], getResources().getDrawable(R.drawable.ic_launcher_disabled));
+							act.addActionItem(ittt);
+						}else{
+							ittt = new ActionItem(itt, arr[itt], dr);
+							act.addActionItem(ittt);
+						}
+					}
+					act.show(indicator);
+					act.setOnActionItemClickListener(new OnActionItemClickListener() {
+						@Override
+						public void onItemClick(QuickAction source, int pos, int actionId) {
+							// TODO Auto-generated method stub
+							if(pos==0){
+								//reset=1;
+								new MasterPassword(mContext, size.x*8/9, null, preferences, 1);
+							}else if(pos==1){
+								if(Constants.db.deleteAllLockedNodes()){
+									setAdapter(CURRENT_ITEM);
+									Toast.makeText(mContext, R.string.lockeditemsunlocked, Toast.LENGTH_SHORT).show();
+								}	
+								else
+									Toast.makeText(mContext, R.string.unabletounlock, Toast.LENGTH_SHORT).show();
+							}else if(pos==2){
+								
+							}
+						}
+					});
+				}
+			break;
 
 		case 300:
 			QuickAction b = new QuickAction(mContext);
@@ -4183,8 +4235,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			item = new ActionItem(3200, getString(R.string.apps),getResources().getDrawable(R.drawable.ic_launcher_apk));
 			action.addActionItem(item);
 		}	
-		item = new ActionItem(500, getString(R.string.restoretodefault),getResources().getDrawable(R.drawable.ic_launcher_delete));
-		action.addActionItem(item);
+		//item = new ActionItem(500, getString(R.string.restoretodefault),getResources().getDrawable(R.drawable.ic_launcher_delete));
+		//action.addActionItem(item);
 		item = new ActionItem(501, getString(R.string.cleargesturedata),getResources().getDrawable(R.drawable.ic_launcher_gesture));
 		action.addActionItem(item);
 		item = new ActionItem(700, getString(R.string.abtme), getResources().getDrawable(R.drawable.ic_launcher_info));
