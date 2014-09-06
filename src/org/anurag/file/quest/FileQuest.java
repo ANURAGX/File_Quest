@@ -4167,18 +4167,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private void ShowMenu() {
 		QuickAction action = new QuickAction(getApplicationContext(), 1);
 		ActionItem item = new ActionItem(420, getString(R.string.animation),getResources().getDrawable(R.drawable.ic_launcher_full));
-		action.addActionItem(item);
-		
-		
+		action.addActionItem(item);		
 		item = new ActionItem(80, getString(R.string.appearance),getResources().getDrawable(R.drawable.ic_launcher_appreance));
-		action.addActionItem(item);
-		
+		action.addActionItem(item);		
 		item = new ActionItem(200, getString(R.string.startup), getResources().getDrawable(R.drawable.ic_launcher_startup));
-		action.addActionItem(item);
-		
-		item = new ActionItem(250, getString(R.string.locker), getResources().getDrawable(R.drawable.ic_launcher_locked));
-		action.addActionItem(item);
-		
+		action.addActionItem(item);		
+		item = new ActionItem(250, getString(R.string.locker), getResources().getDrawable(R.drawable.ic_launcher_lock64));
+		action.addActionItem(item);		
 		if (mViewPager.getCurrentItem() != 3) {
 			item = new ActionItem(300, getString(R.string.folderopt),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
 			action.addActionItem(item);
@@ -4187,18 +4182,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		} else if (mViewPager.getCurrentItem() == 3) {
 			item = new ActionItem(3200, getString(R.string.apps),getResources().getDrawable(R.drawable.ic_launcher_apk));
 			action.addActionItem(item);
-		}
-		
-		
-		
+		}	
 		item = new ActionItem(500, getString(R.string.restoretodefault),getResources().getDrawable(R.drawable.ic_launcher_delete));
 		action.addActionItem(item);
-
 		item = new ActionItem(501, getString(R.string.cleargesturedata),getResources().getDrawable(R.drawable.ic_launcher_gesture));
 		action.addActionItem(item);
-
-		
-		
 		item = new ActionItem(700, getString(R.string.abtme), getResources().getDrawable(R.drawable.ic_launcher_info));
 		action.addActionItem(item);
 		action.setAnimStyle(3);
