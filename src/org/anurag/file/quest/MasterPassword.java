@@ -52,13 +52,8 @@ public class MasterPassword {
 		final EditText pass = (EditText)dialog.findViewById(R.id.password);
 		final EditText confirm = (EditText)dialog.findViewById(R.id.confirmpassword);
 		
-		if(prefs.getString("MASTER_PASSWORD", null) != null){
-			confirm.setVisibility(View.GONE);
-			TextView con = (TextView)dialog.findViewById(R.id.currentFile);
-			con.setVisibility(View.GONE);
-			con = (TextView)dialog.findViewById(R.id.header);
-			con.setText(ctx.getString(R.string.entermaster));
-		}	
+		final String password = prefs.getString("MASTER_PASSWORD", null);
+		
 		
 		Button cancel = (Button)dialog.findViewById(R.id.copyCancel);
 		cancel.setOnClickListener(new View.OnClickListener() {
@@ -70,24 +65,47 @@ public class MasterPassword {
 		});
 		
 		Button set = (Button)dialog.findViewById(R.id.copyOk);
+		
+		if(password != null){
+			confirm.setVisibility(View.GONE);
+			TextView con = (TextView)dialog.findViewById(R.id.currentFile);
+			con.setVisibility(View.GONE);
+			con = (TextView)dialog.findViewById(R.id.header);
+			con.setText(ctx.getString(R.string.entermaster));
+			set.setText(ctx.getString(R.string.ok));
+		}	
+		
 		set.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				if(pass.getText().toString().length()<3){
-					//password length is not appropriate....
-					Toast.makeText(ctx, R.string.minimumpasswordlength, Toast.LENGTH_SHORT).show();
-				}else if(pass.getText().toString().equals(confirm.getText().toString())){
-					//passwords matched...
-					//save the password here....
-					SharedPreferences.Editor  editor = prefs.edit();
-					editor.putString("MASTER_PASSWORD", pass.toString());
-					editor.commit();
-					ctx.sendBroadcast(new Intent("FQ_FILE_LOCKED_OR_UNLOCKED"));
-					dialog.dismiss();
-				}else if(!pass.getText().toString().equals(confirm.getText().toString())){
-					//passwords didn't matched... 
-					Toast.makeText(ctx, R.string.passworddidnotmatch, Toast.LENGTH_SHORT).show();
+				if(password == null){
+					if(pass.getText().toString().length()<3){
+						//password length is not appropriate....
+						Toast.makeText(ctx, R.string.minimumpasswordlength, Toast.LENGTH_SHORT).show();
+					}else if(pass.getText().toString().equals(confirm.getText().toString())){
+						//passwords matched...
+						//save the password here....
+						SharedPreferences.Editor  editor = prefs.edit();
+						editor.putString("MASTER_PASSWORD", pass.getText().toString());
+						editor.commit();
+						ctx.sendBroadcast(new Intent("FQ_FILE_LOCKED_OR_UNLOCKED"));
+						dialog.dismiss();
+					}else if(!pass.getText().toString().equals(confirm.getText().toString())){
+						//passwords didn't matched... 
+						Toast.makeText(ctx, R.string.passworddidnotmatch, Toast.LENGTH_SHORT).show();
+					}
+				}else if(password != null){
+					if(pass.getText().toString().length()<3){
+						//password length is not appropriate....
+						Toast.makeText(ctx, R.string.minimumpasswordlength, Toast.LENGTH_SHORT).show();
+					}else if(pass.getText().toString().equals(password)){
+						ctx.sendBroadcast(new Intent("FQ_FILE_LOCKED_OR_UNLOCKED"));
+						dialog.dismiss();
+					}else if(!pass.getText().toString().equals(confirm.getText().toString())){
+						//passwords didn't matched... 
+						Toast.makeText(ctx, R.string.passworddidnotmatch, Toast.LENGTH_SHORT).show();
+					}
 				}
 			}
 		});		

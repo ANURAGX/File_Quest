@@ -4631,7 +4631,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}else if(ACTION.equalsIgnoreCase("FQ_FILE_LOCKED_OR_UNLOCKED")){
 					int id = Constants.lock.getId();
 					if(CURRENT_ITEM==2){
-						if(!file2.isLocked()){
+						if(!sdItemsList.get(id).isLocked()){
 							//file is not locked ....
 							//lock the file...
 							
@@ -4640,7 +4640,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							Constants.db.insertNodeToLock(sdItemsList.get(id).getFile().getAbsolutePath(), 1, 1);
 							sdItemsList.get(id).setLockStatus(true);
 							Toast.makeText(mContext, R.string.itemlocked, Toast.LENGTH_SHORT).show();
-						}else if(file2.isLocked()){
+						}else if(sdItemsList.get(id).isLocked()){
 							//after password verification was successful,unlock the file...
 							Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_unlocked));
 							Constants.db.deleteLockedNode(sdItemsList.get(id).getFile().getPath());
@@ -4648,14 +4648,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							Toast.makeText(mContext, R.string.itemunlocked, Toast.LENGTH_SHORT).show();
 						}
 					}else if(CURRENT_ITEM==1){
-						if(!file.isLocked()){
+						if(!rootItemList.get(id).isLocked()){
 							//file is not locked ....
 							//lock the file...
+							
+							//this condition is true when user has not up the password and tried to lock the item...
 							Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_locked));
 							Constants.db.insertNodeToLock(rootItemList.get(id).getFile().getAbsolutePath(), 1, 1);
 							rootItemList.get(id).setLockStatus(true);
 							Toast.makeText(mContext, R.string.itemlocked, Toast.LENGTH_SHORT).show();
-						}else if(file2.isLocked()){
+						}else if(rootItemList.get(id).isLocked()){
 							//after password verification was successful,unlock the file...
 							Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_unlocked));
 							Constants.db.deleteLockedNode(rootItemList.get(id).getFile().getPath());
