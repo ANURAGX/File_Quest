@@ -2769,7 +2769,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}
 			} else if (CURRENT_ITEM == 0 && elementInFocus) {
 				elementInFocus = false;
-				CURRENT_ITEM=2;
+				CURRENT_ITEM=0;
 				resetPager();
 				mFlipperBottom.showNext();
 				mFlipperBottom.setAnimation(nextAnim());
