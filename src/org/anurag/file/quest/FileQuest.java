@@ -598,67 +598,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	}
 
 	/**
-	 * FUNCTION RELOADS THE LIST AFTER CERTAIN TASK.....
-	 * 
-	 * @param ITEM
-	 */
-	private static void refreshList(final int ITEM) {
-		final Handler handle = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				// TODO Auto-generated method stub
-				super.handleMessage(msg);
-				switch (msg.what) {
-				case 1:
-					root.setAdapter(sdAdapter);
-					break;
-
-				case 2:
-					simple.setAdapter(sdAdapter);
-					break;
-				case 3:
-					if(elementInFocus)
-						load_FIle_Gallery(fPos);
-					else{
-						resetPager();
-					}
-					break;
-
-				case 4:
-					nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
-					APP_LIST_VIEW.setAdapter(nAppAdapter);
-				}
-			}
-		};
-
-		Thread thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				if (ITEM == 1) {
-					rootItemList = rootManager.getList();
-					handle.sendEmptyMessage(2);
-					if (RootAdapter.MULTI_SELECT) {
-						RootAdapter.thumbselection = new boolean[rootItemList.size()];
-						RootAdapter.C = 0;
-					}
-				} else if (ITEM == 2) {
-					sdItemsList = sdManager.getList();
-					if (SDAdapter.MULTI_SELECT) {
-						SDAdapter.thumbselection = new boolean[sdItemsList.size()];
-						SDAdapter.C = 0;
-					}
-					handle.sendEmptyMessage(1);
-				} else if (ITEM == 0) {
-					handle.sendEmptyMessage(3);
-				} else if (ITEM == 3)
-					handle.sendEmptyMessage(4);
-			}
-		});
-		thread.start();
-	}
-
-	/**
 	 * THIS FUNCTION SETS THE ADPATER FOR ALL THE PANELS,AFTER CERTAIN
 	 * OPERATIONS...
 	 */
@@ -4597,10 +4536,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				// TODO Auto-generated method stub
 				String ACTION = it.getAction();
 				if (ACTION.equalsIgnoreCase("FQ_BACKUP")|| ACTION.equals(Intent.ACTION_UNINSTALL_PACKAGE))
-					refreshList(CURRENT_ITEM);
+					setAdapter(CURRENT_ITEM);
 				else if (ACTION.equalsIgnoreCase("FQ_DELETE")) {
 					// setAdapter(CURRENT_ITEM);
-					refreshList(CURRENT_ITEM);
+					setAdapter(CURRENT_ITEM);
 				} else if (ACTION.equalsIgnoreCase("FQ_FLASHZIP")) {
 					// FLASHABLE ZIP DIALOG IS FIRED FROM HERE
 					 new CreateZipApps(mContext, size.x*8/9, nList);
