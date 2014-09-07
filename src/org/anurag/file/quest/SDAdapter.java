@@ -23,6 +23,9 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +37,8 @@ import android.widget.Toast;
 
 
 public class SDAdapter extends BaseAdapter{
+	private static ThumbnailCreator creator;
+	Bitmap image;
 	Holder h;
 	public static boolean MULTI_SELECT;
 	public static boolean[] thumbselection;
@@ -46,6 +51,7 @@ public class SDAdapter extends BaseAdapter{
 	public SDAdapter(Context context,ArrayList<Item> object) {
 		// TODO Auto-generated constructor stub
 		ctx = context;
+		creator = new ThumbnailCreator(50, 50);
 		MULTI_FILES = new ArrayList<Item>();
 		list = object;
 		inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -176,7 +182,27 @@ public class SDAdapter extends BaseAdapter{
 		h.fName.setText(item.getName());
 		h.fType.setText(item.getType());
 		h.fSize.setText(item.getSize());
-		h.icon.setImageDrawable(item.getIcon());
+		if(!item.getType().equals("Image"))
+			h.icon.setImageDrawable(item.getIcon());
+		else{
+			h.icon.setImageDrawable(item.getIcon());
+			image = creator.isBitmapCached(item.getPath());
+			if(image == null){
+				final Handler handle = new Handler(new Handler.Callback() {
+					@Override
+					public boolean handleMessage(Message msg) {
+						// TODO Auto-generated method stub
+					    notifyDataSetChanged();
+						return true;
+					}
+				});
+				creator.createNewThumbnail(list, handle);
+				if(!creator.isAlive())
+					creator.start();
+					
+			}else
+				h.icon.setImageBitmap(image);
+		}
 		return convertView;
 	}	
 }

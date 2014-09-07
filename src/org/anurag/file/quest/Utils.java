@@ -1,5 +1,5 @@
 /**
- * Copyright(c) 2012-2014 DRAWNZER.ORG PROJECTS -> ANURAG
+ * Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,8 @@ import android.widget.TextView;
 
 @SuppressLint("HandlerLeak")
 public class Utils {
+	
+	public static boolean FILES_SCANNED;
 	static View v;
 	public static boolean loaded = false;
 	public static ArrayList<File> music;
@@ -66,6 +68,28 @@ public class Utils {
 	TextView count;
 	
 	Context ctx;
+	
+	public Utils() {
+		// TODO Auto-generated constructor stub
+		FILES_SCANNED = false;
+		file = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+		music = new ArrayList<File>();
+		apps = new ArrayList<File>();
+		vids = new ArrayList<File>();
+		doc = new ArrayList<File>();
+		zip = new ArrayList<File>();
+		mis = new ArrayList<File>();
+		img = new ArrayList<File>();
+		//ctx = cont;
+		
+		musicsize=0;
+		apksize=0;
+		vidsize=0;
+		docsize=0;
+		zipsize=0;
+		missize=0;
+		imgsize=0;
+	}
 	public Utils(View view,Context cont) {
 		// TODO Auto-generated constructor stub
 		v = view;
@@ -207,57 +231,6 @@ public class Utils {
 	void makelist(File file){
 		if(file.isFile()){
 			identifyType(file);
-			/*
-			if(SimpleAdapter.getFileType(file)==null){
-				mis.add(file);
-				missize+=file.length();
-				misize = size(missize);
-				size = mis.size();
-				handle.sendEmptyMessage(8);
-			}	
-			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("song")){
-				music.add(file);
-				musicsize+=file.length();
-				msize = size(musicsize);
-				size = music.size();
-				handle.sendEmptyMessage(2);
-			}	
-			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("image")){
-				img.add(file);
-				imgsize+=file.length();
-				psize = size(imgsize);
-				size = img.size();
-				handle.sendEmptyMessage(5);
-			}	
-			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("video")){
-				vids.add(file);
-				vidsize+=file.length();
-				vsize = size(vidsize);
-				size = vids.size();
-				handle.sendEmptyMessage(6);
-			}	
-			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("zip")||SimpleAdapter.getFileType(file).equalsIgnoreCase("compressed")){
-				zip.add(file);
-				zipsize+=file.length();
-				zsize = size(zipsize);
-				size = zip.size();
-				handle.sendEmptyMessage(7);
-			}else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("apk")){
-				apps.add(file);
-				apksize+=file.length();
-				asize = size(apksize);
-				size = apps.size();
-				handle.sendEmptyMessage(3);
-			}	
-			else if(SimpleAdapter.getFileType(file).equalsIgnoreCase("document")||
-					SimpleAdapter.getFileType(file).equalsIgnoreCase("text")){
-				doc.add(file);
-				docsize+=file.length();
-				dsize = size(docsize);
-				size = doc.size();
-				handle.sendEmptyMessage(4);
-			}	*/
-			
 		}else if(file.isDirectory()){
 			for(File f:file.listFiles())
 				makelist(f);

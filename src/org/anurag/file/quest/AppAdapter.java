@@ -27,7 +27,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -146,10 +145,10 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 			iTv2.setText(size);
 			if(date == 0){
 				iTv3.setText(mContext.getString(R.string.nobackup));
-				iTv.setTextColor(Color.WHITE);
+				//iTv.setTextColor(Color.WHITE);
 			}else{
 				iTv3.setText(mContext.getString(R.string.backupon) + " " + new Date(date));
-				iTv.setTextColor(Color.GREEN);
+				//iTv.setTextColor(Color.GREEN);
 			}
 			super.onPostExecute(result);
 		}

@@ -23,6 +23,9 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +35,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 public class RootAdapter extends BaseAdapter{
-	
+	private static ThumbnailCreator creator;
+	Bitmap image;
+	Holder h;
 	public static boolean MULTI_SELECT;
 	public static boolean[] thumbselection;
 	public static long C;
@@ -45,6 +51,7 @@ public class RootAdapter extends BaseAdapter{
 	public RootAdapter(Context context,ArrayList<Item> object) {
 		// TODO Auto-generated constructor stub
 		ctx = context;
+		creator = new ThumbnailCreator(50, 50);
 		MULTI_FILES = new ArrayList<Item>();
 		list = object;
 		inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -82,7 +89,7 @@ public class RootAdapter extends BaseAdapter{
 	public View getView(int pos, View convertView, ViewGroup arg2) {
 		// TODO Auto-generated method stub
 		item = list.get(pos);
-		Holder h = new Holder();
+		h = new Holder();
 		if(convertView == null){
 			h = new Holder();
 			convertView = inflater.inflate(R.layout.row_list_1, arg2 , false);
@@ -91,7 +98,7 @@ public class RootAdapter extends BaseAdapter{
 			h.fType = (TextView)convertView.findViewById(R.id.fileType);
 			h.fSize = (TextView)convertView.findViewById(R.id.fileSize);
 			h.box = (CheckBox)convertView.findViewById(R.id.checkbox);
-
+		
 			h.lockimg = (ImageView)convertView.findViewById(R.id.lockimg);
 			h.favimg = (ImageView)convertView.findViewById(R.id.favimg);
 			convertView.setTag(h);
@@ -128,7 +135,7 @@ public class RootAdapter extends BaseAdapter{
 				}else{
 					//unlocking file,before that asking the password...
 					Constants.lock = img;
-					new MasterPassword(ctx, FileQuest.size.x*8/9, null,prefs,0);
+					new MasterPassword(ctx, FileQuest.size.x*8/9,  null,prefs,0);
 				}
 			}
 		});
@@ -175,12 +182,27 @@ public class RootAdapter extends BaseAdapter{
 		h.fName.setText(item.getName());
 		h.fType.setText(item.getType());
 		h.fSize.setText(item.getSize());
-		h.icon.setImageDrawable(item.getIcon());
-		
-		if(!item.canRead())
-			h.fSize.setTextColor(ctx.getResources().getColor(R.color.brightRed));
+		if(!item.getType().equals("Image"))
+			h.icon.setImageDrawable(item.getIcon());
+		else{
+			h.icon.setImageDrawable(item.getIcon());
+			image = creator.isBitmapCached(item.getPath());
+			if(image == null){
+				final Handler handle = new Handler(new Handler.Callback() {
+					@Override
+					public boolean handleMessage(Message msg) {
+						// TODO Auto-generated method stub
+					    notifyDataSetChanged();
+						return true;
+					}
+				});
+				creator.createNewThumbnail(list, handle);
+				if(!creator.isAlive())
+					creator.start();
+					
+			}else
+				h.icon.setImageBitmap(image);
+		}
 		return convertView;
-	}
-
-	
+	}	
 }
