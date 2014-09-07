@@ -146,7 +146,7 @@ public class AdapterLoaders {
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_open);
 					ho.Name.setText(mContext.getString(R.string.launch));
 				}else if(position == 1){
-					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_uninstall);
+					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_user);
 					ho.Name.setText(mContext.getString(R.string.uninstall));
 				}else if(position == 2){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_backupall);
