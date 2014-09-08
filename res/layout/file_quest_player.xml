@@ -32,12 +32,14 @@
         android:orientation="horizontal">
         
         <ImageView 
+            android:id="@+id/albumart"
             android:layout_gravity="center_vertical"
             android:background="@drawable/ic_launcher_albumart"
             android:layout_width="100dp"
             android:layout_height="100dp"/>
         
         <TextView 
+            android:id="@+id/musicName"
             android:paddingLeft="00dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
