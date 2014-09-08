@@ -193,8 +193,9 @@
 	<string name="unabletounlock">Unable to unlock them</string>
 	<string name="enternewpassword">Enter new password</string>
 	<string name="resetmasterpassword">Reset master password</string>
-	
-	
+	<string name="failedtoplay">Failed to play the music</string>
+	<string name="notavailable">Not available</string> 
+	    
 	
 	
 	
