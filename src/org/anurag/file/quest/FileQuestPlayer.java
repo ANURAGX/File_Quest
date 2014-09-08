@@ -20,17 +20,25 @@
 
 package org.anurag.file.quest;
 
+import java.io.File;
 import java.io.IOException;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -46,6 +54,7 @@ public class FileQuestPlayer extends Activity{
 	boolean playing;
 	MediaPlayer player;
 	SeekBar seekbar;
+	MediaMetadataRetriever retreive;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -58,29 +67,72 @@ public class FileQuestPlayer extends Activity{
 		dialog.setCancelable(true); 
 		dialog.setContentView(R.layout.file_quest_player);
 		seekbar = (SeekBar)dialog.findViewById(R.id.seek);
+		
+		TextView albumname = (TextView)dialog.findViewById(R.id.albumName);
+		TextView artist = (TextView)dialog.findViewById(R.id.artistName);
+		ImageView album = (ImageView)dialog.findViewById(R.id.albumart);
 		try {
 			player = new MediaPlayer();
 			player.setDataSource(FileQuestPlayer.this, intent.getData());
 			player.prepare();
 			player.start();
 			seekbar.setMax(player.getDuration());
+			retreive = new MediaMetadataRetriever();
+			retreive.setDataSource(FileQuestPlayer.this, intent.getData());
+			/**
+			 * extracting mediametadata like album name,artist,album art...
+			 */
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			player = null;
+			Toast.makeText(FileQuestPlayer.this, R.string.failedtoplay , Toast.LENGTH_SHORT).show();
+			FileQuestPlayer.this.finish();
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			player = null;
+			Toast.makeText(FileQuestPlayer.this, R.string.failedtoplay , Toast.LENGTH_SHORT).show();
+			FileQuestPlayer.this.finish();
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			player = null;
+			Toast.makeText(FileQuestPlayer.this, R.string.failedtoplay , Toast.LENGTH_SHORT).show();
+			FileQuestPlayer.this.finish();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			player = null;
+			Toast.makeText(FileQuestPlayer.this, R.string.failedtoplay , Toast.LENGTH_SHORT).show();
+			FileQuestPlayer.this.finish();
 		}
+		
+		if(player!=null){
+			
+			//setting the album art....
+			try{
+				byte art[] = retreive.getEmbeddedPicture();
+				Bitmap img = BitmapFactory.decodeByteArray(art, 0, art.length);
+				album.setImageBitmap(img);
+			}catch(Exception e){
+				album.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_albumart));
+			}
+			
+			//setting the album name...
+			try{
+				albumname.setText(retreive.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
+			}catch(Exception e){
+				albumname.setText(R.string.notavailable);
+			}
+			
+			//setting the artist name...
+			try{
+				artist.setText(retreive.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
+			}catch(Exception e){
+				albumname.setText(R.string.notavailable);
+			}
+		}			
 		
 		seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
@@ -101,7 +153,8 @@ public class FileQuestPlayer extends Activity{
 		});
 		
 		dialog.getWindow().getAttributes().width = size.x*8/9;
-		dialog.show();
+		if(player!=null)
+			dialog.show();
 		dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 			@Override
 			public void onDismiss(DialogInterface dialog) {
