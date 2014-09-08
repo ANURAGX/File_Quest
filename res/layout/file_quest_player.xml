@@ -18,6 +18,7 @@
  -->
  
 <LinearLayout 
+    android:padding="5dp"
     android:background="@android:color/background_dark"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -28,7 +29,7 @@
     <LinearLayout 
         android:paddingLeft="5dp"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
         
         <ImageView 
@@ -37,15 +38,35 @@
             android:background="@drawable/ic_launcher_albumart"
             android:layout_width="100dp"
             android:layout_height="100dp"/>
-        
-        <TextView 
-            android:id="@+id/musicName"
-            android:paddingLeft="00dp"
-            android:layout_gravity="center"
+    
+        <LinearLayout 
+            android:paddingLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/anurag"/>        
+            android:layout_height="wrap_content">
+            
+             <TextView 
+                android:textSize="15sp"
+                android:paddingBottom="10dp" 
+            	android:id="@+id/albumName"
+            	android:paddingLeft="00dp"
+            	android:layout_gravity="center"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:textStyle="bold"
+            	android:text="@string/anurag"/>  
+            
+        	<TextView 
+            	android:id="@+id/artistName"
+            	android:paddingLeft="00dp"
+            	android:layout_gravity="center"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:text="@string/anurag"/> 
+            
+        </LinearLayout>
+        
     </LinearLayout>
     
      <LinearLayout 
