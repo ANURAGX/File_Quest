@@ -77,11 +77,13 @@ public class G_Open {
 				// TODO Auto-generated method stub
 				ArrayList<Prediction> list = library.recognize(arg1);
 				if(list.size()>0){
-					String name = list.get(0).name;
-					Intent intent = new Intent("FQ_G_OPEN");
-					intent.putExtra("gesture_path", name);
-					context.sendBroadcast(intent);
-					dialog.dismiss();
+					if(list.get(0).score > 0.9f){
+						String name = list.get(0).name;
+						Intent intent = new Intent("FQ_G_OPEN");
+						intent.putExtra("gesture_path", name);
+						context.sendBroadcast(intent);
+						dialog.dismiss();
+					}					
 				}
 			}
 		});
