@@ -24,6 +24,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -135,6 +136,10 @@ public class MasterPassword {
 						}catch(NullPointerException e){
 							intent.putExtra("password_verified", "no_need");
 						}
+						
+						//It is specific to G_open (gesture open for locked files)
+						if(Constants.activeMode == Constants.MODES.G_OPEN)
+							intent.putExtra("g_open_path", item.getPath());
 						ctx.sendBroadcast(intent);
 						dialog.dismiss();
 					}else if(!pass.getText().toString().equals(confirm.getText().toString())){

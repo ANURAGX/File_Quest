@@ -4558,20 +4558,30 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						CURRENT_ITEM = 2;
 					String value = it.getStringExtra("gesture_path");
 					if (new File(value).exists()) {
+						
+						Item tempItem = new Item(new File(value), null, null, null);						
 						if (new File(value).isFile()) {
 							mViewPager.setCurrentItem(CURRENT_ITEM);
-							if(CURRENT_ITEM==1)
-								file = new Item(new File(value), null, null, null);
-							else if(CURRENT_ITEM ==2)
-								file2 = new Item(new File(value), null, null, null);
-							new OpenFileDialog(mContext, Uri.parse(value),size.x*8/9);
+							if(!tempItem.isLocked())
+								new OpenFileDialog(mContext, Uri.parse(value),size.x*8/9);
+							else
+								new MasterPassword(mContext, size.x*8/9, tempItem,preferences, Constants.MODES.G_OPEN);
 						} else {
 							if (CURRENT_ITEM == 1) {
-								RootManager.nStack.push(value);
+								if(!tempItem.isLocked()){
+									RootManager.nStack.push(value);
+									setAdapter(CURRENT_ITEM);
+								}else
+									new MasterPassword(mContext, size.x*8/9, tempItem, preferences, Constants.MODES.G_OPEN);
+								
 							} else if (CURRENT_ITEM == 2){
-								SDManager.nStack.push(value);
+								if(!tempItem.isLocked()){
+									SDManager.nStack.push(value);
+									setAdapter(2);
+								}else
+									new MasterPassword(mContext, size.x*8/9, tempItem, preferences, Constants.MODES.G_OPEN);
 							}	
-							setAdapter(CURRENT_ITEM);
+							
 						}
 					} else
 						Toast.makeText(mContext, R.string.filedoesnotexists,Toast.LENGTH_SHORT).show();
@@ -4641,6 +4651,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						//USER HAS SELECTED TO OPEN A LOCKED ITEM,
 						//AFTER PASSORD VERIFICATION,SERVE USER'S REQUEST HERE...
 						if(CURRENT_ITEM==2){
+							
+							//opening task here...
 							if(Constants.activeMode==Constants.MODES.OPEN){
 								if (!file2.isDirectory()) {
 									new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
@@ -4648,11 +4660,25 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									SDManager.nStack.push(file2.getPath());
 									setAdapter(2);
 								}
-							}else if(Constants.activeMode == Constants.MODES.DELETE){
+							}
+							//delete the provided item after password verification...
+							else if(Constants.activeMode == Constants.MODES.DELETE){
 								Constants.db.deleteLockedNode(file2.getPath());
 								deleteMethod(file2);
 							}
+							//open the locked file or folder after password verification...
+							else if(Constants.activeMode == Constants.MODES.G_OPEN){
+								File f = new File(it.getStringExtra("g_open_path"));
+								if(f.isFile())
+									new OpenFileDialog(mContext, Uri.parse(f.getPath()), size.x*8/9);
+								else{
+									SDManager.nStack.push(f.getPath());
+									setAdapter(2);
+								}
+							}
 						}else if(CURRENT_ITEM==1){
+							
+							//opening task here...
 							if(Constants.activeMode == Constants.MODES.OPEN){
 								if(!file.isDirectory()){
 									new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
@@ -4660,9 +4686,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									RootManager.nStack.push(file.getPath());
 									setAdapter(1);
 								}
-							}else if(Constants.activeMode == Constants.MODES.DELETE){
+							}
+							//delete the provided item after password verification...
+							else if(Constants.activeMode == Constants.MODES.DELETE){
 								Constants.db.deleteLockedNode(file.getPath());
 								deleteMethod(file);
+							}
+							//open the locked file or folder after password verification...
+							else if(Constants.activeMode == Constants.MODES.G_OPEN){
+								File f = new File(it.getStringExtra("g_open_path"));
+								if(f.isFile())
+									new OpenFileDialog(mContext, Uri.parse(f.getPath()), size.x*8/9);
+								else{
+									RootManager.nStack.push(f.getPath());
+									setAdapter(1);
+								}
 							}
 						}
 					}else{

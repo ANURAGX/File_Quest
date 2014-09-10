@@ -64,7 +64,7 @@ public class Constants {
 	 *
 	 */
 	public static enum MODES { RESET , DELETE , COPY , RENAME , SEND , 
-		ARCHIVE , PASTEINTO , ADDGESTURE , OPEN , DEFAULT};
+		ARCHIVE , PASTEINTO , G_OPEN , OPEN , DEFAULT};
 		
 	//This is get reference for which operation the master password was verified....	
 	public static MODES activeMode;	
