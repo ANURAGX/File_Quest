@@ -134,6 +134,8 @@ public class MasterPassword {
 								intent.putExtra("password_verified", "no_need");
 						}catch(NullPointerException e){
 							intent.putExtra("password_verified", "no_need");
+							if(Constants.activeMode == Constants.MODES.UNLOCK_ALL)
+								intent.putExtra("password_verified", "verified");
 						}
 						
 						//It is specific to G_open (gesture open for locked files)

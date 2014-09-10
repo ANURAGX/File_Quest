@@ -3328,12 +3328,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								//reset=1;
 								new MasterPassword(mContext, size.x*8/9, null, preferences, Constants.MODES.RESET);
 							}else if(pos==1){
-								if(Constants.db.deleteAllLockedNodes()){
-									setAdapter(CURRENT_ITEM);
-									Toast.makeText(mContext, R.string.lockeditemsunlocked, Toast.LENGTH_SHORT).show();
-								}	
-								else
-									Toast.makeText(mContext, R.string.unabletounlock, Toast.LENGTH_SHORT).show();
+								new MasterPassword(mContext, size.x*8/9, null, preferences, Constants.MODES.UNLOCK_ALL);
 							}else if(pos==2){
 								
 							}
@@ -4658,7 +4653,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						//DONE AFTER PASSWORD IS VERIFIED....
 						//USER HAS SELECTED TO OPEN A LOCKED ITEM,
 						//AFTER PASSORD VERIFICATION,SERVE USER'S REQUEST HERE...
-						if(CURRENT_ITEM==2){
+						
+						
+						if(Constants.activeMode == Constants.MODES.UNLOCK_ALL){
+							if(Constants.db.deleteAllLockedNodes()){
+								setAdapter(CURRENT_ITEM);
+								Toast.makeText(mContext, R.string.lockeditemsunlocked, Toast.LENGTH_SHORT).show();
+							}	
+							else
+								Toast.makeText(mContext, R.string.unabletounlock, Toast.LENGTH_SHORT).show();
+						}						
+						else if(CURRENT_ITEM==2){
 							
 							//opening task here...
 							if(Constants.activeMode==Constants.MODES.OPEN){
