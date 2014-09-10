@@ -1322,8 +1322,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								Toast.makeText(mContext, R.string.cannotsendfolder, Toast.LENGTH_SHORT).show();
 						}
 						else{
-							if (!file.isDirectory())
-								new BluetoothChooser(mContext, file.getPath(), size.x*8/9, null);
+							if(!file.isDirectory()){
+								if(!file.isLocked())
+									new BluetoothChooser(mContext, file.getPath(), size.x*8/9, null);
+								else 
+									new MasterPassword(mContext, size.x*8/9, file, preferences, Constants.MODES.SEND);
+							}	
 							else
 								showToast(getString(R.string.compressandsend));
 						}
@@ -1602,8 +1606,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								Toast.makeText(mContext, R.string.cannotsendfolder, Toast.LENGTH_SHORT).show();
 						}
 						else{
-							if (!file2.isDirectory())
-								new BluetoothChooser(mContext, file2.getPath(), size.x*8/9  , null);
+							if(!file2.isDirectory()){
+								if(!file2.isLocked())
+									new BluetoothChooser(mContext, file2.getPath(), size.x*8/9  , null);
+								else 
+									new MasterPassword(mContext, size.x*8/9, file2, preferences, Constants.MODES.SEND);
+							}	
 							else
 								showToast(getString(R.string.compressandsend));
 						}						
@@ -4676,6 +4684,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									setAdapter(2);
 								}
 							}
+							//sharing the locked item after password verification...
+							else if(Constants.activeMode == Constants.MODES.SEND){
+								new BluetoothChooser(mContext, file2.getPath(), size.x*8/9, null);
+							}
 						}else if(CURRENT_ITEM==1){
 							
 							//opening task here...
@@ -4702,6 +4714,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									setAdapter(1);
 								}
 							}
+							//sharing the locked item after password verification...
+							else if(Constants.activeMode == Constants.MODES.SEND)
+								new BluetoothChooser(mContext, file.getPath(), size.x*8/9, null);
 						}
 					}else{
 						//THE UI HAS TO BE CHANGED BASED ON THE LOCKING AND
