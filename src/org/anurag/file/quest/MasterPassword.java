@@ -92,6 +92,11 @@ public class MasterPassword {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+				
+				//getting the reference about task for which password
+				//was verified...
+				Constants.activeMode = MODE;
+				
 				if(password == null||MODE==Constants.MODES.RESET){
 					if(pass.getText().toString().length()<3){
 						//password length is not appropriate....

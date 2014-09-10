@@ -49,6 +49,7 @@ public class Constants {
 	public static ItemDB db;
 	
 	/**
+	 * THIS ENUM IS FOR MASTER PASSWORD ....
 	 * 
 	 * DEFAULT for setting password for first time...
 	 * RESET for changing password...
@@ -64,4 +65,7 @@ public class Constants {
 	 */
 	public static enum MODES { RESET , DELETE , COPY , RENAME , SEND , 
 		ARCHIVE , PASTEINTO , ADDGESTURE , OPEN , DEFAULT};
+		
+	//This is get reference for which operation the master password was verified....	
+	public static MODES activeMode;	
 }

@@ -1287,15 +1287,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 
 					case 6:
-							
 							//DELETE
-						if(ZIP_ROOT||RAR_ROOT||TAR_ROOT)
-							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
-						else{
-							ArrayList<Item> te = new ArrayList<Item>();
-							te.add(file);
-							new DeleteFiles(mContext, size.x*8/9, te,null);
-						}
+							if(ZIP_ROOT||RAR_ROOT||TAR_ROOT)
+								Toast.makeText(mContext, R.string.operationnotsupported,
+										Toast.LENGTH_SHORT).show();
+							else{
+								if(!file.isLocked())
+									deleteMethod(file);
+								else new MasterPassword(mContext, size.x*8/9,file, 
+										preferences, Constants.MODES.DELETE);
+							}
 							break;
 					case 7:
 						// RENAME
@@ -1563,9 +1564,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						if(ZIP_SD||RAR_SD||TAR_SD)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
-							ArrayList<Item> te = new ArrayList<Item>();
-							te.add(file2);
-							new DeleteFiles(mContext, size.x*8/9, te,null);
+							if(!file2.isLocked()){
+								deleteMethod(file2);
+							}else
+								new MasterPassword(mContext, size.x*8/9, file2, preferences,
+										Constants.MODES.DELETE);
 						}
 							break;
 					case 7:
@@ -1623,8 +1626,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else
 							new FileProperties(mContext, size.x*8/9, file2.getFile());
 					}
-				}
+				}			
 			});
+			
 			root.setOnItemClickListener(new OnItemClickListener(){
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3) {
@@ -4637,18 +4641,28 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						//USER HAS SELECTED TO OPEN A LOCKED ITEM,
 						//AFTER PASSORD VERIFICATION,SERVE USER'S REQUEST HERE...
 						if(CURRENT_ITEM==2){
-							if (!file2.isDirectory()) {
-								new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
-							} else if (file2.isDirectory()) {
-								SDManager.nStack.push(file2.getPath());
-								setAdapter(2);
+							if(Constants.activeMode==Constants.MODES.OPEN){
+								if (!file2.isDirectory()) {
+									new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
+								} else if (file2.isDirectory()) {
+									SDManager.nStack.push(file2.getPath());
+									setAdapter(2);
+								}
+							}else if(Constants.activeMode == Constants.MODES.DELETE){
+								Constants.db.deleteLockedNode(file2.getPath());
+								deleteMethod(file2);
 							}
 						}else if(CURRENT_ITEM==1){
-							if(!file.isDirectory()){
-								new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
-							}else if(file.isDirectory()){
-								RootManager.nStack.push(file.getPath());
-								setAdapter(1);
+							if(Constants.activeMode == Constants.MODES.OPEN){
+								if(!file.isDirectory()){
+									new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
+								}else if(file.isDirectory()){
+									RootManager.nStack.push(file.getPath());
+									setAdapter(1);
+								}
+							}else if(Constants.activeMode == Constants.MODES.DELETE){
+								Constants.db.deleteLockedNode(file.getPath());
+								deleteMethod(file);
 							}
 						}
 					}else{
@@ -5348,4 +5362,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		mViewPager.setCurrentItem(CURRENT_ITEM);
 		indicator.setViewPager(mViewPager);
 	}
+	
+	private static void deleteMethod(Item file2) {
+		// TODO Auto-generated method stub
+		ArrayList<Item> te = new ArrayList<Item>();
+		te.add(file2);
+		new DeleteFiles(mContext, size.x*8/9, te,null);
+		
+	}
+	
 }
