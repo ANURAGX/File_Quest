@@ -1102,7 +1102,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								setAdapter(1);
 							}
 						}else
-							new MasterPassword(mContext, size.x*8/9, file, preferences,0);
+							new MasterPassword(mContext, size.x*8/9, file, preferences,Constants.MODES.OPEN);
 					}					
 				}
 			});
@@ -1210,7 +1210,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									setAdapter(1);
 								}
 							}else
-								new MasterPassword(mContext, size.x*8/9, file, preferences,0);
+								new MasterPassword(mContext, size.x*8/9, file, preferences,Constants.MODES.OPEN);
 						}
 						break;
 
@@ -1477,7 +1477,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 										setAdapter(2);
 									}
 								}else{
-									new MasterPassword(mContext, size.x*8/9, file2, preferences,0);
+									new MasterPassword(mContext, size.x*8/9, file2, preferences,Constants.MODES.OPEN);
 								}	
 							}
 						break;
@@ -1699,7 +1699,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								setAdapter(2);
 							}
 						}else{
-							new MasterPassword(mContext, size.x*8/9, file2, preferences,0);
+							new MasterPassword(mContext, size.x*8/9, file2, preferences,Constants.MODES.OPEN);
 						}
 					}
 				}
@@ -3314,7 +3314,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							// TODO Auto-generated method stub
 							if(pos==0){
 								//reset=1;
-								new MasterPassword(mContext, size.x*8/9, null, preferences, 1);
+								new MasterPassword(mContext, size.x*8/9, null, preferences, Constants.MODES.RESET);
 							}else if(pos==1){
 								if(Constants.db.deleteAllLockedNodes()){
 									setAdapter(CURRENT_ITEM);
@@ -3385,6 +3385,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						PAGER_ANIM = pos;
 						String[] te = getResources().getStringArray(R.array.effects);		
 						mViewPager.setTransitionEffect(TransitionEffect.valueOf(te[PAGER_ANIM]));
+						resetPager();
 						edit.putInt("PAGER_ANIM", PAGER_ANIM);
 						edit.commit();
 						Toast.makeText(mContext, getString(R.string.settingsapplied), Toast.LENGTH_SHORT).show();

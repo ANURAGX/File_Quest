@@ -19,6 +19,7 @@
 
 package org.anurag.file.quest;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -34,15 +35,18 @@ import android.widget.Toast;
  * @author Anurag
  *
  */
+@SuppressLint("CutPasteId")
 public class MasterPassword {
 
 	/**
 	 * 
 	 * @param ctx
-	 * @param width of the dialog window....
-	 * @param item to lock or unlock...
+	 * @param width
+	 * @param item
+	 * @param prefs
+	 * @param MODE
 	 */
-	public MasterPassword(final Context ctx , int width , final Item item , final SharedPreferences prefs ,final int reset) {
+	public MasterPassword(final Context ctx , int width , final Item item , final SharedPreferences prefs ,final Constants.MODES MODE) {
 		// TODO Auto-generated constructor stub
 		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
 		dialog.setCancelable(true);
@@ -65,7 +69,8 @@ public class MasterPassword {
 		
 		Button set = (Button)dialog.findViewById(R.id.copyOk);
 		
-		if(reset==1){
+		//MODE=1 means password has to be reset...
+		if(MODE== Constants.MODES.RESET){
 			newpass.setVisibility(View.VISIBLE);
 			TextView co = (TextView)dialog.findViewById(R.id.newpasswdtext);
 			co.setVisibility(View.VISIBLE);
@@ -73,7 +78,8 @@ public class MasterPassword {
 			co.setText(ctx.getString(R.string.resetmasterpassword));
 		}
 		
-		if(password != null&&reset==0){
+		///MODE!=1 means password confirmation...
+		if(password != null && MODE!=Constants.MODES.RESET){
 			confirm.setVisibility(View.GONE);
 			TextView con = (TextView)dialog.findViewById(R.id.currentFile);
 			con.setVisibility(View.GONE);
@@ -86,7 +92,7 @@ public class MasterPassword {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				if(password == null||reset==1){
+				if(password == null||MODE==Constants.MODES.RESET){
 					if(pass.getText().toString().length()<3){
 						//password length is not appropriate....
 						Toast.makeText(ctx, R.string.minimumpasswordlength, Toast.LENGTH_SHORT).show();
@@ -96,13 +102,13 @@ public class MasterPassword {
 						SharedPreferences.Editor  editor = prefs.edit();
 						editor.putString("MASTER_PASSWORD", pass.getText().toString());
 						editor.commit();
-						if(reset==0){
+						if(MODE==Constants.MODES.DEFAULT){
 							//main activity has to notified after verification...
 							Intent intent = new Intent("FQ_FILE_LOCKED_OR_UNLOCKED");
 							intent.putExtra("password_verified", "no_need");
 							ctx.sendBroadcast(intent);
 							dialog.dismiss();
-						}else if(reset==1)
+						}else if(MODE==Constants.MODES.RESET)
 							//it is only to change or set password...
 							Toast.makeText(ctx, R.string.passwdreset, Toast.LENGTH_SHORT).show();
 					}else if(!pass.getText().toString().equals(confirm.getText().toString())){
