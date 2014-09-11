@@ -265,7 +265,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static boolean mUseBackKey = false;
 	private static ViewFlipper mVFlipper;
 	private static int LAST_PAGE;
-	static boolean LongClick = false;
 	static boolean error;
 
 	boolean added = false;
@@ -643,8 +642,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						sdItemsList = sdManager.getList();
 					if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT)
 						rootItemList = rootManager.getList();
-					if (ITEM == 0)
-						load_FIle_Gallery(pos);
+					//if (ITEM == 0)
+						//load_FIle_Gallery(pos);
 				} catch (IndexOutOfBoundsException e) {
 					if(!ZIP_SD&&!RAR_SD&&!TAR_SD)
 						sdItemsList = sdManager.getList();
@@ -889,12 +888,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						@Override
 						public boolean onItemLongClick(AdapterView<?> arg0,
 								View arg1, int position, long arg3) {
-							if (elementInFocus && !LongClick) {
+							if (elementInFocus) {
 								if (SEARCH_FLAG)
 									file0 = searchList.get(position).getFile();
 								else
 									file0 = mediaFileList.get(position);
-								LongClick = true;
 								d.show();
 							}
 							return true;
@@ -963,8 +961,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						new BluetoothChooser(mContext, file0.getAbsolutePath(), size.x*8/9, null);
 						break;
 					case 9:
-						new AddGesture(mContext, size.x, size.y*8/9, file0
-								.getPath());
+						new AddGesture(mContext, size.x, size.y*8/9, file0.getPath());
 						break;
 					case 10:
 						// PROPERTIES
@@ -983,16 +980,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							file0 = searchList.get(position).getFile();
 						else
 							file0 = mediaFileList.get(position);
-						if (LongClick) {
-							LongClick = false;
-						} else
-							new OpenFileDialog(mContext, Uri.parse(file0.getAbsolutePath()), size.x*8/9);
+						new OpenFileDialog(mContext, Uri.parse(file0.getAbsolutePath()), size.x*8/9);
 					}
 				}
 			});
 			return v;
 		}
-
 	}
 
 	/**
@@ -4347,8 +4340,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					} else {
 						LIST_VIEW_3D.setVisibility(View.GONE);
 						FILE_GALLEY.setVisibility(View.VISIBLE);
-						Toast.makeText(mContext, R.string.empty,
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, R.string.empty,Toast.LENGTH_SHORT).show();
 						if (elementInFocus) {
 							mFlipperBottom.showNext();
 							mFlipperBottom.setAnimation(nextAnim());
