@@ -129,7 +129,7 @@ public class SDAdapter extends BaseAdapter{
 					else{
 						list.get(img.getId()).setLockStatus(true);
 						img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_locked));
-						Constants.db.insertNodeToLock(list.get(img.getId()).getFile().getAbsolutePath(), 1, 1);
+						Constants.db.insertNodeToLock(list.get(img.getId()).getFile().getAbsolutePath(), 1);
 						Toast.makeText(ctx, R.string.itemlocked, Toast.LENGTH_SHORT).show();
 					}					
 				}else{

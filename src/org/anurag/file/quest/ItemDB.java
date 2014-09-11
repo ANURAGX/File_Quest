@@ -49,7 +49,11 @@ public class ItemDB extends SQLiteOpenHelper{
 		db.execSQL("CREATE TABLE ITEMS "+
 				   "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
 				   "FILEPATH TEXT,"+
-				   "LOCKED INTEGER,"+
+				   "LOCKED INTEGER);");
+		
+		db.execSQL("CREATE TABLE FAVITEMS "+
+				   "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
+				   "FILEPATH TEXT,"+
 				   "FAV INTEGER);");
 	}
 
@@ -57,6 +61,7 @@ public class ItemDB extends SQLiteOpenHelper{
 	public void onUpgrade(SQLiteDatabase DB, int arg1, int arg2) {
 		// TODO Auto-generated method stub
 		DB.execSQL("DROP TABLE IF EXISTS ITEMS");
+		DB.execSQL("DROP TABLE IF EXISTS FAVITEMS");
 		onCreate(DB);
 	}
 	
@@ -66,7 +71,7 @@ public class ItemDB extends SQLiteOpenHelper{
 	 * @param locked
 	 * @param fav
 	 */
-	public void insertNodeToLock(String PATH,int locked,int fav){
+	public void insertNodeToLock(String PATH,int locked){
 		/**
 		 * performing raw query to ensure that we are not making any 
 		 * duplicate record of the items.. 
@@ -78,10 +83,9 @@ public class ItemDB extends SQLiteOpenHelper{
 			ContentValues values = new ContentValues();
 			values.put("FILEPATH", PATH);
 			values.put("LOCKED", locked);
-			values.put("FAV", fav);
+			//values.put("FAV", fav);
 			db.insert("ITEMS", null , values);
-		}
-		
+		}		
 	}
 	
 	/**
