@@ -25,14 +25,15 @@ import android.graphics.drawable.Drawable;
 
 public class Item {
 	
-	File file;
-	String name;
-	String path;
-	String parent;
-	Drawable icon;
-	String size;
-	String type;
-	boolean isLocked;
+	private File file;
+	private String name;
+	private String path;
+	private String parent;
+	private Drawable icon;
+	private String size;
+	private String type;
+	private boolean isLocked;
+	private boolean isFav;
 	public Item(File fi , Drawable img , String typ , String si) {
 		// TODO Auto-generated constructor stub
 		this.file = fi;
@@ -43,6 +44,7 @@ public class Item {
 		this.type = typ;
 		this.size = si;
 		isLocked = Constants.db.isLocked(this.path);
+		isFav = Constants.db.isFavItem(this.path);
 	}
 	
 	/**
@@ -146,6 +148,22 @@ public class Item {
 	 * @param lockstatus
 	 */
 	public void setLockStatus(boolean lockstatus){
-		isLocked = lockstatus;
+		this.isLocked = lockstatus;
+	}
+	
+	/**
+	 * 
+	 * @param favStatus
+	 */
+	public void setFavStatus(boolean favStatus){
+		this.isFav = favStatus;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isFavItem(){
+		return this.isFav;
 	}
 }
