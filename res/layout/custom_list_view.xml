@@ -23,146 +23,156 @@
         android:orientation="vertical"
         xmlns:android="http://schemas.android.com/apk/res/android">
    <LinearLayout 
-            android:orientation="vertical"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:id="@+id/file_gallery_layout">
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:id="@+id/file_gallery_layout">
   		<ScrollView 
   		     android:scrollbars="none"
    			 android:layout_width="match_parent"
     		 android:layout_height="match_parent">
-			   <LinearLayout 
-        			android:paddingTop="10dp"
-        			android:paddingLeft="5dp"
-        			android:paddingRight="5dp"
+		   <LinearLayout 
+        		android:paddingTop="10dp"
+        		android:paddingLeft="5dp"
+        		android:paddingRight="5dp"
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:orientation="vertical">
+        		<LinearLayout
         			android:layout_width="fill_parent"
         			android:layout_height="wrap_content"
-        			android:orientation="vertical">
-        			<LinearLayout
-        				android:layout_width="fill_parent"
-        				android:layout_height="wrap_content"
-        				android:orientation="horizontal">
-    					<LinearLayout 
-    	    				android:id="@+id/music"
-    	    				android:onClick="onClick"
-    	    				android:layout_margin="3dp"
-    	    				android:clickable="true"
-    	    				android:focusable="true"
-    	    				android:background="@drawable/action_item_btn"
-    	    				android:layout_gravity="center"
-    	    				android:gravity="center"
-    	    				android:layout_width="fill_parent"
-    	    				android:layout_height="wrap_content"
-    	    				android:layout_weight="1"
-    	    				android:orientation="vertical"> 
-    				  	    <TextView 
-    	        				android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:text="@string/music"/>
-    	    				<ImageButton 
-	   	        				android:clickable="false"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:background="@drawable/ic_launcher_music_file_gallery"/>
-    						<TextView 
-    						    android:id="@+id/mSize"
-    	        				android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:text="@string/zerosize"/>
-    						<TextView 
-    						    android:id="@+id/mFiles"
-    	        				android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:text="@string/zerofiles"/>
-    	    				
-    						
-    					</LinearLayout>
-    	
-    					<LinearLayout 
-    					    android:id="@+id/apps"
-    	     				android:layout_margin="3dp"
-    	    				android:clickable="true"
-    	    				android:focusable="true"
-    	    				android:background="@drawable/action_item_btn"
-    	    				android:layout_gravity="center"
-    	    				android:gravity="center"
-    	    				android:layout_width="fill_parent"
-    	    				android:layout_height="wrap_content"
-    	    				android:layout_weight="1"
-    	    				android:orientation="vertical">   
-    	   
-    	  					<TextView 
-    	        				android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:text="@string/apps"/>
-    	    				<ImageButton 
-    	        				android:clickable="false"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:background="@drawable/ic_launcher_app_file_gallery"/>
-    						<TextView 
-    						    android:id="@+id/aSize"
-    	        				android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:text="@string/zerosize"/>
-    						<TextView 
-    						    android:id="@+id/aFiles"
-    	        				android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:text="@string/zerofiles"/>
+        			android:orientation="horizontal">
+        			
+        		    <LinearLayout 
+    	    			android:id="@+id/fav"
+    	    			android:onClick="onClick"
+    	    			android:layout_margin="3dp"
+    	    			android:clickable="true"
+    	    			android:focusable="true"
+    	    			android:background="@drawable/action_item_btn"
+    	    			android:layout_gravity="center"
+    	    			android:gravity="center"
+    	    			android:layout_width="fill_parent"
+    	    			android:layout_height="wrap_content"
+    	    			android:layout_weight="1"
+    	    			android:orientation="vertical"> 
+    			  	    <TextView 
+    	       				android:textStyle="bold"
+    	       				android:layout_width="wrap_content"
+    	       				android:layout_height="wrap_content"
+    	       				android:text="@string/favorite"/>
+    	    			<ImageButton 
+	   	       				android:clickable="false"
+    	       				android:layout_width="wrap_content"
+    	       				android:layout_height="wrap_content"
+    	       				android:background="@drawable/ic_launcher_fav_gallery"/>
+    					<TextView 
+    					    android:id="@+id/fSize"
+    	       				android:textStyle="bold"
+    	       				android:layout_width="wrap_content"
+    	       				android:layout_height="wrap_content"
+    	       				android:text="@string/zerosize"/>
+    					<TextView 
+    					    android:id="@+id/fFiles"
+    	       				android:textStyle="bold"
+    	       				android:layout_width="wrap_content"
+    	       				android:layout_height="wrap_content"
+    	       				android:text="@string/zerofiles"/>
+    	    			
     					
-    					</LinearLayout>
     				</LinearLayout>
-    
-
-    
-    				<LinearLayout
-        				android:layout_width="fill_parent"
-        				android:layout_height="wrap_content"
-        				android:orientation="horizontal">
-    					<LinearLayout 
-    					    android:id="@+id/docs"
-    	    				android:layout_margin="3dp"
-    	    				android:clickable="true"
-    	    				android:focusable="true"
-    	    				android:background="@drawable/action_item_btn"
-    	    				android:layout_gravity="center"
-    	    				android:gravity="center"
-    	    				android:layout_width="fill_parent"
-    	    				android:layout_height="wrap_content"
-    	    				android:layout_weight="1"
-    	    				android:orientation="vertical">
-    	    				<TextView 
-    	       					android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	       					android:layout_height="wrap_content"
-    	        				android:text="@string/docs"/> 
-    	   					<ImageButton 
-    	      					android:clickable="false"
-    	     					android:layout_width="wrap_content"
-    	      					android:layout_height="wrap_content"
-    	        				android:background="@drawable/ic_launcher_docs_file_gallery"/>
-    	    				<TextView 
-    	    				    android:id="@+id/dSize"
-    	        				android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:text="@string/zerosize"/>
-    						<TextView 
-    						    android:id="@+id/dFile"
-    	        				android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:text="@string/zerofiles"/>
-    	</LinearLayout>
+        		    
+        		    
+    				<LinearLayout 
+    	    			android:id="@+id/music"
+    	    			android:onClick="onClick"
+    	    			android:layout_margin="3dp"
+    	    			android:clickable="true"
+    	    			android:focusable="true"
+    	    			android:background="@drawable/action_item_btn"
+    	    			android:layout_gravity="center"
+    	    			android:gravity="center"
+    	    			android:layout_width="fill_parent"
+    	    			android:layout_height="wrap_content"
+    	    			android:layout_weight="1"
+    	    			android:orientation="vertical"> 
+    			  	    <TextView 
+    	       				android:textStyle="bold"
+    	       				android:layout_width="wrap_content"
+    	       				android:layout_height="wrap_content"
+    	       				android:text="@string/music"/>
+    	    			<ImageButton 
+	   	       				android:clickable="false"
+    	       				android:layout_width="wrap_content"
+    	       				android:layout_height="wrap_content"
+    	       				android:background="@drawable/ic_launcher_music_file_gallery"/>
+    					<TextView 
+    					    android:id="@+id/mSize"
+    	       				android:textStyle="bold"
+    	       				android:layout_width="wrap_content"
+    	       				android:layout_height="wrap_content"
+    	       				android:text="@string/zerosize"/>
+    					<TextView 
+    					    android:id="@+id/mFiles"
+    	       				android:textStyle="bold"
+    	       				android:layout_width="wrap_content"
+    	       				android:layout_height="wrap_content"
+    	       				android:text="@string/zerofiles"/>
+    	    			
+    					
+    				</LinearLayout>
     	
-    					<LinearLayout 
+    				
+    				
+    			</LinearLayout>
+    
+  				<LinearLayout
+       				android:layout_width="fill_parent"
+       				android:layout_height="wrap_content"
+       				android:orientation="horizontal">
+    				
+  				    
+  				    <LinearLayout 
+    				    android:id="@+id/apps"
+    	   				android:layout_margin="3dp"
+    	   				android:clickable="true"
+    	   				android:focusable="true"
+    	   				android:background="@drawable/action_item_btn"
+    	   				android:layout_gravity="center"
+    	    			android:gravity="center"
+    	    			android:layout_width="fill_parent"
+    	    			android:layout_height="wrap_content"
+    	    			android:layout_weight="1"
+    	    			android:orientation="vertical">   
+    	   
+    	  				<TextView 
+    	        			android:textStyle="bold"
+    	        			android:layout_width="wrap_content"
+    	        			android:layout_height="wrap_content"
+    	        			android:text="@string/apps"/>
+    	    			<ImageButton 
+    	        			android:clickable="false"
+    	        			android:layout_width="wrap_content"
+    	        			android:layout_height="wrap_content"
+    	        			android:background="@drawable/ic_launcher_app_file_gallery"/>
+    					<TextView 
+    					    android:id="@+id/aSize"
+    	        			android:textStyle="bold"
+    	        			android:layout_width="wrap_content"
+    	        			android:layout_height="wrap_content"
+    	        			android:text="@string/zerosize"/>
+    					<TextView 
+    					    android:id="@+id/aFiles"
+    	        			android:textStyle="bold"
+    	        			android:layout_width="wrap_content"
+    	        			android:layout_height="wrap_content"
+    	        			android:text="@string/zerofiles"/>
+    					 
+    				</LinearLayout>
+  				      				    
+   					
+   	
+    				<LinearLayout 
     					    android:id="@+id/photos"
     	    				android:orientation="vertical"
     	    				android:layout_margin="3dp"
@@ -198,175 +208,181 @@
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
     	        				android:text="@string/zerofiles"/>
-    	</LinearLayout>
-    </LinearLayout>
-    
-	<LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    	<LinearLayout 
-    	    android:id="@+id/videos"
-    	    android:orientation="vertical"
-    	     android:layout_margin="3dp"
-    	    android:clickable="true"
-    	    android:focusable="true"
-    	    android:background="@drawable/action_item_btn"
-    	    android:layout_gravity="center"
-    	    android:gravity="center"
-    	    android:layout_width="fill_parent"
-    	    android:layout_height="wrap_content"
-    	    android:layout_weight="1"> 
-    	    <TextView 
-    	        android:textStyle="bold"
-    	        android:layout_width="wrap_content"
-    	        android:layout_height="wrap_content"
-    	        android:text="@string/vids"/>
-    	    
-    	    <ImageButton 
-    	        android:clickable="false"
-    	        android:layout_width="wrap_content"
-    	        android:layout_height="wrap_content"
-    	        android:background="@drawable/ic_launcher_video_file_gallery"/>
-    	    
-    	  				  <TextView 
-    	  				      android:id="@+id/vSize"
-    	        				android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:text="@string/zerosize"/>
-    						<TextView 
-    						    android:id="@+id/vFiles"
-    	        				android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:text="@string/zerofiles"/>
-    	</LinearLayout>
-    	
-    	<LinearLayout 
-    	    android:id="@+id/zips"
-    		android:orientation="vertical"
-    	     android:layout_margin="3dp"
-    	    android:clickable="true"
-    	    android:focusable="true"
-    	    android:background="@drawable/action_item_btn"
-    	    android:layout_gravity="center"
-    	    android:gravity="center"
-    	    android:layout_width="fill_parent"
-    	    android:layout_height="wrap_content"
-    	    android:layout_weight="1">  
-    	    <TextView 
-    	        android:textStyle="bold"
-    	        android:layout_width="wrap_content"
-    	        android:layout_height="wrap_content"
-    	        android:text="Archive Files"/>
-    	    <ImageButton 
-    	        android:clickable="false"
-    	        android:layout_width="wrap_content"
-    	        android:layout_height="wrap_content"
-    	        android:background="@drawable/ic_launcher_zip_file_gallery"/>
-    	    
-    	    				<TextView 
-    	    				    android:id="@+id/zSize"
-    	        				android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:text="@string/zerosize"/>
-    						<TextView 
-    						    android:id="@+id/zFiles"
-    	        				android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:text="@string/zerofiles"/>
-    	</LinearLayout>
-    </LinearLayout>
-<LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    	<LinearLayout 
-    	    android:id="@+id/misc"
-    	    android:orientation="vertical"
-    	     android:layout_margin="3dp"
-    	    android:clickable="true"
-    	    android:focusable="true"
-    	    android:background="@drawable/action_item_btn"
-    	    android:layout_gravity="center"
-    	    android:gravity="center"
-    	    android:layout_width="fill_parent"
-    	    android:layout_height="wrap_content"
-    	    android:layout_weight="1">   
-    	    
-    	    <TextView 
-    	        android:textStyle="bold"
-    	        android:layout_width="wrap_content"
-    	        android:layout_height="wrap_content"
-    	        android:text="@string/mis"/>
-    	    <ImageButton 
-    	        android:clickable="false"
-    	        android:layout_width="wrap_content"
-    	        android:layout_height="wrap_content"
-    	        android:background="@drawable/ic_launcher_misce_file_gallery"/>
-    	    
-    	    <TextView 
-    	        	android:id="@+id/misFiles"
-    	        	android:textStyle="bold"
-    	        	android:layout_width="wrap_content"
-    	        	android:layout_height="wrap_content"
-    	        	android:text="@string/zerosize"/>
-    		<TextView 
-    	    		android:id="@+id/misSize"
-    	    		android:textStyle="bold"
-    	    		android:layout_width="wrap_content"
-    	        	android:layout_height="wrap_content"
-    	        	android:text="@string/zerofiles"/>
-    	</LinearLayout>
-    	
-    	<LinearLayout 
-    	    android:id="@+id/sdcard"
-    	    android:orientation="vertical"
-    	    android:layout_margin="3dp"
-    	    android:clickable="true"
-    	    android:focusable="true"
-    	    android:background="@drawable/action_item_btn"
-    	    android:layout_gravity="center"
-    	    android:gravity="center"
-    	    android:layout_width="fill_parent"
-    	    android:layout_height="wrap_content"
-    	    android:layout_weight="1">   
-    	    <TextView 
-    	        android:textStyle="bold"
-    	        android:layout_width="wrap_content"
-    	        android:layout_height="wrap_content"
-    	        android:text="@string/sd"/>
-    	    <ImageButton 
-    	        android:clickable="false"
-    	        android:layout_width="wrap_content"
-    	        android:layout_height="wrap_content"
-    	        android:background="@drawable/ic_launcher_sdcard_file_gallery"/>
-    	    <TextView 
-    	        android:id="@+id/lsSdcard"
-    	        				android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:text="@string/zerosize"/>
-    	    
-    	    <TextView 
-    	        android:id="@+id/lsSdcard2"
-    	        				android:textStyle="bold"
-    	        				android:layout_width="wrap_content"
-    	        				android:layout_height="wrap_content"
-    	        				android:text="@string/zerofiles"/>
-    	    
-    						
+    			</LinearLayout>
+    			
     		</LinearLayout>
-    	</LinearLayout>
-
-	</LinearLayout>
+    
+			<LinearLayout
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:orientation="horizontal">
+    			<LinearLayout 
+    	    		android:id="@+id/videos"
+    	    		android:orientation="vertical"
+    	     		android:layout_margin="3dp"
+    	    		android:clickable="true"
+    	    		android:focusable="true"
+    	    		android:background="@drawable/action_item_btn"
+    	    		android:layout_gravity="center"
+    	    		android:gravity="center"
+    	    		android:layout_width="fill_parent"
+    	    		android:layout_height="wrap_content"
+    	    		android:layout_weight="1"> 
+    	    		<TextView 
+    	        		android:textStyle="bold"
+    	        		android:layout_width="wrap_content"
+    	        		android:layout_height="wrap_content"
+    	        		android:text="@string/vids"/>
+    	    
+    	   			<ImageButton 
+    	        		android:clickable="false"
+    	        		android:layout_width="wrap_content"
+    	        		android:layout_height="wrap_content"
+    	        		android:background="@drawable/ic_launcher_video_file_gallery"/>
+    	    
+    	  			<TextView 
+    	  		    	android:id="@+id/vSize"
+    	        		android:textStyle="bold"
+    	        		android:layout_width="wrap_content"
+    	        		android:layout_height="wrap_content"
+    	        		android:text="@string/zerosize"/>
+    				<TextView 
+    				    android:id="@+id/vFiles"
+    	        		android:textStyle="bold"
+    	        		android:layout_width="wrap_content"
+    	        		android:layout_height="wrap_content"
+    	        		android:text="@string/zerofiles"/>
+    			</LinearLayout>
+    	
+    			<LinearLayout 
+   					    android:id="@+id/docs"
+   	    				android:layout_margin="3dp"
+   	    				android:clickable="true"
+   	    				android:focusable="true"
+   	    				android:background="@drawable/action_item_btn"
+   	    				android:layout_gravity="center"
+   	    				android:gravity="center"
+   	    				android:layout_width="fill_parent"
+   	    				android:layout_height="wrap_content"
+   	    				android:layout_weight="1"
+   	    				android:orientation="vertical">
+   	    				<TextView 
+   	       					android:textStyle="bold"
+   	        				android:layout_width="wrap_content"
+   	       					android:layout_height="wrap_content"
+   	        				android:text="@string/docs"/> 
+   	   					<ImageButton 
+   	      					android:clickable="false"
+   	     					android:layout_width="wrap_content"
+   	      					android:layout_height="wrap_content"
+   	        				android:background="@drawable/ic_launcher_docs_file_gallery"/>
+   	    				<TextView 
+   	    			    	android:id="@+id/dSize"
+   	        				android:textStyle="bold"
+   	        				android:layout_width="wrap_content"
+   	        				android:layout_height="wrap_content"
+   	        				android:text="@string/zerosize"/>
+   						<TextView 
+   					    	android:id="@+id/dFile"
+   	        				android:textStyle="bold"
+   	        				android:layout_width="wrap_content"
+   	        				android:layout_height="wrap_content"
+   	        				android:text="@string/zerofiles"/>
+				   	</LinearLayout>
+    	    	
+    		</LinearLayout>
+			
+			<LinearLayout
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:orientation="horizontal">
+    	
+    			<LinearLayout 
+    	    		android:id="@+id/zips"
+    				android:orientation="vertical"
+    	     		android:layout_margin="3dp"
+    	    		android:clickable="true"
+    	    		android:focusable="true"
+    	    		android:background="@drawable/action_item_btn"
+    	    		android:layout_gravity="center"
+    	    		android:gravity="center"
+    	    		android:layout_width="fill_parent"
+    	    		android:layout_height="wrap_content"
+    	    		android:layout_weight="1">  
+    	    		<TextView 
+    	        		android:textStyle="bold"
+    	        		android:layout_width="wrap_content"
+    	        		android:layout_height="wrap_content"
+    	        		android:text="@string/archivefiles"/>
+    	    		<ImageButton 
+    	        		android:clickable="false"
+    	        		android:layout_width="wrap_content"
+    	        		android:layout_height="wrap_content"
+    	        		android:background="@drawable/ic_launcher_zip_file_gallery"/>
+    	    
+    	    		<TextView 
+    	    			android:id="@+id/zSize"
+    	        		android:textStyle="bold"
+    	        		android:layout_width="wrap_content"
+    	        		android:layout_height="wrap_content"
+    	        		android:text="@string/zerosize"/>
+    				<TextView 
+    				    android:id="@+id/zFiles"
+    	       			android:textStyle="bold"
+    	       			android:layout_width="wrap_content"
+    	       			android:layout_height="wrap_content"
+    	       			android:text="@string/zerofiles"/>
+    			</LinearLayout>
+    			
+    			<LinearLayout 
+    	    		android:id="@+id/misc"
+    	    		android:orientation="vertical"
+    	     		android:layout_margin="3dp"
+    	    		android:clickable="true"
+    	    		android:focusable="true"
+    	   	 		android:background="@drawable/action_item_btn"
+    	    		android:layout_gravity="center"
+    	    		android:gravity="center"
+    	    		android:layout_width="fill_parent"
+    	    		android:layout_height="wrap_content"
+    	    		android:layout_weight="1">   
+    	    
+    	   			<TextView 
+    	        		android:textStyle="bold"
+    	        		android:layout_width="wrap_content"
+    	       	 		android:layout_height="wrap_content"
+    	        		android:text="@string/mis"/>
+    	    		<ImageButton 
+    	        		android:clickable="false"
+    	        		android:layout_width="wrap_content"
+    	        		android:layout_height="wrap_content"
+    	        		android:background="@drawable/ic_launcher_misce_file_gallery"/>
+    	    
+    	    		<TextView 
+    	        		android:id="@+id/misFiles"
+    	        		android:textStyle="bold"
+    	        		android:layout_width="wrap_content"
+    	        		android:layout_height="wrap_content"
+    	        		android:text="@string/zerosize"/>
+    				<TextView 
+    	    			android:id="@+id/misSize"
+    	    			android:textStyle="bold"
+    	    			android:layout_width="wrap_content"
+    	        		android:layout_height="wrap_content"
+    	        		android:text="@string/zerofiles"/>
+    			</LinearLayout>
+    			
+    		</LinearLayout>
+    		
+		</LinearLayout>
+	
+	<!-- end of scroll view...-->
 	</ScrollView>
+	
+  		
 </LinearLayout>
         
-    <ListView 
+  <ListView 
         android:visibility="gone"
         android:divider="@color/transparent"
         android:layout_width="fill_parent"
@@ -374,9 +390,6 @@
         android:id="@+id/customListView"
         >
     </ListView>
+ 
     
-
-
-    
-    
-    </LinearLayout>
+</LinearLayout>
