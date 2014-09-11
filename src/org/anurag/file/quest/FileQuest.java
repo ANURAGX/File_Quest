@@ -794,17 +794,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			LinearLayout vids = (LinearLayout) v.findViewById(R.id.videos);
 			LinearLayout zips = (LinearLayout) v.findViewById(R.id.zips);
 			LinearLayout misc = (LinearLayout) v.findViewById(R.id.misc);
-			LinearLayout zdcard = (LinearLayout) v.findViewById(R.id.sdcard);
-			TextView ls = (TextView) v.findViewById(R.id.lsSdcard);
-			/**
-			 * CHECKING WHETHER EXTERNAL SD IS PRESENT OR NOT....
-			 */
-			if (StorageHelper.isExternalStorageAvailableAndWriteable())
-				ls.setText(R.string.extpresent);
-			else
-				ls.setText(R.string.extAbsent);
-			TextView ls2 = (TextView) v.findViewById(R.id.lsSdcard2);
-			ls2.setText(R.string.intpresent);
+		
+			
 			Utils util = new Utils(v,mContext);
 			util.load();
 			/*
@@ -869,13 +860,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					load_FIle_Gallery((fPos = 6));
 				}
 			});
-			zdcard.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					// TODO Auto-generated method stub
-					// setAdapterAgain(2, mContext);
-				}
-			});
+		
 
 			final Dialog d = new Dialog(mContext,R.style.custom_dialog_theme);
 			d.setContentView(R.layout.long_click_dialog);
