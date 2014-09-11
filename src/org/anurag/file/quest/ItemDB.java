@@ -148,7 +148,7 @@ public class ItemDB extends SQLiteOpenHelper{
 	 */
 	public boolean deleteAllFavItem(String Path){
 		SQLiteDatabase db = this.getWritableDatabase();
-		return db.delete("FAVITEM", null,null) > 0;
+		return db.delete("FAVITEMS", null,null) > 0;
 	}
 	
 	/**
@@ -158,7 +158,7 @@ public class ItemDB extends SQLiteOpenHelper{
 	 */
 	public boolean deleteFavItem(String Path){
 		SQLiteDatabase db = this.getWritableDatabase();
-		return db.delete("FAVITEM", "FILEPATH = ?",new String[]{Path}) > 0;
+		return db.delete("FAVITEMS", "FILEPATH = ?",new String[]{Path}) > 0;
 	}
 	
 	/**

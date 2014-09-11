@@ -140,13 +140,28 @@ public class RootAdapter extends BaseAdapter{
 			}
 		});
 		
+		if(item.isFavItem())
+			h.favimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_favorite));
+		else
+			h.favimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_not_favorite));
+		
 		h.favimg.setId(pos);
 		h.favimg.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				ImageView img = (ImageView)v;
-				img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_favorite));
+				ImageView im = (ImageView)v;
+				if(list.get(im.getId()).isFavItem()){
+					im.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_not_favorite));
+					list.get(im.getId()).setFavStatus(false);
+					Constants.db.deleteFavItem(list.get(im.getId()).getPath());
+					Toast.makeText(ctx, R.string.favremoved, Toast.LENGTH_SHORT).show();
+				}else{
+					im.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_favorite));
+					list.get(im.getId()).setFavStatus(true);
+					Constants.db.insertNodeToFav(list.get(im.getId()).getPath(), 1);
+					Toast.makeText(ctx, R.string.favadded, Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 		
