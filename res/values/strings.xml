@@ -197,8 +197,8 @@
 	<string name="notavailable">Not available</string> 
 	<string name="archivefiles">Archive Files</string>    
 	<string name="favorite">Favorite</string>
-	
-	
+	<string name="favadded">One item added to list</string>
+	<string name="favremoved">One item removed</string>
 	
 	
 	
