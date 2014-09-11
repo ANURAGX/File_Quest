@@ -66,10 +66,9 @@ public class ItemDB extends SQLiteOpenHelper{
 	}
 	
 	/**
-	 * 
+	 * method to add the item in locked db...
 	 * @param PATH
 	 * @param locked
-	 * @param fav
 	 */
 	public void insertNodeToLock(String PATH,int locked){
 		/**
@@ -89,7 +88,29 @@ public class ItemDB extends SQLiteOpenHelper{
 	}
 	
 	/**
-	 * 
+	 * method to add the item in fav db...
+	 * @param PATH
+	 * @param locked
+	 */
+	public void insertNodeToFav(String PATH,int fav){
+		/**
+		 * performing raw query to ensure that we are not making any 
+		 * duplicate record of the items.. 
+		 */		
+		Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM FAVITEMS WHERE FILEPATH = ?",
+				new String[]{PATH});
+		if(cursor.getCount()==0){
+			SQLiteDatabase db = this.getWritableDatabase();
+			ContentValues values = new ContentValues();
+			values.put("FILEPATH", PATH);
+			values.put("FAV", fav);
+			//values.put("FAV", fav);
+			db.insert("FAVITEMS", null , values);
+		}		
+	}
+	
+	/**
+	 * method to delete the provided locked item from the db...
 	 * @param Path
 	 * @return
 	 */
@@ -99,7 +120,7 @@ public class ItemDB extends SQLiteOpenHelper{
 	}
 	
 	/**
-	 * 
+	 * method to delete all locked items from entries...
 	 * @return
 	 */
 	public boolean deleteAllLockedNodes(){
@@ -108,7 +129,7 @@ public class ItemDB extends SQLiteOpenHelper{
 	}
 	
 	/**
-	 * 
+	 * method to know about the locked status of item...
 	 * @param PATH
 	 * @return
 	 */
@@ -116,6 +137,39 @@ public class ItemDB extends SQLiteOpenHelper{
 		Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM ITEMS WHERE FILEPATH = ?",
 				new String[]{PATH});
 		if(cursor.getCount()==0)
+			return false;
+		return true;
+	}
+	
+	/**
+	 * method to delete the all fav items entry from db...
+	 * @param Path
+	 * @return
+	 */
+	public boolean deleteAllFavItem(String Path){
+		SQLiteDatabase db = this.getWritableDatabase();
+		return db.delete("FAVITEM", null,null) > 0;
+	}
+	
+	/**
+	 * method to delete the fav items entry from db...
+	 * @param Path
+	 * @return
+	 */
+	public boolean deleteFavItem(String Path){
+		SQLiteDatabase db = this.getWritableDatabase();
+		return db.delete("FAVITEM", "FILEPATH = ?",new String[]{Path}) > 0;
+	}
+	
+	/**
+	 * method to know about the favorite status of the item...
+	 * @param PATH
+	 * @return
+	 */
+	public boolean isFavItem(String PATH){
+		Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM FAVITEMS WHERE FILEPATH = ?",
+				new String[]{PATH});
+		if(cursor.getCount() == 0)
 			return false;
 		return true;
 	}
