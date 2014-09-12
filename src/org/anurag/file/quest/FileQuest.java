@@ -1843,25 +1843,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		CURRENT_ITEM = mViewPager.getCurrentItem();
 		switch (v.getId()) {
 
-		
-		case R.id.http_btn:
-				{
-					QuickAction act = new QuickAction(mContext);
-					ActionItem it = new ActionItem(0, getString(R.string.starthttp),getResources().getDrawable(R.drawable.ic_launcher_http_ftp_server));
-					act.addActionItem(it);
-					it = new ActionItem(0, getString(R.string.startftp),getResources().getDrawable(R.drawable.ic_launcher_http_ftp_server));
-					act.addActionItem(it);
-					act.show(indicator);
-					act.setOnActionItemClickListener(new OnActionItemClickListener() {
-						@Override
-						public void onItemClick(QuickAction source, int pos, int actionId) {
-							// TODO Auto-generated method stub
-							Toast.makeText(mContext, ""+pos, Toast.LENGTH_SHORT).show();
-						}
-					});
-				}
-				break;
-		
 		case R.id.g_open:
 			new G_Open(mContext, size.x, size.y);
 			break;
