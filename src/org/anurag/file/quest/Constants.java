@@ -19,6 +19,8 @@
 
 package org.anurag.file.quest;
 
+import org.anurag.dropbox.DBoxUsers;
+
 import android.os.Environment;
 import android.widget.ImageView;
 
@@ -47,6 +49,9 @@ public class Constants {
 	public static ImageView lock;
 	public static ImageView fav;
 	public static ItemDB db;
+	public static DBoxUsers dboxDB;
+	
+	
 	
 	/**
 	 * THIS ENUM IS FOR MASTER PASSWORD ....

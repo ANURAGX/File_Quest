@@ -23,13 +23,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.R;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.webkit.WebView;
+
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.exception.DropboxException;
@@ -46,7 +50,7 @@ public class DBoxManager {
 	public static ArrayList<DBoxObj> dListSimple;
 	public static ArrayList<DBoxObj> dSearch;
 	public static boolean DBOX_ROOT = false;
-	public static boolean DBOX_SIMPLE = false;
+	public static boolean DBOX_SD = false;
     public static String rootPath = "/";
     public static String simplePath = "/";
 
@@ -101,6 +105,7 @@ public class DBoxManager {
     	final Dialog dialog = new Dialog(ctx , R.style.custom_dialog_theme);
     	dialog.setCancelable(false);
     	dialog.setContentView(R.layout.p_dialog);
+    	dialog.getWindow().getAttributes().width = FileQuest.size.x*8/9;
     	WebView prog = (WebView)dialog.findViewById(R.id.p_Web_View);
     	prog.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
 		prog.setEnabled(false);
@@ -139,9 +144,9 @@ public class DBoxManager {
 				//sending initial message to open loading dialog...
 				handle.sendEmptyMessage(0);
 				if(ITEM==2)
-					dListRoot = generateListForRoot(ctx);
-				else if(ITEM==1)
 					dListSimple = generateListForRoot(ctx);
+				else if(ITEM==1)
+					dListRoot = generateListForRoot(ctx);
 				sort(ITEM);
 				handle.sendEmptyMessage(1);
 					
@@ -169,9 +174,9 @@ public class DBoxManager {
 			}
 		};		
 		if(item==2)
-			Collections.sort(dListRoot, comp);
-		else
 			Collections.sort(dListSimple, comp);
+		else
+			Collections.sort(dListRoot, comp);
 	}
     
 }

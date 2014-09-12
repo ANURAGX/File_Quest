@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.zip.ZipFile;
+
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
@@ -63,6 +64,7 @@ import org.ultimate.quickaction3D.ActionItem;
 import org.ultimate.quickaction3D.QuickAction;
 import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
 import org.ultimate.root.LinuxShell;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -116,6 +118,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.astuetz.PagerSlidingTabStrip;
@@ -298,6 +301,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 		mContext = FileQuest.this;
 		Constants.db = new ItemDB(mContext);
+		Constants.dboxDB = new DBoxUsers(mContext);		
+		
 		sdManager = new SDManager(FileQuest.this);
 		rootManager = new RootManager(FileQuest.this);
 		RootManager.SORT_TYPE = SDManager.SORT_TYPE = SORT_TYPE;
@@ -309,6 +314,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		rootItemList = rootManager.getList();
 		sdAdapter = new SDAdapter(mContext, sdItemsList);
 		rootAdapter = new RootAdapter(mContext, rootItemList);
+		
 		/**
 		 * THIS THREAD CATCHES THE UNCAUGHT EXCEPTIONS...
 		 * IF APP CRASHES IT RESTARTS THE APP ......
@@ -569,13 +575,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		if(DBoxAuth.AUTH){
 			AndroidAuthSession session = DBoxAuth.mApi.getSession();
 			if(session.authenticationSuccessful()){
-				DBoxAuth.storeAuth(session.getOAuth2AccessToken(), FileQuest.this);
+				DBoxAuth.storeAuth(session.getOAuth2AccessToken(),mContext);
 				session.finishAuthentication();
 				Toast.makeText(mContext, "Authenticated", Toast.LENGTH_SHORT).show();
 				if(CURRENT_ITEM==2)
-					DBoxManager.DBOX_ROOT=true;
+					DBoxManager.DBOX_SD=true;
 				else if(CURRENT_ITEM==1)
-					DBoxManager.DBOX_SIMPLE = true;
+					DBoxManager.DBOX_ROOT = true;
 				DBoxManager.setDropBoxAdapter(CURRENT_ITEM, mContext);
 			}else
 				Toast.makeText(mContext, "Failed to authenticate", Toast.LENGTH_SHORT).show();
@@ -2626,7 +2632,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									break;
 									
 						default:
-									Toast.makeText(mContext, ""+DBoxUsers.getTotalUsers(mContext),
+							
+									Toast.makeText(mContext, ""+Constants.dboxDB.getTotalUsers(),
 											Toast.LENGTH_SHORT).show();
 									//Toast.makeText(mContext, R.string.supporttakenBack,Toast.LENGTH_SHORT).show();
 									break;
@@ -4618,7 +4625,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 				}else if(ACTION.equals("FQ_DROPBOX_OPEN_FOLDER")){
 					//action to open drop box location in panel.....
-					resetPager();
+					if(CURRENT_ITEM == 2){
+						root.setAdapter(new DBoxAdapter(mContext, DBoxManager.dListSimple));
+					}
 				}else if(ACTION.equalsIgnoreCase("FQ_MOVE_LOCATION")){
 					new MultipleCopyDialog(mContext, tempList, size.x*8/9, it.getStringExtra("move_location"), true);
 				}else if(ACTION.equalsIgnoreCase("FQ_FILE_LOCKED_OR_UNLOCKED")){

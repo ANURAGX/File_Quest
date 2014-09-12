@@ -19,10 +19,14 @@
 
 package org.anurag.dropbox;
 
+import org.anurag.file.quest.Constants;
+
 import android.content.Context;
 import android.widget.Toast;
+
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
+import com.dropbox.client2.exception.DropboxException;
 import com.dropbox.client2.session.AppKeyPair;
 
 
@@ -48,15 +52,22 @@ public class DBoxAuth {
 	
 	static private AndroidAuthSession buildAuthSession(){
 		AppKeyPair pair = new AppKeyPair(DropBoxConstant.appKey, DropBoxConstant.appSecretKey);
-		AndroidAuthSession session = new AndroidAuthSession(pair);
-		
+		AndroidAuthSession session = new AndroidAuthSession(pair);		
 		return session;
 	}
 	
-	public static void storeAuth(String session , Context ctx){
+	public static void storeAuth(String session ,Context ctx){
 		//String auth2Token = session.getOAuth2AccessToken();
 		if(session!=null){
-			DBoxUsers.saveUser("oauth2:", session, ctx);
+			String name;
+			try {
+				name = mApi.accountInfo().displayName;
+			} catch (DropboxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				name = "USER";
+			}
+			Constants.dboxDB.saveUser("oauth2:", session , name);
 		}
 	}
 }

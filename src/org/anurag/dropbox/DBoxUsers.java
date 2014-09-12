@@ -19,25 +19,52 @@
 
 package org.anurag.dropbox;
 
+import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * 
  * @author Anurag
  *
  */
-public class DBoxUsers{
+public class DBoxUsers extends SQLiteOpenHelper{
 
+	private static String DBNAME = "DBOXUSER.db";
+	
+	public DBoxUsers(Context ctx) {
+		// TODO Auto-generated constructor stub
+		super(ctx,DBNAME , null , 1);
+	}
+
+	@Override
+	public void onCreate(SQLiteDatabase db) {
+		// TODO Auto-generated method stub
+		db.execSQL("CREATE TABLE DBOXUSERS "
+				+ "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ "USERNAME TEXT,"
+				+ "KEY TEXT,"
+				+ "SECRET TEXT);");
+	}
+
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		// TODO Auto-generated method stub
+		db.execSQL("DROP TABLE IF EXISTS DBOXUSERS");
+		onCreate(db);
+	}
+	
 	/**
 	 * THIS FUNCTION IS TO GET TOTAL NUMBER OF DROPBOX USER WHO WERE SUCCESSFULLY AUTHENTICATED
 	 * TO THE CURRENT DEVICE...
-	 * @param ctx
 	 * @return
 	 */
-	public static int getTotalUsers(Context ctx){
-		SharedPreferences prefs = ctx.getSharedPreferences("DROPBOX_PREFS", 0);
-		return prefs.getInt("TOTAL_USERS", 0);
+	public int getTotalUsers(){
+		Cursor curs = this.getReadableDatabase().rawQuery("SELECT * FROM DBOXUSERS", null);
+		return curs.getCount();
 	}
 	
 	/**
@@ -46,17 +73,17 @@ public class DBoxUsers{
 	 * 
 	 * @param key
 	 * @param secret
-	 * @param ctx
+	 * @param userName
 	 */
-	public static void saveUser(String key , String secret , Context ctx){
-		SharedPreferences prefs = ctx.getSharedPreferences("DROPBOX_PREFS", 0);
-		int total = prefs.getInt("TOTAL_USERS", 0);
-		String CURRENT_USER = "USER"+(total+1);
-		SharedPreferences.Editor edit = prefs.edit();
-		edit.putString(CURRENT_USER+"_KEY", key);
-		edit.putString(CURRENT_USER+"_SECRET", secret);
-		edit.putInt("TOTAL_USERS", (total+1));
-		edit.commit();
+	public void saveUser(String key , String secret , String userName){
+		Log.d("In save User", "In save User");
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put("KEY", key);
+		values.put("SECRET", secret);
+		values.put("USERNAME", userName);
+		db.insert("DBOXUSERS", null, values);
+		db.close();
 	}
 	
 }

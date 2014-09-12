@@ -106,6 +106,7 @@ public class ItemDB extends SQLiteOpenHelper{
 			values.put("FAV", fav);
 			//values.put("FAV", fav);
 			db.insert("FAVITEMS", null , values);
+			db.close();
 		}		
 	}
 	
