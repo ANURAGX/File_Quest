@@ -159,7 +159,7 @@ public class TarObj {
 		 * ITS DIRECTORY CHECK......
 		 */
 		if(!isFile()){
-			this.icon = ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]);
+			this.icon = ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]);
 			return ctx.getString(R.string.directory);
 		}	
 		

@@ -96,7 +96,7 @@ public class ZipAdapter extends BaseAdapter{
 		
 		if(!zFile.isFile()){
 			h.fSize.setVisibility(View.GONE);
-			h.icon.setImageDrawable(ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
+			h.icon.setImageDrawable(ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
 		}else
 			h.icon.setImageDrawable(zFile.getIcon());
 		h.fName.setText(zFile.getName());

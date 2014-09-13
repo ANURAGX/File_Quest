@@ -31,7 +31,7 @@ import android.widget.ImageView;
  */
 public class Constants {
 	
-	public static int FOLDER_TYPE;
+	public static int FOLDER_ICON;
 	public static int[] FOLDERS = {R.drawable.ic_launcher_orange_folder ,
 		   R.drawable.ic_launcher_green_folder,
 		   R.drawable.ic_launcher_yellow_folder , 

@@ -173,7 +173,7 @@ public class SetLaunchDir{
 			}else
 				item = (ItemHolder)convertView.getTag();
 				if(list[position].isDirectory())
-					item.Icon.setBackgroundResource(Constants.FOLDERS[Constants.FOLDER_TYPE]);
+					item.Icon.setBackgroundResource(Constants.FOLDERS[Constants.FOLDER_ICON]);
 				else
 					item.Icon.setBackgroundResource(R.drawable.ic_launcher_unknown);
 				item.Name.setText(list[position].getName());

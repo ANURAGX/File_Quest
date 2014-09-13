@@ -99,7 +99,7 @@ public class RarAdapter extends BaseAdapter{
 		if(rFile.isFile())
 			h.icon.setImageDrawable(rFile.getIcon());
 		else{
-			h.icon.setImageDrawable(ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
+			h.icon.setImageDrawable(ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
 			h.fSize.setVisibility(View.GONE);
 		}h.fSize.setText(rFile.getSize());
 		return convertView;

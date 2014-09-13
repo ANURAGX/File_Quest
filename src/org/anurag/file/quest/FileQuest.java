@@ -286,7 +286,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		TRANSPRA_LEVEL = preferences.getFloat("TRANSPRA_LEVEL", 0.9f);
 		SHOW_HIDDEN_FOLDERS = preferences.getBoolean("SHOW_HIDDEN_FOLDERS",false);
 		SORT_TYPE = preferences.getInt("SORT_TYPE", 2);
-		Constants.FOLDER_TYPE = preferences.getInt("FOLDER_TYPE", 3);
+		Constants.FOLDER_ICON = preferences.getInt("FOLDER_TYPE", 5);
 		HOME_DIRECTORY = preferences.getString("HOME_DIRECTORY", null);
 		ENABLE_ON_LAUNCH = preferences.getBoolean("ENABLE_ON_LAUNCH", false);
 		LIST_ANIM = preferences.getInt("LIST_ANIM", 4);
@@ -3145,7 +3145,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			ActionItem q1 = new ActionItem(100,getString(R.string.adjusttrans), getResources().getDrawable(R.drawable.ic_launcher_appreance));
 			q.addActionItem(q1);
 			if (CURRENT_ITEM != 3) {
-				q1 = new ActionItem(90, getString(R.string.setfoldericn),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
+				q1 = new ActionItem(90, getString(R.string.setfoldericn),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
 				q.addActionItem(q1);
 			}
 			q.setOnActionItemClickListener(this);
@@ -3155,7 +3155,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 90:
 			// DIRECTED FROM CASE 80
 			// DISPLAYS THE OPTIONS AVAILABLE FOR CHANGING FOLDER ICON TO SHOW
-			int FOLDER_TYPE = Constants.FOLDER_TYPE;
+			int FOLDER_TYPE = Constants.FOLDER_ICON;
 			QuickAction ac = new QuickAction(mContext);
 			ActionItem it;
 
@@ -3309,7 +3309,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			else
 				j = new ActionItem(1000, getString(R.string.showhidden),getResources().getDrawable(R.drawable.ic_launcher_disabled));
 			b.addActionItem(j);
-			j = new ActionItem(1100, getString(R.string.sort), getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
+			j = new ActionItem(1100, getString(R.string.sort), getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
 			b.addActionItem(j);
 			b.setOnActionItemClickListener(this);
 			b.show(indicator);
@@ -3509,31 +3509,31 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			if (SORT_TYPE == 1)
 				k = new ActionItem(1200, getString(R.string.alphafirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1200, getString(R.string.alphafirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
+				k = new ActionItem(1200, getString(R.string.alphafirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
 			c.addActionItem(k);
 
 			if (SORT_TYPE == 2)
 				k = new ActionItem(1300, getString(R.string.folderfirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1300, getString(R.string.folderfirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
+				k = new ActionItem(1300, getString(R.string.folderfirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
 			c.addActionItem(k);
 
 			if (SORT_TYPE == 3)
 				k = new ActionItem(1400, getString(R.string.filefirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1400, getString(R.string.filefirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
+				k = new ActionItem(1400, getString(R.string.filefirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
 			c.addActionItem(k);
 
 			if (SORT_TYPE == 4)
 				k = new ActionItem(1500, getString(R.string.hidfirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1500, getString(R.string.hidfirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
+				k = new ActionItem(1500, getString(R.string.hidfirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
 			c.addActionItem(k);
 
 			if (SORT_TYPE == 5)
 				k = new ActionItem(1600, getString(R.string.nonhidfirst),getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				k = new ActionItem(1600, getString(R.string.nonhidfirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
+				k = new ActionItem(1600, getString(R.string.nonhidfirst),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
 			c.addActionItem(k);
 			c.setOnActionItemClickListener(this);
 			c.show(indicator);
@@ -3685,7 +3685,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 2800:
 			// DIRECTED FROM CAE 90
 			// SETS THE FOLDER ICON TO DEFAULT FOLDER ICON
-			Constants.FOLDER_TYPE = 0;
+			Constants.FOLDER_ICON = 0;
 			edit.putInt("FOLDER_TYPE", 0);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3695,7 +3695,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 2900:
 			// DIRECTED FROM CAE 90
 			// SETS THE FOLDER ICON TO VIOLET FOLDER ICON
-			Constants.FOLDER_TYPE = 1;
+			Constants.FOLDER_ICON = 1;
 			edit.putInt("FOLDER_TYPE", 1);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3705,7 +3705,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 3000:
 			// DIRECTED FROM CAE 90
 			// SETS THE FOLDER ICON TO OXYGEN FOLDER ICON
-			Constants.FOLDER_TYPE = 2;
+			Constants.FOLDER_ICON = 2;
 			edit.putInt("FOLDER_TYPE", 2);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3715,7 +3715,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 3100:
 			// DIRECTED FROM CAE 90
 			// SETS THE FOLDER ICON TO YELLOW FOLDER ICON
-			Constants.FOLDER_TYPE = 3;
+			Constants.FOLDER_ICON = 3;
 			edit.putInt("FOLDER_TYPE", 3);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3725,7 +3725,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 3101:
 			// DIRECTED FROM CAE 90
 			// SETS THE FOLDER ICON TO YELLOW FOLDER ICON
-			Constants.FOLDER_TYPE = 4;
+			Constants.FOLDER_ICON = 4;
 			edit.putInt("FOLDER_TYPE", 4);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3735,7 +3735,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 3102:
 			// DIRECTED FROM CAE 90
 			// SETS THE FOLDER ICON TO YELLOW FOLDER ICON
-			Constants.FOLDER_TYPE = 5;
+			Constants.FOLDER_ICON = 5;
 			edit.putInt("FOLDER_TYPE", 5);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3744,7 +3744,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 3103:
 			// DIRECTED FROM CAE 90
 			// SETS THE FOLDER ICON TO YELLOW FOLDER ICON
-			Constants.FOLDER_TYPE = 6;
+			Constants.FOLDER_ICON = 6;
 			edit.putInt("FOLDER_TYPE", 6);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -4138,7 +4138,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		item = new ActionItem(250, getString(R.string.locker), getResources().getDrawable(R.drawable.ic_launcher_lock64));
 		action.addActionItem(item);		
 		if (mViewPager.getCurrentItem() != 3) {
-			item = new ActionItem(300, getString(R.string.folderopt),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]));
+			item = new ActionItem(300, getString(R.string.folderopt),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
 			action.addActionItem(item);
 			item = new ActionItem(400, getString(R.string.sethomdir),getResources().getDrawable(R.drawable.ic_launcher_droid_home));
 			action.addActionItem(item);

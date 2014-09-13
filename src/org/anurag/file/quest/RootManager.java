@@ -246,7 +246,7 @@ public class RootManager {
 	private Drawable buildIcon(File f){
 		if(f.isDirectory()){
 			type = ctx.getString(R.string.directory);
-			return res.getDrawable(Constants.FOLDERS[Constants.FOLDER_TYPE]);
+			return res.getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]);
 		}
 		String name = f.getName();
 		if(name.endsWith(".zip")||name.endsWith(".ZIP")){
