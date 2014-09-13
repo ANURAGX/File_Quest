@@ -271,7 +271,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	static boolean error;
 	boolean added = false;
 	private static Utils loadFileGallery;
-	
+	private static View v;
 	@SuppressWarnings({ "deprecation" })
 	@SuppressLint({ "NewApi"})
 	@Override
@@ -775,14 +775,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}
 			}
 		}
-
+		
 		@Override
 		public View onCreateView(LayoutInflater inflater,
 				final ViewGroup container, Bundle savedInstanceState) {
 			// TODO Auto-generated method stub
 			// mContext = getActivity();
 			inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View v = inflater.inflate(R.layout.custom_list_view, container,false);
+			v = inflater.inflate(R.layout.custom_list_view, container,false);
 			LIST_VIEW_3D = (ListView) v.findViewById(R.id.customListView);
 			LIST_VIEW_3D.setSelector(R.drawable.blue_button);
 			FILE_GALLEY = (LinearLayout)v.findViewById(R.id.file_gallery_layout);
@@ -4508,6 +4508,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					setAdapter(CURRENT_ITEM);
 				}else if (ACTION.equalsIgnoreCase("FQ_DELETE")) {
 					// setAdapter(CURRENT_ITEM);
+					
+					Utils.loaded = false;
+					loadFileGallery.load();
+					
 					setAdapter(CURRENT_ITEM);
 				} else if (ACTION.equalsIgnoreCase("FQ_FLASHZIP")) {
 					// FLASHABLE ZIP DIALOG IS FIRED FROM HERE

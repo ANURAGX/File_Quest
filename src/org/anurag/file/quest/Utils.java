@@ -207,13 +207,20 @@ public class Utils {
 		if(!loaded)
 			thread.start();
 		else{
-			handle.sendEmptyMessage(2);
-			handle.sendEmptyMessage(3);
-			handle.sendEmptyMessage(4);
-			handle.sendEmptyMessage(5);
-			handle.sendEmptyMessage(6);
-			handle.sendEmptyMessage(7);
-			handle.sendEmptyMessage(8);
+			if(music.size()>0)
+				handle.sendEmptyMessage(2);
+			if(apps.size()>0)
+				handle.sendEmptyMessage(3);
+			if(doc.size()>0)
+				handle.sendEmptyMessage(4);
+			if(img.size()>0)
+				handle.sendEmptyMessage(5);
+			if(vids.size()>0)
+				handle.sendEmptyMessage(6);
+			if(zip.size()>0)
+				handle.sendEmptyMessage(7);
+			if(mis.size()>0)
+				handle.sendEmptyMessage(8);
 		}
 	}
 	
@@ -322,7 +329,6 @@ public class Utils {
 			size = mis.size();
 			if(Constants.UPDATE_FILEGALLERY)
 				handle.sendEmptyMessage(8);
-		}
-		
+		}		
 	}
 }
