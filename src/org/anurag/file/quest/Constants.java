@@ -72,5 +72,6 @@ public class Constants {
 		ARCHIVE , PASTEINTO , G_OPEN , OPEN , DEFAULT , UNLOCK_ALL};
 		
 	//This is get reference for which operation the master password was verified....	
-	public static MODES activeMode;	
+	public static MODES activeMode;
+	public static boolean UPDATE_FILEGALLERY = false;
 }

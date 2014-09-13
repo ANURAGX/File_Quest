@@ -33,7 +33,6 @@ import android.widget.TextView;
 @SuppressLint("HandlerLeak")
 public class Utils {
 	
-	public static boolean FILES_SCANNED;
 	static View v;
 	public static boolean loaded = false;
 	public static ArrayList<File> music;
@@ -71,7 +70,7 @@ public class Utils {
 	
 	public Utils() {
 		// TODO Auto-generated constructor stub
-		FILES_SCANNED = false;
+		
 		file = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
 		music = new ArrayList<File>();
 		apps = new ArrayList<File>();
@@ -102,7 +101,7 @@ public class Utils {
 		mis = new ArrayList<File>();
 		img = new ArrayList<File>();
 		ctx = cont;
-		
+		loaded = false;
 		musicsize=0;
 		apksize=0;
 		vidsize=0;
@@ -110,6 +109,10 @@ public class Utils {
 		zipsize=0;
 		missize=0;
 		imgsize=0;
+	}
+	
+	public void setView(View view){
+		v = view;
 	}
 	
 	public void load(){
@@ -196,12 +199,22 @@ public class Utils {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				loaded = false;
+				//loaded = false;
 				makelist(file);
-				handle.sendEmptyMessage(1);				
+				loaded = true;			
 			}
 		});
-		thread.start();
+		if(!loaded)
+			thread.start();
+		else{
+			handle.sendEmptyMessage(2);
+			handle.sendEmptyMessage(3);
+			handle.sendEmptyMessage(4);
+			handle.sendEmptyMessage(5);
+			handle.sendEmptyMessage(6);
+			handle.sendEmptyMessage(7);
+			handle.sendEmptyMessage(8);
+		}
 	}
 	
 	
@@ -251,7 +264,8 @@ public class Utils {
 			zipsize+=file.length();
 			zsize = size(zipsize);
 			size = zip.size();
-			handle.sendEmptyMessage(7);
+			if(Constants.UPDATE_FILEGALLERY)
+				handle.sendEmptyMessage(7);
 		}
 		else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
 				||name.endsWith(".amr")||name.endsWith(".MP3")||name.endsWith(".OGG")||name.endsWith(".M4A")||
@@ -260,14 +274,16 @@ public class Utils {
 			musicsize+=file.length();
 			msize = size(musicsize);
 			size = music.size();
-			handle.sendEmptyMessage(2);
+			if(Constants.UPDATE_FILEGALLERY)
+				handle.sendEmptyMessage(2);
 		}
 		else if(name.endsWith(".apk")||name.endsWith(".APK")){
 			apps.add(file);
 			apksize+=file.length();
 			asize = size(apksize);
 			size = apps.size();
-			handle.sendEmptyMessage(3);
+			if(Constants.UPDATE_FILEGALLERY)
+				handle.sendEmptyMessage(3);
 		}		
 		else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
 				||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
@@ -276,7 +292,8 @@ public class Utils {
 			vidsize+=file.length();
 			vsize = size(vidsize);
 			size = vids.size();
-			handle.sendEmptyMessage(6);
+			if(Constants.UPDATE_FILEGALLERY)
+				handle.sendEmptyMessage(6);
 		}	
 		else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
 				||name.endsWith(".png")||name.endsWith(".BMP")||name.endsWith(".GIF")||name.endsWith(".JPEG")||name.endsWith(".JPG")
@@ -285,7 +302,8 @@ public class Utils {
 			imgsize+=file.length();
 			psize = size(imgsize);
 			size = img.size();
-			handle.sendEmptyMessage(5);
+			if(Constants.UPDATE_FILEGALLERY)
+				handle.sendEmptyMessage(5);
 		}
 		else if(name.endsWith(".txt")||name.endsWith(".log")||name.endsWith(".ini")||name.endsWith(".doc")
 				||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".TXT")||name.endsWith(".LOG")||name.endsWith(".INI")||name.endsWith(".DOC")
@@ -294,14 +312,16 @@ public class Utils {
 			docsize+=file.length();
 			dsize = size(docsize);
 			size = doc.size();
-			handle.sendEmptyMessage(4);
+			if(Constants.UPDATE_FILEGALLERY)
+				handle.sendEmptyMessage(4);
 		}
 		else{
 			mis.add(file);
 			missize+=file.length();
 			misize = size(missize);
 			size = mis.size();
-			handle.sendEmptyMessage(8);
+			if(Constants.UPDATE_FILEGALLERY)
+				handle.sendEmptyMessage(8);
 		}
 		
 	}

@@ -270,7 +270,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static int LAST_PAGE;
 	static boolean error;
 	boolean added = false;
-	
+	private static Utils loadFileGallery;
 	
 	@SuppressWarnings({ "deprecation" })
 	@SuppressLint({ "NewApi"})
@@ -350,8 +350,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 
 		setContentView(R.layout.new_ui);
-
-	
+		loadFileGallery = new Utils(null, mContext);
+		loadFileGallery.load();
 		
 
 		editBox = (EditText) findViewById(R.id.editBox);
@@ -774,7 +774,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					FILE_GALLEY.setVisibility(View.VISIBLE);
 				}
 			}
-
 		}
 
 		@Override
@@ -800,9 +799,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			LinearLayout zips = (LinearLayout) v.findViewById(R.id.zips);
 			LinearLayout misc = (LinearLayout) v.findViewById(R.id.misc);
 		
-			
-			Utils util = new Utils(v,mContext);
-			util.load();
+			loadFileGallery.setView(v);
+			Constants.UPDATE_FILEGALLERY = true;
+			loadFileGallery.load();
 			/*
 			 * WHEN MUSIC BUTTON IS CLICKED
 			 */
@@ -4505,9 +4504,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			public void onReceive(Context arg0, Intent it) {
 				// TODO Auto-generated method stub
 				String ACTION = it.getAction();
-				if (ACTION.equalsIgnoreCase("FQ_BACKUP")|| ACTION.equals(Intent.ACTION_UNINSTALL_PACKAGE))
+				if (ACTION.equalsIgnoreCase("FQ_BACKUP")|| ACTION.equals(Intent.ACTION_UNINSTALL_PACKAGE)){
 					setAdapter(CURRENT_ITEM);
-				else if (ACTION.equalsIgnoreCase("FQ_DELETE")) {
+				}else if (ACTION.equalsIgnoreCase("FQ_DELETE")) {
 					// setAdapter(CURRENT_ITEM);
 					setAdapter(CURRENT_ITEM);
 				} else if (ACTION.equalsIgnoreCase("FQ_FLASHZIP")) {
