@@ -204,8 +204,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static Dialog dialog;
 	public static Point size;
 	public static Context mContext;
-	static int LIST_ANIM;
-	static int PAGER_ANIM;
+	static int LIST_ANIMATION;
+	static int PAGER_ANIMATION;
 	private static ListView root;
 	private static ListView simple;
 	private static ListView LIST_VIEW_3D;
@@ -269,7 +269,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ViewFlipper mVFlipper;
 	private static int LAST_PAGE;
 	static boolean error;
-
 	boolean added = false;
 	
 	
@@ -289,8 +288,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		Constants.FOLDER_ICON = preferences.getInt("FOLDER_TYPE", 5);
 		HOME_DIRECTORY = preferences.getString("HOME_DIRECTORY", null);
 		ENABLE_ON_LAUNCH = preferences.getBoolean("ENABLE_ON_LAUNCH", false);
-		LIST_ANIM = preferences.getInt("LIST_ANIM", 4);
-		PAGER_ANIM = preferences.getInt("PAGER_ANIM", 3);
+		LIST_ANIMATION = preferences.getInt("LIST_ANIMATION", 0);
+		PAGER_ANIMATION = preferences.getInt("PAGER_ANIMATION", 0);
 		edit = preferences.edit();
 
 		try {
@@ -369,7 +368,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		
 		String[] te = getResources().getStringArray(R.array.effects);		
-		mViewPager.setTransitionEffect(TransitionEffect.valueOf(te[PAGER_ANIM]));
+		mViewPager.setTransitionEffect(TransitionEffect.valueOf(te[PAGER_ANIMATION]));
 		
 		indicator.setViewPager(mViewPager);
 		mViewPager.setCurrentItem(CURRENT_PREF_ITEM);
@@ -790,7 +789,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			FILE_GALLEY = (LinearLayout)v.findViewById(R.id.file_gallery_layout);
 
 			JazzyHelper helper = new JazzyHelper(mContext, null);
-			helper.setTransitionEffect(LIST_ANIM);
+			helper.setTransitionEffect(LIST_ANIMATION);
 			LIST_VIEW_3D.setOnScrollListener(helper);
 			
 			LinearLayout music = (LinearLayout) v.findViewById(R.id.music);
@@ -987,7 +986,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	public static class RootPanel extends BaseFragment {
 		public RootPanel(){
 			//PASSING THE ANIMATION TYPE FOR THE LIST VIEW.....
-			super(LIST_ANIM);
+			super(LIST_ANIMATION);
 		}
 		int spos;
 		
@@ -1350,7 +1349,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 		public SDPanel() {
 			//PASSING THE ANIMATION TYPE FOR THE LIST VIEW.....
-			super(LIST_ANIM);
+			super(LIST_ANIMATION);
 		}
 		
 		@Override
@@ -1371,7 +1370,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				setListAdapter(new TarAdapter(mContext, tListSD));
 			else{	
 				//sdItemsList = sdManager.getList();
-				setListAdapter(new SDAdapter(mContext, sdItemsList));
+				setListAdapter(sdAdapter);
 			}	
 			dialog = new Dialog(getActivity(), R.style.custom_dialog_theme);
 			dialog.setContentView(R.layout.long_click_dialog);
@@ -1713,7 +1712,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	public static class AppPanel extends BaseFragment {
 		public AppPanel(){
 			//PASSING THE ANIMATION TYPE FOR THE LIST VIEW.....
-			super(LIST_ANIM);
+			super(LIST_ANIMATION);
 		}
 
 		@Override
@@ -3343,7 +3342,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				QuickAction act = new QuickAction(mContext);
 				ActionItem item;
 				for(int m=0;m<ls.length;++m){
-					if(m==PAGER_ANIM)
+					if(m==PAGER_ANIMATION)
 						item = new ActionItem(423,"   "+ls[m], getResources().getDrawable(R.drawable.ic_launcher_apply));
 					else
 						item = new ActionItem(423,"   "+ls[m], dr);
@@ -3353,11 +3352,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					@Override
 					public void onItemClick(QuickAction source, int pos, int actionId) {
 						// TODO Auto-generated method stub
-						PAGER_ANIM = pos;
+						PAGER_ANIMATION = pos;
 						String[] te = getResources().getStringArray(R.array.effects);		
-						mViewPager.setTransitionEffect(TransitionEffect.valueOf(te[PAGER_ANIM]));
+						mViewPager.setTransitionEffect(TransitionEffect.valueOf(te[PAGER_ANIMATION]));
 						resetPager();
-						edit.putInt("PAGER_ANIM", PAGER_ANIM);
+						edit.putInt("PAGER_ANIMATION", PAGER_ANIMATION);
 						edit.commit();
 						Toast.makeText(mContext, getString(R.string.settingsapplied), Toast.LENGTH_SHORT).show();
 					}
@@ -3374,7 +3373,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				QuickAction act = new QuickAction(mContext);
 				ActionItem item;
 				for(int m=0;m<s.length;++m){
-					if(m==LIST_ANIM)
+					if(m==LIST_ANIMATION)
 						item = new ActionItem(424,"   "+s[m], getResources().getDrawable(R.drawable.ic_launcher_apply));
 					else
 						item = new ActionItem(424,"   "+s[m], dra);
@@ -3384,8 +3383,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					@Override
 					public void onItemClick(QuickAction source, int pos, int actionId) {
 						// TODO Auto-generated method stub
-						LIST_ANIM = pos;
-						edit.putInt("LIST_ANIM", LIST_ANIM);
+						LIST_ANIMATION = pos;
+						edit.putInt("LIST_ANIMATION", LIST_ANIMATION);
 						edit.commit();
 						resetPager();
 						Toast.makeText(mContext, getString(R.string.settingsapplied),Toast.LENGTH_SHORT).show();
