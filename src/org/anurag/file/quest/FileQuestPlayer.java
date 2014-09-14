@@ -20,9 +20,8 @@
 
 package org.anurag.file.quest;
 
-import java.io.File;
-import java.io.IOException;
 
+import java.io.IOException;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -76,6 +75,7 @@ public class FileQuestPlayer extends Activity{
 			player.setDataSource(FileQuestPlayer.this, intent.getData());
 			player.prepare();
 			player.start();
+			player.setLooping(true);
 			seekbar.setMax(player.getDuration());
 			retreive = new MediaMetadataRetriever();
 			retreive.setDataSource(FileQuestPlayer.this, intent.getData());
@@ -159,8 +159,12 @@ public class FileQuestPlayer extends Activity{
 			@Override
 			public void onDismiss(DialogInterface dialog) {
 				// TODO Auto-generated method stub
-				playing = false;
-				player.release();
+				try{
+					player.release();
+					playing = false;
+				}catch(Exception e){
+					
+				}
 				FileQuestPlayer.this.finish();
 			}
 		});
@@ -170,7 +174,11 @@ public class FileQuestPlayer extends Activity{
 			public void handleMessage(Message msg){
 				switch(msg.what){
 					case 0 :
-							seekbar.incrementProgressBy(1);
+							try{
+								seekbar.setProgress(player.getCurrentPosition());
+							}catch(IllegalStateException e){
+								
+							}
 							break;
 				}
 			}
