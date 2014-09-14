@@ -1261,9 +1261,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							if (!file.canRead())
 								Toast.makeText(mContext, R.string.serviceUnavaila,Toast.LENGTH_SHORT).show();
 							else if (file.canRead()) {
-								ArrayList<Item> temp = new ArrayList<Item>();
-								temp.add(file);
-								new CreateZip(mContext, size.x*8/9, temp);
+								if(!file.isLocked()){
+									ArrayList<Item> temp = new ArrayList<Item>();
+									temp.add(file);
+									new CreateZip(mContext, size.x*8/9, temp);
+								}else
+									new MasterPassword(mContext, size.x*8/9, file, preferences, Constants.MODES.ARCHIVE);
 							}
 						}						
 						break;
@@ -1284,8 +1287,18 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// RENAME
 						if(ZIP_ROOT||RAR_ROOT||TAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
-						else
-							Toast.makeText(mContext,"Yet to implement rename command for root files",Toast.LENGTH_SHORT).show();
+						else{
+							if(!file.isLocked()){
+								COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+								RENAME_COMMAND = true;
+								mVFlipper.showPrevious();
+								mVFlipper.setAnimation(prevAnim());
+								editBox.setText(file.getName());
+								editBox.setSelected(true);
+							}
+							else
+								new MasterPassword(mContext, size.x*8/9, file, preferences, Constants.MODES.RENAME);
+						}	
 						break;
 
 					case 8:
@@ -1539,9 +1552,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						if(ZIP_SD||RAR_SD||TAR_SD)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
-							ArrayList<Item> temp = new ArrayList<Item>();
-							temp.add(file2);
-							new CreateZip(mContext, size.x*8/9, temp);
+							if(!file2.isLocked()){
+								ArrayList<Item> temp = new ArrayList<Item>();
+								temp.add(file2);
+								new CreateZip(mContext, size.x*8/9, temp);
+							}else
+								new MasterPassword(mContext, size.x*8/9, file2, preferences, Constants.MODES.ARCHIVE);
 						}
 						
 						break;
@@ -1563,12 +1579,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						if(ZIP_SD||RAR_SD||TAR_SD)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
-							COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
-							RENAME_COMMAND = true;
-							mVFlipper.showPrevious();
-							mVFlipper.setAnimation(prevAnim());
-							editBox.setText(file2.getName());
-							editBox.setSelected(true);
+							if(!file2.isLocked()){
+								COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+								RENAME_COMMAND = true;
+								mVFlipper.showPrevious();
+								mVFlipper.setAnimation(prevAnim());
+								editBox.setText(file2.getName());
+								editBox.setSelected(true);
+							}else{
+								new MasterPassword(mContext, size.x*8/9, file2, preferences, Constants.MODES.RENAME);
+							}
 						}						
 						break;
 
@@ -2228,6 +2248,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							/*
 							 * yet to implement rename command for root files
 							 */
+							
+							if (file.getFile().renameTo(new File(name))) {
+								Toast.makeText(mContext,getString(R.string.renamed)+ new File(name).getName(),Toast.LENGTH_SHORT).show();
+							}
 						} catch (Exception e) {
 							/**
 							 * THIS INTENT IS FIRED WHEN RENAMING OF FILE FAILS
@@ -4660,6 +4684,23 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							else if(Constants.activeMode == Constants.MODES.SEND){
 								new BluetoothChooser(mContext, file2.getPath(), size.x*8/9, null);
 							}
+							
+							//archiving the locked item here....
+							else if(Constants.activeMode == Constants.MODES.ARCHIVE){
+								ArrayList<Item> temp = new ArrayList<Item>();
+								temp.add(file2);
+								new CreateZip(mContext, size.x*8/9, temp);
+							}
+							
+							//renaming the locked item here...
+							else if(Constants.activeMode == Constants.MODES.RENAME){
+								COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+								RENAME_COMMAND = true;
+								mVFlipper.showPrevious();
+								mVFlipper.setAnimation(prevAnim());
+								editBox.setText(file2.getName());
+								editBox.setSelected(true);
+							}
 						}else if(CURRENT_ITEM==1){
 							
 							//opening task here...
@@ -4689,6 +4730,23 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							//sharing the locked item after password verification...
 							else if(Constants.activeMode == Constants.MODES.SEND)
 								new BluetoothChooser(mContext, file.getPath(), size.x*8/9, null);
+							
+							//archiving the locked item here....
+							else if(Constants.activeMode == Constants.MODES.ARCHIVE){
+								ArrayList<Item> temp = new ArrayList<Item>();
+								temp.add(file);
+								new CreateZip(mContext, size.x*8/9, temp);
+							}
+							
+							//renaming the locked item here...
+							else if(Constants.activeMode == Constants.MODES.RENAME){
+								COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+								RENAME_COMMAND = true;
+								mVFlipper.showPrevious();
+								mVFlipper.setAnimation(prevAnim());
+								editBox.setText(file.getName());
+								editBox.setSelected(true);
+							}
 						}
 					}else{
 						//THE UI HAS TO BE CHANGED BASED ON THE LOCKING AND
