@@ -530,7 +530,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		}
         initLeftMenu();
 		super.onCreate(savedInstanceState);
-		
+		startActivity(new Intent(mContext, Settings.class));
 	}
 
 	@Override
@@ -4559,8 +4559,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					// setAdapter(CURRENT_ITEM);
 					
 					Utils.loaded = false;
-					loadFileGallery.load();
-					
 					setAdapter(CURRENT_ITEM);
 				} else if (ACTION.equalsIgnoreCase("FQ_FLASHZIP")) {
 					// FLASHABLE ZIP DIALOG IS FIRED FROM HERE
