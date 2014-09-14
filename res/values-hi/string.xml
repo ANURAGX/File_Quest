@@ -193,7 +193,8 @@
 	<string name="changepasswd">पासवर्ड बदला जा रहा है....</string>
 	
 	
-	
+	<!-- FILE QUEST PLAYER -->
+	<string name="fqplayer">फाइल  क्वेस्ट  प्लेयर </string>
 	
 	
 	<!-- TASKER ACTIVITY STRINGS..... -->

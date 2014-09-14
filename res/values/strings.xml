@@ -213,8 +213,8 @@
 	
 	
 	
-	
-	
+	<!-- FILE QUEST PLAYER -->
+	<string name="fqplayer">FILE  QUEST  PLAYER</string>
 	
 	<!-- TASKER ACTIVITY STRINGS..... -->
 	<string name="startupfoldernotfound">Startup folder not found</string>
