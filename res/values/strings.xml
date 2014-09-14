@@ -199,6 +199,16 @@
 	<string name="favorite">Favorite</string>
 	<string name="favadded">One item added to list</string>
 	<string name="favremoved">One item removed</string>
+	<string name="setpasswd">Setting password for first time....</string>
+	<string name="arcpasswd">Archiving the locked item....</string>
+	<string name="delpasswd">Deleting the locked item....</string>
+	<string name="copypasswd">Copying the locked item....</string>
+	<string name="openpasswd">Opening the locked item....</string>
+	<string name="pasteppasswd">Pasting into locked item....</string>
+	<string name="renamepasswd">Renaming the locked item....</string>
+	<string name="sendpasswd">Sending the locked item....</string>
+	<string name="unlockpasswd">Unlocking the locked items....</string>
+	<string name="changepasswd">Changing the password....</string>
 	
 	
 	
