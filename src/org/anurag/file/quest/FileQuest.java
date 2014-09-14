@@ -1250,8 +1250,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// PASTE
 						if(ZIP_ROOT||RAR_ROOT||TAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
-						else
-							pasteCommand(true);
+						else{
+							if(!file.isLocked())
+								pasteCommand(true);
+							else 
+								new MasterPassword(mContext, size.x*8/9, file, preferences, Constants.MODES.PASTEINTO);
+						}	
 						break;
 					case 5:
 						// ZIP
@@ -1541,56 +1545,60 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}						
 						break;
 					case 4:
-						// PASTE
-						if(ZIP_SD||RAR_SD||TAR_SD)
-							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
-						else
-							pasteCommand(true);
-						break;
+							// PASTE
+							if(ZIP_SD||RAR_SD||TAR_SD)
+								Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
+							else{
+								if(!file2.isLocked())
+									pasteCommand(true);
+								else 
+									new MasterPassword(mContext, size.x*8/9, file2, preferences, Constants.MODES.PASTEINTO);
+							}	
+							break;
 					case 5:
-						// ZIP
-						if(ZIP_SD||RAR_SD||TAR_SD)
-							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
-						else{
-							if(!file2.isLocked()){
-								ArrayList<Item> temp = new ArrayList<Item>();
-								temp.add(file2);
-								new CreateZip(mContext, size.x*8/9, temp);
-							}else
-								new MasterPassword(mContext, size.x*8/9, file2, preferences, Constants.MODES.ARCHIVE);
-						}
+							// ZIP
+							if(ZIP_SD||RAR_SD||TAR_SD)
+								Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
+							else{
+								if(!file2.isLocked()){
+									ArrayList<Item> temp = new ArrayList<Item>();
+									temp.add(file2);
+									new CreateZip(mContext, size.x*8/9, temp);
+								}else
+									new MasterPassword(mContext, size.x*8/9, file2, preferences, Constants.MODES.ARCHIVE);
+							}
 						
-						break;
+							break;
 					case 6:
 						
 							//DELETE
-						if(ZIP_SD||RAR_SD||TAR_SD)
-							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
-						else{
-							if(!file2.isLocked()){
-								deleteMethod(file2);
-							}else
-								new MasterPassword(mContext, size.x*8/9, file2, preferences,
-										Constants.MODES.DELETE);
-						}
+							if(ZIP_SD||RAR_SD||TAR_SD)
+								Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
+							else{
+								if(!file2.isLocked()){
+									deleteMethod(file2);
+								}else
+									new MasterPassword(mContext, size.x*8/9, file2, preferences,
+											Constants.MODES.DELETE);
+							}
 							break;
 					case 7:
-						// RENAME
-						if(ZIP_SD||RAR_SD||TAR_SD)
-							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
-						else{
-							if(!file2.isLocked()){
-								COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
-								RENAME_COMMAND = true;
-								mVFlipper.showPrevious();
-								mVFlipper.setAnimation(prevAnim());
-								editBox.setText(file2.getName());
-								editBox.setSelected(true);
-							}else{
-								new MasterPassword(mContext, size.x*8/9, file2, preferences, Constants.MODES.RENAME);
-							}
-						}						
-						break;
+							// RENAME
+							if(ZIP_SD||RAR_SD||TAR_SD)
+								Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
+							else{
+								if(!file2.isLocked()){
+									COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+									RENAME_COMMAND = true;
+									mVFlipper.showPrevious();
+									mVFlipper.setAnimation(prevAnim());
+									editBox.setText(file2.getName());
+									editBox.setSelected(true);
+								}else{
+									new MasterPassword(mContext, size.x*8/9, file2, preferences, Constants.MODES.RENAME);
+								}
+							}						
+							break;
 
 					case 8:
 						// SEND
@@ -4701,6 +4709,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								editBox.setText(file2.getName());
 								editBox.setSelected(true);
 							}
+							
+							//pasting the file into locked item...
+							else if(Constants.activeMode == Constants.MODES.PASTEINTO){
+								pasteCommand(true);
+							}
 						}else if(CURRENT_ITEM==1){
 							
 							//opening task here...
@@ -4746,6 +4759,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								mVFlipper.setAnimation(prevAnim());
 								editBox.setText(file.getName());
 								editBox.setSelected(true);
+							}
+							
+							//pasting the file into locked item...
+							else if(Constants.activeMode == Constants.MODES.PASTEINTO){
+								pasteCommand(true);
 							}
 						}
 					}else{
