@@ -2313,21 +2313,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				new GetHomeDirectory(mContext, size.x*8/9, preferences);
 			} else if (new File(HOME_DIRECTORY).exists()) {
 				if (CURRENT_ITEM == 2) {
-					sdManager = new SDManager(mContext);
-					SDManager.SHOW_HIDDEN_FOLDER = SHOW_HIDDEN_FOLDERS;
-					SDManager.SORT_TYPE = SORT_TYPE;
-					SDManager.nStack.push(HOME_DIRECTORY);
-					sdItemsList = sdManager.getList();
-					sdAdapter = new SDAdapter(mContext,sdItemsList);
-					resetPager();
+					if(!new Item(new File(HOME_DIRECTORY), null, null, null).isLocked()){
+						SDManager.nStack.push(HOME_DIRECTORY);
+						setAdapter(2);
+					}	
+					else
+						new MasterPassword(mContext, size.x*8/9, new Item(new File(HOME_DIRECTORY), null, null, null)
+							,preferences, Constants.MODES.HOME);
 				} else if (CURRENT_ITEM == 1) {
-					rootManager = new RootManager(mContext);
-					RootManager.SHOW_HIDDEN_FOLDER = SHOW_HIDDEN_FOLDERS;
-					RootManager.SORT_TYPE = SORT_TYPE;
-					RootManager.nStack.push(HOME_DIRECTORY);
-					rootItemList = rootManager.getList();
-					rootAdapter = new RootAdapter(mContext,rootItemList);
-					resetPager();
+					if(!new Item(new File(HOME_DIRECTORY), null, null, null).isLocked()){
+						RootManager.nStack.push(HOME_DIRECTORY);
+						setAdapter(1);
+					}	
+					else
+						new MasterPassword(mContext, size.x*8/9, new Item(new File(HOME_DIRECTORY), null, null, null),
+								preferences, Constants.MODES.HOME);
 				} else if (CURRENT_ITEM == 0) {
 					QuickAction d = new QuickAction(mContext);
 					ActionItem df = new ActionItem(8, "/", getResources().getDrawable(R.drawable.ic_launcher_droid_home));
@@ -4732,6 +4732,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							
 							else if(Constants.activeMode == Constants.MODES.COPY)
 								pasteCommand(true);
+							
+							//opening the home folder....
+							else if(Constants.activeMode == Constants.MODES.HOME){
+								SDManager.nStack.push(HOME_DIRECTORY);
+								setAdapter(2);
+							}
 						}else if(CURRENT_ITEM==1){
 							
 							//opening task here...
@@ -4782,6 +4788,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							//pasting the file into locked item...
 							else if(Constants.activeMode == Constants.MODES.PASTEINTO){
 								pasteCommand(true);
+							}
+							
+							else if(Constants.activeMode == Constants.MODES.COPY)
+								pasteCommand(true);
+							
+							
+							//opening the home folder..
+							else if(Constants.activeMode == Constants.MODES.HOME){
+								RootManager.nStack.push(HOME_DIRECTORY);
+								setAdapter(1);
 							}
 						}
 					}else{

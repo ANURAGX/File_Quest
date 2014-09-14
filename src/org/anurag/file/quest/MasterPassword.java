@@ -106,8 +106,9 @@ public class MasterPassword {
 			else if(MODE == Constants.MODES.SEND)
 				msg.setText(ctx.getResources().getString(R.string.sendpasswd));
 			else if(MODE == Constants.MODES.UNLOCK_ALL)
-				msg.setText(ctx.getResources().getString(R.string.unlockpasswd));	
-			
+				msg.setText(ctx.getResources().getString(R.string.unlockpasswd));
+			else if(MODE == Constants.MODES.HOME)
+				msg.setText(ctx.getResources().getString(R.string.homepasswd));
 			confirm.setVisibility(View.GONE);
 			TextView con = (TextView)dialog.findViewById(R.id.currentFile);
 			con.setVisibility(View.GONE);
