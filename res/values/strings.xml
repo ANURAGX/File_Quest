@@ -209,7 +209,7 @@
 	<string name="sendpasswd">Sending the locked item....</string>
 	<string name="unlockpasswd">Unlocking the locked items....</string>
 	<string name="changepasswd">Changing the password....</string>
-	
+	<string name="homepasswd">Opening the home item....</string>
 	
 	
 	
