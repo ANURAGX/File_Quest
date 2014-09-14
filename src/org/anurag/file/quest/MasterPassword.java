@@ -71,6 +71,8 @@ public class MasterPassword {
 		
 		//MODE=1 means password has to be reset...
 		if(MODE== Constants.MODES.RESET){
+			TextView msg = (TextView)dialog.findViewById(R.id.Message);
+			msg.setText(ctx.getResources().getString(R.string.changepasswd));
 			newpass.setVisibility(View.VISIBLE);
 			TextView co = (TextView)dialog.findViewById(R.id.newpasswdtext);
 			co.setVisibility(View.VISIBLE);
@@ -78,8 +80,34 @@ public class MasterPassword {
 			co.setText(ctx.getString(R.string.resetmasterpassword));
 		}
 		
+		if(password==null){
+			TextView msg = (TextView)dialog.findViewById(R.id.Message);
+			if(MODE == Constants.MODES.DEFAULT)
+				msg.setText(ctx.getResources().getString(R.string.setpasswd));
+		}
 		///MODE!=1 means password confirmation...
-		if(password != null && MODE!=Constants.MODES.RESET){
+		else if(password != null && MODE!=Constants.MODES.RESET){
+			
+			TextView msg = (TextView)dialog.findViewById(R.id.Message);
+			if(MODE == Constants.MODES.ARCHIVE)
+				msg.setText(ctx.getResources().getString(R.string.arcpasswd));
+			else if(MODE == Constants.MODES.COPY)
+				msg.setText(ctx.getResources().getString(R.string.copypasswd));
+			else if(MODE == Constants.MODES.DELETE)
+				msg.setText(ctx.getResources().getString(R.string.delpasswd));
+			else if(MODE == Constants.MODES.G_OPEN)
+				msg.setText(ctx.getResources().getString(R.string.openpasswd));
+			else if(MODE == Constants.MODES.OPEN)
+				msg.setText(ctx.getResources().getString(R.string.openpasswd));
+			else if(MODE == Constants.MODES.PASTEINTO)
+				msg.setText(ctx.getResources().getString(R.string.openpasswd));
+			else if(MODE == Constants.MODES.RENAME)
+				msg.setText(ctx.getResources().getString(R.string.renamepasswd));
+			else if(MODE == Constants.MODES.SEND)
+				msg.setText(ctx.getResources().getString(R.string.sendpasswd));
+			else if(MODE == Constants.MODES.UNLOCK_ALL)
+				msg.setText(ctx.getResources().getString(R.string.unlockpasswd));	
+			
 			confirm.setVisibility(View.GONE);
 			TextView con = (TextView)dialog.findViewById(R.id.currentFile);
 			con.setVisibility(View.GONE);
