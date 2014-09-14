@@ -127,70 +127,98 @@ public class Utils {
 							break;
 				
 					case 2:
-							//DISLPAYS MUSIC SIZE..
-							TextView mSize= (TextView)v.findViewById(R.id.mSize);
-							mSize.setText(msize);
-							
-							count = (TextView)v.findViewById(R.id.mFiles);
-							count.setText(music.size() + " "+ctx.getString(R.string.items));
+							try{
+								//DISLPAYS MUSIC SIZE..
+								TextView mSize= (TextView)v.findViewById(R.id.mSize);
+								mSize.setText(msize);
+								
+								count = (TextView)v.findViewById(R.id.mFiles);
+								count.setText(music.size() + " "+ctx.getString(R.string.items));
+							}catch(NullPointerException e){
+								
+							}
 							break;
 							
 					case 3:
-							//DISPLAYS APPS SIZE...
-							TextView aSize= (TextView)v.findViewById(R.id.aSize);
-							aSize.setText(asize);
-							
-							
-							count = (TextView)v.findViewById(R.id.aFiles);
-							count.setText(apps.size() + " "+ctx.getString(R.string.items));
+							try{
+								//DISPLAYS APPS SIZE...
+								TextView aSize= (TextView)v.findViewById(R.id.aSize);
+								aSize.setText(asize);
+								
+								
+								count = (TextView)v.findViewById(R.id.aFiles);
+								count.setText(apps.size() + " "+ctx.getString(R.string.items));
+							}catch(NullPointerException e){
+								
+							}
 							break;
 							
 					case 4:
 						
-							//DSIPLAYS DOCS SIZE...
-							TextView dSize= (TextView)v.findViewById(R.id.dSize);
-							dSize.setText(dsize);
-							
-							count = (TextView)v.findViewById(R.id.dFile);
-							count.setText(doc.size() + " "+ctx.getString(R.string.items));
+							try{
+								//DSIPLAYS DOCS SIZE...
+								TextView dSize= (TextView)v.findViewById(R.id.dSize);
+								dSize.setText(dsize);
+								
+								count = (TextView)v.findViewById(R.id.dFile);
+								count.setText(doc.size() + " "+ctx.getString(R.string.items));
+							}catch(NullPointerException e){
+								
+							}
 							break;
 					case 5:
-							//displays IMAGE SIZE..
-							TextView iSize= (TextView)v.findViewById(R.id.pSize);
-							iSize.setText(psize);
-							
-							count = (TextView)v.findViewById(R.id.pFiles);
-							count.setText(img.size() + " "+ctx.getString(R.string.items));
+							try{
+								//displays IMAGE SIZE..
+								TextView iSize= (TextView)v.findViewById(R.id.pSize);
+								iSize.setText(psize);
+								
+								count = (TextView)v.findViewById(R.id.pFiles);
+								count.setText(img.size() + " "+ctx.getString(R.string.items));
+							}catch(NullPointerException e){
+								
+							}
 							break;
 							
 					case 6:
-							//displays video size...
-							TextView vSize= (TextView)v.findViewById(R.id.vSize);
-							vSize.setText(vsize);
-							
-							
-							count = (TextView)v.findViewById(R.id.vFiles);
-							count.setText(vids.size() + " "+ctx.getString(R.string.items));
+							try{
+								//displays video size...
+								TextView vSize= (TextView)v.findViewById(R.id.vSize);
+								vSize.setText(vsize);
+								
+								
+								count = (TextView)v.findViewById(R.id.vFiles);
+								count.setText(vids.size() + " "+ctx.getString(R.string.items));
+							}catch(NullPointerException e){
+								
+							}
 							break;
 							
 							
 					case 7:
 						
-							//displays archive size...
-							TextView zSize= (TextView)v.findViewById(R.id.zSize);
-							zSize.setText(zsize);
-							
-							count = (TextView)v.findViewById(R.id.zFiles);
-							count.setText(zip.size() + " "+ctx.getString(R.string.items));
+							try{
+								//displays archive size...
+								TextView zSize= (TextView)v.findViewById(R.id.zSize);
+								zSize.setText(zsize);
+								
+								count = (TextView)v.findViewById(R.id.zFiles);
+								count.setText(zip.size() + " "+ctx.getString(R.string.items));
+							}catch(NullPointerException e){
+								
+							}
 							break;
 							
 					case 8:
 							//displays miscellaneous size...
-							TextView mmSize= (TextView)v.findViewById(R.id.misFiles);
-							mmSize.setText(misize);
-							
-							count = (TextView)v.findViewById(R.id.misSize);
-							count.setText(mis.size() + " "+ctx.getString(R.string.items));
+							try{
+								TextView mmSize= (TextView)v.findViewById(R.id.misFiles);
+								mmSize.setText(misize);
+								
+								count = (TextView)v.findViewById(R.id.misSize);
+								count.setText(mis.size() + " "+ctx.getString(R.string.items));
+							}catch(NullPointerException e){
+								
+							}
 							break;
 				}
 			}
