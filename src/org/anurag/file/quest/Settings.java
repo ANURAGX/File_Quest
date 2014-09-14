@@ -20,19 +20,24 @@
 
 package org.anurag.file.quest;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.Info;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
+import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -74,6 +79,27 @@ public class Settings extends Activity {
 		parentFolderList.add(getString(R.string.cleargesturedata));
 		folderAdapter = new SettingsAdapter(Settings.this, parentFolderList,1);
 		folderLs.setAdapter(folderAdapter);
+		
+		folderLs.setOnGroupClickListener(new OnGroupClickListener() {
+			@Override
+			public boolean onGroupClick(ExpandableListView arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				if(arg2==3)
+					new GetHomeDirectory(Settings.this, FileQuest.size.x*8/9 , FileQuest.preferences);
+				else if(arg2==4){
+					try{
+						new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/File Quest/.gesture").delete();
+					}catch(Exception e){
+						
+					}
+					Toast.makeText(Settings.this, getString(R.string.gesturedatacleared),Toast.LENGTH_SHORT).show();
+				}
+				return false;
+			}
+		});
+		
+		
 		
 		ls.setAdapter(new abtAdapter());
 		ls.setOnItemLongClickListener(null);
