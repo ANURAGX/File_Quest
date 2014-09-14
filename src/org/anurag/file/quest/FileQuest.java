@@ -1493,7 +1493,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						 * if root panel is currently on cloud mode,then on
 						 * selection from below list,it migrated to root panel
 						 * and user there does the pasting work of selected file
-						 * from sd card panel..... else a seperate dialog is
+						 * from sd card panel..... else a separate dialog is
 						 * fired listing the account and asking user to select a
 						 * directory to paste...
 						 */
@@ -1548,9 +1548,26 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							// PASTE
 							if(ZIP_SD||RAR_SD||TAR_SD)
 								Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
-							else{
-								if(!file2.isLocked())
-									pasteCommand(true);
+							else if(file2.isDirectory()){
+								if(!file2.isLocked()){//checking the locked status of current folder..
+									boolean flag = false;
+									int l = COPY_FILES.size();
+									
+									//checking whether the copy list contains any locked items or not.
+									//if it contains,then password verification...
+									for(int i=0;i<l;++i){
+										if(COPY_FILES.get(i)!=null)
+												if(COPY_FILES.get(i).isLocked()){
+													flag = true;
+													break;
+												}
+									}
+									
+									if(flag)
+										new MasterPassword(mContext, size.x*8/9, file2, preferences, Constants.MODES.COPY);
+									else
+										pasteCommand(true);
+								}	
 								else 
 									new MasterPassword(mContext, size.x*8/9, file2, preferences, Constants.MODES.PASTEINTO);
 							}	
@@ -4711,9 +4728,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							}
 							
 							//pasting the file into locked item...
-							else if(Constants.activeMode == Constants.MODES.PASTEINTO){
+							else if(Constants.activeMode == Constants.MODES.PASTEINTO) {
 								pasteCommand(true);
 							}
+							
+							else if(Constants.activeMode == Constants.MODES.COPY)
+								pasteCommand(true);
 						}else if(CURRENT_ITEM==1){
 							
 							//opening task here...

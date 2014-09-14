@@ -100,7 +100,7 @@ public class MasterPassword {
 			else if(MODE == Constants.MODES.OPEN)
 				msg.setText(ctx.getResources().getString(R.string.openpasswd));
 			else if(MODE == Constants.MODES.PASTEINTO)
-				msg.setText(ctx.getResources().getString(R.string.openpasswd));
+				msg.setText(ctx.getResources().getString(R.string.pasteppasswd));
 			else if(MODE == Constants.MODES.RENAME)
 				msg.setText(ctx.getResources().getString(R.string.renamepasswd));
 			else if(MODE == Constants.MODES.SEND)
