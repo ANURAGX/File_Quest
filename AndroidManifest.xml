@@ -63,10 +63,6 @@
             </intent-filter>
         </activity>
        
-        <!-- SETTINGS ACTIVITY.... -->
-        <activity 
-            android:name="org.anurag.file.quest.Settings"/>
-        
         <!-- FILE QUEST EDITOR -->
         <activity
             android:label="@string/label" 
@@ -129,6 +125,10 @@
         		<category android:name="android.intent.category.DEFAULT" />
       		</intent-filter>
     	</activity>
+    	
+        <!-- SETTINGS ACTIVITY.... -->
+        <activity 
+            android:name="org.anurag.file.quest.Settings"/>
    </application>
 
 </manifest>
