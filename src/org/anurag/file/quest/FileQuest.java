@@ -48,6 +48,7 @@ import org.anurag.dropbox.DBoxManager;
 import org.anurag.dropbox.DBoxUsers;
 import org.anurag.gesture.AddGesture;
 import org.anurag.gesture.G_Open;
+import org.anurag.settings.Settings;
 import org.ultimate.menuItems.AppProperties;
 import org.ultimate.menuItems.BluetoothChooser;
 import org.ultimate.menuItems.DeleteBackups;
