@@ -128,7 +128,7 @@
     	
         <!-- SETTINGS ACTIVITY.... -->
         <activity 
-            android:name="org.anurag.file.quest.Settings"/>
+            android:name="org.anurag.settings.Settings"/>
    </application>
 
 </manifest>
