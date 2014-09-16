@@ -280,8 +280,13 @@ public class Utils {
 		if(file.isFile()){
 			identifyType(file);
 		}else if(file.isDirectory()){
-			for(File f:file.listFiles())
-				makelist(f);
+			try{
+				//FOR ME A NULLPOINTER RAISED WHEN USB WAS CONNECTED AND APP WAS OPEND...	
+				for(File f:file.listFiles())
+					makelist(f);
+			}catch(Exception e){
+				
+			}
 		}
 	}
 	
