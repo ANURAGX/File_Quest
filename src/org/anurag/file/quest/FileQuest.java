@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.zip.ZipFile;
-
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
@@ -65,7 +64,6 @@ import org.ultimate.quickaction3D.ActionItem;
 import org.ultimate.quickaction3D.QuickAction;
 import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
 import org.ultimate.root.LinuxShell;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -119,7 +117,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.astuetz.PagerSlidingTabStrip;
@@ -1251,9 +1248,26 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// PASTE
 						if(ZIP_ROOT||RAR_ROOT||TAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
-						else{
-							if(!file.isLocked())
-								pasteCommand(true);
+						else if(file.isDirectory()){
+							if(!file.isLocked()){
+								try{
+									int l = COPY_FILES.size();
+									boolean flag = false;
+									for(int i=0;i<l;++i){
+										if(COPY_FILES.get(i)!=null)
+											if(COPY_FILES.get(i).isLocked()){
+												flag = true;
+												break;
+											}
+									}
+									if(flag)
+										new MasterPassword(mContext, size.x*8/9, file, preferences,Constants.MODES.COPY);
+									else
+										pasteCommand(true);
+								}catch(NullPointerException e){
+									
+								}
+							}	
 							else 
 								new MasterPassword(mContext, size.x*8/9, file, preferences, Constants.MODES.PASTEINTO);
 						}	

@@ -150,14 +150,15 @@ public class MasterPassword {
 						Toast.makeText(ctx, R.string.passworddidnotmatch, Toast.LENGTH_SHORT).show();
 					}
 				}else if(password != null){
-					if(pass.getText().toString().length()<3){
-						//password length is not appropriate....
-						Toast.makeText(ctx, R.string.minimumpasswordlength, Toast.LENGTH_SHORT).show();
-					}else if(pass.getText().toString().equals(password)){
+					if(pass.getText().toString().equals(password)){
 						Intent intent = new Intent("FQ_FILE_LOCKED_OR_UNLOCKED");
 						try{
 							//in one case item will always be null...
-							if(item.isLocked())
+							
+							
+							if(MODE == Constants.MODES.COPY)
+								intent.putExtra("password_verified", "verified");
+							else if(item.isLocked())
 								intent.putExtra("password_verified", "verified");
 							else
 								intent.putExtra("password_verified", "no_need");
