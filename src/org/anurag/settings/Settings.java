@@ -75,6 +75,14 @@ public class Settings extends Activity {
 		listAdapter2 = new SettingsFolderOptAdapter(this, listDataHeader2, listDataChild2);
 		expListView2.setAdapter(listAdapter2);
 
+		expListView1.setOnGroupClickListener(new OnGroupClickListener() {
+			@Override
+			public boolean onGroupClick(ExpandableListView arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
 		
 
 		// Listview on child click listener
@@ -83,14 +91,6 @@ public class Settings extends Activity {
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
 				// TODO Auto-generated method stub
-				Toast.makeText(
-						getApplicationContext(),
-						listDataHeader1.get(groupPosition)
-								+ " : "
-								+ listDataChild1.get(
-										listDataHeader1.get(groupPosition)).get(
-										childPosition), Toast.LENGTH_SHORT)
-						.show();
 				return false;
 			}
 		});
