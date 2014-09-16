@@ -20,17 +20,19 @@
 
 package org.anurag.settings;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.R;
+import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.Info;
-
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +42,6 @@ import android.widget.BaseAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.ExpandableListView.OnGroupCollapseListener;
-import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -50,79 +50,67 @@ import android.widget.Toast;
 public class Settings extends Activity {
 
 	SettingsInterFaceAdapter listAdapter;
-	ExpandableListView expListView;
-	List<String> listDataHeader;
-	HashMap<String, List<String>> listDataChild;
+	ExpandableListView expListView1,expListView2;
+	List<String> listDataHeader1,listDataHeader2;
+	HashMap<String, List<String>> listDataChild1,listDataChild2;
 	ListView abtLs;
-	
-	
+	SharedPreferences settingsPrefs;
+	SettingsFolderOptAdapter listAdapter2;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.settings_ui);
-
+		settingsPrefs = getSharedPreferences("MY_APP_SETTINGS", 0);
 		// get the listview
-		expListView = (ExpandableListView) findViewById(R.id.intUI);
-
+		expListView1 = (ExpandableListView) findViewById(R.id.intUI);
+		expListView2 = (ExpandableListView) findViewById(R.id.folderls);
 		// preparing list data
 		prepareListData();
-
-		listAdapter = new SettingsInterFaceAdapter(this, listDataHeader, listDataChild);
+		listAdapter = new SettingsInterFaceAdapter(this, listDataHeader1, listDataChild1);
 
 		// setting list adapter
-		expListView.setAdapter(listAdapter);
+		expListView1.setAdapter(listAdapter);
 
-		// Listview Group click listener
-		expListView.setOnGroupClickListener(new OnGroupClickListener() {
+		prepareListData2();
+		listAdapter2 = new SettingsFolderOptAdapter(this, listDataHeader2, listDataChild2);
+		expListView2.setAdapter(listAdapter2);
 
-			@Override
-			public boolean onGroupClick(ExpandableListView parent, View v,
-					int groupPosition, long id) {
-				// Toast.makeText(getApplicationContext(),
-				// "Group Clicked " + listDataHeader.get(groupPosition),
-				// Toast.LENGTH_SHORT).show();
-				return false;
-			}
-		});
-
-		// Listview Group expanded listener
-		expListView.setOnGroupExpandListener(new OnGroupExpandListener() {
-
-			@Override
-			public void onGroupExpand(int groupPosition) {
-				Toast.makeText(getApplicationContext(),
-						listDataHeader.get(groupPosition) + " Expanded",
-						Toast.LENGTH_SHORT).show();
-			}
-		});
-
-		// Listview Group collasped listener
-		expListView.setOnGroupCollapseListener(new OnGroupCollapseListener() {
-
-			@Override
-			public void onGroupCollapse(int groupPosition) {
-				Toast.makeText(getApplicationContext(),
-						listDataHeader.get(groupPosition) + " Collapsed",
-						Toast.LENGTH_SHORT).show();
-
-			}
-		});
+		
 
 		// Listview on child click listener
-		expListView.setOnChildClickListener(new OnChildClickListener() {
-
+		expListView1.setOnChildClickListener(new OnChildClickListener() {
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
 				// TODO Auto-generated method stub
 				Toast.makeText(
 						getApplicationContext(),
-						listDataHeader.get(groupPosition)
+						listDataHeader1.get(groupPosition)
 								+ " : "
-								+ listDataChild.get(
-										listDataHeader.get(groupPosition)).get(
+								+ listDataChild1.get(
+										listDataHeader1.get(groupPosition)).get(
 										childPosition), Toast.LENGTH_SHORT)
 						.show();
+				return false;
+			}
+		});
+		
+		
+		expListView2.setOnGroupClickListener(new OnGroupClickListener() {
+			@Override
+			public boolean onGroupClick(ExpandableListView arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				if(arg2 == 3)
+					new GetHomeDirectory(Settings.this, FileQuest.size.x*8/9, settingsPrefs);
+				else if(arg2 == 4){
+					try{
+						new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/File Quest/.gesture").delete();
+					}catch(Exception e){
+						
+					}
+					Toast.makeText(Settings.this, getString(R.string.gesturedatacleared),Toast.LENGTH_SHORT).show();
+				}
 				return false;
 			}
 		});
@@ -144,27 +132,54 @@ public class Settings extends Activity {
 	 * Preparing the list data
 	 */
 	private void prepareListData() {
-		listDataHeader = new ArrayList<String>();
-		listDataChild = new HashMap<String, List<String>>();
-
+		listDataHeader1 = new ArrayList<String>();
+		listDataChild1 = new HashMap<String, List<String>>();
 		// Adding child data
-		listDataHeader.add(getString(R.string.animation));
-		listDataHeader.add(getString(R.string.appearance));
-		
+		listDataHeader1.add(getString(R.string.animation));
+		listDataHeader1.add(getString(R.string.appearance));
 		// Adding child data
 		List<String> animChild = new ArrayList<String>();
 		animChild.add(getString(R.string.panelanim));
 		animChild.add(getString(R.string.listanim));
-
 		List<String> appearChild = new ArrayList<String>();
 		appearChild.add(getString(R.string.adjusttrans));
-		appearChild.add(getString(R.string.setfoldericn));
+		appearChild.add(getString(R.string.setfoldericn));		
+		listDataChild1.put(listDataHeader1.get(0), animChild); // Header, Child data
+		listDataChild1.put(listDataHeader1.get(1), appearChild);
 		
-
+	}
+	
+	/*
+	 * Preparing the list data
+	 */
+	private void prepareListData2() {
+		listDataHeader2 = new ArrayList<String>();
+		listDataChild2 = new HashMap<String, List<String>>();
+		// Adding child data
+		listDataHeader2.add(getString(R.string.startup));
+		listDataHeader2.add(getString(R.string.locker));
+		listDataHeader2.add(getString(R.string.folderopt));
+		listDataHeader2.add(getString(R.string.sethomdir));
+		listDataHeader2.add(getString(R.string.cleargesturedata));
+		// Adding child data
+		List<String> start = new ArrayList<String>();
+		start.add(getString(R.string.setstartpanel));
+		start.add(getString(R.string.setstartupdir));
 		
-		listDataChild.put(listDataHeader.get(0), animChild); // Header, Child data
-		listDataChild.put(listDataHeader.get(1), appearChild);
+		List<String> lock = new ArrayList<String>();
+		String[] arr = getResources().getStringArray(R.array.itemlockerlist);
+		lock.add(arr[1]);
+		lock.add(arr[2]);
+		lock.add(arr[3]);
+		List<String> opt = new ArrayList<String>();
+		opt.add(getString(R.string.showhidden));
+		opt.add(getString(R.string.sort));
 		
+		listDataChild2.put(listDataHeader2.get(0), start); // Header, Child data
+		listDataChild2.put(listDataHeader2.get(1), lock);	
+		listDataChild2.put(listDataHeader2.get(2), opt);
+		listDataChild2.put(listDataHeader2.get(3), new ArrayList<String>());
+		listDataChild2.put(listDataHeader2.get(4), new ArrayList<String>());
 	}
 	
 	class abtAdapter extends BaseAdapter{		
