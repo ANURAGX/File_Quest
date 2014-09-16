@@ -1552,16 +1552,20 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							else if(file2.isDirectory()){
 								if(!file2.isLocked()){//checking the locked status of current folder..
 									boolean flag = false;
-									int l = COPY_FILES.size();
-									
-									//checking whether the copy list contains any locked items or not.
-									//if it contains,then password verification...
-									for(int i=0;i<l;++i){
-										if(COPY_FILES.get(i)!=null)
-												if(COPY_FILES.get(i).isLocked()){
-													flag = true;
-													break;
-												}
+									try{
+										int l = COPY_FILES.size();
+										
+										//checking whether the copy list contains any locked items or not.
+										//if it contains,then password verification...
+										for(int i=0;i<l;++i){
+											if(COPY_FILES.get(i)!=null)
+													if(COPY_FILES.get(i).isLocked()){
+														flag = true;
+														break;
+													}
+										}
+									}catch(NullPointerException e){
+										
 									}
 									
 									if(flag)
