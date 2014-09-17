@@ -34,7 +34,7 @@ public class TransitionViewPager extends ViewPager {
 	private static final float ROT_MAX = 15.0f;
 
 	public enum TransitionEffect {
-		Standard, Tablet, CubeIn, CubeOut, FlipVertical, FlipHorizontal, Stack, ZoomIn, ZoomOut, RotateUp, RotateDown, Accordion
+		Standard, Tablet, CubeIn, CubeOut, FlipVertical, FlipHorizontal, ZoomIn, RotateUp, RotateDown, Accordion
 	}
 
 	private static final boolean API_11;
@@ -62,11 +62,6 @@ public class TransitionViewPager extends ViewPager {
 				R.styleable.TransitionViewPager_outlineEnabled, false));
 		setOutlineColor(ta.getColor(
 				R.styleable.TransitionViewPager_outlineColor, Color.WHITE));
-		switch (mEffect) {
-		case Stack:
-		case ZoomOut:
-			setFadeEnabled(true);
-		}
 		ta.recycle();
 	}
 
@@ -530,14 +525,9 @@ public class TransitionViewPager extends ViewPager {
 		case FlipHorizontal:
 			animateFlipHorizontal(mLeft, mRight, effectOffset,
 					positionOffsetPixels);
-		case Stack:
-			animateStack(mLeft, mRight, effectOffset, positionOffsetPixels);
-			break;
+		
 		case ZoomIn:
 			animateZoom(mLeft, mRight, effectOffset, true);
-			break;
-		case ZoomOut:
-			animateZoom(mLeft, mRight, effectOffset, false);
 			break;
 		case RotateUp:
 			animateRotate(mLeft, mRight, effectOffset, true);

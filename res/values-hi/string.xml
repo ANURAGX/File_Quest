@@ -26,14 +26,12 @@
       <string-array name="effects">
         <item>Standard</item>
         <item>Tablet</item>
-         <item>CubeIn</item>
+        <item>CubeIn</item>
         <item>CubeOut</item>
         <item>FlipVertical</item>
         <item>FlipHorizontal</item>
-        <item>Stack</item>
         <item>ZoomIn</item>
-        <item>ZoomOut</item>
-    	<item>RotateUp</item>
+        <item>RotateUp</item>
         <item>RotateDown</item>
     	<item>Accordion</item>
     </string-array>
@@ -45,9 +43,7 @@
         <item>क्यूब आउट </item>
         <item>फ्लिप वर्टीकल</item>
         <item>फ्लिप हॉरिजॉन्टल</item>
-        <item>स्टैक</item>
         <item>ज़ूम इन</item>
-        <item>ज़ूम आउट </item>
         <item>रोटेट उप</item>
         <item>रोटेट डाउन</item>   	
     	<item>एकार्डियन</item>
