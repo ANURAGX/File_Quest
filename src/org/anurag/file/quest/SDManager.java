@@ -52,9 +52,11 @@ public class SDManager {
 		nStack = new Stack<String>();
 		if(new File("/storage").exists()){
 			nStack.push("/storage");
-		}else
+			//nStack.push("/storage");
+		}else{
 			nStack.push(Constants.PATH);		
-		nStack.push(Constants.PATH);
+			//nStack.push(Constants.PATH);
+		}	
 		items = new ArrayList<Item>();
 		res = ctx.getResources();
 	}
