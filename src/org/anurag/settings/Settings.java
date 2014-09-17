@@ -136,9 +136,11 @@ public class Settings extends Activity {
 					}	
 					edit.putBoolean("SHOW_HIDDEN_FOLDERS",FileQuest.SHOW_HIDDEN_FOLDERS);
 					edit.commit();
+					Toast.makeText(Settings.this, R.string.settingsapplied, Toast.LENGTH_SHORT).show();
 				}
+				else if(grp == 0 && child == 0)
+					new StartUpPanelDialog(Settings.this, FileQuest.size.x*8/9 , edit);
 				
-				Toast.makeText(Settings.this, R.string.settingsapplied, Toast.LENGTH_SHORT).show();
 				return false;
 			}
 		});
