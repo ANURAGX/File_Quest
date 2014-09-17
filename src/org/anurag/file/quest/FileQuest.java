@@ -225,7 +225,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static int SHOW_APP;
 	private static String HOME_DIRECTORY;
 	private static int SORT_TYPE;
-	private static boolean SHOW_HIDDEN_FOLDERS;
+	public static boolean SHOW_HIDDEN_FOLDERS;
 	private static int CURRENT_PREF_ITEM;
 	private float TRANSPRA_LEVEL;
 	public static SharedPreferences.Editor edit;
@@ -799,7 +799,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 			loadFileGallery.setView(v);
 			Constants.UPDATE_FILEGALLERY = true;
-			loadFileGallery.load();
+			//loadFileGallery.load();
 			/*
 			 * WHEN MUSIC BUTTON IS CLICKED
 			 */

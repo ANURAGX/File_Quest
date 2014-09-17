@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.R;
 
 import android.content.Context;
@@ -78,8 +79,16 @@ public class SettingsFolderOptAdapter extends BaseExpandableListAdapter {
 			grp.img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_startup));
 		else if(groupPosition == 1)
 			grp.img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_lock64));
-		else if(groupPosition == 2)
-			grp.img.setImageDrawable(ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
+		else if(groupPosition == 2){
+			if(childText.equalsIgnoreCase("sorting"))
+				grp.img.setImageDrawable(ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
+			else{
+				if(FileQuest.SHOW_HIDDEN_FOLDERS)
+					grp.img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_apply));
+				else
+					grp.img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_disabled));
+			}
+		}	
 		else if(groupPosition == 3)
 			grp.img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_droid_home));
 		else if(groupPosition == 4)
