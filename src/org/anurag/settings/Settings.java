@@ -99,6 +99,8 @@ public class Settings extends Activity {
 				// TODO Auto-generated method stub
 				if(groupPosition== 0 && childPosition == 0)
 					new PagerAnimDialog(Settings.this, FileQuest.size.x*8/9, edit);
+				else if(groupPosition == 0 && childPosition == 1)
+					new ListAnimDialog(Settings.this, FileQuest.size.x*8/9, edit);
 				return false;
 			}
 		});

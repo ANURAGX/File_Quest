@@ -35,12 +35,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PagerAnimDialog {
+public class ListAnimDialog {
 	
 	Context context;
 	String[] list;
 	int pos;
-	public PagerAnimDialog(final Context ctx , int width ,final  SharedPreferences.Editor edit) {
+	public ListAnimDialog(final Context ctx , int width ,final  SharedPreferences.Editor edit) {
 		// TODO Auto-generated constructor stub
 		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
 		dialog.setCancelable(true);
@@ -48,7 +48,7 @@ public class PagerAnimDialog {
 		dialog.getWindow().getAttributes().width = width;
 		context = ctx;
 		pos = -1;
-		list = ctx.getResources().getStringArray(R.array.effects2);
+		list = ctx.getResources().getStringArray(R.array.listAnims);
 		
 		//dialog image....
 		ImageView img = (ImageView)dialog.findViewById(R.id.launchImage);
@@ -82,8 +82,8 @@ public class PagerAnimDialog {
 				if(pos == -1)//no item selected....
 					Toast.makeText(ctx, ctx.getString(R.string.makeaselection), Toast.LENGTH_SHORT).show();
 				else{
-					FileQuest.PAGER_ANIMATION = pos;
-					edit.putInt("PAGER_ANIMATION", pos);
+					FileQuest.LIST_ANIMATION = pos;
+					edit.putInt("LIST_ANIMATION", pos);
 					edit.commit();
 					Toast.makeText(ctx, ctx.getString(R.string.settingsapplied), Toast.LENGTH_SHORT).show();
 					Settings.settingsChanged = true;
@@ -136,7 +136,7 @@ public class PagerAnimDialog {
 			}else
 				g = (grp) convert.getTag();
 			g.txt.setText(list[arg0]);
-			if(FileQuest.PAGER_ANIMATION == arg0)
+			if(FileQuest.LIST_ANIMATION == arg0)
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_full));
