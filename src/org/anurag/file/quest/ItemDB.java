@@ -85,6 +85,7 @@ public class ItemDB extends SQLiteOpenHelper{
 			//values.put("FAV", fav);
 			db.insert("ITEMS", null , values);
 		}		
+		cursor.close();
 	}
 	
 	/**
@@ -108,6 +109,7 @@ public class ItemDB extends SQLiteOpenHelper{
 			db.insert("FAVITEMS", null , values);
 			db.close();
 		}		
+		cursor.close();
 	}
 	
 	/**
@@ -137,7 +139,9 @@ public class ItemDB extends SQLiteOpenHelper{
 	public boolean isLocked(String PATH){
 		Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM ITEMS WHERE FILEPATH = ?",
 				new String[]{PATH});
-		if(cursor.getCount()==0)
+		int count = cursor.getCount();
+		cursor.close();
+		if(count==0)
 			return false;
 		return true;
 	}
@@ -170,7 +174,9 @@ public class ItemDB extends SQLiteOpenHelper{
 	public boolean isFavItem(String PATH){
 		Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM FAVITEMS WHERE FILEPATH = ?",
 				new String[]{PATH});
-		if(cursor.getCount() == 0)
+		int count = cursor.getCount();
+		cursor.close();
+		if(count == 0)
 			return false;
 		return true;
 	}
