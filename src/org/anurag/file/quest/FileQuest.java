@@ -303,10 +303,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		sdManager = new SDManager(FileQuest.this);
 		rootManager = new RootManager(FileQuest.this);
 		RootManager.SORT_TYPE = SDManager.SORT_TYPE = SORT_TYPE;
-		if (SHOW_HIDDEN_FOLDERS) {
-			RootManager.SHOW_HIDDEN_FOLDER = true;
-			SDManager.SHOW_HIDDEN_FOLDER = true;
-		}
+		
 		sdItemsList = sdManager.getList();
 		rootItemList = rootManager.getList();
 		sdAdapter = new SDAdapter(mContext, sdItemsList);
@@ -632,11 +629,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				if (SHOW_HIDDEN_FOLDERS) {
-					SDManager.SHOW_HIDDEN_FOLDER = true;
-					RootManager.SHOW_HIDDEN_FOLDER = true;
-				}
-
 				try {// TRY BLOCK IS USED BECAUSE I NOTICED THAT WHEN NEW FOLDER
 						// WITH HINDI LANGAUGE IS CREATED THROWS INDEXOUTOFBOUND
 						// EXCEPTION
@@ -3594,9 +3586,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			// VISIBLE
 			if (SHOW_HIDDEN_FOLDERS) {
 				edit.putBoolean("SHOW_HIDDEN_FOLDERS", false);
-				SHOW_HIDDEN_FOLDERS = sdManager.SHOW_HIDDEN_FOLDER = rootManager.SHOW_HIDDEN_FOLDER = false;
+				SHOW_HIDDEN_FOLDERS  =  false;
 			} else {
-				SHOW_HIDDEN_FOLDERS = sdManager.SHOW_HIDDEN_FOLDER = rootManager.SHOW_HIDDEN_FOLDER = true;
+				SHOW_HIDDEN_FOLDERS  =  true;
 				edit.putBoolean("SHOW_HIDDEN_FOLDERS", true);
 			}
 			edit.commit();

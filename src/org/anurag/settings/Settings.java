@@ -55,12 +55,17 @@ public class Settings extends Activity {
 	HashMap<String, List<String>> listDataChild1,listDataChild2;
 	ListView abtLs;
 	SharedPreferences settingsPrefs;
+	SharedPreferences.Editor edit;
 	SettingsFolderOptAdapter listAdapter2;
+	
+	public static ImageView applied;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.settings_ui);
 		settingsPrefs = getSharedPreferences("MY_APP_SETTINGS", 0);
+		edit = settingsPrefs.edit();
 		// get the listview
 		expListView1 = (ExpandableListView) findViewById(R.id.intUI);
 		expListView2 = (ExpandableListView) findViewById(R.id.folderls);
@@ -111,6 +116,29 @@ public class Settings extends Activity {
 					}
 					Toast.makeText(Settings.this, getString(R.string.gesturedatacleared),Toast.LENGTH_SHORT).show();
 				}
+				return false;
+			}
+		});
+		
+		expListView2.setOnChildClickListener(new OnChildClickListener() {
+			@Override
+			public boolean onChildClick(ExpandableListView arg0, View arg1, int grp,
+					int child, long arg4) {
+				// TODO Auto-generated method stub
+				if(grp == 2 && child == 0){
+					if(FileQuest.SHOW_HIDDEN_FOLDERS){
+						FileQuest.SHOW_HIDDEN_FOLDERS = false;
+						applied.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_disabled));
+					}	
+					else{
+						FileQuest.SHOW_HIDDEN_FOLDERS = true;
+						applied.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_apply));
+					}	
+					edit.putBoolean("SHOW_HIDDEN_FOLDERS",FileQuest.SHOW_HIDDEN_FOLDERS);
+					edit.commit();
+				}
+				
+				Toast.makeText(Settings.this, R.string.settingsapplied, Toast.LENGTH_SHORT).show();
 				return false;
 			}
 		});

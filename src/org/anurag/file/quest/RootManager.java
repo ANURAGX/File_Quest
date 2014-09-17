@@ -46,7 +46,6 @@ public class RootManager {
 	ArrayList<Item> items;
 	private static Context ctx;
 	private File file;
-	public static boolean SHOW_HIDDEN_FOLDER = false;
 	String type;
 	private static Resources res;
 	public RootManager(Context context) {
@@ -204,7 +203,7 @@ public class RootManager {
 			File[] files = listFiles(file);
 			Arrays.sort(files,alphaFolderFirst);
 			int l = files.length;
-			if(SHOW_HIDDEN_FOLDER)
+			if(FileQuest.SHOW_HIDDEN_FOLDERS)
 				for(int i = 0 ;i<l ; ++i)
 					if(files[i].getName().startsWith("."))
 						items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
@@ -231,7 +230,7 @@ public class RootManager {
 			for(int i = 0 ;i<files.length ; ++i)
 				if(!files[i].getName().startsWith("."))
 					items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
-			if(SHOW_HIDDEN_FOLDER)
+			if(FileQuest.SHOW_HIDDEN_FOLDERS)
 				for(int i = 0 ;i<files.length ; ++i)
 					if( files[i].getName().startsWith("."))
 						items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
@@ -352,7 +351,7 @@ public class RootManager {
 	 */
 	public File[] listFiles(File f){
 		if(f.canRead()){
-			if(!SHOW_HIDDEN_FOLDER)
+			if(!FileQuest.SHOW_HIDDEN_FOLDERS)
 				return f.listFiles(new HiddenFileFilter());
 			else 
 				return f.listFiles(new ReadFileFilter());
@@ -374,7 +373,7 @@ public class RootManager {
 				}
 			}catch(Exception e){
 				nStack.pop();
-				if(!SHOW_HIDDEN_FOLDER)
+				if(!FileQuest.SHOW_HIDDEN_FOLDERS)
 					return f.listFiles(new HiddenFileFilter());
 				else 
 					return f.listFiles(new ReadFileFilter());

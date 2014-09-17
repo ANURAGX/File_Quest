@@ -43,7 +43,6 @@ public class SDManager {
 	ArrayList<Item> items;
 	private static Context ctx;
 	private File file;
-	public static boolean SHOW_HIDDEN_FOLDER = false;
 	String type;
 	private static Resources res;
 	public SDManager(Context context) {
@@ -162,7 +161,7 @@ public class SDManager {
 			return getCurrentFileListWithHiddenItemLast();
 		if(file.canRead() && file.exists()){
 			File[] files = null;
-			if(!SHOW_HIDDEN_FOLDER)
+			if(!FileQuest.SHOW_HIDDEN_FOLDERS)
 				files = file.listFiles(new HiddenFileFilter());
 			else
 				files = file.listFiles(new ReadFileFilter());
@@ -210,7 +209,7 @@ public class SDManager {
 			File[] files = file.listFiles();
 			Arrays.sort(files,alphaFolderFirst);
 			int l = files.length;
-			if(SHOW_HIDDEN_FOLDER)
+			if(FileQuest.SHOW_HIDDEN_FOLDERS)
 				for(int i = 0 ;i<l ; ++i)
 					if(files[i].getName().startsWith(".") && files[i].canRead())
 						items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
@@ -237,7 +236,7 @@ public class SDManager {
 			for(int i = 0 ;i<files.length ; ++i)
 				if(!files[i].getName().startsWith(".") && files[i].canRead())
 					items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
-			if(SHOW_HIDDEN_FOLDER)
+			if(FileQuest.SHOW_HIDDEN_FOLDERS)
 				for(int i = 0 ;i<files.length ; ++i)
 					if( files[i].getName().startsWith(".") && files[i].canRead())
 						items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
