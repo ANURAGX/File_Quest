@@ -227,7 +227,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static int SORT_TYPE;
 	public static boolean SHOW_HIDDEN_FOLDERS;
 	public static int CURRENT_PREF_ITEM;
-	private float TRANSPRA_LEVEL;
+	public static float TRANSPRA_LEVEL;
 	public static SharedPreferences.Editor edit;
 	public static SharedPreferences preferences;
 	private static boolean SEARCH_FLAG = false;

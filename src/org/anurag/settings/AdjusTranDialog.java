@@ -35,12 +35,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ListAnimDialog {
+public class AdjusTranDialog {
 	
 	Context context;
 	String[] list;
 	int pos;
-	public ListAnimDialog(final Context ctx , int width ,final  SharedPreferences.Editor edit) {
+	public AdjusTranDialog(final Context ctx , int width ,final  SharedPreferences.Editor edit) {
 		// TODO Auto-generated constructor stub
 		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
 		dialog.setCancelable(true);
@@ -48,15 +48,20 @@ public class ListAnimDialog {
 		dialog.getWindow().getAttributes().width = width;
 		context = ctx;
 		pos = -1;
-		list = ctx.getResources().getStringArray(R.array.listAnims);
+		list = new String[5];
+		list[0] = ctx.getString(R.string.opaque60);
+		list[1] = ctx.getString(R.string.opaque70);
+		list[2] = ctx.getString(R.string.opaque80);
+		list[3] = ctx.getString(R.string.opaque90);
+		list[4] = ctx.getString(R.string.opaque100);
 		
 		//dialog image....
 		ImageView img = (ImageView)dialog.findViewById(R.id.launchImage);
-		img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_full));
+		img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_appreance));
 		
 		//dialog title....
 		TextView title = (TextView)dialog.findViewById(R.id.open);
-		title.setText(ctx.getString(R.string.listanim));
+		title.setText(ctx.getString(R.string.adjusttrans));
 		
 		//Buttons....
 		Button btn = (Button)dialog.findViewById(R.id.justOnce);
@@ -82,8 +87,8 @@ public class ListAnimDialog {
 				if(pos == -1)//no item selected....
 					Toast.makeText(ctx, ctx.getString(R.string.makeaselection), Toast.LENGTH_SHORT).show();
 				else{
-					FileQuest.LIST_ANIMATION = pos;
-					edit.putInt("LIST_ANIMATION", pos);
+					FileQuest.TRANSPRA_LEVEL = Float.parseFloat(pos+"");
+					edit.putFloat("TRANSPRA_LEVEL", FileQuest.TRANSPRA_LEVEL);
 					edit.commit();
 					Toast.makeText(ctx, ctx.getString(R.string.settingsapplied), Toast.LENGTH_SHORT).show();
 					Settings.settingsChanged = true;
@@ -136,10 +141,10 @@ public class ListAnimDialog {
 			}else
 				g = (grp) convert.getTag();
 			g.txt.setText(list[arg0]);
-			if(FileQuest.LIST_ANIMATION == arg0)
+			if(FileQuest.TRANSPRA_LEVEL == Float.parseFloat(arg0+""))
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_full));
+				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_appreance));
 			return convert;
 		}
 		
