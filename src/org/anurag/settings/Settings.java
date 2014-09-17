@@ -59,10 +59,11 @@ public class Settings extends Activity {
 	SettingsFolderOptAdapter listAdapter2;
 	
 	public static ImageView applied;
-	
+	public static boolean settingsChanged;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		settingsChanged = false;
 		setContentView(R.layout.settings_ui);
 		settingsPrefs = getSharedPreferences("MY_APP_SETTINGS", 0);
 		edit = settingsPrefs.edit();
@@ -96,6 +97,8 @@ public class Settings extends Activity {
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
 				// TODO Auto-generated method stub
+				if(groupPosition== 0 && childPosition == 0)
+					new PagerAnimDialog(Settings.this, FileQuest.size.x*8/9, edit);
 				return false;
 			}
 		});

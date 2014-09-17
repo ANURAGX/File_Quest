@@ -202,8 +202,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static Dialog dialog;
 	public static Point size;
 	public static Context mContext;
-	static int LIST_ANIMATION;
-	static int PAGER_ANIMATION;
+	public static int LIST_ANIMATION;
+	public static int PAGER_ANIMATION;
 	private static ListView root;
 	private static ListView simple;
 	private static ListView LIST_VIEW_3D;
@@ -4600,7 +4600,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				// TODO Auto-generated method stub
 				String ACTION = it.getAction();
 				if (ACTION.equalsIgnoreCase("FQ_BACKUP")|| ACTION.equals(Intent.ACTION_UNINSTALL_PACKAGE)){
-					setAdapter(CURRENT_ITEM);
+					resetPager();
 				}else if (ACTION.equalsIgnoreCase("FQ_DELETE")) {
 					// setAdapter(CURRENT_ITEM);
 					
