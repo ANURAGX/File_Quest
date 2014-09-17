@@ -1251,6 +1251,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(file.isDirectory()){
 							if(!file.isLocked()){
 								try{
+									//checking whether the selected item is locked or not....
 									int l = COPY_FILES.size();
 									boolean flag = false;
 									for(int i=0;i<l;++i){
@@ -2332,17 +2333,51 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				new GetHomeDirectory(mContext, size.x*8/9, preferences);
 			} else if (new File(HOME_DIRECTORY).exists()) {
 				if (CURRENT_ITEM == 2) {
+					//checking whether home is locked or not....
 					if(!new Item(new File(HOME_DIRECTORY), null, null, null).isLocked()){
-						SDManager.nStack.push(HOME_DIRECTORY);
-						setAdapter(2);
+						String hPath = HOME_DIRECTORY;
+						boolean locked = false;
+						
+						//checking whether home's parent folder is locked or not....
+						while(!hPath.equalsIgnoreCase(Constants.PATH)){
+							hPath = hPath.substring(0, hPath.lastIndexOf("/"));
+							if(new Item(new File(hPath), null, null, null).isLocked()){
+								locked = true;
+								break;
+							}
+						}
+						
+						if(!locked){
+							SDManager.nStack.push(HOME_DIRECTORY);
+							setAdapter(2);
+						}else	
+							new MasterPassword(mContext, size.x*8/9, new Item(new File(hPath), null, null, null)
+							,preferences, Constants.MODES.HOME);
 					}	
 					else
 						new MasterPassword(mContext, size.x*8/9, new Item(new File(HOME_DIRECTORY), null, null, null)
 							,preferences, Constants.MODES.HOME);
 				} else if (CURRENT_ITEM == 1) {
 					if(!new Item(new File(HOME_DIRECTORY), null, null, null).isLocked()){
-						RootManager.nStack.push(HOME_DIRECTORY);
-						setAdapter(1);
+						String hPath = HOME_DIRECTORY;
+						boolean locked = false;
+						
+						//checking whether home's parent folder is locked or not....
+						while(!hPath.equalsIgnoreCase(Constants.PATH)){
+							hPath = hPath.substring(0, hPath.lastIndexOf("/"));
+							if(new Item(new File(hPath), null, null, null).isLocked()){
+								locked = true;
+								break;
+							}
+						}
+						
+						if(!locked){
+							RootManager.nStack.push(HOME_DIRECTORY);
+							setAdapter(1);
+						}else
+							new MasterPassword(mContext, size.x*8/9, new Item(new File(hPath), null, null, null)
+								,preferences, Constants.MODES.HOME);
+							
 					}	
 					else
 						new MasterPassword(mContext, size.x*8/9, new Item(new File(HOME_DIRECTORY), null, null, null),
