@@ -59,7 +59,6 @@ import org.ultimate.menuItems.MultiSendApps;
 import org.ultimate.menuItems.MultipleCopyDialog;
 import org.ultimate.menuItems.SelectApp;
 import org.ultimate.menuItems.SelectedApp;
-import org.ultimate.menuItems.SetLaunchDir;
 import org.ultimate.quickaction3D.ActionItem;
 import org.ultimate.quickaction3D.QuickAction;
 import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
@@ -78,7 +77,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -267,7 +265,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ViewFlipper mVFlipper;
 	private static int LAST_PAGE;
 	static boolean error;
-	
+	static SlideLayout slidemenu;
 	private static Utils loadFileGallery;
 	private static View v;
 	@SuppressWarnings({ "deprecation" })
@@ -592,7 +590,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		ShowMenu();
+		//ShowMenu();
+		slidemenu.openLeftMenu(true);
 		return false;
 	}
 
@@ -3484,39 +3483,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	}
 
 	/**
-	 * THIS FUNCTION SHOWS THE SETTINGS OF THE APPS
-	 */
-	private void ShowMenu() {
-		QuickAction action = new QuickAction(getApplicationContext(), 1);
-		ActionItem item = new ActionItem(420, getString(R.string.animation),getResources().getDrawable(R.drawable.ic_launcher_full));
-		action.addActionItem(item);		
-		item = new ActionItem(80, getString(R.string.appearance),getResources().getDrawable(R.drawable.ic_launcher_appreance));
-		action.addActionItem(item);		
-		item = new ActionItem(200, getString(R.string.startup), getResources().getDrawable(R.drawable.ic_launcher_startup));
-		action.addActionItem(item);		
-		item = new ActionItem(250, getString(R.string.locker), getResources().getDrawable(R.drawable.ic_launcher_lock64));
-		action.addActionItem(item);		
-		if (mViewPager.getCurrentItem() != 3) {
-			item = new ActionItem(300, getString(R.string.folderopt),getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
-			action.addActionItem(item);
-			item = new ActionItem(400, getString(R.string.sethomdir),getResources().getDrawable(R.drawable.ic_launcher_droid_home));
-			action.addActionItem(item);
-		} else if (mViewPager.getCurrentItem() == 3) {
-			item = new ActionItem(3200, getString(R.string.apps),getResources().getDrawable(R.drawable.ic_launcher_apk));
-			action.addActionItem(item);
-		}	
-		//item = new ActionItem(500, getString(R.string.restoretodefault),getResources().getDrawable(R.drawable.ic_launcher_delete));
-		//action.addActionItem(item);
-		item = new ActionItem(501, getString(R.string.cleargesturedata),getResources().getDrawable(R.drawable.ic_launcher_gesture));
-		action.addActionItem(item);
-		item = new ActionItem(700, getString(R.string.abtme), getResources().getDrawable(R.drawable.ic_launcher_info));
-		action.addActionItem(item);
-		action.setAnimStyle(3);
-		action.setOnActionItemClickListener(this);
-		action.show(indicator);
-	}
-
-	/**
 	 * THIS FUNCTION RESETS THE HORIZONTAL SCROLL VIEW TO START AND DISPLAYS THE
 	 * APPROPRIATE MESSAGE WHEN MULTI SELECT IS DISABLED
 	 * 
@@ -4732,7 +4698,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * THIS METHOD INITIALIZES THE SLIDE MENU IN ONCREATE METHOD....
 	 */
 	private void initLeftMenu(){
-		SlideLayout slidemenu = (SlideLayout)findViewById(R.id.slide_left_menu);
+		slidemenu = (SlideLayout)findViewById(R.id.slide_left_menu);
 		
 		ActionSlideExpandableListView lsView = (ActionSlideExpandableListView)findViewById(R.id.actionSlideExpandableListView1);
 		
