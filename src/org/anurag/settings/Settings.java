@@ -103,6 +103,8 @@ public class Settings extends Activity {
 					new ListAnimDialog(Settings.this, FileQuest.size.x*8/9, edit);
 				else if(groupPosition == 1 && childPosition == 0)
 					new AdjusTranDialog(Settings.this, FileQuest.size.x*8/9, edit);
+				else if(groupPosition == 1 && childPosition == 1)
+					new FolderIconDialog(Settings.this, FileQuest.size.x*8/9, edit);
 				return false;
 			}
 		});
