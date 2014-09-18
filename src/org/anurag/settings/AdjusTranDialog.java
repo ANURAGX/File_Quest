@@ -132,6 +132,7 @@ public class AdjusTranDialog {
 		public View getView(int arg0, View convert, ViewGroup arg2) {
 			// TODO Auto-generated method stub
 			grp g = new grp();
+			float po = 0;
 			if(convert == null){
 				LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				convert = inf.inflate(R.layout.row_list_2, arg2,false);
@@ -141,7 +142,19 @@ public class AdjusTranDialog {
 			}else
 				g = (grp) convert.getTag();
 			g.txt.setText(list[arg0]);
-			if(FileQuest.TRANSPRA_LEVEL == Float.parseFloat(arg0+""))
+			
+			if(arg0 == 0)
+				po = 0.6f;
+			else if(arg0 == 1)
+				po = 0.7f;
+			else if(arg0 == 2)
+				po = 0.8f;
+			else if(arg0 == 3)
+				po = 0.9f;
+			else if(arg0 == 4)
+				po = 1.0f;
+			
+			if(FileQuest.TRANSPRA_LEVEL == po)
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_appreance));
