@@ -86,7 +86,7 @@ public class PagerAnimDialog {
 					edit.putInt("PAGER_ANIMATION", pos);
 					edit.commit();
 					Toast.makeText(ctx, ctx.getString(R.string.settingsapplied), Toast.LENGTH_SHORT).show();
-					Settings.settingsChanged = true;
+					Settings.pagerAnimSettingsChanged = true;
 					dialog.dismiss();
 				}
 			}

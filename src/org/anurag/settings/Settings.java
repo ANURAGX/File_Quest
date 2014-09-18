@@ -24,15 +24,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.R;
 import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.Info;
-
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
@@ -63,6 +60,8 @@ public class Settings extends Activity {
 	
 	public static ImageView applied;
 	public static boolean settingsChanged;
+	public static boolean pagerAnimSettingsChanged;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -260,7 +259,16 @@ public class Settings extends Activity {
 					a.img.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_info));
 					a.txt.setText(getString(R.string.abtme));
 					return arg1;
-				}
-						
+				}						
 		}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		if(settingsChanged || pagerAnimSettingsChanged){
+			this.setResult(100);
+			finish();
+		}	
+	}	
 }

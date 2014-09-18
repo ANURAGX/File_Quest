@@ -1946,7 +1946,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			break;
 
 		case R.id.appSettings:
-			startActivity(new Intent(mContext , Settings.class));
+			startActivityForResult(new Intent(mContext , Settings.class), 100);
 			break;
 
 		case R.id.bottom_multi: {
@@ -2722,61 +2722,19 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	/**
 	 * OnActivityResult For FileQuest Class
 	 */
-	@SuppressLint("SdCardPath")
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		CURRENT_ITEM = mViewPager.getCurrentItem();
-		if (requestCode == 5) {
-			if (resultCode == 1) {
+		if(requestCode == 100){
+			if(Settings.settingsChanged || Settings.pagerAnimSettingsChanged){
+				//some change in settings encountered....
+				if(Settings.pagerAnimSettingsChanged){
+					String[] te = getResources().getStringArray(R.array.effects);		
+					mViewPager.setTransitionEffect(TransitionEffect.valueOf(te[PAGER_ANIMATION]));
+				}
 				setAdapter(CURRENT_ITEM);
-				CUT_COMMAND = COPY_COMMAND = false;
-				mVFlipper.showNext();
-				mVFlipper.setAnimation(nextAnim());
-			}
-		} else if (requestCode == 6) {
-			if (resultCode == 1) {
-				setAdapter(CURRENT_ITEM);
-				mVFlipper.showNext();
-				mVFlipper.setAnimation(nextAnim());
 			}
 		}
-
-		else if (requestCode == 400) {
-			if (resultCode == RESULT_OK) {
-				if (data.getData().toString().equals("/sdcard"))
-					HOME_DIRECTORY = PATH;
-				else
-					HOME_DIRECTORY = data.getData().toString();
-				edit.putString("HOME_DIRECTORY", HOME_DIRECTORY);
-				edit.commit();
-				Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
-			}
-		} else if (requestCode == 2600) {
-			if (resultCode == RESULT_OK) {
-				if (data.getData().toString().equals("/sdcard"))
-					INTERNAL_PATH_ONE = PATH;
-				else
-					INTERNAL_PATH_ONE = data.getData().toString();
-				edit.putString("INTERNAL_PATH_ONE", INTERNAL_PATH_ONE);
-				edit.commit();
-				Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
-			}
-		} else if (requestCode == 2700) {
-			if (resultCode == RESULT_OK) {
-				if (data.getData().toString().equals("/sdcard"))
-					INTERNAL_PATH_TWO = PATH;
-				else
-					INTERNAL_PATH_TWO = data.getData().toString();
-				edit.putString("INTERNAL_PATH_TWO", INTERNAL_PATH_TWO);
-				edit.commit();
-				Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
-			}
-		}
-		super.onActivityResult(requestCode, resultCode, data);
 	}
-
-	
-	
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
