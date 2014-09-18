@@ -58,13 +58,13 @@ public class SetLaunchDir{
 	Context mContext;
 	Dialog dialog;
 	int mode;
-	public SetLaunchDir(Context context,int width,SharedPreferences edit,int m) {
+	public SetLaunchDir(Context context,int width,SharedPreferences.Editor edit,int m) {
 		// TODO Auto-generated constructor stub
 		mContext = context;
 		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
 		dialog.setContentView(R.layout.open_file_dialog);
 		dialog.getWindow().getAttributes().width = width;
-		ed = edit.edit();
+		ed = edit;
 		mode = m;
 		onCreate();
 	}

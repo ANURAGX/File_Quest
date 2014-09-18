@@ -154,6 +154,9 @@ public class Settings extends Activity {
 				else if(grp == 0 && child == 0)
 					new StartUpPanelDialog(Settings.this, FileQuest.size.x*8/9 , edit);
 				
+				else if(grp == 0 && child == 1)
+					new StartupDirDialog(Settings.this, FileQuest.size.x*8/9, edit);
+				
 				else if(grp == 2 && child == 1)
 					new SortDialog(Settings.this, FileQuest.size.x*8/9, edit);
 				

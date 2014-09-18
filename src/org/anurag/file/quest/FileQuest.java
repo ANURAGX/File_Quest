@@ -216,7 +216,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private long av, to;
 	private String sav, sto;
 	private static boolean MULTI_SELECT_APPS;
-	private static boolean ENABLE_ON_LAUNCH;
+	public static boolean ENABLE_ON_LAUNCH;
 	private static String INTERNAL_PATH_ONE;
 	private static String INTERNAL_PATH_TWO;
 	private static String PATH;
@@ -301,7 +301,24 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		sdManager = new SDManager(FileQuest.this);
 		rootManager = new RootManager(FileQuest.this);
 		
-		
+		if (ENABLE_ON_LAUNCH) {
+			if (new File(INTERNAL_PATH_TWO).exists()) {
+				if (PATH != INTERNAL_PATH_TWO)
+					SDManager.nStack.push(INTERNAL_PATH_TWO);
+			} else {
+				edit.putString("INTERNAL_PATH_TWO", PATH);
+				edit.commit();
+				showToast(getResources().getString(R.string.startupfoldernotfound));
+			}
+			if (new File(INTERNAL_PATH_ONE).exists()) {
+				if (PATH != INTERNAL_PATH_ONE)
+					RootManager.nStack.push(INTERNAL_PATH_ONE);
+			} else {
+				edit.putString("INTERNAL_PATH_ONE", PATH);
+				edit.commit();
+				showToast(getResources().getString(R.string.startupfoldernotfound));
+			}
+		}		
 		sdItemsList = sdManager.getList();
 		rootItemList = rootManager.getList();
 		sdAdapter = new SDAdapter(mContext, sdItemsList);
@@ -368,27 +385,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		mVFlipper = (ViewFlipper) findViewById(R.id.viewFlipperMenu);
 		mFlipperBottom = (ViewFlipper) findViewById(R.id.viewFlipperMenuBottom);
 		
-		if (ENABLE_ON_LAUNCH) {
-			if (new File(INTERNAL_PATH_TWO).exists()) {
-				if (PATH != INTERNAL_PATH_TWO)
-					SDManager.nStack.push(INTERNAL_PATH_TWO);
-			} else {
-				edit.putString("INTERNAL_PATH_TWO", PATH);
-				edit.commit();
-				showToast(getResources().getString(
-						R.string.startupfoldernotfound));
-			}
-			if (new File(INTERNAL_PATH_ONE).exists()) {
-				if (PATH != INTERNAL_PATH_ONE)
-					RootManager.nStack.push(INTERNAL_PATH_ONE);
-			} else {
-				edit.putString("INTERNAL_PATH_ONE", PATH);
-				edit.commit();
-				showToast(getResources().getString(
-						R.string.startupfoldernotfound));
-			}
-		}
-
 		if (CURRENT_PREF_ITEM != 3)
 			LAST_PAGE = 2;
 		else
@@ -403,17 +399,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			new load().execute();
 			LAST_PAGE = 0;
 		}
-
-		if (CURRENT_PREF_ITEM == 3) {
+		else if (CURRENT_PREF_ITEM == 3) {
 			mVFlipper.setAnimation(nextAnim());
 			mVFlipper.showNext();
 			mFlipperBottom.showPrevious();
 			mFlipperBottom.setAnimation(prevAnim());
 		}
-
-		
-		
-		
 		nManager = new AppManager(mContext);
 		nManager.SHOW_APP = SHOW_APP;
 		nList = nManager.giveMeAppList();
