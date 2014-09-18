@@ -24,12 +24,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.R;
 import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.Info;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
@@ -60,6 +63,7 @@ public class Settings extends Activity {
 	
 	public static ImageView applied;
 	public static boolean settingsChanged;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

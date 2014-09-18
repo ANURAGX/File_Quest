@@ -55,7 +55,7 @@ public class FolderIconDialog {
 		list[3] = ctx.getString(R.string.violetfolder);
 		list[4] = ctx.getString(R.string.redfolder);
 		list[5] = ctx.getString(R.string.brownfolder);
-		list[5] = ctx.getString(R.string.bluefolder);
+		list[6] = ctx.getString(R.string.bluefolder);
 		//dialog image....
 		ImageView img = (ImageView)dialog.findViewById(R.id.launchImage);
 		img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_appreance));
@@ -145,7 +145,7 @@ public class FolderIconDialog {
 			if(Constants.FOLDER_ICON == arg0)
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_apply));
 			else
-				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_appreance));
+				g.img.setImageDrawable(context.getResources().getDrawable(Constants.FOLDERS[arg0]));
 			return convert;
 		}
 		
