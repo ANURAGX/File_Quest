@@ -525,7 +525,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		}
         initLeftMenu();
 		super.onCreate(savedInstanceState);
-		startActivity(new Intent(mContext, Settings.class));
+		
 	}
 
 	@Override
@@ -1946,7 +1946,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			break;
 
 		case R.id.appSettings:
-			ShowMenu();
+			startActivity(new Intent(mContext , Settings.class));
 			break;
 
 		case R.id.bottom_multi: {
