@@ -40,8 +40,6 @@ import android.graphics.drawable.Drawable;
  */
 public class RootManager {
 
-	
-	public static int SORT_TYPE;
 	public static Stack<String> nStack;
 	ArrayList<Item> items;
 	private static Context ctx;
@@ -152,18 +150,18 @@ public class RootManager {
 	public ArrayList<Item> getList(){
 		items.clear();
 		file = new File(nStack.peek());
-		if(SORT_TYPE == 4)
+		if(FileQuest.SORT_TYPE == 4)
 			return getCurrentFileListWithHiddenItemFirst();
-		else if(SORT_TYPE == 5)
+		else if(FileQuest.SORT_TYPE == 5)
 			return getCurrentFileListWithHiddenItemLast();
 		if(file.exists()){
 			File[] files = null;
 			files = listFiles(file);			
-			if(SORT_TYPE == 1)
+			if(FileQuest.SORT_TYPE == 1)
 				Arrays.sort(files,alpha);
-			else if(SORT_TYPE == 2)
+			else if(FileQuest.SORT_TYPE == 2)
 				Arrays.sort(files,alphaFolderFirst);
-			else if(SORT_TYPE == 3)
+			else if(FileQuest.SORT_TYPE == 3)
 				Arrays.sort(files,alphaFileFirst);
 			int l = files.length;
 			for(int i = 0 ;i<l ; ++i){

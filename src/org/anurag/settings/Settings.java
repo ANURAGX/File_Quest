@@ -146,12 +146,16 @@ public class Settings extends Activity {
 						FileQuest.SHOW_HIDDEN_FOLDERS = true;
 						applied.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_apply));
 					}	
+					settingsChanged = true;
 					edit.putBoolean("SHOW_HIDDEN_FOLDERS",FileQuest.SHOW_HIDDEN_FOLDERS);
 					edit.commit();
 					Toast.makeText(Settings.this, R.string.settingsapplied, Toast.LENGTH_SHORT).show();
 				}
 				else if(grp == 0 && child == 0)
 					new StartUpPanelDialog(Settings.this, FileQuest.size.x*8/9 , edit);
+				
+				else if(grp == 2 && child == 1)
+					new SortDialog(Settings.this, FileQuest.size.x*8/9, edit);
 				
 				return false;
 			}

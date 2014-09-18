@@ -224,7 +224,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static String PATH;
 	private static int SHOW_APP;
 	private static String HOME_DIRECTORY;
-	private static int SORT_TYPE;
+	public static int SORT_TYPE;
 	public static boolean SHOW_HIDDEN_FOLDERS;
 	public static int CURRENT_PREF_ITEM;
 	public static float TRANSPRA_LEVEL;
@@ -302,7 +302,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 		sdManager = new SDManager(FileQuest.this);
 		rootManager = new RootManager(FileQuest.this);
-		RootManager.SORT_TYPE = SDManager.SORT_TYPE = SORT_TYPE;
+		
 		
 		sdItemsList = sdManager.getList();
 		rootItemList = rootManager.getList();
@@ -3593,7 +3593,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 1200:
 			// DIRECTED FROM CASE 1100
 			// SETS SORTING IN ALPHABETICAL ORDER
-			SORT_TYPE = SDManager.SORT_TYPE = RootManager.SORT_TYPE = 1;
+		
 			edit.putInt("SORT_TYPE", 1);
 			edit.commit();
 			Toast.makeText(mContext,getString(R.string.settingsapplied), Toast.LENGTH_SHORT).show();
@@ -3603,7 +3603,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 1300:
 			// SETS SORTING IN FOLDER FIRST THEN FILE
 			// DIRECTED FROM CASE 1100
-			SORT_TYPE = SDManager.SORT_TYPE = RootManager.SORT_TYPE = 2;
+			
 			edit.putInt("SORT_TYPE", 2);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3613,7 +3613,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 1400:
 			// SETS DORTING IN FILE FIRST THE FOLDER
 			// DIRECTED FROM CASE 1100
-			SORT_TYPE = SDManager.SORT_TYPE = RootManager.SORT_TYPE = 3;
+		
 			edit.putInt("SORT_TYPE", 3);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3623,7 +3623,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 1500:
 			// SETS SORTING IN SHOW HIDDEN ITEM FIRST
 			// DIRECTED FROM CASE 1100
-			SORT_TYPE = SDManager.SORT_TYPE = RootManager.SORT_TYPE = 4;
+		
 			edit.putInt("SORT_TYPE", 4);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
@@ -3633,7 +3633,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case 1600:
 			// SETS SORTING IN SHOW NON HIDDEN ITEMS FIRST
 			// DIRECTED FROM CASE 1100
-			SORT_TYPE = SDManager.SORT_TYPE = RootManager.SORT_TYPE = 5;
+			
 			edit.putInt("SORT_TYPE", 5);
 			edit.commit();
 			Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
