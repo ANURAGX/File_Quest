@@ -383,6 +383,7 @@
 </LinearLayout>
         
   <ListView 
+        style="?android:attr/absListViewStyle"
         android:visibility="gone"
         android:divider="@color/transparent"
         android:layout_width="fill_parent"
