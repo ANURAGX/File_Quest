@@ -4709,19 +4709,19 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			public void onClick(View itemView, View clickedView, int position) {
 				// TODO Auto-generated method stub
 				ArrayList<Item> itemList = null;
-				if(position==0)
+				if(position==1)
 					itemList = convertToItem(Utils.music);
-				else if(position==1)
-					itemList = convertToItem(Utils.apps);
 				else if(position==2)
-					itemList = convertToItem(Utils.doc);
+					itemList = convertToItem(Utils.apps);
 				else if(position==3)
-					itemList = convertToItem(Utils.img);
+					itemList = convertToItem(Utils.doc);
 				else if(position==4)
-					itemList = convertToItem(Utils.vids);
+					itemList = convertToItem(Utils.img);
 				else if(position==5)
-					itemList = convertToItem(Utils.zip);
+					itemList = convertToItem(Utils.vids);
 				else if(position==6)
+					itemList = convertToItem(Utils.zip);
+				else if(position==7)
 					itemList = convertToItem(Utils.mis);
 				
 				/**
