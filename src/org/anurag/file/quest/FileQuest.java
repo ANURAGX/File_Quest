@@ -582,7 +582,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		//ShowMenu();
-		slidemenu.openLeftMenu(true);
+		if(!slidemenu.isLeftMenuOpen())
+			slidemenu.openLeftMenu(true);
 		return false;
 	}
 
@@ -2730,7 +2731,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			CURRENT_ITEM = mViewPager.getCurrentItem();
-			if ((SEARCH_FLAG || RENAME_COMMAND || CREATE_FILE)
+			
+			if(slidemenu.isLeftMenuOpen())
+				slidemenu.closeLeftMenu(true);
+			else if ((SEARCH_FLAG || RENAME_COMMAND || CREATE_FILE)
 					&& (CURRENT_ITEM == 1 || CURRENT_ITEM == 2 || CURRENT_ITEM == 0)) {
 				setAdapter(CURRENT_ITEM);
 				mVFlipper.setAnimation(nextAnim());
