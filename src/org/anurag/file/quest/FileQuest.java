@@ -248,8 +248,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	/**
 	 * Media Panel Variables
 	 */
-	private static MediaElementAdapter element;
-	private static ArrayList<File> mediaFileList;
+	private static FileGalleryAdapter element;
+	private static ArrayList<Item> mediaFileList;
 	private static boolean elementInFocus = false;
 	private static int pos = 0;
 	private static AppManager nManager;
@@ -260,7 +260,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ListView APP_LIST_VIEW;
 	private static Item file;
 	private static Item file2;
-	private static File file0;
+	private static Item file0;
 	private static boolean mUseBackKey = false;
 	private static ViewFlipper mVFlipper;
 	private static int LAST_PAGE;
@@ -860,7 +860,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								View arg1, int position, long arg3) {
 							if (elementInFocus) {
 								if (SEARCH_FLAG)
-									file0 = searchList.get(position).getFile();
+									file0 = searchList.get(position);
 								else
 									file0 = mediaFileList.get(position);
 								d.show();
@@ -877,7 +877,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					switch (position) {
 					case 0:
 						// OPEN THE SELECTED FILE
-						new OpenFileDialog(mContext, Uri.parse(file0.getAbsolutePath()), size.x*8/9);
+						new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
 						break;
 					case 1:
 						// CLOUD.....
@@ -889,7 +889,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						RENAME_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 						COPY_COMMAND = true;
 						COPY_FILES = new ArrayList<Item>();
-						COPY_FILES.add(new Item(file0, null, null, null));
+						COPY_FILES.add(file0);
 						break;
 
 					case 3:
@@ -897,7 +897,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						RENAME_COMMAND = COPY_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 						CUT_COMMAND = true;
 						COPY_FILES = new ArrayList<Item>();
-						COPY_FILES.add(new Item(file0, null, null, null));
+						COPY_FILES.add(file0);
 						break;
 					case 4:
 						// PASTE
@@ -905,16 +905,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 					case 5:
 						// ZIP
-						ArrayList<File> temp = new ArrayList<File>();
+						ArrayList<Item> temp = new ArrayList<Item>();
 						temp.add(file0);
-						new CreateZip(mContext, size.x * 8 / 9,convertToItem(temp));
+						new CreateZip(mContext, size.x * 8 / 9,temp);
 						break;
 					case 6:
 							//DELETE
 							{
-								ArrayList<File> te = new ArrayList<File>();
+								ArrayList<Item> te = new ArrayList<Item>();
 								te.add(file0);
-								new DeleteFiles(mContext, size.x*8/9, convertToItem(te),null);
+								new DeleteFiles(mContext, size.x*8/9, te,null);
 							}
 							break;
 					case 7:
@@ -928,14 +928,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 					case 8:
 						// SEND
-						new BluetoothChooser(mContext, file0.getAbsolutePath(), size.x*8/9, null);
+						new BluetoothChooser(mContext, file0.getPath(), size.x*8/9, null);
 						break;
 					case 9:
 						new AddGesture(mContext, size.x, size.y*8/9, file0.getPath());
 						break;
 					case 10:
 						// PROPERTIES
-						new FileProperties(mContext, size.x*8/9, file0);
+						new FileProperties(mContext, size.x*8/9, file0.getFile());
 					}
 				}
 			});
@@ -947,10 +947,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						final int position, long id) {
 					if (elementInFocus) {
 						if (SEARCH_FLAG)
-							file0 = searchList.get(position).getFile();
+							file0 = searchList.get(position);
 						else
 							file0 = mediaFileList.get(position);
-						new OpenFileDialog(mContext, Uri.parse(file0.getAbsolutePath()), size.x*8/9);
+						new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
 					}
 				}
 			});
@@ -1948,7 +1948,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				item = new ActionItem(-1, getString(R.string.multiforgallery),getResources().getDrawable(R.drawable.ic_launcher_images));
 				action.addActionItem(item);
 			} else {
-				if (MediaElementAdapter.MULTI_SELECT)
+				if (FileGalleryAdapter.MULTI_SELECT)
 					item = new ActionItem(0,getString(R.string.multiforgallery), getResources().getDrawable(R.drawable.ic_launcher_apply));
 				else
 					item = new ActionItem(0,getString(R.string.multiforgallery), getResources().getDrawable(R.drawable.ic_launcher_images));
@@ -1988,15 +1988,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 						break;
 					case 0:
-						if (MediaElementAdapter.MULTI_SELECT) {
-							element = new MediaElementAdapter(mContext,R.layout.row_list_1, mediaFileList);
-							MediaElementAdapter.thumbselection = new boolean[mediaFileList.size()];
-							MediaElementAdapter.MULTI_SELECT = false;
+						if (FileGalleryAdapter.MULTI_SELECT) {
+							element = new FileGalleryAdapter(mContext , mediaFileList);
+							FileGalleryAdapter.thumbselection = new boolean[mediaFileList.size()];
+							FileGalleryAdapter.MULTI_SELECT = false;
 							LIST_VIEW_3D.setAdapter(element);
 						} else {
-							element = new MediaElementAdapter(mContext,R.layout.row_list_1, mediaFileList);
-							MediaElementAdapter.thumbselection = new boolean[mediaFileList.size()];
-							MediaElementAdapter.MULTI_SELECT = true;
+							element = new FileGalleryAdapter(mContext , mediaFileList);
+							FileGalleryAdapter.thumbselection = new boolean[mediaFileList.size()];
+							FileGalleryAdapter.MULTI_SELECT = true;
 							LIST_VIEW_3D.setAdapter(element);
 							if (CURRENT_ITEM == 3) {
 								mFlipperBottom.showNext();
@@ -2260,8 +2260,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				// THIS FLIPPER IS SET FOR RENAMING
 				else if (RENAME_COMMAND) {
 					if (CURRENT_ITEM == 0) {
-						name = getPathWithoutFilename(file0).getPath() + "/"+ name;
-						if (file0.renameTo(new File(name))) {
+						name = getPathWithoutFilename(file0.getFile()).getPath() + "/"+ name;
+						if (file0.getFile().renameTo(new File(name))) {
 							Toast.makeText(mContext,getString(R.string.renamed)+ new File(name).getName(),Toast.LENGTH_SHORT).show();
 						} else {
 							/**
@@ -3137,7 +3137,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			// SECOND LOCATION IS CASE 9
 			// loadMediaList(pos=1);
 			// elementInFocus = true;
-			// media.setAdapter(new MediaElementAdapter(mContext,
+			// media.setAdapter(new FileGalleryAdapter(mContext,
 			// R.layout.row_list_1, mediaFileList));
 			load_FIle_Gallery(1);
 			break;
@@ -3510,23 +3510,23 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @param str
 	 */
 	public void OPERATION_ON_MULTI_SELECT_FILES(int ITEM, int action, String str) {
-		if (ITEM == 0 && MediaElementAdapter.MULTI_SELECT) {
-			if (action == 4 && MediaElementAdapter.C != 0) {// DELETE THE
+		if (ITEM == 0 && FileGalleryAdapter.MULTI_SELECT) {
+			if (action == 4 && FileGalleryAdapter.C != 0) {// DELETE THE
 															// MULTIPLE FILES IF
 															// ACTIONID = 4
-				new DeleteFiles(mContext, size.x*8/9, convertToItem(MediaElementAdapter.MULTI_FILES),null);
-			} else if (action == 5 && MediaElementAdapter.C != 0) {
+				new DeleteFiles(mContext, size.x*8/9, FileGalleryAdapter.MULTI_FILES,null);
+			} else if (action == 5 && FileGalleryAdapter.C != 0) {
 				MULTIPLE_COPY_GALLERY = true;
 				MULTIPLE_COPY = MULTIPLE_CUT = COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = MULTIPLE_CUT_GALLERY = SEARCH_FLAG = false;
-				COPY_FILES = convertToItem(MediaElementAdapter.MULTI_FILES);
-				showToast(MediaElementAdapter.C + " "+ getString(R.string.selectedforcopy));
-			} else if (action == 2 && MediaElementAdapter.C != 0) {
+				COPY_FILES = FileGalleryAdapter.MULTI_FILES;
+				showToast(FileGalleryAdapter.C + " "+ getString(R.string.selectedforcopy));
+			} else if (action == 2 && FileGalleryAdapter.C != 0) {
 				MULTIPLE_CUT_GALLERY = true;
-				COPY_FILES = convertToItem(MediaElementAdapter.MULTI_FILES);
+				COPY_FILES = FileGalleryAdapter.MULTI_FILES;
 				MULTIPLE_COPY = MULTIPLE_CUT = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY_GALLERY = RENAME_COMMAND = SEARCH_FLAG = false;
-				showToast(MediaElementAdapter.C + " "+ getString(R.string.selectedformove));
-			} else if (action == 3 && MediaElementAdapter.C != 0) {
-				COPY_FILES = convertToItem(MediaElementAdapter.MULTI_FILES);
+				showToast(FileGalleryAdapter.C + " "+ getString(R.string.selectedformove));
+			} else if (action == 3 && FileGalleryAdapter.C != 0) {
+				COPY_FILES = FileGalleryAdapter.MULTI_FILES;
 				new CreateZip(mContext, size.x * 8 / 9, COPY_FILES);
 			} else
 				Toast.makeText(mContext, R.string.firstselectsomefiles,
@@ -3615,7 +3615,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if (mediaFileList.size() > 0) {
 						FILE_GALLEY.setVisibility(View.GONE);
 						LIST_VIEW_3D.setVisibility(View.VISIBLE);
-						element = new MediaElementAdapter(mContext,R.layout.row_list_1, mediaFileList);
+						element = new FileGalleryAdapter(mContext, mediaFileList);
 						LIST_VIEW_3D.setAdapter(element);
 						LIST_VIEW_3D.setEnabled(true);
 						//LIST_VIEW_3D.setDynamics(new SimpleDynamics(0.7f, 0.6f));
@@ -4452,7 +4452,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						File fi = file2.getFile();
 						if(CURRENT_ITEM==0){
 							CURRENT_ITEM = 2;
-							fi = file0;
+							fi = file0.getFile();
 						}
 						ZipFile zf = new ZipFile(fi);
 						zListSD = new ZipManager(zf, zipPathSD, mContext).generateList();
@@ -4527,7 +4527,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						File fi = file2.getFile();
 						if(CURRENT_ITEM==0){
 							CURRENT_ITEM = 2;
-							fi = file0;
+							fi = file0.getFile();
 						}
 						Archive zf = new Archive(fi);
 						rListSD = new RarManager(zf, rarPathSD, mContext).generateList();
@@ -4608,7 +4608,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						File fi = file2.getFile();
 						if(CURRENT_ITEM==0){
 							CURRENT_ITEM = 2;
-							fi = file0;
+							fi = file0.getFile();
 						}
 						tListSD = new TarManager(fi, tarPathSD, mContext).generateList();
 						if(progDial.isShowing())
@@ -4710,19 +4710,19 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				// TODO Auto-generated method stub
 				ArrayList<Item> itemList = null;
 				if(position==1)
-					itemList = convertToItem(Utils.music);
+					itemList = (Utils.music);
 				else if(position==2)
-					itemList = convertToItem(Utils.apps);
+					itemList = (Utils.apps);
 				else if(position==3)
-					itemList = convertToItem(Utils.doc);
+					itemList = (Utils.doc);
 				else if(position==4)
-					itemList = convertToItem(Utils.img);
+					itemList = (Utils.img);
 				else if(position==5)
-					itemList = convertToItem(Utils.vids);
+					itemList = (Utils.vids);
 				else if(position==6)
-					itemList = convertToItem(Utils.zip);
+					itemList = (Utils.zip);
 				else if(position==7)
-					itemList = convertToItem(Utils.mis);
+					itemList = (Utils.mis);
 				
 				/**
 				 * switching to different actions of buttons in expanded list....
@@ -4745,22 +4745,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	}
 	
 	
-	/**
-	 * 
-	 * @param convert
-	 * @return
-	 */
-	private static ArrayList<Item> convertToItem(ArrayList<File> convert){
-		ArrayList<Item> items = new ArrayList<Item>();
-		int l = convert.size();
-		File tfile;
-		for(int i=0;i<l;++i){
-			tfile = convert.get(i);
-			if(tfile!=null)
-				items.add(new Item(tfile,null,null,null));
-		}
-		return items; 
-	}
+	
 	
 	/**
 	 * 

@@ -24,6 +24,8 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -33,15 +35,17 @@ import android.widget.TextView;
 @SuppressLint("HandlerLeak")
 public class Utils {
 	
+	static String type;
+	Resources res;
 	static View v;
 	public static boolean loaded = false;
-	public static ArrayList<File> music;
-	public static ArrayList<File> apps;
-	public static ArrayList<File> vids;
-	public static ArrayList<File> doc;
-	public static ArrayList<File> zip;
-	public static ArrayList<File> mis;
-	public static ArrayList<File> img;
+	public static ArrayList<Item> music;
+	public static ArrayList<Item> apps;
+	public static ArrayList<Item> vids;
+	public static ArrayList<Item> doc;
+	public static ArrayList<Item> zip;
+	public static ArrayList<Item> mis;
+	public static ArrayList<Item> img;
 	
 	
 	static String msize;
@@ -72,13 +76,13 @@ public class Utils {
 		// TODO Auto-generated constructor stub
 		
 		file = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
-		music = new ArrayList<File>();
-		apps = new ArrayList<File>();
-		vids = new ArrayList<File>();
-		doc = new ArrayList<File>();
-		zip = new ArrayList<File>();
-		mis = new ArrayList<File>();
-		img = new ArrayList<File>();
+		music = new ArrayList<Item>();
+		apps = new ArrayList<Item>();
+		vids = new ArrayList<Item>();
+		doc = new ArrayList<Item>();
+		zip = new ArrayList<Item>();
+		mis = new ArrayList<Item>();
+		img = new ArrayList<Item>();
 		//ctx = cont;
 		
 		musicsize=0;
@@ -93,14 +97,19 @@ public class Utils {
 		// TODO Auto-generated constructor stub
 		v = view;
 		file = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
-		music = new ArrayList<File>();
-		apps = new ArrayList<File>();
-		vids = new ArrayList<File>();
-		doc = new ArrayList<File>();
-		zip = new ArrayList<File>();
-		mis = new ArrayList<File>();
-		img = new ArrayList<File>();
+		
+		music = new ArrayList<Item>();
+		apps = new ArrayList<Item>();
+		vids = new ArrayList<Item>();
+		doc = new ArrayList<Item>();
+		zip = new ArrayList<Item>();
+		mis = new ArrayList<Item>();
+		img = new ArrayList<Item>();
+		
+		
+		
 		ctx = cont;
+		res = ctx.getResources();
 		loaded = false;
 		musicsize=0;
 		apksize=0;
@@ -300,7 +309,7 @@ public class Utils {
 		if(name.endsWith(".zip")||name.endsWith(".tar")||name.endsWith(".rar")||name.endsWith(".7z")
 				||name.endsWith(".tar.gz")||name.endsWith(".tar.bz2")||name.endsWith(".ZIP")||name.endsWith(".TAR")||
 				name.endsWith(".RAR")||name.endsWith(".7Z")||name.endsWith(".TAR.GZ")||name.endsWith(".TAR.BZ2")){
-			zip.add(file);
+			zip.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
 			zipsize+=file.length();
 			zsize = size(zipsize);
 			size = zip.size();
@@ -310,7 +319,7 @@ public class Utils {
 		else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
 				||name.endsWith(".amr")||name.endsWith(".MP3")||name.endsWith(".OGG")||name.endsWith(".M4A")||
 				name.endsWith(".WAV")||name.endsWith(".AMR")){
-			music.add(file);
+			music.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
 			musicsize+=file.length();
 			msize = size(musicsize);
 			size = music.size();
@@ -318,7 +327,7 @@ public class Utils {
 				handle.sendEmptyMessage(2);
 		}
 		else if(name.endsWith(".apk")||name.endsWith(".APK")){
-			apps.add(file);
+			apps.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
 			apksize+=file.length();
 			asize = size(apksize);
 			size = apps.size();
@@ -328,7 +337,7 @@ public class Utils {
 		else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
 				||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
 				||name.endsWith(".MKV")){
-			vids.add(file);
+			vids.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
 			vidsize+=file.length();
 			vsize = size(vidsize);
 			size = vids.size();
@@ -338,7 +347,7 @@ public class Utils {
 		else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
 				||name.endsWith(".png")||name.endsWith(".BMP")||name.endsWith(".GIF")||name.endsWith(".JPEG")||name.endsWith(".JPG")
 				||name.endsWith(".PNG")){
-			img.add(file);
+			img.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
 			imgsize+=file.length();
 			psize = size(imgsize);
 			size = img.size();
@@ -348,7 +357,7 @@ public class Utils {
 		else if(name.endsWith(".txt")||name.endsWith(".log")||name.endsWith(".ini")||name.endsWith(".doc")
 				||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".TXT")||name.endsWith(".LOG")||name.endsWith(".INI")||name.endsWith(".DOC")
 				||name.endsWith(".PPT")||name.endsWith(".DOCX")){
-			doc.add(file);
+			doc.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
 			docsize+=file.length();
 			dsize = size(docsize);
 			size = doc.size();
@@ -356,7 +365,7 @@ public class Utils {
 				handle.sendEmptyMessage(4);
 		}
 		else{
-			mis.add(file);
+			mis.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
 			missize+=file.length();
 			misize = size(missize);
 			size = mis.size();
@@ -364,4 +373,71 @@ public class Utils {
 				handle.sendEmptyMessage(8);
 		}		
 	}
+	/**
+	 * 
+	 * @return
+	 */
+	private Drawable buildIcon(File f){
+		String name = f.getName();
+		if(name.endsWith(".zip")||name.endsWith(".ZIP")){
+			type=ctx.getString(R.string.zip);
+			return res.getDrawable(R.drawable.ic_launcher_zip_it);			
+		}else if(name.endsWith(".7z")||name.endsWith(".7Z")){
+			type=ctx.getString(R.string.zip7);
+			return res.getDrawable(R.drawable.ic_launcher_7zip);
+		}else if(name.endsWith(".rar")||name.endsWith(".RAR")){
+			type=ctx.getString(R.string.rar);
+			return res.getDrawable(R.drawable.ic_launcher_rar);
+		}else if(name.endsWith(".tar")||name.endsWith(".TAR")||name.endsWith(".tar.gz")||name.endsWith(".TAR.GZ")
+				||name.endsWith(".TAT.BZ2")||name.endsWith(".tar.bz2")){
+			type=ctx.getString(R.string.tar);
+			return res.getDrawable(R.drawable.ic_launcher_tar);
+		}
+		else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
+				||name.endsWith(".amr")||name.endsWith(".MP3")||name.endsWith(".OGG")||name.endsWith(".M4A")||
+				name.endsWith(".WAV")||name.endsWith(".AMR")){
+			type=ctx.getString(R.string.music);
+			return res.getDrawable(R.drawable.ic_launcher_music);
+		}
+		else if(name.endsWith(".apk")||name.endsWith(".APK")){
+			type=ctx.getString(R.string.application);
+			return res.getDrawable(R.drawable.ic_launcher_apk);
+		}else if(name.endsWith(".sh")||name.endsWith(".SH")||name.endsWith(".prop")||name.endsWith("init")
+				||name.endsWith(".default")||name.endsWith(".rc")){
+			type=ctx.getString(R.string.script);
+			return res.getDrawable(R.drawable.ic_launcher_sh);
+		}else if(name.endsWith(".pdf")||name.endsWith(".PDF")){
+			type=ctx.getString(R.string.pdf);
+			return res.getDrawable(R.drawable.ic_launcher_adobe);
+		}else if(name.endsWith(".htm")||name.endsWith(".html")||name.endsWith(".mhtml")){
+			type=ctx.getString(R.string.web);
+			return res.getDrawable(R.drawable.ic_launcher_web_pages);
+		}else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
+				||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
+				||name.endsWith(".MKV")){
+			type=ctx.getString(R.string.vids);
+			return res.getDrawable(R.drawable.ic_launcher_video);
+		}	
+		else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
+				||name.endsWith(".png")||name.endsWith(".BMP")||name.endsWith(".GIF")||name.endsWith(".JPEG")||name.endsWith(".JPG")
+				||name.endsWith(".PNG")){
+			type=ctx.getString(R.string.image);
+			return res.getDrawable(R.drawable.ic_launcher_images);
+		}else if(name.endsWith(".txt")||name.endsWith(".TXT")||name.endsWith(".log")||name.endsWith(".LOG")
+				||name.endsWith(".ini")||name.endsWith(".INI")){
+			type=ctx.getString(R.string.text);
+			return res.getDrawable(R.drawable.ic_launcher_text);
+		}
+		else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
+				||name.endsWith(".PPT")||name.endsWith(".DOCX")||name.endsWith(".pptx")||name.endsWith(".PPTX")
+				||name.endsWith(".csv")||name.endsWith(".CSV")){
+			type=ctx.getString(R.string.docs);
+			return res.getDrawable(R.drawable.ic_launcher_ppt);
+		}
+		else{
+			type=ctx.getString(R.string.unknown);
+			return res.getDrawable(R.drawable.ic_launcher_unknown);
+		}		
+	}
+	
 }
