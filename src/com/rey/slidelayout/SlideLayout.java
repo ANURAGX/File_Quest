@@ -29,7 +29,7 @@ public class SlideLayout extends FrameLayout {
 	public static final int ACTION_OPEN = 0x01;	
 	public static final int ACTION_CLOSE = 0x02;
 	public static final int ACTION_DRAG = 0x04;
-	
+	private static boolean menuOpen = false;
 	public static final int TARGET_CONTENT = 0x00;
 	public static final int TARGET_LEFT = 0x01;
 	public static final int TARGET_RIGHT = 0x02;
@@ -1159,7 +1159,7 @@ public class SlideLayout extends FrameLayout {
 		
 		long duration = (long)Math.abs(mLeftMenuStyle.mAnimDuration * ((float)(mLeftMenuStyle.mSize - mOffsetX) / (float)mLeftMenuStyle.mSize));		
 		getLeftMenuView().clearAnimation();
-		
+		menuOpen = true;
 		if(animation && duration > 0){
 			setState(ACTION_OPEN, TARGET_LEFT, OP.OPEN_LEFT);	
 			SlideAnimation anim = new SlideAnimation(true);
@@ -1188,7 +1188,7 @@ public class SlideLayout extends FrameLayout {
 	public void closeLeftMenu(boolean animation){
 		if(getLeftMenuView() == null || (!isState(ACTION_SHOW, TARGET_LEFT) && !isState(ACTION_DRAG, TARGET_LEFT)))
 			return;
-		
+		menuOpen = false;
 		long duration = (long)(mLeftMenuStyle.mAnimDuration * ((float)mOffsetX / (float)mLeftMenuStyle.mSize));				
 		getLeftMenuView().clearAnimation();
 		
@@ -1991,6 +1991,10 @@ public class SlideLayout extends FrameLayout {
 			return (float)Math.pow(input - 1, 3) + 1;
 		}
 		
+	}
+	
+	public boolean isLeftMenuOpen(){
+		return SlideLayout.menuOpen;
 	}
 	
 	private class MenuStyle{
