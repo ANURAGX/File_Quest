@@ -1374,6 +1374,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			root = getListView();			
 			root.setSelector(R.drawable.blue_button);
 			ColorDrawable color = new ColorDrawable(android.R.color.black);
+			
 			root.setDivider(color);
 			if(DBoxManager.DBOX_ROOT)
 				setListAdapter(new DBoxAdapter(mContext, DBoxManager.dListRoot));

@@ -21,10 +21,13 @@ package org.anurag.file.quest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,10 +42,11 @@ import android.widget.Toast;
 public class FileGalleryAdapter extends BaseAdapter{
 	
 	private static HashMap<String, Bitmap> imgList;
+	private static HashMap<String, Drawable> apkList;
 	Bitmap image;
 	Holder h;
 	public static boolean MULTI_SELECT;
-	public static boolean[] thumbselection;
+	public static boolean[] thumbselection; 
 	public static long C;
 	Item item;
 	Context ctx;
@@ -56,6 +60,7 @@ public class FileGalleryAdapter extends BaseAdapter{
 		list = object;
 		inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		imgList = new HashMap<String , Bitmap>();
+		apkList = new HashMap<String , Drawable>();
 	}
 
 	@Override
@@ -198,19 +203,28 @@ public class FileGalleryAdapter extends BaseAdapter{
 		h.fName.setText(item.getName());
 		h.fType.setText(item.getType());
 		h.fSize.setText(item.getSize());
-		if(!item.getType().equals("Image"))
-			h.icon.setImageDrawable(item.getIcon());
-		else{
-			h.icon.setImageDrawable(item.getIcon());
+		h.icon.setImageDrawable(item.getIcon());
+		if(item.getType().equals("Image")){
 			image = imgList.get(item.getPath());
 			if(image == null)
 				new LoadImage(h.icon, item).execute();
 			else
 				h.icon.setImageBitmap(image);
+		}else if(item.getType().equals("App")){
+			Drawable draw = apkList.get(item.getPath());
+			if(draw == null)
+				new LoadApkIcon(h.icon, item).execute();
+			else
+				h.icon.setImageDrawable(draw);
 		}
 		return convertView;
 	}	
 	
+	/**
+	 * class to load images thumbnail...
+	 * @author Anurag
+	 *
+	 */
 	private class LoadImage extends AsyncTask<Void , Void ,Void>{
 		ImageView iView;
 		Bitmap map;
@@ -259,7 +273,40 @@ public class FileGalleryAdapter extends BaseAdapter{
 				imgList.put(itm.getPath(), map);
 			}
 			return null;
+		}		
+	}
+	
+	/**
+	 * Class to load the apk icons...
+	 * @author Anurag
+	 *
+	 */
+	private class LoadApkIcon extends AsyncTask<Void, Void, Void>{
+
+		ImageView iView;
+		Item itm;
+		Drawable dra;
+		public LoadApkIcon(ImageView view , Item it) {
+			// TODO Auto-generated constructor stub
+			this.iView = view;
+			this.itm = it;
 		}
 		
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			iView.setImageDrawable(dra);
+		}
+
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			// TODO Auto-generated method stub
+			PackageInfo inf = ctx.getPackageManager().getPackageArchiveInfo(itm.getPath(),0);
+			inf.applicationInfo.publicSourceDir = itm.getPath();
+			dra = inf.applicationInfo.loadIcon(ctx.getPackageManager());
+			apkList.put(itm.getPath(), dra);
+			return null;
+		}		
 	}
 }
