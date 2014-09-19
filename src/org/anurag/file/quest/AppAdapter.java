@@ -17,11 +17,12 @@
  *
  */
 
-
 package org.anurag.file.quest;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -30,7 +31,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,28 +40,35 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
-	private static LayoutInflater inflater;
+	private static HashMap<String, Drawable> ls;
+	private static HashMap<String, String> names;
+	private static HashMap<String, String> sizes;
+	private static HashMap<String, String> backups;
+	private LayoutInflater inflater;
 	public static PackageManager nPManager;
-	private static ArrayList<ApplicationInfo> nList;
-	public static ApplicationInfo info;
+	private ArrayList<ApplicationInfo> nList;
+	public ApplicationInfo info;
 	private static Context mContext;
-	private static FileHolder nHolder;
+	private FileHolder nHolder;
 	public boolean[] thumbSelection;
 	public long C;
 	public boolean MULTI_SELECT; 
-	static Message msg;
+	//static Message msg;
 	public ArrayList<ApplicationInfo> MULTI_APPS;
 	public AppAdapter(Context context, int textViewResourceId , ArrayList<ApplicationInfo> nInfo) {
 		super(context,textViewResourceId,nInfo);
 		nList = nInfo;
 		C = 0;
-		msg = new Message();
 		MULTI_APPS = new ArrayList<ApplicationInfo>();
 		MULTI_SELECT = false;
 		thumbSelection = new boolean[nList.size()];
 		mContext = context;
 		inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		nPManager = context.getPackageManager();
+		ls = new HashMap<String , Drawable>();
+		names = new HashMap<String , String>();
+		sizes = new HashMap<String , String>();
+		backups = new HashMap<String , String>();
 	}
 	
 	
@@ -115,7 +122,17 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 			nHolder.box.setChecked(thumbSelection[position]);
 		}else
 			nHolder.box.setVisibility(View.GONE);
-		new AppLoader(nHolder.FileIcon , nHolder.FileName , nHolder.FileSize , nHolder.FileType).execute(info);
+		
+		Drawable img = ls.get(nPManager.getApplicationLabel(info));
+		if(img == null){
+			new AppLoader(nHolder.FileIcon , nHolder.FileName , nHolder.FileSize , nHolder.FileType).execute(info);
+		}else{
+			String nm = nPManager.getApplicationLabel(info).toString();
+			nHolder.FileIcon.setImageDrawable(img);
+			nHolder.FileName.setText(names.get(nm));
+			nHolder.FileSize.setText(sizes.get(nm));
+			nHolder.FileType.setText(backups.get(nm));
+		}
 		return convertView;
 	}
 		
@@ -143,28 +160,28 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 			iView.setImageDrawable(draw);
 			iTv.setText(name);
 			iTv2.setText(size);
-			if(date == 0){
-				iTv3.setText(mContext.getString(R.string.nobackup));
-				//iTv.setTextColor(Color.WHITE);
-			}else{
-				iTv3.setText(mContext.getString(R.string.backupon) + " " + new Date(date));
-				//iTv.setTextColor(Color.GREEN);
-			}
+			iTv3.setText(backups.get(name));
 			super.onPostExecute(result);
 		}
 		@Override
 		protected Void doInBackground(ApplicationInfo... arg0) {
-			draw = nPManager.getApplicationIcon(arg0[0]);
 			name = nPManager.getApplicationLabel(arg0[0]).toString();
+			draw = ls.get(arg0[0].packageName);
+			if(draw == null){
+				draw = nPManager.getApplicationIcon(arg0[0]);
+				ls.put(name, draw);
+			}	
 			size = size(new File(arg0[0].sourceDir));
 			date = backupExists(arg0[0]);
-			
+			names.put(name, name);
+			sizes.put(name, size);
+			if(date == 0)
+				backups.put(name, mContext.getString(R.string.nobackup));
+			else
+				backups.put(name, mContext.getString(R.string.backupon) + " " + new Date(date));
 			return null;
-		}
-		
-	}
-	
-	
+		}		
+	}	
 	public static long backupExists(ApplicationInfo in){
 		PackageInfo i = null;
 		String PATH = Environment.getExternalStorageDirectory().getPath();
@@ -185,9 +202,6 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 		}
 		return 0;
 	}
-
-
-	
 	/**
 	 * THIS FUNCTION RETURN THE SIZE IF THE GIVEN FIZE IN PARAMETER
 	 * @param f
@@ -197,15 +211,12 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 		long size = f.length();
 		if(size>Constants.GB)
 			return String.format(mContext.getString(R.string.sizegb), (double)size/(Constants.GB));
-		
 		else if(size > Constants.MB)
 			return String.format(mContext.getString(R.string.sizemb), (double)size/(Constants.MB));
 		
 		else if(size>1024)
-			return String.format(mContext.getString(R.string.sizekb), (double)size/(1024));
-		
+			return String.format(mContext.getString(R.string.sizekb), (double)size/(1024));		
 		else
 			return String.format(mContext.getString(R.string.sizebytes), (double)size);
 	}
-
 }
