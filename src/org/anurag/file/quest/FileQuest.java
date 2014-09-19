@@ -3828,11 +3828,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				// TODO Auto-generated method stub
 				String ACTION = it.getAction();
 				if (ACTION.equalsIgnoreCase("FQ_BACKUP")|| ACTION.equals(Intent.ACTION_UNINSTALL_PACKAGE)){
-					resetPager();
+					setAdapter(CURRENT_ITEM);
 				}else if (ACTION.equalsIgnoreCase("FQ_DELETE")) {
 					// setAdapter(CURRENT_ITEM);
 					
-					Utils.loaded = false;
 					setAdapter(CURRENT_ITEM);
 				} else if (ACTION.equalsIgnoreCase("FQ_FLASHZIP")) {
 					// FLASHABLE ZIP DIALOG IS FIRED FROM HERE
