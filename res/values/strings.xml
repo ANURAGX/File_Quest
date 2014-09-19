@@ -57,6 +57,7 @@
     
     
     <string-array name="slideList">
+        <item>Favorite</item>
         <item>Music Files</item>
         <item>Apk Files</item>
         <item>Documents</item>
