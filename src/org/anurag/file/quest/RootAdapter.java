@@ -20,12 +20,12 @@
 package org.anurag.file.quest;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Message;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +37,7 @@ import android.widget.Toast;
 
 
 public class RootAdapter extends BaseAdapter{
-	private static ThumbnailCreator creator;
+	private static HashMap<String, Bitmap> imgList;
 	Bitmap image;
 	Holder h;
 	public static boolean MULTI_SELECT;
@@ -51,10 +51,10 @@ public class RootAdapter extends BaseAdapter{
 	public RootAdapter(Context context,ArrayList<Item> object) {
 		// TODO Auto-generated constructor stub
 		ctx = context;
-		creator = new ThumbnailCreator(50, 50);
 		MULTI_FILES = new ArrayList<Item>();
 		list = object;
 		inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		imgList = new HashMap<String , Bitmap>();
 	}
 
 	@Override
@@ -201,23 +201,65 @@ public class RootAdapter extends BaseAdapter{
 			h.icon.setImageDrawable(item.getIcon());
 		else{
 			h.icon.setImageDrawable(item.getIcon());
-			image = creator.isBitmapCached(item.getPath());
-			if(image == null){
-				final Handler handle = new Handler(new Handler.Callback() {
-					@Override
-					public boolean handleMessage(Message msg) {
-						// TODO Auto-generated method stub
-					    notifyDataSetChanged();
-						return true;
-					}
-				});
-				creator.createNewThumbnail(list, handle);
-				if(!creator.isAlive())
-					creator.start();
-					
-			}else
+			image = imgList.get(item.getPath());
+			if(image == null)
+				new LoadImage(h.icon, item).execute();
+			else
 				h.icon.setImageBitmap(image);
 		}
 		return convertView;
 	}	
+	
+	private class LoadImage extends AsyncTask<Void , Void ,Void>{
+		ImageView iView;
+		Bitmap map;
+		Item itm;
+		public LoadImage(ImageView view , Item it) {
+			// TODO Auto-generated constructor stub
+			this.iView = view;
+			this.itm = it;
+		}		
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			iView.setImageBitmap(map);
+		}
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+		}
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			// TODO Auto-generated method stub
+			map = imgList.get(itm.getPath());
+			if(map == null){
+				long len_kb = itm.getFile().length() / 1024;
+				
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.outWidth = 50;
+				options.outHeight = 50;
+					
+				if (len_kb > 1000 && len_kb < 5000) {
+					options.inSampleSize = 32;
+					options.inPurgeable = true;
+					map = (BitmapFactory.decodeFile(itm.getPath(), options));
+										
+				} else if (len_kb >= 5000) {
+					options.inSampleSize = 32;
+					options.inPurgeable = true;
+					map = (BitmapFactory.decodeFile(itm.getPath(), options));
+									
+				} else if (len_kb <= 1000) {
+					options.inPurgeable = true;
+					map = (Bitmap.createScaledBitmap(BitmapFactory.decodeFile(itm.getPath()),50,50,false));
+				}
+				imgList.put(itm.getPath(), map);
+			}
+			return null;
+		}
+		
+	}
+	
 }
