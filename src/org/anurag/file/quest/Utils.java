@@ -21,7 +21,6 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -588,7 +587,7 @@ public class Utils {
 					null, 
 					null, 
 					null, 
-					MediaStore.Images.Media.TITLE + " ASC");
+					MediaStore.Images.Media.DEFAULT_SORT_ORDER);
 			String name;
 			Drawable draw = ctx.getResources().getDrawable(R.drawable.ic_launcher_images); 
 			String typ = ctx.getString(R.string.image);
@@ -628,7 +627,7 @@ public class Utils {
 					null,
 					null,
 					null,
-					MediaStore.Audio.Media.TITLE+" ASC");
+					MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
 			String name;
 			Drawable draw = ctx.getResources().getDrawable(R.drawable.ic_launcher_music); 
 			String typ = ctx.getString(R.string.music);
