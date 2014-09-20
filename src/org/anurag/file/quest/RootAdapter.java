@@ -206,9 +206,9 @@ public class RootAdapter extends BaseAdapter{
 		if(item.getType().equals("Image")){
 			image = imgList.get(item.getPath());
 			if(image == null)
-				new LoadImage(h.icon, item).execute();
-			else
 				h.icon.setImageBitmap(image);
+			else
+				new LoadImage(h.icon, item).execute();
 		}else if(item.getType().equals("App")){
 			Drawable draw = apkList.get(item.getPath());
 			if(draw == null)
