@@ -31,9 +31,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -54,6 +53,7 @@ public class FileQuestPlayer extends Activity{
 	MediaPlayer player;
 	SeekBar seekbar;
 	MediaMetadataRetriever retreive;
+	Play play;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -79,6 +79,7 @@ public class FileQuestPlayer extends Activity{
 			seekbar.setMax(player.getDuration());
 			retreive = new MediaMetadataRetriever();
 			retreive.setDataSource(FileQuestPlayer.this, intent.getData());
+			play = new Play();
 			/**
 			 * extracting mediametadata like album name,artist,album art...
 			 */
@@ -121,14 +122,22 @@ public class FileQuestPlayer extends Activity{
 			
 			//setting the album name...
 			try{
-				albumname.setText(retreive.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
+				String name = retreive.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+				if(name.length() != 0)
+					albumname.setText(retreive.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
+				else
+					albumname.setText(R.string.notavailable);
 			}catch(Exception e){
 				albumname.setText(R.string.notavailable);
 			}
 			
 			//setting the artist name...
 			try{
-				artist.setText(retreive.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
+				String name = retreive.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+				if(name.length() != 0)
+					artist.setText(retreive.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
+				else
+					albumname.setText(R.string.notavailable);
 			}catch(Exception e){
 				albumname.setText(R.string.notavailable);
 			}
@@ -162,6 +171,7 @@ public class FileQuestPlayer extends Activity{
 				try{
 					player.release();
 					playing = false;
+					play.cancel(true);
 				}catch(Exception e){
 					
 				}
@@ -169,37 +179,37 @@ public class FileQuestPlayer extends Activity{
 			}
 		});
 		
-		final Handler handle = new Handler(){
-			@Override
-			public void handleMessage(Message msg){
-				switch(msg.what){
-					case 0 :
-							try{
-								seekbar.setProgress(player.getCurrentPosition());
-							}catch(IllegalStateException e){
-								
-							}
-							break;
-				}
-			}
-		};
-		
-		Thread thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				while(playing){
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					handle.sendEmptyMessage(0);
-				}
-			}
-		});
-		if(player!=null)
-			thread.start();	
+		if(player != null)
+			play.execute();
+		else{
+			FileQuestPlayer.this.finish();
+		}
 	}	
+	
+	private class Play extends AsyncTask<Void, Void, Void> {
+		@Override
+		protected void onProgressUpdate(Void... values) {
+			// TODO Auto-generated method stub
+			try{
+				seekbar.setProgress(player.getCurrentPosition());
+			}catch(IllegalStateException e){
+				
+			}
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			while(playing){
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				publishProgress((Void[])null);
+			}
+			return null;
+		}		
+	}
 }
