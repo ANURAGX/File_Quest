@@ -21,6 +21,7 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -269,6 +270,7 @@ public class Utils {
 		//loaded = true;
 		new MusicAsyncTask().execute();
 		new ImageAsyncTask().execute();
+		new VideoAsyncTask().execute();
 		loaded  = true;
 	}
 	
@@ -591,9 +593,10 @@ public class Utils {
 			String name;
 			Drawable draw = ctx.getResources().getDrawable(R.drawable.ic_launcher_images); 
 			String typ = ctx.getString(R.string.image);
+			File fil;
 			while(cursor.moveToNext()){
 				name = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-				File fil = new File(name);
+				fil = new File(name);
 				img.add(new Item(fil,
 						draw,
 						typ,
@@ -631,9 +634,10 @@ public class Utils {
 			String name;
 			Drawable draw = ctx.getResources().getDrawable(R.drawable.ic_launcher_music); 
 			String typ = ctx.getString(R.string.music);
+			File fil;
 			while(cursor.moveToNext()){
 				name = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
-				File fil = new File(name);
+				fil = new File(name);
 				music.add(new Item(fil,
 						draw,
 						typ,
@@ -645,5 +649,46 @@ public class Utils {
 			cursor.close();
 			return null;
 		}		
+	}
+
+	/**
+	 * 
+	 * @author Anurag
+	 *
+	 */
+	private class VideoAsyncTask extends AsyncTask<Void, Void, Void>{
+		@Override
+		protected void onProgressUpdate(Void... values) {
+			// TODO Auto-generated method stub
+			vidText.setText(vsize);								
+			vidTextCount.setText(vids.size() + " "+ctx.getString(R.string.items));
+		}
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			// TODO Auto-generated method stub
+			Cursor cursor = ctx.getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+					null,
+					null,
+					null,
+					null);
+			String name;
+			Drawable draw = ctx.getResources().getDrawable(R.drawable.ic_launcher_video); 
+			String typ = ctx.getString(R.string.vids);
+			File fil;
+			while(cursor.moveToNext()){
+				name = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
+				fil = new File(name);
+				vids.add(new Item(fil,
+						draw,
+						typ,
+						RootManager.getSize(fil)));
+				vidsize+=fil.length();
+				vsize = size(vidsize);
+				publishProgress((Void[])null);
+			}
+			cursor.close();
+			return null;
+		}
+		
 	}
 }
