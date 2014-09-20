@@ -360,8 +360,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 
 		setContentView(R.layout.new_ui);
-		loadFileGallery = new Utils(null, mContext);
-		loadFileGallery.load();
+	//	loadFileGallery = new Utils(null, mContext);
+		//loadFileGallery.setDetails();
 		
 
 		editBox = (EditText) findViewById(R.id.editBox);
@@ -667,6 +667,70 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	}
 
 	
+	/**
+	 * The above same method,bute here task is achieved via asynctask... 
+	 * @param ITEM
+	 */
+	private static void setAdapter2(final int ITEM) {
+		
+		new AsyncTask<Void, Void, Void>(){
+			@Override
+			protected void onPostExecute(Void result) {
+				// TODO Auto-generated method stub
+				super.onPostExecute(result);
+				CURRENT_ITEM = ITEM;
+				if(CURRENT_ITEM != 0){
+					resetPager();
+				}else if(CURRENT_ITEM == 0)
+					load_FIle_Gallery(fPos);
+			}
+
+			@Override
+			protected Void doInBackground(Void... params) {
+				// TODO Auto-generated method stub
+				try {// TRY BLOCK IS USED BECAUSE I NOTICED THAT WHEN NEW FOLDER
+					// WITH HINDI LANGAUGE IS CREATED THROWS INDEXOUTOFBOUND
+					// EXCEPTION
+					// I THINK IT IS APPLICABLE TO OTHER LANGUAGES ALSO
+					if(!ZIP_SD&&!RAR_SD&&!TAR_SD)
+						sdItemsList = sdManager.getList();
+					if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT)
+						rootItemList = rootManager.getList();
+					//if (ITEM == 0)
+						//load_FIle_Gallery(pos);
+				}catch (IndexOutOfBoundsException e) {
+					if(!ZIP_SD&&!RAR_SD&&!TAR_SD)
+						sdItemsList = sdManager.getList();
+					if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT)
+						rootItemList = rootManager.getList();
+				}
+				
+				if(SDAdapter.MULTI_SELECT) {
+					SDAdapter.thumbselection = new boolean[sdItemsList.size()];
+					SDAdapter.MULTI_FILES = new ArrayList<Item>();
+					SDAdapter.C = 0;
+				}
+				if(RootAdapter.MULTI_SELECT) {
+					RootAdapter.thumbselection = new boolean[rootItemList.size()];
+					RootAdapter.MULTI_FILES = new ArrayList<Item>();
+					RootAdapter.C = 0;
+				}
+				mUseBackKey = false;
+				if(ITEM == 3) {
+					if (MULTI_SELECT_APPS) {
+						nAppAdapter = new AppAdapter(mContext,R.layout.row_list_1, nList);
+						nAppAdapter.MULTI_SELECT = true;
+					} else if (!MULTI_SELECT_APPS) {
+						nAppAdapter = new AppAdapter(mContext,R.layout.row_list_1, nList);
+						nAppAdapter.MULTI_SELECT = false;
+						
+					}
+				} 
+				return null;
+			}			
+		}.execute();
+	}
+	
 
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -780,7 +844,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			LinearLayout zips = (LinearLayout) v.findViewById(R.id.zips);
 			LinearLayout misc = (LinearLayout) v.findViewById(R.id.misc);
 		
-			loadFileGallery.setView(v);
+			loadFileGallery = new Utils(v, mContext);
+			loadFileGallery.load();
+			//loadFileGallery.setView(v);
 			Constants.UPDATE_FILEGALLERY = true;
 			//loadFileGallery.load();
 			/*
