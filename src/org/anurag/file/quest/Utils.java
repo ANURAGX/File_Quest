@@ -25,10 +25,13 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.TextView;
 
@@ -64,13 +67,19 @@ public class Utils {
 	static long zipsize=0;
 	static long missize=0;
 	static long imgsize=0;
-	int size = 0;
+	
 	File file; 	
-	String message;
 	Handler handle;
 	TextView count;
-	
 	Context ctx;
+	
+	static TextView musicText,musicTextCount;
+	static TextView appText,appTextCount;
+	static TextView imgText,imgTextCount;
+	static TextView vidText,vidTextCount;
+	static TextView docText,docTextCount;
+	static TextView arcText,arcTextCount;
+	static TextView misText,misTextCount;
 	
 	public Utils() {
 		// TODO Auto-generated constructor stub
@@ -96,6 +105,27 @@ public class Utils {
 	public Utils(View view,Context cont) {
 		// TODO Auto-generated constructor stub
 		v = view;
+		musicText = (TextView)v.findViewById(R.id.mSize);
+		musicTextCount = (TextView)v.findViewById(R.id.mFiles);
+		
+		appText = (TextView)v.findViewById(R.id.aSize);
+		appTextCount = (TextView)v.findViewById(R.id.aFiles);
+		
+		docText = (TextView)v.findViewById(R.id.dSize);
+		docTextCount = (TextView)v.findViewById(R.id.dFile);
+		
+		imgText = (TextView)v.findViewById(R.id.pSize);
+		imgTextCount = (TextView)v.findViewById(R.id.pFiles);
+		
+		vidText = (TextView)v.findViewById(R.id.vSize);
+		vidTextCount = (TextView)v.findViewById(R.id.vFiles);
+		
+		arcText = (TextView)v.findViewById(R.id.zSize);
+		arcTextCount = (TextView)v.findViewById(R.id.zFiles);
+		
+		misText = (TextView)v.findViewById(R.id.misFiles);
+		misTextCount = (TextView)v.findViewById(R.id.misSize);
+		
 		file = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
 		
 		music = new ArrayList<Item>();
@@ -138,11 +168,8 @@ public class Utils {
 					case 2:
 							try{
 								//DISLPAYS MUSIC SIZE..
-								TextView mSize= (TextView)v.findViewById(R.id.mSize);
-								mSize.setText(msize);
-								
-								count = (TextView)v.findViewById(R.id.mFiles);
-								count.setText(music.size() + " "+ctx.getString(R.string.items));
+								musicText.setText(msize);								
+								musicTextCount.setText(music.size() + " "+ctx.getString(R.string.items));
 							}catch(NullPointerException e){
 								
 							}
@@ -151,12 +178,8 @@ public class Utils {
 					case 3:
 							try{
 								//DISPLAYS APPS SIZE...
-								TextView aSize= (TextView)v.findViewById(R.id.aSize);
-								aSize.setText(asize);
-								
-								
-								count = (TextView)v.findViewById(R.id.aFiles);
-								count.setText(apps.size() + " "+ctx.getString(R.string.items));
+								appText.setText(asize);								
+								appTextCount.setText(apps.size() + " "+ctx.getString(R.string.items));
 							}catch(NullPointerException e){
 								
 							}
@@ -166,11 +189,8 @@ public class Utils {
 						
 							try{
 								//DSIPLAYS DOCS SIZE...
-								TextView dSize= (TextView)v.findViewById(R.id.dSize);
-								dSize.setText(dsize);
-								
-								count = (TextView)v.findViewById(R.id.dFile);
-								count.setText(doc.size() + " "+ctx.getString(R.string.items));
+								docText.setText(dsize);							
+								docTextCount.setText(doc.size() + " "+ctx.getString(R.string.items));
 							}catch(NullPointerException e){
 								
 							}
@@ -178,11 +198,8 @@ public class Utils {
 					case 5:
 							try{
 								//displays IMAGE SIZE..
-								TextView iSize= (TextView)v.findViewById(R.id.pSize);
-								iSize.setText(psize);
-								
-								count = (TextView)v.findViewById(R.id.pFiles);
-								count.setText(img.size() + " "+ctx.getString(R.string.items));
+								imgText.setText(psize);								
+								imgTextCount.setText(img.size() + " "+ctx.getString(R.string.items));
 							}catch(NullPointerException e){
 								
 							}
@@ -191,12 +208,8 @@ public class Utils {
 					case 6:
 							try{
 								//displays video size...
-								TextView vSize= (TextView)v.findViewById(R.id.vSize);
-								vSize.setText(vsize);
-								
-								
-								count = (TextView)v.findViewById(R.id.vFiles);
-								count.setText(vids.size() + " "+ctx.getString(R.string.items));
+								vidText.setText(vsize);								
+								vidTextCount.setText(vids.size() + " "+ctx.getString(R.string.items));
 							}catch(NullPointerException e){
 								
 							}
@@ -207,11 +220,8 @@ public class Utils {
 						
 							try{
 								//displays archive size...
-								TextView zSize= (TextView)v.findViewById(R.id.zSize);
-								zSize.setText(zsize);
-								
-								count = (TextView)v.findViewById(R.id.zFiles);
-								count.setText(zip.size() + " "+ctx.getString(R.string.items));
+								arcText.setText(zsize);								
+								arcTextCount.setText(zip.size() + " "+ctx.getString(R.string.items));
 							}catch(NullPointerException e){
 								
 							}
@@ -220,11 +230,8 @@ public class Utils {
 					case 8:
 							//displays miscellaneous size...
 							try{
-								TextView mmSize= (TextView)v.findViewById(R.id.misFiles);
-								mmSize.setText(misize);
-								
-								count = (TextView)v.findViewById(R.id.misSize);
-								count.setText(mis.size() + " "+ctx.getString(R.string.items));
+								misText.setText(misize);								
+								misTextCount.setText(mis.size() + " "+ctx.getString(R.string.items));
 							}catch(NullPointerException e){
 								
 							}
@@ -241,7 +248,7 @@ public class Utils {
 				loaded = true;			
 			}
 		});
-		if(!loaded)
+		/*if(!loaded)
 			thread.start();
 		else{
 			if(music.size()>0)
@@ -258,7 +265,12 @@ public class Utils {
 				handle.sendEmptyMessage(7);
 			if(mis.size()>0)
 				handle.sendEmptyMessage(8);
-		}
+		}*/
+	//	makelist(file);
+		//loaded = true;
+		new MusicAsyncTask().execute();
+		new ImageAsyncTask().execute();
+		loaded  = true;
 	}
 	
 	
@@ -304,73 +316,185 @@ public class Utils {
 	 * @param file
 	 * @return
 	 */
-	private void identifyType(File file){
+	private void identifyType(final File file){
 		String name = file.getName();
 		if(name.endsWith(".zip")||name.endsWith(".tar")||name.endsWith(".rar")||name.endsWith(".7z")
 				||name.endsWith(".tar.gz")||name.endsWith(".tar.bz2")||name.endsWith(".ZIP")||name.endsWith(".TAR")||
 				name.endsWith(".RAR")||name.endsWith(".7Z")||name.endsWith(".TAR.GZ")||name.endsWith(".TAR.BZ2")){
-			zip.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
+			
+			/*zip.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
 			zipsize+=file.length();
 			zsize = size(zipsize);
-			size = zip.size();
 			if(Constants.UPDATE_FILEGALLERY)
-				handle.sendEmptyMessage(7);
+				handle.sendEmptyMessage(7);*/
+			new AsyncTask<Void, Void, Void>(){
+				@Override
+				protected void onPostExecute(Void result) {
+					// TODO Auto-generated method stub
+					arcText.setText(zsize);								
+					arcTextCount.setText(zip.size() + " "+ctx.getString(R.string.items));
+				}
+				@Override
+				protected Void doInBackground(Void... params) {
+					// TODO Auto-generated method stub
+					zip.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
+					zipsize+=file.length();
+					zsize = size(zipsize);
+					return null;
+				}
+				
+			}.execute();
 		}
 		else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
 				||name.endsWith(".amr")||name.endsWith(".MP3")||name.endsWith(".OGG")||name.endsWith(".M4A")||
 				name.endsWith(".WAV")||name.endsWith(".AMR")){
-			music.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
+			/*music.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
 			musicsize+=file.length();
 			msize = size(musicsize);
-			size = music.size();
 			if(Constants.UPDATE_FILEGALLERY)
-				handle.sendEmptyMessage(2);
+				handle.sendEmptyMessage(2);*/
+			new AsyncTask<Void, Void, Void>(){
+				@Override
+				protected void onPostExecute(Void result) {
+					// TODO Auto-generated method stub
+					musicText.setText(msize);								
+					musicTextCount.setText(music.size() + " "+ctx.getString(R.string.items));
+				}
+				@Override
+				protected Void doInBackground(Void... params) {
+					// TODO Auto-generated method stub
+					music.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
+					musicsize+=file.length();
+					msize = size(musicsize);
+					return null;
+				}
+				
+			}.execute();
 		}
 		else if(name.endsWith(".apk")||name.endsWith(".APK")){
-			apps.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
+			/*apps.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
 			apksize+=file.length();
 			asize = size(apksize);
-			size = apps.size();
 			if(Constants.UPDATE_FILEGALLERY)
-				handle.sendEmptyMessage(3);
+				handle.sendEmptyMessage(3);*/
+			new AsyncTask<Void, Void, Void>(){
+				@Override
+				protected void onPostExecute(Void result) {
+					// TODO Auto-generated method stub
+					appText.setText(asize);								
+					appTextCount.setText(apps.size() + " "+ctx.getString(R.string.items));
+				}
+				@Override
+				protected Void doInBackground(Void... params) {
+					// TODO Auto-generated method stub
+					apps.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
+					apksize+=file.length();
+					asize = size(apksize);
+					return null;
+				}
+				
+			}.execute();
 		}		
 		else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
 				||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
 				||name.endsWith(".MKV")){
-			vids.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
+			/*vids.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
 			vidsize+=file.length();
 			vsize = size(vidsize);
-			size = vids.size();
 			if(Constants.UPDATE_FILEGALLERY)
-				handle.sendEmptyMessage(6);
+				handle.sendEmptyMessage(6);*/
+			new AsyncTask<Void, Void, Void>(){
+				@Override
+				protected void onPostExecute(Void result) {
+					// TODO Auto-generated method stub
+					vidText.setText(vsize);								
+					vidTextCount.setText(vids.size() + " "+ctx.getString(R.string.items));
+				}
+				@Override
+				protected Void doInBackground(Void... params) {
+					// TODO Auto-generated method stub
+					vids.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
+					vidsize+=file.length();
+					vsize = size(vidsize);
+					return null;
+				}
+				
+			}.execute();
 		}	
 		else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
 				||name.endsWith(".png")||name.endsWith(".BMP")||name.endsWith(".GIF")||name.endsWith(".JPEG")||name.endsWith(".JPG")
 				||name.endsWith(".PNG")){
-			img.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
-			imgsize+=file.length();
-			psize = size(imgsize);
-			size = img.size();
-			if(Constants.UPDATE_FILEGALLERY)
-				handle.sendEmptyMessage(5);
+			
+			new AsyncTask<Void, Void, Void>(){
+				@Override
+				protected void onPostExecute(Void result) {
+					// TODO Auto-generated method stub
+					imgText.setText(psize);								
+					imgTextCount.setText(img.size() + " "+ctx.getString(R.string.items));
+				}
+				@Override
+				protected Void doInBackground(Void... params) {
+					// TODO Auto-generated method stub
+					img.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
+					imgsize+=file.length();
+					psize = size(imgsize);
+					return null;
+				}				
+			}.execute();
+			
+			
+			//if(Constants.UPDATE_FILEGALLERY)
+				//handle.sendEmptyMessage(5);
 		}
 		else if(name.endsWith(".txt")||name.endsWith(".log")||name.endsWith(".ini")||name.endsWith(".doc")
 				||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".TXT")||name.endsWith(".LOG")||name.endsWith(".INI")||name.endsWith(".DOC")
 				||name.endsWith(".PPT")||name.endsWith(".DOCX")){
-			doc.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
+			/*doc.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
 			docsize+=file.length();
 			dsize = size(docsize);
-			size = doc.size();
 			if(Constants.UPDATE_FILEGALLERY)
-				handle.sendEmptyMessage(4);
+				handle.sendEmptyMessage(4);*/
+			new AsyncTask<Void, Void, Void>(){
+				@Override
+				protected void onPostExecute(Void result) {
+					// TODO Auto-generated method stub
+					docText.setText(dsize);							
+					docTextCount.setText(doc.size() + " "+ctx.getString(R.string.items));
+				}
+				@Override
+				protected Void doInBackground(Void... params) {
+					// TODO Auto-generated method stub
+					doc.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
+					docsize+=file.length();
+					dsize = size(docsize);
+					return null;
+				}
+				
+			}.execute();
 		}
 		else{
-			mis.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
+			/*mis.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
 			missize+=file.length();
 			misize = size(missize);
-			size = mis.size();
 			if(Constants.UPDATE_FILEGALLERY)
-				handle.sendEmptyMessage(8);
+				handle.sendEmptyMessage(8);*/
+			new AsyncTask<Void, Void, Void>(){
+				@Override
+				protected void onPostExecute(Void result) {
+					// TODO Auto-generated method stub
+					misText.setText(misize);								
+					misTextCount.setText(mis.size() + " "+ctx.getString(R.string.items));
+				}
+				@Override
+				protected Void doInBackground(Void... params) {
+					// TODO Auto-generated method stub
+					mis.add(new Item(file, buildIcon(file), type, RootManager.getSize(file)));
+					missize+=file.length();
+					misize = size(missize);
+					return null;
+				}
+				
+			}.execute();
 		}		
 	}
 	/**
@@ -440,4 +564,87 @@ public class Utils {
 		}		
 	}
 	
+	/**
+	 * 
+	 * @author Anurag.....
+	 *
+	 */
+	private class ImageAsyncTask extends AsyncTask<Void, Void, Void>{
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+		}	
+		@Override
+		protected void onProgressUpdate(Void... values) {
+			// TODO Auto-generated method stub
+			imgText.setText(psize);								
+			imgTextCount.setText(img.size() + " "+ctx.getString(R.string.items));
+		}
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			Cursor cursor = ctx.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, 
+					null, 
+					null, 
+					null, 
+					MediaStore.Images.Media.TITLE + " ASC");
+			String name;
+			Drawable draw = ctx.getResources().getDrawable(R.drawable.ic_launcher_images); 
+			String typ = ctx.getString(R.string.image);
+			while(cursor.moveToNext()){
+				name = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+				File fil = new File(name);
+				img.add(new Item(fil,
+						draw,
+						typ,
+						RootManager.getSize(fil)));
+				imgsize+=fil.length();
+				psize = size(imgsize);
+				publishProgress((Void[])null);
+			}
+			cursor.close();
+			return null;
+		}		
+	}	
+	
+	/**
+	 * 
+	 * @author Anurag....
+	 *
+	 */
+	private class MusicAsyncTask extends AsyncTask<Void, Void , Void>{
+		@Override
+		protected void onProgressUpdate(Void... values) {
+			// TODO Auto-generated method stub
+			musicText.setText(msize);								
+			musicTextCount.setText(music.size() + " "+ctx.getString(R.string.items));
+		}
+
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			// TODO Auto-generated method stub
+			Cursor cursor = ctx.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+					null,
+					null,
+					null,
+					MediaStore.Audio.Media.TITLE+" ASC");
+			String name;
+			Drawable draw = ctx.getResources().getDrawable(R.drawable.ic_launcher_music); 
+			String typ = ctx.getString(R.string.music);
+			while(cursor.moveToNext()){
+				name = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+				File fil = new File(name);
+				music.add(new Item(fil,
+						draw,
+						typ,
+						RootManager.getSize(fil)));
+				musicsize+=fil.length();
+				msize = size(musicsize);
+				publishProgress((Void[])null);
+			}
+			cursor.close();
+			return null;
+		}		
+	}
 }
