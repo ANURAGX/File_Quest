@@ -41,6 +41,9 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaScannerConnection;
+import android.media.MediaScannerConnection.OnScanCompletedListener;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -149,6 +152,8 @@ public class MultipleCopyDialog {
 							
 					case 10:
 							if(dialog.isShowing()){
+								//scanning the files into the local android db after performing the copying operation....
+								MediaScannerConnection.scanFile(mContext, new String[]{Constants.PATH},null,null);	
 								dialog.dismiss();
 								if(running){
 									mContext.sendBroadcast(new Intent("FQ_DELETE"));
