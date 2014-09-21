@@ -41,8 +41,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaScannerConnection;
-import android.media.MediaScannerConnection.OnScanCompletedListener;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
@@ -153,7 +151,11 @@ public class MultipleCopyDialog {
 					case 10:
 							if(dialog.isShowing()){
 								//scanning the files into the local android db after performing the copying operation....
-								MediaScannerConnection.scanFile(mContext, new String[]{Constants.PATH},null,null);	
+								try{
+									mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.fromFile(new File(Constants.PATH))));
+								}catch(Exception e){
+									mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(Constants.PATH))));
+								}
 								dialog.dismiss();
 								if(running){
 									mContext.sendBroadcast(new Intent("FQ_DELETE"));
@@ -254,7 +256,7 @@ public class MultipleCopyDialog {
 					handle.sendEmptyMessage(3);
 					o_stream.write(data, 0, read);
 				}	
-
+				
 				o_stream.flush();
 				i_stream.close();
 				o_stream.close();

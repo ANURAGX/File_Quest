@@ -79,13 +79,11 @@ public class DeleteFiles{
 						btn2.setVisibility(View.GONE);
 						break;
 					case 2 :  	
-						MediaScannerConnection.scanFile(ctx, new String[]{Constants.PATH},
-								null, new OnScanCompletedListener() {									
-									@Override
-									public void onScanCompleted(String arg0, Uri arg1) {
-										// TODO Auto-generated method stub
-									}
-								});	
+						try{
+							mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.fromFile(new File(Constants.PATH))));
+						}catch(Exception e){
+							mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(Constants.PATH))));
+						}
 						mContext.sendBroadcast(new Intent("FQ_DELETE"));
 						Toast.makeText(mContext, ctx.getString(R.string.deleted),Toast.LENGTH_SHORT).show();
 						dialog.dismiss();	
