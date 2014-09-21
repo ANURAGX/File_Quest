@@ -21,10 +21,15 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.util.ArrayList;
+
 import com.stericson.RootTools.RootTools;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaScannerConnection;
+import android.media.MediaScannerConnection.OnScanCompletedListener;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -74,10 +79,16 @@ public class DeleteFiles{
 						btn2.setVisibility(View.GONE);
 						break;
 					case 2 :  	
+						MediaScannerConnection.scanFile(ctx, new String[]{Constants.PATH},
+								null, new OnScanCompletedListener() {									
+									@Override
+									public void onScanCompleted(String arg0, Uri arg1) {
+										// TODO Auto-generated method stub
+									}
+								});	
 						mContext.sendBroadcast(new Intent("FQ_DELETE"));
-						Toast.makeText(mContext, ctx.getString(R.string.deleted),
-								Toast.LENGTH_SHORT).show();
-						dialog.dismiss();						
+						Toast.makeText(mContext, ctx.getString(R.string.deleted),Toast.LENGTH_SHORT).show();
+						dialog.dismiss();	
 				}
 			}
 		};
