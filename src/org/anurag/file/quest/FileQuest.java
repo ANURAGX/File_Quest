@@ -2954,6 +2954,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				rootItemList = rootManager.getList();
 				CURRENT_ITEM=1;
 				resetPager();
+				file = new Item(new File(RootManager.getCurrentDirectory()),null, null, null);
 			} else if (CURRENT_ITEM == 1&&RootManager.getCurrentDirectory().endsWith("/")) {
 				/**
 				 * CHECKS WHETHER THE CURRENT PREF IS 1 IF IT IS FOUND 3 THEN IT
@@ -3050,7 +3051,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					SDAdapter.thumbselection = new boolean[sdItemsList.size()];
 				CURRENT_ITEM = 2;
 				resetPager();
-				//file2 = new File(RFileManager.getCurrentDirectory());
+				file2 = new Item(new File(SDManager.getCurrentDirectory()), null, null, null);
 			} else if (CURRENT_ITEM == 2 && SDManager.nStack.size() < 2) {
 				/**
 				 * CHECKS WHETHER THE CURRENT PREF IS 2 IF IT IS FOUND 3 THEN IT
