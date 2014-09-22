@@ -943,7 +943,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					switch (position) {
 					case 0:
 						// OPEN THE SELECTED FILE
-						new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
+						
+						if(!file0.isLocked())//file is not locked...
+							new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
+						else//file is locked....
+							new MasterPassword(mContext, size.x*8/9, file0, preferences,Constants.MODES.OPEN);
 						break;
 					case 1:
 						// CLOUD.....
@@ -1016,7 +1020,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							file0 = searchList.get(position);
 						else
 							file0 = mediaFileList.get(position);
-						new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
+						
+						if(!file0.isLocked())//selected item is not locked...
+							new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
+						else//item is locked...
+							new MasterPassword(mContext, size.x*8/9, file0, preferences, Constants.MODES.OPEN);
 					}
 				}
 			});
@@ -4139,6 +4147,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								RootManager.nStack.push(HOME_DIRECTORY);
 								setAdapter(1);
 							}
+						}else if(CURRENT_ITEM == 0){
+							//handling the locked items post request here for file gallery...
+							if(Constants.activeMode == Constants.MODES.OPEN)
+								new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
 						}
 					}else{
 						//THE UI HAS TO BE CHANGED BASED ON THE LOCKING AND
