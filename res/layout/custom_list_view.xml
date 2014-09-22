@@ -71,13 +71,13 @@
     	       				android:textStyle="bold"
     	       				android:layout_width="wrap_content"
     	       				android:layout_height="wrap_content"
-    	       				android:text="@string/zerosize"/>
+    	       				android:text="@string/totalfolder"/>
     					<TextView 
     					    android:id="@+id/fFiles"
     	       				android:textStyle="bold"
     	       				android:layout_width="wrap_content"
     	       				android:layout_height="wrap_content"
-    	       				android:text="@string/zerofiles"/>
+    	       				android:text="@string/totalfiles"/>
     	    			
     					
     				</LinearLayout>
