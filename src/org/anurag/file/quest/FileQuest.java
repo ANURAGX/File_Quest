@@ -975,9 +975,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 					case 5:
 						// ZIP
-						ArrayList<Item> temp = new ArrayList<Item>();
-						temp.add(file0);
-						new CreateZip(mContext, size.x * 8 / 9,temp);
+						if(!file0.isLocked()){//item is not locked....
+							ArrayList<Item> temp = new ArrayList<Item>();
+							temp.add(file0);
+							new CreateZip(mContext, size.x * 8 / 9,temp);
+						}else//item is locked....
+							new MasterPassword(mContext, size.x*8/9, file0, preferences, Constants.MODES.ARCHIVE);
 						break;
 					case 6:
 							//DELETE
@@ -4149,8 +4152,19 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							}
 						}else if(CURRENT_ITEM == 0){
 							//handling the locked items post request here for file gallery...
+							
+							//opening the locked item after passwd verification...
 							if(Constants.activeMode == Constants.MODES.OPEN)
 								new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
+							
+							//archiving the locked item after passwd verivication....
+							else if(Constants.activeMode == Constants.MODES.ARCHIVE){
+								ArrayList<Item> temp = new ArrayList<Item>();
+								temp.add(file0);
+								new CreateZip(mContext, size.x*8/9, temp);
+							}
+							
+							
 						}
 					}else{
 						//THE UI HAS TO BE CHANGED BASED ON THE LOCKING AND
