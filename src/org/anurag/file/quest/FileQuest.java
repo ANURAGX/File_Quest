@@ -993,11 +993,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							break;
 					case 7:
 						// RENAME
-						COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
-						RENAME_COMMAND = true;
-						mVFlipper.showPrevious();
-						mVFlipper.setAnimation(prevAnim());
-						editBox.setText(file0.getName());
+						if(file0.isLocked())
+							new MasterPassword(mContext, size.x*8/9, file0, preferences, Constants.MODES.RENAME);
+						else{
+							COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+							RENAME_COMMAND = true;
+							mVFlipper.showPrevious();
+							mVFlipper.setAnimation(prevAnim());
+							editBox.setText(file0.getName());
+						}
 						break;
 
 					case 8:
@@ -4177,6 +4181,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							//sharing the locked item after password verification...
 							else if(Constants.activeMode == Constants.MODES.SEND)
 								new BluetoothChooser(mContext, file0.getPath(), size.x*8/9, null);
+							
+							//renaming the locked item here...
+							else if(Constants.activeMode == Constants.MODES.RENAME){
+								COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+								RENAME_COMMAND = true;
+								mVFlipper.showPrevious();
+								mVFlipper.setAnimation(prevAnim());
+								editBox.setText(file0.getName());
+								editBox.setSelected(true);
+							}
 							
 						}
 					}else{
