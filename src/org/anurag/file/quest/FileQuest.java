@@ -4179,7 +4179,22 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								Toast.makeText(mContext, R.string.itemunlocked, Toast.LENGTH_SHORT).show();
 							}
 						}else if(CURRENT_ITEM == 0){
-							
+							if(!mediaFileList.get(id).isLocked()){
+								//file is not locked...
+								//lock the file...
+								
+								//this condition is true when user has not up the password and tried to lock the item...
+								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_locked));
+								Constants.db.insertNodeToLock(mediaFileList.get(id).getFile().getAbsolutePath(), 1);
+								mediaFileList.get(id).setLockStatus(true);
+								Toast.makeText(mContext, R.string.itemlocked, Toast.LENGTH_SHORT).show();
+							}else if(mediaFileList.get(id).isLocked()){
+								//after password verification was successful,unlock the file...
+								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_unlocked));
+								Constants.db.deleteLockedNode(mediaFileList.get(id).getFile().getPath());
+								mediaFileList.get(id).setLockStatus(false);
+								Toast.makeText(mContext, R.string.itemunlocked, Toast.LENGTH_SHORT).show();
+							}
 						}
 					}
 				}
