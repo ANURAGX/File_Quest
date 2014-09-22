@@ -25,8 +25,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Environment;
-import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -43,9 +41,12 @@ public class Utils {
 	public static ArrayList<Item> zip;
 	public static ArrayList<Item> mis;
 	public static ArrayList<Item> img;
+	public static ArrayList<Item> fav;
 	
-	Drawable musicImg,imageImg,vidImg,docImg,arcImg,misImg,apkImg;
-	String musicType,imageType,vidType,docType,arcType,misType,apkType;
+	private static int folderCount,fileCount;
+	
+	Drawable musicImg,imageImg,vidImg,docImg,arcImg,misImg,apkImg,folderImg;
+	String musicType,imageType,vidType,docType,arcType,misType,apkType,folderType,folderCnt,fileCnt;
 	
 	
 	static String msize;
@@ -65,9 +66,6 @@ public class Utils {
 	static long missize=0;
 	static long imgsize=0;
 	
-	File file; 	
-	Handler handle;
-	TextView count;
 	Context ctx;
 	
 	static TextView musicText,musicTextCount;
@@ -77,11 +75,11 @@ public class Utils {
 	static TextView docText,docTextCount;
 	static TextView arcText,arcTextCount;
 	static TextView misText,misTextCount;
+	static TextView favText,favTextCount;
 	
 	public Utils() {
 		// TODO Auto-generated constructor stub
 		
-		file = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
 		music = new ArrayList<Item>();
 		apps = new ArrayList<Item>();
 		vids = new ArrayList<Item>();
@@ -123,7 +121,9 @@ public class Utils {
 		misText = (TextView)v.findViewById(R.id.misFiles);
 		misTextCount = (TextView)v.findViewById(R.id.misSize);
 		
-		file = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+		favText = (TextView)v.findViewById(R.id.fSize);
+		favTextCount = (TextView)v.findViewById(R.id.fFiles);
+		
 		
 		music = new ArrayList<Item>();
 		apps = new ArrayList<Item>();
@@ -131,7 +131,8 @@ public class Utils {
 		doc = new ArrayList<Item>();
 		zip = new ArrayList<Item>();
 		mis = new ArrayList<Item>();
-		img = new ArrayList<Item>();		
+		img = new ArrayList<Item>();	
+		fav = new ArrayList<Item>();	
 		ctx = cont;
 		res = ctx.getResources();
 		loaded = false;
@@ -150,7 +151,10 @@ public class Utils {
 		docImg = res.getDrawable(R.drawable.ic_launcher_ppt);
 		misImg = res.getDrawable(R.drawable.ic_launcher_unknown);
 		arcImg = res.getDrawable(R.drawable.ic_launcher_zip_it);
+		folderImg = res.getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]);
 		
+		folderCnt = res.getString(R.string.totalfolder);
+		fileCnt = res.getString(R.string.totalfiles);
 		musicType = ctx.getString(R.string.music);
 		arcType = ctx.getString(R.string.zip);
 		apkType = ctx.getString(R.string.application);
@@ -158,6 +162,11 @@ public class Utils {
 		misType = ctx.getString(R.string.mis);
 		vidType = ctx.getString(R.string.vids);
 		docType = ctx.getString(R.string.docs);
+		folderType = res.getString(R.string.directory);
+		
+		folderCount = fileCount = 0;
+		favText.setText(String.format(folderCnt, 0));
+		favTextCount.setText(String.format(fileCnt, 0));
 	}
 	
 	public void setView(View view){
@@ -174,14 +183,11 @@ public class Utils {
 	 */
 	public String size(long size){
 		if(size>Constants.GB)
-			return String.format(ctx.getString(R.string.appsizegb), (double)size/(Constants.GB));
-		
+			return String.format(ctx.getString(R.string.appsizegb), (double)size/(Constants.GB));		
 		else if(size > Constants.MB)
-			return String.format(ctx.getString(R.string.appsizemb), (double)size/(Constants.MB));
-		
+			return String.format(ctx.getString(R.string.appsizemb), (double)size/(Constants.MB));		
 		else if(size>1024)
-			return String.format(ctx.getString(R.string.appsizekb), (double)size/(1024));
-		
+			return String.format(ctx.getString(R.string.appsizekb), (double)size/(1024));		
 		else
 			return String.format(ctx.getString(R.string.appsizebytes), (double)size);
 	}
@@ -198,8 +204,13 @@ public class Utils {
 		protected void onProgressUpdate(Integer... values) {
 			// TODO Auto-generated method stub
 			switch(values[0]){
-				case 0:
+				case 0:					
+					try{
+						favText.setText(String.format(folderCnt, folderCount));
+						favTextCount.setText(String.format(fileCnt, fileCount));
+					}catch(Exception e){
 						
+					}					
 					break;
 				case 1:
 					try{
@@ -276,7 +287,7 @@ public class Utils {
 		@Override
 		protected Void doInBackground(Void... arg0) {
 			// TODO Auto-generated method stub
-			start(file);
+			start(new File(Constants.PATH));
 			return null;
 		}
 		
@@ -285,11 +296,19 @@ public class Utils {
 		 * @param fil
 		 */
 		void start(File fil){
-			for(File fi:fil.listFiles())
+			for(File fi:fil.listFiles()){
 				if(fi.isFile())
 					makeIcon(fi);
-				else if(fi.isDirectory())
+				else if(fi.isDirectory()){
+					Item itm = new Item(fi, folderImg,folderType, null);
+					if(itm.isFavItem()){
+						folderCount++;
+						fav.add(itm);
+						publishProgress(new Integer[]{0});
+					}
 					start(fi);
+				}	
+			}	
 		}	
 		
 		/**
@@ -299,89 +318,184 @@ public class Utils {
 		private void makeIcon(File f){
 			String name = f.getName();
 			if(name.endsWith(".zip")||name.endsWith(".ZIP")){
-				zip.add(new Item(f, arcImg, arcType, RootManager.getSize(f)));
+				Item itm = new Item(f, arcImg, arcType, RootManager.getSize(f));				
+				
+				zip.add(itm);
 				zipsize+=f.length();
 				zsize = size(zipsize);
-				publishProgress(new Integer[]{7});
+				publishProgress(new Integer[]{6});
+				
+				//checking fav item status
+				if(itm.isFavItem()){
+					fileCount++;
+					fav.add(itm);
+					publishProgress(new Integer[]{0});
+				}
 			}else if(name.endsWith(".7z")||name.endsWith(".7Z")){
-				zip.add(new Item(f, res.getDrawable(R.drawable.ic_launcher_7zip),
-						arcType, RootManager.getSize(f)));
+				Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_7zip),
+						arcType, RootManager.getSize(f));
+				zip.add(itm);
 				zipsize+=f.length();
 				zsize = size(zipsize);
-				publishProgress(new Integer[]{7});
+				publishProgress(new Integer[]{6});
+				
+				//checking fav item status
+				if(itm.isFavItem()){
+					fileCount++;
+					fav.add(itm);
+					publishProgress(new Integer[]{0});
+				}
 			}else if(name.endsWith(".rar")||name.endsWith(".RAR")){
-				zip.add(new Item(f, res.getDrawable(R.drawable.ic_launcher_rar),
-						arcType, RootManager.getSize(f)));
+				Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_rar),
+						arcType, RootManager.getSize(f));
+				zip.add(itm);
 				zipsize+=f.length();
 				zsize = size(zipsize);
-				publishProgress(new Integer[]{7});
+				publishProgress(new Integer[]{6});
+				
+				//checking fav item status
+				if(itm.isFavItem()){
+					fileCount++;
+					fav.add(itm);
+					publishProgress(new Integer[]{0});
+				}
 			}else if(name.endsWith(".tar")||name.endsWith(".TAR")||name.endsWith(".tar.gz")||name.endsWith(".TAR.GZ")
 					||name.endsWith(".TAT.BZ2")||name.endsWith(".tar.bz2")){
-				zip.add(new Item(f, res.getDrawable(R.drawable.ic_launcher_tar),
-						arcType, RootManager.getSize(f)));
+				Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_tar),
+						arcType, RootManager.getSize(f));
+				zip.add(itm);
 				zipsize+=f.length();
 				zsize = size(zipsize);
-				publishProgress(new Integer[]{7});
+				publishProgress(new Integer[]{6});
+				
+				//checking fav item status
+				if(itm.isFavItem()){
+					fileCount++;
+					fav.add(itm);
+					publishProgress(new Integer[]{0});
+				}
+				
 			}
 			else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
 					||name.endsWith(".amr")||name.endsWith(".MP3")||name.endsWith(".OGG")||name.endsWith(".M4A")||
 					name.endsWith(".WAV")||name.endsWith(".AMR")){
-				
-				music.add(new Item(f, musicImg, musicType, RootManager.getSize(f)));
+				Item itm = new Item(f, musicImg, musicType, RootManager.getSize(f));
+				music.add(itm);
 				musicsize+=f.length();
 				msize = size(musicsize);
 				publishProgress(new Integer[]{1});
+				
+				//checking fav item status
+				if(itm.isFavItem()){
+					fileCount++;
+					fav.add(itm);
+					publishProgress(new Integer[]{0});
+				}
 			}
 			else if(name.endsWith(".apk")||name.endsWith(".APK")){
-				apps.add(new Item(f, apkImg, apkType, RootManager.getSize(f)));
+				Item itm = new Item(f, apkImg, apkType, RootManager.getSize(f));
+				apps.add(itm);
 				apksize+=f.length();
 				asize = size(musicsize);
 				publishProgress(new Integer[]{2});
+				
+				//checking fav item status
+				if(itm.isFavItem()){
+					fileCount++;
+					fav.add(itm);
+					publishProgress(new Integer[]{0});
+				}
 			}else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
 					||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
 					||name.endsWith(".MKV")){
-				vids.add(new Item(f, vidImg, vidType, RootManager.getSize(f)));
+				Item itm = new Item(f, vidImg, vidType, RootManager.getSize(f));
+				vids.add(itm);
 				vidsize+=f.length();
 				vsize = size(vidsize);
 				publishProgress(new Integer[]{4});
+				
+				//checking fav item status
+				if(itm.isFavItem()){
+					fileCount++;
+					fav.add(itm);
+					publishProgress(new Integer[]{0});
+				}
 			}	
 			else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
 					||name.endsWith(".png")||name.endsWith(".BMP")||name.endsWith(".GIF")||name.endsWith(".JPEG")||name.endsWith(".JPG")
 					||name.endsWith(".PNG")){
-				img.add(new Item(f, imageImg, imageType, RootManager.getSize(f)));
+				Item itm = new Item(f, imageImg, imageType, RootManager.getSize(f));
+				img.add(itm);
 				imgsize+=f.length();
 				psize = size(imgsize);
 				publishProgress(new Integer[]{3});
+				
+				//checking fav item status
+				if(itm.isFavItem()){
+					fileCount++;
+					fav.add(itm);
+					publishProgress(new Integer[]{0});
+				}
 			}else if(name.endsWith(".pdf")||name.endsWith(".PDF")){
-				doc.add(new Item(f,
-						res.getDrawable(R.drawable.ic_launcher_adobe),
-						ctx.getString(R.string.pdf),
-						RootManager.getSize(f)));
+				Item itm = new Item(f,res.getDrawable(R.drawable.ic_launcher_adobe),
+									ctx.getString(R.string.pdf),
+									RootManager.getSize(f));
+				doc.add(itm);
 				docsize+=f.length();
 				dsize = size(docsize);
-				publishProgress(new Integer[]{5});				
+				publishProgress(new Integer[]{5});	
+								
+				//checking fav item status
+				if(itm.isFavItem()){
+					fileCount++;
+					fav.add(itm);
+					publishProgress(new Integer[]{0});
+				}
 			}else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
 					||name.endsWith(".PPT")||name.endsWith(".DOCX")||name.endsWith(".pptx")||name.endsWith(".PPTX")
 					||name.endsWith(".csv")||name.endsWith(".CSV")){
-				doc.add(new Item(f,docImg,docType,RootManager.getSize(f)));
+				Item itm = new Item(f,docImg,docType,RootManager.getSize(f));
+				doc.add(itm);
 				docsize+=f.length();
 				dsize = size(docsize);
 				publishProgress(new Integer[]{5});
+				
+				//checking fav item status
+				if(itm.isFavItem()){
+					fileCount++;
+					fav.add(itm);
+					publishProgress(new Integer[]{0});
+				}
 			}else if(name.endsWith(".txt")||name.endsWith(".TXT")||name.endsWith(".log")||name.endsWith(".LOG")
 					||name.endsWith(".ini")||name.endsWith(".INI")){
-				doc.add(new Item(f,
-						res.getDrawable(R.drawable.ic_launcher_text),
-						ctx.getString(R.string.text),
-						RootManager.getSize(f)));
+				Item itm = new Item(f,res.getDrawable(R.drawable.ic_launcher_text),
+									ctx.getString(R.string.text),
+									RootManager.getSize(f));
+				doc.add(itm);
 				docsize+=f.length();
 				dsize = size(docsize);
 				publishProgress(new Integer[]{5});
+				
+				//checking fav item status
+				if(itm.isFavItem()){
+					fileCount++;
+					fav.add(itm);
+					publishProgress(new Integer[]{0});
+				}
 			}
 			else{
-				mis.add(new Item(f,misImg, misType, RootManager.getSize(f)));
+				Item itm = new Item(f,misImg, misType, RootManager.getSize(f));
+				mis.add(itm);
 				missize+=f.length();
 				misize = size(missize);
 				publishProgress(new Integer[]{7});
+				
+				//checking fav item status
+				if(itm.isFavItem()){
+					fileCount++;
+					fav.add(itm);
+					publishProgress(new Integer[]{0});
+				}
 			}		
 		}		
 	}	
