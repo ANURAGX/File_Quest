@@ -21,14 +21,10 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import com.stericson.RootTools.RootTools;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaScannerConnection;
-import android.media.MediaScannerConnection.OnScanCompletedListener;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
@@ -55,7 +51,7 @@ public class DeleteFiles{
 		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
 		dialog.setContentView(R.layout.delete_files);
 		dialog.getWindow().getAttributes().width = width;
-		dialog.setCancelable(false);
+		dialog.setCancelable(true);
 		file = list;
 		name=msg;
 		onCreate(context);
