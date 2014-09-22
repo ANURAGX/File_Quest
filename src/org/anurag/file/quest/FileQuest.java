@@ -125,6 +125,22 @@ import com.rey.slidelayout.SlideLayout;
 import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
 import com.twotoasters.jazzylistview.JazzyHelper;
 
+
+/*
+ *	TODO LIST...
+ *
+ * 	1. DELETE THE ENTRY FROM THE DB WHEN THE LOCKED ITEM IS 
+ *     RENAMED AND UPDATE THE DB WITH THE RENAMED ITEM...
+ *     
+ *     
+ */
+/**
+ * 
+ * @author ANURAG
+ *
+ */
+
+
 @SuppressLint({ "HandlerLeak", "SdCardPath" })
 public class FileQuest extends FragmentActivity implements OnClickListener, QuickAction.OnActionItemClickListener {
 
