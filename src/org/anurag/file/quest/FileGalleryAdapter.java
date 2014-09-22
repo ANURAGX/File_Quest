@@ -145,7 +145,7 @@ public class FileGalleryAdapter extends BaseAdapter{
 			}
 		});
 		
-		if(item.isFavItem())
+		if(Constants.db.isFavItem(item.getPath()))
 			h.favimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_favorite));
 		else
 			h.favimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_not_favorite));
