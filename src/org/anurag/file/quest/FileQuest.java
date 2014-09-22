@@ -1002,7 +1002,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 					case 8:
 						// SEND
-						new BluetoothChooser(mContext, file0.getPath(), size.x*8/9, null);
+						if(file0.isLocked())//item is locked....
+							new MasterPassword(mContext, size.x*8/9, file0, preferences, Constants.MODES.SEND);
+						else//item is not locked...
+							new BluetoothChooser(mContext, file0.getPath(), size.x*8/9, null);
 						break;
 					case 9:
 						new AddGesture(mContext, size.x, size.y*8/9, file0.getPath());
@@ -4170,6 +4173,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								Constants.db.deleteLockedNode(file0.getPath());
 								deleteMethod(file0);
 							}
+							
+							//sharing the locked item after password verification...
+							else if(Constants.activeMode == Constants.MODES.SEND)
+								new BluetoothChooser(mContext, file0.getPath(), size.x*8/9, null);
 							
 						}
 					}else{
