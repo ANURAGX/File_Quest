@@ -984,11 +984,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 					case 6:
 							//DELETE
-							{
+							if(!file0.isLocked()){//item is not locked...
 								ArrayList<Item> te = new ArrayList<Item>();
 								te.add(file0);
 								new DeleteFiles(mContext, size.x*8/9, te,null);
-							}
+							}else//item is locked...
+								new MasterPassword(mContext, size.x*8/9, file0, preferences, Constants.MODES.DELETE);
 							break;
 					case 7:
 						// RENAME
@@ -4164,6 +4165,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								new CreateZip(mContext, size.x*8/9, temp);
 							}
 							
+							//delete the provided item after password verification...
+							else if(Constants.activeMode == Constants.MODES.DELETE){
+								Constants.db.deleteLockedNode(file0.getPath());
+								deleteMethod(file0);
+							}
 							
 						}
 					}else{
