@@ -1178,8 +1178,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			d.getWindow().getAttributes().width = size.x*8/9;
 			simple.setOnItemLongClickListener(new OnItemLongClickListener() {
 				@Override
-				public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-						int position, long id) {
+				public boolean onItemLongClick(AdapterView<?> arg0, View arg1,int position, long id) {
 					spos = position;
 					if(SEARCH_FLAG){
 						if(ZIP_ROOT)
@@ -1201,6 +1200,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							file = rootItemList.get(position);
 					}
 					d.show();
+					fPos = position;
 					return true;
 				}
 			});
@@ -1518,6 +1518,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							file2 = sdItemsList.get(arg2);
 					}
 					dialog.show();
+					fPos = arg2;
 					return true;
 				}
 			});
@@ -3931,11 +3932,61 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					setAdapter(CURRENT_ITEM);
 				}else if (ACTION.equalsIgnoreCase("FQ_DELETE")) {
 					// setAdapter(CURRENT_ITEM);
-					if(CURRENT_ITEM != 0)
-						setAdapter(CURRENT_ITEM);
+					if(CURRENT_ITEM == 1){
+						if(!RootAdapter.MULTI_SELECT){
+							//single item has to removed....
+							rootItemList.remove(fPos);
+							simple.setAdapter(rootAdapter);
+						}else{
+							//multi select option was enabled and delete operation
+							//was performed...
+							int l = RootAdapter.MULTI_FILES.size();
+							for(int i = 0 ; i < l ;++i){
+								if(RootAdapter.MULTI_FILES.get(i)!=null){
+									//SDAdapter.MULTI_FILES.remove(i);
+									rootItemList.remove(i); 
+								}
+							}
+							RootAdapter.thumbselection = new boolean[rootItemList.size()];
+							simple.setAdapter(rootAdapter);
+						}
+					}else if(CURRENT_ITEM == 2){
+						if(!SDAdapter.MULTI_SELECT){
+							//single item has to removed....
+							sdItemsList.remove(fPos);
+							root.setAdapter(sdAdapter);
+						}else{
+							//multi select option was enabled and delete operation
+							//was performed...
+							int l = SDAdapter.MULTI_FILES.size();
+							for(int i = 0 ; i < l ;++i){
+								if(SDAdapter.MULTI_FILES.get(i)!=null){
+									//SDAdapter.MULTI_FILES.remove(i);
+									sdItemsList.remove(i); 
+								}
+							}
+							SDAdapter.thumbselection = new boolean[sdItemsList.size()];
+							root.setAdapter(sdAdapter);
+						}
+					}
 					else if(CURRENT_ITEM == 0){
-						mediaFileList.remove(fPos);
-						LIST_VIEW_3D.setAdapter(element);
+						if(!FileGalleryAdapter.MULTI_SELECT){
+							//deleting single item from UI...
+							mediaFileList.remove(fPos);
+							LIST_VIEW_3D.setAdapter(element);
+						}else{
+							//multi select option was enabled and delete operation
+							//was performed...
+							int l = FileGalleryAdapter.MULTI_FILES.size();
+							for(int i = 0 ; i < l ;++i){
+								if(FileGalleryAdapter.MULTI_FILES.get(i)!=null){
+									//SDAdapter.MULTI_FILES.remove(i);
+									mediaFileList.remove(i); 
+								}
+							}
+							FileGalleryAdapter.thumbselection = new boolean[mediaFileList.size()];
+							LIST_VIEW_3D.setAdapter(element);
+						}
 					}
 				} else if (ACTION.equalsIgnoreCase("FQ_FLASHZIP")) {
 					// FLASHABLE ZIP DIALOG IS FIRED FROM HERE
