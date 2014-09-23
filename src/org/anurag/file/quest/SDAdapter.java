@@ -27,6 +27,8 @@ import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +43,7 @@ import android.widget.Toast;
 public class SDAdapter extends BaseAdapter{
 	private static HashMap<String, Drawable> apkList;
 	private static HashMap<String, Bitmap> imgList;
+	private static HashMap<String, Bitmap> musicList;
 	Bitmap image;
 	Holder h;
 	public static boolean MULTI_SELECT;
@@ -59,6 +62,7 @@ public class SDAdapter extends BaseAdapter{
 		inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		imgList = new HashMap<String , Bitmap>();
 		apkList = new HashMap<String , Drawable>();
+		musicList = new HashMap<String , Bitmap>();
 	}
 
 	@Override
@@ -214,6 +218,12 @@ public class SDAdapter extends BaseAdapter{
 				new LoadApkIcon(h.icon, item).execute();
 			else
 				h.icon.setImageDrawable(draw);
+		}else if(item.getType().equals("Music")){
+			Bitmap music = musicList.get(item.getPath());
+			if(music !=null)
+				h.icon.setImageBitmap(music);
+			else
+				new LoadAlbumArt(h.icon , item).execute();
 		}
 		return convertView;
 	}	
@@ -304,6 +314,45 @@ public class SDAdapter extends BaseAdapter{
 			inf.applicationInfo.publicSourceDir = itm.getPath();
 			dra = inf.applicationInfo.loadIcon(ctx.getPackageManager());
 			apkList.put(itm.getPath(), dra);
+			return null;
+		}		
+	}
+	
+	/**
+	 * Class to load the album art of the music files....
+	 * @author Anurag....
+	 *
+	 */
+	private class LoadAlbumArt extends AsyncTask<Void, Void, Void>{
+
+		ImageView iView;
+		Bitmap map;
+		Item itm;
+		public LoadAlbumArt(ImageView view , Item it) {
+			// TODO Auto-generated constructor stub
+			this.iView = view;
+			this.itm = it;
+		}		
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			if(map !=null)
+				iView.setImageBitmap(map);
+		}
+		
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			// TODO Auto-generated method stub
+			try{
+				MediaMetadataRetriever ret = new MediaMetadataRetriever();
+				ret.setDataSource(ctx, Uri.parse(itm.getPath()));
+				map = BitmapFactory.decodeByteArray(ret.getEmbeddedPicture(), 0, ret.getEmbeddedPicture().length);
+				if(map!=null)
+					musicList.put(itm.getPath(), map);
+			}catch(Exception e){
+				map = null;
+			}
 			return null;
 		}		
 	}
