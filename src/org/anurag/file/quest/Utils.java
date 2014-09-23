@@ -31,7 +31,7 @@ import android.widget.TextView;
 public class Utils {
 	
 	static String type;
-	Resources res;
+	static Resources res;
 	static View v;
 	public static boolean loaded = false;
 	public static ArrayList<Item> music;
@@ -45,8 +45,24 @@ public class Utils {
 	
 	private static int folderCount,fileCount;
 	
-	Drawable musicImg,imageImg,vidImg,docImg,arcImg,misImg,apkImg,folderImg;
-	String musicType,imageType,vidType,docType,arcType,misType,apkType,folderType,folderCnt,fileCnt;
+	static Drawable musicImg;
+	static Drawable imageImg;
+	static Drawable vidImg;
+	static Drawable docImg;
+	static Drawable arcImg;
+	static Drawable misImg;
+	static Drawable apkImg;
+	static Drawable folderImg;
+	static String musicType;
+	static String imageType;
+	static String vidType;
+	static String docType;
+	static String arcType;
+	static String misType;
+	static String apkType;
+	static String folderType;
+	static String folderCnt;
+	static String fileCnt;
 	
 	
 	static String msize;
@@ -66,7 +82,7 @@ public class Utils {
 	static long missize=0;
 	static long imgsize=0;
 	
-	Context ctx;
+	static Context ctx;
 	
 	static TextView musicText,musicTextCount;
 	static TextView appText,appTextCount;
@@ -100,29 +116,36 @@ public class Utils {
 	public Utils(View view,Context cont) {
 		// TODO Auto-generated constructor stub
 		v = view;
-		musicText = (TextView)v.findViewById(R.id.mSize);
-		musicTextCount = (TextView)v.findViewById(R.id.mFiles);
 		
-		appText = (TextView)v.findViewById(R.id.aSize);
-		appTextCount = (TextView)v.findViewById(R.id.aFiles);
+		if(v !=null){
+			musicText = (TextView)v.findViewById(R.id.mSize);
+			musicTextCount = (TextView)v.findViewById(R.id.mFiles);
+			
+			appText = (TextView)v.findViewById(R.id.aSize);
+			appTextCount = (TextView)v.findViewById(R.id.aFiles);
+			
+			docText = (TextView)v.findViewById(R.id.dSize);
+			docTextCount = (TextView)v.findViewById(R.id.dFile);
+			
+			imgText = (TextView)v.findViewById(R.id.pSize);
+			imgTextCount = (TextView)v.findViewById(R.id.pFiles);
+			
+			vidText = (TextView)v.findViewById(R.id.vSize);
+			vidTextCount = (TextView)v.findViewById(R.id.vFiles);
+			
+			arcText = (TextView)v.findViewById(R.id.zSize);
+			arcTextCount = (TextView)v.findViewById(R.id.zFiles);
+			
+			misText = (TextView)v.findViewById(R.id.misFiles);
+			misTextCount = (TextView)v.findViewById(R.id.misSize);
+			
+			favText = (TextView)v.findViewById(R.id.fSize);
+			favTextCount = (TextView)v.findViewById(R.id.fFiles);
+			
+			favText.setText(String.format(folderCnt, 0));
+			favTextCount.setText(String.format(fileCnt, 0));
+		}
 		
-		docText = (TextView)v.findViewById(R.id.dSize);
-		docTextCount = (TextView)v.findViewById(R.id.dFile);
-		
-		imgText = (TextView)v.findViewById(R.id.pSize);
-		imgTextCount = (TextView)v.findViewById(R.id.pFiles);
-		
-		vidText = (TextView)v.findViewById(R.id.vSize);
-		vidTextCount = (TextView)v.findViewById(R.id.vFiles);
-		
-		arcText = (TextView)v.findViewById(R.id.zSize);
-		arcTextCount = (TextView)v.findViewById(R.id.zFiles);
-		
-		misText = (TextView)v.findViewById(R.id.misFiles);
-		misTextCount = (TextView)v.findViewById(R.id.misSize);
-		
-		favText = (TextView)v.findViewById(R.id.fSize);
-		favTextCount = (TextView)v.findViewById(R.id.fFiles);
 		
 		
 		music = new ArrayList<Item>();
@@ -165,15 +188,40 @@ public class Utils {
 		folderType = res.getString(R.string.directory);
 		
 		folderCount = fileCount = 0;
+		
+	}
+	
+	public static void setView(View view){
+		v = view;
+		musicText = (TextView)v.findViewById(R.id.mSize);
+		musicTextCount = (TextView)v.findViewById(R.id.mFiles);
+		
+		appText = (TextView)v.findViewById(R.id.aSize);
+		appTextCount = (TextView)v.findViewById(R.id.aFiles);
+		
+		docText = (TextView)v.findViewById(R.id.dSize);
+		docTextCount = (TextView)v.findViewById(R.id.dFile);
+		
+		imgText = (TextView)v.findViewById(R.id.pSize);
+		imgTextCount = (TextView)v.findViewById(R.id.pFiles);
+		
+		vidText = (TextView)v.findViewById(R.id.vSize);
+		vidTextCount = (TextView)v.findViewById(R.id.vFiles);
+		
+		arcText = (TextView)v.findViewById(R.id.zSize);
+		arcTextCount = (TextView)v.findViewById(R.id.zFiles);
+		
+		misText = (TextView)v.findViewById(R.id.misFiles);
+		misTextCount = (TextView)v.findViewById(R.id.misSize);
+		
+		favText = (TextView)v.findViewById(R.id.fSize);
+		favTextCount = (TextView)v.findViewById(R.id.fFiles);
+		
 		favText.setText(String.format(folderCnt, 0));
 		favTextCount.setText(String.format(fileCnt, 0));
 	}
 	
-	public void setView(View view){
-		v = view;
-	}
-	
-	public void load(){
+	public static void load(){
 		new MainAsyncTask().execute();
 	}	
 	/**
@@ -181,7 +229,7 @@ public class Utils {
 	 * @param list
 	 * @return
 	 */
-	public String size(long size){
+	public static String size(long size){
 		if(size>Constants.GB)
 			return String.format(ctx.getString(R.string.appsizegb), (double)size/(Constants.GB));		
 		else if(size > Constants.MB)
@@ -193,7 +241,7 @@ public class Utils {
 	}
 	
 	
-	private class MainAsyncTask extends AsyncTask<Void, Integer, Void>{
+	private static class MainAsyncTask extends AsyncTask<Void, Integer, Void>{
 		@Override
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
@@ -287,7 +335,18 @@ public class Utils {
 		@Override
 		protected Void doInBackground(Void... arg0) {
 			// TODO Auto-generated method stub
-			start(new File(Constants.PATH));
+			if(!Utils.loaded)
+				start(new File(Constants.PATH));
+			else{
+				publishProgress(new Integer[]{0});
+				publishProgress(new Integer[]{1});
+				publishProgress(new Integer[]{2});
+				publishProgress(new Integer[]{3});
+				publishProgress(new Integer[]{4});
+				publishProgress(new Integer[]{5});
+				publishProgress(new Integer[]{6});
+				publishProgress(new Integer[]{7});
+			}
 			return null;
 		}
 		
@@ -499,4 +558,53 @@ public class Utils {
 			}		
 		}		
 	}	
+	
+	public static void updateUI(){
+		try{
+			favText.setText(String.format(folderCnt, folderCount));
+			favTextCount.setText(String.format(fileCnt, fileCount));
+		}catch(Exception e){}					
+		
+		try{
+			//DISLPAYS MUSIC SIZE..
+			musicText.setText(msize);								
+			musicTextCount.setText(music.size() + " "+ctx.getString(R.string.items));
+		}catch(NullPointerException e){}					
+		
+		try{
+			//DISPLAYS APPS SIZE...
+			appText.setText(asize);								
+			appTextCount.setText(apps.size() + " "+ctx.getString(R.string.items));
+		}catch(NullPointerException e){}					
+		
+		try{
+			//displays IMAGE SIZE..
+			imgText.setText(psize);								
+			imgTextCount.setText(img.size() + " "+ctx.getString(R.string.items));
+		}catch(NullPointerException e){}
+			
+		try{
+			//displays video size...
+			vidText.setText(vsize);								
+			vidTextCount.setText(vids.size() + " "+ctx.getString(R.string.items));
+		}catch(NullPointerException e){}
+			
+		try{
+			//DSIPLAYS DOCS SIZE...
+			docText.setText(dsize);							
+			docTextCount.setText(doc.size() + " "+ctx.getString(R.string.items));
+		}catch(NullPointerException e){}
+		
+		try{
+			//displays archive size...
+			arcText.setText(zsize);								
+			arcTextCount.setText(zip.size() + " "+ctx.getString(R.string.items));
+		}catch(NullPointerException e){}
+			
+		//displays miscellaneous size...
+		try{
+			misText.setText(misize);								
+			misTextCount.setText(mis.size() + " "+ctx.getString(R.string.items));
+		}catch(NullPointerException e){}	
+	}
 }

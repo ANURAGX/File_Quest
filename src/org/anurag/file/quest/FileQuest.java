@@ -314,6 +314,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		Constants.db = new ItemDB(mContext);
 		Constants.dboxDB = new DBoxUsers(mContext);		
 		
+		loadFileGallery = new Utils(null, mContext);
+		Utils.load();
+		
 		sdManager = new SDManager(FileQuest.this);
 		rootManager = new RootManager(FileQuest.this);
 		
@@ -860,11 +863,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			LinearLayout zips = (LinearLayout) v.findViewById(R.id.zips);
 			LinearLayout misc = (LinearLayout) v.findViewById(R.id.misc);
 		
-			loadFileGallery = new Utils(v, mContext);
-			loadFileGallery.load();
-			//loadFileGallery.setView(v);
-			Constants.UPDATE_FILEGALLERY = true;
-			//loadFileGallery.load();
+			
+			Utils.setView(v);
+			if(Utils.loaded){
+				//all the information is loaded,just uodating the UI.... 
+				Utils.updateUI();
+			}
 			/*
 			 * WHEN MUSIC BUTTON IS CLICKED
 			 */
