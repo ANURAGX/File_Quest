@@ -938,22 +938,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			d.getWindow().getAttributes().width = size.x*8/9;
 			LIST_VIEW_3D.setOnItemLongClickListener(new OnItemLongClickListener() {
 						@Override
-						public boolean onItemLongClick(AdapterView<?> arg0,
-								View arg1, int position, long arg3) {
+						public boolean onItemLongClick(AdapterView<?> arg0,View arg1, int position, long arg3) {
 							if (elementInFocus) {
 								if (SEARCH_FLAG)
 									file0 = searchList.get(position);
 								else
 									file0 = mediaFileList.get(position);
 								d.show();
+								fPos = position;
 							}
 							return true;
 						}
 					});
 			lo.setOnItemClickListener(new OnItemClickListener() {
 				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1,
-						int position, long arg3) {
+				public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3) {
 					// TODO Auto-generated method stub
 					d.dismiss();
 					switch (position) {
@@ -1040,8 +1039,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			lo.setOnItemLongClickListener(null);
 			LIST_VIEW_3D.setOnItemClickListener(new OnItemClickListener() {
 				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1,
-						final int position, long id) {
+				public void onItemClick(AdapterView<?> arg0, View arg1,final int position, long id) {
 					if (elementInFocus) {
 						if (SEARCH_FLAG)
 							file0 = searchList.get(position);
@@ -3933,8 +3931,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					setAdapter(CURRENT_ITEM);
 				}else if (ACTION.equalsIgnoreCase("FQ_DELETE")) {
 					// setAdapter(CURRENT_ITEM);
-					
-					setAdapter(CURRENT_ITEM);
+					if(CURRENT_ITEM != 0)
+						setAdapter(CURRENT_ITEM);
+					else if(CURRENT_ITEM == 0){
+						mediaFileList.remove(fPos);
+						LIST_VIEW_3D.setAdapter(element);
+					}
 				} else if (ACTION.equalsIgnoreCase("FQ_FLASHZIP")) {
 					// FLASHABLE ZIP DIALOG IS FIRED FROM HERE
 					 new CreateZipApps(mContext, size.x*8/9, nList);
