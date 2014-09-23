@@ -3351,10 +3351,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								protected void onPostExecute(Void result) {
 									// TODO Auto-generated method stub
 									super.onPostExecute(result);
-									if(CURRENT_ITEM==2)
+									if(CURRENT_ITEM == 2)
 										root.setAdapter(new SDAdapter(mContext,searchList));
-									else if(CURRENT_ITEM==1)
+									else if(CURRENT_ITEM == 1)
 										simple.setAdapter(new RootAdapter(mContext,searchList));
+									else if(CURRENT_ITEM == 0)
+										LIST_VIEW_3D.setAdapter(new FileGalleryAdapter(mContext, searchList));
 								}
 
 								@Override
@@ -3365,24 +3367,33 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 										root.setAdapter(null);
 									else if(CURRENT_ITEM==1)
 										simple.setAdapter(null);
+									else if(CURRENT_ITEM == 0)
+										LIST_VIEW_3D.setAdapter(null);
 								}
 
 								@Override
 								protected Void doInBackground(Void... arg0) {
 									// TODO Auto-generated method stub
-									if(CURRENT_ITEM==2){
+									if(CURRENT_ITEM == 2){
 										String text = ed.toString().toLowerCase();
 										int len = sdItemsList.size();
 										for(int i=0;i<len;++i){
 											if(sdItemsList.get(i).getName().toLowerCase().contains(text))
 												searchList.add(sdItemsList.get(i));
 										}
-									}else if(CURRENT_ITEM==1){
+									}else if(CURRENT_ITEM == 1){
 										String text = ed.toString().toLowerCase();
 										int len = rootItemList.size();
 										for(int i=0;i<len;++i){
 											if(rootItemList.get(i).getName().toLowerCase().contains(text))
 												searchList.add(rootItemList.get(i));
+										}
+									}else if(CURRENT_ITEM == 0){
+										String text = ed.toString().toLowerCase();
+										int len = mediaFileList.size();
+										for(int i=0;i<len;++i){
+											if(mediaFileList.get(i).getName().toLowerCase().contains(text))
+												searchList.add(mediaFileList.get(i));
 										}
 									}
 									return null;
