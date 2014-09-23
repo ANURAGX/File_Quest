@@ -396,7 +396,7 @@ public class Utils {
 				Item itm = new Item(f, apkImg, apkType, RootManager.getSize(f));
 				apps.add(itm);
 				apksize+=f.length();
-				asize = size(musicsize);
+				asize = size(apksize);
 				publishProgress(new Integer[]{2});
 				
 				//checking fav item status
