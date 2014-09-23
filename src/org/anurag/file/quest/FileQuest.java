@@ -3315,8 +3315,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 */
 	private void search(){
 		// TODO Auto-generated method stub
-				searchList = new ArrayList<Item>();
 				try{
+					if(searchList == null)
+						searchList = new ArrayList<Item>();
+					else
+						searchList.clear();
 					LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
 					a.setVisibility(View.GONE);
 					// Search Flipper is loaded
@@ -3350,25 +3353,32 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								@Override
 								protected void onPostExecute(Void result) {
 									// TODO Auto-generated method stub
-									super.onPostExecute(result);
-									if(CURRENT_ITEM == 2)
-										root.setAdapter(new SDAdapter(mContext,searchList));
-									else if(CURRENT_ITEM == 1)
-										simple.setAdapter(new RootAdapter(mContext,searchList));
-									else if(CURRENT_ITEM == 0)
-										LIST_VIEW_3D.setAdapter(new FileGalleryAdapter(mContext, searchList));
+									
+									try{
+										if(CURRENT_ITEM == 2)
+											root.setAdapter(new SDAdapter(mContext,searchList));
+										else if(CURRENT_ITEM == 1)
+											simple.setAdapter(new RootAdapter(mContext,searchList));
+										else if(CURRENT_ITEM == 0)
+											LIST_VIEW_3D.setAdapter(new FileGalleryAdapter(mContext, searchList));
+									}catch(Exception e){
+										
+									}
 								}
 
 								@Override
 								protected void onPreExecute() {
 									// TODO Auto-generated method stub
-									super.onPreExecute();
-									if(CURRENT_ITEM==2)
-										root.setAdapter(null);
-									else if(CURRENT_ITEM==1)
-										simple.setAdapter(null);
-									else if(CURRENT_ITEM == 0)
-										LIST_VIEW_3D.setAdapter(null);
+									try{
+										if(CURRENT_ITEM==2)
+											root.setAdapter(null);
+										else if(CURRENT_ITEM==1)
+											simple.setAdapter(null);
+										else if(CURRENT_ITEM == 0)
+											LIST_VIEW_3D.setAdapter(null);
+									}catch(Exception e){
+										
+									}
 								}
 
 								@Override
@@ -3392,8 +3402,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 										String text = ed.toString().toLowerCase();
 										int len = mediaFileList.size();
 										for(int i=0;i<len;++i){
-											if(mediaFileList.get(i).getName().toLowerCase().contains(text))
-												searchList.add(mediaFileList.get(i));
+											try{
+												if(mediaFileList.get(i).getName().toLowerCase().contains(text))
+													searchList.add(mediaFileList.get(i));
+											}catch(Exception e){
+												
+											}
 										}
 									}
 									return null;
