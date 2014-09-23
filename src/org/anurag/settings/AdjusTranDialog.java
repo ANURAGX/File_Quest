@@ -87,7 +87,18 @@ public class AdjusTranDialog {
 				if(pos == -1)//no item selected....
 					Toast.makeText(ctx, ctx.getString(R.string.makeaselection), Toast.LENGTH_SHORT).show();
 				else{
-					FileQuest.TRANSPRA_LEVEL = Float.parseFloat(pos+"");
+					
+					if(pos == 0)
+						FileQuest.TRANSPRA_LEVEL = 0.6f;
+					else if(pos == 1)
+						FileQuest.TRANSPRA_LEVEL = 0.7f;
+					else if(pos == 2)
+						FileQuest.TRANSPRA_LEVEL = 0.8f;
+					else if(pos == 3)
+						FileQuest.TRANSPRA_LEVEL = 0.9f;
+					else if(pos == 4)
+						FileQuest.TRANSPRA_LEVEL = 1.0f;
+					
 					edit.putFloat("TRANSPRA_LEVEL", FileQuest.TRANSPRA_LEVEL);
 					edit.commit();
 					Toast.makeText(ctx, ctx.getString(R.string.settingsapplied), Toast.LENGTH_SHORT).show();
