@@ -4358,7 +4358,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							}
 						}
 					}
-				}
+				}else if(ACTION.equalsIgnoreCase("FQ_COPY"))
+					setAdapter(CURRENT_ITEM);
 			}
 		};
 		IntentFilter filter = new IntentFilter("FQ_BACKUP");
@@ -4385,7 +4386,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		this.registerReceiver(RECEIVER, filter);
 		filter = new IntentFilter("FQ_MOVE_LOCATION");
 		this.registerReceiver(RECEIVER, filter);
-		
+		filter = new IntentFilter("FQ_COPY");
+		this.registerReceiver(RECEIVER, filter);
 		filter = new IntentFilter("FQ_FILE_LOCKED_OR_UNLOCKED");
 		this.registerReceiver(RECEIVER, filter);
 	}

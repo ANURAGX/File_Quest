@@ -158,7 +158,7 @@ public class MultipleCopyDialog {
 								}
 								dialog.dismiss();
 								if(running){
-									mContext.sendBroadcast(new Intent("FQ_DELETE"));
+									mContext.sendBroadcast(new Intent("FQ_COPY"));
 									Toast.makeText(mContext, mContext.getResources().getString(R.string.copsuccess), Toast.LENGTH_SHORT).show();
 									running = false;
 								}else
