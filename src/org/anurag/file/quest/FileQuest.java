@@ -4017,6 +4017,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							LIST_VIEW_3D.setAdapter(element);
 						}
 					}
+					
+					/**
+					 * updating the file gallery here after an item was deleted...
+					 * 
+					 *  This code will be removed in future....
+					 */
+					if(Utils.loaded){
+						loadFileGallery = new Utils(null, mContext);
+						Utils.load();
+					}
 				} else if (ACTION.equalsIgnoreCase("FQ_FLASHZIP")) {
 					// FLASHABLE ZIP DIALOG IS FIRED FROM HERE
 					 new CreateZipApps(mContext, size.x*8/9, nList);
