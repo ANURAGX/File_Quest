@@ -139,7 +139,7 @@ public class FileGalleryAdapter extends BaseAdapter{
 					else{
 						list.get(img.getId()).setLockStatus(true);
 						img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_locked));
-						Constants.db.insertNodeToLock(list.get(img.getId()).getFile().getAbsolutePath(), 1);
+						Constants.db.insertNodeToLock(list.get(img.getId()).getFile().getAbsolutePath());
 						Toast.makeText(ctx, R.string.itemlocked, Toast.LENGTH_SHORT).show();
 					}					
 				}else{
@@ -169,7 +169,7 @@ public class FileGalleryAdapter extends BaseAdapter{
 				}else{
 					im.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_favorite));
 					list.get(im.getId()).setFavStatus(true);
-					Constants.db.insertNodeToFav(list.get(im.getId()).getPath(), 1);
+					Constants.db.insertNodeToFav(list.get(im.getId()).getPath());
 					Toast.makeText(ctx, R.string.favadded, Toast.LENGTH_SHORT).show();
 				}
 			}
