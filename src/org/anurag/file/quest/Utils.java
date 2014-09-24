@@ -21,8 +21,10 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.View;
@@ -336,8 +338,10 @@ public class Utils {
 		@Override
 		protected Void doInBackground(Void... arg0) {
 			// TODO Auto-generated method stub
-			if(!Utils.loaded)
+			if(!Utils.loaded){
+				startFav();
 				start(new File(Constants.PATH));
+			}	
 			else{
 				publishProgress(new Integer[]{0});
 				publishProgress(new Integer[]{1});
@@ -358,14 +362,8 @@ public class Utils {
 		void start(File fil){
 			for(File fi:fil.listFiles()){
 				if(fi.isFile())
-					makeIcon(fi);
+					makeIcon(fi , false);
 				else if(fi.isDirectory()){
-					Item itm = new Item(fi, folderImg,folderType, null);
-					if(itm.isFavItem()){
-						folderCount++;
-						fav.add(itm);
-						publishProgress(new Integer[]{0});
-					}
 					start(fi);
 				}	
 			}	
@@ -373,20 +371,40 @@ public class Utils {
 		
 		/**
 		 * 
+		 */
+		void startFav(){
+			Cursor cursor = Constants.db.getReadableDatabase().rawQuery("SELECT * FROM FAVITEMS;",null);
+			while(cursor.moveToNext()){
+				String name = cursor.getColumnName(cursor.getColumnIndex("FILEPATH"));
+				File fil = new File(name);
+				if(fil.isFile())
+					makeIcon(new File(name), true);
+				else{
+					folderCount++;
+					fav.add(new Item(fil,
+							folderImg, folderType, RootManager.getSize(fil)));
+					publishProgress(new Integer[]{0});
+				}	
+			}
+			cursor.close();
+		}
+		
+		/**
+		 * 
 		 * @param f
 		 */
-		private void makeIcon(File f){
+		private void makeIcon(File f , boolean favItem){
 			String name = f.getName();
 			if(name.endsWith(".zip")||name.endsWith(".ZIP")){
-				Item itm = new Item(f, arcImg, arcType, RootManager.getSize(f));				
+				Item itm = new Item(f, arcImg, arcType, RootManager.getSize(f));
+				if(!favItem){
+					zip.add(itm);
+					zipsize+=f.length();
+					zsize = size(zipsize);
+					publishProgress(new Integer[]{6});
+				}				
 				
-				zip.add(itm);
-				zipsize+=f.length();
-				zsize = size(zipsize);
-				publishProgress(new Integer[]{6});
-				
-				//checking fav item status
-				if(itm.isFavItem()){
+				else{
 					fileCount++;
 					fav.add(itm);
 					publishProgress(new Integer[]{0});
@@ -394,13 +412,14 @@ public class Utils {
 			}else if(name.endsWith(".7z")||name.endsWith(".7Z")){
 				Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_7zip),
 						arcType, RootManager.getSize(f));
-				zip.add(itm);
-				zipsize+=f.length();
-				zsize = size(zipsize);
-				publishProgress(new Integer[]{6});
+				if(!favItem){
+					zip.add(itm);
+					zipsize+=f.length();
+					zsize = size(zipsize);
+					publishProgress(new Integer[]{6});
+				}
 				
-				//checking fav item status
-				if(itm.isFavItem()){
+				else{
 					fileCount++;
 					fav.add(itm);
 					publishProgress(new Integer[]{0});
@@ -408,13 +427,14 @@ public class Utils {
 			}else if(name.endsWith(".rar")||name.endsWith(".RAR")){
 				Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_rar),
 						arcType, RootManager.getSize(f));
-				zip.add(itm);
-				zipsize+=f.length();
-				zsize = size(zipsize);
-				publishProgress(new Integer[]{6});
+				if(!favItem){
+					zip.add(itm);
+					zipsize+=f.length();
+					zsize = size(zipsize);
+					publishProgress(new Integer[]{6});
+				}
 				
-				//checking fav item status
-				if(itm.isFavItem()){
+				else{
 					fileCount++;
 					fav.add(itm);
 					publishProgress(new Integer[]{0});
@@ -423,13 +443,14 @@ public class Utils {
 					||name.endsWith(".TAT.BZ2")||name.endsWith(".tar.bz2")){
 				Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_tar),
 						arcType, RootManager.getSize(f));
-				zip.add(itm);
-				zipsize+=f.length();
-				zsize = size(zipsize);
-				publishProgress(new Integer[]{6});
+				if(!favItem){
+					zip.add(itm);
+					zipsize+=f.length();
+					zsize = size(zipsize);
+					publishProgress(new Integer[]{6});
+				}
 				
-				//checking fav item status
-				if(itm.isFavItem()){
+				else{
 					fileCount++;
 					fav.add(itm);
 					publishProgress(new Integer[]{0});
@@ -440,13 +461,14 @@ public class Utils {
 					||name.endsWith(".amr")||name.endsWith(".MP3")||name.endsWith(".OGG")||name.endsWith(".M4A")||
 					name.endsWith(".WAV")||name.endsWith(".AMR")){
 				Item itm = new Item(f, musicImg, musicType, RootManager.getSize(f));
-				music.add(itm);
-				musicsize+=f.length();
-				msize = size(musicsize);
-				publishProgress(new Integer[]{1});
+				if(!favItem){
+					music.add(itm);
+					musicsize+=f.length();
+					msize = size(musicsize);
+					publishProgress(new Integer[]{1});
+				}
 				
-				//checking fav item status
-				if(itm.isFavItem()){
+				else{
 					fileCount++;
 					fav.add(itm);
 					publishProgress(new Integer[]{0});
@@ -454,13 +476,14 @@ public class Utils {
 			}
 			else if(name.endsWith(".apk")||name.endsWith(".APK")){
 				Item itm = new Item(f, apkImg, apkType, RootManager.getSize(f));
-				apps.add(itm);
-				apksize+=f.length();
-				asize = size(apksize);
-				publishProgress(new Integer[]{2});
+				if(!favItem){
+					apps.add(itm);
+					apksize+=f.length();
+					asize = size(apksize);
+					publishProgress(new Integer[]{2});
+				}
 				
-				//checking fav item status
-				if(itm.isFavItem()){
+				else{
 					fileCount++;
 					fav.add(itm);
 					publishProgress(new Integer[]{0});
@@ -469,13 +492,14 @@ public class Utils {
 					||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
 					||name.endsWith(".MKV")){
 				Item itm = new Item(f, vidImg, vidType, RootManager.getSize(f));
-				vids.add(itm);
-				vidsize+=f.length();
-				vsize = size(vidsize);
-				publishProgress(new Integer[]{4});
+				if(!favItem){
+					vids.add(itm);
+					vidsize+=f.length();
+					vsize = size(vidsize);
+					publishProgress(new Integer[]{4});
+				}
 				
-				//checking fav item status
-				if(itm.isFavItem()){
+				else{
 					fileCount++;
 					fav.add(itm);
 					publishProgress(new Integer[]{0});
@@ -485,13 +509,14 @@ public class Utils {
 					||name.endsWith(".png")||name.endsWith(".BMP")||name.endsWith(".GIF")||name.endsWith(".JPEG")||name.endsWith(".JPG")
 					||name.endsWith(".PNG")){
 				Item itm = new Item(f, imageImg, imageType, RootManager.getSize(f));
-				img.add(itm);
-				imgsize+=f.length();
-				psize = size(imgsize);
-				publishProgress(new Integer[]{3});
+				if(!favItem){
+					img.add(itm);
+					imgsize+=f.length();
+					psize = size(imgsize);
+					publishProgress(new Integer[]{3});
+				}
 				
-				//checking fav item status
-				if(itm.isFavItem()){
+				else{
 					fileCount++;
 					fav.add(itm);
 					publishProgress(new Integer[]{0});
@@ -500,13 +525,14 @@ public class Utils {
 				Item itm = new Item(f,res.getDrawable(R.drawable.ic_launcher_adobe),
 									ctx.getString(R.string.pdf),
 									RootManager.getSize(f));
-				doc.add(itm);
-				docsize+=f.length();
-				dsize = size(docsize);
-				publishProgress(new Integer[]{5});	
+				if(!favItem){
+					doc.add(itm);
+					docsize+=f.length();
+					dsize = size(docsize);
+					publishProgress(new Integer[]{5});	
+				}
 								
-				//checking fav item status
-				if(itm.isFavItem()){
+				else{
 					fileCount++;
 					fav.add(itm);
 					publishProgress(new Integer[]{0});
@@ -515,13 +541,14 @@ public class Utils {
 					||name.endsWith(".PPT")||name.endsWith(".DOCX")||name.endsWith(".pptx")||name.endsWith(".PPTX")
 					||name.endsWith(".csv")||name.endsWith(".CSV")){
 				Item itm = new Item(f,docImg,docType,RootManager.getSize(f));
-				doc.add(itm);
-				docsize+=f.length();
-				dsize = size(docsize);
-				publishProgress(new Integer[]{5});
+				if(!favItem){
+					doc.add(itm);
+					docsize+=f.length();
+					dsize = size(docsize);
+					publishProgress(new Integer[]{5});
+				}
 				
-				//checking fav item status
-				if(itm.isFavItem()){
+				else{
 					fileCount++;
 					fav.add(itm);
 					publishProgress(new Integer[]{0});
@@ -531,13 +558,14 @@ public class Utils {
 				Item itm = new Item(f,res.getDrawable(R.drawable.ic_launcher_text),
 									ctx.getString(R.string.text),
 									RootManager.getSize(f));
-				doc.add(itm);
-				docsize+=f.length();
-				dsize = size(docsize);
-				publishProgress(new Integer[]{5});
+				if(!favItem){
+					doc.add(itm);
+					docsize+=f.length();
+					dsize = size(docsize);
+					publishProgress(new Integer[]{5});
+				}
 				
-				//checking fav item status
-				if(itm.isFavItem()){
+				else{
 					fileCount++;
 					fav.add(itm);
 					publishProgress(new Integer[]{0});
@@ -545,13 +573,13 @@ public class Utils {
 			}
 			else{
 				Item itm = new Item(f,misImg, misType, RootManager.getSize(f));
-				mis.add(itm);
-				missize+=f.length();
-				misize = size(missize);
-				publishProgress(new Integer[]{7});
-				
-				//checking fav item status
-				if(itm.isFavItem()){
+				if(!favItem){
+					mis.add(itm);
+					missize+=f.length();
+					misize = size(missize);
+					publishProgress(new Integer[]{7});
+				}				
+				else{
 					fileCount++;
 					fav.add(itm);
 					publishProgress(new Integer[]{0});

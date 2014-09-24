@@ -855,6 +855,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			helper.setTransitionEffect(LIST_ANIMATION);
 			LIST_VIEW_3D.setOnScrollListener(helper);
 			
+			LinearLayout fav = (LinearLayout) v.findViewById(R.id.fav);
 			LinearLayout music = (LinearLayout) v.findViewById(R.id.music);
 			LinearLayout app = (LinearLayout) v.findViewById(R.id.apps);
 			LinearLayout docs = (LinearLayout) v.findViewById(R.id.docs);
@@ -872,6 +873,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			/*
 			 * WHEN MUSIC BUTTON IS CLICKED
 			 */
+			fav.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					load_FIle_Gallery((fPos = 7));
+				}
+			});
+
+			
 			music.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -3796,6 +3806,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					mediaFileList = Utils.zip;
 				else if (mode == 6)
 					mediaFileList = Utils.mis;
+				else if(mode == 7)
+					mediaFileList = Utils.fav;
 				handle.sendEmptyMessage(1);
 			}
 		});

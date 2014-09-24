@@ -74,5 +74,5 @@ public class Constants {
 		
 	//This is get reference for which operation the master password was verified....	
 	public static MODES activeMode;
-	public static boolean UPDATE_FILEGALLERY = false;
+	
 }
