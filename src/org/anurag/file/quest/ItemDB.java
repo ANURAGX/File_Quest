@@ -47,14 +47,10 @@ public class ItemDB extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
 		db.execSQL("CREATE TABLE ITEMS "+
-				   "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
-				   "FILEPATH TEXT,"+
-				   "LOCKED INTEGER);");
+				   "(FILEPATH TEXT PRIMARY KEY);");
 		
 		db.execSQL("CREATE TABLE FAVITEMS "+
-				   "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"+
-				   "FILEPATH TEXT,"+
-				   "FAV INTEGER);");
+				   "(FILEPATH TEXT PRIMARY KEY);");
 	}
 
 	@Override
@@ -70,7 +66,7 @@ public class ItemDB extends SQLiteOpenHelper{
 	 * @param PATH
 	 * @param locked
 	 */
-	public void insertNodeToLock(String PATH,int locked){
+	public void insertNodeToLock(String PATH){
 		/**
 		 * performing raw query to ensure that we are not making any 
 		 * duplicate record of the items.. 
@@ -81,7 +77,6 @@ public class ItemDB extends SQLiteOpenHelper{
 			SQLiteDatabase db = this.getWritableDatabase();
 			ContentValues values = new ContentValues();
 			values.put("FILEPATH", PATH);
-			values.put("LOCKED", locked);
 			//values.put("FAV", fav);
 			db.insert("ITEMS", null , values);
 		}		
@@ -93,7 +88,7 @@ public class ItemDB extends SQLiteOpenHelper{
 	 * @param PATH
 	 * @param locked
 	 */
-	public void insertNodeToFav(String PATH,int fav){
+	public void insertNodeToFav(String PATH){
 		/**
 		 * performing raw query to ensure that we are not making any 
 		 * duplicate record of the items.. 
@@ -104,8 +99,6 @@ public class ItemDB extends SQLiteOpenHelper{
 			SQLiteDatabase db = this.getWritableDatabase();
 			ContentValues values = new ContentValues();
 			values.put("FILEPATH", PATH);
-			values.put("FAV", fav);
-			//values.put("FAV", fav);
 			db.insert("FAVITEMS", null , values);
 			db.close();
 		}		
