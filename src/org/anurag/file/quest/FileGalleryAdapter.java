@@ -47,7 +47,6 @@ public class FileGalleryAdapter extends BaseAdapter{
 	private static HashMap<String, Drawable> apkList;
 	private static HashMap<String, Bitmap> musicList;
 	Bitmap image;
-	Holder h;
 	public static boolean MULTI_SELECT;
 	public static boolean[] thumbselection; 
 	public static long C;
@@ -99,7 +98,7 @@ public class FileGalleryAdapter extends BaseAdapter{
 	public View getView(int pos, View convertView, ViewGroup arg2) {
 		// TODO Auto-generated method stub
 		item = list.get(pos);
-		h = new Holder();
+		Holder h = new Holder();
 		if(convertView == null){
 			h = new Holder();
 			convertView = inflater.inflate(R.layout.row_list_1, arg2 , false);
