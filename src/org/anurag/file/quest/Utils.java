@@ -189,6 +189,7 @@ public class Utils {
 		
 		folderCount = fileCount = 0;
 		
+		misize = zsize = vsize = dsize = psize = asize = msize = ctx.getString(R.string.zerosize);
 	}
 	
 	public static void setView(View view){
