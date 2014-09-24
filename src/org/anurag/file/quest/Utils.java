@@ -21,10 +21,8 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.View;

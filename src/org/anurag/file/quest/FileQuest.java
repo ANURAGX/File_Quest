@@ -973,8 +973,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					case 0:
 						// OPEN THE SELECTED FILE
 						
-						if(!file0.isLocked())//file is not locked...
-							new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
+						if(!file0.isLocked()){//file is not locked...
+							if(!file0.isDirectory())
+								new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
+							else{
+								//a folder was requested to open from favorite tile...
+								SDManager.nStack.push(file0.getPath());
+								setAdapter(2);
+							}
+						}	
 						else//file is locked....
 							new MasterPassword(mContext, size.x*8/9, file0, preferences,Constants.MODES.OPEN);
 						break;
@@ -1060,9 +1067,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else
 							file0 = mediaFileList.get(position);
 						
-						if(!file0.isLocked())//selected item is not locked...
-							new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
-						else//item is locked...
+						if(!file0.isLocked()){//selected item is not locked...
+							if(!file0.isDirectory())
+								new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
+							else{
+								//folder is tried to open from favorite tile...
+								SDManager.nStack.push(file0.getPath());
+								setAdapter(2);
+							}
+						}else//item is locked...
 							new MasterPassword(mContext, size.x*8/9, file0, preferences, Constants.MODES.OPEN);
 					}
 				}
@@ -4282,8 +4295,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							//handling the locked items post request here for file gallery...
 							
 							//opening the locked item after passwd verification...
-							if(Constants.activeMode == Constants.MODES.OPEN)
-								new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
+							if(Constants.activeMode == Constants.MODES.OPEN){
+								if(!file0.isDirectory())
+									new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
+								else{
+									//a folder was requested to open from favorite tile...
+									SDManager.nStack.push(file0.getPath());
+									setAdapter(2);
+								}
+							}
 							
 							//archiving the locked item after passwd verivication....
 							else if(Constants.activeMode == Constants.MODES.ARCHIVE){
