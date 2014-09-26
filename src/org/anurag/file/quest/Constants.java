@@ -19,6 +19,8 @@
 
 package org.anurag.file.quest;
 
+import java.util.ArrayList;
+
 import org.anurag.dropbox.DBoxUsers;
 
 import android.os.Environment;
@@ -75,4 +77,5 @@ public class Constants {
 	//This is get reference for which operation the master password was verified....	
 	public static MODES activeMode;
 	
+	public static ArrayList<String> RESOLVED_PATHS;
 }

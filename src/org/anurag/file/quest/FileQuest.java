@@ -211,7 +211,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ArrayList<Item> tempList;
 	
 	
-	static int fPos;
+	private static int fPos,dPos;
 	private BroadcastReceiver RECEIVER;
 	private static Dialog dialog;
 	public static Point size;
@@ -533,6 +533,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		}
         initLeftMenu();
 		super.onCreate(savedInstanceState);
+		
 		
 	}
 
@@ -959,7 +960,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								else
 									file0 = mediaFileList.get(position);
 								d.show();
-								fPos = position;
+								dPos = position;
 							}
 							return true;
 						}
@@ -1077,6 +1078,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							}
 						}else//item is locked...
 							new MasterPassword(mContext, size.x*8/9, file0, preferences, Constants.MODES.OPEN);
+						dPos = position;
 					}
 				}
 			});
@@ -1227,7 +1229,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							file = rootItemList.get(position);
 					}
 					d.show();
-					fPos = position;
+					dPos = position;
 					return true;
 				}
 			});
@@ -1545,7 +1547,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							file2 = sdItemsList.get(arg2);
 					}
 					dialog.show();
-					fPos = arg2;
+					dPos = arg2;
 					return true;
 				}
 			});
@@ -3989,7 +3991,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(CURRENT_ITEM == 1){
 						if(!RootAdapter.MULTI_SELECT){
 							//single item has to removed....
-							rootItemList.remove(fPos);
+							rootItemList.remove(dPos);
 							simple.setAdapter(rootAdapter);
 						}else{
 							//multi select option was enabled and delete operation
@@ -4007,7 +4009,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}else if(CURRENT_ITEM == 2){
 						if(!SDAdapter.MULTI_SELECT){
 							//single item has to removed....
-							sdItemsList.remove(fPos);
+							sdItemsList.remove(dPos);
 							root.setAdapter(sdAdapter);
 						}else{
 							//multi select option was enabled and delete operation
@@ -4026,7 +4028,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					else if(CURRENT_ITEM == 0){
 						if(!FileGalleryAdapter.MULTI_SELECT){
 							//deleting single item from UI...
-							mediaFileList.remove(fPos);
+							mediaFileList.remove(dPos);
 							LIST_VIEW_3D.setAdapter(element);
 						}else{
 							//multi select option was enabled and delete operation
