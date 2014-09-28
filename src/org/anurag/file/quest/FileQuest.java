@@ -2319,15 +2319,23 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if (!name.startsWith("."))
 							name = CREATE_FLAG_PATH + "/." + name;
 						if (CURRENT_ITEM == 1) {
-							/**
-							 * TRY TO CREATE FOLDER WITH ROOT PREVILLEGES...
-							 */
-							LinuxShell.execute("mkdir " + name + "\n");
-							if (new File(name).exists()) {
-								Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_SHORT).show();
-								setAdapter(CURRENT_ITEM);
-							} else
+							try{
+								if (new File(name).mkdir()) {
+									Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_LONG).show();
+									setAdapter(CURRENT_ITEM);
+								} else{
+									/**
+									 * TRY TO CREATE FOLDER WITH ROOT PREVILLEGES...
+									 */
+									LinuxShell.execute("mkdir " + name + "\n");
+									if (new File(name).exists()) {
+										Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_SHORT).show();
+										setAdapter(CURRENT_ITEM);
+									} 
+								}
+							}catch(Exception e){
 								Toast.makeText(mContext,getString(R.string.foldernotcreated),Toast.LENGTH_SHORT).show();
+							}
 						} else if (CURRENT_ITEM == 2) {
 							if (new File(name).mkdir()) {
 								Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_LONG).show();
@@ -2341,15 +2349,24 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					else if (CREATE_FLAG == 2) {
 						name = CREATE_FLAG_PATH + "/" + name;
 						if (CURRENT_ITEM == 1) {
-							/**
-							 * TRY TO CREATE FOLDER WITH ROOT PREVILLEGES...
-							 */
-							LinuxShell.execute("mkdir " + name + "\n");
-							if (new File(name).exists()) {
-								Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_SHORT).show();
-								setAdapter(CURRENT_ITEM);
-							} else
+							
+							try{
+								if (new File(name).mkdir()) {
+									Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_LONG).show();
+									setAdapter(CURRENT_ITEM);
+								} else{
+									/**
+									 * TRY TO CREATE FOLDER WITH ROOT PREVILLEGES...
+									 */
+									LinuxShell.execute("mkdir " + name + "\n");
+									if (new File(name).exists()) {
+										Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_SHORT).show();
+										setAdapter(CURRENT_ITEM);
+									} 
+								}
+							}catch(Exception e){
 								Toast.makeText(mContext,getString(R.string.foldernotcreated),Toast.LENGTH_SHORT).show();
+							}							
 						} else if (CURRENT_ITEM == 2) {
 							if (new File(name).mkdir()) {
 								Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_LONG).show();
