@@ -342,10 +342,7 @@ public class OpenFileDialog {
 		intent = new Intent();
 		intent.setAction(android.content.Intent.ACTION_VIEW);
 		String na = f.getName();
-		if(na.endsWith(".7z")
-				||na.endsWith(".7Z"))
-			intent.setDataAndType(Uri.fromFile(f), "application/7z");
-		else if(na.endsWith(".mp3") ||na.endsWith(".MP3")||na.endsWith(".ogg")||na.endsWith(".OGG")
+		if(na.endsWith(".mp3") ||na.endsWith(".MP3")||na.endsWith(".ogg")||na.endsWith(".OGG")
 				||na.endsWith(".m4a")||na.endsWith(".M4A")||na.endsWith(".amr")||na.endsWith(".AMR"))
 			intent.setDataAndType(Uri.fromFile(f), "audio/*");
 		
@@ -367,10 +364,6 @@ public class OpenFileDialog {
 		else if(na.endsWith(".apk")
 				||na.endsWith(".APK"))
 			intent.setDataAndType(Uri.fromFile(f), "application/vnd.android.package-archive");
-		else if(na.endsWith(".rar"))
-			intent.setDataAndType(Uri.fromFile(f), "application/rar");
-		else if(na.endsWith(".zip")||na.endsWith(".ZIP"))
-			intent.setDataAndType(Uri.fromFile(f),"application/zip");
 		else if(na.endsWith(".pdf")||na.endsWith(".PDF"))
 			intent.setDataAndType(Uri.fromFile(f) , "application/pdf");
 		else if(na.endsWith(".DOC")||na.endsWith(".doc"))
