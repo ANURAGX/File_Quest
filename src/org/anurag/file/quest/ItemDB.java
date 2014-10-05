@@ -56,8 +56,8 @@ public class ItemDB extends SQLiteOpenHelper{
 	@Override
 	public void onUpgrade(SQLiteDatabase DB, int arg1, int arg2) {
 		// TODO Auto-generated method stub
-		DB.execSQL("DROP TABLE IF EXISTS ITEMS");
-		DB.execSQL("DROP TABLE IF EXISTS FAVITEMS");
+		DB.execSQL("DROP TABLE IF EXISTS ITEMS;");
+		DB.execSQL("DROP TABLE IF EXISTS FAVITEMS;");
 		onCreate(DB);
 	}
 	
