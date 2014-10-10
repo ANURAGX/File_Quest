@@ -4031,8 +4031,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}else{
 							//multi select option was enabled and delete operation
 							//was performed...
-							int l = SDAdapter.MULTI_FILES.size();
-							for(int i = 0 ; i < l ;++i){
+							for(int i = 0 ; i < sdItemsList.size() ;++i){
 								if(SDAdapter.MULTI_FILES.get(i)!=null){
 									//SDAdapter.MULTI_FILES.remove(i);
 									sdItemsList.remove(i); 
