@@ -4011,17 +4011,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							rootItemList.remove(dPos);
 							simple.setAdapter(rootAdapter);
 						}else{
-							//multi select option was enabled and delete operation
-							//was performed...
-							int l = RootAdapter.MULTI_FILES.size();
-							for(int i = 0 ; i < l ;++i){
-								if(RootAdapter.MULTI_FILES.get(i)!=null){
-									//SDAdapter.MULTI_FILES.remove(i);
-									rootItemList.remove(i); 
-								}
-							}
-							RootAdapter.thumbselection = new boolean[rootItemList.size()];
-							simple.setAdapter(rootAdapter);
+							setAdapter(1);
 						}
 					}else if(CURRENT_ITEM == 2){
 						if(!SDAdapter.MULTI_SELECT){
@@ -4031,14 +4021,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}else{
 							//multi select option was enabled and delete operation
 							//was performed...
-							for(int i = 0 ; i < sdItemsList.size() ;++i){
-								if(SDAdapter.MULTI_FILES.get(i)!=null){
-									//SDAdapter.MULTI_FILES.remove(i);
-									sdItemsList.remove(i); 
-								}
-							}
-							SDAdapter.thumbselection = new boolean[sdItemsList.size()];
-							root.setAdapter(sdAdapter);
+							setAdapter(2);
 						}
 					}
 					else if(CURRENT_ITEM == 0){
@@ -4049,15 +4032,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}else{
 							//multi select option was enabled and delete operation
 							//was performed...
-							int l = FileGalleryAdapter.MULTI_FILES.size();
-							for(int i = 0 ; i < l ;++i){
-								if(FileGalleryAdapter.MULTI_FILES.get(i)!=null){
-									//SDAdapter.MULTI_FILES.remove(i);
-									mediaFileList.remove(i); 
-								}
-							}
-							FileGalleryAdapter.thumbselection = new boolean[mediaFileList.size()];
-							LIST_VIEW_3D.setAdapter(element);
+							setAdapter(0);
 						}
 					}
 					

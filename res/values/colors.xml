@@ -21,4 +21,5 @@
 	<color name="transparent_black">#aa000000</color>
     <color name="opaque_black">#9a000000</color>
     <color name="yellow">#a08449</color>
+    <color name="red">#FFC74B46</color>
 </resources>
