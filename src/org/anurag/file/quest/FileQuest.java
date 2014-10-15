@@ -396,6 +396,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		indicator = (PagerSlidingTabStrip) findViewById(R.id.indicator);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		
+		//setting view pager limit to hold fragments off screen....
+		mViewPager.setOffscreenPageLimit(4);
+		
 		String[] te = getResources().getStringArray(R.array.effects);		
 		mViewPager.setTransitionEffect(TransitionEffect.valueOf(te[PAGER_ANIMATION]));
 		
