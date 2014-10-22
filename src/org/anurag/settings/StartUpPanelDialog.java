@@ -69,7 +69,7 @@ public class StartUpPanelDialog {
 		btn.setText(ctx.getString(R.string.ok));
 		//List view for items...
 		ListView ls = (ListView)dialog.findViewById(R.id.launch_list);
-		ls.setSelector(R.drawable.blue_botton_2);
+		ls.setSelector(R.drawable.action_item_btn2);
 		ls.setAdapter(new adapter());
 		ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
