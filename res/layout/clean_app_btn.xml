@@ -20,7 +20,7 @@
 <LinearLayout
     android:onClick="onClick"  
     android:id="@+id/cleanBackups"
-    android:background="@drawable/action_item_btn"
+    android:background="@drawable/button_click"
     android:clickable="true"
     android:focusable="true"
     android:gravity="center" 

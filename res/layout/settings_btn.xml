@@ -19,7 +19,7 @@
 <LinearLayout    
     android:id="@+id/appSettings"
     android:onClick="onClick"
-    android:background="@drawable/action_item_btn"
+    android:background="@drawable/button_click"
     android:clickable="true"
     android:focusable="true"
     android:gravity="center" 

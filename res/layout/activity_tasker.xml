@@ -28,7 +28,7 @@
     <com.astuetz.PagerSlidingTabStrip
         	android:id="@+id/indicator"
         	android:layout_width="match_parent"
-        	android:layout_height="24dip"
+        	android:layout_height="30dp"
         	android:background="@android:color/transparent" />
 	<com.abhi.animated.TransitionViewPager
 		android:id="@+id/pager" 

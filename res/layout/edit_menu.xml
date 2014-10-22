@@ -52,7 +52,7 @@
     	    android:layout_width="50dp"
     	    android:focusable="true"
     	    android:clickable="true"
-    	    android:background="@drawable/action_item_btn"
+    	    android:background="@drawable/button_click"
     	    android:layout_height="40dp">
     	    
     	    <ImageButton 

@@ -46,7 +46,7 @@
         <Button
             android:textStyle="bold"
             android:textColor="@android:color/darker_gray"
-            android:background="@drawable/action_item_btn"
+            android:background="@drawable/button_click"
             android:id="@+id/done"
             android:layout_width="0dip"
             android:layout_height="40dp"
@@ -58,7 +58,7 @@
             android:id="@+id/discard"
             android:textStyle="bold"
             android:textColor="@android:color/darker_gray"
-            android:background="@drawable/action_item_btn"
+            android:background="@drawable/button_click"
             android:layout_width="0dip"
             android:layout_height="40dp"
             android:layout_weight="1"

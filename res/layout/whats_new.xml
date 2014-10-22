@@ -292,7 +292,7 @@
         android:textStyle="bold" 
         android:textColor="@android:color/darker_gray" 
         android:id="@+id/whats_new_btn" 
-        android:background="@drawable/action_item_btn" 
+        android:background="@drawable/button_click" 
         android:layout_width="fill_parent" 
         android:layout_height="50.0dip" 
         android:text="@string/ok" 

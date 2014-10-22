@@ -21,7 +21,7 @@
     android:onClick="onClick"
     android:id="@+id/homeDirBtn" 
     android:focusable="true"
-    android:background="@drawable/action_item_btn"
+    android:background="@drawable/button_click"
     android:gravity="center" 
     android:orientation="vertical" 
     android:layout_width="fill_parent" 

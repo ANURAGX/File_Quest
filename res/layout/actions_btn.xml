@@ -18,7 +18,7 @@
  -->
 <LinearLayout
     android:id="@+id/jumpToBtn" 
-    android:background="@drawable/action_item_btn"
+    android:background="@drawable/button_click"
     android:onClick="onClick"
     android:clickable="true"
     android:focusable="true" 

@@ -188,7 +188,7 @@
         android:layout_weight="0.5">
         <Button 
             android:textColor="@android:color/white"
-            android:background="@drawable/action_item_btn"
+            android:background="@drawable/button_click"
             android:textStyle="bold"
             android:id="@+id/appBackupBtn" 
             android:layout_width="fill_parent" 
@@ -198,7 +198,7 @@
             android:onClick="onClick" />
         <Button 
             android:textColor="@android:color/white"
-            android:background="@drawable/action_item_btn"
+            android:background="@drawable/button_click"
             android:textStyle="bold" 
             android:id="@+id/appCacheBtn" 
             android:layout_width="fill_parent" 

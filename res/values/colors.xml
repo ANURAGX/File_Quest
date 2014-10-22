@@ -16,6 +16,7 @@
      limitations under the License.
 -->
 <resources> 
+    <color name="semi_white30">#FFFFFFFF</color>
 	<color name="black">#000000</color>
 	<color name="transparent">#000000FF</color>
 	<color name="transparent_black">#aa000000</color>

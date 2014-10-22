@@ -32,7 +32,7 @@
     	    <!-- LAYOUT FOR LOCK.... --> 
     	
             <ImageView 
-                android:background="@drawable/action_item_btn"
+                android:background="@drawable/button_click"
                 android:id="@+id/lockimg"
                	android:clickable="false"
             	android:layout_gravity="center_vertical"
@@ -44,7 +44,7 @@
          	
     	 	<!-- LAYOUT FOR FAVORITE ITEM... -->
     	 	<ImageView 
-               	android:background="@drawable/action_item_btn"
+               	android:background="@drawable/button_click"
                	android:id="@+id/favimg"
                	android:clickable="false"
             	android:layout_gravity="center_vertical"

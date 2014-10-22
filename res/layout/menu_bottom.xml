@@ -36,7 +36,7 @@
             
         	<LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/bottom_Quit"
         	    android:clickable="true"
@@ -65,7 +65,7 @@
         	
         	<LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/searchBtn"
         	    android:clickable="true"
@@ -96,7 +96,7 @@
            
             <LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/bottom_multi"
         	    android:clickable="true"
@@ -129,7 +129,7 @@
              
            	<LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/bottom_paste"
         	    android:clickable="true"
@@ -161,7 +161,7 @@
              
              <LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/bottom_delete"
         	    android:clickable="true"
@@ -191,7 +191,7 @@
              
              <LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/bottom_copy"
         	    android:clickable="true"
@@ -223,7 +223,7 @@
              
              <LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/bottom_cut"
         	    android:clickable="true"
@@ -252,7 +252,7 @@
              
              <LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/bottom_zip"
         	    android:clickable="true"

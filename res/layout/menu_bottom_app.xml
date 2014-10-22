@@ -37,7 +37,7 @@
             
              <LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/bottom_Quit"
         	    android:clickable="true"
@@ -65,7 +65,7 @@
              
             <LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/bottom_multi"
         	    android:clickable="true"
@@ -94,7 +94,7 @@
                 
              <LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/bottom_multi_send_app"
         	    android:clickable="true"
@@ -124,7 +124,7 @@
            
             <LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/bottom_multi_select_backup"
         	    android:clickable="true"
@@ -153,7 +153,7 @@
              
               <LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/bottom_user_apps"
         	    android:clickable="true"
@@ -182,7 +182,7 @@
              
               <LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/bottom_system_apps"
         	    android:clickable="true"
@@ -210,7 +210,7 @@
                          
               <LinearLayout 
         	    android:paddingTop="2dp"
-        	    android:background="@drawable/action_item_btn"
+        	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/bottom_both_apps"
         	    android:clickable="true"
