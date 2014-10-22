@@ -35,6 +35,7 @@
 	android:layout_width="fill_parent" 
 	android:layout_height="fill_parent">
         <TextView 
+            android:textColor="#FFFFFFFF"
 			android:textStyle="bold"
 			android:ellipsize="middle"
 			android:gravity="center_vertical" 
