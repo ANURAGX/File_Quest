@@ -57,7 +57,7 @@
     </LinearLayout>
     
     <LinearLayout 
-        android:background="@android:color/holo_purple" 
+        android:background="@color/dialog_border" 
         android:layout_width="fill_parent" 
         android:layout_height="3dp" 
          />

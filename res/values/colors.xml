@@ -14,6 +14,7 @@
 -->
 
 <resources> 
+    <color name="dialog_border">#FFFFFFFF</color>
     <color name="semi_white30">#B3FFFFFF</color>
 	<color name="black">#000000</color>
 	<color name="transparent">#000000FF</color>

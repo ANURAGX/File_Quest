@@ -41,6 +41,6 @@
 		android:textSize="15dip"
 		android:paddingRight="10dip"
 		android:text="@string/chart"
-		android:textColor="#fff"/>
+		android:textColor="#ffffffff"/>
 									         
 </LinearLayout>         

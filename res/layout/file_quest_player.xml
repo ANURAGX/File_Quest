@@ -86,8 +86,8 @@
          <SeekBar 
              android:id="@+id/seek"
              android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-             android:progressDrawable="@drawable/progress_horizontal_holo_dark"
+             android:layout_height="10dp"
+             android:progressDrawable="@drawable/sd_status"
              android:thumb="@null"/>
         
     </LinearLayout>
