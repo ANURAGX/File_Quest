@@ -295,7 +295,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static Utils loadFileGallery;
 	private static View v;
 	private String ID;
-	
+	private boolean Ad_loaded;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -320,7 +320,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		} catch (Exception e) {
 
 		}
-		
+		Ad_loaded = false;
 		mContext = FileQuest.this;
 		Constants.db = new ItemDB(mContext);
 		Constants.dboxDB = new DBoxUsers(mContext);		
@@ -551,16 +551,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		{
 			final AdView ad = new AdView(FileQuest.this);
 			ad.setAdSize(AdSize.SMART_BANNER);
-			
 			ad.setAdListener(new AdListener() {
 				@Override
 				public void onAdLoaded() {
 					// TODO Auto-generated method stub
 					super.onAdLoaded();
-					LinearLayout mian = (LinearLayout)findViewById(R.id.main2);
-					mian.addView(ad);
-				}
-				
+					if(!Ad_loaded){
+						LinearLayout main = (LinearLayout)findViewById(R.id.main2);
+						main.addView(ad);
+						Ad_loaded = true;
+					}
+				}				
 			});
 			
 			final Handler handle = new Handler(){
@@ -569,8 +570,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					// TODO Auto-generated method stub
 					super.handleMessage(msg);
 					ad.loadAd(new AdRequest.Builder().build());
-				}
-				
+				}				
 			};
 			
 			Thread thr = new Thread(new Runnable() {
@@ -594,8 +594,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}
 			});			
 			thr.start();
-		}
-		
+		}		
 	}
 
 	@Override
@@ -910,7 +909,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = inflater.inflate(R.layout.custom_list_view, container,false);
 			LIST_VIEW_3D = (ListView) v.findViewById(R.id.customListView);
-			LIST_VIEW_3D.setSelector(R.drawable.blue_button);
+			LIST_VIEW_3D.setSelector(R.drawable.button_click);
 			FILE_GALLEY = (LinearLayout)v.findViewById(R.id.file_gallery_layout);
 
 			JazzyHelper helper = new JazzyHelper(mContext, null);
@@ -1010,7 +1009,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			ListView lo = (ListView) d.findViewById(R.id.list);
 			AdapterLoaders loaders = new AdapterLoaders(getActivity(), false,0);
 			lo.setAdapter(loaders.getLongClickAdapter());
-			lo.setSelector(getResources().getDrawable(R.drawable.blue_button));
+			lo.setSelector(getResources().getDrawable(R.drawable.button_click));
 			d.getWindow().getAttributes().width = size.x*8/9;
 			LIST_VIEW_3D.setOnItemLongClickListener(new OnItemLongClickListener() {
 						@Override
@@ -1164,7 +1163,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			super.onActivityCreated(savedInstanceState);
 			// mContext = getActivity();
 			simple = getListView();
-			simple.setSelector(R.drawable.blue_button);
+			simple.setSelector(R.drawable.button_click);
 			ColorDrawable color = new ColorDrawable(android.R.color.black);
 			simple.setDivider(color);
 			if(ZIP_ROOT)
@@ -1264,7 +1263,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			ListView lo = (ListView) d.findViewById(R.id.list);
 			AdapterLoaders loaders = new AdapterLoaders(getActivity(), false , 1);
 			lo.setAdapter(loaders.getLongClickAdapter());
-			lo.setSelector(getResources().getDrawable(R.drawable.blue_button));
+			lo.setSelector(getResources().getDrawable(R.drawable.button_click));
 			d.getWindow().getAttributes().width = size.x*8/9;
 			simple.setOnItemLongClickListener(new OnItemLongClickListener() {
 				@Override
@@ -1561,7 +1560,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			super.onActivityCreated(savedInstanceState);
 
 			root = getListView();			
-			root.setSelector(R.drawable.blue_button);
+			root.setSelector(R.drawable.button_click);
 			ColorDrawable color = new ColorDrawable(android.R.color.black);
 			
 			root.setDivider(color);
@@ -1582,7 +1581,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			ListView lo = (ListView) dialog.findViewById(R.id.list);
 			AdapterLoaders loaders = new AdapterLoaders(mContext, false , 2);
 			lo.setAdapter(loaders.getLongClickAdapter());
-			lo.setSelector(getResources().getDrawable(R.drawable.blue_button));
+			lo.setSelector(getResources().getDrawable(R.drawable.button_click));
 			dialog.getWindow().getAttributes().width = size.x*8/9;
 			root.setOnItemLongClickListener(new OnItemLongClickListener() {
 				@Override
@@ -1958,7 +1957,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			super.onActivityCreated(savedInstanceState);
 			// mContext = getActivity();
 			APP_LIST_VIEW = getListView();
-			APP_LIST_VIEW.setSelector(R.drawable.blue_button);
+			APP_LIST_VIEW.setSelector(R.drawable.button_click);
 			ColorDrawable color = new ColorDrawable(android.R.color.black);
 			APP_LIST_VIEW.setDivider(color);
 			setListAdapter(nAppAdapter);
@@ -1979,7 +1978,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			ListView lo = (ListView) dia.findViewById(R.id.list);
 			AdapterLoaders loaders = new AdapterLoaders(mContext, true , 3);
 			lo.setAdapter(loaders.getLongClickAdapter());
-			lo.setSelector(getResources().getDrawable(R.drawable.blue_button));
+			lo.setSelector(getResources().getDrawable(R.drawable.button_click));
 			dia.getWindow().getAttributes().width = size.x*8/9;
 			APP_LIST_VIEW
 					.setOnItemLongClickListener(new OnItemLongClickListener() {

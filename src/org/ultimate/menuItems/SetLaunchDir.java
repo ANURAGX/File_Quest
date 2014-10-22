@@ -91,7 +91,7 @@ public class SetLaunchDir{
 		go = (Button)dialog.findViewById(R.id.goBack);
 		go.setVisibility(View.GONE);
 		
-		lv.setSelector(R.drawable.blue_button);
+		lv.setSelector(R.drawable.button_click);
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int pos,long id) {

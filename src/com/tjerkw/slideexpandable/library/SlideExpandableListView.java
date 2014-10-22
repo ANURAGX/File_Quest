@@ -90,7 +90,7 @@ class SlideExpandableListView extends ListView {
  	@Override
 	public void setSelector(Drawable sel) {
 		// TODO Auto-generated method stub
-		super.setSelector(getResources().getDrawable(R.drawable.blue_button));
+		super.setSelector(getResources().getDrawable(R.drawable.button_click));
 	}
 
 	@Override

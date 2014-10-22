@@ -93,7 +93,7 @@ public class MultiSendApps{
 		}
 		new PushUris().execute();
 		ListView lv = (ListView)dialog.findViewById(R.id.launch_list);
-		lv.setSelector(R.drawable.blue_button);
+		lv.setSelector(R.drawable.button_click);
 		lv.setAdapter(new OpenItems(mContext, R.layout.row_list_2, list));
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override

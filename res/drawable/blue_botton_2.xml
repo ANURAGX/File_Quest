@@ -7,11 +7,7 @@
                 android:startColor="@android:color/holo_purple"
                 android:endColor="#5f3d70" />
             <stroke android:color="#3d4544" android:width="1dp" />
-            <padding android:bottom="5dp"/>
-           
-              
-           
-           
+            <padding android:bottom="5dp"/>           
         </shape>
     </item>
 </selector>

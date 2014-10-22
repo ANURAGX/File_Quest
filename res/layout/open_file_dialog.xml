@@ -72,7 +72,7 @@
             android:id="@+id/open_list" 
             android:layout_width="fill_parent" 
             android:layout_height="fill_parent" 
-            android:listSelector="@drawable/blue_button" 
+            android:listSelector="@drawable/button_click" 
             android:divider="#ff242424" 
             android:dividerHeight="0.5dip" 
             android:minHeight="10.0dip" />
