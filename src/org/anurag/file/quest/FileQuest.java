@@ -4129,12 +4129,35 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else if(CURRENT_ITEM==2){
 							
 							//opening task here...
-							if(Constants.activeMode==Constants.MODES.OPEN){
+							if(Constants.activeMode==Constants.MODES.OPEN 
+									|| Constants.activeMode == Constants.MODES.G_OPEN) {
 								if (!file2.isDirectory()) {
 									new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
 								} else if (file2.isDirectory()) {
 									SDManager.nStack.push(file2.getPath());
-									setAdapter(2);
+									
+									//using separate handler and thread only because
+									//setAdapter() function was causing app to force close....
+									final Handler handle = new Handler(){
+										@Override
+										public void handleMessage(Message msg) {
+											// TODO Auto-generated method stub
+											super.handleMessage(msg);
+											mViewPager.setAdapter(mSectionsPagerAdapter);
+											mViewPager.setCurrentItem(2);
+											indicator.setViewPager(mViewPager);
+										}
+									};
+									
+									Thread thr = new Thread(new Runnable() {
+										@Override
+										public void run() {
+											// TODO Auto-generated method stub
+											sdItemsList = sdManager.getList();
+											handle.sendEmptyMessage(0);
+										}
+									});
+									thr.start();
 								}
 							}
 							//delete the provided item after password verification...
@@ -4142,16 +4165,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								Constants.db.deleteLockedNode(file2.getPath());
 								deleteMethod(file2);
 							}
-							//open the locked file or folder after password verification...
-							else if(Constants.activeMode == Constants.MODES.G_OPEN){
-								File f = new File(it.getStringExtra("g_open_path"));
-								if(f.isFile())
-									new OpenFileDialog(mContext, Uri.parse(f.getPath()), size.x*8/9);
-								else{
-									SDManager.nStack.push(f.getPath());
-									setAdapter(2);
-								}
-							}
+							
 							//sharing the locked item after password verification...
 							else if(Constants.activeMode == Constants.MODES.SEND){
 								new BluetoothChooser(mContext, file2.getPath(), size.x*8/9, null);
