@@ -4350,33 +4350,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		};
 		
 		
-		IntentFilter filter = new IntentFilter("FQ_BACKUP");
-		this.registerReceiver(RECEIVER, filter);
-		filter = new IntentFilter("FQ_DELETE");
-		this.registerReceiver(RECEIVER, filter);
-		filter = new IntentFilter("FQ_FLASHZIP");
-		this.registerReceiver(RECEIVER, filter);
-		filter = new IntentFilter(Intent.ACTION_UNINSTALL_PACKAGE);
-		this.registerReceiver(RECEIVER, filter);
-		filter = new IntentFilter("FQ_G_OPEN");
-		this.registerReceiver(RECEIVER, filter);
-		filter = new IntentFilter("FQ_ZIP_OPEN");
-		this.registerReceiver(RECEIVER, filter);
-		filter = new IntentFilter("FQ_EXTRACT_PATH");
-		this.registerReceiver(RECEIVER, filter);
-		filter = new IntentFilter("FQ_RAR_OPEN");
-		this.registerReceiver(RECEIVER, filter);
-		filter = new IntentFilter("FQ_TAR_OPEN");
-		this.registerReceiver(RECEIVER, filter);
-		filter = new IntentFilter("FQ_7Z_OPEN");
-		this.registerReceiver(RECEIVER, filter);
-		filter = new IntentFilter("FQ_DROPBOX_OPEN_FOLDER");
-		this.registerReceiver(RECEIVER, filter);
-		filter = new IntentFilter("FQ_MOVE_LOCATION");
-		this.registerReceiver(RECEIVER, filter);
-		filter = new IntentFilter("FQ_COPY");
-		this.registerReceiver(RECEIVER, filter);
-		filter = new IntentFilter("FQ_FILE_LOCKED_OR_UNLOCKED");
+		IntentFilter filter = new IntentFilter();
+		filter.addAction("FQ_BACKUP");
+		filter.addAction("FQ_DELETE");
+		filter.addAction("FQ_FLASHZIP");
+		filter.addAction("FQ_G_OPEN");
+		filter.addAction("FQ_ZIP_OPEN");
+		filter.addAction("FQ_EXTRACT_PATH");
+		filter.addAction("FQ_RAR_OPEN");
+		filter.addAction("FQ_TAR_OPEN");
+		filter.addAction("FQ_7Z_OPEN");
+		filter.addAction(Intent.ACTION_UNINSTALL_PACKAGE);
+		filter.addAction("FQ_DROPBOX_OPEN_FOLDER");
+		filter.addAction("FQ_MOVE_LOCATION");
+		filter.addAction("FQ_COPY");
+		filter.addAction("FQ_FILE_LOCKED_OR_UNLOCKED");
 		this.registerReceiver(RECEIVER, filter);
 	}
 	
