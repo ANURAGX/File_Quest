@@ -26,7 +26,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.zip.ZipFile;
-
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
@@ -67,7 +66,6 @@ import org.ultimate.quickaction3D.ActionItem;
 import org.ultimate.quickaction3D.QuickAction;
 import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
 import org.ultimate.root.LinuxShell;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -104,9 +102,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -120,7 +115,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.astuetz.PagerSlidingTabStrip;
@@ -274,9 +268,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	/**
 	 * Media Panel Variables
 	 */
-	private static FileGalleryAdapter element;
+	public static FileGalleryAdapter element;
 	private static ArrayList<Item> mediaFileList;
-	private static boolean elementInFocus = false;
+	public static boolean elementInFocus = false;
 	private static int pos = 0;
 	private static AppManager nManager;
 
@@ -349,6 +343,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				showToast(getResources().getString(R.string.startupfoldernotfound));
 			}
 		}		
+		mediaFileList = new ArrayList<Item>();
 		sdItemsList = sdManager.getList();
 		rootItemList = rootManager.getList();
 		sdAdapter = new SDAdapter(mContext, sdItemsList);
@@ -433,10 +428,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			LAST_PAGE = 0;
 		}
 		else if (CURRENT_PREF_ITEM == 3) {
-			mVFlipper.setAnimation(nextAnim());
 			mVFlipper.showNext();
 			mFlipperBottom.showPrevious();
-			mFlipperBottom.setAnimation(prevAnim());
 		}
 		nManager = new AppManager(mContext);
 		nManager.SHOW_APP = SHOW_APP;
@@ -456,7 +449,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				if (page == 0){
 					if (!elementInFocus) {
 						mFlipperBottom.showNext();
-						mFlipperBottom.setAnimation(nextAnim());
 					}
 					b.setBackgroundResource(R.drawable.ic_launcher_select_app);
 					t.setText(getString(R.string.apps));
@@ -470,14 +462,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					LAST_PAGE = 1;
 					if (!elementInFocus) {
 						mFlipperBottom.showPrevious();
-						mFlipperBottom.setAnimation(prevAnim());
 					}
 				}
 
 				if (page == 2 && LAST_PAGE == 0) {
 					if(!elementInFocus){
 						mFlipperBottom.showPrevious();
-						mFlipperBottom.setAnimation(prevAnim());
 					}					
 					LAST_PAGE = 2;
 				}
@@ -485,20 +475,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				if ((page == 2 || page == 1) && LAST_PAGE == 3) {
 					LAST_PAGE = 2;
 					mFlipperBottom.showNext();
-					mFlipperBottom.setAnimation(nextAnim());
-					mVFlipper.setAnimation(prevAnim());
 					mVFlipper.showPrevious();
 				}
 				if (page == 3 && (LAST_PAGE == 2 || LAST_PAGE == 1)) {
 					LAST_PAGE = 3;
 					mFlipperBottom.showPrevious();
-					mFlipperBottom.setAnimation(prevAnim());
 					if (RENAME_COMMAND || SEARCH_FLAG || CREATE_FILE) {
-						mVFlipper.setAnimation(prevAnim());
 						mVFlipper.showPrevious();
 						RENAME_COMMAND = SEARCH_FLAG = CREATE_FILE = false;
 					} else {
-						mVFlipper.setAnimation(nextAnim());
 						mVFlipper.showNext();
 					}
 				}
@@ -507,18 +492,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					LAST_PAGE = 3;
 					if (elementInFocus) {
 						mVFlipper.showNext();
-						mVFlipper.setAnimation(nextAnim());
 						mFlipperBottom.showPrevious();
-						mFlipperBottom.setAnimation(prevAnim());
 					}
 				}
 
 				if (RENAME_COMMAND || SEARCH_FLAG || CREATE_FILE) {
 					RENAME_COMMAND = SEARCH_FLAG = CREATE_FILE = false;
 					mVFlipper.showNext();
-					mVFlipper.setAnimation(nextAnim());
 				}
-
 			}
 
 			@Override
@@ -1096,7 +1077,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 							RENAME_COMMAND = true;
 							mVFlipper.showPrevious();
-							mVFlipper.setAnimation(prevAnim());
 							editBox.setText(file0.getName());
 						}
 						break;
@@ -1199,10 +1179,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							file = rootItemList.get(position);
 					}
 					if (CREATE_FILE || RENAME_COMMAND || SEARCH_FLAG) {
-						mVFlipper.setAnimation(nextAnim());
 						mVFlipper.showNext();
 						CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = RENAME_COMMAND = false;
-						;
 					}
 
 					/*
@@ -1305,7 +1283,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					case 0:
 						// OPEN
 						if (CREATE_FILE || RENAME_COMMAND || SEARCH_FLAG) {
-							mVFlipper.setAnimation(nextAnim());
 							mVFlipper.showNext();
 							CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = 
 									MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = 
@@ -1374,7 +1351,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// COPY
 						if (RENAME_COMMAND || CREATE_FILE || SEARCH_FLAG) {
 							mVFlipper.showNext();
-							mVFlipper.setAnimation(nextAnim());
 						}
 
 						if(ZIP_ROOT||RAR_ROOT||TAR_ROOT){
@@ -1395,7 +1371,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// CUT
 						if (RENAME_COMMAND || CREATE_FILE || SEARCH_FLAG) {
 							mVFlipper.showNext();
-							mVFlipper.setAnimation(nextAnim());
 						}
 
 						if(ZIP_ROOT){
@@ -1483,7 +1458,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 								RENAME_COMMAND = true;
 								mVFlipper.showPrevious();
-								mVFlipper.setAnimation(prevAnim());
 								editBox.setText(file.getName());
 								editBox.setSelected(true);
 							}
@@ -1622,7 +1596,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					switch (position) {
 					case 0:
 							if (CREATE_FILE || RENAME_COMMAND || SEARCH_FLAG) {
-								mVFlipper.setAnimation(nextAnim());
 								mVFlipper.showNext();
 								CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = RENAME_COMMAND = false;
 							}
@@ -1693,7 +1666,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// COPY
 						if (RENAME_COMMAND || CREATE_FILE || SEARCH_FLAG) {
 							mVFlipper.showNext();
-							mVFlipper.setAnimation(nextAnim());
 						}
 						
 						if(ZIP_SD||RAR_SD||TAR_SD){
@@ -1716,7 +1688,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// CUT
 						if (RENAME_COMMAND || CREATE_FILE || SEARCH_FLAG) {
 							mVFlipper.showNext();
-							mVFlipper.setAnimation(nextAnim());
 						}
 						
 						if(ZIP_SD){
@@ -1801,7 +1772,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 									RENAME_COMMAND = true;
 									mVFlipper.showPrevious();
-									mVFlipper.setAnimation(prevAnim());
 									editBox.setText(file2.getName());
 									editBox.setSelected(true);
 								}else{
@@ -1883,10 +1853,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 					
 					if (CREATE_FILE || RENAME_COMMAND || SEARCH_FLAG) {
-						mVFlipper.setAnimation(nextAnim());
 						mVFlipper.showNext();
 						CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = RENAME_COMMAND = false;
-						;
 					}
 					
 					if(ZIP_SD){//zip file handling...
@@ -2190,9 +2158,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							LIST_VIEW_3D.setAdapter(element);
 							if (CURRENT_ITEM == 3) {
 								mFlipperBottom.showNext();
-								mFlipperBottom.setAnimation(prevAnim());
 								mVFlipper.showPrevious();
-								mVFlipper.setAnimation(prevAnim());
 							}
 							mViewPager.setCurrentItem(0);
 						}
@@ -2334,21 +2300,18 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(SEARCH_FLAG){//DISABLING SEARCH COMMAND....
 						SEARCH_FLAG = false;
 						mVFlipper.showNext();
-						mVFlipper.setAnimation(nextAnim());
 					}else//SEARCH INSIDE ZIP ARCHIVE...
 						zipSearch();
 				}else if(RAR_SD||RAR_ROOT){
 					if(SEARCH_FLAG){//DISABLING SEARCH COMMAND....
 						SEARCH_FLAG = false;
 						mVFlipper.showNext();
-						mVFlipper.setAnimation(nextAnim());
 					}else//SEARCH INSIDE RAR ARCHIVE....
 						rarSearch();
 				}else if(TAR_SD||TAR_ROOT){
 					if(SEARCH_FLAG){//DISABLING SEARCH COMMAND...
 						SEARCH_FLAG = false;
 						mVFlipper.showNext();
-						mVFlipper.setAnimation(nextAnim());
 					}else//SEARCH INSIDE TAR ARCHIVE....
 						tarSearch();
 				}
@@ -2356,7 +2319,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(SEARCH_FLAG){//DISABLING SEARCH COMMAND....
 						SEARCH_FLAG = false;
 						mVFlipper.showNext();
-						mVFlipper.setAnimation(nextAnim());
 					}else//ORDINARY SEARCH....
 						search();
 				}	
@@ -2461,7 +2423,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 					// AFTER CREATING FILES OR FOLDER AGAIN FLIPPER IS SET TO
 					// MAIN MENU
-					mVFlipper.setAnimation(nextAnim());
 					mVFlipper.showNext();
 				}
 				// THIS FLIPPER IS SET FOR RENAMING
@@ -2508,7 +2469,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 					// AFTER RENAMING THE FOLDER OR FILES THE FLIPPER IS SET
 					// AGAIN TO MAIN MENU
-					mVFlipper.setAnimation(nextAnim());
 					mVFlipper.showNext();
 				}
 				setAdapter(CURRENT_ITEM);
@@ -2859,7 +2819,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// file is also displayed
 						// then mViewFlipper is rotated to editText for getting
 						// text
-						mVFlipper.setAnimation(nextAnim());
 						mVFlipper.showNext();
 						mVFlipper.showNext();
 						break;
@@ -2874,7 +2833,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// file is also displayed
 						// then mViewFlipper is rotated to editText for getting
 						// text
-						mVFlipper.setAnimation(nextAnim());
 						mVFlipper.showNext();
 						mVFlipper.showNext();
 						break;
@@ -2888,7 +2846,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						// file is also displayed
 						// then mViewFlipper is rotated to editText for getting
 						// text
-						mVFlipper.setAnimation(nextAnim());
 						mVFlipper.showNext();
 						mVFlipper.showNext();
 					}
@@ -2944,11 +2901,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			else if ((SEARCH_FLAG || RENAME_COMMAND || CREATE_FILE)
 					&& (CURRENT_ITEM == 1 || CURRENT_ITEM == 2 || CURRENT_ITEM == 0)) {
 				setAdapter(CURRENT_ITEM);
-				mVFlipper.setAnimation(nextAnim());
 				mVFlipper.showNext();
 				if (CURRENT_ITEM == 0) {
 					mFlipperBottom.showNext();
-					mFlipperBottom.setAnimation(nextAnim());
 				}
 				SEARCH_FLAG = RENAME_COMMAND = COPY_COMMAND = CUT_COMMAND = CREATE_FILE = false;
 				if (elementInFocus) {
@@ -2961,7 +2916,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				elementInFocus = false;
 				resetPager();
 				mFlipperBottom.showNext();
-				mFlipperBottom.setAnimation(nextAnim());
 			} else if (CURRENT_ITEM == 0 && !elementInFocus) {
 				/**
 				 * CHECKS WHETHER THE CURRENT PREF IS 0 IF IT IS FOUND 0 THEN IT
@@ -2987,7 +2941,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					LAST_PAGE = CURRENT_PREF_ITEM;
 					mViewPager.setCurrentItem(CURRENT_PREF_ITEM);
 					mFlipperBottom.showPrevious();
-					mFlipperBottom.setAnimation(prevAnim());
 				}
 			} else if (CURRENT_ITEM == 3) {
 				/**
@@ -3012,13 +2965,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				else {
 					if (CURRENT_PREF_ITEM == 0) {
 						mVFlipper.showPrevious();
-						mVFlipper.setAnimation(prevAnim());
 						if (elementInFocus) {
 							mFlipperBottom.showNext();
-							mFlipperBottom.setAnimation(nextAnim());
 						} else if (!elementInFocus) {
 							mFlipperBottom.showNext();
-							mFlipperBottom.setAnimation(nextAnim());
 						}
 					}
 					mViewPager.setCurrentItem(CURRENT_PREF_ITEM);
@@ -3219,35 +3169,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		return false;
 	}
 
-	/**
-	 * Creates the animation set for next ViewFlippers when loaded.
-	 * 
-	 * @return a customized animation for mViewFlippers
-	 */
-	private static Animation nextAnim() {
-		Animation anim = new TranslateAnimation(Animation.RELATIVE_TO_PARENT,
-				+1.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
-				Animation.RELATIVE_TO_PARENT, 0.0f,
-				Animation.RELATIVE_TO_PARENT, 0.0f);
-		anim.setDuration(50);
-		anim.setInterpolator(new AccelerateInterpolator());
-		return anim;
-	}
-
-	/**
-	 * Creates the animation set for previous ViewFlippers when loaded.
-	 * 
-	 * @return a customized animation for mViewFlippers
-	 */
-	private static Animation prevAnim() {
-		Animation anim = new TranslateAnimation(Animation.RELATIVE_TO_PARENT,
-				-1.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
-				Animation.RELATIVE_TO_PARENT, 0.0f,
-				Animation.RELATIVE_TO_PARENT, 0.0f);
-		anim.setDuration(50);
-		anim.setInterpolator(new AccelerateInterpolator());
-		return anim;
-	}
+	
 
 	/**
 	 * 
@@ -3264,7 +3186,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			load_FIle_Gallery(0);
 			search();
 			mVFlipper.showNext();
-			mVFlipper.setAnimation(nextAnim());
 			break;
 		case 2:
 			// IF CURRENT ITEM IS 0 AND CATEGORIES ARE DIAPLAYED
@@ -3274,7 +3195,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			load_FIle_Gallery(1);
 			search();
 			mVFlipper.showNext();
-			mVFlipper.setAnimation(nextAnim());
 			break;
 		case 3:
 			// IF CURRENT ITEM IS 0 AND CATEGORIES ARE DIAPLAYED
@@ -3284,7 +3204,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			load_FIle_Gallery(2);
 			search();
 			mVFlipper.showNext();
-			mVFlipper.setAnimation(nextAnim());
 			break;
 
 		case 4:
@@ -3295,7 +3214,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			load_FIle_Gallery(3);
 			search();
 			mVFlipper.showNext();
-			mVFlipper.setAnimation(nextAnim());
 			break;
 
 		case 5:
@@ -3306,7 +3224,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			load_FIle_Gallery(4);
 			search();
 			mVFlipper.showNext();
-			mVFlipper.setAnimation(nextAnim());
 			break;
 
 		case 6:
@@ -3317,7 +3234,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			load_FIle_Gallery(5);
 			search();
 			mVFlipper.showNext();
-			mVFlipper.setAnimation(nextAnim());
 			break;
 
 		case 7:
@@ -3328,7 +3244,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			load_FIle_Gallery(6);
 			search();
 			mVFlipper.showNext();
-			mVFlipper.setAnimation(nextAnim());
 			break;
 
 		case 8:
@@ -3429,7 +3344,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
 					a.setVisibility(View.GONE);
 					// Search Flipper is loaded
-					mVFlipper.setAnimation(nextAnim());
 					mVFlipper.showNext();
 					mVFlipper.showNext();
 					SEARCH_FLAG = true;
@@ -3821,89 +3735,28 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @param con
 	 */
 	public static void load_FIle_Gallery(final int mode) {
-		final Dialog pDialog = new Dialog(mContext, R.style.custom_dialog_theme);
-		final Handler handle = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				switch (msg.what) {
-				case 0:
-					try {
-						pDialog.setContentView(R.layout.p_dialog);
-						pDialog.setCancelable(false);
-						pDialog.getWindow().getAttributes().width = size.x*8/9;
-						WebView web = (WebView)pDialog.findViewById(R.id.p_Web_View);
-						web.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
-						web.setEnabled(false);
-						pDialog.show();
-					} catch (InflateException e) {
-						error = true;
-						Toast.makeText(mContext, R.string.errorinloadingfiles,Toast.LENGTH_SHORT).show();
-					}
-					break;
-				case 1:
-					if (pDialog != null)
-						if (pDialog.isShowing())
-							pDialog.dismiss();
-
-					if (mediaFileList.size() > 0) {
-						FILE_GALLEY.setVisibility(View.GONE);
-						LIST_VIEW_3D.setVisibility(View.VISIBLE);
-						element = new FileGalleryAdapter(mContext, mediaFileList);
-						LIST_VIEW_3D.setAdapter(element);
-						LIST_VIEW_3D.setEnabled(true);
-						//LIST_VIEW_3D.setDynamics(new SimpleDynamics(0.7f, 0.6f));
-						if (!elementInFocus) {
-							mFlipperBottom.showPrevious();
-							mFlipperBottom.setAnimation(prevAnim());
-							elementInFocus = true;
-						}
-						if (SEARCH_FLAG) {
-							mVFlipper.showPrevious();
-							mVFlipper.setAnimation(nextAnim());
-						}
-					} else {
-						LIST_VIEW_3D.setVisibility(View.GONE);
-						FILE_GALLEY.setVisibility(View.VISIBLE);
-						Toast.makeText(mContext, R.string.empty,Toast.LENGTH_SHORT).show();
-						if (elementInFocus) {
-							mFlipperBottom.showNext();
-							mFlipperBottom.setAnimation(nextAnim());
-						}
-						elementInFocus = false;
-					}
-					break;
-				}
-			}
-		};
-		Thread thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				handle.sendEmptyMessage(0);
-				while (!Utils.loaded) {
-					// STOPPING HERE WHILE FILES ARE BEING LOADED IN
-					// BACKGROUND....
-				}
-				if (mode == 0)
-					mediaFileList = Utils.music;
-				else if (mode == 1)
-					mediaFileList = Utils.apps;
-				else if (mode == 2)
-					mediaFileList = Utils.doc;
-				else if (mode == 3)
-					mediaFileList = Utils.img;
-				else if (mode == 4)
-					mediaFileList = Utils.vids;
-				else if (mode == 5)
-					mediaFileList = Utils.zip;
-				else if (mode == 6)
-					mediaFileList = Utils.mis;
-				else if(mode == 7)
-					mediaFileList = Utils.fav;
-				handle.sendEmptyMessage(1);
-			}
-		});
-		thread.start();
+		if (mode == 0)
+			element = new FileGalleryAdapter(mContext, Utils.music);
+		else if (mode == 1)
+			element = new FileGalleryAdapter(mContext, Utils.apps);
+		else if (mode == 2)
+			element = new FileGalleryAdapter(mContext, Utils.doc);
+		else if (mode == 3)
+			element = new FileGalleryAdapter(mContext, Utils.img);
+		else if (mode == 4)
+			element = new FileGalleryAdapter(mContext, Utils.vids);
+		else if (mode == 5)
+			element = new FileGalleryAdapter(mContext, Utils.zip);
+		else if (mode == 6)
+			element = new FileGalleryAdapter(mContext, Utils.mis);
+		else if(mode == 7)
+			element = new FileGalleryAdapter(mContext, Utils.fav);
+		mFlipperBottom.showPrevious();
+		//mFlipperBottom.setAnimation(prevAnim());
+		elementInFocus = true;
+		LIST_VIEW_3D.setAdapter(element);
+		FILE_GALLEY.setVisibility(View.GONE);
+		LIST_VIEW_3D.setVisibility(View.VISIBLE);
 	}
 
 	/**
@@ -4084,7 +3937,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							setAdapter(2);
 						}
 					}
-					else if(CURRENT_ITEM == 0){
+					else if(CURRENT_ITEM == 0 && elementInFocus){
 						if(!FileGalleryAdapter.MULTI_SELECT){
 							//deleting single item from UI...
 							mediaFileList.remove(dPos);
@@ -4265,7 +4118,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 								RENAME_COMMAND = true;
 								mVFlipper.showPrevious();
-								mVFlipper.setAnimation(prevAnim());
 								editBox.setText(file2.getName());
 								editBox.setSelected(true);
 							}
@@ -4325,7 +4177,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 								RENAME_COMMAND = true;
 								mVFlipper.showPrevious();
-								mVFlipper.setAnimation(prevAnim());
 								editBox.setText(file.getName());
 								editBox.setSelected(true);
 							}
@@ -4380,7 +4231,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
 								RENAME_COMMAND = true;
 								mVFlipper.showPrevious();
-								mVFlipper.setAnimation(prevAnim());
 								editBox.setText(file0.getName());
 								editBox.setSelected(true);
 							}
@@ -4488,7 +4338,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
 			a.setVisibility(View.GONE);
 			// Search Flipper is loaded
-			mVFlipper.setAnimation(nextAnim());
 			mVFlipper.showNext();
 			mVFlipper.showNext();
 			SEARCH_FLAG = true;
@@ -4573,7 +4422,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
 			a.setVisibility(View.GONE);
 			// Search Flipper is loaded
-			mVFlipper.setAnimation(nextAnim());
 			mVFlipper.showNext();
 			mVFlipper.showNext();
 			SEARCH_FLAG = true;
@@ -4659,7 +4507,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
 			a.setVisibility(View.GONE);
 			// Search Flipper is loaded
-			mVFlipper.setAnimation(nextAnim());
 			mVFlipper.showNext();
 			mVFlipper.showNext();
 			SEARCH_FLAG = true;

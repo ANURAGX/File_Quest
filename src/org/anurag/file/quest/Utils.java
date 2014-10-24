@@ -24,7 +24,8 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 
@@ -223,7 +224,7 @@ public class Utils {
 	}
 	
 	public static void load(){
-		new MainAsyncTask().execute();
+		new MainAsyncTask().start();
 	}	
 	/**
 	 * 
@@ -242,114 +243,113 @@ public class Utils {
 	}
 	
 	
-	private static class MainAsyncTask extends AsyncTask<Void, Integer, Void>{
-		@Override
-		protected void onPostExecute(Void result) {
-			// TODO Auto-generated method stub
-			Utils.loaded = true;
-		}
-
-		@Override
-		protected void onProgressUpdate(Integer... values) {
-			// TODO Auto-generated method stub
-			switch(values[0]){
-				case 0:					
-					try{
-						favText.setText(String.format(folderCnt, folderCount));
-						favTextCount.setText(String.format(fileCnt, fileCount));
-					}catch(Exception e){
+	private static class MainAsyncTask extends Thread{
+		private Handler handler = new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				if(FileQuest.elementInFocus){
+					FileQuest.element.notifyDataSetChanged();
+				}
+				switch(msg.what){
+					case 0:					
+						try{
+							favText.setText(String.format(folderCnt, folderCount));
+							favTextCount.setText(String.format(fileCnt, fileCount));
+						}catch(Exception e){
+							
+						}					
+						break;
+					case 1:
+						try{
+							//DISLPAYS MUSIC SIZE..
+							musicText.setText(msize);								
+							musicTextCount.setText(music.size() + " "+ctx.getString(R.string.items));
+						}catch(NullPointerException e){
+							
+						}					
+						break;
 						
-					}					
-					break;
-				case 1:
-					try{
-						//DISLPAYS MUSIC SIZE..
-						musicText.setText(msize);								
-						musicTextCount.setText(music.size() + " "+ctx.getString(R.string.items));
-					}catch(NullPointerException e){
+					case 2:
+						try{
+							//DISPLAYS APPS SIZE...
+							appText.setText(asize);								
+							appTextCount.setText(apps.size() + " "+ctx.getString(R.string.items));
+						}catch(NullPointerException e){
+							
+						}					
+						break;
 						
-					}					
-					break;
-					
-				case 2:
-					try{
-						//DISPLAYS APPS SIZE...
-						appText.setText(asize);								
-						appTextCount.setText(apps.size() + " "+ctx.getString(R.string.items));
-					}catch(NullPointerException e){
+					case 3:
+						try{
+							//displays IMAGE SIZE..
+							imgText.setText(psize);								
+							imgTextCount.setText(img.size() + " "+ctx.getString(R.string.items));
+						}catch(NullPointerException e){
+							
+						}
+						break;
 						
-					}					
-					break;
-					
-				case 3:
-					try{
-						//displays IMAGE SIZE..
-						imgText.setText(psize);								
-						imgTextCount.setText(img.size() + " "+ctx.getString(R.string.items));
-					}catch(NullPointerException e){
+					case 4:
+						try{
+							//displays video size...
+							vidText.setText(vsize);								
+							vidTextCount.setText(vids.size() + " "+ctx.getString(R.string.items));
+						}catch(NullPointerException e){
+							
+						}
+						break;
 						
-					}
-					break;
-					
-				case 4:
-					try{
-						//displays video size...
-						vidText.setText(vsize);								
-						vidTextCount.setText(vids.size() + " "+ctx.getString(R.string.items));
-					}catch(NullPointerException e){
+					case 5:
+						try{
+							//DSIPLAYS DOCS SIZE...
+							docText.setText(dsize);							
+							docTextCount.setText(doc.size() + " "+ctx.getString(R.string.items));
+						}catch(NullPointerException e){
+							
+						}
+						break;
 						
-					}
-					break;
-					
-				case 5:
-					try{
-						//DSIPLAYS DOCS SIZE...
-						docText.setText(dsize);							
-						docTextCount.setText(doc.size() + " "+ctx.getString(R.string.items));
-					}catch(NullPointerException e){
+					case 6:
+						try{
+							//displays archive size...
+							arcText.setText(zsize);								
+							arcTextCount.setText(zip.size() + " "+ctx.getString(R.string.items));
+						}catch(NullPointerException e){
+							
+						}
+						break;
 						
-					}
-					break;
-					
-				case 6:
-					try{
-						//displays archive size...
-						arcText.setText(zsize);								
-						arcTextCount.setText(zip.size() + " "+ctx.getString(R.string.items));
-					}catch(NullPointerException e){
-						
-					}
-					break;
-					
-				case 7:
-					//displays miscellaneous size...
-					try{
-						misText.setText(misize);								
-						misTextCount.setText(mis.size() + " "+ctx.getString(R.string.items));
-					}catch(NullPointerException e){
-						
-					}
-					break;
+					case 7:
+						//displays miscellaneous size...
+						try{
+							misText.setText(misize);								
+							misTextCount.setText(mis.size() + " "+ctx.getString(R.string.items));
+						}catch(NullPointerException e){
+							
+						}
+						break;
+				}
 			}
-		}
 
+		};
 		@Override
-		protected Void doInBackground(Void... arg0) {
+		public void run() {
 			// TODO Auto-generated method stub
 			if(!Utils.loaded){
 				start(new File(Constants.PATH));
+				Utils.loaded = true;
 			}	
 			else{
-				publishProgress(new Integer[]{0});
-				publishProgress(new Integer[]{1});
-				publishProgress(new Integer[]{2});
-				publishProgress(new Integer[]{3});
-				publishProgress(new Integer[]{4});
-				publishProgress(new Integer[]{5});
-				publishProgress(new Integer[]{6});
-				publishProgress(new Integer[]{7});
+				handler.sendEmptyMessage(0);
+				handler.sendEmptyMessage(1);
+				handler.sendEmptyMessage(2);
+				handler.sendEmptyMessage(3);
+				handler.sendEmptyMessage(4);
+				handler.sendEmptyMessage(5);
+				handler.sendEmptyMessage(6);
+				handler.sendEmptyMessage(7);
 			}
-			return null;
 		}
 		
 		/**
@@ -365,7 +365,7 @@ public class Utils {
 					if(itm.isFavItem()){
 						fav.add(itm);
 						folderCount++;
-						publishProgress(new Integer[]{0});
+						handler.sendEmptyMessage(0);
 					}	
 					start(fi);
 				}	
@@ -383,12 +383,12 @@ public class Utils {
 				zip.add(itm);
 				zipsize+=f.length();
 				zsize = size(zipsize);
-				publishProgress(new Integer[]{6});
+				handler.sendEmptyMessage(6);
 								
 				if(itm.isFavItem()){
 					fileCount++;
 					fav.add(itm);
-					publishProgress(new Integer[]{0});
+					handler.sendEmptyMessage(0);
 				}
 			}else if(name.endsWith(".7z")||name.endsWith(".7Z")){
 				Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_7zip),
@@ -396,12 +396,12 @@ public class Utils {
 				zip.add(itm);
 				zipsize+=f.length();
 				zsize = size(zipsize);
-				publishProgress(new Integer[]{6});
+				handler.sendEmptyMessage(6);
 				
 				if(itm.isFavItem()){
 					fileCount++;
 					fav.add(itm);
-					publishProgress(new Integer[]{0});
+					handler.sendEmptyMessage(0);
 				}
 			}else if(name.endsWith(".rar")||name.endsWith(".RAR")){
 				Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_rar),
@@ -409,12 +409,12 @@ public class Utils {
 				zip.add(itm);
 				zipsize+=f.length();
 				zsize = size(zipsize);
-				publishProgress(new Integer[]{6});
+				handler.sendEmptyMessage(6);
 				
 				if(itm.isFavItem()){
 					fileCount++;
 					fav.add(itm);
-					publishProgress(new Integer[]{0});
+					handler.sendEmptyMessage(0);
 				}
 			}else if(name.endsWith(".tar")||name.endsWith(".TAR")||name.endsWith(".tar.gz")||name.endsWith(".TAR.GZ")
 					||name.endsWith(".TAT.BZ2")||name.endsWith(".tar.bz2")){
@@ -423,11 +423,11 @@ public class Utils {
 				zip.add(itm);
 				zipsize+=f.length();
 				zsize = size(zipsize);
-				publishProgress(new Integer[]{6});
+				handler.sendEmptyMessage(6);
 				if(itm.isFavItem()){
 					fileCount++;
 					fav.add(itm);
-					publishProgress(new Integer[]{0});
+					handler.sendEmptyMessage(0);
 				}				
 			}
 			else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
@@ -437,12 +437,12 @@ public class Utils {
 				music.add(itm);
 				musicsize+=f.length();
 				msize = size(musicsize);
-				publishProgress(new Integer[]{1});
+				handler.sendEmptyMessage(1);
 								
 				if(itm.isFavItem()){
 					fileCount++;
 					fav.add(itm);
-					publishProgress(new Integer[]{0});
+					handler.sendEmptyMessage(0);
 				}
 			}
 			else if(name.endsWith(".apk")||name.endsWith(".APK")){
@@ -450,12 +450,12 @@ public class Utils {
 				apps.add(itm);
 				apksize+=f.length();
 				asize = size(apksize);
-				publishProgress(new Integer[]{2});
+				handler.sendEmptyMessage(2);
 				
 				if(itm.isFavItem()){
 					fileCount++;
 					fav.add(itm);
-					publishProgress(new Integer[]{0});
+					handler.sendEmptyMessage(0);
 				}
 			}else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
 					||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
@@ -464,12 +464,12 @@ public class Utils {
 				vids.add(itm);
 				vidsize+=f.length();
 				vsize = size(vidsize);
-				publishProgress(new Integer[]{4});
+				handler.sendEmptyMessage(4);
 				
 				if(itm.isFavItem()){
 					fileCount++;
 					fav.add(itm);
-					publishProgress(new Integer[]{0});
+					handler.sendEmptyMessage(0);
 				}
 			}	
 			else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
@@ -479,11 +479,11 @@ public class Utils {
 				img.add(itm);
 				imgsize+=f.length();
 				psize = size(imgsize);
-				publishProgress(new Integer[]{3});
+				handler.sendEmptyMessage(3);
 				if(itm.isFavItem()){
 					fileCount++;
 					fav.add(itm);
-					publishProgress(new Integer[]{0});
+					handler.sendEmptyMessage(0);
 				}
 			}else if(name.endsWith(".pdf")||name.endsWith(".PDF")){
 				Item itm = new Item(f,res.getDrawable(R.drawable.ic_launcher_adobe),
@@ -492,12 +492,12 @@ public class Utils {
 				doc.add(itm);
 				docsize+=f.length();
 				dsize = size(docsize);
-				publishProgress(new Integer[]{5});	
+				handler.sendEmptyMessage(5);
 											
 				if(itm.isFavItem()){
 					fileCount++;
 					fav.add(itm);
-					publishProgress(new Integer[]{0});
+					handler.sendEmptyMessage(0);
 				}
 			}else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
 					||name.endsWith(".PPT")||name.endsWith(".DOCX")||name.endsWith(".pptx")||name.endsWith(".PPTX")
@@ -506,12 +506,12 @@ public class Utils {
 				doc.add(itm);
 				docsize+=f.length();
 				dsize = size(docsize);
-				publishProgress(new Integer[]{5});
+				handler.sendEmptyMessage(5);
 				
 				if(itm.isFavItem()){
 					fileCount++;
 					fav.add(itm);
-					publishProgress(new Integer[]{0});
+					handler.sendEmptyMessage(0);
 				}
 			}else if(name.endsWith(".txt")||name.endsWith(".TXT")||name.endsWith(".log")||name.endsWith(".LOG")
 					||name.endsWith(".ini")||name.endsWith(".INI")){
@@ -521,12 +521,12 @@ public class Utils {
 				doc.add(itm);
 				docsize+=f.length();
 				dsize = size(docsize);
-				publishProgress(new Integer[]{5});
+				handler.sendEmptyMessage(5);
 				
 				if(itm.isFavItem()){
 					fileCount++;
 					fav.add(itm);
-					publishProgress(new Integer[]{0});
+					handler.sendEmptyMessage(0);
 				}
 			}
 			else{
@@ -534,12 +534,12 @@ public class Utils {
 				mis.add(itm);
 				missize+=f.length();
 				misize = size(missize);
-				publishProgress(new Integer[]{7});
+				handler.sendEmptyMessage(7);
 								
 				if(itm.isFavItem()){
 					fileCount++;
 					fav.add(itm);
-					publishProgress(new Integer[]{0});
+					handler.sendEmptyMessage(0);
 				}
 			}		
 		}		

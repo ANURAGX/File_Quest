@@ -37,11 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-/*
- * TODO 
- * UPDATE THE FILE GALLLERY ITEMS AFTER DELETION IN THIS CLASS...
- *  
- */
+
 /**
  * 
  * @author Anurag....
@@ -151,8 +147,8 @@ public class DeleteFiles{
 		if(target.exists() && target.isFile() && target.canWrite()){
 			String nam = mContext.getString(R.string.deletingfile)+" " + target.getName();
 			mHandler.sendEmptyMessage(1);
-			nam = target.getPath();
-			updateFileGallery(nam);
+			//nam = target.getPath();
+			//updateFileGallery(nam);
 			target.delete();			
 		}	
 		
@@ -190,90 +186,4 @@ public class DeleteFiles{
 				}
 		}
 	}	
-	
-	private void updateFileGallery(String name){
-		if(name.endsWith(".zip")||name.endsWith(".ZIP")||name.endsWith(".7z")||name.endsWith(".7Z")
-				||name.endsWith(".rar")||name.endsWith(".RAR")||name.endsWith(".tar")||name.endsWith(".TAR")||name.endsWith(".tar.gz")||name.endsWith(".TAR.GZ")
-				||name.endsWith(".TAT.BZ2")||name.endsWith(".tar.bz2")){
-			for(int i = 0; i < Utils.zip.size() ; ++i){
-				if(Utils.zip.get(i).getPath().equalsIgnoreCase(name)){
-					Utils.zip.remove(i);
-					break;
-				}
-			}
-		}	
-		else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
-				||name.endsWith(".amr")||name.endsWith(".MP3")||name.endsWith(".OGG")||name.endsWith(".M4A")||
-				name.endsWith(".WAV")||name.endsWith(".AMR")){
-			for(int i = 0; i < Utils.music.size() ; ++i){
-				if(Utils.music.get(i).getPath().equalsIgnoreCase(name)){
-					Utils.music.remove(i);
-					break;
-				}
-			}
-		}	
-		else if(name.endsWith(".apk")||name.endsWith(".APK")){
-			for(int i = 0; i < Utils.apps.size() ; ++i){
-				if(Utils.apps.get(i).getPath().equalsIgnoreCase(name)){
-					Utils.apps.remove(i);
-					break;
-				}
-			}
-		}	
-		else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
-				||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
-				||name.endsWith(".MKV")){
-			for(int i = 0; i < Utils.vids.size() ; ++i){
-				if(Utils.vids.get(i).getPath().equalsIgnoreCase(name)){
-					Utils.vids.remove(i);
-					break;
-				}
-			}
-		}	
-		else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
-				||name.endsWith(".png")||name.endsWith(".BMP")||name.endsWith(".GIF")||name.endsWith(".JPEG")||name.endsWith(".JPG")
-				||name.endsWith(".PNG")){
-			for(int i = 0; i < Utils.img.size() ; ++i){
-				if(Utils.img.get(i).getPath().equalsIgnoreCase(name)){
-					Utils.img.remove(i);
-					break;
-				}
-			}
-		}		
-		else if(name.endsWith(".pdf")||name.endsWith(".PDF")){
-			for(int i = 0; i < Utils.doc.size() ; ++i){
-				if(Utils.doc.get(i).getPath().equalsIgnoreCase(name)){
-					Utils.doc.remove(i);
-					break;
-				}
-			}
-		}	
-		else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
-				||name.endsWith(".PPT")||name.endsWith(".DOCX")||name.endsWith(".pptx")||name.endsWith(".PPTX")
-				||name.endsWith(".csv")||name.endsWith(".CSV")){
-			for(int i = 0; i < Utils.doc.size() ; ++i){
-				if(Utils.doc.get(i).getPath().equalsIgnoreCase(name)){
-					Utils.doc.remove(i);
-					break;
-				}
-			}
-		}	
-		else if(name.endsWith(".txt")||name.endsWith(".TXT")||name.endsWith(".log")||name.endsWith(".LOG")
-				||name.endsWith(".ini")||name.endsWith(".INI")){
-			for(int i = 0; i < Utils.doc.size() ; ++i){
-				if(Utils.doc.get(i).getPath().equalsIgnoreCase(name)){
-					Utils.doc.remove(i);
-					break;
-				}
-			}
-		}
-		else{
-			for(int i = 0; i < Utils.mis.size() ; ++i){
-				if(Utils.mis.get(i).getPath().equalsIgnoreCase(name)){
-					Utils.mis.remove(i);
-					break;
-				}
-			}
-		}
-	}
  }
