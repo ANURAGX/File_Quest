@@ -269,7 +269,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * Media Panel Variables
 	 */
 	public static FileGalleryAdapter element;
-	private static ArrayList<Item> mediaFileList;
+	//private static ArrayList<Item> mediaFileList;
 	public static boolean elementInFocus = false;
 	private static int pos = 0;
 	private static AppManager nManager;
@@ -343,7 +343,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				showToast(getResources().getString(R.string.startupfoldernotfound));
 			}
 		}		
-		mediaFileList = new ArrayList<Item>();
+		//mediaFileList = new ArrayList<Item>();
 		sdItemsList = sdManager.getList();
 		rootItemList = rootManager.getList();
 		sdAdapter = new SDAdapter(mContext, sdItemsList);
@@ -870,7 +870,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		public void onResume() {
 			// TODO Auto-generated method stub
 			super.onResume();
-			if (LIST_VIEW_3D != null && mediaFileList != null) {
+			if (LIST_VIEW_3D != null) {
 				if (elementInFocus) {
 					LIST_VIEW_3D.setVisibility(View.VISIBLE);
 					FILE_GALLEY.setVisibility(View.GONE);
@@ -999,7 +999,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								if (SEARCH_FLAG)
 									file0 = searchList.get(position);
 								else
-									file0 = mediaFileList.get(position);
+									file0 = getItemFromCategory(fPos, position);
 								d.show();
 								dPos = position;
 							}
@@ -1106,7 +1106,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						if (SEARCH_FLAG)
 							file0 = searchList.get(position);
 						else
-							file0 = mediaFileList.get(position);
+							file0 = getItemFromCategory(fPos, position);
 						
 						if(!file0.isLocked()){//selected item is not locked...
 							if(!file0.isDirectory())
@@ -2147,13 +2147,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 					case 0:
 						if (FileGalleryAdapter.MULTI_SELECT) {
-							element = new FileGalleryAdapter(mContext , mediaFileList);
-							FileGalleryAdapter.thumbselection = new boolean[mediaFileList.size()];
+							element = new FileGalleryAdapter(mContext , getCategoryList(fPos));
+							FileGalleryAdapter.thumbselection = new boolean[getCategoryList(fPos).size()];
 							FileGalleryAdapter.MULTI_SELECT = false;
 							LIST_VIEW_3D.setAdapter(element);
 						} else {
-							element = new FileGalleryAdapter(mContext , mediaFileList);
-							FileGalleryAdapter.thumbselection = new boolean[mediaFileList.size()];
+							element = new FileGalleryAdapter(mContext , getCategoryList(fPos));
+							FileGalleryAdapter.thumbselection = new boolean[getCategoryList(fPos).size()];
 							FileGalleryAdapter.MULTI_SELECT = true;
 							LIST_VIEW_3D.setAdapter(element);
 							if (CURRENT_ITEM == 3) {
@@ -3420,11 +3420,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 										}
 									}else if(CURRENT_ITEM == 0){
 										String text = ed.toString().toLowerCase();
-										int len = mediaFileList.size();
+										int len = getCategoryList(fPos).size();
 										for(int i=0;i<len;++i){
 											try{
-												if(mediaFileList.get(i).getName().toLowerCase().contains(text))
-													searchList.add(mediaFileList.get(i));
+												if(getCategoryList(fPos).get(i).getName().toLowerCase().contains(text))
+													searchList.add(getCategoryList(fPos).get(i));
 											}catch(Exception e){
 												
 											}
@@ -3758,6 +3758,57 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		FILE_GALLEY.setVisibility(View.GONE);
 		LIST_VIEW_3D.setVisibility(View.VISIBLE);
 	}
+	
+	/**
+	 * Function to get exact item from the selected 
+	 * category of array list in file gallery...
+	 * @param mode category selected....
+	 * @param pos which position from list view....
+	 * @return
+	 */
+	private static Item getItemFromCategory(int mode , int pos){
+		if (mode == 0)
+			return Utils.music.get(pos);
+		else if (mode == 1)
+			return Utils.apps.get(pos);
+		else if (mode == 2)
+			return Utils.doc.get(pos);
+		else if (mode == 3)
+			return Utils.img.get(pos);
+		else if (mode == 4)
+			return Utils.vids.get(pos);
+		else if (mode == 5)
+			return Utils.zip.get(pos);
+		else if (mode == 6)
+			return Utils.mis.get(pos);
+		else 
+			return Utils.fav.get(pos);
+	}
+	
+	/**
+	 * Function get array list of currently selected files category
+	 * in file gallery....
+	 * @param mode category number....
+	 * @return list of files in that category....
+	 */
+	private static ArrayList<Item> getCategoryList(int mode){
+		if (mode == 0)
+			return Utils.music;
+		else if (mode == 1)
+			return Utils.apps;
+		else if (mode == 2)
+			return Utils.doc;
+		else if (mode == 3)
+			return Utils.img;
+		else if (mode == 4)
+			return Utils.vids;
+		else if (mode == 5)
+			return Utils.zip;
+		else if (mode == 6)
+			return Utils.mis;
+		else 
+			return Utils.fav;
+	}
 
 	/**
 	 * THIS CLASS LOADS THE SDCARD INFO AND REFRESHES THE UI OF BOTTOM AND
@@ -3940,7 +3991,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					else if(CURRENT_ITEM == 0 && elementInFocus){
 						if(!FileGalleryAdapter.MULTI_SELECT){
 							//deleting single item from UI...
-							mediaFileList.remove(dPos);
+							getCategoryList(fPos).remove(dPos);
 							LIST_VIEW_3D.setAdapter(element);
 						}else{
 							//multi select option was enabled and delete operation
@@ -4275,20 +4326,20 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								Toast.makeText(mContext, R.string.itemunlocked, Toast.LENGTH_SHORT).show();
 							}
 						}else if(CURRENT_ITEM == 0){
-							if(!mediaFileList.get(id).isLocked()){
+							if(!getCategoryList(fPos).get(id).isLocked()){
 								//file is not locked...
 								//lock the file...
 								
 								//this condition is true when user has not up the password and tried to lock the item...
 								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_locked));
-								Constants.db.insertNodeToLock(mediaFileList.get(id).getFile().getAbsolutePath());
-								mediaFileList.get(id).setLockStatus(true);
+								Constants.db.insertNodeToLock(getCategoryList(fPos).get(id).getFile().getAbsolutePath());
+								getCategoryList(fPos).get(id).setLockStatus(true);
 								Toast.makeText(mContext, R.string.itemlocked, Toast.LENGTH_SHORT).show();
-							}else if(mediaFileList.get(id).isLocked()){
+							}else if(getCategoryList(fPos).get(id).isLocked()){
 								//after password verification was successful,unlock the file...
 								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_unlocked));
-								Constants.db.deleteLockedNode(mediaFileList.get(id).getFile().getPath());
-								mediaFileList.get(id).setLockStatus(false);
+								Constants.db.deleteLockedNode(getCategoryList(fPos).get(id).getFile().getPath());
+								getCategoryList(fPos).get(id).setLockStatus(false);
 								Toast.makeText(mContext, R.string.itemunlocked, Toast.LENGTH_SHORT).show();
 							}
 						}
@@ -4297,6 +4348,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					setAdapter(CURRENT_ITEM);
 			}
 		};
+		
+		
 		IntentFilter filter = new IntentFilter("FQ_BACKUP");
 		this.registerReceiver(RECEIVER, filter);
 		filter = new IntentFilter("FQ_DELETE");
