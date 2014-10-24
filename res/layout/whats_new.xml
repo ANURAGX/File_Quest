@@ -26,7 +26,7 @@
     
     <LinearLayout 
         android:gravity="center" 
-        android:background="@android:color/holo_purple" 
+        android:background="@color/semi_white30" 
         android:padding="5.0dip" 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content" 
@@ -34,7 +34,7 @@
         
         <TextView 
             android:textStyle="bold" 
-            android:textColor="@android:color/darker_gray" 
+            android:textColor="@android:color/white" 
             android:id="@+id/guideTitle" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content" 
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content">
                 <TextView 
-                    android:textColor="@android:color/holo_purple"
+                    android:textColor="@android:color/white"
                     android:textSize="18.0sp" 
                     android:textStyle="bold" 
                     android:paddingLeft="2.0dip" 
@@ -290,7 +290,7 @@
     
     <Button 
         android:textStyle="bold" 
-        android:textColor="@android:color/darker_gray" 
+        android:textColor="@android:color/white" 
         android:id="@+id/whats_new_btn" 
         android:background="@drawable/button_click" 
         android:layout_width="fill_parent" 
