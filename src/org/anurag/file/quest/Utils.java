@@ -74,6 +74,11 @@ public class Utils {
 	static String zsize;
 	static String misize;
 	
+	static String Items;
+	static String sizeGB;
+	static String sizeMB;
+	static String sizeKB;
+	static String sizeByte;
 	
 	static long musicsize=0;
 	static long apksize=0;
@@ -147,7 +152,11 @@ public class Utils {
 			favTextCount.setText(String.format(fileCnt, 0));
 		}
 		
-		
+		Items = cont.getString(R.string.items);
+		sizeGB = cont.getString(R.string.appsizegb);
+		sizeMB = cont.getString(R.string.appsizemb);
+		sizeKB = cont.getString(R.string.appsizekb);
+		sizeByte = cont.getString(R.string.appsizebytes);
 		
 		music = new ArrayList<Item>();
 		apps = new ArrayList<Item>();
@@ -233,13 +242,13 @@ public class Utils {
 	 */
 	public static String size(long size){
 		if(size>Constants.GB)
-			return String.format(ctx.getString(R.string.appsizegb), (double)size/(Constants.GB));		
+			return String.format(sizeGB, (double)size/(Constants.GB));		
 		else if(size > Constants.MB)
-			return String.format(ctx.getString(R.string.appsizemb), (double)size/(Constants.MB));		
+			return String.format(sizeMB, (double)size/(Constants.MB));		
 		else if(size>1024)
-			return String.format(ctx.getString(R.string.appsizekb), (double)size/(1024));		
+			return String.format(sizeKB, (double)size/(1024));		
 		else
-			return String.format(ctx.getString(R.string.appsizebytes), (double)size);
+			return String.format(sizeByte, (double)size);
 	}
 	
 	
@@ -264,7 +273,7 @@ public class Utils {
 						try{
 							//DISLPAYS MUSIC SIZE..
 							musicText.setText(msize);								
-							musicTextCount.setText(music.size() + " "+ctx.getString(R.string.items));
+							musicTextCount.setText(music.size() + " "+Items);
 						}catch(NullPointerException e){
 							
 						}					
@@ -274,7 +283,7 @@ public class Utils {
 						try{
 							//DISPLAYS APPS SIZE...
 							appText.setText(asize);								
-							appTextCount.setText(apps.size() + " "+ctx.getString(R.string.items));
+							appTextCount.setText(apps.size() + " "+Items);
 						}catch(NullPointerException e){
 							
 						}					
@@ -284,8 +293,7 @@ public class Utils {
 						try{
 							//displays IMAGE SIZE..
 							imgText.setText(psize);								
-							imgTextCount.setText(img.size() + " "+ctx.getString(R.string.items));
-						}catch(NullPointerException e){
+							imgTextCount.setText(img.size() + " "+Items);					}catch(NullPointerException e){
 							
 						}
 						break;
@@ -294,7 +302,7 @@ public class Utils {
 						try{
 							//displays video size...
 							vidText.setText(vsize);								
-							vidTextCount.setText(vids.size() + " "+ctx.getString(R.string.items));
+							vidTextCount.setText(vids.size() + " "+Items);
 						}catch(NullPointerException e){
 							
 						}
@@ -304,7 +312,7 @@ public class Utils {
 						try{
 							//DSIPLAYS DOCS SIZE...
 							docText.setText(dsize);							
-							docTextCount.setText(doc.size() + " "+ctx.getString(R.string.items));
+							docTextCount.setText(doc.size() + " "+Items);
 						}catch(NullPointerException e){
 							
 						}
@@ -314,7 +322,7 @@ public class Utils {
 						try{
 							//displays archive size...
 							arcText.setText(zsize);								
-							arcTextCount.setText(zip.size() + " "+ctx.getString(R.string.items));
+							arcTextCount.setText(zip.size() + " "+Items);
 						}catch(NullPointerException e){
 							
 						}
@@ -324,7 +332,7 @@ public class Utils {
 						//displays miscellaneous size...
 						try{
 							misText.setText(misize);								
-							misTextCount.setText(mis.size() + " "+ctx.getString(R.string.items));
+							misTextCount.setText(mis.size() + " "+Items);
 						}catch(NullPointerException e){
 							
 						}
