@@ -78,7 +78,7 @@
     </LinearLayout>
     
      <LinearLayout 
-        android:padding="5dp" 
+        android:padding="10dp" 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
