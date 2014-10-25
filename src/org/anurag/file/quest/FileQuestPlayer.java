@@ -22,6 +22,8 @@ package org.anurag.file.quest;
 
 
 import java.io.IOException;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -31,8 +33,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -47,13 +50,17 @@ import android.widget.Toast;
  * @author Anurag
  *
  */
+@SuppressLint("DefaultLocale")
 public class FileQuestPlayer extends Activity{
 
-	boolean playing;
-	MediaPlayer player;
-	SeekBar seekbar;
-	MediaMetadataRetriever retreive;
-	Play play;
+	private TextView total_time;
+	private TextView current_time;
+	private boolean playing;
+	private MediaPlayer player;
+	private SeekBar seekbar;
+	private MediaMetadataRetriever retreive;
+	
+	@SuppressLint("HandlerLeak")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -67,6 +74,10 @@ public class FileQuestPlayer extends Activity{
 		dialog.setContentView(R.layout.file_quest_player);
 		seekbar = (SeekBar)dialog.findViewById(R.id.seek);
 		
+		
+		total_time = (TextView)dialog.findViewById(R.id.time_total);
+		current_time = (TextView)dialog.findViewById(R.id.time_current);
+		
 		TextView albumname = (TextView)dialog.findViewById(R.id.albumName);
 		TextView artist = (TextView)dialog.findViewById(R.id.artistName);
 		ImageView album = (ImageView)dialog.findViewById(R.id.albumart);
@@ -74,12 +85,20 @@ public class FileQuestPlayer extends Activity{
 			player = new MediaPlayer();
 			player.setDataSource(FileQuestPlayer.this, intent.getData());
 			player.prepare();
+			
+			//if other players are running asking them to close....
+			Intent i = new Intent("com.android.music.musicservicecommand");
+		    i.putExtra("command", "pause");
+		    sendBroadcast(i);
+			
 			player.start();
+			current_time.setText(generateTime(0000));
+			total_time.setText(generateTime(player.getDuration()));
 			player.setLooping(true);
 			seekbar.setMax(player.getDuration());
 			retreive = new MediaMetadataRetriever();
 			retreive.setDataSource(FileQuestPlayer.this, intent.getData());
-			play = new Play();
+			
 			/**
 			 * extracting mediametadata like album name,artist,album art...
 			 */
@@ -156,8 +175,10 @@ public class FileQuestPlayer extends Activity{
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
 				// TODO Auto-generated method stub
-				if(fromUser)
+				if(fromUser){
 					player.seekTo(progress);
+					current_time.setText(generateTime(progress));
+				}	
 			}
 		});
 		
@@ -171,7 +192,6 @@ public class FileQuestPlayer extends Activity{
 				try{
 					player.release();
 					playing = false;
-					play.cancel(true);
 				}catch(Exception e){
 					
 				}
@@ -179,37 +199,38 @@ public class FileQuestPlayer extends Activity{
 			}
 		});
 		
-		if(player != null)
-			play.execute();
+		if(player != null){
+			final Handler handle = new Handler(){
+				@Override
+				public void handleMessage(Message msg){
+					long time = player.getCurrentPosition();
+					current_time.setText(generateTime(time));
+					seekbar.setProgress((int)time);
+				}
+			};
+			handle.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					if(playing){
+						handle.sendEmptyMessage(0);
+						handle.postDelayed(this, 1000);
+					}
+				}
+			}, 1000);
+		}
+			//play.execute();
 		else{
 			FileQuestPlayer.this.finish();
-		}
-	}	
-	
-	private class Play extends AsyncTask<Void, Void, Void> {
-		@Override
-		protected void onProgressUpdate(Void... values) {
-			// TODO Auto-generated method stub
-			try{
-				seekbar.setProgress(player.getCurrentPosition());
-			}catch(IllegalStateException e){
-				
-			}
-		}
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			// TODO Auto-generated method stub
-			while(playing){
-				try {
-					Thread.sleep(1);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				publishProgress((Void[])null);
-			}
-			return null;
 		}		
+	}	
+
+	private String generateTime(long time) {
+		int totalSeconds = (int) (time / 1000);
+		int seconds = totalSeconds % 60;
+		int minutes = (totalSeconds / 60) % 60;
+		int hours = totalSeconds / 3600;
+		return hours > 0 ? String.format("%02d:%02d:%02d", hours, minutes, seconds) : String.format("%02d:%02d", minutes, seconds);
 	}
+	
 }
