@@ -316,7 +316,11 @@ public class RootManager {
 		if(f.isDirectory()){
 			if(!f.canRead())
 				return ctx.getString(R.string.rootd);
-			return f.list().length+" "+ctx.getString(R.string.items);
+			try{
+				return f.list().length+" "+ctx.getString(R.string.items);
+			}catch(NullPointerException e){
+				return 0+" "+ctx.getString(R.string.items);
+			}
 		}	
 		long size = f.length();
 		if(size>Constants.GB)
