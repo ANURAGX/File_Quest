@@ -284,9 +284,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static boolean mUseBackKey = false;
 	private static ViewFlipper mVFlipper;
 	private static int LAST_PAGE;
-	static boolean error;
 	static SlideLayout slidemenu;
-	private static Utils loadFileGallery;
 	private static View v;
 	private String ID;
 	private boolean Ad_loaded;
@@ -319,7 +317,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		Constants.db = new ItemDB(mContext);
 		Constants.dboxDB = new DBoxUsers(mContext);		
 		
-		loadFileGallery = new Utils(null, mContext);
+		Utils.setContext(null , mContext);
 		Utils.load();
 		
 		sdManager = new SDManager(FileQuest.this);
@@ -385,17 +383,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 
 		setContentView(R.layout.new_ui);
-	//	loadFileGallery = new Utils(null, mContext);
-		//loadFileGallery.setDetails();
-		
-
+	
 		editBox = (EditText) findViewById(R.id.editBox);
-
 		sd = (ProgressBar) findViewById(R.id.space_indicator);
 		avail = (TextView) findViewById(R.id.avail);
 		total = (TextView) findViewById(R.id.total);
-
-		error = false;
+		//error = false;
 		
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 		mViewPager = (TransitionViewPager) findViewById(R.id.pager);
