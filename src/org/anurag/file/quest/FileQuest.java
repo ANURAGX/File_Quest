@@ -3998,16 +3998,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							//was performed...
 							setAdapter(0);
 						}
-					}
-					
-					/**
-					 * updating the file gallery here after an item was deleted...
-					 * 
-					 *  This code will be removed in future....
-					 */
-					if(Utils.loaded){
-						loadFileGallery = new Utils(null, mContext);
-						Utils.load();
+					}else if(CURRENT_ITEM == 0 && !elementInFocus){
+						//file deletion was performed from left slide menu...
+						//all files were deleted from a category....
+						Utils.notifyFileDelete(fPos);
 					}
 				} else if (ACTION.equalsIgnoreCase("FQ_FLASHZIP")) {
 					// FLASHABLE ZIP DIALOG IS FIRED FROM HERE
@@ -4941,7 +4935,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			public void onClick(View itemView, View clickedView, int position) {
 				// TODO Auto-generated method stub
 				ArrayList<Item> itemList = null;
-				if(position==1)
+				if(position == 0)
+					itemList = Utils.fav;
+				else if(position==1)
 					itemList = (Utils.music);
 				else if(position==2)
 					itemList = (Utils.apps);
@@ -4955,6 +4951,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					itemList = (Utils.zip);
 				else if(position==7)
 					itemList = (Utils.mis);
+				
+				if(position == 0)
+					fPos = 7;
+				else
+					fPos = position-1;
 				
 				/**
 				 * switching to different actions of buttons in expanded list....

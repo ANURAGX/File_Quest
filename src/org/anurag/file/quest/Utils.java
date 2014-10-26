@@ -29,6 +29,12 @@ import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 
+
+/**
+ * 
+ * @author Anurag....
+ *
+ */
 public class Utils {
 	
 	static String type;
@@ -294,6 +300,7 @@ public class Utils {
 							//displays IMAGE SIZE..
 							imgText.setText(psize);								
 							imgTextCount.setText(img.size() + " "+Items);					}catch(NullPointerException e){
+						}catch(Exception e){
 							
 						}
 						break;
@@ -601,4 +608,88 @@ public class Utils {
 			misTextCount.setText(mis.size() + " "+ctx.getString(R.string.items));
 		}catch(NullPointerException e){}	
 	}
+	
+	
+	public static void notifyAllAppsDeleted(){
+		apps = new ArrayList<Item>();
+		asize = ctx.getString(R.string.zerosize);
+		updateUI();
+	}
+	
+	public static void notifyAllMusicDeleted(){
+		music = new ArrayList<Item>();
+		msize = ctx.getString(R.string.zerosize);
+		updateUI();
+	}
+	
+	public static void notifyAllImageDeleted(){
+		img = new ArrayList<Item>();
+		psize = ctx.getString(R.string.zerosize);
+		updateUI();
+	}
+	
+	public static void notifyAllMisDeleted(){
+		mis = new ArrayList<Item>();
+		misize = ctx.getString(R.string.zerosize);
+		updateUI();
+	}
+	
+	public static void notifyAllZipDeleted(){
+		zip = new ArrayList<Item>();
+		zsize = ctx.getString(R.string.zerosize);
+		updateUI();
+	}
+	
+	public static void notifyAllFavDeleted(){
+		fav = new ArrayList<Item>();
+		folderCount = 0;
+		fileCount = 0;
+		updateUI();
+	}
+	
+	public static void notifyAllVideoDeleted(){
+		vids = new ArrayList<Item>();
+		vsize = ctx.getString(R.string.zerosize);
+		updateUI();
+	}
+	
+	public static void notifyAllDocsDeleted(){
+		doc = new ArrayList<Item>();
+		dsize = ctx.getString(R.string.zerosize);
+		updateUI();
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 */
+	public static void notifyFileDelete(int position){
+		switch(position){
+			case 0:
+					notifyAllMusicDeleted();
+					break;
+			case 1:
+					notifyAllAppsDeleted();
+					break;
+			case 2:
+					notifyAllDocsDeleted();
+					break;
+			case 3:
+				    notifyAllImageDeleted();
+				    break;
+			case 4:
+					notifyAllVideoDeleted();
+					break;
+			case 5:
+					notifyAllZipDeleted();
+					break;
+			case 6:
+					notifyAllMisDeleted();
+					break;
+			default:
+					notifyAllFavDeleted();
+					
+		}
+	}
+	
 }
