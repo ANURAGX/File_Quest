@@ -204,7 +204,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	
 	
 	/**
-	 * 
+	 * variables related to sdcard panel....
 	 */
 	private static SDManager sdManager;
 	private static ArrayList<Item> sdItemsList;
@@ -269,7 +269,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * Media Panel Variables
 	 */
 	public static FileGalleryAdapter element;
-	//private static ArrayList<Item> mediaFileList;
 	public static boolean elementInFocus = false;
 	private static int pos = 0;
 	private static AppManager nManager;
@@ -288,6 +287,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static View v;
 	private String ID;
 	private boolean Ad_loaded;
+	private boolean delete_from_slider_menu;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -312,7 +313,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		} catch (Exception e) {
 
 		}
-		Ad_loaded = false;
+		
+		delete_from_slider_menu = Ad_loaded = false;
 		mContext = FileQuest.this;
 		Constants.db = new ItemDB(mContext);
 		Constants.dboxDB = new DBoxUsers(mContext);		
@@ -455,6 +457,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						Utils.stop();
 						Utils.restart();
 					}					
+					
+					if(delete_from_slider_menu){
+						delete_from_slider_menu = false;
+						Utils.updateUI();
+					}
 				} else if (page != 0) {
 					b.setBackgroundResource(R.drawable.ic_launcher_add_new);
 					t.setText(R.string.New);
@@ -3969,8 +3976,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				if (ACTION.equalsIgnoreCase("FQ_BACKUP")|| ACTION.equals(Intent.ACTION_UNINSTALL_PACKAGE)){
 					setAdapter(CURRENT_ITEM);
 				}else if (ACTION.equalsIgnoreCase("FQ_DELETE")) {
-					// setAdapter(CURRENT_ITEM);
-					if(CURRENT_ITEM == 1){
+					if(delete_from_slider_menu){
+						//file deletion was performed from left slide menu...
+						//all files were deleted from a category....
+						Utils.notifyFileDelete(fPos);
+					}
+					else if(CURRENT_ITEM == 1){
 						if(!RootAdapter.MULTI_SELECT){
 							//single item has to removed....
 							rootItemList.remove(dPos);
@@ -3978,7 +3989,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}else{
 							setAdapter(1);
 						}
-
 						//file gallery has to be updated after delete operation....
 						Utils.update_Needed = true;
 					}else if(CURRENT_ITEM == 2){
@@ -3990,8 +4000,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							//multi select option was enabled and delete operation
 							//was performed...
 							setAdapter(2);
-						}
-						
+						}						
 						//file gallery has to be updated after delete operation....
 						Utils.update_Needed = true;
 					}
@@ -4005,13 +4014,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							//was performed...
 							setAdapter(0);
 						}
-					}else if(CURRENT_ITEM == 0 && !elementInFocus){
-						//file deletion was performed from left slide menu...
-						//all files were deleted from a category....
-						Utils.notifyFileDelete(fPos);
-					}
-					
-					
+					}					
 				} else if (ACTION.equalsIgnoreCase("FQ_FLASHZIP")) {
 					// FLASHABLE ZIP DIALOG IS FIRED FROM HERE
 					 new CreateZipApps(mContext, size.x*8/9, nList);
@@ -4969,6 +4972,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					fPos = 7;
 				else
 					fPos = position-1;
+				
+				//tells that slide menu was used to delete files from panel
+				//other than file gallery....
+				if(CURRENT_ITEM != 0)
+					delete_from_slider_menu = true;
 				
 				/**
 				 * switching to different actions of buttons in expanded list....
