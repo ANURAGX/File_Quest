@@ -21,9 +21,11 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
@@ -39,13 +41,21 @@ import android.widget.TextView;
 @SuppressLint("HandlerLeak")
 public class Utils {
 	
-	
+	//tells whether updating of file gallery needed or not....
 	public static boolean update_Needed;
+	
+	//tells whether updating of favorite items needed or not....
+	public static boolean fav_Update_Needed;
+	
 	
 	static String type;
 	static Resources res;
 	static View v;
-	public static boolean loaded = false;
+	
+	//tells whether files are completely loaded or not....
+	public static boolean loaded;
+	
+	//list of files for different file types in file gallery....
 	public static ArrayList<Item> music;
 	public static ArrayList<Item> apps;
 	public static ArrayList<Item> vids;
@@ -55,6 +65,7 @@ public class Utils {
 	public static ArrayList<Item> img;
 	public static ArrayList<Item> fav;
 	
+	//count of favorite folders and files....
 	private static int folderCount,fileCount;
 	
 	//file types icons....
@@ -88,6 +99,7 @@ public class Utils {
 	static String zsize;
 	static String misize;
 	
+	//strings....
 	static String Items;
 	static String sizeGB;
 	static String sizeMB;
@@ -115,10 +127,14 @@ public class Utils {
 	static TextView misText,misTextCount;
 	static TextView favText,favTextCount;
 	
-	public Utils() {
+	/**
+	 * simple function....
+	 */
+	public static void setContext() {
 		// TODO Auto-generated constructor stub
 		
 		update_Needed = false;
+		fav_Update_Needed = false;
 		
 		music = new ArrayList<Item>();
 		apps = new ArrayList<Item>();
@@ -127,8 +143,7 @@ public class Utils {
 		zip = new ArrayList<Item>();
 		mis = new ArrayList<Item>();
 		img = new ArrayList<Item>();
-		//ctx = cont;
-		
+			
 		musicsize=0;
 		apksize=0;
 		vidsize=0;
@@ -137,10 +152,18 @@ public class Utils {
 		missize=0;
 		imgsize=0;
 	}
-	public Utils(View view,Context cont) {
+	
+	/**
+	 * 
+	 * @param view to show the file gallery items....
+	 * @param cont context....
+	 */
+	public static void setContext(View view,Context cont) {
 		// TODO Auto-generated constructor stub
 		v = view;
 		update_Needed = false;
+		fav_Update_Needed = false;
+		
 		if(v !=null){
 			musicText = (TextView)v.findViewById(R.id.mSize);
 			musicTextCount = (TextView)v.findViewById(R.id.mFiles);
@@ -393,6 +416,7 @@ public class Utils {
 		public void run() {
 			// TODO Auto-generated method stub
 			if(!Utils.loaded){
+				prepareFavList();
 				start(new File(Constants.PATH));
 				Utils.loaded = true;
 			}	
@@ -409,6 +433,34 @@ public class Utils {
 		}
 		
 		/**
+		 * prepares the list of favorite items from db....
+		 */
+		void prepareFavList(){
+			Cursor cursor = Constants.db.getReadableDatabase().query("FAVITEMS", 
+					null, 
+					null, 
+					null, 
+					null, 
+					null, 
+					null);
+			while(cursor.moveToNext()){
+				File file = new File(cursor.getString(0));
+				if(file.isDirectory()){
+					folderCount++;
+					String it = null;
+					try{
+						it = file.list().length +" "+ Items;
+					}catch(Exception e){
+						it = ctx.getString(R.string.rootd);
+					}
+					Item itm = new Item(file, folderImg, folderType, it);
+					fav.add(itm);
+				}else
+					makeIcon(file , true);
+			}
+		}
+		
+		/**
 		 * 
 		 * @param fil
 		 */
@@ -416,14 +468,8 @@ public class Utils {
 			if(!Utils.loaded)
 				for(File fi:fil.listFiles()){
 					if(fi.isFile())
-						makeIcon(fi);
+						makeIcon(fi , false);
 					else if(fi.isDirectory()){
-						Item itm = new Item(fi, folderImg, folderType, RootManager.getSize(fi));
-						if(itm.isFavItem()){
-							fav.add(itm);
-							folderCount++;
-							handler.sendEmptyMessage(0);
-						}	
 						start(fi);
 					}	
 				}	
@@ -433,171 +479,207 @@ public class Utils {
 		 * 
 		 * @param f
 		 */
-		private void makeIcon(File f){
+		private void makeIcon(File f , boolean forFavItem){
 			String name = f.getName();
 			if(name.endsWith(".zip")||name.endsWith(".ZIP")){
 				Item itm = new Item(f, arcImg, arcType, RootManager.getSize(f));
+				if(forFavItem){
+					fav.add(itm);
+					fileCount++;
+					handler.sendEmptyMessage(0);
+					return;
+				}
 				zip.add(itm);
 				zipsize+=f.length();
 				zsize = size(zipsize);
 				handler.sendEmptyMessage(6);
-								
-				if(itm.isFavItem()){
-					fileCount++;
-					fav.add(itm);
-					handler.sendEmptyMessage(0);
-				}
+				
 			}else if(name.endsWith(".7z")||name.endsWith(".7Z")){
 				Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_7zip),
 						arcType, RootManager.getSize(f));
+				
+				if(forFavItem){
+					fav.add(itm);
+					fileCount++;
+					handler.sendEmptyMessage(0);
+					return;
+				}
+				
 				zip.add(itm);
 				zipsize+=f.length();
 				zsize = size(zipsize);
 				handler.sendEmptyMessage(6);
 				
-				if(itm.isFavItem()){
-					fileCount++;
-					fav.add(itm);
-					handler.sendEmptyMessage(0);
-				}
 			}else if(name.endsWith(".rar")||name.endsWith(".RAR")){
 				Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_rar),
 						arcType, RootManager.getSize(f));
+				
+				if(forFavItem){
+					fav.add(itm);
+					fileCount++;
+					handler.sendEmptyMessage(0);
+					return;
+				}
+				
 				zip.add(itm);
 				zipsize+=f.length();
 				zsize = size(zipsize);
 				handler.sendEmptyMessage(6);
 				
-				if(itm.isFavItem()){
-					fileCount++;
-					fav.add(itm);
-					handler.sendEmptyMessage(0);
-				}
 			}else if(name.endsWith(".tar")||name.endsWith(".TAR")||name.endsWith(".tar.gz")||name.endsWith(".TAR.GZ")
 					||name.endsWith(".TAT.BZ2")||name.endsWith(".tar.bz2")){
 				Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_tar),
 						arcType, RootManager.getSize(f));
+				
+				if(forFavItem){
+					fav.add(itm);
+					fileCount++;
+					handler.sendEmptyMessage(0);
+					return;
+				}
+				
 				zip.add(itm);
 				zipsize+=f.length();
 				zsize = size(zipsize);
 				handler.sendEmptyMessage(6);
-				if(itm.isFavItem()){
-					fileCount++;
-					fav.add(itm);
-					handler.sendEmptyMessage(0);
-				}				
+							
 			}
 			else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
 					||name.endsWith(".amr")||name.endsWith(".MP3")||name.endsWith(".OGG")||name.endsWith(".M4A")||
 					name.endsWith(".WAV")||name.endsWith(".AMR")){
 				Item itm = new Item(f, musicImg, musicType, RootManager.getSize(f));
+				
+				if(forFavItem){
+					fav.add(itm);
+					fileCount++;
+					handler.sendEmptyMessage(0);
+					return;
+				}
+				
 				music.add(itm);
 				musicsize+=f.length();
 				msize = size(musicsize);
 				handler.sendEmptyMessage(1);
-								
-				if(itm.isFavItem()){
-					fileCount++;
-					fav.add(itm);
-					handler.sendEmptyMessage(0);
-				}
+				
 			}
 			else if(name.endsWith(".apk")||name.endsWith(".APK")){
 				Item itm = new Item(f, apkImg, apkType, RootManager.getSize(f));
+				
+				if(forFavItem){
+					fav.add(itm);
+					fileCount++;
+					handler.sendEmptyMessage(0);
+					return;
+				}
+				
 				apps.add(itm);
 				apksize+=f.length();
 				asize = size(apksize);
 				handler.sendEmptyMessage(2);
 				
-				if(itm.isFavItem()){
-					fileCount++;
-					fav.add(itm);
-					handler.sendEmptyMessage(0);
-				}
 			}else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
 					||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
 					||name.endsWith(".MKV")){
 				Item itm = new Item(f, vidImg, vidType, RootManager.getSize(f));
+				
+				if(forFavItem){
+					fav.add(itm);
+					fileCount++;
+					handler.sendEmptyMessage(0);
+					return;
+				}
+				
 				vids.add(itm);
 				vidsize+=f.length();
 				vsize = size(vidsize);
 				handler.sendEmptyMessage(4);
 				
-				if(itm.isFavItem()){
-					fileCount++;
-					fav.add(itm);
-					handler.sendEmptyMessage(0);
-				}
 			}	
 			else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
 					||name.endsWith(".png")||name.endsWith(".BMP")||name.endsWith(".GIF")||name.endsWith(".JPEG")||name.endsWith(".JPG")
 					||name.endsWith(".PNG")){
 				Item itm = new Item(f, imageImg, imageType, RootManager.getSize(f));
+				
+				if(forFavItem){
+					fav.add(itm);
+					fileCount++;
+					handler.sendEmptyMessage(0);
+					return;
+				}			
+				
 				img.add(itm);
 				imgsize+=f.length();
 				psize = size(imgsize);
 				handler.sendEmptyMessage(3);
-				if(itm.isFavItem()){
-					fileCount++;
-					fav.add(itm);
-					handler.sendEmptyMessage(0);
-				}
+				
 			}else if(name.endsWith(".pdf")||name.endsWith(".PDF")){
 				Item itm = new Item(f,res.getDrawable(R.drawable.ic_launcher_adobe),
 									ctx.getString(R.string.pdf),
 									RootManager.getSize(f));
-				doc.add(itm);
-				docsize+=f.length();
-				dsize = size(docsize);
-				handler.sendEmptyMessage(5);
-											
-				if(itm.isFavItem()){
-					fileCount++;
+				
+				if(forFavItem){
 					fav.add(itm);
+					fileCount++;
 					handler.sendEmptyMessage(0);
+					return;
 				}
-			}else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
-					||name.endsWith(".PPT")||name.endsWith(".DOCX")||name.endsWith(".pptx")||name.endsWith(".PPTX")
-					||name.endsWith(".csv")||name.endsWith(".CSV")){
-				Item itm = new Item(f,docImg,docType,RootManager.getSize(f));
+				
 				doc.add(itm);
 				docsize+=f.length();
 				dsize = size(docsize);
 				handler.sendEmptyMessage(5);
 				
-				if(itm.isFavItem()){
-					fileCount++;
+			}else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
+					||name.endsWith(".PPT")||name.endsWith(".DOCX")||name.endsWith(".pptx")||name.endsWith(".PPTX")
+					||name.endsWith(".csv")||name.endsWith(".CSV")){
+				Item itm = new Item(f,docImg,docType,RootManager.getSize(f));
+				
+				if(forFavItem){
 					fav.add(itm);
+					fileCount++;
 					handler.sendEmptyMessage(0);
+					return;
 				}
+				
+				doc.add(itm);
+				docsize+=f.length();
+				dsize = size(docsize);
+				handler.sendEmptyMessage(5);
+				
+				
 			}else if(name.endsWith(".txt")||name.endsWith(".TXT")||name.endsWith(".log")||name.endsWith(".LOG")
 					||name.endsWith(".ini")||name.endsWith(".INI")){
 				Item itm = new Item(f,res.getDrawable(R.drawable.ic_launcher_text),
 									ctx.getString(R.string.text),
 									RootManager.getSize(f));
+				if(forFavItem){
+					fav.add(itm);
+					fileCount++;
+					handler.sendEmptyMessage(0);
+					return;
+				}
+				
 				doc.add(itm);
 				docsize+=f.length();
 				dsize = size(docsize);
 				handler.sendEmptyMessage(5);
 				
-				if(itm.isFavItem()){
-					fileCount++;
-					fav.add(itm);
-					handler.sendEmptyMessage(0);
-				}
 			}
 			else{
 				Item itm = new Item(f,misImg, misType, RootManager.getSize(f));
+				
+				if(forFavItem){
+					fav.add(itm);
+					fileCount++;
+					handler.sendEmptyMessage(0);
+					return;
+				}
+				
 				mis.add(itm);
 				missize+=f.length();
 				misize = size(missize);
 				handler.sendEmptyMessage(7);
-								
-				if(itm.isFavItem()){
-					fileCount++;
-					fav.add(itm);
-					handler.sendEmptyMessage(0);
-				}
+				
 			}		
 		}		
 	}	
