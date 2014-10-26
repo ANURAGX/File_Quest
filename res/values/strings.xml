@@ -210,7 +210,7 @@
 	<string name="totalfolder">Folders :- %d Folders</string>
 	<string name="totalfiles">Files :- %d Files</string>
 	<string name="deletingfile">DELETING FILE :- </string>
-	
+	<string name="allfavdeleted">All favorite items removed from list</string>
 	
 	
 	

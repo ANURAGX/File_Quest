@@ -4975,6 +4975,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				 */
 				switch(clickedView.getId()){
 					case R.id.button_delete:
+							if(position == 0){
+								//only deleting favorite items from DB....
+								if(Constants.db.deleteAllFavItem()){
+									Toast.makeText(mContext, R.string.allfavdeleted, Toast.LENGTH_SHORT).show();
+									Utils.notifyFileDelete(fPos);
+								}	
+								break;
+							}	
 							new DeleteFiles(mContext, size.x*8/9, itemList, getResources().getString(R.string.confirmdeletion));
 							break;
 							

@@ -144,7 +144,7 @@ public class ItemDB extends SQLiteOpenHelper{
 	 * @param Path
 	 * @return
 	 */
-	public boolean deleteAllFavItem(String Path){
+	public boolean deleteAllFavItem(){
 		SQLiteDatabase db = this.getWritableDatabase();
 		return db.delete("FAVITEMS", null,null) > 0;
 	}
