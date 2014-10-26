@@ -458,10 +458,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						Utils.restart();
 					}					
 					
-					if(delete_from_slider_menu){
-						delete_from_slider_menu = false;
-						Utils.updateUI();
-					}
 				} else if (page != 0) {
 					b.setBackgroundResource(R.drawable.ic_launcher_add_new);
 					t.setText(R.string.New);
@@ -4974,9 +4970,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					fPos = position-1;
 				
 				//tells that slide menu was used to delete files from panel
-				//other than file gallery....
-				if(CURRENT_ITEM != 0)
-					delete_from_slider_menu = true;
+				delete_from_slider_menu = true;
 				
 				/**
 				 * switching to different actions of buttons in expanded list....
