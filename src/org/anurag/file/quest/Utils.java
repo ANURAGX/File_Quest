@@ -21,6 +21,7 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.util.ArrayList;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -35,7 +36,11 @@ import android.widget.TextView;
  * @author Anurag....
  *
  */
+@SuppressLint("HandlerLeak")
 public class Utils {
+	
+	
+	public static boolean update_Needed;
 	
 	static String type;
 	static Resources res;
@@ -52,6 +57,7 @@ public class Utils {
 	
 	private static int folderCount,fileCount;
 	
+	//file types icons....
 	static Drawable musicImg;
 	static Drawable imageImg;
 	static Drawable vidImg;
@@ -60,6 +66,8 @@ public class Utils {
 	static Drawable misImg;
 	static Drawable apkImg;
 	static Drawable folderImg;
+	
+	//file type strings...
 	static String musicType;
 	static String imageType;
 	static String vidType;
@@ -71,7 +79,7 @@ public class Utils {
 	static String folderCnt;
 	static String fileCnt;
 	
-	
+	//file sizes in  string....
 	static String msize;
 	static String asize;
 	static String psize;
@@ -86,6 +94,7 @@ public class Utils {
 	static String sizeKB;
 	static String sizeByte;
 	
+	//file sizes in long....
 	static long musicsize=0;
 	static long apksize=0;
 	static long vidsize=0;
@@ -96,6 +105,7 @@ public class Utils {
 	
 	static Context ctx;
 	
+	//views for file types in file gallery....
 	static TextView musicText,musicTextCount;
 	static TextView appText,appTextCount;
 	static TextView imgText,imgTextCount;
@@ -107,6 +117,8 @@ public class Utils {
 	
 	public Utils() {
 		// TODO Auto-generated constructor stub
+		
+		update_Needed = false;
 		
 		music = new ArrayList<Item>();
 		apps = new ArrayList<Item>();
@@ -128,7 +140,7 @@ public class Utils {
 	public Utils(View view,Context cont) {
 		// TODO Auto-generated constructor stub
 		v = view;
-		
+		update_Needed = false;
 		if(v !=null){
 			musicText = (TextView)v.findViewById(R.id.mSize);
 			musicTextCount = (TextView)v.findViewById(R.id.mFiles);
@@ -238,9 +250,38 @@ public class Utils {
 		favTextCount.setText(String.format(fileCnt, 0));
 	}
 	
+	/**
+	 * scans the files for file gallery....
+	 */
 	public static void load(){
-		new MainAsyncTask().start();
+		new MainLoadTask().start();
 	}	
+	
+	/**
+	 * stop currently running scanning of files....
+	 */
+	public static void stop(){
+		Utils.loaded = true;
+	}
+	
+	/**
+	 * again reload the items...
+	 */
+	public static void restart(){
+		Utils.loaded = false;
+		music = new ArrayList<Item>();
+		apps = new ArrayList<Item>();
+		vids = new ArrayList<Item>();
+		doc = new ArrayList<Item>();
+		zip = new ArrayList<Item>();
+		mis = new ArrayList<Item>();
+		img = new ArrayList<Item>();	
+		fav = new ArrayList<Item>();
+		misize = zsize = vsize = dsize = psize = asize = 
+				msize = ctx.getString(R.string.zerosize);
+		load();
+	}
+	
 	/**
 	 * 
 	 * @param list
@@ -258,7 +299,7 @@ public class Utils {
 	}
 	
 	
-	private static class MainAsyncTask extends Thread{
+	private static class MainLoadTask extends Thread{
 		private Handler handler = new Handler(){
 			@Override
 			public void handleMessage(Message msg) {
@@ -372,19 +413,20 @@ public class Utils {
 		 * @param fil
 		 */
 		void start(File fil){
-			for(File fi:fil.listFiles()){
-				if(fi.isFile())
-					makeIcon(fi);
-				else if(fi.isDirectory()){
-					Item itm = new Item(fi, folderImg, folderType, RootManager.getSize(fi));
-					if(itm.isFavItem()){
-						fav.add(itm);
-						folderCount++;
-						handler.sendEmptyMessage(0);
+			if(!Utils.loaded)
+				for(File fi:fil.listFiles()){
+					if(fi.isFile())
+						makeIcon(fi);
+					else if(fi.isDirectory()){
+						Item itm = new Item(fi, folderImg, folderType, RootManager.getSize(fi));
+						if(itm.isFavItem()){
+							fav.add(itm);
+							folderCount++;
+							handler.sendEmptyMessage(0);
+						}	
+						start(fi);
 					}	
-					start(fi);
 				}	
-			}	
 		}	
 		
 		/**

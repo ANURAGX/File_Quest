@@ -454,6 +454,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					t.setText(getString(R.string.apps));
 					new load().execute();
 					LAST_PAGE = 0;
+					
+					//delete or copy operation was performed....
+					//updating file gallery....
+					if(Utils.update_Needed){
+						Utils.update_Needed = false;
+						Utils.stop();
+						Utils.restart();
+					}					
 				} else if (page != 0) {
 					b.setBackgroundResource(R.drawable.ic_launcher_add_new);
 					t.setText(R.string.New);
@@ -3977,6 +3985,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}else{
 							setAdapter(1);
 						}
+
+						//file gallery has to be updated after delete operation....
+						Utils.update_Needed = true;
 					}else if(CURRENT_ITEM == 2){
 						if(!SDAdapter.MULTI_SELECT){
 							//single item has to removed....
@@ -3987,6 +3998,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							//was performed...
 							setAdapter(2);
 						}
+						
+						//file gallery has to be updated after delete operation....
+						Utils.update_Needed = true;
 					}
 					else if(CURRENT_ITEM == 0 && elementInFocus){
 						if(!FileGalleryAdapter.MULTI_SELECT){
@@ -4003,6 +4017,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						//all files were deleted from a category....
 						Utils.notifyFileDelete(fPos);
 					}
+					
+					
 				} else if (ACTION.equalsIgnoreCase("FQ_FLASHZIP")) {
 					// FLASHABLE ZIP DIALOG IS FIRED FROM HERE
 					 new CreateZipApps(mContext, size.x*8/9, nList);
@@ -4352,8 +4368,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							}
 						}
 					}
-				}else if(ACTION.equalsIgnoreCase("FQ_COPY"))
+				}else if(ACTION.equalsIgnoreCase("FQ_COPY")){
 					setAdapter(CURRENT_ITEM);
+					
+					//after copying or moving files updating the file gallery....
+					Utils.update_Needed = true;
+				}	
 			}
 		};
 		
