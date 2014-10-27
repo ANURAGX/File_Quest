@@ -447,16 +447,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 					b.setBackgroundResource(R.drawable.ic_launcher_select_app);
 					t.setText(getString(R.string.apps));
-					new load().execute();
 					LAST_PAGE = 0;
 					
 					//delete or copy operation was performed....
 					//updating file gallery....
 					if(Utils.update_Needed){
+						new load().execute();
 						Utils.update_Needed = false;
 						Utils.stop();
 						Utils.restart();
-					}					
+					}else if(Utils.fav_Update_Needed){
+						//an item was added or removed to favorite list
+						//so updating ui....
+						Utils.fav_Update_Needed = false;
+						Utils.update_fav();
+					}
 					
 				} else if (page != 0) {
 					b.setBackgroundResource(R.drawable.ic_launcher_add_new);
@@ -3976,6 +3981,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						//file deletion was performed from left slide menu...
 						//all files were deleted from a category....
 						Utils.notifyFileDelete(fPos);
+						setAdapter(CURRENT_ITEM);
 					}
 					else if(CURRENT_ITEM == 1){
 						if(!RootAdapter.MULTI_SELECT){

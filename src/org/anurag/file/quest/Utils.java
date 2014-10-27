@@ -907,4 +907,16 @@ public class Utils {
 		Utils.fav_Update_Needed = false;
 	}
 	
+	/**
+	 * this function simply updates the ui after and item was added or removed to fav list....
+	 */
+	public static void update_fav(){
+		try{
+			favText.setText(String.format(folderCnt, folderCount));
+			favTextCount.setText(String.format(fileCnt, fileCount));
+		}catch(Exception e){
+			
+		}
+	}
+	
 }
