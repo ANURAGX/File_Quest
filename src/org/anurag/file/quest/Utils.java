@@ -153,6 +153,97 @@ public class Utils {
 		imgsize=0;
 	}
 	
+	
+	private static Handler handler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			if(!FileQuest.elementInFocus)
+				switch(msg.what){
+					case 0:					
+						try{
+							favText.setText(String.format(folderCnt, folderCount));
+							favTextCount.setText(String.format(fileCnt, fileCount));
+						}catch(Exception e){
+							
+						}					
+						break;
+					case 1:
+						try{
+							//DISLPAYS MUSIC SIZE..
+							musicText.setText(msize);								
+							musicTextCount.setText(music.size() + " "+Items);
+						}catch(Exception e){
+							
+						}					
+						break;
+						
+					case 2:
+						try{
+							//DISPLAYS APPS SIZE...
+							appText.setText(asize);								
+							appTextCount.setText(apps.size() + " "+Items);
+						}catch(Exception e){
+							
+						}					
+						break;
+						
+					case 3:
+						try{
+							//displays IMAGE SIZE..
+							imgText.setText(psize);								
+							imgTextCount.setText(img.size() + " "+Items);					}catch(NullPointerException e){
+						}catch(Exception e){
+							
+						}
+						break;
+						
+					case 4:
+						try{
+							//displays video size...
+							vidText.setText(vsize);								
+							vidTextCount.setText(vids.size() + " "+Items);
+						}catch(Exception e){
+							
+						}
+						break;
+						
+					case 5:
+						try{
+							//DSIPLAYS DOCS SIZE...
+							docText.setText(dsize);							
+							docTextCount.setText(doc.size() + " "+Items);
+						}catch(Exception e){
+							
+						}
+						break;
+						
+					case 6:
+						try{
+							//displays archive size...
+							arcText.setText(zsize);								
+							arcTextCount.setText(zip.size() + " "+Items);
+						}catch(Exception e){
+							
+						}
+						break;
+						
+					case 7:
+						//displays miscellaneous size...
+						try{
+							misText.setText(misize);								
+							misTextCount.setText(mis.size() + " "+Items);
+						}catch(Exception e){
+							
+						}
+						break;
+				}
+
+				
+		}	
+
+	};
+	
 	/**
 	 * 
 	 * @param view to show the file gallery items....
@@ -323,101 +414,13 @@ public class Utils {
 	
 	
 	private static class MainLoadTask extends Thread{
-		private Handler handler = new Handler(){
-			@Override
-			public void handleMessage(Message msg) {
-				// TODO Auto-generated method stub
-				if(FileQuest.elementInFocus){
-					FileQuest.element.notifyDataSetChanged();
-				}
-				switch(msg.what){
-					case 0:					
-						try{
-							favText.setText(String.format(folderCnt, folderCount));
-							favTextCount.setText(String.format(fileCnt, fileCount));
-						}catch(Exception e){
-							
-						}					
-						break;
-					case 1:
-						try{
-							//DISLPAYS MUSIC SIZE..
-							musicText.setText(msize);								
-							musicTextCount.setText(music.size() + " "+Items);
-						}catch(NullPointerException e){
-							
-						}					
-						break;
-						
-					case 2:
-						try{
-							//DISPLAYS APPS SIZE...
-							appText.setText(asize);								
-							appTextCount.setText(apps.size() + " "+Items);
-						}catch(NullPointerException e){
-							
-						}					
-						break;
-						
-					case 3:
-						try{
-							//displays IMAGE SIZE..
-							imgText.setText(psize);								
-							imgTextCount.setText(img.size() + " "+Items);					}catch(NullPointerException e){
-						}catch(Exception e){
-							
-						}
-						break;
-						
-					case 4:
-						try{
-							//displays video size...
-							vidText.setText(vsize);								
-							vidTextCount.setText(vids.size() + " "+Items);
-						}catch(NullPointerException e){
-							
-						}
-						break;
-						
-					case 5:
-						try{
-							//DSIPLAYS DOCS SIZE...
-							docText.setText(dsize);							
-							docTextCount.setText(doc.size() + " "+Items);
-						}catch(NullPointerException e){
-							
-						}
-						break;
-						
-					case 6:
-						try{
-							//displays archive size...
-							arcText.setText(zsize);								
-							arcTextCount.setText(zip.size() + " "+Items);
-						}catch(NullPointerException e){
-							
-						}
-						break;
-						
-					case 7:
-						//displays miscellaneous size...
-						try{
-							misText.setText(misize);								
-							misTextCount.setText(mis.size() + " "+Items);
-						}catch(NullPointerException e){
-							
-						}
-						break;
-				}
-			}
-
-		};
+		
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
 			if(!Utils.loaded){
 				prepareFavList();
-				start(new File(Constants.PATH));
+				start(new File("/storage/ext_sd"));
 				Utils.loaded = true;
 			}	
 			else{

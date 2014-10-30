@@ -3782,19 +3782,19 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @return
 	 */
 	private static Item getItemFromCategory(int mode , int pos){
-		if (mode == 0)
+		if (mode == 1)
 			return Utils.music.get(pos);
-		else if (mode == 1)
-			return Utils.apps.get(pos);
 		else if (mode == 2)
+			return Utils.apps.get(pos);
+		else if (mode == 5)
 			return Utils.doc.get(pos);
 		else if (mode == 3)
 			return Utils.img.get(pos);
 		else if (mode == 4)
 			return Utils.vids.get(pos);
-		else if (mode == 5)
-			return Utils.zip.get(pos);
 		else if (mode == 6)
+			return Utils.zip.get(pos);
+		else if (mode == 7)
 			return Utils.mis.get(pos);
 		else 
 			return Utils.fav.get(pos);
@@ -3807,19 +3807,19 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @return list of files in that category....
 	 */
 	private static ArrayList<Item> getCategoryList(int mode){
-		if (mode == 0)
+		if (mode == 1)
 			return Utils.music;
-		else if (mode == 1)
-			return Utils.apps;
 		else if (mode == 2)
+			return Utils.apps;
+		else if (mode == 5)
 			return Utils.doc;
 		else if (mode == 3)
 			return Utils.img;
 		else if (mode == 4)
 			return Utils.vids;
-		else if (mode == 5)
-			return Utils.zip;
 		else if (mode == 6)
+			return Utils.zip;
+		else if (mode == 7)
 			return Utils.mis;
 		else 
 			return Utils.fav;
@@ -3887,7 +3887,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				handle.sendEmptyMessage(1);
 			}
 		});
-
 		public void execute() {
 			thread.start();
 		}
