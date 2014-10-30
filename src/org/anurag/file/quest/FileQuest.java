@@ -643,11 +643,19 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			DBoxAuth.AUTH = false;
 		}
 	}
+	
+	@Override
+	public void finish() {
+		// TODO Auto-generated method stub
+		super.finish();
+		Utils.loaded = true;
+	}
 
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		Utils.loaded = true;
 	}
 
 	@Override
@@ -737,73 +745,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		});
 		thread.start();
 	}
-
-	
-	/**
-	 * The above same method,bute here task is achieved via asynctask... 
-	 * @param ITEM
-	 */
-	private static void setAdapter2(final int ITEM) {
-		
-		new AsyncTask<Void, Void, Void>(){
-			@Override
-			protected void onPostExecute(Void result) {
-				// TODO Auto-generated method stub
-				super.onPostExecute(result);
-				CURRENT_ITEM = ITEM;
-				if(CURRENT_ITEM != 0){
-					resetPager();
-				}else if(CURRENT_ITEM == 0)
-					load_FIle_Gallery(fPos);
-			}
-
-			@Override
-			protected Void doInBackground(Void... params) {
-				// TODO Auto-generated method stub
-				try {// TRY BLOCK IS USED BECAUSE I NOTICED THAT WHEN NEW FOLDER
-					// WITH HINDI LANGAUGE IS CREATED THROWS INDEXOUTOFBOUND
-					// EXCEPTION
-					// I THINK IT IS APPLICABLE TO OTHER LANGUAGES ALSO
-					if(!ZIP_SD&&!RAR_SD&&!TAR_SD)
-						sdItemsList = sdManager.getList();
-					if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT)
-						rootItemList = rootManager.getList();
-					//if (ITEM == 0)
-						//load_FIle_Gallery(pos);
-				}catch (IndexOutOfBoundsException e) {
-					if(!ZIP_SD&&!RAR_SD&&!TAR_SD)
-						sdItemsList = sdManager.getList();
-					if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT)
-						rootItemList = rootManager.getList();
-				}
-				
-				if(SDAdapter.MULTI_SELECT) {
-					SDAdapter.thumbselection = new boolean[sdItemsList.size()];
-					SDAdapter.MULTI_FILES = new ArrayList<Item>();
-					SDAdapter.C = 0;
-				}
-				if(RootAdapter.MULTI_SELECT) {
-					RootAdapter.thumbselection = new boolean[rootItemList.size()];
-					RootAdapter.MULTI_FILES = new ArrayList<Item>();
-					RootAdapter.C = 0;
-				}
-				mUseBackKey = false;
-				if(ITEM == 3) {
-					if (MULTI_SELECT_APPS) {
-						nAppAdapter = new AppAdapter(mContext,R.layout.row_list_1, nList);
-						nAppAdapter.MULTI_SELECT = true;
-					} else if (!MULTI_SELECT_APPS) {
-						nAppAdapter = new AppAdapter(mContext,R.layout.row_list_1, nList);
-						nAppAdapter.MULTI_SELECT = false;
-						
-					}
-				} 
-				return null;
-			}			
-		}.execute();
-	}
-	
-
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
@@ -2928,8 +2869,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}
 			} else if (CURRENT_ITEM == 0 && elementInFocus) {
 				elementInFocus = false;
-				resetPager();
+				//resetPager();
+				LIST_VIEW_3D.setVisibility(View.GONE);
+				FILE_GALLEY.setVisibility(View.VISIBLE);
 				mFlipperBottom.showNext();
+				//update ui after setting file gallery view....
+				if(!Utils.loaded)
+					Utils.updateUI();
 			} else if (CURRENT_ITEM == 0 && !elementInFocus) {
 				/**
 				 * CHECKS WHETHER THE CURRENT PREF IS 0 IF IT IS FOUND 0 THEN IT
@@ -3749,29 +3695,33 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @param con
 	 */
 	public static void load_FIle_Gallery(final int mode) {
-		if(mode == 0)
-			element = new FileGalleryAdapter(mContext, Utils.fav);
-		else if (mode == 1)
-			element = new FileGalleryAdapter(mContext, Utils.music);
-		else if (mode == 2)
-			element = new FileGalleryAdapter(mContext, Utils.apps);
-		else if (mode == 5)
-			element = new FileGalleryAdapter(mContext, Utils.doc);
-		else if (mode == 3)
-			element = new FileGalleryAdapter(mContext, Utils.img);
-		else if (mode == 4)
-			element = new FileGalleryAdapter(mContext, Utils.vids);
-		else if (mode == 6)
-			element = new FileGalleryAdapter(mContext, Utils.zip);
-		else if (mode == 7)
-			element = new FileGalleryAdapter(mContext, Utils.mis);
-		
-		mFlipperBottom.showPrevious();
-		//mFlipperBottom.setAnimation(prevAnim());
 		elementInFocus = true;
-		LIST_VIEW_3D.setAdapter(element);
-		FILE_GALLEY.setVisibility(View.GONE);
-		LIST_VIEW_3D.setVisibility(View.VISIBLE);
+		try{
+			if(mode == 0)
+				element = new FileGalleryAdapter(mContext, Utils.fav);
+			else if (mode == 1)
+				element = new FileGalleryAdapter(mContext, Utils.music);
+			else if (mode == 2)
+				element = new FileGalleryAdapter(mContext, Utils.apps);
+			else if (mode == 5)
+				element = new FileGalleryAdapter(mContext, Utils.doc);
+			else if (mode == 3)
+				element = new FileGalleryAdapter(mContext, Utils.img);
+			else if (mode == 4)
+				element = new FileGalleryAdapter(mContext, Utils.vids);
+			else if (mode == 6)
+				element = new FileGalleryAdapter(mContext, Utils.zip);
+			else if (mode == 7)
+				element = new FileGalleryAdapter(mContext, Utils.mis);
+			LIST_VIEW_3D.setAdapter(element);
+		}catch(Exception e){
+			elementInFocus = false;
+		}
+		if(elementInFocus){
+			FILE_GALLEY.setVisibility(View.GONE);
+			LIST_VIEW_3D.setVisibility(View.VISIBLE);
+			mFlipperBottom.showPrevious();
+		}
 	}
 	
 	/**

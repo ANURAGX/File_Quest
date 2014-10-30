@@ -158,7 +158,7 @@ public class Utils {
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
-			if(!FileQuest.elementInFocus)
+			
 				switch(msg.what){
 					case 0:					
 						try{
@@ -414,7 +414,6 @@ public class Utils {
 	
 	
 	private static class MainLoadTask extends Thread{
-		
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
@@ -467,6 +466,7 @@ public class Utils {
 					Constants.db.deleteFavItem(cursor.getString(0));
 				}
 			}
+			cursor.close();
 		}
 		
 		/**
@@ -499,13 +499,15 @@ public class Utils {
 			if(forFavItem){
 				fav.add(itm);
 				fileCount++;
-				handler.sendEmptyMessage(0);
+				if(!FileQuest.elementInFocus)	
+					handler.sendEmptyMessage(0);
 				return;
 			}
 			zip.add(itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
-			handler.sendEmptyMessage(6);
+			if(!FileQuest.elementInFocus)
+				handler.sendEmptyMessage(6);
 			
 		}else if(name.endsWith(".7z")||name.endsWith(".7Z")){
 			Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_7zip),
@@ -514,14 +516,16 @@ public class Utils {
 			if(forFavItem){
 				fav.add(itm);
 				fileCount++;
-				handler.sendEmptyMessage(0);
+				if(!FileQuest.elementInFocus)
+					handler.sendEmptyMessage(0);
 				return;
 			}
 			
 			zip.add(itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
-			handler.sendEmptyMessage(6);
+			if(!FileQuest.elementInFocus)
+				handler.sendEmptyMessage(6);
 			
 		}else if(name.endsWith(".rar")||name.endsWith(".RAR")){
 			Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_rar),
@@ -530,14 +534,16 @@ public class Utils {
 			if(forFavItem){
 				fav.add(itm);
 				fileCount++;
-				handler.sendEmptyMessage(0);
+				if(!FileQuest.elementInFocus)
+					handler.sendEmptyMessage(0);
 				return;
 			}
 			
 			zip.add(itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
-			handler.sendEmptyMessage(6);
+			if(!FileQuest.elementInFocus)
+				handler.sendEmptyMessage(6);
 			
 		}else if(name.endsWith(".tar")||name.endsWith(".TAR")||name.endsWith(".tar.gz")||name.endsWith(".TAR.GZ")
 				||name.endsWith(".TAT.BZ2")||name.endsWith(".tar.bz2")){
@@ -547,14 +553,16 @@ public class Utils {
 			if(forFavItem){
 				fav.add(itm);
 				fileCount++;
-				handler.sendEmptyMessage(0);
+				if(!FileQuest.elementInFocus)
+					handler.sendEmptyMessage(0);
 				return;
 			}
 			
 			zip.add(itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
-			handler.sendEmptyMessage(6);
+			if(!FileQuest.elementInFocus)
+				handler.sendEmptyMessage(6);
 						
 		}
 		else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
@@ -565,15 +573,16 @@ public class Utils {
 			if(forFavItem){
 				fav.add(itm);
 				fileCount++;
-				handler.sendEmptyMessage(0);
+				if(!FileQuest.elementInFocus)
+					handler.sendEmptyMessage(0);
 				return;
 			}
 			
 			music.add(itm);
 			musicsize+=f.length();
 			msize = size(musicsize);
-			handler.sendEmptyMessage(1);
-			
+			if(!FileQuest.elementInFocus)
+				handler.sendEmptyMessage(1);
 		}
 		else if(name.endsWith(".apk")||name.endsWith(".APK")){
 			Item itm = new Item(f, apkImg, apkType, RootManager.getSize(f));
@@ -581,14 +590,15 @@ public class Utils {
 			if(forFavItem){
 				fav.add(itm);
 				fileCount++;
-				handler.sendEmptyMessage(0);
+				if(!FileQuest.elementInFocus)
+					handler.sendEmptyMessage(0);
 				return;
-			}
-			
+			}			
 			apps.add(itm);
 			apksize+=f.length();
 			asize = size(apksize);
-			handler.sendEmptyMessage(2);
+			if(!FileQuest.elementInFocus)
+				handler.sendEmptyMessage(2);
 			
 		}else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
 				||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
@@ -598,14 +608,16 @@ public class Utils {
 			if(forFavItem){
 				fav.add(itm);
 				fileCount++;
-				handler.sendEmptyMessage(0);
+				if(!FileQuest.elementInFocus)
+					handler.sendEmptyMessage(0);
 				return;
 			}
 			
 			vids.add(itm);
 			vidsize+=f.length();
 			vsize = size(vidsize);
-			handler.sendEmptyMessage(4);
+			if(!FileQuest.elementInFocus)
+				handler.sendEmptyMessage(4);
 			
 		}	
 		else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
@@ -616,14 +628,16 @@ public class Utils {
 			if(forFavItem){
 				fav.add(itm);
 				fileCount++;
-				handler.sendEmptyMessage(0);
+				if(!FileQuest.elementInFocus)
+					handler.sendEmptyMessage(0);
 				return;
 			}			
 			
 			img.add(itm);
 			imgsize+=f.length();
 			psize = size(imgsize);
-			handler.sendEmptyMessage(3);
+			if(!FileQuest.elementInFocus)
+				handler.sendEmptyMessage(3);
 			
 		}else if(name.endsWith(".pdf")||name.endsWith(".PDF")){
 			Item itm = new Item(f,res.getDrawable(R.drawable.ic_launcher_adobe),
@@ -633,15 +647,16 @@ public class Utils {
 			if(forFavItem){
 				fav.add(itm);
 				fileCount++;
-				handler.sendEmptyMessage(0);
+				if(!FileQuest.elementInFocus)
+					handler.sendEmptyMessage(0);
 				return;
 			}
 			
 			doc.add(itm);
 			docsize+=f.length();
 			dsize = size(docsize);
-			handler.sendEmptyMessage(5);
-			
+			if(!FileQuest.elementInFocus)
+				handler.sendEmptyMessage(5);
 		}else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
 				||name.endsWith(".PPT")||name.endsWith(".DOCX")||name.endsWith(".pptx")||name.endsWith(".PPTX")
 				||name.endsWith(".csv")||name.endsWith(".CSV")){
@@ -650,16 +665,17 @@ public class Utils {
 			if(forFavItem){
 				fav.add(itm);
 				fileCount++;
-				handler.sendEmptyMessage(0);
+				if(!FileQuest.elementInFocus)
+					handler.sendEmptyMessage(0);
 				return;
 			}
 			
 			doc.add(itm);
 			docsize+=f.length();
 			dsize = size(docsize);
-			handler.sendEmptyMessage(5);
-			
-			
+			if(!FileQuest.elementInFocus)
+				handler.sendEmptyMessage(5);
+		
 		}else if(name.endsWith(".txt")||name.endsWith(".TXT")||name.endsWith(".log")||name.endsWith(".LOG")
 				||name.endsWith(".ini")||name.endsWith(".INI")){
 			Item itm = new Item(f,res.getDrawable(R.drawable.ic_launcher_text),
@@ -668,15 +684,16 @@ public class Utils {
 			if(forFavItem){
 				fav.add(itm);
 				fileCount++;
-				handler.sendEmptyMessage(0);
+				if(!FileQuest.elementInFocus)
+					handler.sendEmptyMessage(0);
 				return;
 			}
 			
 			doc.add(itm);
 			docsize+=f.length();
 			dsize = size(docsize);
-			handler.sendEmptyMessage(5);
-			
+			if(!FileQuest.elementInFocus)
+				handler.sendEmptyMessage(5);			
 		}
 		else{
 			Item itm = new Item(f,misImg, misType, RootManager.getSize(f));
@@ -684,14 +701,16 @@ public class Utils {
 			if(forFavItem){
 				fav.add(itm);
 				fileCount++;
-				handler.sendEmptyMessage(0);
+				if(!FileQuest.elementInFocus)
+					handler.sendEmptyMessage(0);
 				return;
 			}
 			
 			mis.add(itm);
 			missize+=f.length();
 			misize = size(missize);
-			handler.sendEmptyMessage(7);
+			if(!FileQuest.elementInFocus)
+				handler.sendEmptyMessage(7);
 			
 		}		
 	}
