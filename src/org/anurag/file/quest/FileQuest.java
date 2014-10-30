@@ -215,7 +215,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ArrayList<Item> tempList;
 	
 	
-	private static int fPos,dPos;
+	static int fPos;
+
+	private static int dPos;
 	private BroadcastReceiver RECEIVER;
 	private static Dialog dialog;
 	public static Point size;
@@ -921,23 +923,26 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				//all the information is loaded,just uodating the UI.... 
 				Utils.updateUI();
 			}
+			
 			/*
-			 * WHEN MUSIC BUTTON IS CLICKED
+			 * WHEN FAVORITE BUTTON IS CLICKED
 			 */
 			fav.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					load_FIle_Gallery((fPos = 7));
+					load_FIle_Gallery((fPos = 0));
 				}
 			});
 
-			
+			/*
+			 * WHEN music BUTTON IS CLICKED
+			 */
 			music.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					load_FIle_Gallery((fPos = 0));
+					load_FIle_Gallery((fPos = 1));
 				}
 			});
 
@@ -946,7 +951,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					try {
-						load_FIle_Gallery((fPos = 1));
+						load_FIle_Gallery((fPos = 2));
 					} catch (InflateException e) {
 
 					}
@@ -957,7 +962,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				@Override
 				public void onClick(View arg0) {
 					// TODO Auto-generated method stub
-					load_FIle_Gallery((fPos = 2));
+					load_FIle_Gallery((fPos = 5));
 				}
 			});
 
@@ -981,7 +986,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					load_FIle_Gallery((fPos = 5));
+					load_FIle_Gallery((fPos = 6));
 				}
 			});
 
@@ -989,7 +994,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					load_FIle_Gallery((fPos = 6));
+					load_FIle_Gallery((fPos = 7));
 				}
 			});
 		
@@ -3744,22 +3749,23 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @param con
 	 */
 	public static void load_FIle_Gallery(final int mode) {
-		if (mode == 0)
-			element = new FileGalleryAdapter(mContext, Utils.music);
+		if(mode == 0)
+			element = new FileGalleryAdapter(mContext, Utils.fav);
 		else if (mode == 1)
-			element = new FileGalleryAdapter(mContext, Utils.apps);
+			element = new FileGalleryAdapter(mContext, Utils.music);
 		else if (mode == 2)
+			element = new FileGalleryAdapter(mContext, Utils.apps);
+		else if (mode == 5)
 			element = new FileGalleryAdapter(mContext, Utils.doc);
 		else if (mode == 3)
 			element = new FileGalleryAdapter(mContext, Utils.img);
 		else if (mode == 4)
 			element = new FileGalleryAdapter(mContext, Utils.vids);
-		else if (mode == 5)
-			element = new FileGalleryAdapter(mContext, Utils.zip);
 		else if (mode == 6)
+			element = new FileGalleryAdapter(mContext, Utils.zip);
+		else if (mode == 7)
 			element = new FileGalleryAdapter(mContext, Utils.mis);
-		else if(mode == 7)
-			element = new FileGalleryAdapter(mContext, Utils.fav);
+		
 		mFlipperBottom.showPrevious();
 		//mFlipperBottom.setAnimation(prevAnim());
 		elementInFocus = true;
