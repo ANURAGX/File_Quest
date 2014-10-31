@@ -157,7 +157,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
 	private static SectionsPagerAdapter mSectionsPagerAdapter;
-	
+	private static String pageTitleRoot;
+	private static String pageTitleSD;
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
@@ -677,22 +678,18 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			public void handleMessage(Message msg) {
 				// TODO Auto-generated method stub
 				switch (msg.what) {
-				
-				case 3:
-					CURRENT_ITEM=ITEM;
-					resetPager();
-					break;
-				case 4:
-					CURRENT_ITEM=ITEM;
-					resetPager();
-					APP_LIST_VIEW.setAdapter(nAppAdapter);
-					APP_LIST_VIEW.setSelection(pos);
-					break;
-				case 5:
-					load_FIle_Gallery(fPos);
-					break;
-				}
-				super.handleMessage(msg);
+					case 3:
+						CURRENT_ITEM=ITEM;
+						if(CURRENT_ITEM == 2)
+							root.setAdapter(sdAdapter);
+						else if(CURRENT_ITEM == 1)
+							simple.setAdapter(rootAdapter);
+						indicator.notifyDataSetChanged();
+						break;
+					case 4:
+						load_FIle_Gallery(fPos);
+						break;
+					}
 			}
 		};
 
@@ -729,17 +726,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}
 				mUseBackKey = false;
 				handle.sendEmptyMessage(3);
-				if (ITEM == 3) {
-					if (MULTI_SELECT_APPS) {
-						nAppAdapter = new AppAdapter(mContext,R.layout.row_list_1, nList);
-						nAppAdapter.MULTI_SELECT = true;
-						handle.sendEmptyMessage(4);
-					} else if (!MULTI_SELECT_APPS) {
-						nAppAdapter = new AppAdapter(mContext,R.layout.row_list_1, nList);
-						nAppAdapter.MULTI_SELECT = false;
-						handle.sendEmptyMessage(4);
-					}
-				} else if (ITEM == 0 && elementInFocus)
+				if (ITEM == 0 && elementInFocus)
 					handle.sendEmptyMessage(5);
 			}
 		});
@@ -754,6 +741,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
 		}
+		
 
 		@Override
 		public Fragment getItem(int position) {
@@ -785,29 +773,23 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			String curr;
 			switch (position) {
-			case 0:
-				return getString(R.string.filegallery);
-			case 1:
-				if (RootManager.nStack.size() == 1)
-					return "/";
-				else if (RootManager.getCurrentDirectoryName().equals(
-						"sdcard0"))
-					return getString(R.string.sd);
-				return RootManager.getCurrentDirectoryName();
-			case 2:
-				curr = SDManager.getCurrentDirectoryName();
-				if (curr.equals("sdcard") || curr.equals("sdcard0")
-						|| curr.equalsIgnoreCase("0")
-						|| curr.equalsIgnoreCase(PATH))
-					return getString(R.string.sd);
-				return SDManager.getCurrentDirectoryName();
-			case 3:
-				return getString(R.string.appstore);
-			}
+				case 0:
+					return getString(R.string.filegallery);
+				case 1:
+					if (RootManager.nStack.size() == 1)
+						pageTitleRoot = "/";
+					else
+						pageTitleRoot = RootManager.getCurrentDirectoryName();
+					return pageTitleRoot;
+				case 2:
+					pageTitleSD = SDManager.getCurrentDirectoryName();
+					return pageTitleSD;
+				case 3:
+					return getString(R.string.appstore);
+				}
 			return null;
-		}			
+		}
 	}
 
 	/**
@@ -3001,9 +2983,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			}
 			else if (CURRENT_ITEM == 1&& !RootManager.getCurrentDirectory().equals("/")) {
 				RootManager.nStack.pop();
-				rootItemList = rootManager.getList();
-				CURRENT_ITEM=1;
-				resetPager();
+				setAdapter(1);
 				file = new Item(new File(RootManager.getCurrentDirectory()),null, null, null);
 			} else if (CURRENT_ITEM == 1&&RootManager.getCurrentDirectory().endsWith("/")) {
 				/**
@@ -3096,11 +3076,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}
 			}else if (CURRENT_ITEM == 2 && (SDManager.nStack.size() >= 2)) {
 				SDManager.nStack.pop();
-				sdItemsList = sdManager.getPreviousList();
-				if(SDAdapter.MULTI_SELECT)
-					SDAdapter.thumbselection = new boolean[sdItemsList.size()];
-				CURRENT_ITEM = 2;
-				resetPager();
+				setAdapter(2);
 				file2 = new Item(new File(SDManager.getCurrentDirectory()), null, null, null);
 			} else if (CURRENT_ITEM == 2 && SDManager.nStack.size() < 2) {
 				/**
@@ -3931,6 +3907,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				String ACTION = it.getAction();
 				if (ACTION.equalsIgnoreCase("FQ_BACKUP")|| ACTION.equals(Intent.ACTION_UNINSTALL_PACKAGE)){
 					setAdapter(CURRENT_ITEM);
+					nAppAdapter = new AppAdapter(mContext,R.layout.row_list_1, nList);
+					if (MULTI_SELECT_APPS) {
+						nAppAdapter.MULTI_SELECT = true;
+					}else if (!MULTI_SELECT_APPS) {
+						nAppAdapter.MULTI_SELECT = false;
+					}
+					APP_LIST_VIEW.setAdapter(nAppAdapter); 
+					APP_LIST_VIEW.setSelection(pos);					
 				}else if (ACTION.equalsIgnoreCase("FQ_DELETE")) {
 					if(delete_from_slider_menu){
 						//file deletion was performed from left slide menu...
