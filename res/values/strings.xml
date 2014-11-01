@@ -64,7 +64,7 @@
         <item>Image File</item>
         <item>Video Files</item>
         <item>Archives</item>
-        <item>Miscellaneous Files</item>
+        <item>Unknown Files</item>
     </string-array>
     
 
@@ -254,7 +254,7 @@
 	<string name="jmpdocs">Jump to document files</string>
 	<string name="jmpzip">Jump to zip files</string>
 	<string name="jmpapk">Jump to apk files</string>
-	<string name="jmpmisc">Jump to miscellaneous files</string>
+	<string name="jmpmisc">Jump to Unknown files</string>
     <string name="jmpimg">Jump to image files</string>
     <string name="pastehere">Paste here</string>
     <string name="jmpdown">Jump to download folder</string>
@@ -403,7 +403,7 @@
 	<string name="zip">Zip</string>
     <string name="compr">Compressed</string>
     <string name="web">Web</string>
-    <string name="mis">Miscellaneous</string>
+    <string name="mis">Unknown</string>
     <string name="pdf">Pdf</string>
     <string name="document">Document</string>
     <string name="text">Text</string>

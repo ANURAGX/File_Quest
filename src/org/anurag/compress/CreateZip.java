@@ -164,7 +164,7 @@ public class CreateZip {
 								running=false;
 								//SENDING BROADCAST TO RELOAD THE LIST ON COMPLETION OF ZIP
 								//OPERATION....
-								ctx.sendBroadcast(new Intent("FQ_DELETE"));
+								ctx.sendBroadcast(new Intent("FQ_ARCHIVE_CREATED"));
 								cancel.setText(ctx.getString(R.string.ok));
 								status.setText(ctx.getString(R.string.zipsuccessful));
 								progress.setVisibility(View.GONE);
@@ -180,7 +180,7 @@ public class CreateZip {
 								}
 								//SENDING BROADCAST TO RELOAD THE LIST ON COMPLETION OF ZIP
 								//OPERATION....
-								ctx.sendBroadcast(new Intent("FQ_DELETE"));
+								ctx.sendBroadcast(new Intent("FQ_ARCHIVE_CREATED"));
 								dialog.dismiss();
 								Toast.makeText(ctx, ctx.getString(R.string.zipinterrupted), Toast.LENGTH_SHORT).show();
 							}

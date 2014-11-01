@@ -4306,15 +4306,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}
 					}
 				}else if(ACTION.equalsIgnoreCase("FQ_COPY")){
-					setAdapter(CURRENT_ITEM);
-					
+					setAdapter(CURRENT_ITEM);					
 					//after copying or moving files updating the file gallery....
 					Utils.update_Needed = true;
-				}	
+				}else if(ACTION.equalsIgnoreCase("FQ_ARCHIVE_CREATED")){
+					setAdapter(CURRENT_ITEM);
+					
+				}
 			}
 		};
-		
-		
+				
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("FQ_BACKUP");
 		filter.addAction("FQ_DELETE");
@@ -4330,6 +4331,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		filter.addAction("FQ_MOVE_LOCATION");
 		filter.addAction("FQ_COPY");
 		filter.addAction("FQ_FILE_LOCKED_OR_UNLOCKED");
+		filter.addAction("FQ_ARCHIVE_CREATED");
 		this.registerReceiver(RECEIVER, filter);
 	}
 	
@@ -4965,27 +4967,5 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 	}
 	
-	/**
-	 * 
-	 */
-	private static void setRootAdapter(){
-		final Handler handle = new Handler(){
-			@Override
-			public void handleMessage(Message msg){
-				simple.setAdapter(rootAdapter);
-			}
-		};
-		Thread thr = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				rootItemList = rootManager.getList();
-				if(RootAdapter.MULTI_SELECT)	
-					RootAdapter.thumbselection = new boolean[rootItemList.size()];
-				handle.sendEmptyMessage(0);
-			}
-		});
-		thr.start();
-	}
 	
 }
