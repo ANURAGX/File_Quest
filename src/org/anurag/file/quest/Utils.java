@@ -418,8 +418,8 @@ public class Utils {
 		public void run() {
 			// TODO Auto-generated method stub
 			if(!Utils.loaded){
-				prepareFavList();
-				start(new File("/storage/ext_sd"));
+				//prepareFavList();
+				//start(new File("/storage/ext_sd"));
 				Utils.loaded = true;
 			}	
 			else{

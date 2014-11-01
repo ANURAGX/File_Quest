@@ -171,7 +171,7 @@ public class RarObj {
 		else if(Name.endsWith(".tar") || Name.endsWith(".TAR") || Name.endsWith(".rar") 
 				|| Name.endsWith("RAR") || Name.endsWith(".7z") || Name.endsWith(".7Z")
 				||Name.endsWith(".gz") || Name.endsWith(".GZ")){
-			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_archive_operation);
+			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_zip_it);
 			return ctx.getString(R.string.compr);
 		}	
 		else if(Name.endsWith(".apk") || Name.endsWith(".APK")){

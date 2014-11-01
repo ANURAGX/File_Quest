@@ -21,6 +21,7 @@ package org.anurag.settings;
 
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -51,9 +52,9 @@ public class FolderIconDialog {
 		list = new String[7];
 		list[0] = ctx.getString(R.string.orangefolder);
 		list[1] = ctx.getString(R.string.greenfolder);
-		list[2] = ctx.getString(R.string.yellowfolder);
+		list[2] = ctx.getString(R.string.cyanfolder);
 		list[3] = ctx.getString(R.string.violetfolder);
-		list[4] = ctx.getString(R.string.redfolder);
+		list[4] = ctx.getString(R.string.greyfolder);
 		list[5] = ctx.getString(R.string.brownfolder);
 		list[6] = ctx.getString(R.string.bluefolder);
 		//dialog image....

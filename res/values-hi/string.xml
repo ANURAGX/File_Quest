@@ -258,9 +258,9 @@
     <string name="bluefolder">नीला फोल्डर </string>
     <string name="greenfolder">हरा फोल्डर </string>
     <string name="brownfolder">भूरा फोल्डर </string>
-    <string name="redfolder">लाल फोल्डर </string> 
+    <string name="greyfolder">धुमैला फोल्डर </string> 
     <string name="violetfolder">बैंगनी फोल्डर </string>
-    <string name="yellowfolder">पीला फोल्डर </string>
+    <string name="cyanfolder">सियान फोल्डर </string>
     <string name="opaque60">60 % अपारदर्शी</string>
     <string name="opaque70">70 % अपारदर्शी</string>
     <string name="opaque80">80 % अपारदर्शी</string>

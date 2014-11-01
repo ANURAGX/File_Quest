@@ -108,7 +108,7 @@
 	<string name="no">No</string>
 	<string name="openwith">Open with</string>
 	<string name="wait">Please wait while loading file</string>
-	
+	<string name="sd">SD Card</string>
 	<string name="setasdefault">Set as default</string>
 	<string name="internalstorage">Internal Phone Storage</string>
 	<string name="modified">Modified on</string>
@@ -285,9 +285,9 @@
     <string name="bluefolder">Blue folder</string>
     <string name="greenfolder">Green folder</string>
     <string name="brownfolder">Brown folder</string>
-    <string name="redfolder">Red folder</string> 
+    <string name="greyfolder">Grey folder</string> 
     <string name="violetfolder">Violet folder</string>
-    <string name="yellowfolder">Yellow folder</string>
+    <string name="cyanfolder">Cyan folder</string>
     <string name="opaque60">60 % opaque</string>
     <string name="opaque70">70 % opaque</string>
     <string name="opaque80">80 % opaque</string>

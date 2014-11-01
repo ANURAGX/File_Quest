@@ -36,9 +36,9 @@ public class Constants {
 	public static int FOLDER_ICON;
 	public static int[] FOLDERS = {R.drawable.ic_launcher_orange_folder ,
 		   R.drawable.ic_launcher_green_folder,
-		   R.drawable.ic_launcher_yellow_folder , 
+		   R.drawable.ic_launcher_cyan_folder , 
 		   R.drawable.ic_launcher_violet_folder,
-		   R.drawable.ic_launcher_red_folder ,
+		   R.drawable.ic_launcher_grey_folder ,
 		   R.drawable.ic_launcher_brown_folder,
 		   R.drawable.ic_launcher_blue_folder};	
 	

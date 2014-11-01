@@ -38,7 +38,7 @@ public class ExpandableAdapter extends ArrayAdapter<String>{
 			     R.drawable.ic_launcher_ppt,
 			     R.drawable.ic_launcher_images,
 			     R.drawable.ic_launcher_video,
-			     R.drawable.ic_launcher_archive_operation,
+			     R.drawable.ic_launcher_zip_it,
 			     R.drawable.ic_launcher_unknown};
 	String[] ls;
 	public ExpandableAdapter(Context context, int resource,int textViewResourceId, String[] objects) {
