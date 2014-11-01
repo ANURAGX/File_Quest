@@ -152,10 +152,10 @@ public class AdapterLoaders {
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_backupall);
 					ho.Name.setText(mContext.getString(R.string.takebackup));
 				}else if(position == 3){
-					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_delete);
+					ho.Icon.setBackgroundResource(R.drawable.delete_longclick);
 					ho.Name.setText(mContext.getString(R.string.deleteearlierbackup));
 				}else if(position == 4){
-					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_zip_it);
+					ho.Icon.setBackgroundResource(R.drawable.zip_it_longclick);
 					ho.Name.setText(mContext.getString(R.string.createbackupzip));
 				}else if(position == 5){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_share);
@@ -176,7 +176,7 @@ public class AdapterLoaders {
 						ho.Name.setText(mContext.getString(R.string.extractto));
 					}else
 						ho.Name.setText(mContext.getString(R.string.copy));
-					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_copy);
+					ho.Icon.setBackgroundResource(R.drawable.copy_longclick);
 				}else if(position == 3){
 					if((FileQuest.ZIP_SD &&PANEL==2)|| (FileQuest.ZIP_ROOT && PANEL==1)||(FileQuest.RAR_SD && PANEL==2)
 							||(FileQuest.RAR_ROOT && PANEL==1)||(FileQuest.TAR_ROOT && PANEL==2)||
@@ -184,14 +184,14 @@ public class AdapterLoaders {
 						ho.Icon.setBackgroundResource(R.drawable.ic_launcher_copy);
 						ho.Name.setText(mContext.getString(R.string.extracthere));
 					}else{
-						ho.Icon.setBackgroundResource(R.drawable.ic_launcher_cut);
+						ho.Icon.setBackgroundResource(R.drawable.cut_longclick);
 						ho.Name.setText(mContext.getString(R.string.cut));
 					}					
 				}else if(position == 5){
-					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_zip_it);
+					ho.Icon.setBackgroundResource(R.drawable.zip_it_longclick);
 					ho.Name.setText(mContext.getString(R.string.archive));
 				}else if(position == 6){
-					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_delete);
+					ho.Icon.setBackgroundResource(R.drawable.delete_longclick);
 					ho.Name.setText(mContext.getString(R.string.delete));
 				}else if(position == 7){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_rename);
@@ -203,10 +203,10 @@ public class AdapterLoaders {
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_stats);
 					ho.Name.setText(mContext.getString(R.string.properties));
 				}else if(position == 4){
-					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_paste);
+					ho.Icon.setBackgroundResource(R.drawable.paste_longclick);
 					ho.Name.setText(mContext.getString(R.string.paste));
 				}else if(position == 1){
-					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_drop_box);
+					ho.Icon.setBackgroundResource(R.drawable.cloud_longclick);
 					ho.Name.setText(mContext.getString(R.string.copytocloud));
 				}else if(position == 9){
 					ho.Icon.setBackgroundResource(R.drawable.ic_launcher_gesture);
