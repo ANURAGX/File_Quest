@@ -32,7 +32,7 @@ public class ExpandableAdapter extends ArrayAdapter<String>{
 	Context ctx;
 	LayoutInflater INFLATER;
 	int[] res = {
-				 R.drawable.ic_launcher_favorite,	
+				 R.drawable.favorite_slider,	
 				 R.drawable.ic_launcher_music,
 			     R.drawable.ic_launcher_apk,
 			     R.drawable.ic_launcher_ppt,

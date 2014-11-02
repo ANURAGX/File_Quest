@@ -547,7 +547,7 @@ public class Utils {
 			
 		}else if(name.endsWith(".tar")||name.endsWith(".TAR")||name.endsWith(".tar.gz")||name.endsWith(".TAR.GZ")
 				||name.endsWith(".TAT.BZ2")||name.endsWith(".tar.bz2")){
-			Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_tar),
+			Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_7zip),
 					arcType, RootManager.getSize(f));
 			
 			if(forFavItem){

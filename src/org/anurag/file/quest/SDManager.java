@@ -263,7 +263,7 @@ public class SDManager {
 		}else if(name.endsWith(".tar")||name.endsWith(".TAR")||name.endsWith(".tar.gz")||name.endsWith(".TAR.GZ")
 				||name.endsWith(".TAT.BZ2")||name.endsWith(".tar.bz2")){
 			type=ctx.getString(R.string.tar);
-			return res.getDrawable(R.drawable.ic_launcher_tar);
+			return res.getDrawable(R.drawable.ic_launcher_7zip);
 		}
 		else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
 				||name.endsWith(".amr")||name.endsWith(".MP3")||name.endsWith(".OGG")||name.endsWith(".M4A")||
