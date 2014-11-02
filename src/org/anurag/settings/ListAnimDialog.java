@@ -137,7 +137,7 @@ public class ListAnimDialog {
 				g = (grp) convert.getTag();
 			g.txt.setText(list[arg0]);
 			if(FileQuest.LIST_ANIMATION == arg0)
-				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_apply));
+				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_multi_select));
 			else
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_full));
 			return convert;

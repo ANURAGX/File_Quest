@@ -211,9 +211,9 @@
 	<string name="totalfiles">Files :- %d Files</string>
 	<string name="deletingfile">DELETING FILE :- </string>
 	<string name="allfavdeleted">All favorite items removed from list</string>
-	
-	
-	
+	<string name="inter">INTERFACE</string>
+	<string name="folderoptions">FOLDER OPTIONS</string>
+	<string name="about">ABOUT</string>
 	
 	
 	

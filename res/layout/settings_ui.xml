@@ -52,8 +52,9 @@
       android:layout_width="fill_parent"
       android:layout_height="wrap_content">
       <TextView 
+          android:textColor="@android:color/white"
           android:textStyle="bold"
-          android:text="INTERFACE"
+          android:text="@string/inter"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"/>
   </LinearLayout>
@@ -76,8 +77,9 @@
       android:layout_width="fill_parent"
       android:layout_height="wrap_content">
       <TextView 
+          android:textColor="@android:color/white"
           android:textStyle="bold"
-          android:text="FOLDER OPTIONS"
+          android:text="@string/folderoptions"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"/>
   </LinearLayout>
@@ -100,8 +102,9 @@
       android:layout_width="fill_parent"
       android:layout_height="wrap_content">
       <TextView 
+          android:textColor="@android:color/white"
           android:textStyle="bold"
-          android:text="ABOUT"
+          android:text="@string/about"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"/>
   </LinearLayout>

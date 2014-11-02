@@ -144,7 +144,7 @@ public class Settings extends Activity {
 					}	
 					else{
 						FileQuest.SHOW_HIDDEN_FOLDERS = true;
-						applied.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_apply));
+						applied.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_multi_select));
 					}	
 					settingsChanged = true;
 					edit.putBoolean("SHOW_HIDDEN_FOLDERS",FileQuest.SHOW_HIDDEN_FOLDERS);

@@ -2044,26 +2044,26 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				action.addActionItem(item);
 			} else {
 				if (FileGalleryAdapter.MULTI_SELECT)
-					item = new ActionItem(0,getString(R.string.multiforgallery), getResources().getDrawable(R.drawable.ic_launcher_apply));
+					item = new ActionItem(0,getString(R.string.multiforgallery), getResources().getDrawable(R.drawable.ic_launcher_multi_select));
 				else
 					item = new ActionItem(0,getString(R.string.multiforgallery), getResources().getDrawable(R.drawable.ic_launcher_images));
 				action.addActionItem(item);
 			}
 
 			if ((RootAdapter.MULTI_SELECT))
-				item = new ActionItem(1, getString(R.string.multiforroot),getResources().getDrawable(R.drawable.ic_launcher_apply));
+				item = new ActionItem(1, getString(R.string.multiforroot),getResources().getDrawable(R.drawable.ic_launcher_multi_select));
 			else
 				item = new ActionItem(1, getString(R.string.multiforroot),getResources().getDrawable(R.drawable.ic_launcher_system));
 			action.addActionItem(item);
 
 			if ((SDAdapter.MULTI_SELECT))
-				item = new ActionItem(2, getString(R.string.multiforsd),getResources().getDrawable(R.drawable.ic_launcher_apply));
+				item = new ActionItem(2, getString(R.string.multiforsd),getResources().getDrawable(R.drawable.ic_launcher_multi_select));
 			else
 				item = new ActionItem(2, getString(R.string.multiforsd),getResources().getDrawable(R.drawable.ic_launcher_sdcard));
 			action.addActionItem(item);
 
 			if (MULTI_SELECT_APPS)
-				item = new ActionItem(3, getString(R.string.multiforapp),getResources().getDrawable(R.drawable.ic_launcher_apply));
+				item = new ActionItem(3, getString(R.string.multiforapp),getResources().getDrawable(R.drawable.ic_launcher_multi_select));
 			else
 				item = new ActionItem(3, getString(R.string.multiforapp),getResources().getDrawable(R.drawable.ic_launcher_apk));
 			action.addActionItem(item);

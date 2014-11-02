@@ -84,7 +84,7 @@ public class SettingsFolderOptAdapter extends BaseExpandableListAdapter {
 				grp.img.setImageDrawable(ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
 			else{
 				if(FileQuest.SHOW_HIDDEN_FOLDERS)
-					grp.img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_apply));
+					grp.img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_multi_select));
 				else
 					grp.img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_disabled));
 				Settings.applied = grp.img;

@@ -98,7 +98,6 @@
         
         <!-- FILE QUEST PLAYER -->
         <activity 
-            android:icon="@drawable/ic_launcher_filequest_player"
             android:name="org.anurag.file.quest.FileQuestPlayer"
             android:label="File Quest Player">
             <intent-filter >
