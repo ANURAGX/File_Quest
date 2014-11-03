@@ -3714,21 +3714,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 */
 	private static Item getItemFromCategory(int mode , int pos){
 		if (mode == 1)
-			return Utils.music.get(pos);
+			return Utils.music.get(pos+"");
 		else if (mode == 2)
-			return Utils.apps.get(pos);
+			return Utils.apps.get(pos+"");
 		else if (mode == 5)
-			return Utils.doc.get(pos);
+			return Utils.doc.get(pos+"");
 		else if (mode == 3)
-			return Utils.img.get(pos);
+			return Utils.img.get(pos+"");
 		else if (mode == 4)
-			return Utils.vids.get(pos);
+			return Utils.vids.get(pos+"");
 		else if (mode == 6)
-			return Utils.zip.get(pos);
+			return Utils.zip.get(pos+"");
 		else if (mode == 7)
-			return Utils.mis.get(pos);
+			return Utils.mis.get(pos+"");
 		else 
-			return Utils.fav.get(pos);
+			return Utils.fav.get(pos+"");
 	}
 	
 	/**
