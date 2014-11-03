@@ -20,8 +20,8 @@
 package org.anurag.file.quest;
 
 import java.io.File;
-import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Locale;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -41,6 +41,21 @@ import android.widget.TextView;
 @SuppressLint("HandlerLeak")
 public class Utils {
 	
+	/**
+	 * counter variables(keys) for hashmaps....
+	 */
+	private static int musCounter;
+	private static int appCounter;
+	private static int imgCounter;
+	private static int vidCounter;
+	private static int docCounter;
+	private static int zipCounter;
+	private static int misCounter;
+	private static int favCounter;
+	
+	
+	
+	
 	//tells whether updating of file gallery needed or not....
 	public static boolean update_Needed;
 	
@@ -56,14 +71,14 @@ public class Utils {
 	public static boolean loaded;
 	
 	//list of files for different file types in file gallery....
-	public static ArrayList<Item> music;
-	public static ArrayList<Item> apps;
-	public static ArrayList<Item> vids;
-	public static ArrayList<Item> doc;
-	public static ArrayList<Item> zip;
-	public static ArrayList<Item> mis;
-	public static ArrayList<Item> img;
-	public static ArrayList<Item> fav;
+	public static HashMap<String , Item> music;
+	public static HashMap<String , Item> apps;
+	public static HashMap<String , Item> vids;
+	public static HashMap<String , Item> doc;
+	public static HashMap<String , Item> zip;
+	public static HashMap<String , Item> mis;
+	public static HashMap<String , Item> img;
+	public static HashMap<String ,Item> fav;
 	
 	//count of favorite folders and files....
 	private static int folderCount,fileCount;
@@ -136,13 +151,13 @@ public class Utils {
 		update_Needed = false;
 		fav_Update_Needed = false;
 		
-		music = new ArrayList<Item>();
-		apps = new ArrayList<Item>();
-		vids = new ArrayList<Item>();
-		doc = new ArrayList<Item>();
-		zip = new ArrayList<Item>();
-		mis = new ArrayList<Item>();
-		img = new ArrayList<Item>();
+		music = new HashMap<String , Item>();
+		apps = new HashMap<String , Item>();
+		vids = new HashMap<String , Item>();
+		doc = new HashMap<String , Item>();
+		zip = new HashMap<String , Item>();
+		mis = new HashMap<String , Item>();
+		img = new HashMap<String , Item>();
 			
 		musicsize=0;
 		apksize=0;
@@ -151,9 +166,14 @@ public class Utils {
 		zipsize=0;
 		missize=0;
 		imgsize=0;
+		
+		musCounter = appCounter = imgCounter = vidCounter = docCounter =
+				zipCounter = misCounter = favCounter = 0;
 	}
 	
-	
+	/**
+	 * 
+	 */
 	private static Handler handler = new Handler(){
 		@Override
 		public void handleMessage(Message msg) {
@@ -251,6 +271,10 @@ public class Utils {
 	 */
 	public static void setContext(View view,Context cont) {
 		// TODO Auto-generated constructor stub
+		
+		musCounter = appCounter = imgCounter = vidCounter = docCounter =
+				zipCounter = misCounter = favCounter = 0;
+		
 		v = view;
 		update_Needed = false;
 		fav_Update_Needed = false;
@@ -290,14 +314,15 @@ public class Utils {
 		sizeKB = cont.getString(R.string.appsizekb);
 		sizeByte = cont.getString(R.string.appsizebytes);
 		
-		music = new ArrayList<Item>();
-		apps = new ArrayList<Item>();
-		vids = new ArrayList<Item>();
-		doc = new ArrayList<Item>();
-		zip = new ArrayList<Item>();
-		mis = new ArrayList<Item>();
-		img = new ArrayList<Item>();	
-		fav = new ArrayList<Item>();	
+		music = new HashMap<String , Item>();
+		apps = new HashMap<String , Item>();
+		vids = new HashMap<String , Item>();
+		doc = new HashMap<String , Item>();
+		zip = new HashMap<String , Item>();
+		mis = new HashMap<String , Item>();
+		img = new HashMap<String , Item>();
+		fav = new HashMap<String , Item>();
+		
 		ctx = cont;
 		res = ctx.getResources();
 		loaded = false;
@@ -382,15 +407,19 @@ public class Utils {
 	 * again reload the items...
 	 */
 	public static void restart(){
+		
+		musCounter = appCounter = imgCounter = vidCounter = docCounter =
+				zipCounter = misCounter = 0;
+		
 		Utils.loaded = false;
-		music = new ArrayList<Item>();
-		apps = new ArrayList<Item>();
-		vids = new ArrayList<Item>();
-		doc = new ArrayList<Item>();
-		zip = new ArrayList<Item>();
-		mis = new ArrayList<Item>();
-		img = new ArrayList<Item>();	
-		fav = new ArrayList<Item>();
+		music = new HashMap<String , Item>();
+		apps = new HashMap<String , Item>();
+		vids = new HashMap<String , Item>();
+		doc = new HashMap<String , Item>();
+		zip = new HashMap<String , Item>();
+		mis = new HashMap<String , Item>();
+		img = new HashMap<String , Item>();
+		fav = new HashMap<String , Item>();
 		misize = zsize = vsize = dsize = psize = asize = 
 				msize = ctx.getString(R.string.zerosize);
 		load();
@@ -418,8 +447,8 @@ public class Utils {
 		public void run() {
 			// TODO Auto-generated method stub
 			if(!Utils.loaded){
-				//prepareFavList();
-				//start(new File("/storage/ext_sd"));
+				prepareFavList();
+				start(new File("/storage/ext_sd"));
 				Utils.loaded = true;
 			}	
 			else{
@@ -458,7 +487,7 @@ public class Utils {
 							it = ctx.getString(R.string.rootd);
 						}
 						Item itm = new Item(file, folderImg, folderType, it);
-						fav.add(itm);
+						fav.put(""+favCounter++, itm);
 					}else
 						makeIcon(file , true , handler);
 				}else if(!file.exists()){
@@ -493,72 +522,74 @@ public class Utils {
 	 * @param handler to send message
 	 */
 	private static void makeIcon(File f , boolean forFavItem , Handler handler){
-		String name = f.getName();
-		if(name.endsWith(".zip")||name.endsWith(".ZIP")){
-			Item itm = new Item(f, arcImg, arcType, RootManager.getSize(f));
+		
+		String name = f.getName().toLowerCase(Locale.ENGLISH);
+		
+		if(name.endsWith(".zip")){
+			Item itm = new Item(f, arcImg, arcType, "");
 			if(forFavItem){
-				fav.add(itm);
+				fav.put(""+favCounter++, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)	
 					handler.sendEmptyMessage(0);
 				return;
 			}
-			zip.add(itm);
+			zip.put(""+zipCounter++, itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
 			if(!FileQuest.elementInFocus)
 				handler.sendEmptyMessage(6);
 			
-		}else if(name.endsWith(".7z")||name.endsWith(".7Z")){
+		}else if(name.endsWith(".7z")){
 			Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_7zip),
-					arcType, RootManager.getSize(f));
+					arcType, "");
 			
 			if(forFavItem){
-				fav.add(itm);
+				fav.put(""+favCounter++, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			zip.add(itm);
+			zip.put(""+zipCounter++, itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
 			if(!FileQuest.elementInFocus)
 				handler.sendEmptyMessage(6);
 			
-		}else if(name.endsWith(".rar")||name.endsWith(".RAR")){
+		}else if(name.endsWith(".rar")){
 			Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_rar),
-					arcType, RootManager.getSize(f));
+					arcType, "");
 			
 			if(forFavItem){
-				fav.add(itm);
+				fav.put(""+favCounter++, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			zip.add(itm);
+			zip.put(""+zipCounter++, itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
 			if(!FileQuest.elementInFocus)
 				handler.sendEmptyMessage(6);
 			
-		}else if(name.endsWith(".tar")||name.endsWith(".TAR")||name.endsWith(".tar.gz")||name.endsWith(".TAR.GZ")
-				||name.endsWith(".TAT.BZ2")||name.endsWith(".tar.bz2")){
+		}else if(name.endsWith(".tar")||name.endsWith(".tar.gz")||
+				name.endsWith(".TAT.BZ2")){
 			Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_7zip),
-					arcType, RootManager.getSize(f));
+					arcType, "");
 			
 			if(forFavItem){
-				fav.add(itm);
+				fav.put(""+favCounter++, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			zip.add(itm);
+			zip.put(""+zipCounter++, itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
 			if(!FileQuest.elementInFocus)
@@ -566,54 +597,52 @@ public class Utils {
 						
 		}
 		else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
-				||name.endsWith(".amr")||name.endsWith(".MP3")||name.endsWith(".OGG")||name.endsWith(".M4A")||
-				name.endsWith(".WAV")||name.endsWith(".AMR")){
-			Item itm = new Item(f, musicImg, musicType, RootManager.getSize(f));
+				||name.endsWith(".amr")){
+			Item itm = new Item(f, musicImg, musicType, "");
 			
 			if(forFavItem){
-				fav.add(itm);
+				fav.put(""+favCounter++, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			music.add(itm);
+			music.put(""+musCounter++, itm);
 			musicsize+=f.length();
 			msize = size(musicsize);
 			if(!FileQuest.elementInFocus)
 				handler.sendEmptyMessage(1);
 		}
-		else if(name.endsWith(".apk")||name.endsWith(".APK")){
-			Item itm = new Item(f, apkImg, apkType, RootManager.getSize(f));
+		else if(name.endsWith(".apk")){
+			Item itm = new Item(f, apkImg, apkType, "");
 			
 			if(forFavItem){
-				fav.add(itm);
+				fav.put(""+favCounter++, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}			
-			apps.add(itm);
+			apps.put(""+appCounter++, itm);
 			apksize+=f.length();
 			asize = size(apksize);
 			if(!FileQuest.elementInFocus)
 				handler.sendEmptyMessage(2);
 			
 		}else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
-				||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
-				||name.endsWith(".MKV")){
-			Item itm = new Item(f, vidImg, vidType, RootManager.getSize(f));
+				||name.endsWith(".mkv")){
+			Item itm = new Item(f, vidImg, vidType, "");
 			
 			if(forFavItem){
-				fav.add(itm);
+				fav.put(""+favCounter++, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			vids.add(itm);
+			vids.put(""+vidCounter++, itm);
 			vidsize+=f.length();
 			vsize = size(vidsize);
 			if(!FileQuest.elementInFocus)
@@ -621,92 +650,87 @@ public class Utils {
 			
 		}	
 		else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
-				||name.endsWith(".png")||name.endsWith(".BMP")||name.endsWith(".GIF")||name.endsWith(".JPEG")||name.endsWith(".JPG")
-				||name.endsWith(".PNG")){
-			Item itm = new Item(f, imageImg, imageType, RootManager.getSize(f));
+				||name.endsWith(".png")){
+			Item itm = new Item(f, imageImg, imageType, "");
 			
 			if(forFavItem){
-				fav.add(itm);
+				fav.put(""+favCounter++, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}			
 			
-			img.add(itm);
+			img.put(""+imgCounter++, itm);
 			imgsize+=f.length();
 			psize = size(imgsize);
 			if(!FileQuest.elementInFocus)
 				handler.sendEmptyMessage(3);
 			
-		}else if(name.endsWith(".pdf")||name.endsWith(".PDF")){
+		}else if(name.endsWith(".pdf")){
 			Item itm = new Item(f,res.getDrawable(R.drawable.ic_launcher_adobe),
-								ctx.getString(R.string.pdf),
-								RootManager.getSize(f));
+								ctx.getString(R.string.pdf),"");
 			
 			if(forFavItem){
-				fav.add(itm);
+				fav.put(""+favCounter++, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			doc.add(itm);
+			doc.put(""+docCounter++, itm);
 			docsize+=f.length();
 			dsize = size(docsize);
 			if(!FileQuest.elementInFocus)
 				handler.sendEmptyMessage(5);
 		}else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
-				||name.endsWith(".PPT")||name.endsWith(".DOCX")||name.endsWith(".pptx")||name.endsWith(".PPTX")
-				||name.endsWith(".csv")||name.endsWith(".CSV")){
-			Item itm = new Item(f,docImg,docType,RootManager.getSize(f));
+				||name.endsWith(".pptx")||name.endsWith(".csv")){
+			Item itm = new Item(f , docImg , docType , "");
 			
 			if(forFavItem){
-				fav.add(itm);
+				fav.put(""+favCounter++, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			doc.add(itm);
+			doc.put(""+docCounter++, itm);
 			docsize+=f.length();
 			dsize = size(docsize);
 			if(!FileQuest.elementInFocus)
 				handler.sendEmptyMessage(5);
 		
-		}else if(name.endsWith(".txt")||name.endsWith(".TXT")||name.endsWith(".log")||name.endsWith(".LOG")
-				||name.endsWith(".ini")||name.endsWith(".INI")){
+		}else if(name.endsWith(".txt")||name.endsWith(".log")||name.endsWith(".ini")){
 			Item itm = new Item(f,res.getDrawable(R.drawable.ic_launcher_text),
-								ctx.getString(R.string.text),
-								RootManager.getSize(f));
+								ctx.getString(R.string.text), "");
 			if(forFavItem){
-				fav.add(itm);
+				fav.put(""+favCounter++, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			doc.add(itm);
+			doc.put(""+docCounter++, itm);
 			docsize+=f.length();
 			dsize = size(docsize);
 			if(!FileQuest.elementInFocus)
 				handler.sendEmptyMessage(5);			
 		}
 		else{
-			Item itm = new Item(f,misImg, misType, RootManager.getSize(f));
+			Item itm = new Item(f,misImg, misType, "");
 			
 			if(forFavItem){
-				fav.add(itm);
+				fav.put(""+favCounter++, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			mis.add(itm);
+			mis.put(""+misCounter++, itm);
 			missize+=f.length();
 			misize = size(missize);
 			if(!FileQuest.elementInFocus)
@@ -767,50 +791,50 @@ public class Utils {
 	
 	
 	public static void notifyAllAppsDeleted(){
-		apps = new ArrayList<Item>();
+		apps = new HashMap<String , Item>();
 		asize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllMusicDeleted(){
-		music = new ArrayList<Item>();
+		music = new HashMap<String , Item>();
 		msize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllImageDeleted(){
-		img = new ArrayList<Item>();
+		img = new HashMap<String , Item>();
 		psize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllMisDeleted(){
-		mis = new ArrayList<Item>();
+		mis = new HashMap<String , Item>();
 		misize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllZipDeleted(){
-		zip = new ArrayList<Item>();
+		zip = new HashMap<String , Item>();
 		zsize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllFavDeleted(){
-		fav = new ArrayList<Item>();
+		fav = new HashMap<String , Item>();
 		folderCount = 0;
 		fileCount = 0;
 		updateUI();
 	}
 	
 	public static void notifyAllVideoDeleted(){
-		vids = new ArrayList<Item>();
+		vids = new HashMap<String , Item>();
 		vsize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllDocsDeleted(){
-		doc = new ArrayList<Item>();
+		doc = new HashMap<String , Item>();
 		dsize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
@@ -858,7 +882,7 @@ public class Utils {
 		if(Utils.update_Needed)
 				return;
 		
-		fav = new ArrayList<Item>();
+		fav = new HashMap<String , Item>();
 		folderCount = 0;
 		fileCount = 0;
 		final Handler handler = new Handler(){
@@ -915,7 +939,7 @@ public class Utils {
 								it = ctx.getString(R.string.rootd);
 							}
 							Item itm = new Item(file, folderImg, folderType, it);
-							fav.add(itm);
+							fav.put(""+favCounter++, itm);
 						}else
 							makeIcon(file , true , handler);
 					}else if(!file.exists()){

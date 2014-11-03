@@ -19,6 +19,7 @@
 
 package org.anurag.file.quest;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -50,12 +51,12 @@ public class FileGalleryAdapter extends BaseAdapter{
 	public static boolean MULTI_SELECT;
 	public static boolean[] thumbselection; 
 	public static long C;
-	Item item;
-	Context ctx;
-	ArrayList<Item> list; 
-	LayoutInflater inflater;
+	private Item item;
+	private Context ctx;
+	private HashMap<String , Item> list; 
+	private LayoutInflater inflater;
 	static ArrayList<Item> MULTI_FILES;
-	public FileGalleryAdapter(Context context,ArrayList<Item> object) {
+	public FileGalleryAdapter(Context context , HashMap<String , Item> object) {
 		// TODO Auto-generated constructor stub
 		ctx = context;
 		MULTI_FILES = new ArrayList<Item>();
@@ -97,7 +98,7 @@ public class FileGalleryAdapter extends BaseAdapter{
 	@Override
 	public View getView(int pos, View convertView, ViewGroup arg2) {
 		// TODO Auto-generated method stub
-		item = list.get(pos);
+		item = list.get(""+pos);
 		Holder h = new Holder();
 		if(convertView == null){
 			h = new Holder();
@@ -209,7 +210,7 @@ public class FileGalleryAdapter extends BaseAdapter{
 		
 		h.fName.setText(item.getName());
 		h.fType.setText(item.getType());
-		h.fSize.setText(item.getSize());
+		h.fSize.setText(RootManager.getSize(new File(item.getPath())));
 		h.icon.setImageDrawable(item.getIcon());
 		if(item.getType().equals("Image")){
 			image = imgList.get(item.getPath());

@@ -21,8 +21,7 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import com.stericson.RootTools.RootTools;
+import java.util.HashMap;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -35,6 +34,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.stericson.RootTools.RootTools;
 
 
 
@@ -55,6 +56,12 @@ public class DeleteFiles{
 	Context mContext;
 	Dialog dialog;
 	String nam;
+	
+	
+	public DeleteFiles(Context ctx,int width , HashMap<String , Item> list , String msg) {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public DeleteFiles(Context context,int width,ArrayList<Item> list,String msg) {
 		// TODO Auto-generated constructor stub
 		mContext = context;

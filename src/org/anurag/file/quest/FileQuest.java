@@ -24,8 +24,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.zip.ZipFile;
+
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;
@@ -66,6 +68,7 @@ import org.ultimate.quickaction3D.ActionItem;
 import org.ultimate.quickaction3D.QuickAction;
 import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
 import org.ultimate.root.LinuxShell;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -115,6 +118,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
 import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.astuetz.PagerSlidingTabStrip;
@@ -3315,8 +3319,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 											root.setAdapter(new SDAdapter(mContext,searchList));
 										else if(CURRENT_ITEM == 1)
 											simple.setAdapter(new RootAdapter(mContext,searchList));
-										else if(CURRENT_ITEM == 0)
-											LIST_VIEW_3D.setAdapter(new FileGalleryAdapter(mContext, searchList));
+										else if(CURRENT_ITEM == 0){
+											//LIST_VIEW_3D.setAdapter(new FileGalleryAdapter(mContext , searchList));
+										}	
 									}catch(Exception e){
 										
 									}
@@ -3732,7 +3737,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @param mode category number....
 	 * @return list of files in that category....
 	 */
-	private static ArrayList<Item> getCategoryList(int mode){
+	private static HashMap<String , Item> getCategoryList(int mode){
 		if (mode == 1)
 			return Utils.music;
 		else if (mode == 2)
@@ -4893,7 +4898,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			@Override
 			public void onClick(View itemView, View clickedView, int position) {
 				// TODO Auto-generated method stub
-				ArrayList<Item> itemList = null;
+				HashMap<String , Item> itemList = null;
 				if(position == 0)
 					itemList = Utils.fav;
 				else if(position==1)
@@ -4936,7 +4941,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							break;
 							
 					case R.id.button_move_all:
-							tempList = itemList;
+							//tempList = itemList;
 							new GetMoveLocation(mContext, size.x*8/9);
 							break;
 					case R.id.button_zip_all:

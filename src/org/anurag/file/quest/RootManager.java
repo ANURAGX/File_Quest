@@ -25,6 +25,7 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Locale;
 import java.util.Stack;
 
 import org.ultimate.root.LinuxShell;
@@ -238,72 +239,96 @@ public class RootManager {
 	
 	/**
 	 * 
-	 * @return
+	 * @return icon for the file....
 	 */
 	private Drawable buildIcon(File f){
 		if(f.isDirectory()){
 			type = ctx.getString(R.string.directory);
 			return res.getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]);
 		}
-		String name = f.getName();
-		if(name.endsWith(".zip")||name.endsWith(".ZIP")){
+		
+		String name = f.getName().toLowerCase(Locale.ENGLISH);
+		
+		if(name.endsWith(".zip")){
+			
 			type=ctx.getString(R.string.zip);
-			return res.getDrawable(R.drawable.ic_launcher_zip_it);			
-		}else if(name.endsWith(".7z")||name.endsWith(".7Z")){
+			return res.getDrawable(R.drawable.ic_launcher_zip_it);
+			
+		}else if(name.endsWith(".7z")){
+			
 			type=ctx.getString(R.string.zip7);
 			return res.getDrawable(R.drawable.ic_launcher_7zip);
-		}else if(name.endsWith(".rar")||name.endsWith(".RAR")){
+			
+		}else if(name.endsWith(".rar")){
+			
 			type=ctx.getString(R.string.rar);
 			return res.getDrawable(R.drawable.ic_launcher_rar);
-		}else if(name.endsWith(".tar")||name.endsWith(".TAR")||name.endsWith(".tar.gz")||name.endsWith(".TAR.GZ")
-				||name.endsWith(".TAT.BZ2")||name.endsWith(".tar.bz2")){
+			
+		}else if(name.endsWith(".tar")||name.endsWith(".tar.gz")||name.endsWith(".tar.bz2")){
+			
 			type=ctx.getString(R.string.tar);
 			return res.getDrawable(R.drawable.ic_launcher_7zip);
+			
 		}
 		else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
-				||name.endsWith(".amr")||name.endsWith(".MP3")||name.endsWith(".OGG")||name.endsWith(".M4A")||
-				name.endsWith(".WAV")||name.endsWith(".AMR")){
+				||name.endsWith(".amr")){
+			
 			type=ctx.getString(R.string.music);
 			return res.getDrawable(R.drawable.ic_launcher_music);
+			
 		}
-		else if(name.endsWith(".apk")||name.endsWith(".APK")){
+		else if(name.endsWith(".apk")){
+			
 			type=ctx.getString(R.string.application);
 			return res.getDrawable(R.drawable.ic_launcher_apk);
-		}else if(name.endsWith(".sh")||name.endsWith(".SH")||name.endsWith(".prop")||name.endsWith("init")
+			
+		}else if(name.endsWith(".sh")||name.endsWith(".prop")||name.endsWith("init")
 				||name.endsWith(".default")||name.endsWith(".rc")){
+			
 			type=ctx.getString(R.string.script);
 			return res.getDrawable(R.drawable.ic_launcher_sh);
-		}else if(name.endsWith(".pdf")||name.endsWith(".PDF")){
+			
+		}else if(name.endsWith(".pdf")){
+			
 			type=ctx.getString(R.string.pdf);
 			return res.getDrawable(R.drawable.ic_launcher_adobe);
+			
 		}else if(name.endsWith(".htm")||name.endsWith(".html")||name.endsWith(".mhtml")){
+			
 			type=ctx.getString(R.string.web);
 			return res.getDrawable(R.drawable.ic_launcher_web_pages);
+			
 		}else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
-				||name.endsWith(".mkv")||name.endsWith(".FLV")||name.endsWith(".MP4")||name.endsWith(".3GP")||name.endsWith(".AVI")
-				||name.endsWith(".MKV")){
+				||name.endsWith(".mkv")){
+			
 			type=ctx.getString(R.string.vids);
 			return res.getDrawable(R.drawable.ic_launcher_video);
+			
 		}	
 		else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
-				||name.endsWith(".png")||name.endsWith(".BMP")||name.endsWith(".GIF")||name.endsWith(".JPEG")||name.endsWith(".JPG")
-				||name.endsWith(".PNG")){
+				||name.endsWith(".png")){
+			
 			type=ctx.getString(R.string.image);
 			return res.getDrawable(R.drawable.ic_launcher_images);
-		}else if(name.endsWith(".txt")||name.endsWith(".TXT")||name.endsWith(".log")||name.endsWith(".LOG")
-				||name.endsWith(".ini")||name.endsWith(".INI")){
+			
+		}else if(name.endsWith(".txt")||name.endsWith(".log")||name.endsWith(".ini")){
+			
 			type=ctx.getString(R.string.text);
 			return res.getDrawable(R.drawable.ic_launcher_text);
+			
 		}
 		else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
-				||name.endsWith(".PPT")||name.endsWith(".DOCX")||name.endsWith(".pptx")||name.endsWith(".PPTX")
-				||name.endsWith(".csv")||name.endsWith(".CSV")){
+				||name.endsWith(".pptx")||name.endsWith(".csv")){
+			
 			type=ctx.getString(R.string.docs);
 			return res.getDrawable(R.drawable.ic_launcher_ppt);
+			
 		}
 		else{
+			
 			type=ctx.getString(R.string.unknown);
 			return res.getDrawable(R.drawable.ic_launcher_unknown);
+			
 		}		
 	}
 	

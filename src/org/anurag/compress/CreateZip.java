@@ -25,12 +25,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -68,6 +71,17 @@ public class CreateZip {
 	String fsize;
 	String fname;
 	String stat;
+	
+	/**
+	 * 
+	 * @param ctx
+	 * @param width
+	 * @param list
+	 */
+	public CreateZip(Context ctx , int width , HashMap<String , Item> list) {
+		// TODO Auto-generated constructor stub
+	}
+	
 	/**
 	 * 
 	 * @param ctx
