@@ -461,9 +461,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(Utils.update_Needed){
 						new load().execute();
 						Utils.update_Needed = false;
-						//Utils.stop();
-						//Utils.restart();
-						Toast.makeText(mContext, ""+Utils.img.size(), Toast.LENGTH_LONG).show();
+						Utils.updateUI();
 					}else if(Utils.fav_Update_Needed){
 						//an item was added or removed to favorite list
 						//so updating ui....

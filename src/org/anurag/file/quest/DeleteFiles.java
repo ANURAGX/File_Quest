@@ -155,16 +155,16 @@ public class DeleteFiles{
 	public void deleteFile(File file) {
 		File target = file;
 		if(target.exists() && target.isFile() && target.canWrite()){
-			target.delete();
 			delete_from_gallery(target);
+			target.delete();
 		}	
 		
 		else if(target.exists() && target.isDirectory() && target.canRead()) {
 			String[] file_list = target.list();
 			
 			if(file_list != null && file_list.length == 0) {
-				target.delete();
 				delete_from_gallery(target);
+				target.delete();
 			} else if(file_list != null && file_list.length > 0) {
 				
 				for(int i = 0; i < file_list.length; i++) {
@@ -172,15 +172,15 @@ public class DeleteFiles{
 					if(temp_f.isDirectory())
 						deleteFile(temp_f );
 					else if(temp_f.isFile()){
-						temp_f.delete();
 						delete_from_gallery(temp_f);
+						temp_f.delete();
 					}	
 				}
 			}
 			if(target.exists())
 				if(target.delete()){
-					target.delete();
 					delete_from_gallery(target);
+					target.delete();
 				}
 		}
 	}	
@@ -190,33 +190,42 @@ public class DeleteFiles{
 	 * @param file 
 	 */
 	synchronized void delete_from_gallery(File file){
+		if(file.isDirectory())
+			return;
 		String path = file.getPath();
 		
 		if(Utils.music.get(path) != null){
+			Utils.musicsize -= file.length();
 			Utils.music.remove(path);		
 		}	
 		
 		else if(Utils.apps.get(path) != null){
+			Utils.apksize -= file.length();
 			Utils.apps.remove(path);
 		}	
 		
 		else if(Utils.img.get(path) != null){
+			Utils.imgsize -= file.length();
 			Utils.img.remove(path);
 		}	
 		
 		else if(Utils.vids.get(path) != null){
+			Utils.vidsize -= file.length();
 			Utils.vids.remove(path);
 		}	
 		
 		else if(Utils.doc.get(path) != null){
+			Utils.docsize -= file.length();
 			Utils.doc.remove(path);
 		}	
 		
 		else if(Utils.zip.get(path) != null){
+			Utils.zipsize -= file.length();
 			Utils.zip.remove(path);
 		}	
 		
 		else if(Utils.mis.get(path) != null){
+			Utils.missize -= file.length();
 			Utils.mis.remove(path);
 		}	
 	}	

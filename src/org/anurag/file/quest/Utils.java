@@ -770,42 +770,49 @@ public class Utils {
 		
 		try{
 			//DISLPAYS MUSIC SIZE..
+			msize = size(musicsize);
 			musicText.setText(msize);								
 			musicTextCount.setText(music.size() + " "+ctx.getString(R.string.items));
 		}catch(NullPointerException e){}					
 		
 		try{
 			//DISPLAYS APPS SIZE...
+			asize = size(apksize);
 			appText.setText(asize);								
 			appTextCount.setText(apps.size() + " "+ctx.getString(R.string.items));
 		}catch(NullPointerException e){}					
 		
 		try{
 			//displays IMAGE SIZE..
+			psize = size(imgsize);
 			imgText.setText(psize);								
 			imgTextCount.setText(img.size() + " "+ctx.getString(R.string.items));
 		}catch(NullPointerException e){}
 			
 		try{
 			//displays video size...
+			vsize = size(vidsize);
 			vidText.setText(vsize);								
 			vidTextCount.setText(vids.size() + " "+ctx.getString(R.string.items));
 		}catch(NullPointerException e){}
 			
 		try{
 			//DSIPLAYS DOCS SIZE...
+			dsize = size(docsize);
 			docText.setText(dsize);							
 			docTextCount.setText(doc.size() + " "+ctx.getString(R.string.items));
 		}catch(NullPointerException e){}
 		
 		try{
 			//displays archive size...
+			zsize = size(zipsize);
 			arcText.setText(zsize);								
 			arcTextCount.setText(zip.size() + " "+ctx.getString(R.string.items));
 		}catch(NullPointerException e){}
 			
 		//displays miscellaneous size...
 		try{
+			misize = size(missize);
 			misText.setText(misize);								
 			misTextCount.setText(mis.size() + " "+ctx.getString(R.string.items));
 		}catch(NullPointerException e){}	
