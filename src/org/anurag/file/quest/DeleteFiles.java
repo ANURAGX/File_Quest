@@ -88,6 +88,7 @@ public class DeleteFiles{
 		mHandler = new Handler(){
 			public void handleMessage(Message msg){
 				switch(msg.what){
+				
 					case 0 :
 						popupMessage.setText(ctx.getString(R.string.waitwhiledeleting));
 						btn1.setVisibility(View.GONE);
@@ -154,10 +155,6 @@ public class DeleteFiles{
 	public void deleteFile(File file) {
 		File target = file;
 		if(target.exists() && target.isFile() && target.canWrite()){
-			//String nam = mContext.getString(R.string.deletingfile)+" " + target.getName();
-			//mHandler.sendEmptyMessage(1);
-			//nam = target.getPath();
-			//updateFileGallery(nam);
 			target.delete();
 			delete_from_gallery(target);
 		}	
@@ -166,10 +163,6 @@ public class DeleteFiles{
 			String[] file_list = target.list();
 			
 			if(file_list != null && file_list.length == 0) {
-				//String nam = mContext.getString(R.string.deletingfile)+" " + target.getName();
-				//mHandler.sendEmptyMessage(1);
-				//nam = target.getPath();
-				//updateFileGallery(nam);
 				target.delete();
 				delete_from_gallery(target);
 			} else if(file_list != null && file_list.length > 0) {
@@ -179,10 +172,6 @@ public class DeleteFiles{
 					if(temp_f.isDirectory())
 						deleteFile(temp_f );
 					else if(temp_f.isFile()){
-						//String nam = mContext.getString(R.string.deletingfile)+" " + temp_f.getName();
-						//mHandler.sendEmptyMessage(1);
-						//nam = temp_f.getPath();
-						//updateFileGallery(nam);
 						temp_f.delete();
 						delete_from_gallery(temp_f);
 					}	
@@ -190,10 +179,6 @@ public class DeleteFiles{
 			}
 			if(target.exists())
 				if(target.delete()){
-					//String nam = mContext.getString(R.string.deletingfile)+" " + target.getName();
-					//mHandler.sendEmptyMessage(1);
-					//nam = target.getPath();
-					//updateFileGallery(nam);
 					target.delete();
 					delete_from_gallery(target);
 				}
@@ -207,27 +192,32 @@ public class DeleteFiles{
 	synchronized void delete_from_gallery(File file){
 		String path = file.getPath();
 		
-		if(Utils.music.get(path) != null)
-			Utils.music.remove(path);			
+		if(Utils.music.get(path) != null){
+			Utils.music.remove(path);		
+		}	
 		
-		
-		else if(Utils.apps.get(path) != null)
+		else if(Utils.apps.get(path) != null){
 			Utils.apps.remove(path);
+		}	
 		
-		else if(Utils.img.get(path) != null)
+		else if(Utils.img.get(path) != null){
 			Utils.img.remove(path);
+		}	
 		
-		else if(Utils.vids.get(path) != null)
+		else if(Utils.vids.get(path) != null){
 			Utils.vids.remove(path);
+		}	
 		
-		else if(Utils.doc.get(path) != null)
+		else if(Utils.doc.get(path) != null){
 			Utils.doc.remove(path);
+		}	
 		
-		else if(Utils.zip.get(path) != null)
+		else if(Utils.zip.get(path) != null){
 			Utils.zip.remove(path);
+		}	
 		
-		else if(Utils.mis.get(path) != null)
+		else if(Utils.mis.get(path) != null){
 			Utils.mis.remove(path);
-	}
-	
+		}	
+	}	
  }

@@ -217,6 +217,10 @@
 	
 	
 	
+	
+	
+	
+	
 	<!-- FILE QUEST PLAYER -->
 	<string name="fqplayer">FILE  QUEST  PLAYER</string>
 	
@@ -345,7 +349,7 @@
     <string name="totbytes">Total Space %.2f Bytes</string>
     <string name="linkanaccount">First link an account</string>
     <string name="openingfile">Opening file,wait</string>
-    <string name="filedoesnotexists">File doesnot exists</string>
+    <string name="filedoesnotexists">File doesn\'t exists</string>
     <string name="forceclose">File Quest get force closed,wait while restarting</string>
     
     

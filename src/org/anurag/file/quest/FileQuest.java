@@ -942,8 +942,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									file0 = searchList.get(position);
 								else
 									file0 = getItemFromCategory(fPos, position);
-								d.show();
-								dPos = position;
+								
+								//checks existsnce for file....
+								if(file0.exists()){
+									d.show();
+									dPos = position;
+								}
+								else
+									Toast.makeText(mContext, R.string.filedoesnotexists, Toast.LENGTH_SHORT).show();
 							}
 							return true;
 						}
@@ -1050,17 +1056,20 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else
 							file0 = getItemFromCategory(fPos, position);
 						
-						if(!file0.isLocked()){//selected item is not locked...
-							if(!file0.isDirectory())
-								new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
-							else{
-								//folder is tried to open from favorite tile...
-								SDManager.nStack.push(file0.getPath());
-								setAdapter(2);
-							}
-						}else//item is locked...
-							new MasterPassword(mContext, size.x*8/9, file0, preferences, Constants.MODES.OPEN);
-						dPos = position;
+						if(file0.exists()){
+							if(!file0.isLocked()){//selected item is not locked...
+								if(!file0.isDirectory())
+									new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
+								else{
+									//folder is tried to open from favorite tile...
+									SDManager.nStack.push(file0.getPath());
+									setAdapter(2);
+								}
+							}else//item is locked...
+								new MasterPassword(mContext, size.x*8/9, file0, preferences, Constants.MODES.OPEN);
+							dPos = position;
+						}else
+							Toast.makeText(mContext, R.string.filedoesnotexists, Toast.LENGTH_SHORT).show();
 					}
 				}
 			});
@@ -1163,17 +1172,20 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							setTarAdapter();
 						}
 					}else{
-						//HANDLING ORDINARY FILE EXLORING....
-						if(!file.isLocked()){
-							//file is not locked,open it as usual....
-							if (!file.isDirectory())
-								new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
-							else if (file.isDirectory()){
-								RootManager.nStack.push(file.getPath());
-								setAdapter(1);
-							}
+						if(file.exists()){
+							//HANDLING ORDINARY FILE EXLORING....
+							if(!file.isLocked()){
+								//file is not locked,open it as usual....
+								if (!file.isDirectory())
+									new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
+								else if (file.isDirectory()){
+									RootManager.nStack.push(file.getPath());
+									setAdapter(1);
+								}
+							}else
+								new MasterPassword(mContext, size.x*8/9, file, preferences,Constants.MODES.OPEN);
 						}else
-							new MasterPassword(mContext, size.x*8/9, file, preferences,Constants.MODES.OPEN);
+							Toast.makeText(mContext, R.string.filedoesnotexists, Toast.LENGTH_SHORT).show();
 					}					
 				}
 			});
@@ -1208,8 +1220,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else
 							file = rootItemList.get(position);
 					}
-					d.show();
-					dPos = position;
+					if(file.exists()){
+						d.show();
+						dPos = position;
+					}else
+						Toast.makeText(mContext, R.string.filedoesnotexists, Toast.LENGTH_SHORT).show();
 					return true;
 				}
 			});
@@ -1522,8 +1537,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else
 							file2 = sdItemsList.get(arg2);
 					}
-					dialog.show();
-					dPos = arg2;
+					if(file2.exists()){
+						dialog.show();
+						dPos = arg2;
+					}
+					else
+						Toast.makeText(mContext, R.string.filedoesnotexists, Toast.LENGTH_SHORT).show();
 					return true;
 				}
 			});
@@ -1833,18 +1852,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							setTarAdapter();
 						}
 					}else{//ordinary file handling...
-						if(!file2.isLocked()){
-							//this item is unlocked,no need to verify for password....
-							if (!file2.isDirectory()) {
-								new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
-							} else if (file2.isDirectory()) {
-								SDManager.nStack.push(file2.getPath());
-								setAdapter(2);
-								//resetPager();
+						if(file2.exists()){
+							if(!file2.isLocked()){
+								//this item is unlocked,no need to verify for password....
+								if (!file2.isDirectory()) {
+									new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
+								} else if (file2.isDirectory()) {
+									SDManager.nStack.push(file2.getPath());
+									setAdapter(2);
+									//resetPager();
+								}
+							}else{
+								new MasterPassword(mContext, size.x*8/9, file2, preferences,Constants.MODES.OPEN);
 							}
-						}else{
-							new MasterPassword(mContext, size.x*8/9, file2, preferences,Constants.MODES.OPEN);
-						}
+						}else
+							Toast.makeText(mContext, R.string.filedoesnotexists, Toast.LENGTH_SHORT).show();
 					}
 				}
 			});

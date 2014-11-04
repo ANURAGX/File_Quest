@@ -415,44 +415,6 @@ public class Utils {
 	}	
 	
 	/**
-	 * stop currently running scanning of files....
-	 */
-	public static void stop(){
-		Utils.loaded = true;
-	}
-	
-	/**
-	 * again reload the items...
-	 */
-	public static void restart(){
-		
-		musCounter = appCounter = imgCounter = vidCounter = docCounter =
-				zipCounter = misCounter = 0;
-		
-		musicKey = new ConcurrentHashMap<String , String>();
-		appKey = new ConcurrentHashMap<String , String>();
-		videoKey =  new ConcurrentHashMap<String , String>();
-		docKey =  new ConcurrentHashMap<String , String>();
-		zipKey = new ConcurrentHashMap<String , String>();
-		imgKey = new ConcurrentHashMap<String , String>();
-		misKey = new ConcurrentHashMap<String , String>();
-		favKey = new ConcurrentHashMap<String , String>();
-		
-		Utils.loaded = false;
-		music = new ConcurrentHashMap<String , Item>();
-		apps = new ConcurrentHashMap<String , Item>();
-		vids = new ConcurrentHashMap<String , Item>();
-		doc = new ConcurrentHashMap<String , Item>();
-		zip = new ConcurrentHashMap<String , Item>();
-		mis = new ConcurrentHashMap<String , Item>();
-		img = new ConcurrentHashMap<String , Item>();
-		fav = new ConcurrentHashMap<String , Item>();
-		misize = zsize = vsize = dsize = psize = asize = 
-				msize = ctx.getString(R.string.zerosize);
-		load();
-	}
-	
-	/**
 	 * 
 	 * @param list
 	 * @return
@@ -469,6 +431,11 @@ public class Utils {
 	}
 	
 	
+	/**
+	 * 
+	 * @author Anurag....
+	 *
+	 */
 	private static class MainLoadTask extends Thread{
 		@Override
 		public void run() {

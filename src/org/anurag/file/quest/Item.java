@@ -131,6 +131,13 @@ public class Item {
 	 * 
 	 * @return
 	 */
+	public boolean exists(){
+		return this.file.exists();
+	}
+	/**
+	 * 
+	 * @return
+	 */
 	public File getFile(){
 		return this.file;
 	}
