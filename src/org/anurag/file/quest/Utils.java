@@ -820,30 +820,35 @@ public class Utils {
 	
 	
 	public static void notifyAllAppsDeleted(){
+		apksize = 0;
 		apps = new ConcurrentHashMap<String , Item>();
 		asize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllMusicDeleted(){
+		musicsize = 0;
 		music = new ConcurrentHashMap<String , Item>();
 		msize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllImageDeleted(){
+		imgsize = 0;
 		img = new ConcurrentHashMap<String , Item>();
 		psize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllMisDeleted(){
+		missize = 0;
 		mis = new ConcurrentHashMap<String , Item>();
 		misize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllZipDeleted(){
+		zipsize = 0;
 		zip = new ConcurrentHashMap<String , Item>();
 		zsize = ctx.getString(R.string.zerosize);
 		updateUI();
@@ -857,12 +862,14 @@ public class Utils {
 	}
 	
 	public static void notifyAllVideoDeleted(){
+		vidsize = 0;
 		vids = new ConcurrentHashMap<String , Item>();
 		vsize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllDocsDeleted(){
+		docsize = 0;
 		doc = new ConcurrentHashMap<String , Item>();
 		dsize = ctx.getString(R.string.zerosize);
 		updateUI();
@@ -905,33 +912,12 @@ public class Utils {
 	 * function to rebuild the favorite items list after an 
 	 * item was added or removed from DB..... 
 	 */
-	public static void buildFavItems(){
+	public static void buildFavItems(Item itm , boolean add){
 		//if true no need to call the function...
 		//as it will be reloaded in restart function....
 		if(Utils.update_Needed)
 				return;
-		
-		fav = new ConcurrentHashMap<String , Item>();
-		folderCount = 0;
-		fileCount = 0;
-		final Handler handler = new Handler(){
-			@Override
-			public void handleMessage(Message msg) {
-				// TODO Auto-generated method stub
-				super.handleMessage(msg);
-				if(FileQuest.elementInFocus)
-					FileQuest.element.notifyDataSetChanged();
-				else{
-					try{
-						favText.setText(String.format(folderCnt, folderCount));
-						favTextCount.setText(String.format(fileCnt, fileCount));
-					}catch(Exception e){
-						
-					}	
-				}					
-			}
-		};
-		
+			
 		//checking whether file scanning is running or not...
 		//if running,then waiting till it finishes....
 		if(!Utils.loaded)
@@ -944,41 +930,21 @@ public class Utils {
 				}
 			}, 1000);
 		
-		Thread thr = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				Cursor cursor = Constants.db.getReadableDatabase().query("FAVITEMS", 
-						null, 
-						null, 
-						null, 
-						null, 
-						null, 
-						null);
-				while(cursor.moveToNext()){
-					File file = new File(cursor.getString(0));
-					if(file.exists()){
-						//file exists,so proceed....
-						if(file.isDirectory()){
-							folderCount++;
-							String it = null;
-							try{
-								it = file.list().length +" "+ Items;
-							}catch(Exception e){
-								it = ctx.getString(R.string.rootd);
-							}
-							Item itm = new Item(file, folderImg, folderType, it);
-							fav.put(""+favCounter++, itm);
-						}else
-							makeIcon(file , true , handler);
-					}else if(!file.exists()){
-						//item has been deleted,so delete the item from the db also....
-						Constants.db.deleteFavItem(cursor.getString(0));
-					}
-				}
-			}		
-		});
-		thr.start();
+		if(add){
+			if(itm.isDirectory())
+				folderCount++;
+			else
+				fileCount++;
+			favKey.put(""+favCounter++, itm.getPath());
+			fav.put(itm.getPath(), itm);
+		}else{
+			fav.remove(itm.getPath());
+			if(itm.isDirectory())
+				folderCount--;
+			else
+				fileCount--;
+		}
+		
 		Utils.fav_Update_Needed = false;
 	}
 	

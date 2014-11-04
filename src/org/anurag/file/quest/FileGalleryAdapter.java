@@ -181,7 +181,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 							.show();
 					// rebuilding the favorite items list after an item was
 					// removed....
-					Utils.buildFavItems();
+					Utils.buildFavItems(list.get(im.getId()) , false);
 				} else {
 					im.setImageDrawable(ctx.getResources().getDrawable(
 							R.drawable.ic_launcher_favorite));
@@ -191,7 +191,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 							.show();
 					// rebuilding the favorite items list after an item was
 					// added....
-					Utils.buildFavItems();
+					Utils.buildFavItems(list.get(im.getId()) , true);
 				}
 			}
 		});
