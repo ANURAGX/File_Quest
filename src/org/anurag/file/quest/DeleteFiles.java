@@ -21,6 +21,7 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import android.app.Dialog;
@@ -53,9 +54,20 @@ public class DeleteFiles{
 	private  Button btn2;
 	private  Thread thread;
 	private Handler mHandler;
-	Context mContext;
-	Dialog dialog;
-	String nam;
+	private Context mContext;
+	private Dialog dialog;
+	private String nam;
+	private boolean music_deleted;
+	private boolean app_deleted;
+	private boolean img_deleted;
+	private boolean vid_deleted;
+	private boolean doc_deleted;
+	private boolean zip_deleted;
+	private boolean mis_deleted;
+	
+	
+	
+	
 	
 	
 	public DeleteFiles(Context ctx,int width , ConcurrentHashMap<String , Item> list , String msg) {
@@ -64,6 +76,10 @@ public class DeleteFiles{
 	
 	public DeleteFiles(Context context,int width,ArrayList<Item> list,String msg) {
 		// TODO Auto-generated constructor stub
+		
+		music_deleted =	app_deleted = img_deleted = vid_deleted = doc_deleted =
+				zip_deleted = mis_deleted = false;
+		
 		mContext = context;
 		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
 		dialog.setContentView(R.layout.delete_files);
@@ -119,8 +135,10 @@ public class DeleteFiles{
 					try{
 						File f = file.get(i).getFile();
 						if(f!=null){
-							if(f.canWrite())
+							if(f.canWrite()){
 								deleteFile(f);
+								regenerate_keys();
+							}	
 							else
 							{					
 								RootTools.deleteFileOrDirectory("'"+f.getAbsolutePath()+"'", false);
@@ -195,38 +213,116 @@ public class DeleteFiles{
 		String path = file.getPath();
 		
 		if(Utils.music.get(path) != null){
+			music_deleted = true;
 			Utils.musicsize -= file.length();
-			Utils.music.remove(path);		
+			Utils.music.remove(path);
 		}	
 		
 		else if(Utils.apps.get(path) != null){
+			app_deleted = true;
 			Utils.apksize -= file.length();
 			Utils.apps.remove(path);
 		}	
 		
 		else if(Utils.img.get(path) != null){
+			img_deleted = true;
 			Utils.imgsize -= file.length();
 			Utils.img.remove(path);
 		}	
 		
 		else if(Utils.vids.get(path) != null){
+			vid_deleted = true;
 			Utils.vidsize -= file.length();
 			Utils.vids.remove(path);
 		}	
 		
 		else if(Utils.doc.get(path) != null){
+			doc_deleted = true;
 			Utils.docsize -= file.length();
 			Utils.doc.remove(path);
 		}	
 		
 		else if(Utils.zip.get(path) != null){
+			zip_deleted = true;
 			Utils.zipsize -= file.length();
 			Utils.zip.remove(path);
 		}	
 		
 		else if(Utils.mis.get(path) != null){
+			mis_deleted = true;
 			Utils.missize -= file.length();
 			Utils.mis.remove(path);
 		}	
 	}	
- }
+	
+	/**
+	 * function to regenerate the keys after deleting  files...
+	 * it is necessary as they keys...
+	 * if it is not performed then will cause exception....
+	 */
+	synchronized void regenerate_keys(){
+		
+		//regenerating music item's keys....
+		if(music_deleted){
+			Utils.musicKey.clear();
+			int counter = 0;
+			for(Map.Entry< String , Item> entry : Utils.music.entrySet()){
+				Utils.musicKey.put(""+counter++, entry.getKey());
+			}
+		}
+		
+		//regenerating app item's keys....
+		if(app_deleted){
+			Utils.appKey.clear();
+			int counter = 0;
+			for(Map.Entry< String , Item> entry : Utils.apps.entrySet()){
+				Utils.appKey.put(""+counter++, entry.getKey());
+			}
+		}
+		
+		//regenerating image item's keys....
+		if(img_deleted){
+			Utils.imgKey.clear();
+			int counter = 0;
+			for(Map.Entry< String , Item> entry : Utils.img.entrySet()){
+				Utils.imgKey.put(""+counter++, entry.getKey());
+			}
+		}
+		
+		//regenerating video item's keys....
+		if(vid_deleted){
+			Utils.videoKey.clear();
+			int counter = 0;
+			for(Map.Entry< String , Item> entry : Utils.vids.entrySet()){
+				Utils.videoKey.put(""+counter++, entry.getKey());
+			}
+		}
+		
+		//regenerating document item's keys....
+		if(doc_deleted){
+			Utils.docKey.clear();
+			int counter = 0;
+			for(Map.Entry< String , Item> entry : Utils.doc.entrySet()){
+				Utils.docKey.put(""+counter++, entry.getKey());
+			}
+		}
+		
+		//regenerating archive item's keys....
+		if(zip_deleted){
+			Utils.zipKey.clear();
+			int counter = 0;
+			for(Map.Entry< String , Item> entry : Utils.zip.entrySet()){
+				Utils.zipKey.put(""+counter++, entry.getKey());
+			}
+		}
+		
+		//regenerating unknown item's keys....
+		if(mis_deleted){
+			Utils.misKey.clear();
+			int counter = 0;
+			for(Map.Entry< String , Item> entry : Utils.mis.entrySet()){
+				Utils.misKey.put(""+counter++, entry.getKey());
+			}
+		}
+	}
+}	
