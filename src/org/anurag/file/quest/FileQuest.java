@@ -24,8 +24,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.ZipFile;
 
 import org.anurag.compress.ArchiveEntryProperties;
@@ -461,8 +461,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(Utils.update_Needed){
 						new load().execute();
 						Utils.update_Needed = false;
-						Utils.stop();
-						Utils.restart();
+						//Utils.stop();
+						//Utils.restart();
+						Toast.makeText(mContext, ""+Utils.img.size(), Toast.LENGTH_LONG).show();
 					}else if(Utils.fav_Update_Needed){
 						//an item was added or removed to favorite list
 						//so updating ui....
@@ -3737,7 +3738,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @param mode category number....
 	 * @return list of files in that category....
 	 */
-	private static HashMap<String , Item> getCategoryList(int mode){
+	private static ConcurrentHashMap<String , Item> getCategoryList(int mode){
 		if (mode == 1)
 			return Utils.music;
 		else if (mode == 2)
@@ -3761,7 +3762,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @param mode
 	 * @return
 	 */
-	private static HashMap<String , String> getKeys(int mode){
+	private static ConcurrentHashMap<String , String> getKeys(int mode){
 		if(mode == 0)
 			return Utils.favKey;
 		
@@ -4928,7 +4929,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			@Override
 			public void onClick(View itemView, View clickedView, int position) {
 				// TODO Auto-generated method stub
-				HashMap<String , Item> itemList = null;
+				ConcurrentHashMap<String , Item> itemList = null;
 				if(position == 0)
 					itemList = Utils.fav;
 				else if(position==1)

@@ -25,7 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -78,7 +78,7 @@ public class CreateZip {
 	 * @param width
 	 * @param list
 	 */
-	public CreateZip(Context ctx , int width , HashMap<String , Item> list) {
+	public CreateZip(Context ctx , int width , ConcurrentHashMap<String , Item> list) {
 		// TODO Auto-generated constructor stub
 	}
 	

@@ -21,7 +21,7 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -58,7 +58,7 @@ public class DeleteFiles{
 	String nam;
 	
 	
-	public DeleteFiles(Context ctx,int width , HashMap<String , Item> list , String msg) {
+	public DeleteFiles(Context ctx,int width , ConcurrentHashMap<String , Item> list , String msg) {
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -84,6 +84,7 @@ public class DeleteFiles{
 		else
 			popupMessage.setText(nam);
 		message = (TextView)dialog.findViewById(R.id.textMessage2);
+		
 		mHandler = new Handler(){
 			public void handleMessage(Message msg){
 				switch(msg.what){
@@ -135,6 +136,7 @@ public class DeleteFiles{
 		btn1.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				dialog.setCancelable(false);
 				thread.start();
 				//message.setVisibility(View.VISIBLE);
 			}
@@ -152,11 +154,12 @@ public class DeleteFiles{
 	public void deleteFile(File file) {
 		File target = file;
 		if(target.exists() && target.isFile() && target.canWrite()){
-			String nam = mContext.getString(R.string.deletingfile)+" " + target.getName();
-			mHandler.sendEmptyMessage(1);
+			//String nam = mContext.getString(R.string.deletingfile)+" " + target.getName();
+			//mHandler.sendEmptyMessage(1);
 			//nam = target.getPath();
 			//updateFileGallery(nam);
-			target.delete();			
+			target.delete();
+			delete_from_gallery(target);
 		}	
 		
 		else if(target.exists() && target.isDirectory() && target.canRead()) {
@@ -168,6 +171,7 @@ public class DeleteFiles{
 				//nam = target.getPath();
 				//updateFileGallery(nam);
 				target.delete();
+				delete_from_gallery(target);
 			} else if(file_list != null && file_list.length > 0) {
 				
 				for(int i = 0; i < file_list.length; i++) {
@@ -180,6 +184,7 @@ public class DeleteFiles{
 						//nam = temp_f.getPath();
 						//updateFileGallery(nam);
 						temp_f.delete();
+						delete_from_gallery(temp_f);
 					}	
 				}
 			}
@@ -190,7 +195,39 @@ public class DeleteFiles{
 					//nam = target.getPath();
 					//updateFileGallery(nam);
 					target.delete();
+					delete_from_gallery(target);
 				}
 		}
 	}	
+	
+	/**
+	 * 
+	 * @param file 
+	 */
+	synchronized void delete_from_gallery(File file){
+		String path = file.getPath();
+		
+		if(Utils.music.get(path) != null)
+			Utils.music.remove(path);			
+		
+		
+		else if(Utils.apps.get(path) != null)
+			Utils.apps.remove(path);
+		
+		else if(Utils.img.get(path) != null)
+			Utils.img.remove(path);
+		
+		else if(Utils.vids.get(path) != null)
+			Utils.vids.remove(path);
+		
+		else if(Utils.doc.get(path) != null)
+			Utils.doc.remove(path);
+		
+		else if(Utils.zip.get(path) != null)
+			Utils.zip.remove(path);
+		
+		else if(Utils.mis.get(path) != null)
+			Utils.mis.remove(path);
+	}
+	
  }

@@ -20,8 +20,9 @@
 package org.anurag.file.quest;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -42,7 +43,7 @@ import android.widget.TextView;
 public class Utils {
 	
 	/**
-	 * counter variables(keys) for hashmaps....
+	 * counter variables(keys) for ConcurrentHashMaps....
 	 */
 	private static int musCounter;
 	private static int appCounter;
@@ -52,14 +53,14 @@ public class Utils {
 	private static int zipCounter;
 	private static int misCounter;
 	private static int favCounter;
-	public static HashMap<String, String> musicKey;
-	public static HashMap<String, String> appKey;
-	public static HashMap<String, String> imgKey;
-	public static HashMap<String, String> videoKey;
-	public static HashMap<String, String> docKey;
-	public static HashMap<String, String> zipKey;
-	public static HashMap<String, String> misKey;
-	public static HashMap<String, String> favKey;
+	public static ConcurrentHashMap<String, String> musicKey;
+	public static ConcurrentHashMap<String, String> appKey;
+	public static ConcurrentHashMap<String, String> imgKey;
+	public static ConcurrentHashMap<String, String> videoKey;
+	public static ConcurrentHashMap<String, String> docKey;
+	public static ConcurrentHashMap<String, String> zipKey;
+	public static ConcurrentHashMap<String, String> misKey;
+	public static ConcurrentHashMap<String, String> favKey;
 	
 	
 	
@@ -78,14 +79,14 @@ public class Utils {
 	public static boolean loaded;
 	
 	//list of files for different file types in file gallery....
-	public static HashMap<String , Item> music;
-	public static HashMap<String , Item> apps;
-	public static HashMap<String , Item> vids;
-	public static HashMap<String , Item> doc;
-	public static HashMap<String , Item> zip;
-	public static HashMap<String , Item> mis;
-	public static HashMap<String , Item> img;
-	public static HashMap<String ,Item> fav;
+	public static ConcurrentHashMap<String , Item> music;
+	public static ConcurrentHashMap<String , Item> apps;
+	public static ConcurrentHashMap<String , Item> vids;
+	public static ConcurrentHashMap<String , Item> doc;
+	public static ConcurrentHashMap<String , Item> zip;
+	public static ConcurrentHashMap<String , Item> mis;
+	public static ConcurrentHashMap<String , Item> img;
+	public static ConcurrentHashMap<String ,Item> fav;
 	
 	//count of favorite folders and files....
 	private static int folderCount,fileCount;
@@ -158,13 +159,13 @@ public class Utils {
 		update_Needed = false;
 		fav_Update_Needed = false;
 		
-		music = new HashMap<String , Item>();
-		apps = new HashMap<String , Item>();
-		vids = new HashMap<String , Item>();
-		doc = new HashMap<String , Item>();
-		zip = new HashMap<String , Item>();
-		mis = new HashMap<String , Item>();
-		img = new HashMap<String , Item>();
+		music = new ConcurrentHashMap<String , Item>();
+		apps = new ConcurrentHashMap<String , Item>();
+		vids = new ConcurrentHashMap<String , Item>();
+		doc = new ConcurrentHashMap<String , Item>();
+		zip = new ConcurrentHashMap<String , Item>();
+		mis = new ConcurrentHashMap<String , Item>();
+		img = new ConcurrentHashMap<String , Item>();
 			
 		musicsize=0;
 		apksize=0;
@@ -321,23 +322,23 @@ public class Utils {
 		sizeKB = cont.getString(R.string.appsizekb);
 		sizeByte = cont.getString(R.string.appsizebytes);
 		
-		music = new HashMap<String , Item>();
-		apps = new HashMap<String , Item>();
-		vids = new HashMap<String , Item>();
-		doc = new HashMap<String , Item>();
-		zip = new HashMap<String , Item>();
-		mis = new HashMap<String , Item>();
-		img = new HashMap<String , Item>();
-		fav = new HashMap<String , Item>();
+		music = new ConcurrentHashMap<String , Item>();
+		apps = new ConcurrentHashMap<String , Item>();
+		vids = new ConcurrentHashMap<String , Item>();
+		doc = new ConcurrentHashMap<String , Item>();
+		zip = new ConcurrentHashMap<String , Item>();
+		mis = new ConcurrentHashMap<String , Item>();
+		img = new ConcurrentHashMap<String , Item>();
+		fav = new ConcurrentHashMap<String , Item>();
 		
-		musicKey = new HashMap<String , String>();
-		appKey = new HashMap<String , String>();
-		videoKey =  new HashMap<String , String>();
-		docKey =  new HashMap<String , String>();
-		zipKey = new HashMap<String , String>();
-		imgKey = new HashMap<String , String>();
-		misKey = new HashMap<String , String>();
-		favKey = new HashMap<String , String>();
+		musicKey = new ConcurrentHashMap<String , String>();
+		appKey = new ConcurrentHashMap<String , String>();
+		videoKey =  new ConcurrentHashMap<String , String>();
+		docKey =  new ConcurrentHashMap<String , String>();
+		zipKey = new ConcurrentHashMap<String , String>();
+		imgKey = new ConcurrentHashMap<String , String>();
+		misKey = new ConcurrentHashMap<String , String>();
+		favKey = new ConcurrentHashMap<String , String>();
 		
 		
 		ctx = cont;
@@ -428,24 +429,24 @@ public class Utils {
 		musCounter = appCounter = imgCounter = vidCounter = docCounter =
 				zipCounter = misCounter = 0;
 		
-		musicKey = new HashMap<String , String>();
-		appKey = new HashMap<String , String>();
-		videoKey =  new HashMap<String , String>();
-		docKey =  new HashMap<String , String>();
-		zipKey = new HashMap<String , String>();
-		imgKey = new HashMap<String , String>();
-		misKey = new HashMap<String , String>();
-		favKey = new HashMap<String , String>();
+		musicKey = new ConcurrentHashMap<String , String>();
+		appKey = new ConcurrentHashMap<String , String>();
+		videoKey =  new ConcurrentHashMap<String , String>();
+		docKey =  new ConcurrentHashMap<String , String>();
+		zipKey = new ConcurrentHashMap<String , String>();
+		imgKey = new ConcurrentHashMap<String , String>();
+		misKey = new ConcurrentHashMap<String , String>();
+		favKey = new ConcurrentHashMap<String , String>();
 		
 		Utils.loaded = false;
-		music = new HashMap<String , Item>();
-		apps = new HashMap<String , Item>();
-		vids = new HashMap<String , Item>();
-		doc = new HashMap<String , Item>();
-		zip = new HashMap<String , Item>();
-		mis = new HashMap<String , Item>();
-		img = new HashMap<String , Item>();
-		fav = new HashMap<String , Item>();
+		music = new ConcurrentHashMap<String , Item>();
+		apps = new ConcurrentHashMap<String , Item>();
+		vids = new ConcurrentHashMap<String , Item>();
+		doc = new ConcurrentHashMap<String , Item>();
+		zip = new ConcurrentHashMap<String , Item>();
+		mis = new ConcurrentHashMap<String , Item>();
+		img = new ConcurrentHashMap<String , Item>();
+		fav = new ConcurrentHashMap<String , Item>();
 		misize = zsize = vsize = dsize = psize = asize = 
 				msize = ctx.getString(R.string.zerosize);
 		load();
@@ -474,7 +475,7 @@ public class Utils {
 			// TODO Auto-generated method stub
 			if(!Utils.loaded){
 				prepareFavList();
-				start(new File("/storage/ext_sd"));
+				start(new File(Constants.PATH));
 				Utils.loaded = true;
 			}	
 			else{
@@ -845,50 +846,50 @@ public class Utils {
 	
 	
 	public static void notifyAllAppsDeleted(){
-		apps = new HashMap<String , Item>();
+		apps = new ConcurrentHashMap<String , Item>();
 		asize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllMusicDeleted(){
-		music = new HashMap<String , Item>();
+		music = new ConcurrentHashMap<String , Item>();
 		msize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllImageDeleted(){
-		img = new HashMap<String , Item>();
+		img = new ConcurrentHashMap<String , Item>();
 		psize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllMisDeleted(){
-		mis = new HashMap<String , Item>();
+		mis = new ConcurrentHashMap<String , Item>();
 		misize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllZipDeleted(){
-		zip = new HashMap<String , Item>();
+		zip = new ConcurrentHashMap<String , Item>();
 		zsize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllFavDeleted(){
-		fav = new HashMap<String , Item>();
+		fav = new ConcurrentHashMap<String , Item>();
 		folderCount = 0;
 		fileCount = 0;
 		updateUI();
 	}
 	
 	public static void notifyAllVideoDeleted(){
-		vids = new HashMap<String , Item>();
+		vids = new ConcurrentHashMap<String , Item>();
 		vsize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
 	
 	public static void notifyAllDocsDeleted(){
-		doc = new HashMap<String , Item>();
+		doc = new ConcurrentHashMap<String , Item>();
 		dsize = ctx.getString(R.string.zerosize);
 		updateUI();
 	}
@@ -936,7 +937,7 @@ public class Utils {
 		if(Utils.update_Needed)
 				return;
 		
-		fav = new HashMap<String , Item>();
+		fav = new ConcurrentHashMap<String , Item>();
 		folderCount = 0;
 		fileCount = 0;
 		final Handler handler = new Handler(){
