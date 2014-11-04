@@ -2088,12 +2088,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 					case 0:
 						if (FileGalleryAdapter.MULTI_SELECT) {
-							element = new FileGalleryAdapter(mContext , getCategoryList(fPos));
+							element = new FileGalleryAdapter(mContext , getCategoryList(fPos) , getKeys(fPos));
 							FileGalleryAdapter.thumbselection = new boolean[getCategoryList(fPos).size()];
 							FileGalleryAdapter.MULTI_SELECT = false;
 							LIST_VIEW_3D.setAdapter(element);
 						} else {
-							element = new FileGalleryAdapter(mContext , getCategoryList(fPos));
+							element = new FileGalleryAdapter(mContext , getCategoryList(fPos) , getKeys(fPos));
 							FileGalleryAdapter.thumbselection = new boolean[getCategoryList(fPos).size()];
 							FileGalleryAdapter.MULTI_SELECT = true;
 							LIST_VIEW_3D.setAdapter(element);
@@ -3679,21 +3679,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		elementInFocus = true;
 		try{
 			if(mode == 0)
-				element = new FileGalleryAdapter(mContext, Utils.fav);
+				element = new FileGalleryAdapter(mContext, Utils.fav , getKeys(mode));
 			else if (mode == 1)
-				element = new FileGalleryAdapter(mContext, Utils.music);
+				element = new FileGalleryAdapter(mContext, Utils.music , getKeys(mode));
 			else if (mode == 2)
-				element = new FileGalleryAdapter(mContext, Utils.apps);
+				element = new FileGalleryAdapter(mContext, Utils.apps , getKeys(mode));
 			else if (mode == 5)
-				element = new FileGalleryAdapter(mContext, Utils.doc);
+				element = new FileGalleryAdapter(mContext, Utils.doc , getKeys(mode));
 			else if (mode == 3)
-				element = new FileGalleryAdapter(mContext, Utils.img);
+				element = new FileGalleryAdapter(mContext, Utils.img , getKeys(mode));
 			else if (mode == 4)
-				element = new FileGalleryAdapter(mContext, Utils.vids);
+				element = new FileGalleryAdapter(mContext, Utils.vids , getKeys(mode));
 			else if (mode == 6)
-				element = new FileGalleryAdapter(mContext, Utils.zip);
+				element = new FileGalleryAdapter(mContext, Utils.zip , getKeys(mode));
 			else if (mode == 7)
-				element = new FileGalleryAdapter(mContext, Utils.mis);
+				element = new FileGalleryAdapter(mContext, Utils.mis , getKeys(mode));
 			LIST_VIEW_3D.setAdapter(element);
 		}catch(Exception e){
 			elementInFocus = false;
@@ -3714,21 +3714,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 */
 	private static Item getItemFromCategory(int mode , int pos){
 		if (mode == 1)
-			return Utils.music.get(pos+"");
+			return Utils.music.get(Utils.musicKey.get(""+pos));
 		else if (mode == 2)
-			return Utils.apps.get(pos+"");
+			return Utils.apps.get(Utils.appKey.get(""+pos));
 		else if (mode == 5)
-			return Utils.doc.get(pos+"");
+			return Utils.doc.get(Utils.docKey.get(""+pos));
 		else if (mode == 3)
-			return Utils.img.get(pos+"");
+			return Utils.img.get(Utils.imgKey.get(""+pos));
 		else if (mode == 4)
-			return Utils.vids.get(pos+"");
+			return Utils.vids.get(Utils.videoKey.get(""+pos));
 		else if (mode == 6)
-			return Utils.zip.get(pos+"");
+			return Utils.zip.get(Utils.zipKey.get(""+pos));
 		else if (mode == 7)
-			return Utils.mis.get(pos+"");
+			return Utils.mis.get(Utils.misKey.get(""+pos));
 		else 
-			return Utils.fav.get(pos+"");
+			return Utils.fav.get(Utils.favKey.get(""+pos));
 	}
 	
 	/**
@@ -3754,6 +3754,36 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			return Utils.mis;
 		else 
 			return Utils.fav;
+	}
+	
+	/**
+	 * Function get keys for the list of files selected
+	 * @param mode
+	 * @return
+	 */
+	private static HashMap<String , String> getKeys(int mode){
+		if(mode == 0)
+			return Utils.favKey;
+		
+		if(mode == 1)
+			return Utils.musicKey;
+		
+		if(mode == 2)
+			return Utils.appKey;
+		
+		if(mode == 3)
+			return Utils.imgKey;
+		
+		if(mode == 4)
+			return Utils.videoKey;
+		
+		if(mode == 5)
+			return Utils.docKey;
+		
+		if(mode == 6)
+			return Utils.zipKey;
+		
+		return Utils.misKey;
 	}
 
 	/**

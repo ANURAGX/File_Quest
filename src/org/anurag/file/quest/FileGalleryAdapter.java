@@ -44,10 +44,11 @@ import android.widget.Toast;
 
 public class FileGalleryAdapter extends BaseAdapter{
 	
+	private HashMap<String , String> keys;
 	private static HashMap<String, Bitmap> imgList;
 	private static HashMap<String, Drawable> apkList;
 	private static HashMap<String, Bitmap> musicList;
-	Bitmap image;
+	private Bitmap image;
 	public static boolean MULTI_SELECT;
 	public static boolean[] thumbselection; 
 	public static long C;
@@ -56,11 +57,13 @@ public class FileGalleryAdapter extends BaseAdapter{
 	private HashMap<String , Item> list; 
 	private LayoutInflater inflater;
 	static ArrayList<Item> MULTI_FILES;
-	public FileGalleryAdapter(Context context , HashMap<String , Item> object) {
+	
+	public FileGalleryAdapter(Context context , HashMap<String , Item> object , HashMap<String , String> key) {
 		// TODO Auto-generated constructor stub
 		ctx = context;
 		MULTI_FILES = new ArrayList<Item>();
 		list = object;
+		this.keys = key;
 		inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		imgList = new HashMap<String , Bitmap>();
 		apkList = new HashMap<String , Drawable>();
@@ -98,7 +101,7 @@ public class FileGalleryAdapter extends BaseAdapter{
 	@Override
 	public View getView(int pos, View convertView, ViewGroup arg2) {
 		// TODO Auto-generated method stub
-		item = list.get(""+pos);
+		item = list.get(keys.get(""+pos));
 		Holder h = new Holder();
 		if(convertView == null){
 			h = new Holder();

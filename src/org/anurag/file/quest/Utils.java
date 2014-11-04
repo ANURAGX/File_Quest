@@ -52,7 +52,14 @@ public class Utils {
 	private static int zipCounter;
 	private static int misCounter;
 	private static int favCounter;
-	
+	public static HashMap<String, String> musicKey;
+	public static HashMap<String, String> appKey;
+	public static HashMap<String, String> imgKey;
+	public static HashMap<String, String> videoKey;
+	public static HashMap<String, String> docKey;
+	public static HashMap<String, String> zipKey;
+	public static HashMap<String, String> misKey;
+	public static HashMap<String, String> favKey;
 	
 	
 	
@@ -323,6 +330,16 @@ public class Utils {
 		img = new HashMap<String , Item>();
 		fav = new HashMap<String , Item>();
 		
+		musicKey = new HashMap<String , String>();
+		appKey = new HashMap<String , String>();
+		videoKey =  new HashMap<String , String>();
+		docKey =  new HashMap<String , String>();
+		zipKey = new HashMap<String , String>();
+		imgKey = new HashMap<String , String>();
+		misKey = new HashMap<String , String>();
+		favKey = new HashMap<String , String>();
+		
+		
 		ctx = cont;
 		res = ctx.getResources();
 		loaded = false;
@@ -411,6 +428,15 @@ public class Utils {
 		musCounter = appCounter = imgCounter = vidCounter = docCounter =
 				zipCounter = misCounter = 0;
 		
+		musicKey = new HashMap<String , String>();
+		appKey = new HashMap<String , String>();
+		videoKey =  new HashMap<String , String>();
+		docKey =  new HashMap<String , String>();
+		zipKey = new HashMap<String , String>();
+		imgKey = new HashMap<String , String>();
+		misKey = new HashMap<String , String>();
+		favKey = new HashMap<String , String>();
+		
 		Utils.loaded = false;
 		music = new HashMap<String , Item>();
 		apps = new HashMap<String , Item>();
@@ -487,7 +513,8 @@ public class Utils {
 							it = ctx.getString(R.string.rootd);
 						}
 						Item itm = new Item(file, folderImg, folderType, it);
-						fav.put(""+favCounter++, itm);
+						fav.put(file.getPath(), itm);
+						favKey.put(""+favCounter++, file.getPath());
 					}else
 						makeIcon(file , true , handler);
 				}else if(!file.exists()){
@@ -524,17 +551,21 @@ public class Utils {
 	private static void makeIcon(File f , boolean forFavItem , Handler handler){
 		
 		String name = f.getName().toLowerCase(Locale.ENGLISH);
+		String path = f.getPath();
 		
 		if(name.endsWith(".zip")){
 			Item itm = new Item(f, arcImg, arcType, "");
 			if(forFavItem){
-				fav.put(""+favCounter++, itm);
+				favKey.put(""+favCounter++, path);
+				fav.put(path, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)	
 					handler.sendEmptyMessage(0);
 				return;
 			}
-			zip.put(""+zipCounter++, itm);
+			
+			zipKey.put(""+zipCounter++, path);
+			zip.put(path, itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
 			if(!FileQuest.elementInFocus)
@@ -545,14 +576,16 @@ public class Utils {
 					arcType, "");
 			
 			if(forFavItem){
-				fav.put(""+favCounter++, itm);
+				favKey.put(""+favCounter++, path);
+				fav.put(path, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			zip.put(""+zipCounter++, itm);
+			zipKey.put(""+zipCounter++, path);
+			zip.put(path, itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
 			if(!FileQuest.elementInFocus)
@@ -563,14 +596,16 @@ public class Utils {
 					arcType, "");
 			
 			if(forFavItem){
-				fav.put(""+favCounter++, itm);
+				favKey.put(""+favCounter++, path);
+				fav.put(path, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			zip.put(""+zipCounter++, itm);
+			zipKey.put(""+zipCounter++, path);
+			zip.put(path, itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
 			if(!FileQuest.elementInFocus)
@@ -582,14 +617,16 @@ public class Utils {
 					arcType, "");
 			
 			if(forFavItem){
-				fav.put(""+favCounter++, itm);
+				favKey.put(""+favCounter++, path);
+				fav.put(path, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			zip.put(""+zipCounter++, itm);
+			zipKey.put(""+zipCounter++, path);
+			zip.put(path, itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
 			if(!FileQuest.elementInFocus)
@@ -601,14 +638,16 @@ public class Utils {
 			Item itm = new Item(f, musicImg, musicType, "");
 			
 			if(forFavItem){
-				fav.put(""+favCounter++, itm);
+				favKey.put(""+favCounter++, path);
+				fav.put(path, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			music.put(""+musCounter++, itm);
+			musicKey.put(""+musCounter++, path);
+			music.put(path, itm);
 			musicsize+=f.length();
 			msize = size(musicsize);
 			if(!FileQuest.elementInFocus)
@@ -618,13 +657,16 @@ public class Utils {
 			Item itm = new Item(f, apkImg, apkType, "");
 			
 			if(forFavItem){
-				fav.put(""+favCounter++, itm);
+				favKey.put(""+favCounter++, path);
+				fav.put(path, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}			
-			apps.put(""+appCounter++, itm);
+			
+			appKey.put(""+appCounter++, path);
+			apps.put(path, itm);
 			apksize+=f.length();
 			asize = size(apksize);
 			if(!FileQuest.elementInFocus)
@@ -635,14 +677,16 @@ public class Utils {
 			Item itm = new Item(f, vidImg, vidType, "");
 			
 			if(forFavItem){
-				fav.put(""+favCounter++, itm);
+				favKey.put(""+favCounter++, path);
+				fav.put(path, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			vids.put(""+vidCounter++, itm);
+			videoKey.put(""+vidCounter++, path);
+			vids.put(path, itm);
 			vidsize+=f.length();
 			vsize = size(vidsize);
 			if(!FileQuest.elementInFocus)
@@ -654,14 +698,16 @@ public class Utils {
 			Item itm = new Item(f, imageImg, imageType, "");
 			
 			if(forFavItem){
-				fav.put(""+favCounter++, itm);
+				favKey.put(""+favCounter++, path);
+				fav.put(path, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}			
 			
-			img.put(""+imgCounter++, itm);
+			imgKey.put(""+imgCounter++, path);
+			img.put(path, itm);
 			imgsize+=f.length();
 			psize = size(imgsize);
 			if(!FileQuest.elementInFocus)
@@ -672,14 +718,16 @@ public class Utils {
 								ctx.getString(R.string.pdf),"");
 			
 			if(forFavItem){
-				fav.put(""+favCounter++, itm);
+				favKey.put(""+favCounter++, path);
+				fav.put(path, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			doc.put(""+docCounter++, itm);
+			docKey.put(""+docCounter++, path);
+			doc.put(path, itm);
 			docsize+=f.length();
 			dsize = size(docsize);
 			if(!FileQuest.elementInFocus)
@@ -689,14 +737,16 @@ public class Utils {
 			Item itm = new Item(f , docImg , docType , "");
 			
 			if(forFavItem){
-				fav.put(""+favCounter++, itm);
+				favKey.put(""+favCounter++, path);
+				fav.put(path, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			doc.put(""+docCounter++, itm);
+			docKey.put(""+docCounter++, path);
+			doc.put(path, itm);
 			docsize+=f.length();
 			dsize = size(docsize);
 			if(!FileQuest.elementInFocus)
@@ -706,14 +756,16 @@ public class Utils {
 			Item itm = new Item(f,res.getDrawable(R.drawable.ic_launcher_text),
 								ctx.getString(R.string.text), "");
 			if(forFavItem){
-				fav.put(""+favCounter++, itm);
+				favKey.put(""+favCounter++, path);
+				fav.put(path, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			doc.put(""+docCounter++, itm);
+			docKey.put(""+docCounter++, path);
+			doc.put(path, itm);
 			docsize+=f.length();
 			dsize = size(docsize);
 			if(!FileQuest.elementInFocus)
@@ -723,14 +775,16 @@ public class Utils {
 			Item itm = new Item(f,misImg, misType, "");
 			
 			if(forFavItem){
-				fav.put(""+favCounter++, itm);
+				favKey.put(""+favCounter++, path);
+				fav.put(path, itm);
 				fileCount++;
 				if(!FileQuest.elementInFocus)
 					handler.sendEmptyMessage(0);
 				return;
 			}
 			
-			mis.put(""+misCounter++, itm);
+			misKey.put(""+misCounter++, path);
+			mis.put(path, itm);
 			missize+=f.length();
 			misize = size(missize);
 			if(!FileQuest.elementInFocus)
