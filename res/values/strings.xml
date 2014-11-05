@@ -27,7 +27,13 @@
     
    
     
-    
+    <string-array name="slider_group_list">
+        <item>Graphical Analysis</item>
+        <item>File Gallery</item>
+        <item>Cloud Networks</item>
+        <item>Connect to Server</item>
+        <item>Locked Items</item>
+    </string-array>
     
      <!-- STRING ARRAYS.... -->
     <string-array name="effects">
