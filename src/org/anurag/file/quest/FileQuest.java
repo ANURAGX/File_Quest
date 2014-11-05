@@ -85,6 +85,7 @@ import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -4936,7 +4937,24 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private void initLeftMenu(){
 		slidemenu = (SlideLayout)findViewById(R.id.slide_left_menu);
 		
-		ActionSlideExpandableListView lsView = (ActionSlideExpandableListView)findViewById(R.id.actionSlideExpandableListView1);
+		//setting the device name here....
+		TextView devId = (TextView)findViewById(R.id.dev_id);
+		String dev = Build.MODEL;
+		String man = Build.MANUFACTURER;
+		if(dev.length() == 0 || dev == null)
+			dev = getString(R.string.unknown);
+		else{
+			if(!dev.contains(man))
+				dev = man + " " + dev;
+			char a = dev.charAt(0);
+			if(!Character.isUpperCase(a)){
+				dev = Character.toUpperCase(a) + dev.substring(1);
+			}
+		}		
+		devId.setText(dev);
+		
+		
+		final ActionSlideExpandableListView lsView = (ActionSlideExpandableListView)findViewById(R.id.actionSlideExpandableListView1);
 		
 		String[] values = getResources().getStringArray(R.array.slideList);
 		lsView.setAdapter(new ExpandableAdapter(this,R.layout.expandable_row_list,

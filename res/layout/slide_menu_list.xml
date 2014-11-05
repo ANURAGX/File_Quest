@@ -26,16 +26,18 @@
     android:orientation="vertical" >
     
     <LinearLayout
-        android:gravity="center_horizontal"
+        android:paddingBottom="20dp"
+        android:gravity="center"
         android:orientation="horizontal" 
         android:layout_width="match_parent"
-        android:layout_height="64dp">
+        android:layout_height="84dp">
         <ImageView 
             android:background="@drawable/ic_launcher_stats"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"/>
         
         <TextView 
+            android:gravity="center"
             android:textColor="@android:color/white"
             android:paddingTop="10dp"
         	android:paddingLeft="10dp"
@@ -45,9 +47,34 @@
             android:layout_height="wrap_content"
             android:text="@string/manage"/>
     </LinearLayout>
+    
+     <LinearLayout
+        android:layout_marginLeft="3dp" 
+        android:orientation="horizontal" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView 
+            android:background="@drawable/android_device"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"/>
+        
+        <TextView 
+            android:id="@+id/dev_id"
+            android:textColor="@android:color/white"
+            android:paddingTop="10dp"
+        	android:paddingLeft="10dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unknown"/>
+    </LinearLayout>
 
+     
+      
+      
     <com.tjerkw.slideexpandable.library.ActionSlideExpandableListView
         android:id="@+id/actionSlideExpandableListView1"
+        android:layout_marginLeft="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     </com.tjerkw.slideexpandable.library.ActionSlideExpandableListView>
