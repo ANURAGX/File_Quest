@@ -112,7 +112,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -132,6 +131,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.rey.slidelayout.SlideLayout;
+import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
 import com.twotoasters.jazzylistview.JazzyHelper;
 
 
@@ -4953,9 +4953,71 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		}		
 		devId.setText(dev);
 				
-		
-		
-		
+		final ActionSlideExpandableListView lsView = (ActionSlideExpandableListView)findViewById(R.id.expandable_list);
+				
+				String[] values = getResources().getStringArray(R.array.slideList);
+				lsView.setAdapter(new ExpandableAdapter(this,R.layout.expandable_list_item,
+						R.id.expandable_toggle_button,values));
+				
+				/**
+				 * click listener for single item inside slide menu list...
+				 */
+				lsView.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
+					@Override
+					public void onClick(View itemView, View clickedView, int position) {
+						// TODO Auto-generated method stub
+						ConcurrentHashMap<String , Item> itemList = null;
+						if(position == 0)
+							itemList = Utils.fav;
+						else if(position==1)
+							itemList = (Utils.music);
+						else if(position==2)
+							itemList = (Utils.apps);
+						else if(position==3)
+							itemList = (Utils.doc);
+						else if(position==4)
+							itemList = (Utils.img);
+						else if(position==5)
+							itemList = (Utils.vids);
+						else if(position==6)
+							itemList = (Utils.zip);
+						else if(position==7)
+							itemList = (Utils.mis);
+						
+						if(position == 0)
+							fPos = 7;
+						else
+							fPos = position-1;
+						
+						//tells that slide menu was used to delete files from panel
+						delete_from_slider_menu = true;
+						
+						/**
+						 * switching to different actions of buttons in expanded list....
+						 */
+						switch(clickedView.getId()){
+							case R.id.button_delete:
+									if(position == 0){
+										//only deleting favorite items from DB....
+										if(Constants.db.deleteAllFavItem()){
+											Toast.makeText(mContext, R.string.allfavdeleted, Toast.LENGTH_SHORT).show();
+											Utils.notifyFileDelete(fPos);
+										}	
+										break;
+									}	
+									new DeleteFiles(mContext, size.x*8/9, itemList, getResources().getString(R.string.confirmdeletion));
+									break;
+									
+							case R.id.button_move_all:
+									//tempList = itemList;
+									new GetMoveLocation(mContext, size.x*8/9);
+									break;
+							case R.id.button_zip_all:
+									new CreateZip(mContext, size.x*8/9, itemList);
+									break;
+						}
+					}
+				}, R.id.button_delete,R.id.button_zip_all,R.id.button_move_all);
 	}
 	
 	
