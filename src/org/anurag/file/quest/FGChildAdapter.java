@@ -26,7 +26,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,29 +34,36 @@ import android.widget.TextView;
  * @author Anurag....
  *
  */
-public class SliderExpBaseAdapter extends BaseExpandableListAdapter{
-	
-	private Context mContext;
-	private String[] group;
-	private LayoutInflater inflater;
-	private int groupIcon[] = {
-			R.drawable.analysis,
-			R.drawable.file_gallery,
-			R.drawable.ic_launcher_drop_box,
-			R.drawable.server,
-			R.drawable.locker
-		};
-	private String[] group2;	
-	private ArrayList<String> grp2;
-	public SliderExpBaseAdapter(Context ctx) {
-		// TODO Auto-generated constructor stub
-		this.mContext = ctx;
-		grp2 = new ArrayList<String>();
-		group = ctx.getResources().getStringArray(R.array.slider_group_list);
-		group2 = ctx.getResources().getStringArray(R.array.slideList);
-		inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
+public class FGChildAdapter extends BaseExpandableListAdapter{
 
+	private ArrayList<String> group;
+	private LayoutInflater inf;
+	private int[] icons = {
+			R.drawable.favorite_slider,
+			R.drawable.ic_launcher_music,
+			R.drawable.ic_launcher_apk,
+			R.drawable.ic_launcher_images,
+			R.drawable.ic_launcher_video,
+			R.drawable.ic_launcher_ppt,
+			R.drawable.ic_launcher_zip_it,
+			R.drawable.ic_launcher_unknown,
+			
+		};
+	private String[] child = {"Delete" , "Move To one location" , "Zip it"};
+	private int[] childIcons ={
+			R.drawable.ic_launcher_delete,
+			R.drawable.ic_launcher_cut,
+			R.drawable.zip_it_longclick
+		};
+	private Context mContext;
+	public FGChildAdapter(Context ctx , ArrayList<String> grp) {
+		// TODO Auto-generated constructor stub
+		group = grp;
+		this.mContext = ctx;
+		inf = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
+	}
+	
 	@Override
 	public Object getChild(int arg0, int arg1) {
 		// TODO Auto-generated method stub
@@ -70,56 +76,39 @@ public class SliderExpBaseAdapter extends BaseExpandableListAdapter{
 		return arg1;
 	}
 
-	class childHolder{
-		ExpandableListView ls;
-	}
-	
 	@Override
-	public View getChildView(int groupPos, int childPos, boolean arg2, View arg3,
+	public View getChildView(int arg0, int arg1, boolean arg2, View arg3,
 			ViewGroup arg4) {
 		// TODO Auto-generated method stub
-		if(groupPos == 1){
-			childHolder hld = new childHolder();
-			if(arg3 == null){
-				arg3 = inflater.inflate(R.layout.child_exp_list_view, arg4 , false);
-				hld.ls = (ExpandableListView)arg3.findViewById(R.id.slider_child_ls_view);
-				arg3.setTag(hld);
-			}else
-				hld = (childHolder) arg3.getTag();
-			FGChildAdapter adp = new FGChildAdapter(mContext, grp2);
-			hld.ls.setAdapter(adp);
-			grp2.add(group2[0]);
-			adp.notifyDataSetChanged();
-			grp2.add(group2[1]);
-			adp.notifyDataSetChanged();
-			
-			
-			hld.ls.setSelector(R.drawable.button_click);
-			return arg3;
-		}
-		else
-			return null;
+		Holder hld= new Holder();
+		if(arg3 == null){
+			arg3 = inf.inflate(R.layout.row_list_2, arg4 , false);
+			hld.icon = (ImageView)arg3.findViewById(R.id.iconImage2);
+			hld.name = (TextView)arg3.findViewById(R.id.directoryName2);
+			arg3.setTag(hld);
+		}else
+			hld = (Holder) arg3.getTag();
+		hld.name.setText(child[arg1]);
+		hld.icon.setImageDrawable(mContext.getResources().getDrawable(childIcons[arg1]));
+		return arg3;
 	}
 
 	@Override
-	public int getChildrenCount(int groupPosition) {
+	public int getChildrenCount(int group) {
 		// TODO Auto-generated method stub
-		if(groupPosition == 1)
-			return 8;
-		else  
-			return 0;
+		return 3;
 	}
 
 	@Override
 	public Object getGroup(int arg0) {
 		// TODO Auto-generated method stub
-		return null;
+		return arg0;
 	}
 
 	@Override
 	public int getGroupCount() {
 		// TODO Auto-generated method stub
-		return group.length;
+		return group.size();
 	}
 
 	@Override
@@ -139,15 +128,15 @@ public class SliderExpBaseAdapter extends BaseExpandableListAdapter{
 		// TODO Auto-generated method stub
 		Holder holder = new Holder();
 		if(arg2 == null){
-			arg2 = inflater.inflate(R.layout.slider_exp_row_list , arg3 , false);
+			arg2 = inf.inflate(R.layout.row_list_2 , arg3 , false);
 			holder.icon = (ImageView) arg2.findViewById(R.id.iconImage2);
-			holder.name = (TextView)arg2.findViewById(R.id.name2);
+			holder.name = (TextView)arg2.findViewById(R.id.directoryName2);
 			arg2.setTag(holder);
 		}else
 			holder = (Holder) arg2.getTag();
 		
-		holder.name.setText(group[arg0]);
-		holder.icon.setImageDrawable(mContext.getResources().getDrawable(groupIcon[arg0]));
+		holder.name.setText(group.get(arg0));
+		holder.icon.setImageDrawable(mContext.getResources().getDrawable(icons[arg0]));
 		return arg2;
 	}
 
@@ -160,7 +149,7 @@ public class SliderExpBaseAdapter extends BaseExpandableListAdapter{
 	@Override
 	public boolean isChildSelectable(int arg0, int arg1) {
 		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 
 }
