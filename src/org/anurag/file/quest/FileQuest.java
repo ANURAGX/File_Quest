@@ -4953,9 +4953,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		}		
 		devId.setText(dev);
 				
-		ExpandableListView exp_ls = (ExpandableListView)findViewById(R.id.slider_ls_view);
-		exp_ls.setAdapter(new SliderExpBaseAdapter(mContext));
-		exp_ls.setSelector(R.drawable.button_click);
+		
 		
 		
 	}
