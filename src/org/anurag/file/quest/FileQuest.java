@@ -543,7 +543,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			edit.commit();
 			new WhatsNew(mContext, size.x * 8 / 9, size.y * 8 / 9);
 		}
-        initLeftMenu();
+        
 		super.onCreate(savedInstanceState);
 		
 		{
@@ -621,6 +621,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		params.alpha = TRANSPRA_LEVEL;
 		super.onStart();
 		// REGISTER_RECEIVER();
+		initLeftMenu();
 	}
 
 	@Override

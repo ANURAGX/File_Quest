@@ -17,19 +17,13 @@
                               anurag.dev1512@gmail.com
  
  -->
-<ScrollView 
-    android:scrollbars="@null"
+ 
+<LinearLayout 
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout 
-    	android:paddingTop="5dp"
-    	android:paddingLeft="5dp"
-    	android:layout_width="match_parent"
-    	android:layout_height="match_parent"
-    	android:orientation="vertical" >
-    
-    	<LinearLayout
+    <LinearLayout
         	android:paddingBottom="20dp"
         	android:gravity="center"
        	 	android:orientation="horizontal" 
@@ -72,134 +66,146 @@
             	android:layout_height="wrap_content"
             	android:text="@string/unknown"/>
     	</LinearLayout>
-
-     	<LinearLayout
-        	android:layout_marginTop="20dp" 
-        	android:background="@drawable/button_click"
-        	android:clickable="true"
-        	android:focusable="true"
-        	android:layout_marginLeft="10dp" 
-        	android:orientation="horizontal" 
-        	android:layout_width="match_parent"
-        	android:layout_height="wrap_content">
-        	<ImageView 
-            	android:background="@drawable/analysis"
-        		android:layout_width="wrap_content"
-        		android:layout_height="wrap_content"/>
+    	
+     	<ScrollView 
+    		android:scrollbars="@null"
+    		android:layout_width="match_parent"
+    		android:layout_height="match_parent">
+    		<LinearLayout 
+    			android:paddingTop="5dp"
+    			android:paddingLeft="5dp"
+    			android:layout_width="match_parent"
+    			android:layout_height="match_parent"
+    			android:orientation="vertical" >
+    
+      		<LinearLayout
+        		android:layout_marginTop="20dp" 
+   	  		   	android:background="@drawable/button_click"
+    	    	android:clickable="true"
+        		android:focusable="true"
+        		android:layout_marginLeft="10dp" 
+        		android:orientation="horizontal" 
+        		android:layout_width="match_parent"
+        		android:layout_height="wrap_content">
+        		<ImageView 
+            		android:background="@drawable/analysis"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"/>
       	  
-        	<TextView 
-            	android:textColor="@android:color/white"
-            	android:paddingTop="10dp"
-        		android:paddingLeft="10dp"
-            	android:textStyle="bold"
-        	    android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-           	 android:text="Graph Analysis"/>
-    	</LinearLayout>
+        		<TextView 
+            		android:textColor="@android:color/white"
+            		android:paddingTop="10dp"
+        			android:paddingLeft="10dp"
+            		android:textStyle="bold"
+        	    	android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+           	 		android:text="Graph Analysis"/>
+    		</LinearLayout>
     
-     	<LinearLayout
-        	android:id="@+id/fg"
-        	android:background="@drawable/button_click"
-        	android:clickable="true"
-        	android:focusable="true" 
-        	android:layout_marginLeft="10dp" 
-        	android:orientation="horizontal" 
-        	android:layout_width="match_parent"
-        	android:layout_height="wrap_content">
-        	<ImageView 
-            	android:background="@drawable/file_gallery"
-        		android:layout_width="wrap_content"
-        		android:layout_height="wrap_content"/>
+     		<LinearLayout
+        		android:id="@+id/fg"
+        		android:background="@drawable/button_click"
+        		android:clickable="true"
+        		android:focusable="true" 
+        		android:layout_marginLeft="10dp" 
+        		android:orientation="horizontal" 
+        		android:layout_width="match_parent"
+        		android:layout_height="wrap_content">
+        		<ImageView 
+            		android:background="@drawable/file_gallery"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"/>
         
-       	 	<TextView 
-            	android:textColor="@android:color/white"
-            	android:paddingTop="10dp"
-        		android:paddingLeft="10dp"
-            	android:textStyle="bold"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:text="File Gallery"/>
-    	</LinearLayout>    
-    	<com.tjerkw.slideexpandable.library.ActionSlideExpandableListView
-			xmlns:android="http://schemas.android.com/apk/res/android"
-			android:scrollbars="@null"
-			android:id="@+id/expandable_list"
-			android:divider="#00000000"
-			android:visibility="gone"
-			android:layout_marginLeft="20dp"
-			android:layout_height="fill_parent"
-			android:layout_width="fill_parent"/>
+      	 	 	<TextView 
+        	    	android:textColor="@android:color/white"
+            		android:paddingTop="10dp"
+        			android:paddingLeft="10dp"
+            		android:textStyle="bold"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:text="File Gallery"/>
+    		</LinearLayout>    
+    		<com.tjerkw.slideexpandable.library.ActionSlideExpandableListView
+				xmlns:android="http://schemas.android.com/apk/res/android"
+				android:scrollbars="@null"
+				android:id="@+id/expandable_list"
+				android:divider="#00000000"
+				android:visibility="gone"
+				android:layout_marginLeft="20dp"
+				android:layout_height="fill_parent"
+				android:layout_width="fill_parent"/>
     
-    	<LinearLayout
-        	android:id="@+id/cld"
-        	android:background="@drawable/button_click"
-        	android:clickable="true"
-        	android:focusable="true" 
-        	android:layout_marginLeft="10dp" 
-        	android:orientation="horizontal" 
-        	android:layout_width="match_parent"
-        	android:layout_height="wrap_content">
-        	<ImageView 
-            	android:background="@drawable/ic_launcher_drop_box"
-        		android:layout_width="wrap_content"
-        		android:layout_height="wrap_content"/>
+    		<LinearLayout
+        		android:id="@+id/cld"
+        		android:background="@drawable/button_click"
+        		android:clickable="true"
+        		android:focusable="true" 
+        		android:layout_marginLeft="10dp" 
+        		android:orientation="horizontal" 
+        		android:layout_width="match_parent"
+        		android:layout_height="wrap_content">
+        		<ImageView 
+            		android:background="@drawable/ic_launcher_drop_box"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"/>
         
-        	<TextView 
-            	android:textColor="@android:color/white"
-            	android:paddingTop="10dp"
-        		android:paddingLeft="10dp"
-            	android:textStyle="bold"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:text="Cloud Networks"/>
-    	</LinearLayout> 
+        		<TextView 
+            		android:textColor="@android:color/white"
+            		android:paddingTop="10dp"
+        			android:paddingLeft="10dp"
+            		android:textStyle="bold"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:text="Cloud Networks"/>
+    		</LinearLayout> 
     
-    	<LinearLayout
-        	android:id="@+id/serv"
-        	android:background="@drawable/button_click"
-        	android:clickable="true"
-        	android:focusable="true" 
-        	android:layout_marginLeft="10dp" 
-        	android:orientation="horizontal" 
-       	 	android:layout_width="match_parent"
-        	android:layout_height="wrap_content">
-        	<ImageView 
-            	android:background="@drawable/server"
-        		android:layout_width="wrap_content"
-        		android:layout_height="wrap_content"/>
+    		<LinearLayout
+        		android:id="@+id/serv"
+        		android:background="@drawable/button_click"
+        		android:clickable="true"
+        		android:focusable="true" 
+        		android:layout_marginLeft="10dp" 
+        		android:orientation="horizontal" 
+       	 		android:layout_width="match_parent"
+        		android:layout_height="wrap_content">
+        		<ImageView 
+            		android:background="@drawable/server"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"/>
         
-        	<TextView 
-            	android:textColor="@android:color/white"
-            	android:paddingTop="10dp"
-        		android:paddingLeft="10dp"
-            	android:textStyle="bold"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:text="Connect to Server"/>
-    	</LinearLayout> 
+      	  		<TextView 
+        		   	android:textColor="@android:color/white"
+            		android:paddingTop="10dp"
+        			android:paddingLeft="10dp"
+            		android:textStyle="bold"
+            		android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:text="Connect to Server"/>
+    		</LinearLayout> 
     
-    	<LinearLayout
-        	android:id="@+id/lckItm"
-        	android:background="@drawable/button_click"
-        	android:clickable="true"
-        	android:focusable="true" 
-        	android:layout_marginLeft="10dp" 
-        	android:orientation="horizontal" 
-        	android:layout_width="match_parent"
-        	android:layout_height="wrap_content">
-        	<ImageView 
-            	android:background="@drawable/locker"
-        		android:layout_width="wrap_content"
-        		android:layout_height="wrap_content"/>
+    		<LinearLayout
+        		android:id="@+id/lckItm"
+        		android:background="@drawable/button_click"
+        		android:clickable="true"
+        		android:focusable="true" 
+        		android:layout_marginLeft="10dp" 
+        		android:orientation="horizontal" 
+        		android:layout_width="match_parent"
+        		android:layout_height="wrap_content">
+        		<ImageView 
+            		android:background="@drawable/locker"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"/>
         
-        	<TextView 
-            	android:textColor="@android:color/white"
-            	android:paddingTop="10dp"
-        		android:paddingLeft="10dp"
-            	android:textStyle="bold"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:text="Locked Items"/>
-    	</LinearLayout> 
-	</LinearLayout>
-</ScrollView>
+        		<TextView 
+            		android:textColor="@android:color/white"
+            		android:paddingTop="10dp"
+        			android:paddingLeft="10dp"
+            		android:textStyle="bold"
+            		android:layout_width="wrap_content"
+          	  		android:layout_height="wrap_content"
+            		android:text="Locked Items"/>
+    		</LinearLayout> 
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout> 
