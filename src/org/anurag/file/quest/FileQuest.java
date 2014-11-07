@@ -5021,6 +5021,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 				}, R.id.button_delete,R.id.button_zip_all,R.id.button_move_all);
 				
+			//expand or collapse file gallery sub items....	
 			LinearLayout fg = (LinearLayout)findViewById(R.id.fg);
 			fg.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -5032,6 +5033,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}	
 					else
 						lsView.setVisibility(View.GONE);
+				}
+			});
+			
+			//launching graph analysis activity....
+			LinearLayout grph = (LinearLayout)findViewById(R.id.grphbtn);
+			grph.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					startActivity(new Intent(mContext, GraphAnalysis.class));
 				}
 			});
 	}
