@@ -114,6 +114,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -5024,15 +5025,39 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					if(lsView.getVisibility() == View.GONE)
+					if(lsView.getVisibility() == View.GONE){
+						expandListView(lsView);
 						lsView.setVisibility(View.VISIBLE);
+					}	
 					else
 						lsView.setVisibility(View.GONE);
 				}
 			});
 	}
 	
-	
+	/**
+	 * hack to expand the list view inside the scroll view....
+	 * @param ls
+	 */
+	private void expandListView(ListView myListView){
+		ListAdapter myListAdapter = myListView.getAdapter();
+	    if (myListAdapter == null) {
+	        // do nothing return null
+	        return;
+	    }
+	    // set listAdapter in loop for getting final size
+	    int totalHeight = 0;
+	    for (int size = 0; size < myListAdapter.getCount(); size++) {
+	        View listItem = myListAdapter.getView(size, null, myListView);
+	        listItem.measure(0, 0);
+	        totalHeight += listItem.getMeasuredHeight();
+	    }
+	    // setting listview item in adapter
+	    ViewGroup.LayoutParams params = myListView.getLayoutParams();
+	    params.height = totalHeight
+	            + (myListView.getDividerHeight() * (myListAdapter.getCount() - 1));
+	    myListView.setLayoutParams(params);
+	}
 	
 	
 	/**
