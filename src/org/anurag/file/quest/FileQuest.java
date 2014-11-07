@@ -5018,6 +5018,18 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}
 					}
 				}, R.id.button_delete,R.id.button_zip_all,R.id.button_move_all);
+				
+			LinearLayout fg = (LinearLayout)findViewById(R.id.fg);
+			fg.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					if(lsView.getVisibility() == View.GONE)
+						lsView.setVisibility(View.VISIBLE);
+					else
+						lsView.setVisibility(View.GONE);
+				}
+			});
 	}
 	
 	

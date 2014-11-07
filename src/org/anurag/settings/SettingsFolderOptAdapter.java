@@ -78,7 +78,7 @@ public class SettingsFolderOptAdapter extends BaseExpandableListAdapter {
 		if(groupPosition == 0)
 			grp.img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_startup));
 		else if(groupPosition == 1)
-			grp.img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_lock64));
+			grp.img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.locker));
 		else if(groupPosition == 2){
 			if(childText.equalsIgnoreCase("sorting"))
 				grp.img.setImageDrawable(ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
@@ -138,7 +138,7 @@ public class SettingsFolderOptAdapter extends BaseExpandableListAdapter {
 		if(groupPosition == 0)
 			grp.img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_startup));
 		else if(groupPosition == 1)
-			grp.img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_lock64));
+			grp.img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.locker));
 		else if(groupPosition == 2)
 			grp.img.setImageDrawable(ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
 		else if(groupPosition == 3)
