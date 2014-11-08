@@ -100,7 +100,7 @@
             		android:textStyle="bold"
         	    	android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
-           	 		android:text="Graph Analysis"/>
+           	 		android:text="@string/graph_stats"/>
     		</LinearLayout>
     
      		<LinearLayout
@@ -124,7 +124,7 @@
             		android:textStyle="bold"
             		android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
-            		android:text="File Gallery"/>
+            		android:text="@string/filegallery"/>
     		</LinearLayout>    
     		<com.tjerkw.slideexpandable.library.ActionSlideExpandableListView
 				xmlns:android="http://schemas.android.com/apk/res/android"
@@ -157,7 +157,7 @@
             		android:textStyle="bold"
             		android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
-            		android:text="Cloud Networks"/>
+            		android:text="@string/cloud_networks"/>
     		</LinearLayout> 
     
     		<LinearLayout
@@ -181,7 +181,7 @@
             		android:textStyle="bold"
             		android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
-            		android:text="Connect to Server"/>
+            		android:text="@string/connect_server"/>
     		</LinearLayout> 
     
     		<LinearLayout
@@ -205,7 +205,7 @@
             		android:textStyle="bold"
             		android:layout_width="wrap_content"
           	  		android:layout_height="wrap_content"
-            		android:text="Locked Items"/>
+            		android:text="@string/locked_items"/>
     		</LinearLayout> 
 		</LinearLayout>
 	</ScrollView>

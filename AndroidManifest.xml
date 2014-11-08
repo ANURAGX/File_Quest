@@ -131,9 +131,10 @@
         
         <!-- GRAPH ANALYSIS ACTIVITY.... -->
         <activity 
-            android:name="org.anurag.file.quest.GraphAnalysis">
-            
+            android:theme="@android:style/Theme.Holo"
+            android:name="org.anurag.file.quest.GraphAnalysis">            
         </activity>
+        
    </application>
 
 </manifest>

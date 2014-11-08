@@ -27,13 +27,7 @@
     
    
     
-    <string-array name="slider_group_list">
-        <item>Graphical Analysis</item>
-        <item>File Gallery</item>
-        <item>Cloud Networks</item>
-        <item>Connect to Server</item>
-        <item>Locked Items</item>
-    </string-array>
+    
     
      <!-- STRING ARRAYS.... -->
     <string-array name="effects">
@@ -90,6 +84,11 @@
         	<item>Fade</item>
         	<item>Twirl</item>
         	<item>Slide in</item>
+    </string-array>
+    
+    <string-array  name="graph_titles">
+        <item>Bar Graph</item>
+        <item>Pie Chart</item>
     </string-array>
     
     <string-array name="itemlockerlist">
@@ -220,8 +219,10 @@
 	<string name="inter">INTERFACE</string>
 	<string name="folderoptions">FOLDER OPTIONS</string>
 	<string name="about">ABOUT</string>
-	
-	
+	<string name="graph_stats">Graphical Stats</string>
+	<string name="cloud_networks">Cloud Networks</string>
+	<string name="connect_server">Connect to Server</string>
+	<string name="locked_items">Locked Items</string>
 	
 	
 	
