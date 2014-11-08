@@ -135,6 +135,12 @@
             android:name="org.anurag.file.quest.GraphAnalysis">            
         </activity>
         
+        <!-- FILE PROPERTIES ACTIVITY.... -->
+        <activity 
+            android:name="org.anurag.file.quest.FileProperties"
+            android:theme="@android:style/Theme.Holo">
+        </activity>
+        
    </application>
 
 </manifest>

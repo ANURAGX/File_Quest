@@ -57,7 +57,6 @@ import org.ultimate.menuItems.AppProperties;
 import org.ultimate.menuItems.BluetoothChooser;
 import org.ultimate.menuItems.DeleteBackups;
 import org.ultimate.menuItems.DeleteFlashable;
-import org.ultimate.menuItems.FileProperties;
 import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.GetMoveLocation;
 import org.ultimate.menuItems.MultiSendApps;
@@ -1042,7 +1041,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 					case 10:
 						// PROPERTIES
-						new FileProperties(mContext, size.x*8/9, file0.getFile());
+						Intent fprp = new Intent(mContext, org.anurag.file.quest.FileProperties.class);
+						fprp.putExtra("path", file0.getPath());
+						startActivity(fprp);
 					}
 				}
 			});
@@ -1467,8 +1468,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							new RarFileProperties(mContext, rFileRoot, size.x*8/9);
 						else if(TAR_ROOT)
 							new TarFileProperties(mContext, tFileRoot, size.x*8/9);
-						else
-							new FileProperties(getActivity(), size.x*8/9, file.getFile());
+						else{
+							Intent fprp = new Intent(mContext, org.anurag.file.quest.FileProperties.class);
+							fprp.putExtra("path", file.getPath());
+							startActivity(fprp);
+						}	
 					}
 				}
 			});
@@ -1784,8 +1788,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							new RarFileProperties(mContext, rarFileSD, size.x*8/9);
 						else if(TAR_SD)
 							new TarFileProperties(mContext, tFileSD, size.x*8/9);
-						else
-							new FileProperties(mContext, size.x*8/9, file2.getFile());
+						else{
+							//new FileProperties(mContext, size.x*8/9, file2.getFile());
+							Intent fprp = new Intent(mContext, org.anurag.file.quest.FileProperties.class);
+							fprp.putExtra("path", file2.getPath());
+							startActivity(fprp);
+						}	
 					}
 				}			
 			});
@@ -2642,8 +2650,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 											new TarFileProperties(mContext, tFileRoot, size.x*8/9);
 										else if(RAR_ROOT && rFileRoot !=null)
 											new RarFileProperties(mContext, rFileRoot, size.x*8/9);
-										else
-											new FileProperties(mContext,size.x *8/9, file.getFile());
+										else{
+											Intent fprp = new Intent(mContext, org.anurag.file.quest.FileProperties.class);
+											fprp.putExtra("path", file.getPath());
+											startActivity(fprp);
+										}	
 									} else if (CURRENT_ITEM == 2) {
 										if(ZIP_SD && zFileSD != null)
 											new ArchiveEntryProperties(mContext, zFileSD, size.x*8/9);
@@ -2651,8 +2662,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 											new TarFileProperties(mContext, tFileSD, size.x*8/9);
 										else if(RAR_SD && rarFileSD !=null)
 											new RarFileProperties(mContext, rarFileSD, size.x*8/9);
-										else
-											new FileProperties(mContext,size.x*8/9, file2.getFile());
+										else{
+											Intent fprp = new Intent(mContext, org.anurag.file.quest.FileProperties.class);
+											fprp.putExtra("path", file2.getPath());
+											startActivity(fprp);
+										}	
 									}
 									break;
 								case 1400:

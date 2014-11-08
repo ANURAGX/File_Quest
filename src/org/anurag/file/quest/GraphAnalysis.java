@@ -301,7 +301,7 @@ public class GraphAnalysis extends FragmentActivity{
         set.setColors(colors);
         PieData data = new PieData(xVal, set);
         pChart.setData(data);
-        mChart.highlightValues(null);
-        mChart.invalidate();
+        pChart.highlightValues(null);
+        pChart.invalidate();
 	}
 }

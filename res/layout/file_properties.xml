@@ -16,18 +16,32 @@
                               anurag.dev1512@gmail.com
  
  -->
- 
 <LinearLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical" >
- 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/chart1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="20dp"/>
+    
 
+    <com.github.mikephil.charting.charts.PieChart
+        android:layout_weight="7"
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    
+    <LinearLayout 
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        
+    </LinearLayout>
+    
 </LinearLayout>
