@@ -155,7 +155,7 @@ public class GraphAnalysis extends FragmentActivity{
 	        mChart.setDrawVerticalGrid(false);
 	        mChart.setDrawHorizontalGrid(false);
 	        mChart.setDrawGridBackground(false);
-
+	        mChart.setEnabled(false);
 	        XLabels xLabels = mChart.getXLabels();
 	        xLabels.setPosition(XLabelPosition.BOTTOM);
 	        xLabels.setCenterXLabelText(true);
@@ -208,13 +208,13 @@ public class GraphAnalysis extends FragmentActivity{
 	        // display percentage values
 	        pChart.setUsePercentValues(true);
 	        
-	        mChart.setTouchEnabled(false);
+	        //pChart.setTouchEnabled(false);
 
 	        pChart.setCenterText(getResources().getString(R.string.graph_stats));
 	        
 	        setPieData();
-	        mChart.animateXY(1500, 1500);
-	        Legend l = mChart.getLegend();
+	        pChart.animateXY(1500, 1500);
+	        Legend l = pChart.getLegend();
 	        l.setPosition(LegendPosition.RIGHT_OF_CHART);
 	        l.setXEntrySpace(7f);
 	        l.setYEntrySpace(5f);
