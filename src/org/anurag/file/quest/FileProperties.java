@@ -22,7 +22,7 @@ package org.anurag.file.quest;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -33,9 +33,10 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
@@ -55,6 +56,7 @@ import com.github.mikephil.charting.utils.Legend.LegendPosition;
  * TODO 
  * calculate folder size of folders that needed root access....
  */
+@SuppressLint("HandlerLeak")
 public class FileProperties extends Activity{
 
 	private PieChart pChart;
@@ -66,6 +68,33 @@ public class FileProperties extends Activity{
 	private TextView prp_path;
 	private TextView prp_type;
 	private TextView prp_size;
+
+	private Handler handler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			if(msg.what == 1){
+				pChart.animateXY(1500, 1500);
+				return;
+			}
+			setPieData();
+		//	pChart.animateXY(1500, 1500);
+	        Legend l = pChart.getLegend();
+	        l.setPosition(LegendPosition.RIGHT_OF_CHART);
+	        l.setXEntrySpace(7f);
+	        l.setYEntrySpace(5f);
+		}
+		
+	};
+	
+	private Thread thread = new Thread(new Runnable() {
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			calculateLength();
+			handler.sendEmptyMessage(1);
+		}
+	});
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +106,7 @@ public class FileProperties extends Activity{
 		getActionBar().setBackgroundDrawable(new ColorDrawable(0x00000000));
 		getActionBar().setTitle(R.string.properties);
 		
-		file = new File(getIntent().getStringExtra("path"));
+    	file = new File(getIntent().getStringExtra("path"));
 		size = 0;
 		pChart = (PieChart)findViewById(R.id.chart);
 		prp_img = (ImageView)findViewById(R.id.prop_img);
@@ -119,12 +148,15 @@ public class FileProperties extends Activity{
         pChart.setCenterText(getResources().getString(R.string.properties));
         
         setPieData();
-        pChart.animateXY(1500, 1500);
+        if(file.isFile())
+        	pChart.animateXY(1500, 1500);
         Legend l = pChart.getLegend();
         l.setPosition(LegendPosition.RIGHT_OF_CHART);
         l.setXEntrySpace(7f);
         l.setYEntrySpace(5f);
-		
+        
+        if(file.isDirectory())
+        	thread.start();
 	}
 	/**
 	 * this function sets the pie chart data....
@@ -147,7 +179,7 @@ public class FileProperties extends Activity{
 			prp_size.setText(getString(R.string.filesize) + " - " + RootManager.getSize(file));
 		}	
 		else if(file.isDirectory()){
-			yVal.add(new BarEntry(calculateLength(), 1));
+			yVal.add(new BarEntry(size, 1));
 			prp_size.setText(Utils.size(size));
 		}	
 		
@@ -193,13 +225,17 @@ public class FileProperties extends Activity{
 	 * @param file
 	 */
 	private void getFileSize(File file){
-		if(file.isFile())
+		if(file.isFile()){
 			size = file.length();
+			handler.sendEmptyMessage(0);
+		}	
 		else if(file.isDirectory() && file.listFiles().length !=0){
 			File[] a = file.listFiles();
 			for(int i = 0 ; i<a.length ; ++i){
-				if(a[i].isFile())
+				if(a[i].isFile()){
 					size = size + a[i].length();
+					handler.sendEmptyMessage(0);
+				}	
 				else
 					getFileSize(a[i]);
 			}
