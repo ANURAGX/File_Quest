@@ -839,6 +839,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 			
 			Utils.setView(v);
+			Utils.update_fav();
 			if(Utils.loaded){
 				//all the information is loaded,just uodating the UI.... 
 				Utils.updateUI();
@@ -3979,7 +3980,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						nAppAdapter.MULTI_SELECT = false;
 					}
 					APP_LIST_VIEW.setAdapter(nAppAdapter); 
-					APP_LIST_VIEW.setSelection(pos);					
+					APP_LIST_VIEW.setSelection(pos);
+					
+					//notifying the file gallery to update....
+					Utils.update_Needed = true;
 				}else if (ACTION.equalsIgnoreCase("FQ_DELETE")) {
 					if(delete_from_slider_menu){
 						//file deletion was performed from left slide menu...
@@ -4378,6 +4382,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				}else if(ACTION.equalsIgnoreCase("FQ_ARCHIVE_CREATED")){
 					setAdapter(CURRENT_ITEM);
 					
+					//after creating zipped file updating the file gallery....
+					Utils.update_Needed = true;
 				}
 			}
 		};

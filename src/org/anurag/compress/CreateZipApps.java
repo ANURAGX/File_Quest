@@ -30,7 +30,10 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
+import org.anurag.file.quest.Utils;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -53,6 +56,7 @@ import android.widget.Toast;
  * @author Anurag
  *
  */
+@SuppressLint("HandlerLeak")
 public class CreateZipApps {
 
 	byte[] data = new byte[Constants.BUFFER];
@@ -206,6 +210,8 @@ public class CreateZipApps {
 					try {
 						zout.flush();
 						zout.close();
+						
+						addToFileGallery(new File(main));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -257,8 +263,10 @@ public class CreateZipApps {
 				if(running){
 					running = false;
 					handle.sendEmptyMessage(3);
-				}else
+				}else{
+					ctx.sendBroadcast(new Intent("FQ_ARCHIVE_CREATED"));
 					dialog.dismiss();
+				}	
 			}
 		});
 		dialog.show();
@@ -286,7 +294,19 @@ public class CreateZipApps {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}		
+	}
+	
+	/**
+	 * function to the backed up apk to file gallery list....
+	 * @param f
+	 */
+	private void addToFileGallery(File f){
+		String path = f.getPath();
+		Item itm = new Item(f, Utils.arcImg, Utils.arcType, "");
+		Utils.zipKey.put(""+Utils.zipCounter++, path);
+		Utils.zip.put(path, itm);
+		Utils.zipsize+=f.length();
+		Utils.zsize = Utils.size(Utils.zipsize);
 	}
 }

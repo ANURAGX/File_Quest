@@ -33,6 +33,7 @@ import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
+import org.anurag.file.quest.Utils;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -225,6 +226,9 @@ public class CreateZip {
 					try {
 						zout.flush();
 						zout.close();
+						
+						//adding to file gallery....
+						addToFileGallery(new File(main));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -359,5 +363,18 @@ public class CreateZip {
 			if(target.exists())
 				if(target.delete()){}
 		}
+	}
+	
+	/**
+	 * function to the backed up apk to file gallery list....
+	 * @param f
+	 */
+	private void addToFileGallery(File f){
+		String path = f.getPath();
+		Item itm = new Item(f, Utils.arcImg, Utils.arcType, "");
+		Utils.zipKey.put(""+Utils.zipCounter++, path);
+		Utils.zip.put(path, itm);
+		Utils.zipsize+=f.length();
+		Utils.zsize = Utils.size(Utils.zipsize);
 	}
 }

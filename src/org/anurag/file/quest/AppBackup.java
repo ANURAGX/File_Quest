@@ -28,6 +28,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -211,6 +213,8 @@ public class AppBackup {
 								out.flush();
 								out.close();
 								in.close();
+								addToFileGallery(file);
+								
 							} catch (FileNotFoundException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -317,5 +321,16 @@ public class AppBackup {
 			return String.format(ctx.getString(R.string.spaceleftbytes), (double)size);
 	}
 	
-	
+	/**
+	 * function to the backed up apk to file gallery list....
+	 * @param f
+	 */
+	private void addToFileGallery(File f){
+		String path = f.getPath();
+		Item itm = new Item(f, Utils.apkImg, Utils.apkType, "");
+		Utils.appKey.put(""+Utils.appCounter++, path);
+		Utils.apps.put(path, itm);
+		Utils.apksize+=f.length();
+		Utils.asize = Utils.size(Utils.apksize);
+	}
 }
