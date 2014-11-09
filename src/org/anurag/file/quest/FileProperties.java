@@ -50,6 +50,11 @@ import com.github.mikephil.charting.utils.Legend.LegendPosition;
  * @author Anurag....
  *
  */
+
+/*
+ * TODO 
+ * calculate folder size of folders that needed root access....
+ */
 public class FileProperties extends Activity{
 
 	private PieChart pChart;
@@ -175,7 +180,11 @@ public class FileProperties extends Activity{
 	 */
 	private long calculateLength() {
 		// TODO Auto-generated method stub
-		getFileSize(file);
+		try{
+			getFileSize(file);
+		}catch(Exception e){
+			return 0;
+		}
 		return size;
 	}
 	
