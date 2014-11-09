@@ -31,10 +31,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
+import org.anurag.file.quest.Utils;
 import org.ultimate.root.LinuxShell;
 
 import android.annotation.SuppressLint;
@@ -81,7 +83,7 @@ public class MultipleCopyDialog {
 	ImageView iM;
 	static Handler handle;
 	static boolean running ;
-	
+	private static boolean cut;
 	
 	
 	public MultipleCopyDialog(Context context,ArrayList<Item> obj,int windowSize,String dest,boolean comm) {
@@ -98,6 +100,8 @@ public class MultipleCopyDialog {
 		dialog.setCancelable(false);
 		dialog.getWindow().getAttributes().width = windowSize;
 		progress = (ProgressBar)dialog.findViewById(R.id.progress);
+		
+		cut = command;
 		
 		iM = (ImageView)dialog.findViewById(R.id.headerImage);
 		iM.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_file_task));
@@ -260,7 +264,10 @@ public class MultipleCopyDialog {
 				o_stream.flush();
 				i_stream.close();
 				o_stream.close();
-
+				
+				//adding the copied file to file gallery....
+				if(!cut)
+					addToFileGallery(cp_file);
 			} catch (FileNotFoundException e) {
 				Log.e("FileNotFoundException", e.getMessage());
 				return -1;
@@ -451,4 +458,133 @@ public class MultipleCopyDialog {
 			}
 			return false;
 		}	
+		
+		
+		/**
+		 * function to add the items to file gallery on copying file....
+		 * @param f
+		 */
+		private static void addToFileGallery(File f ){
+			
+			String name = f.getName().toLowerCase(Locale.ENGLISH);
+			String path = f.getPath();
+			
+			if(name.endsWith(".zip")){
+				Item itm = new Item(f, Utils.arcImg, Utils.arcType, "");
+				Utils.zipKey.put(""+Utils.zipCounter++, path);
+				Utils.zip.put(path, itm);
+				Utils.zipsize+=f.length();
+				Utils.zsize = size(Utils.zipsize);
+				
+				
+			}else if(name.endsWith(".7z")){
+				Item itm = new Item(f, Utils.res.getDrawable(R.drawable.ic_launcher_7zip),
+						Utils.arcType, "");
+				
+				Utils.zipKey.put(""+Utils.zipCounter++, path);
+				Utils.zip.put(path, itm);
+				Utils.zipsize+=f.length();
+				Utils.zsize = size(Utils.zipsize);
+				
+				
+			}else if(name.endsWith(".rar")){
+				Item itm = new Item(f, Utils.res.getDrawable(R.drawable.ic_launcher_rar),
+						Utils.arcType, "");
+				Utils.zipKey.put(""+Utils.zipCounter++, path);
+				Utils.zip.put(path, itm);
+				Utils.zipsize+=f.length();
+				Utils.zsize = size(Utils.zipsize);
+				
+				
+			}else if(name.endsWith(".tar")||name.endsWith(".tar.gz")||
+					name.endsWith(".TAT.BZ2")){
+				Item itm = new Item(f, Utils.res.getDrawable(R.drawable.ic_launcher_7zip),
+						Utils.arcType, "");
+				
+				Utils.zipKey.put(""+Utils.zipCounter++, path);
+				Utils.zip.put(path, itm);
+				Utils.zipsize+=f.length();
+				Utils.zsize = size(Utils.zipsize);
+				
+							
+			}
+			else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
+					||name.endsWith(".amr")){
+				Item itm = new Item(f, Utils.musicImg, Utils.musicType, "");
+				
+				Utils.musicKey.put(""+Utils.musCounter++, path);
+				Utils.music.put(path, itm);
+				Utils.musicsize+=f.length();
+				Utils.msize = size(Utils.musicsize);
+				
+			}
+			else if(name.endsWith(".apk")){
+				Item itm = new Item(f, Utils.apkImg, Utils.apkType, "");
+				
+				Utils.appKey.put(""+Utils.appCounter++, path);
+				Utils.apps.put(path, itm);
+				Utils.apksize+=f.length();
+				Utils.asize = size(Utils.apksize);
+									
+				
+			}else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
+					||name.endsWith(".mkv")){
+				Item itm = new Item(f, Utils.vidImg, Utils.vidType, "");
+				
+				Utils.videoKey.put(""+Utils.vidCounter++, path);
+				Utils.vids.put(path, itm);
+				Utils.vidsize+=f.length();
+				Utils.vsize = size(Utils.vidsize);
+				
+				
+			}	
+			else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
+					||name.endsWith(".png")){
+				Item itm = new Item(f, Utils.imageImg, Utils.imageType, "");
+				
+				Utils.imgKey.put(""+Utils.imgCounter++, path);
+				Utils.img.put(path, itm);
+				Utils.imgsize+=f.length();
+				Utils.psize = size(Utils.imgsize);
+				
+				
+			}else if(name.endsWith(".pdf")){
+				Item itm = new Item(f,Utils.res.getDrawable(R.drawable.ic_launcher_adobe),
+									Utils.res.getString(R.string.pdf),"");
+				
+				Utils.docKey.put(""+Utils.docCounter++, path);
+				Utils.doc.put(path, itm);
+				Utils.docsize+=f.length();
+				Utils.dsize = size(Utils.docsize);
+				
+			}else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
+					||name.endsWith(".pptx")||name.endsWith(".csv")){
+				Item itm = new Item(f , Utils.docImg , Utils.docType , "");
+				
+				Utils.docKey.put(""+Utils.docCounter++, path);
+				Utils.doc.put(path, itm);
+				Utils.docsize+=f.length();
+				Utils.dsize = size(Utils.docsize);
+				
+			
+			}else if(name.endsWith(".txt")||name.endsWith(".log")||name.endsWith(".ini")){
+				Item itm = new Item(f,Utils.res.getDrawable(R.drawable.ic_launcher_text),
+									Utils.res.getString(R.string.text), "");
+				
+				Utils.docKey.put(""+Utils.docCounter++, path);
+				Utils.doc.put(path, itm);
+				Utils.docsize+=f.length();
+				Utils.dsize = size(Utils.docsize);
+					
+			}
+			else{
+				Item itm = new Item(f,Utils.misImg, Utils.misType, "");
+				
+				Utils.misKey.put(""+Utils.misCounter++, path);
+				Utils.mis.put(path, itm);
+				Utils.missize+=f.length();
+				Utils.misize = size(Utils.missize);
+								
+			}		
+		}		
 }

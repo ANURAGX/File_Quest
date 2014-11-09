@@ -135,20 +135,12 @@ import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
 import com.twotoasters.jazzylistview.JazzyHelper;
 
 
-/*
- *	TODO LIST...
- *
- * 	1. DELETE THE ENTRY FROM THE DB WHEN THE LOCKED ITEM IS 
- *     RENAMED AND UPDATE THE DB WITH THE RENAMED ITEM...
- *     
- *     
- */
+
 /**
  * 
  * @author ANURAG
  *
  */
-
 
 @SuppressLint({ "HandlerLeak", "SdCardPath" })
 public class FileQuest extends FragmentActivity implements OnClickListener, QuickAction.OnActionItemClickListener {
@@ -4379,7 +4371,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}
 					}
 				}else if(ACTION.equalsIgnoreCase("FQ_COPY")){
-					setAdapter(CURRENT_ITEM);					
+					setAdapter(CURRENT_ITEM);	
+					
 					//after copying or moving files updating the file gallery....
 					Utils.update_Needed = true;
 				}else if(ACTION.equalsIgnoreCase("FQ_ARCHIVE_CREATED")){

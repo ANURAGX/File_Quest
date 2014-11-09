@@ -45,14 +45,14 @@ public class Utils {
 	/**
 	 * counter variables(keys) for ConcurrentHashMaps....
 	 */
-	private static int musCounter;
-	private static int appCounter;
-	private static int imgCounter;
-	private static int vidCounter;
-	private static int docCounter;
-	private static int zipCounter;
-	private static int misCounter;
-	private static int favCounter;
+	public static int musCounter;
+	public static int appCounter;
+	public static int imgCounter;
+	public static int vidCounter;
+	public static int docCounter;
+	public static int zipCounter;
+	public static int misCounter;
+	public static int favCounter;
 	public static ConcurrentHashMap<String, String> musicKey;
 	public static ConcurrentHashMap<String, String> appKey;
 	public static ConcurrentHashMap<String, String> imgKey;
@@ -72,7 +72,7 @@ public class Utils {
 	
 	
 	static String type;
-	static Resources res;
+	public static Resources res;
 	static View v;
 	
 	//tells whether files are completely loaded or not....
@@ -89,38 +89,38 @@ public class Utils {
 	public static ConcurrentHashMap<String ,Item> fav;
 	
 	//count of favorite folders and files....
-	private static int folderCount,fileCount;
+	public static int folderCount,fileCount;
 	
 	//file types icons....
-	static Drawable musicImg;
-	static Drawable imageImg;
-	static Drawable vidImg;
-	static Drawable docImg;
-	static Drawable arcImg;
-	static Drawable misImg;
-	static Drawable apkImg;
+	public static Drawable musicImg;
+	public static Drawable imageImg;
+	public static Drawable vidImg;
+	public static Drawable docImg;
+	public static Drawable arcImg;
+	public static Drawable misImg;
+	public static Drawable apkImg;
 	static Drawable folderImg;
 	
 	//file type strings...
-	static String musicType;
-	static String imageType;
-	static String vidType;
-	static String docType;
-	static String arcType;
-	static String misType;
-	static String apkType;
+	public static String musicType;
+	public static String imageType;
+	public static String vidType;
+	public static String docType;
+	public static String arcType;
+	public static String misType;
+	public static String apkType;
 	static String folderType;
 	static String folderCnt;
 	static String fileCnt;
 	
 	//file sizes in  string....
-	static String msize;
-	static String asize;
-	static String psize;
-	static String dsize;
-	static String vsize;
-	static String zsize;
-	static String misize;
+	public static String msize;
+	public static String asize;
+	public static String psize;
+	public static String dsize;
+	public static String vsize;
+	public static String zsize;
+	public static String misize;
 	
 	//strings....
 	static String Items;
@@ -130,13 +130,13 @@ public class Utils {
 	static String sizeByte;
 	
 	//file sizes in long....
-	static long musicsize=0;
-	static long apksize=0;
-	static long vidsize=0;
-	static long docsize=0;
-	static long zipsize=0;
-	static long missize=0;
-	static long imgsize=0;
+	public static long musicsize=0;
+	public static long apksize=0;
+	public static long vidsize=0;
+	public static long docsize=0;
+	public static long zipsize=0;
+	public static long missize=0;
+	public static long imgsize=0;
 	
 	static Context ctx;
 	
@@ -182,7 +182,7 @@ public class Utils {
 	/**
 	 * 
 	 */
-	private static Handler handler = new Handler(){
+	public static Handler handler = new Handler(){
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
@@ -436,7 +436,7 @@ public class Utils {
 	 * @author Anurag....
 	 *
 	 */
-	private static class MainLoadTask extends Thread{
+	public static class MainLoadTask extends Thread{
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
@@ -516,7 +516,7 @@ public class Utils {
 	 * @param forFavItem if true add it fav list....
 	 * @param handler to send message
 	 */
-	private static void makeIcon(File f , boolean forFavItem , Handler handler){
+	public static void makeIcon(File f , boolean forFavItem , Handler handler){
 		
 		String name = f.getName().toLowerCase(Locale.ENGLISH);
 		String path = f.getPath();
