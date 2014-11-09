@@ -134,25 +134,28 @@ public class FileGalleryAdapter extends BaseAdapter {
 				ImageView img = (ImageView) v;
 				SharedPreferences prefs = ctx.getSharedPreferences(
 						"MY_APP_SETTINGS", 0);
-				if (!list.get(img.getId()).isLocked()) {
+				if (!list.get(keys.get(""+img.getId())).isLocked()) {
 					// checking for master password is set or not
 					String passwd = prefs.getString("MASTER_PASSWORD", null);
 					if (passwd == null) {
 						Constants.lock = img;
+						
+						//setting lock id here,as it will be used in FileQuest Activity....
+						Constants.lockID = keys.get(""+img.getId());
 						new MasterPassword(ctx, FileQuest.size.x * 8 / 9, null,
 								prefs, Constants.MODES.DEFAULT);
 					} else {
-						list.get(img.getId()).setLockStatus(true);
-						img.setImageDrawable(ctx.getResources().getDrawable(
-								R.drawable.ic_launcher_locked));
-						Constants.db.insertNodeToLock(list.get(img.getId())
-								.getFile().getAbsolutePath());
-						Toast.makeText(ctx, R.string.itemlocked,
-								Toast.LENGTH_SHORT).show();
+						list.get(keys.get(""+img.getId())).setLockStatus(true);
+						img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_locked));
+						Constants.db.insertNodeToLock(list.get(keys.get(""+img.getId())).getFile().getAbsolutePath());
+						Toast.makeText(ctx, R.string.itemlocked,Toast.LENGTH_SHORT).show();
 					}
 				} else {
 					// unlocking file,before that asking the password...
 					Constants.lock = img;
+					
+					//setting lock id here,as it will be used in FileQuest Activity.... 
+					Constants.lockID = keys.get(""+img.getId());
 					new MasterPassword(ctx, FileQuest.size.x * 8 / 9, null,
 							prefs, Constants.MODES.DEFAULT);
 				}
@@ -172,26 +175,26 @@ public class FileGalleryAdapter extends BaseAdapter {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				ImageView im = (ImageView) v;
-				if (list.get(im.getId()).isFavItem()) {
+				if (list.get(keys.get(""+im.getId())).isFavItem()) {
 					im.setImageDrawable(ctx.getResources().getDrawable(
 							R.drawable.ic_launcher_not_favorite));
-					list.get(im.getId()).setFavStatus(false);
-					Constants.db.deleteFavItem(list.get(im.getId()).getPath());
+					list.get(keys.get(""+im.getId())).setFavStatus(false);
+					Constants.db.deleteFavItem(list.get(keys.get(""+im.getId())).getPath());
 					Toast.makeText(ctx, R.string.favremoved, Toast.LENGTH_SHORT)
 							.show();
 					// rebuilding the favorite items list after an item was
 					// removed....
-					Utils.buildFavItems(list.get(im.getId()) , false);
+					Utils.buildFavItems(list.get(keys.get(""+im.getId())) , false);
 				} else {
 					im.setImageDrawable(ctx.getResources().getDrawable(
 							R.drawable.ic_launcher_favorite));
-					list.get(im.getId()).setFavStatus(true);
-					Constants.db.insertNodeToFav(list.get(im.getId()).getPath());
+					list.get(keys.get(""+im.getId())).setFavStatus(true);
+					Constants.db.insertNodeToFav(list.get(keys.get(""+im.getId())).getPath());
 					Toast.makeText(ctx, R.string.favadded, Toast.LENGTH_SHORT)
 							.show();
 					// rebuilding the favorite items list after an item was
 					// added....
-					Utils.buildFavItems(list.get(im.getId()) , true);
+					Utils.buildFavItems(list.get(keys.get(""+im.getId())) , true);
 				}
 			}
 		});

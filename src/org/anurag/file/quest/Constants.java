@@ -78,4 +78,8 @@ public class Constants {
 	public static MODES activeMode;
 	
 	public static ArrayList<String> RESOLVED_PATHS;
+	
+	//holding the id for the item in file gallery that was selected for locking
+	//or unlocking,after verification of password this id will be used in FileQuest Activity....
+	public static String lockID;
 }
