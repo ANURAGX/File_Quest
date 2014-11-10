@@ -20,6 +20,7 @@
 package org.anurag.file.quest;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,6 +29,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -442,7 +444,7 @@ public class Utils {
 			// TODO Auto-generated method stub
 			if(!Utils.loaded){
 				prepareFavList();
-				start(new File(Constants.PATH));
+				start(Environment.getExternalStorageDirectory());
 				Utils.loaded = true;
 			}	
 			else{
@@ -499,13 +501,28 @@ public class Utils {
 		 */
 		void start(File fil){
 			if(!Utils.loaded)
-				for(File fi:fil.listFiles()){
-					if(fi.isFile())
-						makeIcon(fi , false , handler);
-					else if(fi.isDirectory()){
-						start(fi);
-					}	
-				}	
+				
+				try{//using true block because for loop resulting in NULLPOINTER
+					//EXCEPTION in API 14....
+					for(File fi:fil.listFiles(new FileFilter() {
+						@Override
+						public boolean accept(File arg0) {
+							// TODO Auto-generated method stub
+							if(arg0 == null)
+								return false;
+							else 
+								return true;
+						}
+					})){
+						if(fi.isFile())
+							makeIcon(fi , false , handler);
+						else if(fi.isDirectory()){
+							start(fi);
+						}	
+					}
+				}catch(NullPointerException e){
+					
+				}
 		}					
 	}	
 	
