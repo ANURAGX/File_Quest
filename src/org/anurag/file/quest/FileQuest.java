@@ -2015,6 +2015,54 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		CURRENT_ITEM = mViewPager.getCurrentItem();
 		switch (v.getId()) {
 
+		case R.id.grphbtn:
+			//starting analysis of file gallery items....
+			startActivity(new Intent(mContext, GraphAnalysis.class));
+			break;		
+		
+		case R.id.cld:
+			
+			{
+				//displaying currently available cloud networks and hiding also....
+				final LinearLayout drp = (LinearLayout)findViewById(R.id.cld_drp);
+				final LinearLayout gogl = (LinearLayout)findViewById(R.id.cld_gogledrv);
+				final LinearLayout sky = (LinearLayout)findViewById(R.id.cld_skydrv);
+				if(drp.getVisibility() == View.VISIBLE){
+					drp.setVisibility(View.GONE);
+					gogl.setVisibility(View.GONE);
+					sky.setVisibility(View.GONE);
+				}else{
+					drp.setVisibility(View.VISIBLE);
+					gogl.setVisibility(View.VISIBLE);
+					sky.setVisibility(View.VISIBLE);
+				}
+			}
+			break;
+			
+		//options under development....may be available in next update.... 	
+		case R.id.http:
+		case R.id.ftp:
+		case R.id.cld_drp:
+		case R.id.cld_gogledrv:
+		case R.id.cld_skydrv:
+			Toast.makeText(mContext, R.string.coming_soon, Toast.LENGTH_SHORT).show();
+			break;
+		
+		case R.id.serv:
+			{
+				//displaying currently available server options and hiding also....	
+				final LinearLayout http = (LinearLayout)findViewById(R.id.http);
+				final LinearLayout ftp = (LinearLayout)findViewById(R.id.ftp);
+				if(http.getVisibility() == View.VISIBLE){
+					http.setVisibility(View.GONE);
+					ftp.setVisibility(View.GONE);
+				}else{
+					http.setVisibility(View.VISIBLE);
+					ftp.setVisibility(View.VISIBLE);
+				}
+			}
+			break;
+			
 		case R.id.g_open:
 			new G_Open(mContext, size.x, size.y);
 			break;
@@ -5048,16 +5096,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						lsView.setVisibility(View.GONE);
 				}
 			});
-			
-			//launching graph analysis activity....
-			LinearLayout grph = (LinearLayout)findViewById(R.id.grphbtn);
-			grph.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					// TODO Auto-generated method stub
-					startActivity(new Intent(mContext, GraphAnalysis.class));
-				}
-			});
+						
 	}
 	
 	/**

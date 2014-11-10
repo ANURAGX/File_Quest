@@ -79,6 +79,7 @@
     			android:orientation="vertical" >
     
       		<LinearLayout
+      		    android:onClick="onClick"
       		    android:id="@+id/grphbtn"
         		android:layout_marginTop="20dp" 
    	  		   	android:background="@drawable/button_click"
@@ -137,6 +138,7 @@
 				android:layout_width="fill_parent"/>
     
     		<LinearLayout
+    		    android:onClick="onClick"
         		android:id="@+id/cld"
         		android:background="@drawable/button_click"
         		android:clickable="true"
@@ -158,9 +160,96 @@
             		android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
             		android:text="@string/cloud_networks"/>
-    		</LinearLayout> 
+    		</LinearLayout>
+    		
+    		
+    		
+    			<!--temprary view....till next update  -->
+    		
+    			<LinearLayout
+    			    android:onClick="onClick"
+    			    android:visibility="gone"
+        			android:id="@+id/cld_skydrv"
+        			android:background="@drawable/button_click"
+        			android:clickable="true"
+        			android:focusable="true" 
+        			android:layout_marginLeft="30dp" 
+        			android:orientation="horizontal" 
+        			android:layout_width="match_parent"
+        			android:layout_height="wrap_content">
+        			<ImageView 
+            			android:background="@drawable/ic_launcher_sky_drive"
+        				android:layout_width="wrap_content"
+        				android:layout_height="wrap_content"/>
+        
+       		 		<TextView 
+            			android:textColor="@android:color/white"
+            			android:paddingTop="10dp"
+        				android:paddingLeft="10dp"
+            			android:textStyle="bold"
+            			android:layout_width="wrap_content"
+            			android:layout_height="wrap_content"
+            			android:text="@string/skydrive"/>
+    			</LinearLayout>
+    		
+    		<!--temprary view....till next update  -->
+    			<LinearLayout
+        			android:onClick="onClick"
+        			android:visibility="gone"
+        			android:id="@+id/cld_gogledrv"
+        			android:background="@drawable/button_click"
+        			android:clickable="true"
+        			android:focusable="true" 
+        			android:layout_marginLeft="30dp" 
+        			android:orientation="horizontal" 
+        			android:layout_width="match_parent"
+        			android:layout_height="wrap_content">
+        			<ImageView 
+            			android:background="@drawable/ic_launcher_google_drive"
+        				android:layout_width="wrap_content"
+        				android:layout_height="wrap_content"/>
+        
+       		 		<TextView 
+            			android:textColor="@android:color/white"
+            			android:paddingTop="10dp"
+        				android:paddingLeft="10dp"
+            			android:textStyle="bold"
+            			android:layout_width="wrap_content"
+            			android:layout_height="wrap_content"
+            			android:text="@string/googledrive"/>
+    			</LinearLayout>
+    		
+    		
+    			<!--temprary view....till next update  -->
+    			<LinearLayout
+    			    android:onClick="onClick"
+    			    android:visibility="gone"
+        			android:id="@+id/cld_drp"
+        			android:background="@drawable/button_click"
+        			android:clickable="true"
+        			android:focusable="true" 
+        			android:layout_marginLeft="30dp" 
+        			android:orientation="horizontal" 
+        			android:layout_width="match_parent"
+        			android:layout_height="wrap_content">
+        			<ImageView 
+            			android:background="@drawable/ic_launcher_drop_box"
+        				android:layout_width="wrap_content"
+        				android:layout_height="wrap_content"/>
+        
+       		 		<TextView 
+            			android:textColor="@android:color/white"
+            			android:paddingTop="10dp"
+        				android:paddingLeft="10dp"
+            			android:textStyle="bold"
+            			android:layout_width="wrap_content"
+            			android:layout_height="wrap_content"
+            			android:text="@string/dropbox"/>
+    			</LinearLayout>
+    		
     
     		<LinearLayout
+    		    android:onClick="onClick"
         		android:id="@+id/serv"
         		android:background="@drawable/button_click"
         		android:clickable="true"
@@ -183,6 +272,62 @@
             		android:layout_height="wrap_content"
             		android:text="@string/connect_server"/>
     		</LinearLayout> 
+    		
+    		
+    				<!--temprary view....till next update  -->
+    				<LinearLayout
+    				    android:onClick="onClick"
+        				android:visibility="gone"
+        				android:id="@+id/http"
+        				android:background="@drawable/button_click"
+        				android:clickable="true"
+        				android:focusable="true" 
+        				android:layout_marginLeft="30dp" 
+        				android:orientation="horizontal" 
+        				android:layout_width="match_parent"
+      		  			android:layout_height="wrap_content">
+        				<ImageView 
+            				android:background="@drawable/server"
+        					android:layout_width="wrap_content"
+        					android:layout_height="wrap_content"/>
+        
+     	  		 		<TextView 
+        	    			android:textColor="@android:color/white"
+            				android:paddingTop="10dp"
+        					android:paddingLeft="10dp"
+            				android:textStyle="bold"
+         		   			android:layout_width="wrap_content"
+            				android:layout_height="wrap_content"
+            				android:text="@string/starthttp"/>
+    				</LinearLayout>
+    		
+    		
+    				<!--temprary view....till next update  -->
+    				<LinearLayout
+    				    android:onClick="onClick"
+    					android:visibility="gone"
+        				android:id="@+id/ftp"
+    	    			android:background="@drawable/button_click"
+        				android:clickable="true"
+        				android:focusable="true" 
+        				android:layout_marginLeft="30dp" 
+        				android:orientation="horizontal" 
+   		     			android:layout_width="match_parent"
+        				android:layout_height="wrap_content">
+        				<ImageView 
+            				android:background="@drawable/server"
+        					android:layout_width="wrap_content"
+        					android:layout_height="wrap_content"/>
+        
+       			 		<TextView 
+            				android:textColor="@android:color/white"
+            				android:paddingTop="10dp"
+        					android:paddingLeft="10dp"
+            				android:textStyle="bold"
+          		  			android:layout_width="wrap_content"
+            				android:layout_height="wrap_content"
+            				android:text="@string/startftp"/>
+    				</LinearLayout>
     
     		<LinearLayout
         		android:id="@+id/lckItm"

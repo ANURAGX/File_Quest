@@ -166,8 +166,8 @@
 	<string name="preparingtoshare">Preparing to share</string>
 	<string name="cannotsendfolder">Cannot send a folder</string>
 	<string name="http">Server</string>
-	<string name="starthttp">Start Http Server</string>
-	<string name="startftp">Start Ftp Server</string>
+	<string name="starthttp">Connect to Http Server</string>
+	<string name="startftp">Connect to Ftp Server</string>
 	<string name="none">None</string>
 	<string name="manage">Manage Storage</string>
 	<string name="deleteall">Delete all files</string>
@@ -223,7 +223,7 @@
 	<string name="cloud_networks">Cloud Networks</string>
 	<string name="connect_server">Connect to Server</string>
 	<string name="locked_items">Locked Items</string>
-	
+	<string name="coming_soon">This feature is arriving soon....</string>
 	
 	
 	
