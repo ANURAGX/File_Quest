@@ -70,6 +70,7 @@ import org.ultimate.root.LinuxShell;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -5176,8 +5177,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					{
 						NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext);
 						mBuilder.setSmallIcon(R.drawable.file_quest_icon);																					
-						mBuilder.setContentTitle("Content title");
-						mBuilder.setContentText("Content Text");
+						mBuilder.setContentTitle(getString(R.string.app_name));
+						mBuilder.setContentText(getString(R.string.update_avail));
+						
+						Toast.makeText(mContext, R.string.update_avail, Toast.LENGTH_SHORT).show();
 						
 						Intent intent = new Intent(Intent.ACTION_VIEW);
 						intent.setData(Uri.parse("market://details?id=org.anurag.file.quest"));
@@ -5188,7 +5191,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						
 						PendingIntent pendint = stack.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 						mBuilder.setContentIntent(pendint);
-						
+						mBuilder.getNotification().flags |= Notification.FLAG_AUTO_CANCEL;
 						NotificationManager notimgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 						notimgr.notify(1, mBuilder.build());
 					}

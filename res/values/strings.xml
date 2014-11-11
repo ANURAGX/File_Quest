@@ -228,6 +228,8 @@
 	<string name="nointernet">No internet connectivity....</string>
 	<string name="checking_update">Wait while checking for update</string>
 	<string name="failed_to_check_for_update">Failed to check for update</string>
+	<string name="update_avail">New update of FILE QUEST is available</string>
+	
 	
 	
 	
