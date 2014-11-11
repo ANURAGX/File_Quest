@@ -70,6 +70,8 @@ import org.ultimate.root.LinuxShell;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -82,6 +84,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -94,6 +98,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -573,6 +579,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							ad.setAdUnitId(ID);
 							handle.sendEmptyMessage(0);
 						}
+						scan.close();
 					} catch (MalformedURLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -2061,6 +2068,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					ftp.setVisibility(View.VISIBLE);
 				}
 			}
+			break;
+			
+		case R.id.upd_check:			
+			//checking for update....	
+			update_checker();
+			break;
+			
+		case R.id.whats_new:
+			//new features....
+			new WhatsNew(mContext, size.x*8/9, size.y*8/9);
 			break;
 			
 		case R.id.g_open:
@@ -5139,6 +5156,75 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		te.add(file2);
 		new DeleteFiles(mContext, size.x*8/9, te,null);
 		
+	}
+	
+	/**
+	 * this function checks for update for File Quest
+	 * and makes a notification to download link
+	 * in playstore.... 
+	 */
+	private void update_checker() {
+		// TODO Auto-generated method stub
+		Toast.makeText(mContext, R.string.checking_update, Toast.LENGTH_SHORT).show();
+		
+		final Handler hand = new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				switch(msg.what){
+				case 1://update available....
+					{
+						NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext);
+						mBuilder.setSmallIcon(R.drawable.file_quest_icon);																					
+						mBuilder.setContentTitle("Content title");
+						mBuilder.setContentText("Content Text");
+						
+						Intent intent = new Intent(Intent.ACTION_VIEW);
+						intent.setData(Uri.parse("market://details?id=org.anurag.file.quest"));
+						
+						TaskStackBuilder stack = TaskStackBuilder.create(mContext);
+						stack.addParentStack(FileQuest.class);
+						stack.addNextIntent(intent);
+						
+						PendingIntent pendint = stack.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+						mBuilder.setContentIntent(pendint);
+						
+						NotificationManager notimgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+						notimgr.notify(1, mBuilder.build());
+					}
+					break;
+				case 2://no connectivity....
+					Toast.makeText(mContext, R.string.nointernet, Toast.LENGTH_SHORT).show();
+					break;
+				case 3:
+					//failed to check for update....
+					Toast.makeText(mContext, R.string.failed_to_check_for_update, Toast.LENGTH_SHORT).show();
+				}
+			}			
+		};
+		
+		Thread th = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try{
+					ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+					NetworkInfo info = cm.getActiveNetworkInfo();
+					if(!info.isConnected()){
+						hand.sendEmptyMessage(2);
+						return;
+					}	
+					Scanner scan = new Scanner(new URL("https://www.dropbox.com/s/x1gp7a6ozdvg81g/FQ_UPDATE.txt?dl=1").openStream());
+					String update = scan.next();
+					if(!update.equalsIgnoreCase(getString(R.string.version)))
+						hand.sendEmptyMessage(1);
+					scan.close();
+				}catch(Exception e){
+					hand.sendEmptyMessage(3);
+				}
+			}
+		});
+		th.start();
 	}
 	
 	

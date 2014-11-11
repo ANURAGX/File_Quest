@@ -330,6 +330,7 @@
     				</LinearLayout>
     
     		<LinearLayout
+    		    android:onClick="onClick"
         		android:id="@+id/lckItm"
         		android:background="@drawable/button_click"
         		android:clickable="true"
@@ -351,7 +352,57 @@
             		android:layout_width="wrap_content"
           	  		android:layout_height="wrap_content"
             		android:text="@string/locked_items"/>
-    		</LinearLayout> 
+    		</LinearLayout>
+    		
+    		<LinearLayout
+    		    android:onClick="onClick"
+        		android:id="@+id/upd_check"
+        		android:background="@drawable/button_click"
+        		android:clickable="true"
+        		android:focusable="true" 
+        		android:layout_marginLeft="10dp" 
+        		android:orientation="horizontal" 
+        		android:layout_width="match_parent"
+        		android:layout_height="wrap_content">
+        		<ImageView 
+            		android:background="@drawable/update_chech"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"/>
+        
+        		<TextView 
+            		android:textColor="@android:color/white"
+            		android:paddingTop="10dp"
+        			android:paddingLeft="10dp"
+            		android:textStyle="bold"
+            		android:layout_width="wrap_content"
+          	  		android:layout_height="wrap_content"
+            		android:text="@string/update_check"/>
+    		</LinearLayout>
+    		
+    		<LinearLayout
+    		    android:onClick="onClick"
+        		android:id="@+id/whats_new"
+        		android:background="@drawable/button_click"
+        		android:clickable="true"
+        		android:focusable="true" 
+        		android:layout_marginLeft="10dp" 
+        		android:orientation="horizontal" 
+        		android:layout_width="match_parent"
+        		android:layout_height="wrap_content">
+        		<ImageView 
+            		android:background="@drawable/whats_new"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"/>
+        
+        		<TextView 
+            		android:textColor="@android:color/white"
+            		android:paddingTop="10dp"
+        			android:paddingLeft="10dp"
+            		android:textStyle="bold"
+            		android:layout_width="wrap_content"
+          	  		android:layout_height="wrap_content"
+            		android:text="@string/whatsnew"/>
+    		</LinearLayout>
 		</LinearLayout>
 	</ScrollView>
 </LinearLayout> 

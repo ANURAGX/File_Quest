@@ -224,6 +224,10 @@
 	<string name="connect_server">Connect to Server</string>
 	<string name="locked_items">Locked Items</string>
 	<string name="coming_soon">This feature is arriving soon....</string>
+	<string name="update_check">Check for update</string>
+	<string name="nointernet">No internet connectivity....</string>
+	<string name="checking_update">Wait while checking for update</string>
+	<string name="failed_to_check_for_update">Failed to check for update</string>
 	
 	
 	
