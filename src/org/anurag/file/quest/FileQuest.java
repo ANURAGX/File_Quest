@@ -5185,13 +5185,19 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						Intent intent = new Intent(Intent.ACTION_VIEW);
 						intent.setData(Uri.parse("market://details?id=org.anurag.file.quest"));
 						
+						
+						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | 
+						        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+						
 						TaskStackBuilder stack = TaskStackBuilder.create(mContext);
 						stack.addParentStack(FileQuest.class);
 						stack.addNextIntent(intent);
 						
 						PendingIntent pendint = stack.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 						mBuilder.setContentIntent(pendint);
-						mBuilder.getNotification().flags |= Notification.FLAG_AUTO_CANCEL;
+				
+						mBuilder.setAutoCancel(true);
+						
 						NotificationManager notimgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 						notimgr.notify(1, mBuilder.build());
 					}
