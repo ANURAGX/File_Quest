@@ -306,11 +306,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		TRANSPRA_LEVEL = preferences.getFloat("TRANSPRA_LEVEL", 0.9f);
 		SHOW_HIDDEN_FOLDERS = preferences.getBoolean("SHOW_HIDDEN_FOLDERS",false);
 		SORT_TYPE = preferences.getInt("SORT_TYPE", 2);
-		Constants.FOLDER_ICON = preferences.getInt("FOLDER_TYPE", 5);
+		Constants.FOLDER_ICON = preferences.getInt("FOLDER_TYPE", 0);
 		HOME_DIRECTORY = preferences.getString("HOME_DIRECTORY", null);
 		ENABLE_ON_LAUNCH = preferences.getBoolean("ENABLE_ON_LAUNCH", false);
-		LIST_ANIMATION = preferences.getInt("LIST_ANIMATION", 0);
-		PAGER_ANIMATION = preferences.getInt("PAGER_ANIMATION", 0);
+		LIST_ANIMATION = preferences.getInt("LIST_ANIMATION", 4);
+		PAGER_ANIMATION = preferences.getInt("PAGER_ANIMATION", 3);
 		edit = preferences.edit();
 
 		try {
@@ -845,11 +845,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		
 			
 			Utils.setView(v);
+			
+			//update the favorite tile separately.... 
 			Utils.update_fav();
-			if(Utils.loaded){
-				//all the information is loaded,just uodating the UI.... 
-				Utils.updateUI();
-			}
+			//update the ui....
+			Utils.updateUI();
 			
 			/*
 			 * WHEN FAVORITE BUTTON IS CLICKED
@@ -2213,7 +2213,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
-								resetPager();
+								simple.setAdapter(rootAdapter);
 							}								
 						}
 						break;
@@ -2237,7 +2237,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
 								//OUT OF THE ARCHIVE...
 								//root.setAdapter(sdAdapter);
-								resetPager();
+								root.setAdapter(sdAdapter);
 							}	
 						}
 						break;
