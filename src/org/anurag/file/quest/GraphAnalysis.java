@@ -43,7 +43,6 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Legend;
 import com.github.mikephil.charting.utils.XLabels;
 import com.github.mikephil.charting.utils.Legend.LegendPosition;
@@ -58,6 +57,16 @@ public class GraphAnalysis extends FragmentActivity{
 	private PagerSlidingTabStrip strip;
 	private PagerFragmentAdapter adpt;
 	
+	//color for bar graph and pie chart....
+	private int color[] = {
+							Color.rgb(102, 102, 102),
+							Color.rgb(81, 171, 56),
+							Color.rgb(199, 75, 70),
+							Color.rgb(255, 93, 61),
+							Color.rgb(63, 159, 224),
+							Color.rgb(81, 97, 188),
+							Color.rgb(42, 109, 130)
+						  };
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -246,7 +255,7 @@ public class GraphAnalysis extends FragmentActivity{
 		xVal.add("Unknown");
 		
 		BarDataSet set = new BarDataSet(yVal, "Data Set");
-		set.setColors(ColorTemplate.COLORFUL_COLORS);
+		set.setColors(color);
 		
 		ArrayList<BarDataSet> sets = new ArrayList<BarDataSet>();
 		sets.add(set);
@@ -282,23 +291,7 @@ public class GraphAnalysis extends FragmentActivity{
 		PieDataSet set = new PieDataSet(yVal, "");
 		set.setSliceSpace(4f);
 		
-		// add a lot of colors
-
-        ArrayList<Integer> colors = new ArrayList<Integer>();
-
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-        
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-        
-        colors.add(ColorTemplate.getHoloBlue());
-        
-        set.setColors(colors);
+		set.setColors(color);
         PieData data = new PieData(xVal, set);
         pChart.setData(data);
         pChart.highlightValues(null);

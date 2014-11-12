@@ -42,7 +42,6 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Legend;
 import com.github.mikephil.charting.utils.Legend.LegendPosition;
 
@@ -68,6 +67,12 @@ public class FileProperties extends Activity{
 	private TextView prp_path;
 	private TextView prp_type;
 	private TextView prp_size;
+	
+	//color for pie chart....
+	private int color[] = {
+				Color.rgb(81, 171, 56),
+				Color.rgb(255, 93, 61)
+			};
 
 	private Handler handler = new Handler(){
 		@Override
@@ -190,16 +195,7 @@ public class FileProperties extends Activity{
 		PieDataSet set = new PieDataSet(yVal, "");
 		set.setSliceSpace(4f);
 		
-		// add a lot of colors
-
-        ArrayList<Integer> colors = new ArrayList<Integer>();
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-        
-        colors.add(ColorTemplate.getHoloBlue());
-        
-        set.setColors(colors);
+        set.setColors(color);
         PieData data = new PieData(xVal, set);
         pChart.setData(data);
         pChart.highlightValues(null);
