@@ -2957,6 +2957,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				//update ui after setting file gallery view....
 				if(!Utils.loaded)
 					Utils.updateUI();
+				Utils.update_fav();
 			} else if (CURRENT_ITEM == 0 && !elementInFocus) {
 				/**
 				 * CHECKS WHETHER THE CURRENT PREF IS 0 IF IT IS FOUND 0 THEN IT

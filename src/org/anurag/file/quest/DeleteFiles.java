@@ -20,7 +20,6 @@
 package org.anurag.file.quest;
 
 import java.io.File;
-
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -105,7 +104,12 @@ public class DeleteFiles{
 		dialog.setContentView(R.layout.delete_files);
 		dialog.getWindow().getAttributes().width = width;
 		dialog.setCancelable(true);
-		file = list;
+		
+		file = new ArrayList<Item>();
+		for(int i = 0 ; i<list.size() ; ++i)
+			if(list.get(i) != null)
+				file.add(list.get(i));
+		//file = list;
 		if(file != null)
 			len = file.size();
 		nam=msg;
