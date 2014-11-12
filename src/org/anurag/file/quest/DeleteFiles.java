@@ -23,7 +23,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +35,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.stericson.RootTools.RootTools;
 
 
@@ -45,6 +44,7 @@ import com.stericson.RootTools.RootTools;
  * @author Anurag....
  *
  */
+@SuppressLint("HandlerLeak")
 public class DeleteFiles{
 
 	private  ArrayList<Item> file;
@@ -63,15 +63,16 @@ public class DeleteFiles{
 	private boolean vid_deleted;
 	private boolean doc_deleted;
 	private boolean zip_deleted;
-	private boolean mis_deleted;
-	
-	
-	
-	
-	
+	private boolean mis_deleted;	
+	private ConcurrentHashMap<String, Item> hashMpList;
 	
 	public DeleteFiles(Context ctx,int width , ConcurrentHashMap<String , Item> list , String msg) {
 		// TODO Auto-generated constructor stub
+		hashMpList = list;
+		ArrayList<Item> itms = null;
+		
+		//passing null arrayList intentionally....
+		new DeleteFiles(ctx, width, itms, msg);
 	}
 	
 	public DeleteFiles(Context context,int width,ArrayList<Item> list,String msg) {
@@ -137,7 +138,6 @@ public class DeleteFiles{
 						if(f!=null){
 							if(f.canWrite()){
 								deleteFile(f);
-								regenerate_keys();
 							}	
 							else
 							{					
@@ -147,7 +147,10 @@ public class DeleteFiles{
 					}catch(NullPointerException e){
 						
 					}
-				}				
+				}			
+				
+				//after deleting all files regenerating keys....
+				regenerate_keys();
 				mHandler.sendEmptyMessage(2);
 			}
 		});
