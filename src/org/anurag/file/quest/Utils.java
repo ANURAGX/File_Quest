@@ -835,96 +835,6 @@ public class Utils {
 		}catch(NullPointerException e){}	
 	}
 	
-	
-	public static void notifyAllAppsDeleted(){
-		apksize = 0;
-		apps = new ConcurrentHashMap<String , Item>();
-		asize = ctx.getString(R.string.zerosize);
-		updateUI();
-	}
-	
-	public static void notifyAllMusicDeleted(){
-		musicsize = 0;
-		music = new ConcurrentHashMap<String , Item>();
-		msize = ctx.getString(R.string.zerosize);
-		updateUI();
-	}
-	
-	public static void notifyAllImageDeleted(){
-		imgsize = 0;
-		img = new ConcurrentHashMap<String , Item>();
-		psize = ctx.getString(R.string.zerosize);
-		updateUI();
-	}
-	
-	public static void notifyAllMisDeleted(){
-		missize = 0;
-		mis = new ConcurrentHashMap<String , Item>();
-		misize = ctx.getString(R.string.zerosize);
-		updateUI();
-	}
-	
-	public static void notifyAllZipDeleted(){
-		zipsize = 0;
-		zip = new ConcurrentHashMap<String , Item>();
-		zsize = ctx.getString(R.string.zerosize);
-		updateUI();
-	}
-	
-	public static void notifyAllFavDeleted(){
-		fav = new ConcurrentHashMap<String , Item>();
-		folderCount = 0;
-		fileCount = 0;
-		updateUI();
-	}
-	
-	public static void notifyAllVideoDeleted(){
-		vidsize = 0;
-		vids = new ConcurrentHashMap<String , Item>();
-		vsize = ctx.getString(R.string.zerosize);
-		updateUI();
-	}
-	
-	public static void notifyAllDocsDeleted(){
-		docsize = 0;
-		doc = new ConcurrentHashMap<String , Item>();
-		dsize = ctx.getString(R.string.zerosize);
-		updateUI();
-	}
-	
-	/**
-	 * 
-	 * @param position
-	 */
-	public static void notifyFileDelete(int position){
-		switch(position){
-			case 0:
-					notifyAllMusicDeleted();
-					break;
-			case 1:
-					notifyAllAppsDeleted();
-					break;
-			case 2:
-					notifyAllDocsDeleted();
-					break;
-			case 3:
-				    notifyAllImageDeleted();
-				    break;
-			case 4:
-					notifyAllVideoDeleted();
-					break;
-			case 5:
-					notifyAllZipDeleted();
-					break;
-			case 6:
-					notifyAllMisDeleted();
-					break;
-			default:
-					notifyAllFavDeleted();
-					
-		}
-	}
-	
 	/**
 	 * function to rebuild the favorite items list after an 
 	 * item was added or removed from DB..... 
@@ -975,6 +885,19 @@ public class Utils {
 		}catch(Exception e){
 			
 		}
+	}
+
+	/**
+	 * function to empty the fav item list....
+	 * @param fPos
+	 */
+	public static void notifyFavFileDelete(int fPos) {
+		// TODO Auto-generated method stub
+		fav = new ConcurrentHashMap<String , Item>();
+		folderCount = 0;
+		fileCount = 0;
+		favKey = new ConcurrentHashMap<String , String>();
+		update_fav();
 	}
 	
 }

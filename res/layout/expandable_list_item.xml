@@ -63,8 +63,8 @@
 	    
 	    <!-- LAYOUT FOR DELETE.....-->
 		<LinearLayout 
-		        android:paddingLeft="10dp"
-        	    android:paddingTop="2dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginTop="5dp"
         	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/button_delete"
@@ -93,8 +93,8 @@
 		
 		<!-- LAYOUT FOR COMPRESS ALL FILES.....-->
 		<LinearLayout 
-		        android:paddingLeft="10dp"
-        	    android:paddingTop="2dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginTop="5dp"
         	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/button_zip_all"
@@ -122,8 +122,8 @@
         
 		<!-- LAYOUT FOR MOVING ALL FILES TO ONE LOCATION.....-->
 		<LinearLayout 
-		        android:paddingLeft="10dp"
-        	    android:paddingTop="2dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginTop="5dp"
         	    android:background="@drawable/button_click"
         	    android:onClick="onClick"
         	    android:id="@+id/button_move_all"

@@ -4052,7 +4052,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(delete_from_slider_menu){
 						//file deletion was performed from left slide menu...
 						//all files were deleted from a category....
-						Utils.notifyFileDelete(fPos);
+						if(CURRENT_ITEM == 0){
+							if(elementInFocus)
+								element.notifyDataSetChanged();
+							else
+								Utils.updateUI();
+						}	
+						else
+							Utils.update_Needed = true;
 						setAdapter(CURRENT_ITEM);
 					}
 					else if(CURRENT_ITEM == 1){
@@ -5046,22 +5053,37 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					public void onClick(View itemView, View clickedView, int position) {
 						// TODO Auto-generated method stub
 						ConcurrentHashMap<String , Item> itemList = null;
+						ConcurrentHashMap<String, String> keys = null;
 						if(position == 0)
 							itemList = Utils.fav;
-						else if(position==1)
+						else if(position==1){
 							itemList = (Utils.music);
-						else if(position==2)
+							keys = Utils.musicKey;
+						}	
+						else if(position==2){
 							itemList = (Utils.apps);
-						else if(position==3)
+							keys = Utils.appKey;
+						}	
+						else if(position==3){
 							itemList = (Utils.doc);
-						else if(position==4)
+							keys = Utils.docKey;
+						}	
+						else if(position==4){
 							itemList = (Utils.img);
-						else if(position==5)
+							keys = Utils.imgKey;
+						}	
+						else if(position==5){
 							itemList = (Utils.vids);
-						else if(position==6)
+							keys = Utils.videoKey;
+						}	
+						else if(position==6){
 							itemList = (Utils.zip);
-						else if(position==7)
+							keys = Utils.zipKey;
+						}	
+						else if(position==7){
 							itemList = (Utils.mis);
+							keys = Utils.misKey;
+						}	
 						
 						if(position == 0)
 							fPos = 7;
@@ -5080,11 +5102,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 										//only deleting favorite items from DB....
 										if(Constants.db.deleteAllFavItem()){
 											Toast.makeText(mContext, R.string.allfavdeleted, Toast.LENGTH_SHORT).show();
-											Utils.notifyFileDelete(fPos);
+											Utils.notifyFavFileDelete(fPos);
 										}	
 										break;
 									}	
-									new DeleteFiles(mContext, size.x*8/9, itemList, getResources().getString(R.string.confirmdeletion));
+									new DeleteFiles(mContext, size.x*8/9, itemList,keys, getResources().getString(R.string.confirmdeletion));
 									break;
 									
 							case R.id.button_move_all:

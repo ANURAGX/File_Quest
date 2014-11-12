@@ -20,9 +20,11 @@
 package org.anurag.file.quest;
 
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -35,6 +37,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.stericson.RootTools.RootTools;
 
 
@@ -47,7 +50,10 @@ import com.stericson.RootTools.RootTools;
 @SuppressLint("HandlerLeak")
 public class DeleteFiles{
 
+	//list of files to be deleted
 	private  ArrayList<Item> file;
+
+	//showing current message
 	private  TextView popupMessage;
 	private TextView message;
 	private  Button btn1;
@@ -57,21 +63,34 @@ public class DeleteFiles{
 	private Context mContext;
 	private Dialog dialog;
 	private String nam;
+	
+	//boolean values true tells type of file deleted
 	private boolean music_deleted;
 	private boolean app_deleted;
 	private boolean img_deleted;
 	private boolean vid_deleted;
 	private boolean doc_deleted;
 	private boolean zip_deleted;
-	private boolean mis_deleted;	
-	private ConcurrentHashMap<String, Item> hashMpList;
+	private boolean mis_deleted;
+	private int len;
 	
-	public DeleteFiles(Context ctx,int width , ConcurrentHashMap<String , Item> list , String msg) {
+	/**
+	 * 
+	 * @param ctx context
+	 * @param width for dialog
+	 * @param list of files to be deleted
+	 * @param lsKeys for list of files
+	 * @param msg to show....
+	 */
+	public DeleteFiles(Context ctx,int width , ConcurrentHashMap<String , Item> list ,ConcurrentHashMap<String, String> lsKeys,
+			String msg) {
 		// TODO Auto-generated constructor stub
-		hashMpList = list;
-		ArrayList<Item> itms = null;
+		ArrayList<Item> itms = new ArrayList<Item>();
+		len = list.size();
+		for(int i = 0 ; i<len ; ++i){
+			itms.add(list.get(lsKeys.get(""+i)));
+		}
 		
-		//passing null arrayList intentionally....
 		new DeleteFiles(ctx, width, itms, msg);
 	}
 	
@@ -87,6 +106,8 @@ public class DeleteFiles{
 		dialog.getWindow().getAttributes().width = width;
 		dialog.setCancelable(true);
 		file = list;
+		if(file != null)
+			len = file.size();
 		nam=msg;
 		onCreate(context);
 	}
@@ -131,10 +152,10 @@ public class DeleteFiles{
 			@Override
 			public void run() {
 				mHandler.sendEmptyMessage(0);
-				int len = file.size();
+				File f;
 				for(int i=0;i<len;++i){
 					try{
-						File f = file.get(i).getFile();
+						f = file.get(i).getFile();
 						if(f!=null){
 							if(f.canWrite()){
 								deleteFile(f);
