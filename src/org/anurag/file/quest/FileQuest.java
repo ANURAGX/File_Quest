@@ -70,7 +70,6 @@ import org.ultimate.root.LinuxShell;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -100,7 +99,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -5186,14 +5184,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						intent.setData(Uri.parse("market://details?id=org.anurag.file.quest"));
 						
 						
-						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | 
-						        Intent.FLAG_ACTIVITY_CLEAR_TASK);
-						
-						TaskStackBuilder stack = TaskStackBuilder.create(mContext);
-						stack.addParentStack(FileQuest.class);
-						stack.addNextIntent(intent);
-						
-						PendingIntent pendint = stack.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+											
+						PendingIntent pendint = PendingIntent.getActivity(mContext, 900, intent, 0);
 						mBuilder.setContentIntent(pendint);
 				
 						mBuilder.setAutoCancel(true);
