@@ -27,7 +27,7 @@ import android.os.Environment;
 import android.widget.ImageView;
 
 /**
- * THIS FILE CONTAINS THE CONSTANTS THAT ARE USED ALL OVER THE PROGRAM...
+ * THIS FILE CONTAINS THE CONSTANTS THAT ARE USED ALL OVER THE APP...
  * @author Anurag
  *
  */
@@ -40,13 +40,27 @@ public class Constants {
 		   R.drawable.ic_launcher_violet_folder,
 		   R.drawable.ic_launcher_grey_folder ,
 		   R.drawable.ic_launcher_brown_folder,
-		   R.drawable.ic_launcher_blue_folder};	
+		   R.drawable.ic_launcher_blue_folder
+		   };	
 	
 	public static boolean LOAD_THUMBNAILS=false;
 	public static long GB = 1024*1024*1024;
 	public static long MB = 1024*1024;
 	public static int BUFFER = 1024*1024;
+	
+	//environment path....
 	public static String PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
+	
+	//external memory card path,if not available its null....
+	public static String EXT_PATH;
+	
+	//available above JBMR1....,else null
+	public static String EMULATED_PATH;
+	
+	//in some devices legacy path is available in emulated folder,if not
+	//available its null....
+	public static String LEGACY_PATH; 
+	
 	public static boolean LOCK_CHILD;
 	public static ImageView lock;
 	public static ImageView fav;

@@ -313,6 +313,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		PAGER_ANIMATION = preferences.getInt("PAGER_ANIMATION", 3);
 		edit = preferences.edit();
 
+		//initializing the external,internal,emulated,legacy paths....
+		new StorageUtils();
+		
 		try {
 			new File("/sdcard/File Quest/").mkdir();
 		} catch (Exception e) {
