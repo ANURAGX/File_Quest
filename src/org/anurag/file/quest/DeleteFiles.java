@@ -260,6 +260,10 @@ public class DeleteFiles{
 		if(file.isDirectory())
 			return;
 		String path = file.getPath();
+		String virtualPath;
+		if(path.startsWith(Constants.EMULATED_PATH)){
+			
+		}
 		
 		if(Utils.music.get(path) != null){
 			music_deleted = true;
