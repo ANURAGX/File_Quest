@@ -4067,25 +4067,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						setAdapter(CURRENT_ITEM);
 					}
 					else if(CURRENT_ITEM == 1){
-						if(!RootAdapter.MULTI_SELECT){
-							//single item has to removed....
-							rootItemList.remove(dPos);
-							simple.setAdapter(rootAdapter);
-						}else{
-							setAdapter(1);
-						}
+						setAdapter(1);
 						//file gallery has to be updated after delete operation....
 						Utils.update_Needed = true;
 					}else if(CURRENT_ITEM == 2){
-						if(!SDAdapter.MULTI_SELECT){
-							//single item has to removed....
-							sdItemsList.remove(dPos);
-							root.setAdapter(sdAdapter);
-						}else{
-							//multi select option was enabled and delete operation
-							//was performed...
-							setAdapter(2);
-						}						
+						setAdapter(2);					
 						//file gallery has to be updated after delete operation....
 						Utils.update_Needed = true;
 					}

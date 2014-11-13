@@ -29,6 +29,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -149,6 +150,12 @@ public class DeleteFiles{
 						mContext.sendBroadcast(new Intent("FQ_DELETE"));
 						Toast.makeText(mContext, ctx.getString(R.string.deleted),Toast.LENGTH_SHORT).show();
 						dialog.dismiss();	
+						break;
+					case 3:
+						TextView title = (TextView)dialog.findViewById(R.id.popupTitle);
+						title.setText(ctx.getString(R.string.delete_frm_ext_sd_title));
+						popupMessage.setText(ctx.getResources().getString(R.string.delete_frm_ext_sd));
+						btn2.setVisibility(View.VISIBLE);						
 				}
 			}
 		};
@@ -161,6 +168,20 @@ public class DeleteFiles{
 					try{
 						f = file.get(i).getFile();
 						if(f!=null){
+							
+							/**
+							 * in android 4.4 deleting files from externally plugged
+							 * memory card id prohibited....
+							 * so checking android version to kitkat and external sd card path....
+							 * 
+							 * if true handling it separately by showing appropriate message....
+							 */
+							if(f.getAbsolutePath().startsWith(Constants.EXT_PATH) && 
+									Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT){
+								mHandler.sendEmptyMessage(3);
+								return;
+							}
+							
 							if(f.canWrite()){
 								deleteFile(f);
 							}	

@@ -229,6 +229,10 @@
 	<string name="checking_update">Wait while checking for update</string>
 	<string name="failed_to_check_for_update">Failed to check for update</string>
 	<string name="update_avail">New update of FILE QUEST is available</string>
+	<string name="delete_frm_ext_sd">Beginning from Android 4.4 Kitkat,it may not possible to remove or rename files on external storage due to change of Android security policy.</string>
+	<string name="delete_frm_ext_sd_title">Cannot delete from external storage!</string>
+	
+	
 	
 	
 	
