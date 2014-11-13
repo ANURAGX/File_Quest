@@ -54,11 +54,11 @@ public class Constants {
 	//external memory card path,if not available its null....
 	public static String EXT_PATH;
 	
-	//available above JBMR1....,else null
+	//available above JBMR1....,else its empty....
 	public static String EMULATED_PATH;
 	
 	//in some devices legacy path is available in emulated folder,if not
-	//available its null....
+	//available its empty....
 	public static String LEGACY_PATH; 
 	
 	public static boolean LOCK_CHILD;
