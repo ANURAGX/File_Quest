@@ -244,6 +244,8 @@ public class RootManager {
 	private Drawable buildIcon(File f){
 		if(f.isDirectory()){
 			type = ctx.getString(R.string.directory);
+			if(f.getAbsolutePath().equalsIgnoreCase(Constants.EXT_PATH))
+				return res.getDrawable(R.drawable.ic_launcher_sdcard);
 			return res.getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]);
 		}
 		

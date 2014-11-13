@@ -61,6 +61,9 @@ public class Constants {
 	//available its empty....
 	public static String LEGACY_PATH; 
 	
+	//if true then external sdcard is plugged....
+	public static boolean isExtAvailable;
+	
 	public static boolean LOCK_CHILD;
 	public static ImageView lock;
 	public static ImageView fav;

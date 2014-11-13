@@ -232,7 +232,13 @@ public class FileGalleryAdapter extends BaseAdapter {
 		h.fType.setText(item.getType());
 		h.fSize.setText(RootManager.getSize(new File(item.getPath())));
 		h.icon.setImageDrawable(item.getIcon());
-		if (item.getType().equals("Image")) {
+		
+		if(item.isDirectory()){
+			if(item.getPath().startsWith(Constants.EXT_PATH))
+				h.icon.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_sdcard));
+		}
+		
+		else if (item.getType().equals("Image")) {
 			image = imgList.get(item.getPath());
 			if (image != null)
 				h.icon.setImageBitmap(image);

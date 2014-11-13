@@ -49,7 +49,10 @@ public class StorageUtils {
 	 */
 	private void getExternalMemoryPath(){
 		String paths = System.getenv("SECONDARY_STORAGE");
-		Constants.EXT_PATH = paths; 
+		if(new File(paths).exists() && new File(paths).canRead()){
+			Constants.EXT_PATH = paths; 
+			Constants.isExtAvailable = true;
+		}
 	}
 	
 	/**
