@@ -20,8 +20,10 @@
 package org.anurag.file.quest;
 
 import java.io.File;
+
 import java.io.FileFilter;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import android.annotation.SuppressLint;
@@ -34,6 +36,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
+
 
 
 /**
@@ -866,6 +869,11 @@ public class Utils {
 			fav.put(itm.getPath(), itm);
 		}else{
 			fav.remove(itm.getPath());
+			int counter = 0;
+			Utils.favKey.clear();
+			for(Map.Entry< String , Item> entry : Utils.fav.entrySet()){
+				Utils.favKey.put(""+counter++, entry.getValue().getPath());
+			}
 			if(itm.isDirectory())
 				folderCount--;
 			else

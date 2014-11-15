@@ -383,7 +383,8 @@ public class ItemDB extends SQLiteOpenHelper{
 				db.delete("ITEMS", "FILEPATH = ?",new String[]{sdcard0});
 				db.delete("ITEMS", "FILEPATH = ?",new String[]{sdPath});
 			}
-		}		
+		}
+		db.delete("FAVITEMS", "FILEPATH = ?",new String[]{PATH});
 		return true;
 	}
 	
@@ -494,6 +495,7 @@ public class ItemDB extends SQLiteOpenHelper{
 				db.delete("FAVITEMS", "FILEPATH = ?",new String[]{sdPath});
 			}
 		}		
+		db.delete("FAVITEMS", "FILEPATH = ?",new String[]{PATH});
 		return true;
 	}
 	

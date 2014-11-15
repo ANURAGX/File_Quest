@@ -468,6 +468,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						//so updating ui....
 						Utils.fav_Update_Needed = false;
 						Utils.update_fav();
+						if(element != null)
+							element.notifyDataSetChanged();
 					}
 					
 				} else if (page != 0) {
@@ -972,6 +974,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								//a folder was requested to open from favorite tile...
 								SDManager.nStack.push(file0.getPath());
 								setAdapter(2);
+								mViewPager.setCurrentItem(2);
 							}
 						}	
 						else//file is locked....
@@ -1068,6 +1071,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									//folder is tried to open from favorite tile...
 									SDManager.nStack.push(file0.getPath());
 									setAdapter(2);
+									mViewPager.setCurrentItem(2);
 								}
 							}else//item is locked...
 								new MasterPassword(mContext, size.x*8/9, file0, preferences, Constants.MODES.OPEN);
