@@ -750,7 +750,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			super(fm);
 		}
 		
-
+		String[] titles = mContext.getResources().getStringArray(R.array.slideList);
 		@Override
 		public Fragment getItem(int position) {
 			switch (position) {
@@ -783,7 +783,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		public CharSequence getPageTitle(int position) {
 			switch (position) {
 				case 0:
-					return getString(R.string.filegallery);
+					if(!elementInFocus)
+						return getString(R.string.filegallery);
+					return titles[fPos];
 				case 1:
 					if (RootManager.nStack.size() == 1)
 						pageTitleRoot = "/";
@@ -2954,6 +2956,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					elementInFocus = false;
 					LIST_VIEW_3D.setVisibility(View.GONE);
 					FILE_GALLEY.setVisibility(View.VISIBLE);
+					indicator.notifyDataSetChanged();
 				}
 			} else if (CURRENT_ITEM == 0 && elementInFocus) {
 				elementInFocus = false;
@@ -2965,6 +2968,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				if(!Utils.loaded)
 					Utils.updateUI();
 				Utils.update_fav();
+				indicator.notifyDataSetChanged();
 			} else if (CURRENT_ITEM == 0 && !elementInFocus) {
 				/**
 				 * CHECKS WHETHER THE CURRENT PREF IS 0 IF IT IS FOUND 0 THEN IT
@@ -3805,6 +3809,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			FILE_GALLEY.setVisibility(View.GONE);
 			LIST_VIEW_3D.setVisibility(View.VISIBLE);
 			mFlipperBottom.showPrevious();
+			indicator.notifyDataSetChanged();
 		}
 	}
 	
@@ -5058,11 +5063,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							itemList = (Utils.apps);
 							keys = Utils.appKey;
 						}	
-						else if(position==3){
+						else if(position==4){
 							itemList = (Utils.doc);
 							keys = Utils.docKey;
 						}	
-						else if(position==4){
+						else if(position==3){
 							itemList = (Utils.img);
 							keys = Utils.imgKey;
 						}	

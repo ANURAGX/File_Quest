@@ -58,13 +58,13 @@
     
     <string-array name="slideList">
         <item>Favorite</item>
-        <item>Music Files</item>
-        <item>Apk Files</item>
+        <item>Music </item>
+        <item>Apps </item>
+        <item>Images</item>
         <item>Documents</item>
-        <item>Image File</item>
-        <item>Video Files</item>
+        <item>Videos</item>
         <item>Archives</item>
-        <item>Unknown Files</item>
+        <item>Unknown</item>
     </string-array>
     
 
