@@ -250,7 +250,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	public static int SORT_TYPE;
 	public static boolean SHOW_HIDDEN_FOLDERS;
 	public static int CURRENT_PREF_ITEM;
-	public static float TRANSPRA_LEVEL;
+	public static float TRANSPARENCY_LEVEL;
 	public static SharedPreferences.Editor edit;
 	public static SharedPreferences preferences;
 	private static boolean SEARCH_FLAG = false;
@@ -303,7 +303,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		INTERNAL_PATH_TWO = preferences.getString("INTERNAL_PATH_TWO", PATH);
 		SHOW_APP = preferences.getInt("SHOW_APP", 1);
 		CURRENT_ITEM = CURRENT_PREF_ITEM = preferences.getInt("CURRENT_PREF_ITEM", 0);
-		TRANSPRA_LEVEL = preferences.getFloat("TRANSPRA_LEVEL", 0.9f);
+		TRANSPARENCY_LEVEL = preferences.getFloat("TRANSPARENCY_LEVEL", 1.0f);
 		SHOW_HIDDEN_FOLDERS = preferences.getBoolean("SHOW_HIDDEN_FOLDERS",false);
 		SORT_TYPE = preferences.getInt("SORT_TYPE", 2);
 		Constants.FOLDER_ICON = preferences.getInt("FOLDER_TYPE", 0);
@@ -598,14 +598,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	@Override
 	protected void onPostResume() {
 		params = this.getWindow().getAttributes();
-		params.alpha = TRANSPRA_LEVEL;
+		params.alpha = TRANSPARENCY_LEVEL;
 		super.onPostResume();
 	}
 
 	@Override
 	protected void onResumeFragments() {
 		params = this.getWindow().getAttributes();
-		params.alpha = TRANSPRA_LEVEL;
+		params.alpha = TRANSPARENCY_LEVEL;
 		super.onResumeFragments();
 	}
 
@@ -618,7 +618,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	@Override
 	protected void onStart() {
 		params = this.getWindow().getAttributes();
-		params.alpha = TRANSPRA_LEVEL;
+		params.alpha = TRANSPARENCY_LEVEL;
 		super.onStart();
 		// REGISTER_RECEIVER();
 		initLeftMenu();

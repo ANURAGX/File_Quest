@@ -89,17 +89,17 @@ public class AdjusTranDialog {
 				else{
 					
 					if(pos == 0)
-						FileQuest.TRANSPRA_LEVEL = 0.6f;
+						FileQuest.TRANSPARENCY_LEVEL = 0.6f;
 					else if(pos == 1)
-						FileQuest.TRANSPRA_LEVEL = 0.7f;
+						FileQuest.TRANSPARENCY_LEVEL = 0.7f;
 					else if(pos == 2)
-						FileQuest.TRANSPRA_LEVEL = 0.8f;
+						FileQuest.TRANSPARENCY_LEVEL = 0.8f;
 					else if(pos == 3)
-						FileQuest.TRANSPRA_LEVEL = 0.9f;
+						FileQuest.TRANSPARENCY_LEVEL = 0.9f;
 					else if(pos == 4)
-						FileQuest.TRANSPRA_LEVEL = 1.0f;
+						FileQuest.TRANSPARENCY_LEVEL = 1.0f;
 					
-					edit.putFloat("TRANSPRA_LEVEL", FileQuest.TRANSPRA_LEVEL);
+					edit.putFloat("TRANSPARENCY_LEVEL", FileQuest.TRANSPARENCY_LEVEL);
 					edit.commit();
 					Toast.makeText(ctx, ctx.getString(R.string.settingsapplied), Toast.LENGTH_SHORT).show();
 					Settings.settingsChanged = true;
@@ -165,7 +165,7 @@ public class AdjusTranDialog {
 			else if(arg0 == 4)
 				po = 1.0f;
 			
-			if(FileQuest.TRANSPRA_LEVEL == po)
+			if(FileQuest.TRANSPARENCY_LEVEL == po)
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_multi_select));
 			else
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_appreance));
