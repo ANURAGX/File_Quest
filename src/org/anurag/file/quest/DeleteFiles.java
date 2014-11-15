@@ -47,12 +47,15 @@ import com.stericson.RootTools.RootTools;
  * @author Anurag....
  *
  */
-@SuppressLint("HandlerLeak")
+@SuppressLint({ "HandlerLeak", "SdCardPath" })
 public class DeleteFiles{
 
 	//list of files to be deleted
 	private  ArrayList<Item> file;
 
+	//current file which is being  deleted
+	private String currentFile;
+	
 	//showing current message
 	private  TextView popupMessage;
 	private TextView message;
@@ -62,7 +65,7 @@ public class DeleteFiles{
 	private Handler mHandler;
 	private Context mContext;
 	private Dialog dialog;
-	private String nam;
+	
 	
 	//boolean values true tells type of file deleted
 	private boolean music_deleted;
@@ -113,7 +116,7 @@ public class DeleteFiles{
 		//file = list;
 		if(file != null)
 			len = file.size();
-		nam=msg;
+		currentFile=msg;
 		onCreate(context);
 	}
 	
@@ -122,10 +125,10 @@ public class DeleteFiles{
 		btn1 = (Button)dialog.findViewById(R.id.popupOk);
 		btn2 = (Button)dialog.findViewById(R.id.popupCancel);
 		popupMessage = (TextView)dialog.findViewById(R.id.textMessage);
-		if(nam==null)
+		if(currentFile == null)
 			popupMessage.setText(ctx.getString(R.string.confirmdelete));
 		else
-			popupMessage.setText(nam);
+			popupMessage.setText(currentFile);
 		message = (TextView)dialog.findViewById(R.id.textMessage2);
 		
 		mHandler = new Handler(){
@@ -136,10 +139,11 @@ public class DeleteFiles{
 						popupMessage.setText(ctx.getString(R.string.waitwhiledeleting));
 						btn1.setVisibility(View.GONE);
 						btn2.setVisibility(View.GONE);
+						message.setVisibility(View.VISIBLE);
 						break;
 						
 					case 1:
-						message.setText(nam);
+						message.setText(currentFile);
 						break;
 					case 2 :  	
 						try{
@@ -155,7 +159,9 @@ public class DeleteFiles{
 						TextView title = (TextView)dialog.findViewById(R.id.popupTitle);
 						title.setText(ctx.getString(R.string.delete_frm_ext_sd_title));
 						popupMessage.setText(ctx.getResources().getString(R.string.delete_frm_ext_sd));
-						btn2.setVisibility(View.VISIBLE);						
+						btn2.setVisibility(View.VISIBLE);
+						break;
+						
 				}
 			}
 		};
@@ -176,11 +182,12 @@ public class DeleteFiles{
 							 * 
 							 * if true handling it separately by showing appropriate message....
 							 */
-							if(f.getAbsolutePath().startsWith(Constants.EXT_PATH) && 
-									Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT){
-								mHandler.sendEmptyMessage(3);
-								return;
-							}
+							if(Constants.isExtAvailable)
+								if(f.getAbsolutePath().startsWith(Constants.EXT_PATH) && 
+										Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT){
+									mHandler.sendEmptyMessage(3);
+									return;
+								}
 							
 							if(f.canWrite()){
 								deleteFile(f);
@@ -190,9 +197,7 @@ public class DeleteFiles{
 								RootTools.deleteFileOrDirectory("'"+f.getAbsolutePath()+"'", false);
 							}
 						}	
-					}catch(NullPointerException e){
-						
-					}
+					}catch(NullPointerException e){}
 				}			
 				
 				//after deleting all files regenerating keys....
@@ -222,6 +227,8 @@ public class DeleteFiles{
 	public void deleteFile(File file) {
 		File target = file;
 		if(target.exists() && target.isFile() && target.canWrite()){
+			currentFile = mContext.getString(R.string.deletingfile) + " " + target.getName();
+			mHandler.sendEmptyMessage(1);
 			delete_from_gallery(target);
 			target.delete();
 		}	
@@ -230,15 +237,22 @@ public class DeleteFiles{
 			String[] file_list = target.list();
 			
 			if(file_list != null && file_list.length == 0) {
+				currentFile = mContext.getString(R.string.deletingfile) + " " + target.getName();
+				mHandler.sendEmptyMessage(1);
 				delete_from_gallery(target);
 				target.delete();
 			} else if(file_list != null && file_list.length > 0) {
 				
 				for(int i = 0; i < file_list.length; i++) {
 					File temp_f = new File(target.getAbsolutePath() + "/" + file_list[i]);
-					if(temp_f.isDirectory())
+					if(temp_f.isDirectory()){
+						currentFile = mContext.getString(R.string.deletingfile) + " " + temp_f.getName();
+						mHandler.sendEmptyMessage(1);
 						deleteFile(temp_f );
+					}	
 					else if(temp_f.isFile()){
+						currentFile = mContext.getString(R.string.deletingfile) + " " + temp_f.getName();
+						mHandler.sendEmptyMessage(1);
 						delete_from_gallery(temp_f);
 						temp_f.delete();
 					}	
@@ -246,6 +260,8 @@ public class DeleteFiles{
 			}
 			if(target.exists())
 				if(target.delete()){
+					currentFile = mContext.getString(R.string.deletingfile) + " " + target.getName();
+					mHandler.sendEmptyMessage(1);
 					delete_from_gallery(target);
 					target.delete();
 				}
@@ -261,19 +277,41 @@ public class DeleteFiles{
 	synchronized void delete_from_gallery(File file){
 		if(file.isDirectory())
 			return;
-		String path = file.getPath();
-		String virtualPath;
+		String path = file.getAbsolutePath();
+		String virtualPath = null;
 		
 		//checks whether the given path can become the key or not,
 		//if not it makes it a key for the hashmap....
-		if(!path.startsWith(Constants.PATH)){
-			if(path.startsWith(Constants.LEGACY_PATH)){
-				virtualPath = path.substring(Constants.LEGACY_PATH.length(), path.length());
-				path = Constants.PATH + virtualPath ;
-			}else if(path.startsWith(Constants.EMULATED_PATH)){
-				virtualPath = path.substring(Constants.EMULATED_PATH.length(), path.length());
-				path = Constants.PATH + virtualPath ;
+		//if not able to generate the key,then return....
+		try{
+			if(!path.startsWith(Constants.PATH)){
+				if(path.startsWith(Constants.LEGACY_PATH)){
+					virtualPath = path.substring(Constants.LEGACY_PATH.length(), path.length());
+					path = Constants.PATH + virtualPath ;
+				}else if(path.startsWith(Constants.EMULATED_PATH)){
+					virtualPath = path.substring(Constants.EMULATED_PATH.length(), path.length());
+					path = Constants.PATH + virtualPath ;
+				}else if(path.startsWith("/sdcard")){
+					String str = "/sdcard";
+					virtualPath = path.substring(str.length(), path.length());
+					path = Constants.PATH + virtualPath ;
+				}else if(path.startsWith("/mnt/sdcard")){
+					String str = "/mnt/sdcard";
+					virtualPath = path.substring(str.length(), path.length());
+					path = Constants.PATH + virtualPath ;
+				}else if(path.startsWith("/storage/sdcard0")){
+					String str = "/storage/sdcard0";
+					virtualPath = path.substring(str.length(), path.length());
+					path = Constants.PATH + virtualPath ;
+				}else if(path.startsWith("/storage/sd")){
+					String str = "/storage/sd";
+					virtualPath = path.substring(str.length(), path.length());
+					path = Constants.PATH + virtualPath ;
+				}else
+					return;
 			}
+		}catch(Exception e){
+			path = file.getAbsolutePath();
 		}
 		
 		//removes item from music list of file gallery...

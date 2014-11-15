@@ -60,7 +60,7 @@ public class StorageUtils {
 	 */
 	private void getEmulatedPath(){
 		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1){
-			Constants.EMULATED_PATH = null;
+			Constants.EMULATED_PATH = "";
 			return;
 		}	
 		String emulatedpath = System.getenv("EMULATED_STORAGE_TARGET");
@@ -91,7 +91,7 @@ public class StorageUtils {
 	private void getLegacyPath(){
 		String rawExternalStorage = System.getenv("EXTERNAL_STORAGE");
 		if(TextUtils.isEmpty(rawExternalStorage)){
-			Constants.LEGACY_PATH = null;
+			Constants.LEGACY_PATH = "";
 			return;
 		}	
 		if(TextUtils.equals(rawExternalStorage, Constants.PATH))
