@@ -52,7 +52,9 @@ public class StorageUtils {
 		if(new File(paths).exists() && new File(paths).canRead()){
 			Constants.EXT_PATH = paths; 
 			Constants.isExtAvailable = true;
+			return;
 		}
+		Constants.EXT_PATH = "NOT_AVAILABLE";
 	}
 	
 	/**
@@ -91,7 +93,7 @@ public class StorageUtils {
 	private void getLegacyPath(){
 		String rawExternalStorage = System.getenv("EXTERNAL_STORAGE");
 		if(TextUtils.isEmpty(rawExternalStorage)){
-			Constants.LEGACY_PATH = "";
+			Constants.LEGACY_PATH = "NOT_AVAILABLE";
 			return;
 		}	
 		if(TextUtils.equals(rawExternalStorage, Constants.PATH))

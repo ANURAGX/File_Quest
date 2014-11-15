@@ -87,7 +87,7 @@ public class ItemDB extends SQLiteOpenHelper{
 			values.put("DUP", 0);
 			db.insert("ITEMS", null , values);
 			
-			if(Constants.isExtAvailable)
+		//	if(Constants.isExtAvailable)
 				if(!PATH.startsWith(Constants.EXT_PATH)){
 					//DUPLICATE ITEMS....
 					//THESE ITEMS ARE SAME
@@ -213,7 +213,7 @@ public class ItemDB extends SQLiteOpenHelper{
 			values.put("DUP", 0);
 			db.insert("FAVITEMS", null , values);
 			
-			if(Constants.isExtAvailable)
+			//if(Constants.isExtAvailable)
 				if(!PATH.startsWith(Constants.EXT_PATH)){
 					//DUPLICATE ITEMS....
 					//THESE ITEMS ARE SAME
