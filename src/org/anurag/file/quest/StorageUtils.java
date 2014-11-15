@@ -80,7 +80,7 @@ public class StorageUtils {
 		if(TextUtils.isEmpty(id))
 			Constants.EMULATED_PATH = emulatedpath;
 		else{
-			Constants.EMULATED_PATH = emulatedpath + File.pathSeparator + id;
+			Constants.EMULATED_PATH = emulatedpath + "/" + id;
 		}
 	}
 	

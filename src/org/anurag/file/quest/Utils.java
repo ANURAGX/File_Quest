@@ -463,9 +463,9 @@ public class Utils {
 		 * prepares the list of favorite items from db....
 		 */
 		void prepareFavList(){
-			Cursor cursor = Constants.db.getReadableDatabase().query("FAVITEMS", 
+			Cursor cursor = Constants.db.getReadableDatabase().query("FAVITEMS",
 					null, 
-					null, 
+					"DUP = 0", 
 					null, 
 					null, 
 					null, 

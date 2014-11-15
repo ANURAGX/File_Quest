@@ -303,6 +303,10 @@ public class DeleteFiles{
 					String str = "/storage/sdcard0";
 					virtualPath = path.substring(str.length(), path.length());
 					path = Constants.PATH + virtualPath ;
+				}else if(path.startsWith("/storage/sdcard")){
+					String str = "/storage/sdcard";
+					virtualPath = path.substring(str.length(), path.length());
+					path = Constants.PATH + virtualPath ;
 				}else if(path.startsWith("/storage/sd")){
 					String str = "/storage/sd";
 					virtualPath = path.substring(str.length(), path.length());

@@ -19,11 +19,15 @@
 
 package org.anurag.file.quest;
 
+import java.io.File;
+
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 
 
 /**
@@ -33,6 +37,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  *
  */
 
+@SuppressLint("SdCardPath")
 public class ItemDB extends SQLiteOpenHelper{
 	
 	static String DBNAME = "ItemDB.db";
@@ -47,10 +52,10 @@ public class ItemDB extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
 		db.execSQL("CREATE TABLE ITEMS "+
-				   "(FILEPATH TEXT PRIMARY KEY);");
+				   "(FILEPATH TEXT PRIMARY KEY , DUP INTEGER);");
 		
 		db.execSQL("CREATE TABLE FAVITEMS "+
-				   "(FILEPATH TEXT PRIMARY KEY);");
+				   "(FILEPATH TEXT PRIMARY KEY , DUP INTEGER);");
 	}
 
 	@Override
@@ -98,8 +103,111 @@ public class ItemDB extends SQLiteOpenHelper{
 		if(cursor.getCount()==0){
 			SQLiteDatabase db = this.getWritableDatabase();
 			ContentValues values = new ContentValues();
+			
+			//ORIGIONAL FILE....
 			values.put("FILEPATH", PATH);
+			values.put("DUP", 0);
 			db.insert("FAVITEMS", null , values);
+			
+			if(Constants.isExtAvailable)
+				if(!PATH.startsWith(Constants.EXT_PATH)){
+					//DUPLICATE ITEMS....
+					//THESE ITEMS ARE SAME
+					//BUT THEY HAVE DIFFERENT PATH TO SAME ITEM....
+					//LIKE WE CAN REACH TO SDCARD FROM /MNT/SDCARD OR /SDCARD OR /EMULATED PATHS....
+					//SO ADDING THEM ALSO TO THE DB....
+					
+					String emulatedPath ="";
+					String legacyPath = "";
+					String mntPath;
+					String sdPath;
+					String sdcard0;
+					String sd;
+					String sdcard;
+					String basePath = null;			
+					
+					if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+						//emulated or legacy paths are available....
+						if(PATH.startsWith(Constants.EMULATED_PATH)){
+							basePath = PATH.substring(Constants.EMULATED_PATH.length(), PATH.length()); 
+						}else if(PATH.startsWith(Constants.LEGACY_PATH)){
+							basePath = PATH.substring(Constants.LEGACY_PATH.length(), PATH.length());
+						}
+					}
+					
+					if(basePath == null){
+						if(PATH.startsWith("/sdcard")){
+							String str = "/sdcard";
+							basePath = PATH.substring(str.length(), PATH.length());
+						}else if(PATH.startsWith("/mnt/sdcard")){
+							String str = "/mnt/sdcard";
+							basePath = PATH.substring(str.length(), PATH.length());
+						}else if(PATH.startsWith("/storage/sdcard0")){
+							String str = "/storage/sdcard0";
+							basePath = PATH.substring(str.length(), PATH.length());
+						}else if(PATH.startsWith("/storage/sdcard")){
+							String str = "/storage/sdcard";
+							basePath = PATH.substring(str.length(), PATH.length());
+						}else if(PATH.startsWith("/storage/sd")){
+							String str = "/storage/sd";
+							basePath = PATH.substring(str.length(), PATH.length());
+						} 
+					}
+					
+					if(basePath != null){
+						if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+							emulatedPath = Constants.EMULATED_PATH + basePath;
+							legacyPath = Constants.LEGACY_PATH + basePath;
+							if(new File(emulatedPath).exists()){
+								values.put("FILEPATH", emulatedPath);
+								values.put("DUP", 1);
+								db.insert("FAVITEMS", null , values);
+							}
+							
+							if(new File(legacyPath).exists()){
+								values.put("FILEPATH", legacyPath);
+								values.put("DUP", 1);
+								db.insert("FAVITEMS", null , values);
+							}
+						}	
+						
+						mntPath = "/mnt/sdcard" + basePath;
+						sdPath = "/sdcard" + basePath;
+						sdcard0 = "/storage/sdcard0" + basePath;
+						sd = "/storage/sd" + basePath;
+						sdcard = "/storage/sdcard" + basePath;
+						
+						if(new File(mntPath).exists()){
+							values.put("FILEPATH", mntPath);
+							values.put("DUP", 1);
+							db.insert("FAVITEMS", null , values);
+						}
+						
+						if(new File(sdPath).exists()){
+							values.put("FILEPATH", sdPath);
+							values.put("DUP", 1);
+							db.insert("FAVITEMS", null , values);
+						}
+						
+						if(new File(sdcard0).exists()){
+							values.put("FILEPATH", sdcard0);
+							values.put("DUP", 1);
+							db.insert("FAVITEMS", null , values);
+						}
+						
+						if(new File(sd).exists()){
+							values.put("FILEPATH", sd);
+							values.put("DUP", 1);
+							db.insert("FAVITEMS", null , values);
+						}
+						
+						if(new File(sdcard).exists()){
+							values.put("FILEPATH", sdcard);
+							values.put("DUP", 1);
+							db.insert("FAVITEMS", null , values);
+						}
+					}
+				}			
 			db.close();
 		}		
 		cursor.close();
