@@ -52,7 +52,7 @@ public class ItemDB extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
 		db.execSQL("CREATE TABLE ITEMS "+
-				   "(FILEPATH TEXT PRIMARY KEY , DUP INTEGER);");
+				   "(FILEPATH TEXT PRIMARY KEY);");
 		
 		db.execSQL("CREATE TABLE FAVITEMS "+
 				   "(FILEPATH TEXT PRIMARY KEY , DUP INTEGER);");
@@ -84,7 +84,6 @@ public class ItemDB extends SQLiteOpenHelper{
 			
 			//ORIGIONAL ITEM....
 			values.put("FILEPATH", PATH);
-			values.put("DUP", 0);
 			db.insert("ITEMS", null , values);
 			
 		//	if(Constants.isExtAvailable)
@@ -140,13 +139,11 @@ public class ItemDB extends SQLiteOpenHelper{
 							legacyPath = Constants.LEGACY_PATH + basePath;
 							if(new File(emulatedPath).exists()){
 								values.put("FILEPATH", emulatedPath);
-								values.put("DUP", 1);
 								db.insert("ITEMS", null , values);
 							}
 							
 							if(new File(legacyPath).exists()){
 								values.put("FILEPATH", legacyPath);
-								values.put("DUP", 1);
 								db.insert("ITEMS", null , values);
 							}
 						}	
@@ -159,31 +156,26 @@ public class ItemDB extends SQLiteOpenHelper{
 						
 						if(new File(mntPath).exists()){
 							values.put("FILEPATH", mntPath);
-							values.put("DUP", 1);
 							db.insert("ITEMS", null , values);
 						}
 						
 						if(new File(sdPath).exists()){
 							values.put("FILEPATH", sdPath);
-							values.put("DUP", 1);
 							db.insert("ITEMS", null , values);
 						}
 						
 						if(new File(sdcard0).exists()){
 							values.put("FILEPATH", sdcard0);
-							values.put("DUP", 1);
 							db.insert("ITEMS", null , values);
 						}
 						
 						if(new File(sd).exists()){
 							values.put("FILEPATH", sd);
-							values.put("DUP", 1);
 							db.insert("ITEMS", null , values);
 						}
 						
 						if(new File(sdcard).exists()){
 							values.put("FILEPATH", sdcard);
-							values.put("DUP", 1);
 							db.insert("ITEMS", null , values);
 						}
 					}
@@ -324,9 +316,75 @@ public class ItemDB extends SQLiteOpenHelper{
 	 * @param Path
 	 * @return
 	 */
-	public boolean deleteLockedNode(String Path){
+	public boolean deleteLockedNode(String PATH){
 		SQLiteDatabase db = this.getWritableDatabase();
-		return db.delete("ITEMS", "FILEPATH = ?", new String[]{Path})>0;
+		
+		if(!PATH.startsWith(Constants.EXT_PATH)){
+			//DUPLICATE ITEMS....
+			//THESE ITEMS ARE SAME
+			//BUT THEY HAVE DIFFERENT PATH TO SAME ITEM....
+			//LIKE WE CAN REACH TO SDCARD FROM /MNT/SDCARD OR /SDCARD OR /EMULATED PATHS....
+			//SO ADDING THEM ALSO TO THE DB....
+			
+			String emulatedPath ="";
+			String legacyPath = "";
+			String mntPath;
+			String sdPath;
+			String sdcard0;
+			String sd;
+			String sdcard;
+			String basePath = null;			
+			
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+				//emulated or legacy paths are available....
+				if(PATH.startsWith(Constants.EMULATED_PATH)){
+					basePath = PATH.substring(Constants.EMULATED_PATH.length(), PATH.length()); 
+				}else if(PATH.startsWith(Constants.LEGACY_PATH)){
+					basePath = PATH.substring(Constants.LEGACY_PATH.length(), PATH.length());
+				}
+			}
+			
+			//emulated path is not available....
+			if(basePath == null){
+				if(PATH.startsWith("/sdcard")){
+					String str = "/sdcard";
+					basePath = PATH.substring(str.length(), PATH.length());
+				}else if(PATH.startsWith("/mnt/sdcard")){
+					String str = "/mnt/sdcard";
+					basePath = PATH.substring(str.length(), PATH.length());
+				}else if(PATH.startsWith("/storage/sdcard0")){
+					String str = "/storage/sdcard0";
+					basePath = PATH.substring(str.length(), PATH.length());
+				}else if(PATH.startsWith("/storage/sdcard")){
+					String str = "/storage/sdcard";
+					basePath = PATH.substring(str.length(), PATH.length());
+				}else if(PATH.startsWith("/storage/sd")){
+					String str = "/storage/sd";
+					basePath = PATH.substring(str.length(), PATH.length());
+				} 
+			}
+			
+			//pushing the item into db....
+			if(basePath != null){
+				if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+					emulatedPath = Constants.EMULATED_PATH + basePath;
+					legacyPath = Constants.LEGACY_PATH + basePath;
+					db.delete("ITEMS", "FILEPATH = ?",new String[]{emulatedPath});
+					db.delete("ITEMS", "FILEPATH = ?",new String[]{legacyPath});
+				}					
+				mntPath = "/mnt/sdcard" + basePath;
+				sdPath = "/sdcard" + basePath;
+				sdcard0 = "/storage/sdcard0" + basePath;
+				sd = "/storage/sd" + basePath;
+				sdcard = "/storage/sdcard" + basePath;
+				db.delete("ITEMS", "FILEPATH = ?",new String[]{mntPath});
+				db.delete("ITEMS", "FILEPATH = ?",new String[]{sd});
+				db.delete("ITEMS", "FILEPATH = ?",new String[]{sdcard});
+				db.delete("ITEMS", "FILEPATH = ?",new String[]{sdcard0});
+				db.delete("ITEMS", "FILEPATH = ?",new String[]{sdPath});
+			}
+		}		
+		return true;
 	}
 	
 	/**
@@ -368,9 +426,75 @@ public class ItemDB extends SQLiteOpenHelper{
 	 * @param Path
 	 * @return
 	 */
-	public boolean deleteFavItem(String Path){
+	public boolean deleteFavItem(String PATH){
 		SQLiteDatabase db = this.getWritableDatabase();
-		return db.delete("FAVITEMS", "FILEPATH = ?",new String[]{Path}) > 0;
+		
+		if(!PATH.startsWith(Constants.EXT_PATH)){
+			//DUPLICATE ITEMS....
+			//THESE ITEMS ARE SAME
+			//BUT THEY HAVE DIFFERENT PATH TO SAME ITEM....
+			//LIKE WE CAN REACH TO SDCARD FROM /MNT/SDCARD OR /SDCARD OR /EMULATED PATHS....
+			//SO ADDING THEM ALSO TO THE DB....
+			
+			String emulatedPath ="";
+			String legacyPath = "";
+			String mntPath;
+			String sdPath;
+			String sdcard0;
+			String sd;
+			String sdcard;
+			String basePath = null;			
+			
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+				//emulated or legacy paths are available....
+				if(PATH.startsWith(Constants.EMULATED_PATH)){
+					basePath = PATH.substring(Constants.EMULATED_PATH.length(), PATH.length()); 
+				}else if(PATH.startsWith(Constants.LEGACY_PATH)){
+					basePath = PATH.substring(Constants.LEGACY_PATH.length(), PATH.length());
+				}
+			}
+			
+			//emulated path is not available....
+			if(basePath == null){
+				if(PATH.startsWith("/sdcard")){
+					String str = "/sdcard";
+					basePath = PATH.substring(str.length(), PATH.length());
+				}else if(PATH.startsWith("/mnt/sdcard")){
+					String str = "/mnt/sdcard";
+					basePath = PATH.substring(str.length(), PATH.length());
+				}else if(PATH.startsWith("/storage/sdcard0")){
+					String str = "/storage/sdcard0";
+					basePath = PATH.substring(str.length(), PATH.length());
+				}else if(PATH.startsWith("/storage/sdcard")){
+					String str = "/storage/sdcard";
+					basePath = PATH.substring(str.length(), PATH.length());
+				}else if(PATH.startsWith("/storage/sd")){
+					String str = "/storage/sd";
+					basePath = PATH.substring(str.length(), PATH.length());
+				} 
+			}
+			
+			//pushing the item into db....
+			if(basePath != null){
+				if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+					emulatedPath = Constants.EMULATED_PATH + basePath;
+					legacyPath = Constants.LEGACY_PATH + basePath;
+					db.delete("FAVITEMS", "FILEPATH = ?",new String[]{emulatedPath});
+					db.delete("FAVITEMS", "FILEPATH = ?",new String[]{legacyPath});
+				}					
+				mntPath = "/mnt/sdcard" + basePath;
+				sdPath = "/sdcard" + basePath;
+				sdcard0 = "/storage/sdcard0" + basePath;
+				sd = "/storage/sd" + basePath;
+				sdcard = "/storage/sdcard" + basePath;
+				db.delete("FAVITEMS", "FILEPATH = ?",new String[]{mntPath});
+				db.delete("FAVITEMS", "FILEPATH = ?",new String[]{sd});
+				db.delete("FAVITEMS", "FILEPATH = ?",new String[]{sdcard});
+				db.delete("FAVITEMS", "FILEPATH = ?",new String[]{sdcard0});
+				db.delete("FAVITEMS", "FILEPATH = ?",new String[]{sdPath});
+			}
+		}		
+		return true;
 	}
 	
 	/**
