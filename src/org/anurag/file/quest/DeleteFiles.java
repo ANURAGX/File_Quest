@@ -253,7 +253,9 @@ public class DeleteFiles{
 	}	
 	
 	/**
-	 * 
+	 * this function removes the files from list of file gallery....
+	 * after the file is deleted from the memory....
+	 * so no need to rescan the entire memory to prepare the list....
 	 * @param file 
 	 */
 	synchronized void delete_from_gallery(File file){
@@ -261,46 +263,62 @@ public class DeleteFiles{
 			return;
 		String path = file.getPath();
 		String virtualPath;
-		if(path.startsWith(Constants.EMULATED_PATH)){
-			
+		
+		//checks whether the given path can become the key or not,
+		//if not it makes it a key for the hashmap....
+		if(!path.startsWith(Constants.PATH)){
+			if(path.startsWith(Constants.LEGACY_PATH)){
+				virtualPath = path.substring(Constants.LEGACY_PATH.length(), path.length());
+				path = Constants.PATH + virtualPath ;
+			}else if(path.startsWith(Constants.EMULATED_PATH)){
+				virtualPath = path.substring(Constants.EMULATED_PATH.length(), path.length());
+				path = Constants.PATH + virtualPath ;
+			}
 		}
 		
+		//removes item from music list of file gallery...
 		if(Utils.music.get(path) != null){
 			music_deleted = true;
 			Utils.musicsize -= file.length();
 			Utils.music.remove(path);
 		}	
 		
+		//removes item from app list of file gallery...
 		else if(Utils.apps.get(path) != null){
 			app_deleted = true;
 			Utils.apksize -= file.length();
 			Utils.apps.remove(path);
 		}	
 		
+		//removes item from image list of file gallery...
 		else if(Utils.img.get(path) != null){
 			img_deleted = true;
 			Utils.imgsize -= file.length();
 			Utils.img.remove(path);
 		}	
 		
+		//removes item from video list of file gallery...
 		else if(Utils.vids.get(path) != null){
 			vid_deleted = true;
 			Utils.vidsize -= file.length();
 			Utils.vids.remove(path);
 		}	
 		
+		//removes item from document list of file gallery...
 		else if(Utils.doc.get(path) != null){
 			doc_deleted = true;
 			Utils.docsize -= file.length();
 			Utils.doc.remove(path);
 		}	
 		
+		//removes item from zip list of file gallery...
 		else if(Utils.zip.get(path) != null){
 			zip_deleted = true;
 			Utils.zipsize -= file.length();
 			Utils.zip.remove(path);
 		}	
 		
+		//removes item from unknown list of file gallery...
 		else if(Utils.mis.get(path) != null){
 			mis_deleted = true;
 			Utils.missize -= file.length();
