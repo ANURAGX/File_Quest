@@ -2046,18 +2046,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				final LinearLayout sky = (LinearLayout)findViewById(R.id.cld_skydrv);
 				final LinearLayout mefire = (LinearLayout)findViewById(R.id.cld_mdfire);
 				final LinearLayout sugar = (LinearLayout)findViewById(R.id.cld_sugar);
+				final LinearLayout copy = (LinearLayout)findViewById(R.id.cld_copy);
 				if(drp.getVisibility() == View.VISIBLE){
 					drp.setVisibility(View.GONE);
 					gogl.setVisibility(View.GONE);
 					sky.setVisibility(View.GONE);
 					mefire.setVisibility(View.GONE);
 					sugar.setVisibility(View.GONE);
+					copy.setVisibility(View.GONE);
 				}else{
 					drp.setVisibility(View.VISIBLE);
 					gogl.setVisibility(View.VISIBLE);
 					sky.setVisibility(View.VISIBLE);
 					mefire.setVisibility(View.VISIBLE);
 					sugar.setVisibility(View.VISIBLE);
+					copy.setVisibility(View.VISIBLE);
 				}
 			}
 			break;
@@ -2070,6 +2073,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case R.id.cld_mdfire:
 		case R.id.cld_sugar:	
 		case R.id.cld_skydrv:
+		case R.id.cld_copy:	
 			Toast.makeText(mContext, R.string.coming_soon, Toast.LENGTH_SHORT).show();
 			break;
 		
@@ -2887,6 +2891,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		hiddenItem = new ActionItem(-5000, getString(R.string.sugarsync),getResources().getDrawable(R.drawable.sugar_sync));
 		action.addActionItem(hiddenItem);
 
+		hiddenItem = new ActionItem(-4000, getString(R.string.copy_cld),getResources().getDrawable(R.drawable.copy));
+		action.addActionItem(hiddenItem);
 		hiddenItem = new ActionItem(500,getString(R.string.createhiddenfolder), getResources().getDrawable(R.drawable.ic_launcher_add_new));
 		action.addActionItem(hiddenItem);
 		ActionItem folderItem = new ActionItem(600,getString(R.string.createfolder), getResources().getDrawable(R.drawable.ic_launcher_add_new));
@@ -2960,6 +2966,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						case -7000: 
 						case -6000:
 						case -5000:
+						case -4000:	
 									/*
 								 	* DROPBOX STUFF
 								 	*/

@@ -237,6 +237,7 @@
 	<string name="no_locked_items">No items are locked</string>
 	<string name="mediafire">Mediafire</string>
 	<string name="sugarsync">Sugarsync</string>
+	<string name="copy_cld">Copy</string>
 	<string name="no_file_available">No files available</string>
 	
 	
