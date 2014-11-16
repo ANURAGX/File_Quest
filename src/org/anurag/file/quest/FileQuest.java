@@ -2043,14 +2043,20 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				final LinearLayout drp = (LinearLayout)findViewById(R.id.cld_drp);
 				final LinearLayout gogl = (LinearLayout)findViewById(R.id.cld_gogledrv);
 				final LinearLayout sky = (LinearLayout)findViewById(R.id.cld_skydrv);
+				final LinearLayout mefire = (LinearLayout)findViewById(R.id.cld_mdfire);
+				final LinearLayout sugar = (LinearLayout)findViewById(R.id.cld_sugar);
 				if(drp.getVisibility() == View.VISIBLE){
 					drp.setVisibility(View.GONE);
 					gogl.setVisibility(View.GONE);
 					sky.setVisibility(View.GONE);
+					mefire.setVisibility(View.GONE);
+					sugar.setVisibility(View.GONE);
 				}else{
 					drp.setVisibility(View.VISIBLE);
 					gogl.setVisibility(View.VISIBLE);
 					sky.setVisibility(View.VISIBLE);
+					mefire.setVisibility(View.VISIBLE);
+					sugar.setVisibility(View.VISIBLE);
 				}
 			}
 			break;
@@ -2060,6 +2066,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		case R.id.ftp:
 		case R.id.cld_drp:
 		case R.id.cld_gogledrv:
+		case R.id.cld_mdfire:
+		case R.id.cld_sugar:	
 		case R.id.cld_skydrv:
 			Toast.makeText(mContext, R.string.coming_soon, Toast.LENGTH_SHORT).show();
 			break;
@@ -2871,6 +2879,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 		hiddenItem = new ActionItem(-7000, getString(R.string.skydrive),getResources().getDrawable(R.drawable.ic_launcher_sky_drive));
 		action.addActionItem(hiddenItem);
+		
+		hiddenItem = new ActionItem(-6000, getString(R.string.mediafire),getResources().getDrawable(R.drawable.mediafire));
+		action.addActionItem(hiddenItem);
+		
+		hiddenItem = new ActionItem(-5000, getString(R.string.sugarsync),getResources().getDrawable(R.drawable.sugar_sync));
+		action.addActionItem(hiddenItem);
 
 		hiddenItem = new ActionItem(500,getString(R.string.createhiddenfolder), getResources().getDrawable(R.drawable.ic_launcher_add_new));
 		action.addActionItem(hiddenItem);
@@ -2939,11 +2953,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					 * CLOUD STORAGE OPTIONS
 					 */
 					switch (actionId) {
+					
 						case -10000:
+						case -9000:
+						case -7000: 
+						case -6000:
+						case -5000:
 									/*
 								 	* DROPBOX STUFF
 								 	*/
-									DBoxAuth.DoAuth(FileQuest.this);
+									//DBoxAuth.DoAuth(FileQuest.this);
+							        Toast.makeText(mContext, R.string.coming_soon, Toast.LENGTH_SHORT).show();
 									break;
 									
 						default:
@@ -5156,7 +5176,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									new GetMoveLocation(mContext, size.x*8/9 , itemList , keys);
 									break;
 							case R.id.button_zip_all:
-									new CreateZip(mContext, size.x*8/9, itemList);
+									new CreateZip(mContext, size.x*8/9, itemList , keys);
 									break;
 						}
 					}

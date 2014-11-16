@@ -235,6 +235,11 @@
 	<string name="unlock_all">Unlock all locked items</string>
 	<string name="lock_disabled">Lock disabled till next restart</string>
 	<string name="no_locked_items">No items are locked</string>
+	<string name="mediafire">Mediafire</string>
+	<string name="sugarsync">Sugarsync</string>
+	
+	
+	
 	
 	
 	

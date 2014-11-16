@@ -247,6 +247,62 @@
             			android:layout_height="wrap_content"
             			android:text="@string/dropbox"/>
     			</LinearLayout>
+    	
+    			<!--temprary view....till next update  -->
+    		
+    			<LinearLayout
+    			    android:onClick="onClick"
+    			    android:visibility="gone"
+        			android:id="@+id/cld_mdfire"
+        			android:background="@drawable/button_click"
+        			android:clickable="true"
+        			android:focusable="true" 
+        			android:layout_marginLeft="40dp" 
+        			android:orientation="horizontal" 
+        			android:layout_width="match_parent"
+        			android:layout_height="wrap_content">
+        			<ImageView 
+            			android:background="@drawable/mediafire"
+        				android:layout_width="wrap_content"
+        				android:layout_height="wrap_content"/>
+        
+       		 		<TextView 
+            			android:textColor="@android:color/white"
+            			android:paddingTop="10dp"
+        				android:paddingLeft="10dp"
+            			android:textStyle="bold"
+            			android:layout_width="wrap_content"
+            			android:layout_height="wrap_content"
+            			android:text="@string/mediafire"/>
+    			</LinearLayout>
+    			<!--temprary view....till next update  -->
+    		
+    			<LinearLayout
+    			    android:onClick="onClick"
+    			    android:visibility="gone"
+        			android:id="@+id/cld_sugar"
+        			android:background="@drawable/button_click"
+        			android:clickable="true"
+        			android:focusable="true" 
+        			android:layout_marginLeft="40dp" 
+        			android:orientation="horizontal" 
+        			android:layout_width="match_parent"
+        			android:layout_height="wrap_content">
+        			<ImageView 
+            			android:background="@drawable/sugar_sync"
+        				android:layout_width="wrap_content"
+        				android:layout_height="wrap_content"/>
+        
+       		 		<TextView 
+            			android:textColor="@android:color/white"
+            			android:paddingTop="10dp"
+        				android:paddingLeft="10dp"
+            			android:textStyle="bold"
+            			android:layout_width="wrap_content"
+            			android:layout_height="wrap_content"
+            			android:text="@string/sugarsync"/>
+    			</LinearLayout>
+    	
     		
     
     		<LinearLayout

@@ -78,8 +78,9 @@ public class CreateZip {
 	 * @param ctx
 	 * @param width
 	 * @param list
+	 * @param keys 
 	 */
-	public CreateZip(Context ctx , int width , ConcurrentHashMap<String , Item> list) {
+	public CreateZip(Context ctx , int width , ConcurrentHashMap<String , Item> list, ConcurrentHashMap<String, String> keys) {
 		// TODO Auto-generated constructor stub
 	}
 	
