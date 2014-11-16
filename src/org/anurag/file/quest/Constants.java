@@ -69,7 +69,7 @@ public class Constants {
 	public static ImageView fav;
 	public static ItemDB db;
 	public static DBoxUsers dboxDB;
-	
+	public static boolean disable_lock;
 	
 	
 	/**
@@ -89,7 +89,7 @@ public class Constants {
 	 * HOME opening the home folder that is locked...  
 	 */
 	public static enum MODES { RESET , DELETE , COPY , RENAME , SEND , 
-		ARCHIVE , PASTEINTO , G_OPEN , OPEN , DEFAULT , UNLOCK_ALL , HOME};
+		ARCHIVE , PASTEINTO , G_OPEN , OPEN , DEFAULT , UNLOCK_ALL , HOME , DISABLE_NEXT_RESTART};
 		
 	//This is get reference for which operation the master password was verified....	
 	public static MODES activeMode;

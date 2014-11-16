@@ -107,6 +107,8 @@ public class MasterPassword {
 				msg.setText(ctx.getResources().getString(R.string.sendpasswd));
 			else if(MODE == Constants.MODES.UNLOCK_ALL)
 				msg.setText(ctx.getResources().getString(R.string.unlockpasswd));
+			else if(MODE == Constants.MODES.DISABLE_NEXT_RESTART)
+				msg.setText(ctx.getString(R.string.dis_next_restart));
 			else if(MODE == Constants.MODES.HOME)
 				msg.setText(ctx.getResources().getString(R.string.homepasswd));
 			else if(MODE == Constants.MODES.DEFAULT)
@@ -119,6 +121,7 @@ public class MasterPassword {
 			set.setText(ctx.getString(R.string.ok));
 		}	
 		
+		Constants.activeMode = MODE;
 		set.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -126,8 +129,7 @@ public class MasterPassword {
 				
 				//getting the reference about task for which password
 				//was verified...
-				Constants.activeMode = MODE;
-				
+							
 				if(password == null||MODE==Constants.MODES.RESET){
 					if(pass.getText().toString().length()<3){
 						//password length is not appropriate....
@@ -155,9 +157,8 @@ public class MasterPassword {
 					if(pass.getText().toString().equals(password)){
 						Intent intent = new Intent("FQ_FILE_LOCKED_OR_UNLOCKED");
 						try{
-							//in one case item will always be null...
-							
-							
+							//in some cases item will always be null...
+														
 							if(MODE == Constants.MODES.COPY)
 								intent.putExtra("password_verified", "verified");
 							else if(item.isLocked())
@@ -166,7 +167,8 @@ public class MasterPassword {
 								intent.putExtra("password_verified", "no_need");
 						}catch(NullPointerException e){
 							intent.putExtra("password_verified", "no_need");
-							if(Constants.activeMode == Constants.MODES.UNLOCK_ALL)
+							if(Constants.activeMode == Constants.MODES.UNLOCK_ALL || 
+									Constants.activeMode == Constants.MODES.DISABLE_NEXT_RESTART)
 								intent.putExtra("password_verified", "verified");
 						}
 						
@@ -183,5 +185,39 @@ public class MasterPassword {
 			}
 		});		
 		dialog.show();
+		if(Constants.disable_lock)
+			lock_disabled(ctx, item, dialog, MODE);
+	}
+	
+	/**
+	 * 
+	 * @param ctx
+	 * @param item
+	 * @param dialog
+	 * @param MODE
+	 */
+	private void lock_disabled(Context ctx , Item item ,Dialog dialog , Constants.MODES MODE){
+		Intent intent = new Intent("FQ_FILE_LOCKED_OR_UNLOCKED");
+		try{
+			//in some cases item will always be null...
+										
+			if(MODE == Constants.MODES.COPY)
+				intent.putExtra("password_verified", "verified");
+			else if(item.isLocked())
+				intent.putExtra("password_verified", "verified");
+			else
+				intent.putExtra("password_verified", "no_need");
+		}catch(NullPointerException e){
+			intent.putExtra("password_verified", "no_need");
+			if(Constants.activeMode == Constants.MODES.UNLOCK_ALL || 
+					Constants.activeMode == Constants.MODES.DISABLE_NEXT_RESTART)
+				intent.putExtra("password_verified", "verified");
+		}
+		
+		//It is specific to G_open (gesture open for locked files)
+		if(Constants.activeMode == Constants.MODES.G_OPEN)
+			intent.putExtra("g_open_path", item.getPath());
+		ctx.sendBroadcast(intent);
+		dialog.dismiss();
 	}
 }

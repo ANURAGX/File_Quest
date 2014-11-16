@@ -2078,6 +2078,44 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			}
 			break;
 			
+		case R.id.lckItm:
+			{
+				//displaying the available options in lock .....
+				final LinearLayout disLock = (LinearLayout)findViewById(R.id.dis_next_restart);
+				final LinearLayout unlockAll = (LinearLayout)findViewById(R.id.unlock_all);
+				if(disLock.getVisibility() == View.VISIBLE){
+					disLock.setVisibility(View.GONE);
+					unlockAll.setVisibility(View.GONE);
+				}else{
+					disLock.setVisibility(View.VISIBLE);
+					unlockAll.setVisibility(View.VISIBLE);
+					if(Constants.disable_lock){
+						TextView msg = (TextView)findViewById(R.id.dis_msg);
+						msg.setText(R.string.lock_disabled);
+					}else{
+						TextView msg = (TextView)findViewById(R.id.dis_msg);
+						msg.setText(R.string.dis_next_restart);
+					}
+				}
+			}
+			break;
+			
+		case R.id.dis_next_restart:
+			//disabling the lock till next restart....
+			if(preferences.getString("MASTER_PASSWORD", null) != null)
+				new MasterPassword(mContext, size.x*8/9, null, preferences, Constants.MODES.DISABLE_NEXT_RESTART);
+			else
+				Toast.makeText(mContext, R.string.no_locked_items, Toast.LENGTH_SHORT).show();
+			break;
+			
+		case R.id.unlock_all:
+			//unlocking all items....
+			if(preferences.getString("MASTER_PASSWORD", null) != null)
+				new MasterPassword(mContext, size.x*8/9, null, preferences, Constants.MODES.UNLOCK_ALL);
+			else
+				Toast.makeText(mContext, R.string.no_locked_items, Toast.LENGTH_SHORT).show();
+			break;
+			
 		case R.id.upd_check:			
 			//checking for update....	
 			update_checker();
@@ -4211,7 +4249,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							}	
 							else
 								Toast.makeText(mContext, R.string.unabletounlock, Toast.LENGTH_SHORT).show();
-						}						
+						}else if(Constants.activeMode == Constants.MODES.DISABLE_NEXT_RESTART){
+							//disabling the lock after verifying the password.... 
+							Constants.disable_lock = true;
+							Toast.makeText(mContext, R.string.lock_disabled, Toast.LENGTH_SHORT).show();
+						}
 						else if(CURRENT_ITEM==2){
 							
 							//opening task here...

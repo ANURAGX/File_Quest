@@ -42,6 +42,9 @@ public class StorageUtils {
 		getExternalMemoryPath();
 		getEmulatedPath();
 		getLegacyPath();
+		
+		//lock is enabled by default....
+		Constants.disable_lock = false;
 	}
 	
 	/**

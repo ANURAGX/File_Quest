@@ -231,10 +231,10 @@
 	<string name="update_avail">New update of FILE QUEST is available</string>
 	<string name="delete_frm_ext_sd">Beginning from Android 4.4 Kitkat,it may not possible to remove or rename files on external storage due to change of Android security policy.</string>
 	<string name="delete_frm_ext_sd_title">Cannot delete from external storage!</string>
-	
-	
-	
-	
+	<string name="dis_next_restart">Disable lock till next restart</string>
+	<string name="unlock_all">Unlock all locked items</string>
+	<string name="lock_disabled">Lock disabled till next restart</string>
+	<string name="no_locked_items">No items are locked</string>
 	
 	
 	
