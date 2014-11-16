@@ -215,7 +215,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static ArrayList<Item> rootItemList;
 	private static RootAdapter rootAdapter;
 	private static SDAdapter sdAdapter;
-	private static ArrayList<Item> tempList;
 	
 	
 	static int fPos;
@@ -462,6 +461,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(Utils.update_Needed){
 						new load().execute();
 						Utils.update_Needed = false;
+						if(elementInFocus)
+							element.notifyDataSetChanged();
 						Utils.updateUI();
 					}else if(Utils.fav_Update_Needed){
 						//an item was added or removed to favorite list
@@ -4229,8 +4230,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(CURRENT_ITEM == 2){
 						root.setAdapter(new DBoxAdapter(mContext, DBoxManager.dListSimple));
 					}
-				}else if(ACTION.equalsIgnoreCase("FQ_MOVE_LOCATION")){
-					new MultipleCopyDialog(mContext, tempList, size.x*8/9, it.getStringExtra("move_location"), true);
 				}else if(ACTION.equalsIgnoreCase("FQ_FILE_LOCKED_OR_UNLOCKED")){
 					/**
 					 * item locking and unlocking task is done here....
@@ -4487,10 +4486,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}
 					}
 				}else if(ACTION.equalsIgnoreCase("FQ_COPY")){
-					setAdapter(CURRENT_ITEM);	
-					
-					//after copying or moving files updating the file gallery....
-					Utils.update_Needed = true;
+					if(CURRENT_ITEM == 0){
+						if(elementInFocus)
+							element.notifyDataSetChanged();
+						else{
+							Utils.updateUI();
+						}
+					}else{
+						setAdapter(CURRENT_ITEM);
+						//after copying or moving files updating the file gallery....
+						Utils.update_Needed = true;
+					}					
 				}else if(ACTION.equalsIgnoreCase("FQ_ARCHIVE_CREATED")){
 					setAdapter(CURRENT_ITEM);
 					
@@ -4512,7 +4518,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		filter.addAction("FQ_7Z_OPEN");
 		filter.addAction(Intent.ACTION_UNINSTALL_PACKAGE);
 		filter.addAction("FQ_DROPBOX_OPEN_FOLDER");
-		filter.addAction("FQ_MOVE_LOCATION");
 		filter.addAction("FQ_COPY");
 		filter.addAction("FQ_FILE_LOCKED_OR_UNLOCKED");
 		filter.addAction("FQ_ARCHIVE_CREATED");
@@ -5094,7 +5099,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					public void onClick(View itemView, View clickedView, int position) {
 						// TODO Auto-generated method stub
 						ConcurrentHashMap<String , Item> itemList = null;
-						ConcurrentHashMap<String, String> keys = null;
+						ConcurrentHashMap<String , String> keys = null;
+						keys = null;
 						if(position == 0)
 							itemList = Utils.fav;
 						else if(position==1){
@@ -5125,12 +5131,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							itemList = (Utils.mis);
 							keys = Utils.misKey;
 						}	
-						
-						if(position == 0)
-							fPos = 7;
-						else
-							fPos = position-1;
-						
+												
 						//tells that slide menu was used to delete files from panel
 						delete_from_slider_menu = true;
 						
@@ -5152,7 +5153,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									
 							case R.id.button_move_all:
 									//tempList = itemList;
-									new GetMoveLocation(mContext, size.x*8/9);
+									new GetMoveLocation(mContext, size.x*8/9 , itemList , keys);
 									break;
 							case R.id.button_zip_all:
 									new CreateZip(mContext, size.x*8/9, itemList);
@@ -5174,8 +5175,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					else
 						lsView.setVisibility(View.GONE);
 				}
-			});
-						
+			});						
 	}
 	
 	/**

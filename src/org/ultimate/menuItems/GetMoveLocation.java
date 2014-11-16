@@ -20,15 +20,21 @@
 package org.ultimate.menuItems;
 
 import java.io.File;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Stack;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
+
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,27 +52,36 @@ import android.widget.TextView;
 @SuppressLint("NewApi")
 public class GetMoveLocation {
 
+	private int window_size;
 	private Stack<File> stack;
 	private File file ;
 	private File[] list;
 	private Button go;
 	private TextView t;
-	ImageView image;
-	Context mContext;
-	Dialog dialog;
-	
+	private ImageView image;
+	private Context mContext;
+	private Dialog dialog;
+	private ConcurrentHashMap<String , Item> hashList;
+	private ConcurrentHashMap<String , String> key;
+	private ArrayList<Item> arrList;
 	/**
 	 * 
 	 * @param context
 	 * @param width
+	 * @param keys 
+	 * @param itemList 
 	 * @param edit ,if null means pass the selected path to extract files of an archive...
 	 */
-	public GetMoveLocation(Context context,int width) {
+	public GetMoveLocation(Context context,int width, ConcurrentHashMap<String, Item> itemList, ConcurrentHashMap<String, String> keys) {
 		// TODO Auto-generated constructor stub
 		mContext = context;
 		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
 		dialog.setContentView(R.layout.open_file_dialog);
 		dialog.getWindow().getAttributes().width = width;
+		hashList = itemList;
+		key = keys;
+		arrList = new ArrayList<Item>();
+		window_size = width;
 		onCreate();
 	}
 	
@@ -125,10 +140,17 @@ public class GetMoveLocation {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				{
-					Intent it = new Intent("FQ_MOVE_LOCATION");
-					it.putExtra("move_location", file.getAbsolutePath());
-					mContext.sendBroadcast(it);
+					int len = hashList.size();
+					for(int i = 0 ; i < len ; ++i){
+						try{
+							arrList.add(hashList.get(key.get(""+i)));
+						}catch(NullPointerException e){
+							continue;
+						}
+					}
 					dialog.dismiss();
+					
+					new MultipleCopyDialog(mContext, arrList, window_size, file.getAbsolutePath(), true);
 				}				
 			}
 		});
