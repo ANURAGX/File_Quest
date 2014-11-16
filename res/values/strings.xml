@@ -237,6 +237,7 @@
 	<string name="no_locked_items">No items are locked</string>
 	<string name="mediafire">Mediafire</string>
 	<string name="sugarsync">Sugarsync</string>
+	<string name="no_file_available">No files available</string>
 	
 	
 	
@@ -248,7 +249,6 @@
 	
 	<!-- TASKER ACTIVITY STRINGS..... -->
 	<string name="startupfoldernotfound">Startup folder not found</string>
-	<string name="nofilesavailable">Empty Folder</string>
 	<string name="noappsinstalled">No apps are installed</string>
 	<string name="appstore">Your app store</string>
 	<string name="filegallery">File Gallery</string>

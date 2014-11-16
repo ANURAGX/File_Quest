@@ -44,6 +44,7 @@ import org.anurag.compress.TarFileProperties;
 import org.anurag.compress.TarManager;
 import org.anurag.compress.TarObj;
 import org.anurag.compress.ZipAdapter;
+import org.anurag.compress.ZipGallery;
 import org.anurag.compress.ZipManager;
 import org.anurag.compress.ZipObj;
 import org.anurag.dropbox.DBoxAdapter;
@@ -4509,19 +4510,23 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					if(CURRENT_ITEM == 0){
 						if(elementInFocus)
 							element.notifyDataSetChanged();
-						else{
-							Utils.updateUI();
-						}
+						Utils.updateUI();
 					}else{
 						setAdapter(CURRENT_ITEM);
 						//after copying or moving files updating the file gallery....
 						Utils.update_Needed = true;
 					}					
 				}else if(ACTION.equalsIgnoreCase("FQ_ARCHIVE_CREATED")){
-					setAdapter(CURRENT_ITEM);
-					
-					//after creating zipped file updating the file gallery....
-					Utils.update_Needed = true;
+					if(CURRENT_ITEM == 0){
+						if(elementInFocus)
+							element.notifyDataSetChanged();
+						Utils.updateUI();
+					}
+					else{
+						setAdapter(CURRENT_ITEM);
+						//after creating zipped file updating the file gallery....
+						Utils.update_Needed = true;
+					}					
 				}
 			}
 		};
@@ -5176,7 +5181,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									new GetMoveLocation(mContext, size.x*8/9 , itemList , keys);
 									break;
 							case R.id.button_zip_all:
-									new CreateZip(mContext, size.x*8/9, itemList , keys);
+									new ZipGallery(mContext, size.x*8/9, itemList, keys , position);
 									break;
 						}
 					}
