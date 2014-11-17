@@ -2651,6 +2651,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							try{
 								boolean locked = false;
 								boolean fav = false;
+								
+								file2.getFile().renameTo(new File(name));
+								
 								//after renaming file ,if it was locked again locking it....
 								if(file2.isLocked()){
 									locked = true;
@@ -2665,9 +2668,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									Constants.db.deleteFavItem(file2.getPath());
 									Constants.db.insertNodeToFav(name);
 								}
-								
-								file2.getFile().renameTo(new File(name));
-								
 								if(fav)
 									file2.setFavStatus(true);
 								

@@ -28,6 +28,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
+import android.text.TextUtils;
 
 
 /**
@@ -137,15 +138,17 @@ public class ItemDB extends SQLiteOpenHelper{
 						if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
 							emulatedPath = Constants.EMULATED_PATH + basePath;
 							legacyPath = Constants.LEGACY_PATH + basePath;
-							if(new File(emulatedPath).exists()){
-								values.put("FILEPATH", emulatedPath);
-								db.insert("ITEMS", null , values);
-							}
+							if(!TextUtils.equals(PATH, emulatedPath))	
+								if(new File(emulatedPath).exists()){
+									values.put("FILEPATH", emulatedPath);
+									db.insert("ITEMS", null , values);
+								}
 							
-							if(new File(legacyPath).exists()){
-								values.put("FILEPATH", legacyPath);
-								db.insert("ITEMS", null , values);
-							}
+							if(!TextUtils.equals(PATH, legacyPath))
+								if(new File(legacyPath).exists()){
+									values.put("FILEPATH", legacyPath);
+									db.insert("ITEMS", null , values);
+								}
 						}	
 						
 						mntPath = "/mnt/sdcard" + basePath;
@@ -154,30 +157,36 @@ public class ItemDB extends SQLiteOpenHelper{
 						sd = "/storage/sd" + basePath;
 						sdcard = "/storage/sdcard" + basePath;
 						
-						if(new File(mntPath).exists()){
-							values.put("FILEPATH", mntPath);
-							db.insert("ITEMS", null , values);
-						}
+						if(!TextUtils.equals(PATH, mntPath))
+							if(new File(mntPath).exists()){
+								values.put("FILEPATH", mntPath);
+								db.insert("ITEMS", null , values);
+							}
 						
-						if(new File(sdPath).exists()){
-							values.put("FILEPATH", sdPath);
-							db.insert("ITEMS", null , values);
-						}
 						
-						if(new File(sdcard0).exists()){
-							values.put("FILEPATH", sdcard0);
-							db.insert("ITEMS", null , values);
-						}
+						if(!TextUtils.equals(PATH, sdPath))
+							if(new File(sdPath).exists()){
+								values.put("FILEPATH", sdPath);
+								db.insert("ITEMS", null , values);
+							}
 						
-						if(new File(sd).exists()){
-							values.put("FILEPATH", sd);
-							db.insert("ITEMS", null , values);
-						}
+						if(!TextUtils.equals(PATH, sdcard0))
+							if(new File(sdcard0).exists()){
+								values.put("FILEPATH", sdcard0);
+								db.insert("ITEMS", null , values);
+							}
+												
+						if(!TextUtils.equals(PATH, sd))
+							if(new File(sd).exists()){
+								values.put("FILEPATH", sd);
+								db.insert("ITEMS", null , values);
+							}
 						
-						if(new File(sdcard).exists()){
-							values.put("FILEPATH", sdcard);
-							db.insert("ITEMS", null , values);
-						}
+						if(!TextUtils.equals(PATH, sdcard))
+							if(new File(sdcard).exists()){
+								values.put("FILEPATH", sdcard);
+								db.insert("ITEMS", null , values);
+							}
 					}
 				}		
 		}		
@@ -185,6 +194,7 @@ public class ItemDB extends SQLiteOpenHelper{
 	}
 	
 	/**
+	 *
 	 * method to add the item in fav db...
 	 * @param PATH
 	 * @param locked
@@ -256,16 +266,18 @@ public class ItemDB extends SQLiteOpenHelper{
 						if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
 							emulatedPath = Constants.EMULATED_PATH + basePath;
 							legacyPath = Constants.LEGACY_PATH + basePath;
-							if(new File(emulatedPath).exists()){
-								values.put("FILEPATH", emulatedPath);
-								values.put("DUP", 1);
-								db.insert("FAVITEMS", null , values);
-							}
+							if(!TextUtils.equals(PATH, emulatedPath))
+								if(new File(emulatedPath).exists()){
+									values.put("FILEPATH", emulatedPath);
+									values.put("DUP", 1);
+									db.insert("FAVITEMS", null , values);
+								}
 							
-							if(new File(legacyPath).exists()){
-								values.put("FILEPATH", legacyPath);
-								values.put("DUP", 1);
-								db.insert("FAVITEMS", null , values);
+							if(!TextUtils.equals(PATH, legacyPath))
+								if(new File(legacyPath).exists()){
+									values.put("FILEPATH", legacyPath);
+									values.put("DUP", 1);
+									db.insert("FAVITEMS", null , values);
 							}
 						}	
 						
@@ -275,35 +287,42 @@ public class ItemDB extends SQLiteOpenHelper{
 						sd = "/storage/sd" + basePath;
 						sdcard = "/storage/sdcard" + basePath;
 						
-						if(new File(mntPath).exists()){
-							values.put("FILEPATH", mntPath);
-							values.put("DUP", 1);
-							db.insert("FAVITEMS", null , values);
-						}
+						if(!TextUtils.equals(PATH, mntPath))
+							if(new File(mntPath).exists()){
+								values.put("FILEPATH", mntPath);
+								values.put("DUP", 1);
+								db.insert("FAVITEMS", null , values);
+							}
 						
-						if(new File(sdPath).exists()){
-							values.put("FILEPATH", sdPath);
-							values.put("DUP", 1);
-							db.insert("FAVITEMS", null , values);
-						}
 						
-						if(new File(sdcard0).exists()){
-							values.put("FILEPATH", sdcard0);
-							values.put("DUP", 1);
-							db.insert("FAVITEMS", null , values);
-						}
+						if(!TextUtils.equals(PATH, sdPath))
+							if(new File(sdPath).exists()){
+								values.put("FILEPATH", sdPath);
+								values.put("DUP", 1);
+								db.insert("FAVITEMS", null , values);
+							}
 						
-						if(new File(sd).exists()){
-							values.put("FILEPATH", sd);
-							values.put("DUP", 1);
-							db.insert("FAVITEMS", null , values);
-						}
 						
-						if(new File(sdcard).exists()){
-							values.put("FILEPATH", sdcard);
-							values.put("DUP", 1);
-							db.insert("FAVITEMS", null , values);
-						}
+						if(!TextUtils.equals(PATH, sdcard0))
+							if(new File(sdcard0).exists()){
+								values.put("FILEPATH", sdcard0);
+								values.put("DUP", 1);
+								db.insert("FAVITEMS", null , values);
+							}
+												
+						if(!TextUtils.equals(PATH,sd))
+							if(new File(sd).exists()){
+								values.put("FILEPATH", sd);
+								values.put("DUP", 1);
+								db.insert("FAVITEMS", null , values);
+							}
+												
+						if(!TextUtils.equals(PATH, sdcard))
+							if(new File(sdcard).exists()){
+								values.put("FILEPATH", sdcard);
+								values.put("DUP", 1);
+								db.insert("FAVITEMS", null , values);
+							}
 					}
 				}			
 			db.close();
