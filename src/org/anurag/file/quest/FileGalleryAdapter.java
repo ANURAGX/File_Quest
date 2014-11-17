@@ -81,7 +81,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 	@Override
 	public Object getItem(int arg0) {
 		// TODO Auto-generated method stub
-		return list.get(arg0);
+		return list.get(keys.get(""+arg0));
 	}
 
 	@Override

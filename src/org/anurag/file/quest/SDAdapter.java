@@ -41,9 +41,9 @@ import android.widget.Toast;
 
 
 public class SDAdapter extends BaseAdapter{
-	private static HashMap<String, Drawable> apkList;
-	private static HashMap<String, Bitmap> imgList;
-	private static HashMap<String, Bitmap> musicList;
+	private HashMap<String, Drawable> apkList;
+	private HashMap<String, Bitmap> imgList;
+	private HashMap<String, Bitmap> musicList;
 	Bitmap image;
 	Holder h;
 	public static boolean MULTI_SELECT;

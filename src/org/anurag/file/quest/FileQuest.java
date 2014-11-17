@@ -947,7 +947,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						public boolean onItemLongClick(AdapterView<?> arg0,View arg1, int position, long arg3) {
 							if (elementInFocus) {
 								if (SEARCH_FLAG)
-									file0 = searchList.get(position);
+									file0 = (Item) LIST_VIEW_3D.getAdapter().getItem(position);
 								else
 									file0 = getItemFromCategory(fPos, position);
 								
@@ -1063,7 +1063,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				public void onItemClick(AdapterView<?> arg0, View arg1,final int position, long id) {
 					if (elementInFocus) {
 						if (SEARCH_FLAG)
-							file0 = searchList.get(position);
+							file0 = (Item) LIST_VIEW_3D.getAdapter().getItem(position);
 						else
 							file0 = getItemFromCategory(fPos, position);
 						
@@ -2666,19 +2666,22 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				// DISPLAYS LIST THAT IS APPLICABLE TO ONLY ALL FILE PANEL
 
 				QuickAction ac = new QuickAction(mContext);
-				ActionItem i = new ActionItem(8, getString(R.string.jmpmusic),getResources().getDrawable(R.drawable.ic_launcher_music));
+				ActionItem i = new ActionItem(7, getString(R.string.jmpfav),getResources().getDrawable(R.drawable.favorite_slider));
+				ac.addActionItem(i);
+				
+				i = new ActionItem(8, getString(R.string.jmpmusic),getResources().getDrawable(R.drawable.ic_launcher_music));
 				ac.addActionItem(i);
 
 				i = new ActionItem(9, getString(R.string.jmpapk),getResources().getDrawable(R.drawable.ic_launcher_apk));
 				ac.addActionItem(i);
 
-				i = new ActionItem(10, getString(R.string.jmpdocs),getResources().getDrawable(R.drawable.ic_launcher_ppt));
+				i = new ActionItem(10, getString(R.string.jmpimg),getResources().getDrawable(R.drawable.ic_launcher_images));
 				ac.addActionItem(i);
-
-				i = new ActionItem(11, getString(R.string.jmpimg),getResources().getDrawable(R.drawable.ic_launcher_images));
+				
+				i = new ActionItem(11, getString(R.string.jmpvids),getResources().getDrawable(R.drawable.ic_launcher_video));
 				ac.addActionItem(i);
-
-				i = new ActionItem(12, getString(R.string.jmpvids),getResources().getDrawable(R.drawable.ic_launcher_video));
+				
+				i = new ActionItem(12, getString(R.string.jmpdocs),getResources().getDrawable(R.drawable.ic_launcher_ppt));
 				ac.addActionItem(i);
 
 				i = new ActionItem(13, getString(R.string.jmpzip),getResources().getDrawable(R.drawable.ic_launcher_zip_it));
@@ -3014,17 +3017,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					&& (CURRENT_ITEM == 1 || CURRENT_ITEM == 2 || CURRENT_ITEM == 0)) {
 				setAdapter(CURRENT_ITEM);
 				mVFlipper.showNext();
-				if (CURRENT_ITEM == 0) {
-					mFlipperBottom.showNext();
-				}
 				SEARCH_FLAG = RENAME_COMMAND = COPY_COMMAND = CUT_COMMAND = CREATE_FILE = false;
-				if (elementInFocus) {
+				/*if (elementInFocus) {
 					// LIST_VIEW_3D.setAdapter(adapter);
 					elementInFocus = false;
 					LIST_VIEW_3D.setVisibility(View.GONE);
 					FILE_GALLEY.setVisibility(View.VISIBLE);
 					indicator.notifyDataSetChanged();
-				}
+				}*/
 			} else if (CURRENT_ITEM == 0 && elementInFocus) {
 				elementInFocus = false;
 				//resetPager();
@@ -3292,80 +3292,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	public void onItemClick(QuickAction source, int pos, int actionId) {
 		CURRENT_ITEM = mViewPager.getCurrentItem();
 		switch (actionId) {
-		case 1:
-			// IF CURRENT ITEM IS 0 AND CATEGORIES ARE DIAPLAYED
-			// THEN USER SELECTS FILTER BUTTON,IT SHOWS 7 OPTION
-			// FIRST OPTION IS CASE 1
-			// SEARCH_FLAG = true;
-			load_FIle_Gallery(0);
-			search();
-			mVFlipper.showNext();
-			break;
-		case 2:
-			// IF CURRENT ITEM IS 0 AND CATEGORIES ARE DIAPLAYED
-			// THEN USER SELECTS FILTER BUTTON,IT SHOWS 7 OPTION
-			// SECOND OPTION IS CASE 2
-			// SEARCH_FLAG = true;
-			load_FIle_Gallery(1);
-			search();
-			mVFlipper.showNext();
-			break;
-		case 3:
-			// IF CURRENT ITEM IS 0 AND CATEGORIES ARE DIAPLAYED
-			// THEN USER SELECTS FILTER BUTTON,IT SHOWS 7 OPTION
-			// THIRT OPTION IS CASE 3
-			// SEARCH_FLAG = true;
-			load_FIle_Gallery(2);
-			search();
-			mVFlipper.showNext();
-			break;
-
-		case 4:
-			// IF CURRENT ITEM IS 0 AND CATEGORIES ARE DIAPLAYED
-			// THEN USER SELECTS FILTER BUTTON,IT SHOWS 7 OPTION
-			// Fourth OPTION IS CASE 4
-			// SEARCH_FLAG = true;
-			load_FIle_Gallery(3);
-			search();
-			mVFlipper.showNext();
-			break;
-
-		case 5:
-			// IF CURRENT ITEM IS 0 AND CATEGORIES ARE DIAPLAYED
-			// THEN USER SELECTS FILTER BUTTON,IT SHOWS 7 OPTION
-			// FIFTH OPTION IS CASE 5
-			// SEARCH_FLAG = true;
-			load_FIle_Gallery(4);
-			search();
-			mVFlipper.showNext();
-			break;
-
-		case 6:
-			// IF CURRENT ITEM IS 0 AND CATEGORIES ARE DIAPLAYED
-			// THEN USER SELECTS FILTER BUTTON,IT SHOWS 7 OPTION
-			// SIXTH OPTION IS CASE 6
-			// SEARCH_FLAG = true;
-			load_FIle_Gallery(5);
-			search();
-			mVFlipper.showNext();
-			break;
-
+		
 		case 7:
-			// IF CURRENT ITEM IS 0 AND CATEGORIES ARE DIAPLAYED
-			// THEN USER SELECTS FILTER BUTTON,IT SHOWS 7 OPTION
-			// SEVENTH OPTION IS CASE 7
-			// SEARCH_FLAG = true;
-			load_FIle_Gallery(6);
-			search();
-			mVFlipper.showNext();
+			load_FIle_Gallery((fPos = 0));
 			break;
-
 		case 8:
 
 			// IF CURRENT ITEM IS 0 AND USER SELECTS JUMP TO BUTTON
 			// THEN SEVEN LOCATIONS ARE SHOWN
 			// FIRST LOCATION IS CASE 8
-			load_FIle_Gallery(0);
+			load_FIle_Gallery((fPos = 1));
 			break;
 
 		case 9:
@@ -3376,42 +3312,42 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			// elementInFocus = true;
 			// media.setAdapter(new FileGalleryAdapter(mContext,
 			// R.layout.row_list_1, mediaFileList));
-			load_FIle_Gallery(1);
+			load_FIle_Gallery((fPos = 2));
 			break;
 
 		case 10:
 			// IF CURRENT ITEM IS 0 AND USER SELECTS JUMP TO BUTTON
 			// THEN SEVEN LOCATIONS ARE SHOWN
 			// THIRD LOCATION IS CASE 10
-			load_FIle_Gallery(2);
+			load_FIle_Gallery((fPos = 3));
 			break;
 
 		case 11:
 			// IF CURRENT ITEM IS 0 AND USER SELECTS JUMP TO BUTTON
 			// THEN SEVEN LOCATIONS ARE SHOWN
 			// FOURTH LOCATION IS CASE 11
-			load_FIle_Gallery(3);
+			load_FIle_Gallery((fPos = 4));
 			break;
 
 		case 12:
 			// IF CURRENT ITEM IS 0 AND USER SELECTS JUMP TO BUTTON
 			// THEN SEVEN LOCATIONS ARE SHOWN
 			// FIFTH LOCATION IS CASE 12
-			load_FIle_Gallery(4);
+			load_FIle_Gallery((fPos = 5));
 			break;
 
 		case 13:
 			// IF CURRENT ITEM IS 0 AND USER SELECTS JUMP TO BUTTON
 			// THEN SEVEN LOCATIONS ARE SHOWN
 			// SIXTH LOCATION IS CASE 13
-			load_FIle_Gallery(5);
+			load_FIle_Gallery((fPos = 6));
 			break;
 
 		case 14:
 			// IF CURRENT ITEM IS 0 AND USER SELECTS JUMP TO BUTTON
 			// THEN SEVEN LOCATIONS ARE SHOWN
 			// SEVENTH LOCATION IS CASE 14
-			load_FIle_Gallery(6);
+			load_FIle_Gallery((fPos = 7));
 			break;		
 		}
 	}
@@ -3451,6 +3387,12 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private void search(){
 		// TODO Auto-generated method stub
 				try{
+					
+					final ConcurrentHashMap<String , Item> list = new ConcurrentHashMap<String , Item>();
+					final ConcurrentHashMap<String , String> key = new ConcurrentHashMap<String , String>();
+					final ConcurrentHashMap<String , Item> lsTouse = getCategoryList(fPos);
+					final ConcurrentHashMap<String , String> keysTouse = getKeys(fPos);
+					
 					if(searchList == null)
 						searchList = new ArrayList<Item>();
 					else
@@ -3476,14 +3418,18 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						@Override
 						public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,int arg3) {
 							// TODO Auto-generated method stub
-							searchList.clear();
+							if(CURRENT_ITEM == 0){
+								list.clear();
+								key.clear();
+							}else
+								searchList.clear();
 						}
 						
 						@Override
 						public void afterTextChanged(final Editable ed) {
 							// TODO Auto-generated method stub
 							new AsyncTask<Void, Void, Void>() {
-								
+								int counter = 0;
 								@Override
 								protected void onPostExecute(Void result) {
 									// TODO Auto-generated method stub
@@ -3494,7 +3440,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 										else if(CURRENT_ITEM == 1)
 											simple.setAdapter(new RootAdapter(mContext,searchList));
 										else if(CURRENT_ITEM == 0){
-											//LIST_VIEW_3D.setAdapter(new FileGalleryAdapter(mContext , searchList));
+											LIST_VIEW_3D.setAdapter(new FileGalleryAdapter(mContext, list, key));
 										}	
 									}catch(Exception e){
 										
@@ -3535,11 +3481,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 										}
 									}else if(CURRENT_ITEM == 0){
 										String text = ed.toString().toLowerCase();
-										int len = getCategoryList(fPos).size();
+										int len = lsTouse.size();
 										for(int i=0;i<len;++i){
 											try{
-												if(getCategoryList(fPos).get(i).getName().toLowerCase().contains(text))
-													searchList.add(getCategoryList(fPos).get(i));
+												Item itm = lsTouse.get(keysTouse.get(""+i));
+												if(itm.getName().toLowerCase().contains(text)){
+													list.put(itm.getPath(), itm);
+													key.put(""+counter++, itm.getPath());
+												}	
 											}catch(Exception e){
 												
 											}
@@ -3850,7 +3799,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @param con
 	 */
 	public static void load_FIle_Gallery(final int mode) {
-		elementInFocus = true;
+		if(!elementInFocus)
+			elementInFocus = true;
+		else{
+			mFlipperBottom.showNext();
+		}
 		try{
 			if(mode == 0)
 				element = new FileGalleryAdapter(mContext, Utils.fav , getKeys(mode));

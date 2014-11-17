@@ -61,8 +61,8 @@
         <item>Music </item>
         <item>Apps </item>
         <item>Images</item>
-        <item>Documents</item>
         <item>Videos</item>
+        <item>Documents</item>
         <item>Archives</item>
         <item>Unknown</item>
     </string-array>
@@ -275,14 +275,15 @@
 	<string name="fileexists">File with same name already exists</string>
 	<string name="renamed">Successfully renamed to : </string>
 	<string name="entervalidname">Enter a valid name</string>
-	<string name="jmpmusic">Jump to music files</string>
-	<string name="jmpvids">Jump to video files</string>
-	<string name="jmpmarch">Jump to archive files</string>
-	<string name="jmpdocs">Jump to document files</string>
-	<string name="jmpzip">Jump to zip files</string>
-	<string name="jmpapk">Jump to apk files</string>
-	<string name="jmpmisc">Jump to Unknown files</string>
-    <string name="jmpimg">Jump to image files</string>
+	<string name="jmpfav">Jump to favorite</string>
+	<string name="jmpmusic">Jump to music</string>
+	<string name="jmpvids">Jump to video</string>
+	<string name="jmpmarch">Jump to archive</string>
+	<string name="jmpdocs">Jump to document</string>
+	<string name="jmpzip">Jump to archive</string>
+	<string name="jmpapk">Jump to apps</string>
+	<string name="jmpmisc">Jump to unknown</string>
+    <string name="jmpimg">Jump to image</string>
     <string name="pastehere">Paste here</string>
     <string name="jmpdown">Jump to download folder</string>
     <string name="jmpcam">Jump to camera folder</string>
