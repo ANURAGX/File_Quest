@@ -166,7 +166,7 @@ public class AdjusTranDialog {
 				po = 1.0f;
 			
 			if(FileQuest.TRANSPARENCY_LEVEL == po)
-				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_multi_select));
+				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.selected));
 			else
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_appreance));
 			return convert;

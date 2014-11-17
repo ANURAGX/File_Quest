@@ -146,7 +146,7 @@ public class StartupDirDialog {
 			g.txt.setText(list[arg0]);
 			if(arg0 == 2){
 				if(FileQuest.ENABLE_ON_LAUNCH)
-					g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_multi_select));
+					g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.selected));
 				else
 					g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_disabled));
 			}	

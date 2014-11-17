@@ -62,7 +62,7 @@
     	    android:layout_width="50dp"
     	    android:layout_height="30dp"
     	    android:paddingBottom="20dp"
-    	    android:background="@drawable/ic_launcher_multi_select" />
+    	    android:background="@drawable/selected" />
     	</LinearLayout>
        
    </LinearLayout>

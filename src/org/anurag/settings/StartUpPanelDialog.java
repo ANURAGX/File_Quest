@@ -140,7 +140,7 @@ public class StartUpPanelDialog {
 				g = (grp) convert.getTag();
 			g.txt.setText(list[arg0]);
 			if(FileQuest.CURRENT_PREF_ITEM == arg0)
-				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_multi_select));
+				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.selected));
 			else
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_startup));
 			return convert;
