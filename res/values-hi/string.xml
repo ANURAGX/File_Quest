@@ -216,8 +216,6 @@
 	<string name="showinguserapps">अब यूजर ऐप्प्स को दिखाया जा रहा है</string>
 	<string name="showingsystemapps">अब सिस्टम ऐप्प्स को दिखाया जा रहा है</string>
 	<string name="showinguserandsystemapps">अब दोनों प्रकार के ऐप्प्स  को दिखाया जा रहा है</string>
-	<string name="foldercreated">नया फोल्डर बनाया गया : </string>
-	<string name="foldernotcreated">फोल्डर बनाने में अशक्षम</string>
 	<string name="renamed">सफलतापूर्वक नाम बदला गया : </string>
 	<string name="fileexists">इस नाम से एक फाइल पहले से मौजूद है</string>
 	<string name="entervalidname">एक मान्य नाम दर्ज करें</string>

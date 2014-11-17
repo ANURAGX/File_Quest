@@ -270,8 +270,8 @@
 	<string name="showinguserapps">Now showing user apps</string>
 	<string name="showingsystemapps">Now showing system apps</string>
 	<string name="showinguserandsystemapps">Now showing user and system apps</string>
-	<string name="foldercreated">Folder created at : </string>
-	<string name="foldernotcreated">Failed to create folder</string>
+	<string name="item_created">Item successfully created</string>
+	<string name="creation_failed">Failed to create item</string>
 	<string name="fileexists">File with same name already exists</string>
 	<string name="renamed">Successfully renamed to : </string>
 	<string name="entervalidname">Enter a valid name</string>

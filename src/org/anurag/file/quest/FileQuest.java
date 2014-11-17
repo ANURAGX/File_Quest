@@ -2468,7 +2468,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						if (CURRENT_ITEM == 1) {
 							try{
 								if (new File(name).mkdir()) {
-									Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_LONG).show();
+									Toast.makeText(mContext,getString(R.string.item_created), Toast.LENGTH_LONG).show();
 									setAdapter(CURRENT_ITEM);
 								} else{
 									/**
@@ -2476,19 +2476,19 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									 */
 									LinuxShell.execute("mkdir " + name + "\n");
 									if (new File(name).exists()) {
-										Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_SHORT).show();
+										Toast.makeText(mContext,getString(R.string.item_created), Toast.LENGTH_SHORT).show();
 										setAdapter(CURRENT_ITEM);
 									} 
 								}
 							}catch(Exception e){
-								Toast.makeText(mContext,getString(R.string.foldernotcreated),Toast.LENGTH_SHORT).show();
+								Toast.makeText(mContext,getString(R.string.creation_failed),Toast.LENGTH_SHORT).show();
 							}
 						} else if (CURRENT_ITEM == 2) {
 							if (new File(name).mkdir()) {
-								Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_LONG).show();
+								Toast.makeText(mContext,getString(R.string.item_created), Toast.LENGTH_LONG).show();
 								setAdapter(CURRENT_ITEM);
 							} else if (!new File(name).mkdir())
-								Toast.makeText(mContext,getString(R.string.foldernotcreated),Toast.LENGTH_LONG).show();
+								Toast.makeText(mContext,getString(R.string.creation_failed),Toast.LENGTH_LONG).show();
 						}
 						RENAME_COMMAND = CREATE_FILE = SEARCH_FLAG = CUT_COMMAND = COPY_COMMAND = false;
 					}
@@ -2499,7 +2499,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							
 							try{
 								if (new File(name).mkdir()) {
-									Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_LONG).show();
+									Toast.makeText(mContext,getString(R.string.creation_failed), Toast.LENGTH_LONG).show();
 									setAdapter(CURRENT_ITEM);
 								} else{
 									/**
@@ -2507,25 +2507,25 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									 */
 									LinuxShell.execute("mkdir " + name + "\n");
 									if (new File(name).exists()) {
-										Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_SHORT).show();
+										Toast.makeText(mContext,getString(R.string.item_created), Toast.LENGTH_SHORT).show();
 										setAdapter(CURRENT_ITEM);
 									} 
 								}
 							}catch(Exception e){
-								Toast.makeText(mContext,getString(R.string.foldernotcreated),Toast.LENGTH_SHORT).show();
+								Toast.makeText(mContext,getString(R.string.creation_failed),Toast.LENGTH_SHORT).show();
 							}							
 						} else if (CURRENT_ITEM == 2) {
 							if (new File(name).mkdir()) {
-								Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_LONG).show();
+								Toast.makeText(mContext,getString(R.string.item_created), Toast.LENGTH_LONG).show();
 								setAdapter(CURRENT_ITEM);
 							} else if (!new File(name).mkdir())
-								Toast.makeText(mContext,getString(R.string.foldernotcreated),Toast.LENGTH_LONG).show();
+								Toast.makeText(mContext,getString(R.string.creation_failed),Toast.LENGTH_LONG).show();
 						}
 						RENAME_COMMAND = CREATE_FILE = SEARCH_FLAG = CUT_COMMAND = COPY_COMMAND = false;
 					}
 					// CREATE AN EMPTY FILE
 					else if (CREATE_FLAG == 3) {
-						try {
+						/*try {
 
 							if (CURRENT_ITEM == 1) {
 								name = RootManager.getCurrentDirectory() + "/"	+ editBox.getText().toString();
@@ -2538,12 +2538,68 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								}
 							} else if (CURRENT_ITEM == 2) {
 								if (new File(name).createNewFile()) {
-									Toast.makeText(mContext,getString(R.string.foldercreated)+ name, Toast.LENGTH_LONG).show();
+									
 									setAdapter(CURRENT_ITEM);
 								}
 							}
 						} catch (IOException e) {
-							Toast.makeText(mContext,getString(R.string.foldernotcreated),Toast.LENGTH_LONG).show();
+							
+						}*/
+						name = editBox.getText().toString();
+						if(CURRENT_ITEM == 1){
+							name = RootManager.getCurrentDirectory() + "/" + name;
+							File chFile = new File(RootManager.getCurrentDirectory());
+							if(new File(name).exists())//file exists....
+								Toast.makeText(mContext, R.string.fileexists, Toast.LENGTH_SHORT).show();
+							else{
+								if(!(chFile.canWrite())){
+									/*try{
+										//needs root permission....
+										LinuxShell.execute("cat > " + name);
+										setAdapter(CURRENT_ITEM);
+									}catch(Exception e){
+										Toast.makeText(mContext,getString(R.string.creation_failed),Toast.LENGTH_LONG).show();
+									}*/
+									Toast.makeText(mContext,getString(R.string.creation_failed),Toast.LENGTH_LONG).show();
+								}else{
+									chFile = new File(name);
+									try {
+										chFile.createNewFile();
+										Toast.makeText(mContext,getString(R.string.item_created), Toast.LENGTH_LONG).show();
+										
+										//adding item to unknown file list....
+										Item it = new Item(chFile, Utils.misImg, Utils.misType, "");
+										Utils.mis.put(it.getPath(), it);
+										Utils.misKey.put(""+Utils.misCounter++, it.getPath());
+										Utils.update_Needed = true;
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										Toast.makeText(mContext,getString(R.string.creation_failed),Toast.LENGTH_LONG).show();
+									}
+								}
+							}
+						}else if(CURRENT_ITEM == 2){
+							name = SDManager.getCurrentDirectory() + "/" + name;
+							File chFile = new File(SDManager.getCurrentDirectory());
+							if(new File(name).exists())
+								//file exists....
+								Toast.makeText(mContext, R.string.fileexists, Toast.LENGTH_SHORT).show();
+							else{
+								chFile = new File(name);
+								try {
+									chFile.createNewFile();
+									Toast.makeText(mContext,getString(R.string.item_created), Toast.LENGTH_LONG).show();
+									
+									//adding item to unknown file list....
+									Item it = new Item(chFile, Utils.misImg, Utils.misType, "");
+									Utils.mis.put(it.getPath(), it);
+									Utils.misKey.put(""+Utils.misCounter++, it.getPath());
+									Utils.update_Needed = true;
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									Toast.makeText(mContext,getString(R.string.creation_failed),Toast.LENGTH_LONG).show();
+								}
+							}
 						}
 					}
 					// AFTER CREATING FILES OR FOLDER AGAIN FLIPPER IS SET TO
