@@ -4135,8 +4135,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						if(CURRENT_ITEM == 0){
 							if(elementInFocus)
 								element.notifyDataSetChanged();
-							else
-								Utils.updateUI();
+							Utils.updateUI();
 						}	
 						else
 							Utils.update_Needed = true;
@@ -4151,16 +4150,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						//file gallery has to be updated after delete operation....
 						Utils.update_Needed = true;
 					}
-					else if(CURRENT_ITEM == 0 && elementInFocus){
-						if(!FileGalleryAdapter.MULTI_SELECT){
-							//deleting single item from UI...
-							getCategoryList(fPos).remove(dPos);
-							LIST_VIEW_3D.setAdapter(element);
-						}else{
-							//multi select option was enabled and delete operation
-							//was performed...
-							setAdapter(0);
-						}
+					else if(CURRENT_ITEM == 0){
+						if(elementInFocus){
+							if(!FileGalleryAdapter.MULTI_SELECT)
+								element.notifyDataSetChanged();
+							else{
+								load_FIle_Gallery(fPos);
+							}
+						}	
+						Utils.updateUI();						
 					}					
 				} else if (ACTION.equalsIgnoreCase("FQ_FLASHZIP")) {
 					// FLASHABLE ZIP DIALOG IS FIRED FROM HERE

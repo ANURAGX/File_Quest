@@ -63,6 +63,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 		ctx = context;
 		MULTI_FILES = new ArrayList<Item>();
 		list = object;
+		thumbselection = new boolean[list.size()];
 		this.keys = key;
 		inflater = (LayoutInflater) ctx
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -219,7 +220,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 						ch.setChecked(true);
 						thumbselection[id] = true;
 						MULTI_FILES.remove(id);
-						MULTI_FILES.add(id, list.get(id));
+						MULTI_FILES.add(id, list.get(keys.get(""+id)));
 						C++;
 					}
 				}

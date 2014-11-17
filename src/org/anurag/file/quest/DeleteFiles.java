@@ -109,11 +109,7 @@ public class DeleteFiles{
 		dialog.getWindow().getAttributes().width = width;
 		dialog.setCancelable(true);
 		
-		file = new ArrayList<Item>();
-		for(int i = 0 ; i<list.size() ; ++i)
-			if(list.get(i) != null)
-				file.add(list.get(i));
-		//file = list;
+		file = list;
 		if(file != null)
 			len = file.size();
 		currentFile=msg;
