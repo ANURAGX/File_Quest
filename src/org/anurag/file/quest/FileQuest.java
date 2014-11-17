@@ -20,6 +20,7 @@
 package org.anurag.file.quest;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -67,7 +68,7 @@ import org.ultimate.menuItems.SelectedApp;
 import org.ultimate.quickaction3D.ActionItem;
 import org.ultimate.quickaction3D.QuickAction;
 import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
-import org.ultimate.root.LinuxShell;
+
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -256,7 +257,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static boolean SEARCH_FLAG = false;
 	private static int CREATE_FLAG = 0;
 	private static boolean CREATE_FILE = false;
-	private static String CREATE_FLAG_PATH;
 	private WindowManager.LayoutParams params;
 
 	private static ArrayList<Item> searchList;
@@ -2457,97 +2457,65 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			// String ext = extBox.getText().toString();
 			if (name.length()>0){
 				if (CREATE_FILE) {
-					// GETS THE PATH WHERE FOLDER OR FILE HAS TO BE CREATED
-
-					// CREATE HIDDEN FOLDER
-					if (CREATE_FLAG == 1) {
-						if (name.startsWith("."))
-							name = CREATE_FLAG_PATH + "/" + name;
-						else if (!name.startsWith("."))
-							name = CREATE_FLAG_PATH + "/." + name;
-						if (CURRENT_ITEM == 1) {
+					// CREATE A SIMPLE FOLDER,if create flag == 2
+					//create a hidden folder if create flag == 1
+					if (CREATE_FLAG == 2 || CREATE_FLAG == 1) {
+						if(CREATE_FLAG == 1){
+							//create hidden folder.....
+							if(name.startsWith("."))
+								name = name.substring(1, name.length());
+							name = "/." + name;
+						}	
+						else//create simple folder.....
+							name = "/" + name;
+						if (CURRENT_ITEM == 1) {							
 							try{
-								if (new File(name).mkdir()) {
-									Toast.makeText(mContext,getString(R.string.item_created), Toast.LENGTH_LONG).show();
-									setAdapter(CURRENT_ITEM);
-								} else{
-									/**
-									 * TRY TO CREATE FOLDER WITH ROOT PREVILLEGES...
-									 */
-									LinuxShell.execute("mkdir " + name + "\n");
-									if (new File(name).exists()) {
-										Toast.makeText(mContext,getString(R.string.item_created), Toast.LENGTH_SHORT).show();
-										setAdapter(CURRENT_ITEM);
-									} 
+								/**
+								 * TODO create folders that needs root permisionns
+								 * to create....
+								 */
+								if(!RootManager.getCurrentDirectory().equals("/"))
+									name = RootManager.getCurrentDirectory() + name;
+								boolean exists = new File(name).exists();
+								if(exists)
+									Toast.makeText(mContext, R.string.fileexists, Toast.LENGTH_SHORT).show();
+								else{
+									boolean created = new File(name).mkdirs();
+									if(created){
+										Toast.makeText(mContext, R.string.item_created, Toast.LENGTH_SHORT).show();
+										rootItemList = rootManager.getList();
+										rootAdapter.notifyDataSetChanged();
+									}else if(!created)
+										Toast.makeText(mContext, R.string.creation_failed, Toast.LENGTH_SHORT).show();
 								}
-							}catch(Exception e){
-								Toast.makeText(mContext,getString(R.string.creation_failed),Toast.LENGTH_SHORT).show();
+							}catch(IllegalStateException e){
+								Toast.makeText(mContext, R.string.creation_failed, Toast.LENGTH_SHORT).show();
 							}
 						} else if (CURRENT_ITEM == 2) {
-							if (new File(name).mkdir()) {
-								Toast.makeText(mContext,getString(R.string.item_created), Toast.LENGTH_LONG).show();
-								setAdapter(CURRENT_ITEM);
-							} else if (!new File(name).mkdir())
-								Toast.makeText(mContext,getString(R.string.creation_failed),Toast.LENGTH_LONG).show();
-						}
-						RENAME_COMMAND = CREATE_FILE = SEARCH_FLAG = CUT_COMMAND = COPY_COMMAND = false;
-					}
-					// CREATE A SIMPLE FOLDER
-					else if (CREATE_FLAG == 2) {
-						name = CREATE_FLAG_PATH + "/" + name;
-						if (CURRENT_ITEM == 1) {
-							
-							try{
-								if (new File(name).mkdir()) {
-									Toast.makeText(mContext,getString(R.string.creation_failed), Toast.LENGTH_LONG).show();
-									setAdapter(CURRENT_ITEM);
-								} else{
-									/**
-									 * TRY TO CREATE FOLDER WITH ROOT PREVILLEGES...
-									 */
-									LinuxShell.execute("mkdir " + name + "\n");
-									if (new File(name).exists()) {
-										Toast.makeText(mContext,getString(R.string.item_created), Toast.LENGTH_SHORT).show();
-										setAdapter(CURRENT_ITEM);
-									} 
-								}
-							}catch(Exception e){
-								Toast.makeText(mContext,getString(R.string.creation_failed),Toast.LENGTH_SHORT).show();
-							}							
-						} else if (CURRENT_ITEM == 2) {
-							if (new File(name).mkdir()) {
-								Toast.makeText(mContext,getString(R.string.item_created), Toast.LENGTH_LONG).show();
-								setAdapter(CURRENT_ITEM);
-							} else if (!new File(name).mkdir())
-								Toast.makeText(mContext,getString(R.string.creation_failed),Toast.LENGTH_LONG).show();
+							name = SDManager.getCurrentDirectory() + name;
+							if(new File(name).exists())
+								Toast.makeText(mContext, R.string.fileexists, Toast.LENGTH_SHORT).show();
+							else{
+								boolean created = new File(name).mkdirs();
+								if(created){
+									Toast.makeText(mContext, R.string.item_created, Toast.LENGTH_SHORT).show();
+									sdItemsList = sdManager.getList();
+									sdAdapter.notifyDataSetChanged();
+								}else if(!created)
+									Toast.makeText(mContext, R.string.creation_failed, Toast.LENGTH_SHORT).show();
+							}
 						}
 						RENAME_COMMAND = CREATE_FILE = SEARCH_FLAG = CUT_COMMAND = COPY_COMMAND = false;
 					}
 					// CREATE AN EMPTY FILE
 					else if (CREATE_FLAG == 3) {
-						/*try {
-
-							if (CURRENT_ITEM == 1) {
-								name = RootManager.getCurrentDirectory() + "/"	+ editBox.getText().toString();
-								File f = new File(name);
-								if (f.exists()) {
-									Toast.makeText(mContext,getString(R.string.fileexists),Toast.LENGTH_SHORT).show();
-								} else if (!f.exists()) {
-									LinuxShell.execute("cat > " + name);
-									setAdapter(CURRENT_ITEM);
-								}
-							} else if (CURRENT_ITEM == 2) {
-								if (new File(name).createNewFile()) {
-									
-									setAdapter(CURRENT_ITEM);
-								}
-							}
-						} catch (IOException e) {
-							
-						}*/
 						name = editBox.getText().toString();
 						if(CURRENT_ITEM == 1){
-							name = RootManager.getCurrentDirectory() + "/" + name;
+							
+							if(!RootManager.getCurrentDirectory().equals("/"))
+								name = RootManager.getCurrentDirectory() + "/" + name;
+							else
+								name = "/" + name;
 							File chFile = new File(RootManager.getCurrentDirectory());
 							if(new File(name).exists())//file exists....
 								Toast.makeText(mContext, R.string.fileexists, Toast.LENGTH_SHORT).show();
@@ -3084,11 +3052,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			public void onItemClick(QuickAction source, int pos, int actionId) {
 				// TODO Auto-generated method stub
 				if (actionId >= 500) {
-					CREATE_FLAG_PATH = null;
-					if (CURRENT_ITEM == 1)
-						CREATE_FLAG_PATH = RootManager.getCurrentDirectory();
-					else if (CURRENT_ITEM == 2)
-						CREATE_FLAG_PATH = SDManager.getCurrentDirectory();
 					CREATE_FILE = true;
 					editBox.setText(null);
 					switch (actionId) {
