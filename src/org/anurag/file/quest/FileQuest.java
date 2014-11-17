@@ -2516,19 +2516,49 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					// MAIN MENU
 					mVFlipper.showNext();
 				}
+				
 				// THIS FLIPPER IS SET FOR RENAMING
 				else if (RENAME_COMMAND) {
 					if (CURRENT_ITEM == 0) {
 						name = getPathWithoutFilename(file0.getFile()).getPath() + "/"+ name;
-						if (file0.getFile().renameTo(new File(name))) {
-							Toast.makeText(mContext,getString(R.string.renamed)+ new File(name).getName(),Toast.LENGTH_SHORT).show();
-						} else {
-							/**
-							 * THIS INTENT IS FIRED WHEN RENAMING OF FILE FAILS
-							 * SHOWING POSSIBLE ERROR
-							 */
-							new ErrorDialogs(mContext,size.x*8/9,"renameError");
-						}
+						//file with same name already exists....
+						if(new File(name).exists())
+							Toast.makeText(mContext, R.string.fileexists, Toast.LENGTH_SHORT).show();
+						
+						//try to rename the file.....
+						else
+							try{
+								boolean locked = false;
+								boolean fav = false;
+								//after renaming file ,if it was locked again locking it....
+								if(file0.isLocked()){
+									locked = true;
+									Constants.db.deleteLockedNode(file0.getPath());
+									Constants.db.insertNodeToLock(name);
+								}
+								
+								//after renaming file,if it was a favorite item again
+								//adding it to favorite item....
+								if(file0.isFavItem()){
+									fav = true;
+									Constants.db.deleteFavItem(file0.getPath());
+									Constants.db.insertNodeToFav(name);
+								}
+								
+								file0.getFile().renameTo(new File(name));
+								
+								if(fav)
+									file0.setFavStatus(true);
+								
+								if(locked)
+									file0.setLockStatus(true);
+								
+								Toast.makeText(mContext,getString(R.string.renamed)	+ " " + new File(name).getName(),Toast.LENGTH_SHORT).show();
+							
+							}catch(Exception e){
+								Toast.makeText(mContext, R.string.fileexists, Toast.LENGTH_SHORT).show();
+							}
+						
 					} else if (CURRENT_ITEM == 1) {
 						name = RootManager.getCurrentDirectory() + "/" + name;
 						try {
@@ -2536,27 +2566,83 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							 * yet to implement rename command for root files
 							 */
 							
-							if (file.getFile().renameTo(new File(name))) {
-								Toast.makeText(mContext,getString(R.string.renamed)+ new File(name).getName(),Toast.LENGTH_SHORT).show();
-							}
+							//file with same name already exists....
+							if(new File(name).exists())
+								Toast.makeText(mContext, R.string.fileexists, Toast.LENGTH_SHORT).show();
+							
+							//try to rename the file.....
+							else if(file.canRead() && file.canWrite()){
+									boolean locked = false;
+									boolean fav = false;
+									//after renaming file ,if it was locked again locking it....
+									if(file.isLocked()){
+										locked = true;
+										Constants.db.deleteLockedNode(file.getPath());
+										Constants.db.insertNodeToLock(name);
+									}
+									
+									//after renaming file,if it was a favorite item again
+									//adding it to favorite item....
+									if(file.isFavItem()){
+										fav = true;
+										Constants.db.deleteFavItem(file.getPath());
+										Constants.db.insertNodeToFav(name);
+									}
+									
+									file.getFile().renameTo(new File(name));
+									
+									if(fav)
+										file.setFavStatus(true);
+									
+									if(locked)
+										file.setLockStatus(true);
+									Toast.makeText(mContext,getString(R.string.renamed)	+ " " + new File(name).getName(),Toast.LENGTH_SHORT).show();
+								}
+							//failed to get enough permissions to rename the file.....
+							else
+									Toast.makeText(mContext, R.string.faile_to_rename, Toast.LENGTH_SHORT).show();
 						} catch (Exception e) {
-							/**
-							 * THIS INTENT IS FIRED WHEN RENAMING OF FILE FAILS
-							 * SHOWING POSSIBLE ERROR
-							 */
-							new ErrorDialogs(mContext, size.x*8/9,"renameError");
+							//tried to rename a file that requires root permission.....
+							Toast.makeText(mContext, R.string.fileexists, Toast.LENGTH_SHORT).show();
 						}
 					} else if (CURRENT_ITEM == 2) {
 						name = SDManager.getCurrentDirectory() + "/" + name;
-						if (file2.getFile().renameTo(new File(name))) {
-							Toast.makeText(mContext,getString(R.string.renamed)	+ new File(name).getName(),Toast.LENGTH_SHORT).show();
-						} else {
-							/**
-							 * THIS INTENT IS FIRED WHEN RENAMING OF FILE FAILS
-							 * SHOWING POSSIBLE ERROR
-							 */
-							new ErrorDialogs(mContext, size.x*8/9,"renameError");
-						}
+						
+						//file with same name already exists....
+						if(new File(name).exists())
+							Toast.makeText(mContext, R.string.fileexists, Toast.LENGTH_SHORT).show();
+						
+						//try to rename the file.....
+						else
+							try{
+								boolean locked = false;
+								boolean fav = false;
+								//after renaming file ,if it was locked again locking it....
+								if(file2.isLocked()){
+									locked = true;
+									Constants.db.deleteLockedNode(file2.getPath());
+									Constants.db.insertNodeToLock(name);
+								}
+								
+								//after renaming file,if it was a favorite item again
+								//adding it to favorite item....
+								if(file2.isFavItem()){
+									fav = true;
+									Constants.db.deleteFavItem(file2.getPath());
+									Constants.db.insertNodeToFav(name);
+								}
+								
+								file2.getFile().renameTo(new File(name));
+								
+								if(fav)
+									file2.setFavStatus(true);
+								
+								if(locked)
+									file2.setLockStatus(true);
+								Toast.makeText(mContext,getString(R.string.renamed)	+ " " + new File(name).getName(),Toast.LENGTH_SHORT).show();
+							}catch(Exception e){
+								Toast.makeText(mContext, R.string.fileexists, Toast.LENGTH_SHORT).show();
+							}						
 					}
 					// AFTER RENAMING THE FOLDER OR FILES THE FLIPPER IS SET
 					// AGAIN TO MAIN MENU
