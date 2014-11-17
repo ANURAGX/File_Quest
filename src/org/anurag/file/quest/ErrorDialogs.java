@@ -78,7 +78,7 @@ public class ErrorDialogs {
 			b.setVisibility(View.GONE);
 			iTv.setText(R.string.cantrename);
 			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_rename));
-			tv.setText(R.string.renameerror);
+			tv.setText(R.string.delete_frm_ext_sd);
 			b= (Button)dialog.findViewById(R.id.popupOk);
 			b.setText("Ok");
 			b.setOnClickListener(new View.OnClickListener() {

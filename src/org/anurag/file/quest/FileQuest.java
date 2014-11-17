@@ -1420,18 +1420,35 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							break;
 					case 7:
 						// RENAME
-						if(ZIP_ROOT||RAR_ROOT||TAR_ROOT)
+						if(ZIP_SD||RAR_SD||TAR_SD)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 						else{
-							if(!file.isLocked()){
-								COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
-								RENAME_COMMAND = true;
-								mVFlipper.showPrevious();
-								editBox.setText(file.getName());
-								editBox.setSelected(true);
+							if(Constants.isExtAvailable && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT){
+								if(file.getPath().startsWith(Constants.EXT_PATH)){
+									//tried to rename the file from external sd.....
+									new ErrorDialogs(mContext, size.x*8/9, "renameError");
+								}else{
+									if(!file.isLocked()){
+										COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+										RENAME_COMMAND = true;
+										mVFlipper.showPrevious();
+										editBox.setText(file.getName());
+										editBox.setSelected(true);
+									}else{
+										new MasterPassword(mContext, size.x*8/9, file, preferences, Constants.MODES.RENAME);
+									}
+								}
+							}else{		
+								if(!file.isLocked()){
+									COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+									RENAME_COMMAND = true;
+									mVFlipper.showPrevious();
+									editBox.setText(file.getName());
+									editBox.setSelected(true);
+								}else{
+									new MasterPassword(mContext, size.x*8/9, file, preferences, Constants.MODES.RENAME);
+								}
 							}
-							else
-								new MasterPassword(mContext, size.x*8/9, file, preferences, Constants.MODES.RENAME);
 						}	
 						break;
 
@@ -1744,14 +1761,31 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							if(ZIP_SD||RAR_SD||TAR_SD)
 								Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
 							else{
-								if(!file2.isLocked()){
-									COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
-									RENAME_COMMAND = true;
-									mVFlipper.showPrevious();
-									editBox.setText(file2.getName());
-									editBox.setSelected(true);
-								}else{
-									new MasterPassword(mContext, size.x*8/9, file2, preferences, Constants.MODES.RENAME);
+								if(Constants.isExtAvailable && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT){
+									if(file2.getPath().startsWith(Constants.EXT_PATH)){
+										//tried to rename the file from external sd.....
+										new ErrorDialogs(mContext, size.x*8/9, "renameError");
+									}else{
+										if(!file2.isLocked()){
+											COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+											RENAME_COMMAND = true;
+											mVFlipper.showPrevious();
+											editBox.setText(file2.getName());
+											editBox.setSelected(true);
+										}else{
+											new MasterPassword(mContext, size.x*8/9, file2, preferences, Constants.MODES.RENAME);
+										}
+									}
+								}else{		
+									if(!file2.isLocked()){
+										COPY_COMMAND = CUT_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT = false;
+										RENAME_COMMAND = true;
+										mVFlipper.showPrevious();
+										editBox.setText(file2.getName());
+										editBox.setSelected(true);
+									}else{
+										new MasterPassword(mContext, size.x*8/9, file2, preferences, Constants.MODES.RENAME);
+									}
 								}
 							}						
 							break;
