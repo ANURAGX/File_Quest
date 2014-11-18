@@ -219,9 +219,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static SDAdapter sdAdapter;
 	
 	
-	static int fPos;
+	private static int fPos;
 
-	private static int dPos;
 	private BroadcastReceiver RECEIVER;
 	private static Dialog dialog;
 	public static Point size;
@@ -311,6 +310,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		ENABLE_ON_LAUNCH = preferences.getBoolean("ENABLE_ON_LAUNCH", false);
 		LIST_ANIMATION = preferences.getInt("LIST_ANIMATION", 4);
 		PAGER_ANIMATION = preferences.getInt("PAGER_ANIMATION", 3);
+		
+		
+		
 		edit = preferences.edit();
 
 		//initializing the external,internal,emulated,legacy paths....
@@ -954,7 +956,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								//checks existsnce for file....
 								if(file0.exists()){
 									d.show();
-									dPos = position;
 								}
 								else
 									Toast.makeText(mContext, R.string.filedoesnotexists, Toast.LENGTH_SHORT).show();
@@ -1079,7 +1080,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								}
 							}else//item is locked...
 								new MasterPassword(mContext, size.x*8/9, file0, preferences, Constants.MODES.OPEN);
-							dPos = position;
 						}else
 							Toast.makeText(mContext, R.string.filedoesnotexists, Toast.LENGTH_SHORT).show();
 					}
@@ -1234,7 +1234,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 					if(file.exists()){
 						d.show();
-						dPos = position;
 					}else
 						Toast.makeText(mContext, R.string.filedoesnotexists, Toast.LENGTH_SHORT).show();
 					return true;
@@ -1571,7 +1570,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 					if(file2.exists()){
 						dialog.show();
-						dPos = arg2;
 					}
 					else
 						Toast.makeText(mContext, R.string.filedoesnotexists, Toast.LENGTH_SHORT).show();

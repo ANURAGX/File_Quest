@@ -240,9 +240,10 @@
 	<string name="copy_cld">Copy</string>
 	<string name="no_file_available">No files available</string>
 	<string name="faile_to_rename">Failed to rename file</string>
-	
-	
-	
+	<string name="thumb_loading">Thumbnail Loading....</string>
+	<string name="load_app_thumb">Load app thumb</string>
+	<string name="load_img_thumb">Load image thumb</string>
+	<string name="load_music_thumb">Load album art</string>
 	
 	
 	<!-- FILE QUEST PLAYER -->

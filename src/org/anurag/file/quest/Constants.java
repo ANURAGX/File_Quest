@@ -43,7 +43,12 @@ public class Constants {
 		   R.drawable.ic_launcher_blue_folder
 		   };	
 	
-	public static boolean LOAD_THUMBNAILS=false;
+	//settings to verify whether to show following thumbs,,,,,
+	//by default they are true....
+	public static boolean SHOW_IMAGE_THUMB;
+	public static boolean SHOW_APP_THUMB;
+	public static boolean SHOW_MUSIC_THUMB;
+	
 	public static long GB = 1024*1024*1024;
 	public static long MB = 1024*1024;
 	public static int BUFFER = 1024*1024;

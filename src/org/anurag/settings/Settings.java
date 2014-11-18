@@ -24,10 +24,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.R;
 import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.Info;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -43,11 +45,12 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Settings extends Activity {
+public class Settings extends Activity implements View.OnClickListener{
 
 	SettingsInterFaceAdapter listAdapter;
 	ExpandableListView expListView1,expListView2;
@@ -277,5 +280,28 @@ public class Settings extends Activity {
 			this.setResult(100);
 			finish();
 		}	
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch(v.getId()){
+			case R.id.thmb_set:
+				{
+					LinearLayout img = (LinearLayout)findViewById(R.id.thmb_img);
+					LinearLayout mus = (LinearLayout)findViewById(R.id.thmb_alb);
+					LinearLayout app = (LinearLayout)findViewById(R.id.thmb_app);
+					if(img.getVisibility() == View.VISIBLE){
+						img.setVisibility(View.GONE);
+						mus.setVisibility(View.GONE);
+						app.setVisibility(View.GONE);
+					}else{
+						img.setVisibility(View.VISIBLE);
+						mus.setVisibility(View.VISIBLE);
+						app.setVisibility(View.VISIBLE);
+					}
+				}
+		}
+		
 	}	
 }
