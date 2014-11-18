@@ -244,20 +244,26 @@ public class FileGalleryAdapter extends BaseAdapter {
 			image = imgList.get(item.getPath());
 			if (image != null)
 				h.icon.setImageBitmap(image);
-			else
+			else{
+				h.icon.setTag(item.getPath());
 				new LoadImage(h.icon, item).execute();
+			}	
 		} else if (item.getType().equals("App")) {
 			Drawable draw = apkList.get(item.getPath());
 			if (draw == null)
 				new LoadApkIcon(h.icon, item).execute();
-			else
+			else{
+				h.icon.setTag(item.getPath());
 				h.icon.setImageDrawable(draw);
+			}	
 		} else if (item.getType().equals("Music")) {
 			Bitmap music = musicList.get(item.getPath());
 			if (music != null)
 				h.icon.setImageBitmap(music);
-			else
+			else{
+				h.icon.setTag(item.getPath());
 				new LoadAlbumArt(h.icon, item).execute();
+			}	
 		}
 		return convertView;
 	}
@@ -283,7 +289,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			if(map != null)
+			if(map != null && iView.getTag().equals(itm.getPath()))
 				iView.setImageBitmap(map);
 			map = null;
 		}
@@ -353,7 +359,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			if(dra != null)
+			if(dra != null && iView.getTag().equals(itm.getPath()))
 				iView.setImageDrawable(dra);
 		}
 
@@ -394,7 +400,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 		@Override
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
-			if (map != null)
+			if (map != null && iView.getTag().equals(itm.getPath()))
 				iView.setImageBitmap(map);
 		}
 
