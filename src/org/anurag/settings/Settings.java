@@ -156,6 +156,15 @@ public class Settings extends Activity implements View.OnClickListener{
 				{
 					LinearLayout img = (LinearLayout)findViewById(R.id.hide_folder);
 					LinearLayout mus = (LinearLayout)findViewById(R.id.sort);
+					applied = (ImageView)findViewById(R.id.applied);
+					if(FileQuest.SHOW_HIDDEN_FOLDERS){
+						applied.setImageDrawable(getResources().getDrawable(R.drawable.selected));
+					}	
+					else{
+						FileQuest.SHOW_HIDDEN_FOLDERS = true;
+						applied.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_disabled));
+					}	
+					
 					if(img.getVisibility() == View.VISIBLE){
 						img.setVisibility(View.GONE);
 						mus.setVisibility(View.GONE);
@@ -205,7 +214,20 @@ public class Settings extends Activity implements View.OnClickListener{
 				break;
 				
 			case R.id.hide_folder:
-				Toast.makeText(Settings.this, "Do it", Toast.LENGTH_SHORT).show();
+				
+				applied = (ImageView)findViewById(R.id.applied);				
+				if(FileQuest.SHOW_HIDDEN_FOLDERS){
+					FileQuest.SHOW_HIDDEN_FOLDERS = false;
+					applied.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_disabled));
+				}	
+				else{
+					FileQuest.SHOW_HIDDEN_FOLDERS = true;
+					applied.setImageDrawable(getResources().getDrawable(R.drawable.selected));
+				}	
+				settingsChanged = true;
+				edit.putBoolean("SHOW_HIDDEN_FOLDERS",FileQuest.SHOW_HIDDEN_FOLDERS);
+				edit.commit();
+				Toast.makeText(Settings.this, R.string.settingsapplied, Toast.LENGTH_SHORT).show();
 				break;
 				
 			case R.id.sort:
