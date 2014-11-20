@@ -17,24 +17,28 @@
  
  -->
 <LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingTop="10dp"
-    android:paddingLeft="5dp"
+    android:background="@android:color/background_dark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/background_dark" >
+    android:orientation="vertical" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
     
-    <LinearLayout 
+    
+     <LinearLayout 
+        android:layout_gravity="center_vertical" 
         android:paddingBottom="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView 
-            android:background="@drawable/ic_launcher_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="10dp"/>
+
+         <ImageView
+             android:layout_marginTop="5dp"
+             android:layout_marginLeft="20dp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@drawable/ic_launcher_settings"
+             android:layout_gravity="center"
+             android:paddingRight="10dp" />
         
         <TextView 
             android:paddingLeft="10dp"
@@ -46,55 +50,220 @@
             android:text="@string/settings"/>
     </LinearLayout>
     
-  <LinearLayout 
-      android:background="@color/yellow"
-      android:padding="5dp"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content">
-      <TextView 
-          android:textColor="@android:color/white"
-          android:textStyle="bold"
-          android:text="@string/inter"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"/>
-  </LinearLayout>
+    <ScrollView 
+    	android:layout_width="match_parent"
+    	android:layout_height="match_parent">
+    
+    <LinearLayout 
+    	android:paddingLeft="5dp"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical">
+    	  
+   		<LinearLayout 
+      		android:background="@color/yellow"
+      		android:padding="5dp"
+      		android:layout_width="fill_parent"
+     	    android:layout_height="wrap_content">
+      		<TextView 
+         		android:textColor="@android:color/white"
+          		android:textStyle="bold"
+          		android:text="@string/inter"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"/>
+  		</LinearLayout>
   
  
-  <ExpandableListView 
-      android:divider="@color/black"
-      android:groupIndicator="@null"
-      android:childIndicator="@null"
-      android:listSelector="@drawable/button_click"
-      android:id="@+id/intUI"
-      android:cacheColorHint="#00000000"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"/>
+   		<!-- animation effect.... -->
+  		<LinearLayout 
+  		    android:layout_marginTop="5dp"
+      		android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="10dp"
+      		android:id="@+id/anim_effect"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+         		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/ic_launcher_full"/>
+      
+     		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/animation"/>
+  		</LinearLayout>
   
-  <!-- thumbnail loading.... -->
-  <LinearLayout 
-      android:gravity="center_vertical"
-      android:onClick="onClick"
-      android:background="@drawable/button_click"
-      android:clickable="true"
-      android:focusable="true"
-      android:layout_marginLeft="10dp"
-      android:id="@+id/thmb_set"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal">
+  		<!-- panel animation.... -->	
+  		<LinearLayout 
+  		    android:visibility="gone"
+  		    android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="40dp"
+      		android:id="@+id/panel_amin"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
       
-      <ImageView 
-          android:layout_width="40dp"
-          android:layout_height="40dp"
-          android:background="@drawable/thumbnail"/>
+      		<ImageView 
+          		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/ic_launcher_full"/>
       
-      <TextView 
-          android:layout_marginLeft="10dp"
-          android:textStyle="bold"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="@string/thumb_loading"/>
-  </LinearLayout>
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/panelanim"/>
+  		</LinearLayout>
+  		
+  		<!-- list view animation.... -->	
+  		<LinearLayout 
+      		android:visibility="gone"
+      		android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="40dp"
+      		android:id="@+id/la_anim"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+          		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/ic_launcher_full"/>
+      
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/listanim"/>
+  		</LinearLayout>	
+  		
+  		<!-- appearance.... -->
+  		<LinearLayout 
+      		android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="10dp"
+      		android:id="@+id/appearance"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+         		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/ic_launcher_appreance"/>
+      
+     		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/appearance"/>
+  		</LinearLayout>
+  
+  		<!-- transparency.... -->	
+  		<LinearLayout 
+  		    android:visibility="gone"
+  		    android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="40dp"
+      		android:id="@+id/transparency"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+          		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/ic_launcher_appreance"/>
+      
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/adjusttrans"/>
+  		</LinearLayout>
+  		
+  		<!-- folder icons.... -->	
+  		<LinearLayout 
+  		    android:visibility="gone"
+      		android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="40dp"
+      		android:id="@+id/folder_icons"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+          		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/ic_launcher_appreance"/>
+      
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/setfoldericn"/>
+  		</LinearLayout>	
+  		
+  		
+  		
+  		
+  
+  		<!-- thumbnail.... -->
+  		<LinearLayout 
+      		android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="10dp"
+      		android:id="@+id/thmb_set"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+          		android:layout_width="40dp"
+     		    android:layout_height="40dp"
+          		android:background="@drawable/thumbnail"/>
+      
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/thumb_loading"/>
+  		</LinearLayout>
   
   		<!-- thumbnail sub menu.... -->	
   		<LinearLayout 
@@ -195,36 +364,376 @@
   </LinearLayout>
   
   
-  <ExpandableListView 
-      android:divider="@color/black"
-      android:groupIndicator="@null"
-      android:childIndicator="@null"
-      android:listSelector="@drawable/button_click"
-      android:id="@+id/folderls"
-      android:cacheColorHint="#00000000"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"/>
+  		<!-- startup.... -->
+  		<LinearLayout 
+  		    android:layout_marginTop="5dp"
+      		android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="10dp"
+      		android:id="@+id/start_options"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+         		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/ic_launcher_startup"/>
+      
+     		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/startup"/>
+  		</LinearLayout>
   
+  		<!-- startup panel .... -->	
+  		<LinearLayout 
+  		    android:visibility="gone"
+  		    android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="40dp"
+      		android:id="@+id/panel_startup"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+          		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/ic_launcher_startup"/>
+      
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/setstartpanel"/>
+  		</LinearLayout>
+  		
+  		<!-- start up dir.... -->	
+  		<LinearLayout 
+  		    android:visibility="gone"
+      		android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="40dp"
+      		android:id="@+id/start_dir"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+          		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/ic_launcher_startup"/>
+      
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/setstartupdir"/>
+  		</LinearLayout>	
   
-  <LinearLayout 
-      android:background="@color/yellow"
-      android:padding="5dp"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content">
-      <TextView 
+  		
+  		
+  		<!-- lock.... -->
+  		<LinearLayout 
+      		android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="10dp"
+      		android:id="@+id/itm_locker"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+         		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/locker"/>
+      
+     		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/locker"/>
+  		</LinearLayout>
+  
+  		<!-- reset password .... -->	
+  		<LinearLayout 
+  		    android:visibility="gone"
+  		    android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="40dp"
+      		android:id="@+id/reset_passwd"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+          		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/locker"/>
+      
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/resetmasterpassword"/>
+  		</LinearLayout>
+  		
+  		<!-- unlock locked items.... -->	
+  		<LinearLayout 
+  		    android:visibility="gone"
+  		    android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="40dp"
+      		android:id="@+id/unlock_all"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+          		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/locker"/>
+      
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/unlock_all"/>
+  		</LinearLayout>	
+  
+  		
+  			<!-- unlock locked items.... -->	
+  		<LinearLayout 
+  		    android:visibility="gone"
+  		    android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="40dp"
+      		android:id="@+id/lock_child"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+          		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/locker"/>
+      
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/child_lock"/>
+  		</LinearLayout>	
+  		
+  
+  		<!-- folder options.... -->
+  		<LinearLayout 
+      		android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="10dp"
+      		android:id="@+id/folder_options"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+         		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/ic_launcher_brown_folder"/>
+      
+     		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/folderopt"/>
+  		</LinearLayout>
+  
+  		<!-- hide option .... -->	
+  		<LinearLayout 
+  		    android:visibility="gone"
+  		    android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="40dp"
+      		android:id="@+id/hide_folder"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+          		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/selected"/>
+      
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/showhidden"/>
+  		</LinearLayout>
+  		
+  		<!-- sorting.... -->	
+  		<LinearLayout 
+  		    android:visibility="gone"
+  		    android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="40dp"
+      		android:id="@+id/sort"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+          		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/ic_launcher_brown_folder"/>
+      
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/sort"/>
+  		</LinearLayout>	
+  		
+  		<!-- home .... -->	
+  		<LinearLayout 
+  		    android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="10dp"
+      		android:id="@+id/home"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+          		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/ic_launcher_droid_home"/>
+      
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/sethomdir"/>
+  		</LinearLayout>
+  		
+  		<!-- clear gesture.... -->	
+  		<LinearLayout 
+  		    android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="10dp"
+      		android:id="@+id/cl_gesture"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+          		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/ic_launcher_gesture"/>
+      
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/cleargesturedata"/>
+  		</LinearLayout>	
+  		
+  		
+  		
+  
+  	<LinearLayout 
+        android:background="@color/yellow"
+        android:padding="5dp"
+      	android:layout_width="fill_parent"
+      	android:layout_height="wrap_content">
+      	<TextView 
           android:textColor="@android:color/white"
           android:textStyle="bold"
           android:text="@string/about"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"/>
-  </LinearLayout>
+  	</LinearLayout>
   
 
-  <ListView 
-      android:divider="@color/black"
-      android:listSelector="@drawable/button_click"
-      android:id="@+id/abtls"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"/>
+  		<!-- about me.... -->	
+  		<LinearLayout 
+  		    android:layout_marginTop="5dp"
+  		    android:gravity="center_vertical"
+      		android:onClick="onClick"
+      		android:background="@drawable/button_click"
+      		android:clickable="true"
+      		android:focusable="true"
+      		android:layout_marginLeft="10dp"
+      		android:id="@+id/about"
+      		android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="horizontal">
+      
+      		<ImageView 
+          		android:layout_width="40dp"
+          		android:layout_height="40dp"
+          		android:background="@drawable/ic_launcher_info"/>
+      
+      		<TextView 
+          		android:layout_marginLeft="10dp"
+          		android:textStyle="bold"
+          		android:layout_width="wrap_content"
+          		android:layout_height="wrap_content"
+          		android:text="@string/abtme"/>
+  		</LinearLayout>	
   
+	
+  	</LinearLayout>
+  </ScrollView>
+    
 </LinearLayout>

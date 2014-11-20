@@ -91,12 +91,7 @@
         <item>Pie Chart</item>
     </string-array>
     
-    <string-array name="itemlockerlist">
-        <item>Set master password</item>
-        <item>Reset master password</item>
-        <item>Unlock all locked items</item>
-        <item>Lock child items also</item>
-    </string-array>
+   
     
     <!-- Editor Activity -->
 	<string name="empty">No Files</string>
@@ -244,6 +239,10 @@
 	<string name="load_app_thumb">Load app thumb</string>
 	<string name="load_img_thumb">Load image thumb</string>
 	<string name="load_music_thumb">Load album art</string>
+	<string name="child_lock">Lock child items also</string>
+	
+	
+	
 	
 	
 	<!-- FILE QUEST PLAYER -->

@@ -21,9 +21,6 @@
 package org.anurag.settings;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.R;
@@ -31,35 +28,23 @@ import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.Info;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+
+
 
 public class Settings extends Activity implements View.OnClickListener{
 
-	SettingsInterFaceAdapter listAdapter;
-	ExpandableListView expListView1,expListView2;
-	List<String> listDataHeader1,listDataHeader2;
-	HashMap<String, List<String>> listDataChild1,listDataChild2;
-	ListView abtLs;
+	
 	SharedPreferences settingsPrefs;
 	SharedPreferences.Editor edit;
-	SettingsFolderOptAdapter listAdapter2;
+	
 	
 	public static ImageView applied;
 	public static boolean settingsChanged;
@@ -72,205 +57,12 @@ public class Settings extends Activity implements View.OnClickListener{
 		settingsChanged = false;
 		setContentView(R.layout.settings_ui);
 		settingsPrefs = getSharedPreferences("MY_APP_SETTINGS", 0);
-		edit = settingsPrefs.edit();
-		// get the listview
-		expListView1 = (ExpandableListView) findViewById(R.id.intUI);
-		expListView2 = (ExpandableListView) findViewById(R.id.folderls);
-		// preparing list data
-		prepareListData();
-		listAdapter = new SettingsInterFaceAdapter(this, listDataHeader1, listDataChild1);
-
-		// setting list adapter
-		expListView1.setAdapter(listAdapter);
-
-		prepareListData2();
-		listAdapter2 = new SettingsFolderOptAdapter(this, listDataHeader2, listDataChild2);
-		expListView2.setAdapter(listAdapter2);
-
-		expListView1.setOnGroupClickListener(new OnGroupClickListener() {
-			@Override
-			public boolean onGroupClick(ExpandableListView arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-		});
-		
-
-		// Listview on child click listener
-		expListView1.setOnChildClickListener(new OnChildClickListener() {
-			@Override
-			public boolean onChildClick(ExpandableListView parent, View v,
-					int groupPosition, int childPosition, long id) {
-				// TODO Auto-generated method stub
-				if(groupPosition== 0 && childPosition == 0)
-					new PagerAnimDialog(Settings.this, FileQuest.size.x*8/9, edit);
-				else if(groupPosition == 0 && childPosition == 1)
-					new ListAnimDialog(Settings.this, FileQuest.size.x*8/9, edit);
-				else if(groupPosition == 1 && childPosition == 0)
-					new AdjusTranDialog(Settings.this, FileQuest.size.x*8/9, edit);
-				else if(groupPosition == 1 && childPosition == 1)
-					new FolderIconDialog(Settings.this, FileQuest.size.x*8/9, edit);
-				return false;
-			}
-		});
-		
-		
-		expListView2.setOnGroupClickListener(new OnGroupClickListener() {
-			@Override
-			public boolean onGroupClick(ExpandableListView arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				if(arg2 == 3)
-					new GetHomeDirectory(Settings.this, FileQuest.size.x*8/9, settingsPrefs);
-				else if(arg2 == 4){
-					try{
-						new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/File Quest/.gesture").delete();
-					}catch(Exception e){
-						
-					}
-					Toast.makeText(Settings.this, getString(R.string.gesturedatacleared),Toast.LENGTH_SHORT).show();
-				}
-				return false;
-			}
-		});
-		
-		expListView2.setOnChildClickListener(new OnChildClickListener() {
-			@Override
-			public boolean onChildClick(ExpandableListView arg0, View arg1, int grp,
-					int child, long arg4) {
-				// TODO Auto-generated method stub
-				if(grp == 2 && child == 0){
-					if(FileQuest.SHOW_HIDDEN_FOLDERS){
-						FileQuest.SHOW_HIDDEN_FOLDERS = false;
-						applied.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_disabled));
-					}	
-					else{
-						FileQuest.SHOW_HIDDEN_FOLDERS = true;
-						applied.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_multi_select));
-					}	
-					settingsChanged = true;
-					edit.putBoolean("SHOW_HIDDEN_FOLDERS",FileQuest.SHOW_HIDDEN_FOLDERS);
-					edit.commit();
-					Toast.makeText(Settings.this, R.string.settingsapplied, Toast.LENGTH_SHORT).show();
-				}
-				else if(grp == 0 && child == 0)
-					new StartUpPanelDialog(Settings.this, FileQuest.size.x*8/9 , edit);
-				
-				else if(grp == 0 && child == 1)
-					new StartupDirDialog(Settings.this, FileQuest.size.x*8/9, edit);
-				
-				else if(grp == 2 && child == 1)
-					new SortDialog(Settings.this, FileQuest.size.x*8/9, edit);
-				
-				return false;
-			}
-		});
-		
-		abtLs = (ListView)findViewById(R.id.abtls);
-		abtLs.setAdapter(new abtAdapter());
-		abtLs.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				new Info(Settings.this, FileQuest.size.x*8/9);
-			}
-		});
-		abtLs.setOnItemLongClickListener(null);
+		edit = settingsPrefs.edit();		
 	}
 
-	/*
-	 * Preparing the list data
-	 */
-	private void prepareListData() {
-		listDataHeader1 = new ArrayList<String>();
-		listDataChild1 = new HashMap<String, List<String>>();
-		// Adding child data
-		listDataHeader1.add(getString(R.string.animation));
-		listDataHeader1.add(getString(R.string.appearance));
-		// Adding child data
-		List<String> animChild = new ArrayList<String>();
-		animChild.add(getString(R.string.panelanim));
-		animChild.add(getString(R.string.listanim));
-		List<String> appearChild = new ArrayList<String>();
-		appearChild.add(getString(R.string.adjusttrans));
-		appearChild.add(getString(R.string.setfoldericn));		
-		listDataChild1.put(listDataHeader1.get(0), animChild); // Header, Child data
-		listDataChild1.put(listDataHeader1.get(1), appearChild);
-		
-	}
+
 	
-	/*
-	 * Preparing the list data
-	 */
-	private void prepareListData2() {
-		listDataHeader2 = new ArrayList<String>();
-		listDataChild2 = new HashMap<String, List<String>>();
-		// Adding child data
-		listDataHeader2.add(getString(R.string.startup));
-		listDataHeader2.add(getString(R.string.locker));
-		listDataHeader2.add(getString(R.string.folderopt));
-		listDataHeader2.add(getString(R.string.sethomdir));
-		listDataHeader2.add(getString(R.string.cleargesturedata));
-		// Adding child data
-		List<String> start = new ArrayList<String>();
-		start.add(getString(R.string.setstartpanel));
-		start.add(getString(R.string.setstartupdir));
-		
-		List<String> lock = new ArrayList<String>();
-		String[] arr = getResources().getStringArray(R.array.itemlockerlist);
-		lock.add(arr[1]);
-		lock.add(arr[2]);
-		lock.add(arr[3]);
-		List<String> opt = new ArrayList<String>();
-		opt.add(getString(R.string.showhidden));
-		opt.add(getString(R.string.sort));
-		
-		listDataChild2.put(listDataHeader2.get(0), start); // Header, Child data
-		listDataChild2.put(listDataHeader2.get(1), lock);	
-		listDataChild2.put(listDataHeader2.get(2), opt);
-		listDataChild2.put(listDataHeader2.get(3), new ArrayList<String>());
-		listDataChild2.put(listDataHeader2.get(4), new ArrayList<String>());
-	}
 	
-	class abtAdapter extends BaseAdapter{		
-				@Override
-				public int getCount() {
-					// TODO Auto-generated method stub
-					return 1;
-				}
-				@Override
-				public Object getItem(int arg0) {
-					// TODO Auto-generated method stub
-					return null;
-				}
-				@Override
-				public long getItemId(int arg0) {
-					// TODO Auto-generated method stub
-					return 0;
-				}
-				class abt{
-					ImageView img;
-					TextView txt;
-				}		
-				@Override
-				public View getView(int arg0, View arg1, ViewGroup arg2) {
-					// TODO Auto-generated method stub
-					abt a = new abt();
-					if(arg1==null){
-						LayoutInflater inf = (LayoutInflater) Settings.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
-						arg1 = inf.inflate(R.layout.row_list_expandable, arg2 , false);
-						a.img = (ImageView)arg1.findViewById(R.id.iconImage2);
-						a.txt = (TextView)arg1.findViewById(R.id.directoryName2);
-						arg1.setTag(a);
-					}else
-						a = (abt) arg1.getTag();
-					a.img.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_info));
-					a.txt.setText(getString(R.string.abtme));
-					return arg1;
-				}						
-		}
 
 	@Override
 	public void onBackPressed() {
@@ -286,6 +78,34 @@ public class Settings extends Activity implements View.OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch(v.getId()){
+			case R.id.anim_effect:
+				{
+					LinearLayout panel = (LinearLayout)findViewById(R.id.panel_amin);
+					LinearLayout ls = (LinearLayout)findViewById(R.id.la_anim);
+					if(panel.getVisibility() == View.VISIBLE){
+						panel.setVisibility(View.GONE);
+						ls.setVisibility(View.GONE);
+					}else{
+						panel.setVisibility(View.VISIBLE);
+						ls.setVisibility(View.VISIBLE);
+					}
+				}
+				break;
+		
+			case R.id.appearance:
+				{
+					LinearLayout adj = (LinearLayout)findViewById(R.id.transparency);
+					LinearLayout icn = (LinearLayout)findViewById(R.id.folder_icons);
+					if(adj.getVisibility() == View.VISIBLE){
+						adj.setVisibility(View.GONE);
+						icn.setVisibility(View.GONE);
+					}else{
+						adj.setVisibility(View.VISIBLE);
+						icn.setVisibility(View.VISIBLE);
+					}
+				}
+				break;	
+		
 			case R.id.thmb_set:
 				{
 					LinearLayout img = (LinearLayout)findViewById(R.id.thmb_img);
@@ -301,7 +121,97 @@ public class Settings extends Activity implements View.OnClickListener{
 						app.setVisibility(View.VISIBLE);
 					}
 				}
-		}
-		
-	}	
+				break;
+			case R.id.start_options:
+				{
+					LinearLayout img = (LinearLayout)findViewById(R.id.panel_startup);
+					LinearLayout mus = (LinearLayout)findViewById(R.id.start_dir);
+					if(img.getVisibility() == View.VISIBLE){
+						img.setVisibility(View.GONE);
+						mus.setVisibility(View.GONE);
+					}else{
+						img.setVisibility(View.VISIBLE);
+						mus.setVisibility(View.VISIBLE);
+					}
+				}
+				break;
+			case R.id.itm_locker:
+				{
+					LinearLayout img = (LinearLayout)findViewById(R.id.reset_passwd);
+					LinearLayout mus = (LinearLayout)findViewById(R.id.unlock_all);
+					LinearLayout ch = (LinearLayout)findViewById(R.id.lock_child);
+					if(img.getVisibility() == View.VISIBLE){
+						img.setVisibility(View.GONE);
+						mus.setVisibility(View.GONE);
+						ch.setVisibility(View.GONE);
+					}else{
+						img.setVisibility(View.VISIBLE);
+						mus.setVisibility(View.VISIBLE);
+						ch.setVisibility(View.VISIBLE);
+					}
+				}
+				break;
+				
+			case R.id.folder_options:
+				{
+					LinearLayout img = (LinearLayout)findViewById(R.id.hide_folder);
+					LinearLayout mus = (LinearLayout)findViewById(R.id.sort);
+					if(img.getVisibility() == View.VISIBLE){
+						img.setVisibility(View.GONE);
+						mus.setVisibility(View.GONE);
+					}else{
+						img.setVisibility(View.VISIBLE);
+						mus.setVisibility(View.VISIBLE);
+					}
+				}
+				break;
+				
+			case R.id.home:
+				new GetHomeDirectory(Settings.this, FileQuest.size.x*8/9, settingsPrefs);
+				break;
+				
+			case R.id.cl_gesture:
+				boolean del = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/File Quest/.gesture").delete();
+				if(del)
+					Toast.makeText(Settings.this, R.string.gesturedatacleared, Toast.LENGTH_SHORT).show();
+				break;
+				
+			case R.id.about:
+				new Info(Settings.this, FileQuest.size.x*8/9);
+				break;
+				
+			case R.id.panel_amin:
+				new PagerAnimDialog(Settings.this, FileQuest.size.x*8/9, edit);
+				break;
+				
+			case R.id.la_anim:
+				new ListAnimDialog(Settings.this, FileQuest.size.x*8/9, edit);
+				break;
+				
+			case R.id.transparency:
+				new AdjusTranDialog(Settings.this, FileQuest.size.x*8/9, edit);
+				break;
+				
+			case R.id.folder_icons:
+				new FolderIconDialog(Settings.this, FileQuest.size.x*8/9, edit);
+				break;
+				
+			case R.id.panel_startup:
+				new StartupDirDialog(Settings.this, FileQuest.size.x*8/9, edit);
+				break;
+				
+			case R.id.start_dir:
+				new StartupDirDialog(Settings.this, FileQuest.size.x*8/9, edit);
+				break;
+				
+			case R.id.hide_folder:
+				Toast.makeText(Settings.this, "Do it", Toast.LENGTH_SHORT).show();
+				break;
+				
+			case R.id.sort:
+				new SortDialog(Settings.this, FileQuest.size.x*8/9, edit);
+				break;
+			
+		}		
+	}		
 }
