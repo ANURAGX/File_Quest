@@ -311,6 +311,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		LIST_ANIMATION = preferences.getInt("LIST_ANIMATION", 4);
 		PAGER_ANIMATION = preferences.getInt("PAGER_ANIMATION", 3);
 		
+		//thumbnail settings....
+		Constants.SHOW_APP_THUMB = preferences.getBoolean("SHOW_APP_THUMB", true);
+		Constants.SHOW_IMAGE_THUMB = preferences.getBoolean("SHOW_IMAGE_THUMB", true);
+		Constants.SHOW_MUSIC_THUMB = preferences.getBoolean("SHOW_MUSIC_THUMB", true);
+		
 		
 		
 		edit = preferences.edit();

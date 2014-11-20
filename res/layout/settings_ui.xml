@@ -279,10 +279,11 @@
       		android:layout_height="wrap_content"
       		android:orientation="horizontal">
       
-      		<ImageView 
+      		<ImageView
+      		    android:id="@+id/img_thmb" 
           		android:layout_width="40dp"
           		android:layout_height="40dp"
-          		android:background="@drawable/thumbnail"/>
+          		/>
       
       		<TextView 
           		android:layout_marginLeft="10dp"
@@ -307,9 +308,10 @@
       		android:orientation="horizontal">
       
       		<ImageView 
+          		android:id="@+id/alb_thmb"
           		android:layout_width="40dp"
           		android:layout_height="40dp"
-          		android:background="@drawable/thumbnail"/>
+          		/>
       
       		<TextView 
           		android:layout_marginLeft="10dp"
@@ -334,9 +336,10 @@
       		android:orientation="horizontal">
       
       		<ImageView 
+      		    android:id="@+id/app_thmb"
           		android:layout_width="40dp"
           		android:layout_height="40dp"
-          		android:background="@drawable/thumbnail"/>
+          		/>
       
       		<TextView 
           		android:layout_marginLeft="10dp"

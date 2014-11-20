@@ -21,12 +21,12 @@
 package org.anurag.settings;
 
 import java.io.File;
-
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.R;
 import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.Info;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -60,10 +60,6 @@ public class Settings extends Activity implements View.OnClickListener{
 		edit = settingsPrefs.edit();		
 	}
 
-
-	
-	
-
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
@@ -74,6 +70,7 @@ public class Settings extends Activity implements View.OnClickListener{
 		}	
 	}
 
+	@SuppressLint("CutPasteId")
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -119,6 +116,31 @@ public class Settings extends Activity implements View.OnClickListener{
 						img.setVisibility(View.VISIBLE);
 						mus.setVisibility(View.VISIBLE);
 						app.setVisibility(View.VISIBLE);
+						
+						ImageView i,j,k;
+						if(Constants.SHOW_APP_THUMB){
+							i = (ImageView)findViewById(R.id.app_thmb);
+							i.setImageDrawable(getResources().getDrawable(R.drawable.selected));
+						}else{
+							i = (ImageView)findViewById(R.id.app_thmb);
+							i.setImageDrawable(getResources().getDrawable(R.drawable.thumbnail));
+						}	
+						
+						if(Constants.SHOW_IMAGE_THUMB){
+							j = (ImageView)findViewById(R.id.img_thmb);
+							j.setImageDrawable(getResources().getDrawable(R.drawable.selected));
+						}else{
+							j = (ImageView)findViewById(R.id.img_thmb);
+							j.setImageDrawable(getResources().getDrawable(R.drawable.thumbnail));
+						}
+						
+						if(Constants.SHOW_MUSIC_THUMB){
+							k = (ImageView)findViewById(R.id.alb_thmb);
+							k.setImageDrawable(getResources().getDrawable(R.drawable.selected));
+						}else{
+							k = (ImageView)findViewById(R.id.alb_thmb);
+							k.setImageDrawable(getResources().getDrawable(R.drawable.thumbnail));
+						}
 					}
 				}
 				break;
@@ -233,7 +255,55 @@ public class Settings extends Activity implements View.OnClickListener{
 			case R.id.sort:
 				new SortDialog(Settings.this, FileQuest.size.x*8/9, edit);
 				break;
-			
+				
+			case R.id.thmb_img:
+				Constants.SHOW_IMAGE_THUMB = !Constants.SHOW_IMAGE_THUMB;
+				edit.putBoolean("SHOW_IMAGE_THUMB", Constants.SHOW_IMAGE_THUMB);
+				edit.commit();
+				settingsChanged = true;
+				
+				ImageView j = (ImageView)findViewById(R.id.img_thmb);
+				j.setImageDrawable(null);
+				j.destroyDrawingCache();
+				if(Constants.SHOW_IMAGE_THUMB){
+					j.setImageDrawable(getResources().getDrawable(R.drawable.selected));
+				}else{
+					j.setImageDrawable(getResources().getDrawable(R.drawable.thumbnail));
+				}
+				
+				Toast.makeText(Settings.this, R.string.settingsapplied, Toast.LENGTH_SHORT).show();
+				break;
+				
+			case R.id.thmb_alb:
+				Constants.SHOW_MUSIC_THUMB = !Constants.SHOW_MUSIC_THUMB;
+				edit.putBoolean("SHOW_MUSIC_THUMB", Constants.SHOW_MUSIC_THUMB);
+				edit.commit();
+				settingsChanged = true;
+				ImageView i = (ImageView)findViewById(R.id.alb_thmb);
+				i.setImageDrawable(null);
+				i.destroyDrawingCache();
+				if(Constants.SHOW_MUSIC_THUMB){
+					i.setImageDrawable(getResources().getDrawable(R.drawable.selected));
+				}else{
+					i.setImageDrawable(getResources().getDrawable(R.drawable.thumbnail));
+				}
+				Toast.makeText(Settings.this, R.string.settingsapplied, Toast.LENGTH_SHORT).show();
+				break;
+				
+			case R.id.thmb_app:
+				Constants.SHOW_APP_THUMB = !Constants.SHOW_APP_THUMB;
+				edit.putBoolean("SHOW_IMAGE_THUMB", Constants.SHOW_APP_THUMB);
+				edit.commit();
+				settingsChanged = true;
+				ImageView k = (ImageView)findViewById(R.id.app_thmb);
+				k.setImageDrawable(null);
+				k.destroyDrawingCache();
+				if(Constants.SHOW_APP_THUMB){
+					k.setImageDrawable(getResources().getDrawable(R.drawable.selected));
+				}else{
+					k.setImageDrawable(getResources().getDrawable(R.drawable.thumbnail));
+				}
+				Toast.makeText(Settings.this, R.string.settingsapplied, Toast.LENGTH_SHORT).show();
 		}		
 	}		
 }

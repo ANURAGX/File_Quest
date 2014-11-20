@@ -213,23 +213,29 @@ public class SDAdapter extends BaseAdapter{
 		h.fSize.setText(item.getSize());
 		h.icon.setImageDrawable(item.getIcon());
 		if(item.getType().equals("Image")){
-			image = imgList.get(item.getPath());
-			if(image != null)
-				h.icon.setImageBitmap(image);
-			else
-				new LoadImage(h.icon, item).execute();
+			if(Constants.SHOW_IMAGE_THUMB){
+				image = imgList.get(item.getPath());
+				if(image != null)
+					h.icon.setImageBitmap(image);
+				else
+					new LoadImage(h.icon, item).execute();
+			}
 		}else if(item.getType().equals("App")){
-			Drawable draw = apkList.get(item.getPath());
-			if(draw == null)
-				new LoadApkIcon(h.icon, item).execute();
-			else
-				h.icon.setImageDrawable(draw);
+			if(Constants.SHOW_APP_THUMB){
+				Drawable draw = apkList.get(item.getPath());
+				if(draw == null)
+					new LoadApkIcon(h.icon, item).execute();
+				else
+					h.icon.setImageDrawable(draw);
+			}
 		}else if(item.getType().equals("Music")){
-			Bitmap music = musicList.get(item.getPath());
-			if(music !=null)
-				h.icon.setImageBitmap(music);
-			else
-				new LoadAlbumArt(h.icon , item).execute();
+			if(Constants.SHOW_MUSIC_THUMB){
+				Bitmap music = musicList.get(item.getPath());
+				if(music !=null)
+					h.icon.setImageBitmap(music);
+				else
+					new LoadAlbumArt(h.icon , item).execute();
+			}
 		}
 		return convertView;
 	}	
