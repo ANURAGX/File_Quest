@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AdView" >
+        <attr name="test_mode" format="boolean" />
+        <attr name="banner_type" format="string" />
+        <attr name="animation" format="string" />
+        <attr name="placementType" format="string" />
+        <attr name="canShowMR" format="boolean" />
+    </declare-styleable>
+</resources>

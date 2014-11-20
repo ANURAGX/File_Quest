@@ -28,7 +28,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     
     <uses-sdk
         android:minSdkVersion="14"
@@ -48,6 +50,33 @@
         <meta-data android:name="com.google.android.gms.version"
            android:value="5077000" />
         
+        
+		<meta-data 
+		    android:name="com.fuehlbypa.kddcbytnh159110.APPID" 
+		    android:value="187564" />
+		        
+		<meta-data 
+		    android:name="com.fuehlbypa.kddcbytnh159110.APIKEY" 
+		    android:value="android*1377959896159110585"/>
+		
+		<activity 
+		    android:exported="false" 
+		    android:name="com.fuehlbypa.kddcbytnh159110.MainActivity"
+    	 	android:configChanges="orientation|screenSize"
+    	 	android:theme="@android:style/Theme.Translucent" />
+		
+		<activity 
+		    android:name="com.fuehlbypa.kddcbytnh159110.BrowserActivity"
+			android:configChanges="orientation|screenSize" />
+		
+		<activity 
+		    android:name="com.fuehlbypa.kddcbytnh159110.VDActivity"
+            android:configChanges="orientation|screenSize" 
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+		</activity>       
+        
+        <!-- main activity.... -->
         <activity
         	
         	android:launchMode="standard"

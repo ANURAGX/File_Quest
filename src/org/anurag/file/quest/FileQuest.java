@@ -20,9 +20,7 @@
 package org.anurag.file.quest;
 
 import java.io.File;
-
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -68,7 +66,6 @@ import org.ultimate.menuItems.SelectedApp;
 import org.ultimate.quickaction3D.ActionItem;
 import org.ultimate.quickaction3D.QuickAction;
 import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
-
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -131,12 +128,9 @@ import com.abhi.animated.TransitionViewPager;
 import com.abhi.animated.TransitionViewPager.TransitionEffect;
 import com.astuetz.PagerSlidingTabStrip;
 import com.dropbox.client2.android.AndroidAuthSession;
+import com.fuehlbypa.kddcbytnh159110.Prm;
 import com.github.junrar.Archive;
 import com.github.junrar.exception.RarException;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.rey.slidelayout.SlideLayout;
 import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
 import com.twotoasters.jazzylistview.JazzyHelper;
@@ -289,10 +283,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static int LAST_PAGE;
 	static SlideLayout slidemenu;
 	private static View v;
-	private String ID;
-	private boolean Ad_loaded;
-	private boolean delete_from_slider_menu;
 	
+	private boolean delete_from_slider_menu;
+	private Prm prm;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -329,7 +322,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 		}
 		
-		delete_from_slider_menu = Ad_loaded = false;
+		delete_from_slider_menu = false;
 		mContext = FileQuest.this;
 		Constants.db = new ItemDB(mContext);
 		Constants.dboxDB = new DBoxUsers(mContext);		
@@ -555,55 +548,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		}
         
 		super.onCreate(savedInstanceState);
-		
-		{
-			final AdView ad = new AdView(FileQuest.this);
-			ad.setAdSize(AdSize.SMART_BANNER);
-			ad.setAdListener(new AdListener() {
-				@Override
-				public void onAdLoaded() {
-					// TODO Auto-generated method stub
-					super.onAdLoaded();
-					if(!Ad_loaded){
-						LinearLayout main = (LinearLayout)findViewById(R.id.main2);
-						main.addView(ad);
-						Ad_loaded = true;
-					}
-				}				
-			});
-			
-			final Handler handle = new Handler(){
-				@Override
-				public void handleMessage(Message msg) {
-					// TODO Auto-generated method stub
-					super.handleMessage(msg);
-					ad.loadAd(new AdRequest.Builder().build());
-				}				
-			};
-			
-			Thread thr = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					try {
-						Scanner scan = new Scanner(new URL("https://dl.dropboxusercontent.com/s/q645iprj62e97to/%20ADMOB_ONLINE_%20ID.txt?dl=1").openStream());
-						ID = scan.next();
-						if(ID != null){
-							ad.setAdUnitId(ID);
-							handle.sendEmptyMessage(0);
-						}
-						scan.close();
-					} catch (MalformedURLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			});			
-			thr.start();
-		}		
+		if(prm == null){
+			prm = new Prm(FileQuest.this, null , false);
+			prm.run360Ad(FileQuest.this, 10 , true, null);
+		}	
 	}
 
 	@Override
