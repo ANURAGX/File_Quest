@@ -20,7 +20,7 @@
     
     android:id="@+id/ui"
 	android:orientation="vertical" 
-	android:background="@android:color/black"
+	android:background="@color/black"
 	android:layout_width="fill_parent" 
 	android:layout_height="fill_parent"
 	xmlns:android="http://schemas.android.com/apk/res/android"
