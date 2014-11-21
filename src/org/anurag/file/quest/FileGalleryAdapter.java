@@ -336,6 +336,11 @@ public class FileGalleryAdapter extends BaseAdapter {
 					}
 					imgList.put(itm.getPath(), map);
 				}
+			}catch(OutOfMemoryError e){
+				map = null;
+				imgList.clear();
+				imgList = null;
+				imgList = new ConcurrentHashMap<String , Bitmap>();
 			}catch(Exception e){
 				map = null;
 			}
@@ -378,7 +383,13 @@ public class FileGalleryAdapter extends BaseAdapter {
 				inf.applicationInfo.publicSourceDir = itm.getPath();
 				dra = inf.applicationInfo.loadIcon(ctx.getPackageManager());
 				apkList.put(itm.getPath(), dra);
-			}catch(Exception e){
+			}catch(OutOfMemoryError e){
+				dra = null;
+				apkList.clear();
+				apkList = null;
+				apkList = new ConcurrentHashMap<String , Drawable>();
+			}
+			catch(Exception e){
 				dra = null;
 			}
 			return null;
@@ -420,7 +431,12 @@ public class FileGalleryAdapter extends BaseAdapter {
 						0, ret.getEmbeddedPicture().length);
 				if (map != null)
 					musicList.put(itm.getPath(), map);
-			} catch (Exception e) {
+			}catch(OutOfMemoryError e){
+				map = null;
+				musicList.clear();
+				musicList = null;
+				musicList = new ConcurrentHashMap<String , Bitmap>();
+			}catch (Exception e) {
 				map = null;
 			}
 			return null;

@@ -259,7 +259,8 @@ public class RootAdapter extends BaseAdapter{
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			iView.setImageBitmap(map);
+			if(map != null)
+				iView.setImageBitmap(map);
 		}
 		@Override
 		protected void onPreExecute() {
@@ -269,29 +270,38 @@ public class RootAdapter extends BaseAdapter{
 		@Override
 		protected Void doInBackground(Void... arg0) {
 			// TODO Auto-generated method stub
-			map = imgList.get(itm.getPath());
-			if(map == null){
-				long len_kb = itm.getFile().length() / 1024;
-				
-				BitmapFactory.Options options = new BitmapFactory.Options();
-				options.outWidth = 50;
-				options.outHeight = 50;
+			try{
+				map = imgList.get(itm.getPath());
+				if(map == null){
+					long len_kb = itm.getFile().length() / 1024;
 					
-				if (len_kb > 1000 && len_kb < 5000) {
-					options.inSampleSize = 32;
-					options.inPurgeable = true;
-					map = (BitmapFactory.decodeFile(itm.getPath(), options));
+					BitmapFactory.Options options = new BitmapFactory.Options();
+					options.outWidth = 50;
+					options.outHeight = 50;
+						
+					if (len_kb > 1000 && len_kb < 5000) {
+						options.inSampleSize = 32;
+						options.inPurgeable = true;
+						map = (BitmapFactory.decodeFile(itm.getPath(), options));
+											
+					} else if (len_kb >= 5000) {
+						options.inSampleSize = 32;
+						options.inPurgeable = true;
+						map = (BitmapFactory.decodeFile(itm.getPath(), options));
 										
-				} else if (len_kb >= 5000) {
-					options.inSampleSize = 32;
-					options.inPurgeable = true;
-					map = (BitmapFactory.decodeFile(itm.getPath(), options));
-									
-				} else if (len_kb <= 1000) {
-					options.inPurgeable = true;
-					map = (Bitmap.createScaledBitmap(BitmapFactory.decodeFile(itm.getPath()),50,50,false));
+					} else if (len_kb <= 1000) {
+						options.inPurgeable = true;
+						map = (Bitmap.createScaledBitmap(BitmapFactory.decodeFile(itm.getPath()),50,50,false));
+					}
+					imgList.put(itm.getPath(), map);
 				}
-				imgList.put(itm.getPath(), map);
+			}catch(OutOfMemoryError e){
+				map = null;
+				imgList.clear();
+				imgList = null;
+				imgList = new HashMap<String , Bitmap>();
+			}catch(Exception  e){
+				map = null;
 			}
 			return null;
 		}		
@@ -317,16 +327,26 @@ public class RootAdapter extends BaseAdapter{
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			iView.setImageDrawable(dra);
+			if(dra != null)
+				iView.setImageDrawable(dra);
 		}
 
 		@Override
 		protected Void doInBackground(Void... arg0) {
 			// TODO Auto-generated method stub
-			PackageInfo inf = ctx.getPackageManager().getPackageArchiveInfo(itm.getPath(),0);
-			inf.applicationInfo.publicSourceDir = itm.getPath();
-			dra = inf.applicationInfo.loadIcon(ctx.getPackageManager());
-			apkList.put(itm.getPath(), dra);
+			try{
+				PackageInfo inf = ctx.getPackageManager().getPackageArchiveInfo(itm.getPath(),0);
+				inf.applicationInfo.publicSourceDir = itm.getPath();
+				dra = inf.applicationInfo.loadIcon(ctx.getPackageManager());
+				apkList.put(itm.getPath(), dra);
+			}catch(OutOfMemoryError e){
+				dra = null;
+				apkList.clear();
+				apkList = null;
+				apkList = new HashMap<String , Drawable>();
+			}catch(Exception e){
+				dra = null;
+			}
 			return null;
 		}		
 	}
@@ -363,7 +383,13 @@ public class RootAdapter extends BaseAdapter{
 				map = BitmapFactory.decodeByteArray(ret.getEmbeddedPicture(), 0, ret.getEmbeddedPicture().length);
 				if(map!=null)
 					musicList.put(itm.getPath(), map);
-			}catch(Exception e){
+			}catch(OutOfMemoryError e){
+				map = null;
+				musicList.clear();
+				musicList = null;
+				musicList = new HashMap<String , Bitmap>();
+			}
+			catch(Exception e){
 				map = null;
 			}
 			return null;
