@@ -20,7 +20,6 @@
 package org.anurag.file.quest;
 
 import java.io.File;
-
 import java.io.FileFilter;
 import java.util.Locale;
 import java.util.Map;
@@ -67,8 +66,9 @@ public class Utils {
 	public static ConcurrentHashMap<String, String> misKey;
 	public static ConcurrentHashMap<String, String> favKey;
 	
-	
-	
+	private static MainLoadTask task;
+	private static Object lock;
+ 	
 	//tells whether updating of file gallery needed or not....
 	public static boolean update_Needed;
 	
@@ -270,6 +270,19 @@ public class Utils {
 							
 						}
 						break;
+					
+					case 10:
+						//pause the loading....
+						if(!loaded){
+							handler.postDelayed(new Runnable() {
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									handler.postDelayed(this, 1000);
+								}
+							}, 1000);
+						}
+						break;
 				}
 
 				
@@ -416,8 +429,14 @@ public class Utils {
 	 * scans the files for file gallery....
 	 */
 	public static void load(){
-		new MainLoadTask().start();
+		lock = new Object();
+		task = new MainLoadTask();
+		task.start();
 	}	
+	
+	public static void pause(){
+		handler.sendEmptyMessage(10);
+	}
 	
 	/**
 	 * 
@@ -474,6 +493,25 @@ public class Utils {
 					null, 
 					null);
 			while(cursor.moveToNext()){
+				
+				//waiting here till user navigates back to file gallery from any selected
+				//category....
+				//synchronizing the thread with main ui....
+				
+				//it is almost impossible that thread will cause any issue while reading from
+				//sqlite...
+				//in any case I m syncing thread with main UI....
+				synchronized(lock){
+					while(FileQuest.elementInFocus){
+						try {
+							lock.wait(2000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+				
 				File file = new File(cursor.getString(0));
 				if(file.exists()){
 					//file exists,so proceed....
@@ -517,6 +555,21 @@ public class Utils {
 								return true;
 						}
 					})){
+						
+						//waiting here till user navigates back to file gallery from any selected
+						//category....
+						//synchronizing the thread with main ui....
+						synchronized(lock){
+							while(FileQuest.elementInFocus){
+								try {
+									lock.wait(2000);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}
+						
 						if(fi.isFile())
 							makeIcon(fi , false , handler);
 						else if(fi.isDirectory()){

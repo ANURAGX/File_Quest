@@ -550,7 +550,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		super.onCreate(savedInstanceState);
 		if(prm == null){
 			prm = new Prm(FileQuest.this, null , false);
-			prm.run360Ad(FileQuest.this, 10 , true, null);
+			prm.run360Ad(FileQuest.this, 10 , false, null);
 		}	
 	}
 
@@ -3895,6 +3895,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			mFlipperBottom.showNext();
 		}
 		try{
+			Utils.pause();
 			if(mode == 0)
 				element = new FileGalleryAdapter(mContext, Utils.fav , getKeys(mode));
 			else if (mode == 1)
