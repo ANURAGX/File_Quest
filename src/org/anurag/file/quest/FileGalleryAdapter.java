@@ -253,10 +253,11 @@ public class FileGalleryAdapter extends BaseAdapter {
 		} else if (item.getType().equals("App")) {
 			if(Constants.SHOW_APP_THUMB){
 				Drawable draw = apkList.get(item.getPath());
-				if (draw == null)
-					new LoadApkIcon(h.icon, item).execute();
-				else{
+				if (draw == null){
 					h.icon.setTag(item.getPath());
+					new LoadApkIcon(h.icon, item).execute();
+				}	
+				else{
 					h.icon.setImageDrawable(draw);
 				}
 			}
