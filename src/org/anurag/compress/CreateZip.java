@@ -25,16 +25,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.Utils;
-
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -55,6 +53,7 @@ import android.widget.Toast;
  * @author Anurag
  *
  */
+@SuppressLint("HandlerLeak")
 public class CreateZip {
 
 	byte[] data = new byte[Constants.BUFFER];
@@ -72,17 +71,6 @@ public class CreateZip {
 	String fsize;
 	String fname;
 	String stat;
-	
-	/**
-	 * 
-	 * @param ctx
-	 * @param width
-	 * @param list
-	 * @param keys 
-	 */
-	public CreateZip(Context ctx , int width , ConcurrentHashMap<String , Item> list, ConcurrentHashMap<String, String> keys) {
-		// TODO Auto-generated constructor stub
-	}
 	
 	/**
 	 * 

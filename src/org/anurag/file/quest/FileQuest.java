@@ -4881,6 +4881,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					else if(CURRENT_ITEM==2)
 						SDManager.nStack.pop();
 					resetPager();
+					if(progDial.isShowing())
+						progDial.dismiss();
 					Toast.makeText(mContext, R.string.zipexception, Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -4955,6 +4957,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					else if(CURRENT_ITEM==2)
 						SDManager.nStack.pop();
 					resetPager();
+					if(progDial.isShowing())
+						progDial.dismiss();
 					Toast.makeText(mContext, R.string.zipexception, Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -5036,6 +5040,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					else if(CURRENT_ITEM==2)
 						SDManager.nStack.pop();
 					resetPager();
+					if(progDial.isShowing())
+						progDial.dismiss();
 					Toast.makeText(mContext, R.string.zipexception, Toast.LENGTH_SHORT).show();
 				}
 			}
