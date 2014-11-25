@@ -58,7 +58,7 @@
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
 			android:id="@+id/expandable"
-			android:background="#000000">
+			android:background="@color/black">
 
 	    
 	    <!-- LAYOUT FOR DELETE.....-->
