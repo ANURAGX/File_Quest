@@ -199,10 +199,6 @@
 	<string name="noappsinstalled">कोई ऐप्प इन्सटाल्ड नहीं है</string>
 	<string name="appstore">आपका ऐप्प स्टोर</string>
 	<string name="filegallery">फ़ाइल गैलरी</string>
-	<string name="extpresent">बहरी भंडार उपलब्ध </string>
-	<string name="extAbsent">बहरी भंडार उपलब्ध नहीं</string>
-	<string name="intpresent">आंतरिक भंडार उपलब्ध</string>
-	<string name="supporttakenBack">समर्थन वापस ले लिया गया है </string>
 	<string name="compressandsend">संक्षिप्त करें और इसे भेजें</string>
 	<string name="nobackuptodelete">हटाने के लिए कोई बैकअप उपलब्ध नहीं</string>
 	<string name="quit">निकास</string>

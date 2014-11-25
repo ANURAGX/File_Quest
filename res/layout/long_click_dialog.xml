@@ -75,7 +75,8 @@
         
         <ListView 
             android:id="@+id/list" 
-            android:layout_width="fill_parent" 
+            android:layout_width="fill_parent"
+            android:scrollbars="@null" 
             android:layout_height="fill_parent" 
             android:divider="@color/black"            
             android:dividerHeight="0.5dip" 

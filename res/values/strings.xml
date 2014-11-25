@@ -253,10 +253,6 @@
 	<string name="noappsinstalled">No apps are installed</string>
 	<string name="appstore">Your app store</string>
 	<string name="filegallery">File Gallery</string>
-	<string name="extpresent">External SD Present</string>
-	<string name="extAbsent">External SD Absent</string>
-	<string name="intpresent">Internal SD Present</string>
-	<string name="supporttakenBack">Support Taken Back</string>
 	<string name="compressandsend">Compress and sent it</string>
 	<string name="nobackuptodelete">No backup to delete</string>
 	<string name="quit">Quit</string>

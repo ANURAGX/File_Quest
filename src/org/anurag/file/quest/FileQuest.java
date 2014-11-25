@@ -940,7 +940,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						break;
 					case 1:
 						// CLOUD.....
-						Toast.makeText(mContext, R.string.supporttakenBack,	Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, R.string.coming_soon,	Toast.LENGTH_SHORT).show();
 						break;
 
 					case 2:
@@ -1265,7 +1265,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 					case 1:
 						// COPY TO CLOUD
-						Toast.makeText(mContext, R.string.supporttakenBack,Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, R.string.coming_soon,Toast.LENGTH_SHORT).show();
 						break;
 
 					case 2:
@@ -1603,7 +1603,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						 * fired listing the account and asking user to select a
 						 * directory to paste...
 						 */
-						Toast.makeText(mContext, R.string.supporttakenBack,Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, R.string.coming_soon,Toast.LENGTH_SHORT).show();
 						break;
 
 					case 2:
