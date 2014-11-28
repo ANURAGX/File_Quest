@@ -65,5 +65,5 @@ When submitting a bug report, please include the following:-
 - Catch Exeptions while handling root operations like copying,file editing,etc.
 
 ###Screenshots
-<img src="http://s17.postimg.org/j5d2d8kvj/Unt.png" width="720px" height="400px"/>/>
+<img src="http://s17.postimg.org/j5d2d8kvj/Unt.png" width="720px" height="400px"/>
 
