@@ -18,9 +18,9 @@
 <resources>
 
     <!--APP MANIFEST RELATED STRINGS.... -->
-	<string name="version">0.3.0</string>
+	<string name="version">0.3.5</string>
     <string name="app_name">फाइल क्वेस्ट</string>
-    <string name="versioncode">030</string>
+    <string name="versioncode">035</string>
     
      <!-- STRING ARRAYS.... -->
       <string-array name="effects">
