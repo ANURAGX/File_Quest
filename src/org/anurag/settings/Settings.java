@@ -42,6 +42,7 @@ import android.widget.Toast;
 
 
 
+@SuppressLint("CommitPrefEdits")
 public class Settings extends Activity implements View.OnClickListener{
 
 	
@@ -160,23 +161,7 @@ public class Settings extends Activity implements View.OnClickListener{
 					}
 				}
 				break;
-			case R.id.itm_locker:
-				{
-					LinearLayout img = (LinearLayout)findViewById(R.id.reset_passwd);
-					LinearLayout mus = (LinearLayout)findViewById(R.id.unlock_all);
-					LinearLayout ch = (LinearLayout)findViewById(R.id.lock_child);
-					if(img.getVisibility() == View.VISIBLE){
-						img.setVisibility(View.GONE);
-						mus.setVisibility(View.GONE);
-						ch.setVisibility(View.GONE);
-					}else{
-						img.setVisibility(View.VISIBLE);
-						mus.setVisibility(View.VISIBLE);
-						ch.setVisibility(View.VISIBLE);
-					}
-				}
-				break;
-				
+					
 			case R.id.folder_options:
 				{
 					LinearLayout img = (LinearLayout)findViewById(R.id.hide_folder);
@@ -311,12 +296,10 @@ public class Settings extends Activity implements View.OnClickListener{
 			case R.id.reset_passwd:
 				new MasterPassword(Settings.this, FileQuest.size.x*8/9, null, FileQuest.preferences, Constants.MODES.RESET);
 				break;
-			case R.id.unlock_all:
 				
-				break;
-			case R.id.lock_child:
+			
 				
-				break;
+			
 		}		
 	}		
 }

@@ -450,41 +450,16 @@
   
   		
   		
-  		<!-- lock.... -->
-  		<LinearLayout 
-      		android:gravity="center_vertical"
-      		android:onClick="onClick"
-      		android:background="@drawable/button_click"
-      		android:clickable="true"
-      		android:focusable="true"
-      		android:layout_marginLeft="10dp"
-      		android:id="@+id/itm_locker"
-      		android:layout_width="match_parent"
-      		android:layout_height="wrap_content"
-      		android:orientation="horizontal">
-      
-      		<ImageView 
-         		android:layout_width="40dp"
-          		android:layout_height="40dp"
-          		android:background="@drawable/locker"/>
-      
-     		<TextView 
-          		android:layout_marginLeft="10dp"
-          		android:textStyle="bold"
-          		android:layout_width="wrap_content"
-          		android:layout_height="wrap_content"
-          		android:text="@string/locker"/>
-  		</LinearLayout>
+  				
   
   		<!-- reset password .... -->	
   		<LinearLayout 
-  		    android:visibility="gone"
   		    android:gravity="center_vertical"
       		android:onClick="onClick"
       		android:background="@drawable/button_click"
       		android:clickable="true"
       		android:focusable="true"
-      		android:layout_marginLeft="40dp"
+      		android:layout_marginLeft="10dp"
       		android:id="@+id/reset_passwd"
       		android:layout_width="match_parent"
       		android:layout_height="wrap_content"
@@ -503,60 +478,9 @@
           		android:text="@string/resetmasterpassword"/>
   		</LinearLayout>
   		
-  		<!-- unlock locked items.... -->	
-  		<LinearLayout 
-  		    android:visibility="gone"
-  		    android:gravity="center_vertical"
-      		android:onClick="onClick"
-      		android:background="@drawable/button_click"
-      		android:clickable="true"
-      		android:focusable="true"
-      		android:layout_marginLeft="40dp"
-      		android:id="@+id/unlock_all"
-      		android:layout_width="match_parent"
-      		android:layout_height="wrap_content"
-      		android:orientation="horizontal">
-      
-      		<ImageView 
-          		android:layout_width="40dp"
-          		android:layout_height="40dp"
-          		android:background="@drawable/locker"/>
-      
-      		<TextView 
-          		android:layout_marginLeft="10dp"
-          		android:textStyle="bold"
-          		android:layout_width="wrap_content"
-          		android:layout_height="wrap_content"
-          		android:text="@string/unlock_all"/>
-  		</LinearLayout>	
-  
+  		  
   		
-  			<!-- unlock locked items.... -->	
-  		<LinearLayout 
-  		    android:visibility="gone"
-  		    android:gravity="center_vertical"
-      		android:onClick="onClick"
-      		android:background="@drawable/button_click"
-      		android:clickable="true"
-      		android:focusable="true"
-      		android:layout_marginLeft="40dp"
-      		android:id="@+id/lock_child"
-      		android:layout_width="match_parent"
-      		android:layout_height="wrap_content"
-      		android:orientation="horizontal">
-      
-      		<ImageView 
-          		android:layout_width="40dp"
-          		android:layout_height="40dp"
-          		android:background="@drawable/locker"/>
-      
-      		<TextView 
-          		android:layout_marginLeft="10dp"
-          		android:textStyle="bold"
-          		android:layout_width="wrap_content"
-          		android:layout_height="wrap_content"
-          		android:text="@string/child_lock"/>
-  		</LinearLayout>	
+  		
   		
   
   		<!-- folder options.... -->
