@@ -165,7 +165,7 @@ public class MasterPassword {
 				else if(MODE == Constants.MODES.RESET){
 					if(!pass.getText().toString().equals(password)){
 						//wrong old password....
-						Toast.makeText(ctx, "Wrong old password", Toast.LENGTH_SHORT).show();
+						Toast.makeText(ctx, R.string.wrong_old_passws, Toast.LENGTH_SHORT).show();
 					}else if(newpass.getText().toString().length()<3){
 						//password length is short....
 						Toast.makeText(ctx, R.string.minimumpasswordlength, Toast.LENGTH_SHORT).show();

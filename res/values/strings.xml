@@ -239,8 +239,7 @@
 	<string name="load_app_thumb">Load app thumb</string>
 	<string name="load_img_thumb">Load image thumb</string>
 	<string name="load_music_thumb">Load album art</string>
-	<string name="child_lock">Lock child items also</string>
-	
+	<string name="wrong_old_passws">Wrong old password</string>
 	
 	
 	
@@ -600,6 +599,7 @@
     <string name="foldersizemb">Folder size :- %.2f MB</string>
     <string name="foldersizekb">Folder size :- %.2f KB</string>
     <string name="foldersizebytes">Folder size :- %.2f Bytes</string>
+    <string name="file">File</string>
     <string name="filename">NAME</string>
     <string name="filepath">PATH</string>
     <string name="filesize">SIZE</string>

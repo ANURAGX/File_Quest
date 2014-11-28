@@ -68,7 +68,21 @@
         	<item>स्लाइड इन</item>
     </string-array>
     
+    <string-array name="slideList">
+        <item>फेवरेट</item>
+        <item>संगीत</item>
+        <item>ऐप्प्स</item>
+        <item>तस्वीरें</item>
+        <item>वीडियोस</item>
+        <item>डाक्यूमेंट्स</item>
+        <item>आर्काइव</item>
+        <item>अज्ञात</item>
+    </string-array>
     
+    <string-array  name="graph_titles">
+        <item>बार ग्राफ</item>
+        <item>पाई चार्ट</item>
+    </string-array>
     
     
     
@@ -157,7 +171,7 @@
 	<string name="compressallfiles">सभी को कंप्रेस करें </string>
 	<string name="confirmdeletion">क्या आप फाइल्स और फ़ोल्डर्स को नष्ट करना चाहते है :-  इस प्रकार की सभी फाइलें हमेशा के लिया नष्ट कर दी जाएँगी....</string>
 	<string name="cantextractfromrar">रार आर्काइव में से फाइलों को नहीं निकाला जा सकता....</string>
-	<string name="choosealocation">Choose a location</string>
+	<string name="choosealocation">एक स्थान का चयन करें</string>
 	<string name="enterPassword">पासवर्ड डालें </string>
 	<string name="confirmPassword">पासवर्ड की पुष्टि करें</string>
 	<string name="password">पासवर्ड</string>
@@ -188,6 +202,53 @@
 	<string name="unlockpasswd">लॉक्ड आइटम को अनलॉक किया जा रहा है....</string>
 	<string name="changepasswd">पासवर्ड बदला जा रहा है....</string>
 	<string name="homepasswd">लॉक्ड होम आइटम को खोला जा रहा है....</string>
+	<string name="totalfolder">फ़ोल्डर्स  :- %d फ़ोल्डर्स </string>
+	<string name="totalfiles">फाइल्स :- %d फाइल्स</string>
+	<string name="deletingfile">फाइल नष्ट किया जा रहा है :- </string>
+	<string name="allfavdeleted">सभी पसंदीदा आइटम को सूची से हटाया गया</string>
+	<string name="inter">इंटरफ़ेस </string>
+	<string name="folderoptions">फोल्डर ऑप्शन</string>
+	<string name="about">ऐप्प के सम्बन्ध में</string>
+	<string name="graph_stats">ग्राफ में जानकारी</string>
+	<string name="cloud_networks">क्लाउड नेटवर्क</string>
+	<string name="connect_server">कनेक्ट टू सर्वर</string>
+	<string name="locked_items">लॉक्ड आइटम्स</string>
+	<string name="coming_soon">यह सुविधा जल्द ही आ रहा है....</string>
+	<string name="update_check">अपडेट चेक करें </string>
+	<string name="nointernet">कोई इंटरनेट कनेक्टिविटी नहीं है....</string>
+	<string name="checking_update">जाँच करते समय प्रतीक्षा करें</string>
+	<string name="failed_to_check_for_update">जाँच करने में विफल</string>
+	<string name="update_avail">फाइल क्वेस्ट का नया अपडेट उपलब्ध है</string>
+	<string name="delete_frm_ext_sd">एंड्राइड 4.4 किटकैट से,एक्सटर्नल स्टोरेज से किसी भी फाइल को नष्ट करने या नाम बदलने  की अनुमति नहीं है |</string>
+	<string name="delete_frm_ext_sd_title">एक्सटर्नल स्टोरेज से फाइल को नष्ट नहीं किया जा सकता!</string>
+	<string name="dis_next_restart">अगले रीस्टार्ट तक लॉक को निष्क्रिय करें </string>
+	<string name="unlock_all">सभी लॉक्ड आइटम्स को अनलॉक करें</string>
+	<string name="lock_disabled">अगले रीस्टार्ट तक लॉक को निष्क्रिय किया गया</string>
+	<string name="no_locked_items">कोई भी आइटम लॉक्ड नहीं है</string>
+	<string name="mediafire">Mediafire</string>
+	<string name="sugarsync">Sugarsync</string>
+	<string name="copy_cld">Copy</string>
+	<string name="no_file_available">कोई फाइल उपलब्ध नहीं है</string>
+	<string name="faile_to_rename">फाइल का नाम बदलने में असमर्थ </string>
+	<string name="thumb_loading">थंबनेल लोडिंग....</string>
+	<string name="load_app_thumb">लोड ऐप्प थंब</string>
+	<string name="load_img_thumb">लोड इमेज थंब</string>
+	<string name="load_music_thumb">लोड एल्बम आर्ट</string>
+	<string name="item_created">आइटम सफलतापूर्वक बनाया गया  </string>
+	<string name="creation_failed">आइटम बनाने में असमर्थ </string>
+	<string name="jmpfav">फेवरेट में जाएँ  </string>
+	<string name="wrong_old_passws">पुराना पासवर्ड गलत</string>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	<!-- FILE QUEST PLAYER -->
 	<string name="fqplayer">फाइल  क्वेस्ट  प्लेयर </string>
@@ -195,7 +256,6 @@
 	
 	<!-- TASKER ACTIVITY STRINGS..... -->
 	<string name="startupfoldernotfound">स्टार्टअप फ़ोल्डर नहीं मिला</string>
-	<string name="nofilesavailable">खाली फ़ोल्डर</string>
 	<string name="noappsinstalled">कोई ऐप्प इन्सटाल्ड नहीं है</string>
 	<string name="appstore">आपका ऐप्प स्टोर</string>
 	<string name="filegallery">फ़ाइल गैलरी</string>

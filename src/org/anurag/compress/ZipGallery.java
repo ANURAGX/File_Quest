@@ -119,7 +119,7 @@ public class ZipGallery {
 		});
 		
 		if(list.size() == 0){
-			Toast.makeText(ctx, ctx.getString(R.string.nofilesavailable) , Toast.LENGTH_SHORT).show();
+			Toast.makeText(ctx, ctx.getString(R.string.empty) , Toast.LENGTH_SHORT).show();
 			dialog.dismiss();
 		}else{
 			final String type = "All-" + list.get(keys.get(""+0)).getType()+".zip";
