@@ -57,17 +57,154 @@
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content">
                 <TextView 
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/yellow"
                     android:textSize="18.0sp" 
                     android:textStyle="bold" 
                     android:paddingLeft="2.0dip" 
                     android:layout_width="wrap_content" 
                     android:layout_height="wrap_content" 
-                    android:text="Current Release v-0.3.0" />
+                    android:text="Current Release v0.3.5" />
             </LinearLayout>
-            
-            
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
              
+            <!-- latest version 0.3.5 -->
+            <TextView 
+                android:textColor="@color/semi_white30"
+                android:textSize="15.0sp" 
+                android:textStyle="bold" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="  -> File Locking Mechanism " /> 
+               
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Password protection for files and folder." /> 
+             
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Locked files can't be renamed,deleted,pasted,etc...." /> 
+            
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Password verification has to be done before accessing locked items." /> 
+            
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            
+            <TextView 
+                android:textColor="@color/semi_white30"
+                android:textSize="15.0sp" 
+                android:textStyle="bold" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="  -> Build your favorite item's list" /> 
+               
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Create your list of favorite files and folders." /> 
+             
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Lock them,view them together,etc...." /> 
+            
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>     
+                
+            <TextView 
+                android:textColor="@color/semi_white30"
+                android:textSize="15.0sp" 
+                android:textStyle="bold" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="  -> Interface Change" /> 
+               
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> New Theme...." /> 
+             
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> New slide menu...." /> 
+            
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Graphical analysis for file gallery items...." />
+            
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> New advanced settings activity...." />
+            
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> New file properties window...." />
+            
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+             
+            <TextView 
+                android:textColor="@color/semi_white30"
+                android:textSize="15.0sp" 
+                android:textStyle="bold" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="  -> Performance boosting" /> 
+               
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> File gallery optimized...." /> 
+             
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> File list loading improved...." /> 
+            
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Animations improved...." />
+            
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Some more bug fixes...." />
+           
+            
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            
+            
+            
+            <!-- version 0.3.0 --> 
+            <LinearLayout 
+                android:layout_gravity="center" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content">
+                <TextView 
+                    android:textColor="@color/yellow"
+                    android:textSize="18.0sp" 
+                    android:textStyle="bold" 
+                    android:paddingLeft="2.0dip" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:text="Old Release v0.3.0" />
+            </LinearLayout>
             <TextView 
                 android:textSize="15.0sp" 
                 android:textStyle="bold" 
