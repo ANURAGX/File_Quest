@@ -5191,7 +5191,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							itemList = (Utils.apps);
 							keys = Utils.appKey;
 						}	
-						else if(position==4){
+						else if(position==5){
 							itemList = (Utils.doc);
 							keys = Utils.docKey;
 						}	
@@ -5199,7 +5199,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							itemList = (Utils.img);
 							keys = Utils.imgKey;
 						}	
-						else if(position==5){
+						else if(position==4){
 							itemList = (Utils.vids);
 							keys = Utils.videoKey;
 						}	
