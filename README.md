@@ -10,6 +10,18 @@ https://play.google.com/store/apps/details?id=org.anurag.file.quest
 
 File Quest is world's first File Managing app having 3D Listview.Root enabled,gives the flexibility to do app backup of user and system apps at one click.Share multiple apps via Email directly from installed location.Extremely fast,robust and beautiful app for managing files on your android device.
 
+###NEWLY ADDED FEATURES
+| Sl NO.   |                   FEATURE                                            |
+|:--------:|:--------------------------------------------------------------------:|
+| 1.       | File and folder locking mechanism.                                   |
+| 2.       | Locked items not allowed to get renamed,deleted,opened,etc....       |
+| 3.       | Build the list of favorite items and manage them at one place.       |
+| 4.       | Slide menu with some great options.                                  |
+| 5.       | Cool new theme and UI...                                             |
+| 6.       | Graphical stats of the internal sd card...                           |    
+
+
+
 ###FEATURES
 | Sl NO.   |                   FEATURE                                            |
 |:--------:|:--------------------------------------------------------------------:|
