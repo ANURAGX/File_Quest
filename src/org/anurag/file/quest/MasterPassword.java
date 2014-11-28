@@ -70,7 +70,7 @@ public class MasterPassword {
 		Button set = (Button)dialog.findViewById(R.id.copyOk);
 		
 		//MODE=1 means password has to be reset...
-		if(MODE== Constants.MODES.RESET){
+		if(MODE == Constants.MODES.RESET && password != null){
 			TextView msg = (TextView)dialog.findViewById(R.id.Message);
 			msg.setText(ctx.getResources().getString(R.string.changepasswd));
 			newpass.setVisibility(View.VISIBLE);
@@ -79,6 +79,8 @@ public class MasterPassword {
 			co = (TextView)dialog.findViewById(R.id.header);
 			co.setText(ctx.getString(R.string.resetmasterpassword));
 		}
+		
+		
 		
 		if(password==null){
 			TextView msg = (TextView)dialog.findViewById(R.id.Message);
@@ -130,7 +132,7 @@ public class MasterPassword {
 				//getting the reference about task for which password
 				//was verified...
 							
-				if(password == null||MODE==Constants.MODES.RESET){
+				if(password == null){
 					if(pass.getText().toString().length()<3){
 						//password length is not appropriate....
 						Toast.makeText(ctx, R.string.minimumpasswordlength, Toast.LENGTH_SHORT).show();
@@ -140,20 +142,48 @@ public class MasterPassword {
 						SharedPreferences.Editor  editor = prefs.edit();
 						editor.putString("MASTER_PASSWORD", pass.getText().toString());
 						editor.commit();
+						
+						if(MODE == Constants.MODES.RESET){
+							dialog.dismiss();
+							Toast.makeText(ctx, R.string.passwdreset, Toast.LENGTH_SHORT).show();
+						}	
 						if(MODE==Constants.MODES.DEFAULT){
 							//main activity has to notified after verification...
 							Intent intent = new Intent("FQ_FILE_LOCKED_OR_UNLOCKED");
 							intent.putExtra("password_verified", "no_need");
 							ctx.sendBroadcast(intent);
-							dialog.dismiss();
-						}else if(MODE==Constants.MODES.RESET)
-							//it is only to change or set password...
 							Toast.makeText(ctx, R.string.passwdreset, Toast.LENGTH_SHORT).show();
+							dialog.dismiss();
+						}
+							
 					}else if(!pass.getText().toString().equals(confirm.getText().toString())){
 						//passwords didn't matched... 
 						Toast.makeText(ctx, R.string.passworddidnotmatch, Toast.LENGTH_SHORT).show();
 					}
-				}else if(password != null){
+				}
+				//reseting the password....
+				else if(MODE == Constants.MODES.RESET){
+					if(!pass.getText().toString().equals(password)){
+						//wrong old password....
+						Toast.makeText(ctx, "Wrong old password", Toast.LENGTH_SHORT).show();
+					}else if(newpass.getText().toString().length()<3){
+						//password length is short....
+						Toast.makeText(ctx, R.string.minimumpasswordlength, Toast.LENGTH_SHORT).show();
+					}else if(newpass.getText().toString().equals(confirm.getText().toString())){
+						//passwords matched...
+						//save the password here....
+						SharedPreferences.Editor  editor = prefs.edit();
+						editor.putString("MASTER_PASSWORD", newpass.getText().toString());
+						editor.commit();
+						Toast.makeText(ctx, R.string.passwdreset, Toast.LENGTH_SHORT).show();
+						dialog.dismiss();
+					}else{
+						//passwords didn't match....
+						Toast.makeText(ctx, R.string.passworddidnotmatch, Toast.LENGTH_SHORT).show();
+					}
+				}
+				
+				else if(password != null){
 					if(pass.getText().toString().equals(password)){
 						Intent intent = new Intent("FQ_FILE_LOCKED_OR_UNLOCKED");
 						try{

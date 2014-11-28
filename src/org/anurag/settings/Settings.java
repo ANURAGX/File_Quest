@@ -21,11 +21,14 @@
 package org.anurag.settings;
 
 import java.io.File;
+
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuest;
+import org.anurag.file.quest.MasterPassword;
 import org.anurag.file.quest.R;
 import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.Info;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -183,7 +186,6 @@ public class Settings extends Activity implements View.OnClickListener{
 						applied.setImageDrawable(getResources().getDrawable(R.drawable.selected));
 					}	
 					else{
-						FileQuest.SHOW_HIDDEN_FOLDERS = true;
 						applied.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_disabled));
 					}	
 					
@@ -304,6 +306,17 @@ public class Settings extends Activity implements View.OnClickListener{
 					k.setImageDrawable(getResources().getDrawable(R.drawable.thumbnail));
 				}
 				Toast.makeText(Settings.this, R.string.settingsapplied, Toast.LENGTH_SHORT).show();
+				break;
+				
+			case R.id.reset_passwd:
+				new MasterPassword(Settings.this, FileQuest.size.x*8/9, null, FileQuest.preferences, Constants.MODES.RESET);
+				break;
+			case R.id.unlock_all:
+				
+				break;
+			case R.id.lock_child:
+				
+				break;
 		}		
 	}		
 }

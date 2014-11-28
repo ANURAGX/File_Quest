@@ -178,7 +178,7 @@
 	<string name="cantextractfromrar">Can\'t extract files from rar archives....</string>
 	<string name="choosealocation">Choose a location</string>
 	<string name="enterPassword">Enter password</string>
-	<string name="confirmPassword">Confirm password</string>
+	<string name="confirmPassword">Confirm new password</string>
 	<string name="password">Password</string>
 	<string name="minimumpasswordlength">Minimum password length should be 4</string>
 	<string name="passworddidnotmatch">Password didn\'t match</string>
