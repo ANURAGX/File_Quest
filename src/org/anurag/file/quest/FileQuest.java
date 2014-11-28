@@ -4230,6 +4230,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								if(!tempItem.isLocked()){
 									RootManager.nStack.push(value);
 									setAdapter(CURRENT_ITEM);
+									mViewPager.setCurrentItem(1);
 								}else
 									new MasterPassword(mContext, size.x*8/9, tempItem, preferences, Constants.MODES.G_OPEN);
 								
@@ -4237,6 +4238,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								if(!tempItem.isLocked()){
 									SDManager.nStack.push(value);
 									setAdapter(2);
+									mViewPager.setCurrentItem(2, true);
 								}else
 									new MasterPassword(mContext, size.x*8/9, tempItem, preferences, Constants.MODES.G_OPEN);
 							}	
@@ -5321,6 +5323,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						mBuilder.setContentTitle(getString(R.string.app_name));
 						mBuilder.setContentText(getString(R.string.update_avail));
 						
+						mBuilder.setTicker(getString(R.string.update_avail));
+						
 						Toast.makeText(mContext, R.string.update_avail, Toast.LENGTH_SHORT).show();
 						
 						Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -5370,7 +5374,5 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			}
 		});
 		th.start();
-	}
-	
-	
+	}	
 }
