@@ -70,6 +70,24 @@
                 android:layout_height="wrap_content"/>
              
             <!-- latest version 0.3.5 -->
+            
+            <TextView 
+                android:textColor="@color/semi_white30"
+                android:textSize="15.0sp" 
+                android:textStyle="bold" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="  -> File Quest Music Player " />
+            
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="     -> Get preview of music files with file quest...." /> 
+            
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            
             <TextView 
                 android:textColor="@color/semi_white30"
                 android:textSize="15.0sp" 
