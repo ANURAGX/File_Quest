@@ -3055,6 +3055,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					switch (actionId) {
 					
 						case -10000:
+							DBoxAuth.DoAuth(FileQuest.this);
+							break;
 						case -9000:
 						case -7000: 
 						case -6000:
@@ -3063,7 +3065,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									/*
 								 	* DROPBOX STUFF
 								 	*/
-									//DBoxAuth.DoAuth(FileQuest.this);
+									//
 							        Toast.makeText(mContext, R.string.coming_soon, Toast.LENGTH_SHORT).show();
 									break;
 									
@@ -4299,7 +4301,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 				}else if(ACTION.equals("FQ_DROPBOX_OPEN_FOLDER")){
 					//action to open drop box location in panel.....
-					if(CURRENT_ITEM == 2){
+					cleanStack(null);
+					if(CURRENT_ITEM == 1){
+						simple.setAdapter(new DBoxAdapter(mContext, DBoxManager.dListRoot));
+					}
+					else if(CURRENT_ITEM == 2){
 						root.setAdapter(new DBoxAdapter(mContext, DBoxManager.dListSimple));
 					}
 				}else if(ACTION.equalsIgnoreCase("FQ_FILE_LOCKED_OR_UNLOCKED")){
@@ -5106,12 +5112,18 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			while(RootManager.nStack.peek().contains("->"))
 				RootManager.nStack.pop();
 			RAR_ROOT = TAR_ROOT= ZIP_ROOT = false;
-			file = new Item(new File(p), null, null, null);
+			if(p != null)
+				file = new Item(new File(p), null, null, null);
+			else
+				file = new Item(new File(RootManager.nStack.peek()), null, null, null);
 		}else if(CURRENT_ITEM==2&&(RAR_SD||TAR_SD||ZIP_SD)){
 			while(SDManager.nStack.peek().contains("->"))
 				SDManager.nStack.pop();
 			RAR_SD = ZIP_SD = TAR_SD = false;
-			file2 = new Item(new File(p), null, null, null);
+			if(p != null)
+				file2 = new Item(new File(p), null, null, null);
+			else
+				file2 = new Item(new File(SDManager.nStack.peek()), null, null, null);
 		}
 	}
 	
