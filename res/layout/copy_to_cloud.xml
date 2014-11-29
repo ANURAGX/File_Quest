@@ -1,0 +1,196 @@
+<!-- 
+  Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+                              
+                              anurag.dev1512@gmail.com
+ 
+ -->
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/black"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical" >
+        		
+    <LinearLayout 
+        android:orientation="horizontal"
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView 
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/cloud_longclick"/>
+        
+        <TextView 
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/copytocloud"/>
+    </LinearLayout>
+    
+    <ImageView 
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/dialog_border"/>
+    
+ 	<LinearLayout
+ 	    android:layout_marginLeft="10dp"
+ 	    android:layout_marginTop="10dp"
+        android:onClick="onClick"
+       	android:id="@+id/cld_skydrv"
+    	android:background="@drawable/button_click"
+    	android:clickable="true"
+    	android:focusable="true" 
+    	android:orientation="horizontal" 
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content">
+    	<ImageView 
+    		android:background="@drawable/ic_launcher_sky_drive"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"/>
+    	<TextView 
+    		android:textColor="@android:color/white"
+        	android:paddingTop="10dp"
+        	android:paddingLeft="10dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/skydrive"/>
+    </LinearLayout>
+    		
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+    	android:onClick="onClick"
+    	android:id="@+id/cld_gogledrv"
+        android:background="@drawable/button_click"
+        android:clickable="true"
+        android:focusable="true" 
+        android:orientation="horizontal" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView 
+        	android:background="@drawable/ic_launcher_google_drive"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"/>
+        
+       	<TextView 
+        	android:textColor="@android:color/white"
+        	android:paddingTop="10dp"
+        	android:paddingLeft="10dp"
+        	android:textStyle="bold"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="@string/googledrive"/>
+    </LinearLayout>
+    		
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:onClick="onClick"
+      	android:id="@+id/cld_drp"
+    	android:background="@drawable/button_click"
+    	android:clickable="true"
+    	android:focusable="true" 
+       	android:orientation="horizontal" 
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content">
+    	<ImageView 
+    		android:background="@drawable/ic_launcher_drop_box"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"/>
+    	<TextView 
+      		android:paddingTop="10dp"
+    		android:paddingLeft="10dp"
+    		android:textStyle="bold"
+    		android:layout_width="wrap_content"
+     		android:layout_height="wrap_content"
+            android:text="@string/dropbox"/>
+    </LinearLayout>
+    	
+        		
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:onClick="onClick"
+    	android:id="@+id/cld_mdfire"
+        android:background="@drawable/button_click"
+        android:clickable="true"
+        android:focusable="true" 
+        android:orientation="horizontal" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView 
+        	android:background="@drawable/mediafire"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"/>
+        <TextView 
+        	android:paddingTop="10dp"
+        	android:paddingLeft="10dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mediafire"/>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:onClick="onClick"
+       	android:id="@+id/cld_sugar"
+    	android:background="@drawable/button_click"
+        android:clickable="true"
+        android:focusable="true" 
+        android:orientation="horizontal" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView 
+        	android:background="@drawable/sugar_sync"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"/>
+        
+       	<TextView 
+            android:paddingTop="10dp"
+        	android:paddingLeft="10dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sugarsync"/>
+    </LinearLayout>
+    	
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:onClick="onClick"
+       	android:id="@+id/cld_copy"
+    	android:background="@drawable/button_click"
+    	android:clickable="true"
+        android:focusable="true" 
+        android:orientation="horizontal" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView 
+        	android:background="@drawable/copy"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"/>
+        <TextView 
+            android:paddingTop="10dp"
+        	android:paddingLeft="10dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/copy_cld"/>
+    </LinearLayout>
+</LinearLayout>

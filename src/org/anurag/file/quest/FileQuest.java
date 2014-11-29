@@ -939,8 +939,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							new MasterPassword(mContext, size.x*8/9, file0, preferences,Constants.MODES.OPEN);
 						break;
 					case 1:
-						// CLOUD.....
-						Toast.makeText(mContext, R.string.coming_soon,	Toast.LENGTH_SHORT).show();
+						// copy to CLOUD.....
+						new CopyToCloud(mContext, file0);
 						break;
 
 					case 2:
@@ -1265,7 +1265,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 					case 1:
 						// COPY TO CLOUD
-						Toast.makeText(mContext, R.string.coming_soon,Toast.LENGTH_SHORT).show();
+						new CopyToCloud(mContext, file);
 						break;
 
 					case 2:
@@ -1595,15 +1595,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 					case 1:
 						// COPY TO CLOUD
-						/**
-						 * if root panel is currently on cloud mode,then on
-						 * selection from below list,it migrated to root panel
-						 * and user there does the pasting work of selected file
-						 * from sd card panel..... else a separate dialog is
-						 * fired listing the account and asking user to select a
-						 * directory to paste...
-						 */
-						Toast.makeText(mContext, R.string.coming_soon,Toast.LENGTH_SHORT).show();
+						new CopyToCloud(mContext, file2);
 						break;
 
 					case 2:
