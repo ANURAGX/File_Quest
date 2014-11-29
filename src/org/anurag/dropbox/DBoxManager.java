@@ -60,7 +60,7 @@ public class DBoxManager {
      * @return
      */
     public static ArrayList<DBoxObj> generateListForRoot(Context ctx){
-    	DropboxAPI<?> api = DBoxAuth.mApi;
+    	DropboxAPI<?> api = DBoxAuth.mApi_1;
     	try {
     		com.dropbox.client2.DropboxAPI.Entry list = api.metadata(rootPath, 1000, "", true, null);
 			if(list.isDir){
@@ -83,7 +83,7 @@ public class DBoxManager {
      * @return
      */
     public static ArrayList<DBoxObj> generateListForSimple(Context ctx){
-    	DropboxAPI<?> api = DBoxAuth.mApi;
+    	DropboxAPI<?> api = DBoxAuth.mApi_1;
     	try {
     		com.dropbox.client2.DropboxAPI.Entry list = api.metadata(simplePath, 1000, "", true, null);
 			if(list.isDir){

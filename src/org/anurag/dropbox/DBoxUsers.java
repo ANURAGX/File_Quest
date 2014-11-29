@@ -44,10 +44,9 @@ public class DBoxUsers extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
 		db.execSQL("CREATE TABLE DBOXUSERS "
-				+ "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ "USERNAME TEXT,"
-				+ "KEY TEXT,"
-				+ "SECRET TEXT);");
+				+ "(USERNAME TEXT PRIMARY KEY,"
+				+ "APIKEY TEXT,"
+				+ "SECRETKEY TEXT);");
 	}
 
 	@Override

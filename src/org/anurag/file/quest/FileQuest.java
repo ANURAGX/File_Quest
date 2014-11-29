@@ -594,7 +594,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		 * There was dropbox authentication request by user....
 		 */
 		if(DBoxAuth.AUTH){
-			AndroidAuthSession session = DBoxAuth.mApi.getSession();
+			AndroidAuthSession session = DBoxAuth.mApi_1.getSession();
 			if(session.authenticationSuccessful()){
 				DBoxAuth.storeAuth(session.getOAuth2AccessToken(),mContext);
 				session.finishAuthentication();

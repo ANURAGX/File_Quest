@@ -19,8 +19,11 @@
 
 package org.anurag.file.quest;
 
-import android.app.Dialog;
+import java.util.ArrayList;
 
+import org.anurag.dropbox.DBoxUploader;
+
+import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,7 +73,9 @@ public class CopyToCloud implements OnClickListener {
 				break;
 				
 			case R.id.cld_drp:
-				
+				ArrayList<Item> ls = new ArrayList<Item>();
+				ls.add(item);
+				new DBoxUploader(context, ls);
 				break;
 				
 			case R.id.cld_gogledrv:

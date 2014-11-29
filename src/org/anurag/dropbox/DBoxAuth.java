@@ -32,7 +32,7 @@ import com.dropbox.client2.session.AppKeyPair;
 
 public class DBoxAuth {
 	
-	public static DropboxAPI<AndroidAuthSession> mApi;
+	public static DropboxAPI<AndroidAuthSession> mApi_1;
 	public static boolean AUTH = false;
 	
 	/**
@@ -46,8 +46,8 @@ public class DBoxAuth {
 		}
 		AUTH = true;
 		AndroidAuthSession session = buildAuthSession();
-		mApi = new DropboxAPI<AndroidAuthSession>(session);
-		mApi.getSession().startOAuth2Authentication(ctx);
+		mApi_1 = new DropboxAPI<AndroidAuthSession>(session);
+		mApi_1.getSession().startOAuth2Authentication(ctx);
 	}
 	
 	static private AndroidAuthSession buildAuthSession(){
@@ -61,7 +61,7 @@ public class DBoxAuth {
 		if(session!=null){
 			String name;
 			try {
-				name = mApi.accountInfo().displayName;
+				name = mApi_1.accountInfo().displayName;
 			} catch (DropboxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
