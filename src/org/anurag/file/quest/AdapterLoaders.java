@@ -29,6 +29,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * Adapter class for list view and some other list views....
+ * @author anurag
+ *
+ */
 public class AdapterLoaders {
 
 	static String list[];
