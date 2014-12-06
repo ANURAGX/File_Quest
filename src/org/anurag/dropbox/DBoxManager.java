@@ -40,7 +40,10 @@ import com.dropbox.client2.exception.DropboxException;
 
 
 /**
- * 
+ * this is manager class for listing the files from user's dropbox
+ * account from the provided path....
+ * after loading it notifies the main activity class
+ * to list them in list view....
  * @author Anurag
  *
  */
@@ -53,7 +56,8 @@ public class DBoxManager {
 	public static boolean DBOX_SD = false;
     public static String rootPath = "/";
     public static String simplePath = "/";
-
+    public static DBoxObj sd;
+    public static DBoxObj root;
     
     /**
      * 
@@ -144,7 +148,7 @@ public class DBoxManager {
 				//sending initial message to open loading dialog...
 				handle.sendEmptyMessage(0);
 				if(ITEM==2)
-					dListSimple = generateListForRoot(ctx);
+					dListSimple = generateListForSimple(ctx);
 				else if(ITEM==1)
 					dListRoot = generateListForRoot(ctx);
 				sort(ITEM);
@@ -177,6 +181,5 @@ public class DBoxManager {
 			Collections.sort(dListSimple, comp);
 		else
 			Collections.sort(dListRoot, comp);
-	}
-    
+	}    
 }

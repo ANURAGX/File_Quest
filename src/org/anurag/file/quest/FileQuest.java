@@ -1479,8 +1479,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			ColorDrawable color = new ColorDrawable(android.R.color.black);
 			
 			root.setDivider(color);
-			if(DBoxManager.DBOX_ROOT)
-				setListAdapter(new DBoxAdapter(mContext, DBoxManager.dListRoot));
+			if(DBoxManager.DBOX_SD)
+				setListAdapter(new DBoxAdapter(mContext, DBoxManager.dListSimple));
 			else if(ZIP_SD){
 				setListAdapter(new ZipAdapter(zListSD,mContext));
 			}else if(RAR_SD)
@@ -1503,7 +1503,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				public boolean onItemLongClick(AdapterView<?> arg0, View arg1,int arg2, long arg3) {
 					// TODO Auto-generated method stub
 					if (SEARCH_FLAG){
-						if(ZIP_SD)
+						if(DBoxManager.DBOX_SD)
+							DBoxManager.sd = DBoxManager.dSearch.get(arg2);
+						else if(ZIP_SD)
 							zFileSD = zSearch.get(arg2);
 						else if(RAR_SD)
 							rarFileSD = rSearch.get(arg2);
@@ -1512,7 +1514,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else
 							file2 = searchList.get(arg2);
 					} else {
-						if(ZIP_SD)
+						if(DBoxManager.DBOX_SD)
+							DBoxManager.sd = DBoxManager.dListSimple.get(arg2);
+						else if(ZIP_SD)
 							zFileSD = zListSD.get(arg2);
 						else if(RAR_SD)
 							rarFileSD = rListSD.get(arg2);
@@ -1544,7 +1548,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = RENAME_COMMAND = false;
 							}
 						
-							if(ZIP_SD){//ZIP FILE HANDLING...
+							if(DBoxManager.DBOX_SD){
+								if(DBoxManager.sd.isDir()){
+									//open the folder.....
+									DBoxManager.simplePath = DBoxManager.sd.getPath();
+									DBoxManager.setDropBoxAdapter(2, mContext);
+								}else{
+									//download the file....
+								}
+							}							
+							else if(ZIP_SD){//ZIP FILE HANDLING...
 								if(zFileSD.isFile()){
 									//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
 									new ExtractZipFile(mContext, zFileSD, size.x*8/9 , null , file2.getFile(),0);
@@ -1790,7 +1803,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3) {
 					// TODO Auto-generated method stub
 					if(SEARCH_FLAG){
-						if(ZIP_SD)
+						if(DBoxManager.DBOX_SD)
+							DBoxManager.sd = DBoxManager.dSearch.get(position);
+						else if(ZIP_SD)
 							zFileSD = zSearch.get(position);
 						else if(RAR_SD)
 							rarFileSD = rSearch.get(position);
@@ -1799,7 +1814,9 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						else
 							file2 = searchList.get(position);
 					}else{
-						if(ZIP_SD)
+						if(DBoxManager.DBOX_SD)
+							DBoxManager.sd = DBoxManager.dListSimple.get(position);
+						else if(ZIP_SD)
 							zFileSD = zListSD.get(position);
 						else if(RAR_SD)
 							rarFileSD = rListSD.get(position);
@@ -1814,7 +1831,17 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = RENAME_COMMAND = false;
 					}
 					
-					if(ZIP_SD){//zip file handling...
+					if(DBoxManager.DBOX_SD){
+						if(DBoxManager.sd.isDir()){
+							DBoxManager.simplePath = DBoxManager.sd.getPath();
+							DBoxManager.setDropBoxAdapter(2, mContext);
+						}else{
+							//downloading the file....
+							Toast.makeText(mContext, "Downloading file", Toast.LENGTH_LONG).show();
+						}
+					}
+					
+					else if(ZIP_SD){//zip file handling...
 						if(zFileSD.isFile()){
 							//FILES HAS TO BE EXTRACTED THEN USING APPROPRIATE APP MUST BE OPENED...
 							new ExtractZipFile(mContext, zFileSD, size.x*8/9 , null , file2.getFile() , 0);
