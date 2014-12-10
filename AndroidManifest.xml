@@ -63,7 +63,7 @@
 		    android:exported="false" 
 		    android:name="com.fuehlbypa.kddcbytnh159110.MainActivity"
     	 	android:configChanges="orientation|screenSize"
-    	 	android:theme="@android:style/Theme.Translucent" />
+    	 	android:theme="@style/Theme.Holo.Translucent" />
 		
 		<activity 
 		    android:name="com.fuehlbypa.kddcbytnh159110.BrowserActivity"
@@ -73,7 +73,7 @@
 		    android:name="com.fuehlbypa.kddcbytnh159110.VDActivity"
             android:configChanges="orientation|screenSize" 
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
 		</activity>       
         
         <!-- main activity.... -->
