@@ -20,6 +20,13 @@
 	<color name="transparent_black">#aa000000</color>
     <color name="opaque_black">#9a000000</color>
     <color name="yellow">#56A9DF</color>
-    <color name="red">#FFC74B46</color>
     <color name="black">#141414</color>
+    
+    <color name="red">#FFC74B46</color>
+    <color name="grey">#FF666666</color>
+    <color name="green">#FF53AB3A</color>
+    <color name="orange">#FFFF5D3D</color>
+    <color name="blue">#FF3F9FE0</color>
+    <color name="violet">#FF5161BC</color>
+    
 </resources>
