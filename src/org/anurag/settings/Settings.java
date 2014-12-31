@@ -215,7 +215,7 @@ public class Settings extends Activity implements View.OnClickListener{
 				break;
 				
 			case R.id.panel_startup:
-				new StartupDirDialog(Settings.this, FileQuest.size.x*8/9, edit);
+				new StartUpPanelDialog(Settings.this, FileQuest.size.x*8/9, edit);
 				break;
 				
 			case R.id.start_dir:
