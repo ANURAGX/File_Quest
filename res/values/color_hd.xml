@@ -1,0 +1,42 @@
+<!-- 
+  Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+                              
+                              anurag.dev1512@gmail.com
+ 
+ -->
+ 
+<resources>
+    <color name="grey">#FF666666</color>
+    <color name="green">#FF53AB3A</color>
+    <color name="red">#FFC74B46</color>
+    <color name="orange">#FFFF5D3D</color>
+    <color name="blue">#FF3F9FE0</color>
+    <color name="violet">#FF5161BC</color>
+    <color name="semi_white">#FFFFFFFF</color>
+    <color name="semi_white30">#4DFFFFFF</color>
+    <color name="semi_grey70">#CC666666</color>
+    <color name="semi_green70">#CC53AB3A</color>
+    <color name="semi_red70">#CCC74B46</color>
+    <color name="semi_orange70">#CCFF5D3D</color>
+    <color name="semi_blue70">#CC3F9FE0</color>
+    <color name="semi_violet70">#CC5161BC</color>
+    <color name="semi_grey40">#66666666</color>
+    <color name="semi_green40">#6653AB3A</color>
+    <color name="semi_red40">#66C74B46</color>
+    <color name="semi_orange40">#66FF5D3D</color>
+    <color name="semi_blue40">#663F9FE0</color>
+    <color name="semi_violet40">#665161BC</color>
+     <color name="semi_white15">#26FFFFFF</color>
+</resources>

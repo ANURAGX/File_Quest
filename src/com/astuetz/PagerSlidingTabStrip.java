@@ -83,13 +83,13 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	private boolean textAllCaps = true;
 
 	private int scrollOffset = 52;
-	private int indicatorHeight = 6;
+	private int indicatorHeight = 3;
 	private int underlineHeight = 2;
 	private int dividerPadding = 12;
 	private int tabPadding = 24;
 	private int dividerWidth = 1;
 
-	private int tabTextSize = 12;
+	private int tabTextSize = 14;
 	private int tabTextColor = 0xFFFFFFFF;
 	private Typeface tabTypeface = null;
 	private int tabTypefaceStyle = Typeface.BOLD;
@@ -254,7 +254,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 			}
 		});
 
-		tab.setPadding(tabPadding, 0, tabPadding, 0);
+		tab.setPadding(tabPadding, 5, tabPadding, 3);
 		tabsContainer.addView(tab, position, shouldExpand ? expandedTabLayoutParams : defaultTabLayoutParams);
 	}
 
