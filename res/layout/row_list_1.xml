@@ -25,6 +25,7 @@
     
       
     	 <LinearLayout 
+    	     android:visibility="gone"
     	     android:orientation="horizontal"
     	     android:layout_width="50dp"
     	     android:layout_height="50dp">
@@ -32,6 +33,7 @@
     	    <!-- LAYOUT FOR LOCK.... --> 
     	
             <ImageView 
+                android:visibility="gone"
                 android:background="@drawable/button_click"
                 android:id="@+id/lockimg"
                	android:clickable="false"
@@ -44,6 +46,7 @@
          	
     	 	<!-- LAYOUT FOR FAVORITE ITEM... -->
     	 	<ImageView 
+    	 	    android:visibility="gone"
                	android:background="@drawable/button_click"
                	android:id="@+id/favimg"
                	android:clickable="false"

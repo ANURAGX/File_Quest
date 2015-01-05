@@ -82,11 +82,12 @@ public class FileQuestHD extends FragmentActivity {
             }
 		};
 			
-		styleActionBar(getResources().getColor(R.color.violet));
+		styleActionBar(getResources().getColor(R.color.orange));
 		drawer.setDrawerListener(toggle);
 	
 		pager.setAdapter(adapters);
 		indicator.setViewPager(pager);
+		pager.setOffscreenPageLimit(4);
 	}
 	
 	@Override

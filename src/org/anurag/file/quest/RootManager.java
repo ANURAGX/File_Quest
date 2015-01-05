@@ -20,12 +20,12 @@
 package org.anurag.file.quest;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Locale;
 import java.util.Stack;
 
 import org.ultimate.root.LinuxShell;
@@ -151,18 +151,18 @@ public class RootManager {
 	public ArrayList<Item> getList(){
 		items.clear();
 		file = new File(nStack.peek());
-		if(FileQuest.SORT_TYPE == 4)
+		if(Constants.SORT_TYPE == 4)
 			return getCurrentFileListWithHiddenItemFirst();
-		else if(FileQuest.SORT_TYPE == 5)
+		else if(Constants.SORT_TYPE == 5)
 			return getCurrentFileListWithHiddenItemLast();
 		if(file.exists()){
 			File[] files = null;
 			files = listFiles(file);			
-			if(FileQuest.SORT_TYPE == 1)
+			if(Constants.SORT_TYPE == 1)
 				Arrays.sort(files,alpha);
-			else if(FileQuest.SORT_TYPE == 2)
+			else if(Constants.SORT_TYPE == 2)
 				Arrays.sort(files,alphaFolderFirst);
-			else if(FileQuest.SORT_TYPE == 3)
+			else if(Constants.SORT_TYPE == 3)
 				Arrays.sort(files,alphaFileFirst);
 			int l = files.length;
 			for(int i = 0 ;i<l ; ++i){
@@ -202,7 +202,7 @@ public class RootManager {
 			File[] files = listFiles(file);
 			Arrays.sort(files,alphaFolderFirst);
 			int l = files.length;
-			if(FileQuest.SHOW_HIDDEN_FOLDERS)
+			if(Constants.SHOW_HIDDEN_FOLDERS)
 				for(int i = 0 ;i<l ; ++i)
 					if(files[i].getName().startsWith("."))
 						items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
@@ -229,7 +229,7 @@ public class RootManager {
 			for(int i = 0 ;i<files.length ; ++i)
 				if(!files[i].getName().startsWith("."))
 					items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
-			if(FileQuest.SHOW_HIDDEN_FOLDERS)
+			if(Constants.SHOW_HIDDEN_FOLDERS)
 				for(int i = 0 ;i<files.length ; ++i)
 					if( files[i].getName().startsWith("."))
 						items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
@@ -247,10 +247,10 @@ public class RootManager {
 			if(Constants.isExtAvailable)
 				if(f.getAbsolutePath().equalsIgnoreCase(Constants.EXT_PATH))
 					return res.getDrawable(R.drawable.ic_launcher_sdcard);
-			return res.getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]);
+			return Constants.FOLDER_IMAGE;
 		}
 		
-		String name = f.getName().toLowerCase(Locale.ENGLISH);
+		String name = f.getName().toLowerCase();
 		
 		if(name.endsWith(".zip")){
 			
@@ -381,7 +381,7 @@ public class RootManager {
 	 */
 	public File[] listFiles(File f){
 		if(f.canRead()){
-			if(!FileQuest.SHOW_HIDDEN_FOLDERS)
+			if(!Constants.SHOW_HIDDEN_FOLDERS)
 				return f.listFiles(new HiddenFileFilter());
 			else 
 				return f.listFiles(new ReadFileFilter());
@@ -403,7 +403,7 @@ public class RootManager {
 				}
 			}catch(Exception e){
 				nStack.pop();
-				if(!FileQuest.SHOW_HIDDEN_FOLDERS)
+				if(!Constants.SHOW_HIDDEN_FOLDERS)
 					return f.listFiles(new HiddenFileFilter());
 				else 
 					return f.listFiles(new ReadFileFilter());
