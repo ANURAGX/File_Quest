@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import org.anurag.dropbox.DBoxUsers;
 
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.widget.ImageView;
 
@@ -104,4 +105,8 @@ public class Constants {
 	//holding the id for the item in file gallery that was selected for locking
 	//or unlocking,after verification of password this id will be used in FileQuest Activity....
 	public static String lockID;
+	
+	public static int SORT_TYPE;
+	public static boolean SHOW_HIDDEN_FOLDERS;
+	public static Drawable FOLDER_IMAGE;
 }

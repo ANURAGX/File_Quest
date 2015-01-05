@@ -26,7 +26,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.Stack;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -153,21 +152,21 @@ public class SDManager {
 	public ArrayList<Item> getList(){
 		items.clear();
 		file = new File(nStack.peek());
-		if(FileQuest.SORT_TYPE == 4)
+		if(Constants.SORT_TYPE == 4)
 			return getCurrentFileListWithHiddenItemFirst();
-		else if(FileQuest.SORT_TYPE == 5)
+		else if(Constants.SORT_TYPE == 5)
 			return getCurrentFileListWithHiddenItemLast();
 		if(file.canRead() && file.exists()){
 			File[] files = null;
-			if(!FileQuest.SHOW_HIDDEN_FOLDERS)
+			if(!Constants.SHOW_HIDDEN_FOLDERS)
 				files = file.listFiles(new HiddenFileFilter());
 			else
 				files = file.listFiles(new ReadFileFilter());
-			if(FileQuest.SORT_TYPE == 1)
+			if(Constants.SORT_TYPE == 1)
 				Arrays.sort(files,alpha);
-			else if(FileQuest.SORT_TYPE == 2)
+			else if(Constants.SORT_TYPE == 2)
 				Arrays.sort(files,alphaFolderFirst);
-			else if(FileQuest.SORT_TYPE == 3)
+			else if(Constants.SORT_TYPE == 3)
 				Arrays.sort(files,alphaFileFirst);
 			int l = files.length;
 			for(int i = 0 ;i<l ; ++i){
@@ -207,7 +206,7 @@ public class SDManager {
 			File[] files = file.listFiles();
 			Arrays.sort(files,alphaFolderFirst);
 			int l = files.length;
-			if(FileQuest.SHOW_HIDDEN_FOLDERS)
+			if(Constants.SHOW_HIDDEN_FOLDERS)
 				for(int i = 0 ;i<l ; ++i)
 					if(files[i].getName().startsWith(".") && files[i].canRead())
 						items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
@@ -234,7 +233,7 @@ public class SDManager {
 			for(int i = 0 ;i<files.length ; ++i)
 				if(!files[i].getName().startsWith(".") && files[i].canRead())
 					items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
-			if(FileQuest.SHOW_HIDDEN_FOLDERS)
+			if(Constants.SHOW_HIDDEN_FOLDERS)
 				for(int i = 0 ;i<files.length ; ++i)
 					if( files[i].getName().startsWith(".") && files[i].canRead())
 						items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
@@ -252,7 +251,7 @@ public class SDManager {
 			if(Constants.isExtAvailable)
 				if(f.getAbsolutePath().equalsIgnoreCase(Constants.EXT_PATH))
 					return res.getDrawable(R.drawable.ic_launcher_sdcard);
-			return res.getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]);
+			return Constants.FOLDER_IMAGE;
 		}
 		
 		String name = f.getName().toLowerCase(Locale.ENGLISH);

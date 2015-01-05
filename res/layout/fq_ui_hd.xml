@@ -17,38 +17,57 @@
 -->
 
  
-<LinearLayout 
+<android.support.v4.widget.DrawerLayout 
+    android:id="@+id/sliding_drawer" 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/main_ui" >
-
-    <com.astuetz.PagerSlidingTabStrip
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
-        android:id="@+id/pagerSlidingTabStrip1"
-        android:layout_width="match_parent"
-        android:layout_height="36dp" >
-    </com.astuetz.PagerSlidingTabStrip>
-
-    <android.support.v4.view.ViewPager 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/view">        
-    </android.support.v4.view.ViewPager> 
+    android:layout_height="match_parent">
     
-    <com.fuehlbypa.kddcbytnh159110.AdView
-	    android:layout_gravity="center"
-		xmlns:ap="http://schemas.android.com/apk/res-auto"
-		android:id="@+id/myAdView"
-		android:visibility="gone"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		ap:animation="fade"
-		ap:banner_type="inappad"
-		ap:placementType="interstitial"
-		ap:test_mode="false"
-		ap:canShowMR="false"/>
+    <LinearLayout 
+    	xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:layout_width="match_parent"
+   	 	android:layout_height="match_parent"
+    	android:orientation="vertical"
+    	android:id="@+id/frame_container" >
+
+    	<com.astuetz.PagerSlidingTabStrip
+        	android:paddingTop="3dp"
+        	android:paddingBottom="3dp"
+        	android:id="@+id/pagerSlidingTabStrip1"
+        	android:layout_width="match_parent"
+        	android:layout_height="36dp" >
+    	</com.astuetz.PagerSlidingTabStrip>
+
+    	<android.support.v4.view.ViewPager 
+        	android:layout_width="match_parent"
+        	android:layout_weight="1.0"
+        	android:layout_height="0.0dp"
+        	android:id="@+id/view">        
+    	</android.support.v4.view.ViewPager> 
     
-</LinearLayout>
+    	<com.fuehlbypa.kddcbytnh159110.AdView
+	    	android:layout_gravity="center"
+			xmlns:ap="http://schemas.android.com/apk/res-auto"
+			android:id="@+id/myAdView"
+			android:visibility="gone"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			ap:animation="fade"
+			ap:banner_type="inappad"
+			ap:placementType="interstitial"
+			ap:test_mode="false"
+			ap:canShowMR="false"/>    
+	</LinearLayout>
+	
+    <LinearLayout 
+        android:layout_gravity="start"
+        android:id="@+id/drawer_list"
+        android:orientation="vertical"
+        android:layout_width="320dp"
+        android:layout_height="match_parent">
+    	<include 
+    	    layout="@layout/slide_menu_list"/>        
+        
+    </LinearLayout>
+    
+</android.support.v4.widget.DrawerLayout>
