@@ -370,4 +370,13 @@ public class SDManager {
 		return getList();
 	}
 	
+	/**
+	 * pushes a path to top of stack....
+	 * 
+	 * @param path which was being viewed....
+	 */
+	public void pushPath(String path){
+		nStack.push(path);
+	}
+	
 }

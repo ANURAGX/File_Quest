@@ -21,17 +21,21 @@ package org.anurag.adapters;
 
 import java.util.ArrayList;
 
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.Item;
+import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.SDAdapter;
 import org.anurag.file.quest.SDManager;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 
@@ -59,11 +63,30 @@ public class SdCardPanel extends Fragment{
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		list = (ListView)view.findViewById(R.id.list_view_hd);		
-	
+		list.setSelector(R.drawable.list_selector_hd);
 		if(load == null){
 			load = new LoadList();
 			load.execute();
 		}	
+		
+		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Item item = adapter_list.get(position);
+				if(item.isDirectory()){
+					//selecting a folder....
+					manager.pushPath(item.getPath());
+					load = new LoadList();
+					load.execute();
+				}else{
+					//selecting a file....
+					new OpenFileDialog(getActivity(), Uri.parse(item.getPath())
+							, Constants.size.x*8/9);
+				}
+			}
+		});
 	}
 	
 	

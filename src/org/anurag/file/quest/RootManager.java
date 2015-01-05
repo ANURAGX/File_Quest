@@ -20,7 +20,6 @@
 package org.anurag.file.quest;
 
 import java.io.BufferedReader;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
@@ -442,5 +441,14 @@ public class RootManager {
 			if(target.exists())
 				if(target.delete()){}
 		}
+	}
+	
+	/**
+	 * pushes a path to top of stack....
+	 * 
+	 * @param path which was being viewed....
+	 */
+	public void pushPath(String path){
+		nStack.push(path);
 	}
 }

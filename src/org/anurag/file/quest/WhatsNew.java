@@ -24,7 +24,7 @@ public class WhatsNew {
 
 	public WhatsNew(Context ctx,int width,int height) {
 		// TODO Auto-generated constructor stub
-		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
+		final Dialog dialog = new Dialog(ctx, R.style.Dialog_Orange);
 		dialog.setCancelable(false);
 		dialog.setContentView(R.layout.whats_new);
 		Button btn = (Button)dialog.findViewById(R.id.whats_new_btn);

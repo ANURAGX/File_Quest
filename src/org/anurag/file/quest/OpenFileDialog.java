@@ -120,7 +120,7 @@ public class OpenFileDialog {
 			}
 			
 			
-			dialog = new Dialog(mContext, R.style.custom_dialog_theme);
+			dialog = new Dialog(mContext, R.style.Dialog_Orange);
 			dialog.setCancelable(true);
 			dialog.setContentView(R.layout.launch_file);
 			dialog.getWindow().getAttributes().width = width;

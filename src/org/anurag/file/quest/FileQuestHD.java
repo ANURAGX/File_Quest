@@ -25,6 +25,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import android.app.ActionBar;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -52,6 +53,8 @@ public class FileQuestHD extends FragmentActivity {
 	private ActionBarDrawerToggle toggle;
 	private DrawerLayout drawer;
 	private SharedPreferences prefs;
+	
+	private Editor prefs_editor;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
@@ -66,6 +69,8 @@ public class FileQuestHD extends FragmentActivity {
 		Constants.db = new ItemDB(FileQuestHD.this);
 		Constants.size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(Constants.size);
+		
+		prefs_editor = prefs.edit();
 		
 		setContentView(R.layout.fq_ui_hd);
 		findViewIds();
@@ -94,6 +99,11 @@ public class FileQuestHD extends FragmentActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		if(!prefs.getString("VERSION", "0.0.0").equalsIgnoreCase(getString(R.string.appversion))){
+			prefs_editor.putString("VERSION", getString(R.string.appversion));
+			prefs_editor.commit();
+			new WhatsNew(FileQuestHD.this, Constants.size.x*8/9, Constants.size.y*8/9);
+		}
 	}
 	
 	/**
