@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import org.anurag.dropbox.DBoxUsers;
 
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.widget.ImageView;
@@ -109,4 +110,5 @@ public class Constants {
 	public static int SORT_TYPE;
 	public static boolean SHOW_HIDDEN_FOLDERS;
 	public static Drawable FOLDER_IMAGE;
+	public static Point size;
 }

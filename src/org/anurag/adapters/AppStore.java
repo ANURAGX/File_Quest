@@ -19,16 +19,30 @@
 
 package org.anurag.adapters;
 
+import java.util.ArrayList;
+
+import org.anurag.file.quest.AppAdapter;
+import org.anurag.file.quest.AppBackup;
+import org.anurag.file.quest.AppManager;
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
 
+import android.content.pm.ApplicationInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 public class AppStore extends Fragment{
 	
+	private ListView ls;
+	private ArrayList<ApplicationInfo> apps;
+	private LoadApps load;
+	private AppManager manager;
 	public AppStore() {
 		// TODO Auto-generated constructor stub
 	}
@@ -44,6 +58,47 @@ public class AppStore extends Fragment{
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
+		ls = (ListView) view.findViewById(R.id.list_view_hd);
+		if(load == null){
+			load = new LoadApps();
+			load.execute();
+		}			
+		
+		ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				ArrayList<ApplicationInfo> infos = new ArrayList<ApplicationInfo>();
+				infos.add(apps.get(arg2));
+				new AppBackup(getActivity(), Constants.size.x*8/9, infos);
+			}
+		});
+	}
+	
+	/**
+	 * 
+	 * @author anurag
+	 *
+	 */
+	private class LoadApps extends AsyncTask<Void, Void , Void>{
+
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			ls.setAdapter(new AppAdapter(getActivity(), R.layout.row_list_2, apps));
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			if(manager == null)
+				manager = new AppManager(getActivity());
+			apps = manager.get_downloaded_apps();
+			return null;
+		}
+		
 	}
 	
 }

@@ -50,4 +50,48 @@
     <style name="ActionBarThemeTitleStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textStyle">bold</item>
     </style>
+    
+    <!--ORANGE STYLE FOR DIALOG.... -->	
+    <style name="Dialog_Orange" parent="@android:style/Theme.Translucent">
+        <item name="android:windowBackground">@color/orange</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    
+    <!--RED STYLE FOR DIALOG.... -->	
+    <style name="Dialog_Red" parent="@android:style/Theme.Translucent">
+        <item name="android:windowBackground">@color/red</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    
+    <!--GREY STYLE FOR DIALOG.... -->	
+    <style name="Dialog_Grey" parent="@android:style/Theme.Translucent">
+        <item name="android:windowBackground">@color/grey</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    
+    <!--GREEN STYLE FOR DIALOG.... -->	
+    <style name="Dialog_Green" parent="@android:style/Theme.Translucent">
+        <item name="android:windowBackground">@color/green</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    
+    <!--BLUE STYLE FOR DIALOG.... -->	
+    <style name="Dialog_Blue" parent="@android:style/Theme.Translucent">
+        <item name="android:windowBackground">@color/blue</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    
+    <!--VIOLET STYLE FOR DIALOG.... -->	
+    <style name="Dialog_Violet" parent="@android:style/Theme.Translucent">
+        <item name="android:windowBackground">@color/violet</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    
+    
 </resources>

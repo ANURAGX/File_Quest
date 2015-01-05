@@ -38,5 +38,6 @@
     <color name="semi_orange40">#66FF5D3D</color>
     <color name="semi_blue40">#663F9FE0</color>
     <color name="semi_violet40">#665161BC</color>
-     <color name="semi_white15">#26FFFFFF</color>
+    <color name="semi_white15">#26FFFFFF</color>
+    <color name="black">#26FFFFFF</color>
 </resources>

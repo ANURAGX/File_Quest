@@ -25,6 +25,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import android.app.ActionBar;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -63,6 +64,8 @@ public class FileQuestHD extends FragmentActivity {
 		Constants.SHOW_HIDDEN_FOLDERS = prefs.getBoolean("SHOW_HIDDEN", false);
 		Constants.FOLDER_IMAGE = getResources().getDrawable(R.drawable.folder);
 		Constants.db = new ItemDB(FileQuestHD.this);
+		Constants.size = new Point();
+		getWindowManager().getDefaultDisplay().getSize(Constants.size);
 		
 		setContentView(R.layout.fq_ui_hd);
 		findViewIds();
@@ -79,7 +82,7 @@ public class FileQuestHD extends FragmentActivity {
             }
 		};
 			
-		styleActionBar(getResources().getColor(R.color.orange));
+		styleActionBar(getResources().getColor(R.color.violet));
 		drawer.setDrawerListener(toggle);
 	
 		pager.setAdapter(adapters);
