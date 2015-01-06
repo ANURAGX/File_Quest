@@ -19,6 +19,7 @@
 
 package org.anurag.file.quest;
 
+import org.anurag.adapters.FileGallery;
 import org.anurag.adapters.PagerAdapters;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -147,13 +148,24 @@ public class FileQuestHD extends FragmentActivity {
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		int panel = pager.getCurrentItem();
-		if(panel == Constants.PANEL_NO){
-			if(mBackPressed)
-				FileQuestHD.this.finish();
-			else{
-				mBackPressed = true;
-				Toast.makeText(FileQuestHD.this, R.string.pressbackagain, Toast.LENGTH_SHORT).show();
-			}
+		if(panel == 0){
+			if(FileGallery.isGalleryOpened())
+				FileGallery.collapseGallery();
+			else if(panel == Constants.PANEL_NO)
+				detect_back_press();			
 		}
 	}	
+	
+	/**
+	 * this function checks how many times back key is pressed
+	 * on second press it finishes the app....
+	 */
+	private void detect_back_press(){
+		if(mBackPressed)
+			FileQuestHD.this.finish();
+		else{
+			mBackPressed = true;
+			Toast.makeText(FileQuestHD.this, R.string.pressbackagain, Toast.LENGTH_SHORT).show();
+		}
+	}
 }

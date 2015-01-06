@@ -19,15 +19,31 @@
 
 package org.anurag.adapters;
 
-import org.anurag.file.quest.R;
+import java.util.concurrent.ConcurrentHashMap;
 
+import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.FileGalleryAdapter;
+import org.anurag.file.quest.Item;
+import org.anurag.file.quest.OpenFileDialog;
+import org.anurag.file.quest.R;
+import org.anurag.file.quest.Utils;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
-public class FileGallery extends Fragment{
+public class FileGallery extends Fragment implements OnClickListener{
+	
+	private static ListView ls;
+	private static LinearLayout file_gallery;
+	private static boolean is_gallery_opened;
 	
 	public FileGallery() {
 		// TODO Auto-generated constructor stub
@@ -41,8 +57,112 @@ public class FileGallery extends Fragment{
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+	public void onViewCreated(View v, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		super.onViewCreated(view, savedInstanceState);
+		super.onViewCreated(v, savedInstanceState);
+		ls = (ListView) v.findViewById(R.id.customListView);
+		file_gallery = (LinearLayout) v.findViewById(R.id.file_gallery_layout);
+		Utils.setContext(null , getActivity());
+		Utils.load();
+		Utils.setView(v);
+		is_gallery_opened = false;
+
+		LinearLayout fav = (LinearLayout) v.findViewById(R.id.fav);
+		LinearLayout music = (LinearLayout) v.findViewById(R.id.music);
+		LinearLayout app = (LinearLayout) v.findViewById(R.id.apps);
+		LinearLayout docs = (LinearLayout) v.findViewById(R.id.docs);
+		LinearLayout photo = (LinearLayout) v.findViewById(R.id.photos);
+		LinearLayout vids = (LinearLayout) v.findViewById(R.id.videos);
+		LinearLayout zips = (LinearLayout) v.findViewById(R.id.zips);
+		LinearLayout misc = (LinearLayout) v.findViewById(R.id.misc);
+		
+		music.setOnClickListener(this);
+		fav.setOnClickListener(this);
+		app.setOnClickListener(this);
+		docs.setOnClickListener(this);
+		photo.setOnClickListener(this);
+		vids.setOnClickListener(this);
+		zips.setOnClickListener(this);
+		misc.setOnClickListener(this);
+		
+		ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Item itm = (Item) ls.getAdapter().getItem(arg2);
+				new OpenFileDialog(getActivity(), Uri.parse(itm.getPath()),
+						Constants.size.x*8/9);
+			}
+		});
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		Utils.pause();
+		ConcurrentHashMap<String , Item> lists = new ConcurrentHashMap<String, Item>();
+		ConcurrentHashMap<String , String> keys = new ConcurrentHashMap<String, String>();
+		
+		switch (v.getId()){
+		
+		case R.id.fav:
+			lists = Utils.fav;
+			keys = Utils.favKey;
+			break;
+			
+		case R.id.music:
+			lists = Utils.music;
+			keys = Utils.musicKey;
+			break;
+			
+		case R.id.apps:
+			lists = Utils.apps;
+			keys = Utils.appKey;
+			break;
+			
+		case R.id.docs:
+			lists = Utils.doc;
+			keys = Utils.docKey;
+			break;
+			
+		case R.id.photos:
+			lists = Utils.img;
+			keys = Utils.imgKey;
+			break;
+			
+		case R.id.videos:
+			lists = Utils.vids;
+			keys = Utils.videoKey;
+			break;
+			
+		case R.id.zips:
+			lists = Utils.zip;
+			keys = Utils.zipKey;
+			break;
+			
+		case R.id.misc:
+			lists = Utils.mis;
+			keys = Utils.misKey;
+			break;
+		}
+		file_gallery.setVisibility(View.GONE);
+		ls.setVisibility(View.VISIBLE);
+		ls.setAdapter(new FileGalleryAdapter(getActivity(), lists, keys));
+		is_gallery_opened = true;
+	}
+	
+	/**
+	 * 
+	 * @return true then file gallery is opened....
+	 */
+	public static boolean isGalleryOpened(){
+		return is_gallery_opened;
+	}
+	
+	public static void collapseGallery(){
+		ls.setVisibility(View.GONE);
+		file_gallery.setVisibility(View.VISIBLE);
+		is_gallery_opened = false;
 	}
 }
