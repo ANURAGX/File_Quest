@@ -113,4 +113,5 @@ public class Constants {
 	public static Point size;
 	
 	public static int PANEL_NO;
+	public static int COLOR_STYLE;
 }

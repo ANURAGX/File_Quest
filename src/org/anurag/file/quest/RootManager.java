@@ -451,4 +451,11 @@ public class RootManager {
 	public void pushPath(String path){
 		nStack.push(path);
 	}
+	
+	/**
+	 * pops out the top path from the stack.... 
+	 */
+	public void popTopPath(){
+		nStack.pop();
+	}
 }

@@ -43,8 +43,8 @@ public class SdCardPanel extends Fragment{
 	
 	private ListView list;
 	private ArrayList<Item> adapter_list;
-	private LoadList load;
-	private SDManager manager;
+	private static LoadList load;
+	private static SDManager manager;
 	
 	public SdCardPanel() {
 		// TODO Auto-generated constructor stub
@@ -78,7 +78,6 @@ public class SdCardPanel extends Fragment{
 				if(item.isDirectory()){
 					//selecting a folder....
 					manager.pushPath(item.getPath());
-					load = new LoadList();
 					load.execute();
 				}else{
 					//selecting a file....
@@ -109,6 +108,7 @@ public class SdCardPanel extends Fragment{
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			list.setAdapter(new SDAdapter(getActivity(), adapter_list));
+			load = new LoadList();
 		}
 
 		@Override
@@ -126,4 +126,22 @@ public class SdCardPanel extends Fragment{
 			return null;
 		}		
 	}	
+	
+	/**
+	 * moves one level back....
+	 */
+	public static void navigate_to_back(){
+		manager.popTopPath();
+		load.execute();
+	}
+	
+	/**
+	 * 
+	 * @return true if current directory is /
+	 */
+	public static boolean isAtTopLevel(){
+		if(manager.getCurrentDirectory().equalsIgnoreCase(Constants.PATH))
+			return true;
+		return false;
+	}
 }

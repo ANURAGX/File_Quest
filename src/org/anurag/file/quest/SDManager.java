@@ -49,6 +49,7 @@ public class SDManager {
 		if(new File("/storage").exists()){
 			nStack.push("/storage");
 			//nStack.push("/storage");
+			Constants.PATH = "/storage";
 		}else{
 			nStack.push(Constants.PATH);		
 			//nStack.push(Constants.PATH);
@@ -377,6 +378,13 @@ public class SDManager {
 	 */
 	public void pushPath(String path){
 		nStack.push(path);
+	}
+	
+	/**
+	 * pops out the top path from the stack.... 
+	 */
+	public void popTopPath(){
+		nStack.pop();
 	}
 	
 }

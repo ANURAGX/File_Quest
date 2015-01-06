@@ -21,6 +21,8 @@ package org.anurag.file.quest;
 
 import org.anurag.adapters.FileGallery;
 import org.anurag.adapters.PagerAdapters;
+import org.anurag.adapters.RootPanel;
+import org.anurag.adapters.SdCardPanel;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.fuehlbypa.kddcbytnh159110.Prm;
@@ -72,6 +74,7 @@ public class FileQuestHD extends FragmentActivity {
 		Constants.SHOW_HIDDEN_FOLDERS = prefs.getBoolean("SHOW_HIDDEN", false);
 		Constants.FOLDER_IMAGE = getResources().getDrawable(R.drawable.folder);
 		Constants.PANEL_NO = prefs.getInt("PANEL_NO", 0);
+		Constants.COLOR_STYLE = prefs.getInt("COLOR_STYLE", 0xFFFF5D3D);
 		Constants.db = new ItemDB(FileQuestHD.this);
 		Constants.size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(Constants.size);
@@ -93,7 +96,7 @@ public class FileQuestHD extends FragmentActivity {
             }
 		};
 			
-		styleActionBar(getResources().getColor(R.color.orange));
+		styleActionBar(Constants.COLOR_STYLE);
 		drawer.setDrawerListener(toggle);
 	
 		pager.setAdapter(adapters);
@@ -153,7 +156,24 @@ public class FileQuestHD extends FragmentActivity {
 				FileGallery.collapseGallery();
 			else if(panel == Constants.PANEL_NO)
 				detect_back_press();			
-		}
+		}else if(panel == 1){
+			if(RootPanel.isAtTopLevel() && panel != Constants.PANEL_NO)
+				pager.setCurrentItem(Constants.PANEL_NO);
+			else if(RootPanel.isAtTopLevel())
+				detect_back_press();
+			else
+				RootPanel.navigate_to_back();
+		}else if(panel == 2){
+			if(SdCardPanel.isAtTopLevel() && panel != Constants.PANEL_NO)
+				pager.setCurrentItem(Constants.PANEL_NO);
+			else if(SdCardPanel.isAtTopLevel())
+				detect_back_press();
+			else
+				SdCardPanel.navigate_to_back();
+		}else if(panel == 3 && panel == Constants.PANEL_NO)
+			detect_back_press();
+		else
+			pager.setCurrentItem(Constants.PANEL_NO);
 	}	
 	
 	/**

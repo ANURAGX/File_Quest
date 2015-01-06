@@ -42,8 +42,8 @@ public class RootPanel extends Fragment{
 	
 	private ListView list;
 	private ArrayList<Item> adapter_list;
-	private LoadList load;
-	private RootManager manager;
+	private static LoadList load;
+	private static RootManager manager;
 	
 	public RootPanel() {
 		// TODO Auto-generated constructor stub
@@ -78,7 +78,6 @@ public class RootPanel extends Fragment{
 				if(item.isDirectory()){
 					//selecting a folder....
 					manager.pushPath(item.getPath());
-					load = new LoadList();
 					load.execute();
 				}else{
 					//selecting a file....
@@ -86,14 +85,13 @@ public class RootPanel extends Fragment{
 							, Constants.size.x*8/9);
 				}
 			}
-		});
-		
+		});		
 	}
-	
-	
-	
+		
 	/**
-	 * 
+	 *
+	 * this class loads the list of files and folders in background thread
+	 * and inflates the results in list view....
 	 * @author anurag
 	 *
 	 */
@@ -110,6 +108,7 @@ public class RootPanel extends Fragment{
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			list.setAdapter(new RootAdapter(getActivity(), adapter_list));
+			load = new LoadList();
 		}
 
 		@Override
@@ -127,4 +126,22 @@ public class RootPanel extends Fragment{
 			return null;
 		}		
 	}	
+	
+	/**
+	 * moves one level back....
+	 */
+	public static void navigate_to_back(){
+		manager.popTopPath();
+		load.execute();
+	}
+	
+	/**
+	 * 
+	 * @return true if current directory is /
+	 */
+	public static boolean isAtTopLevel(){
+		if(manager.getCurrentDirectory().equalsIgnoreCase("/"))
+			return true;
+		return false;
+	}
 }
