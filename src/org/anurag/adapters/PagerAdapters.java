@@ -25,6 +25,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class PagerAdapters extends FragmentStatePagerAdapter{
 
+	private static String TITLES[] = {"FILE GALLERY" , "/" , "SDCARD" , "APP STORE"}; 
+	
 	public PagerAdapters(FragmentManager fm) {
 		super(fm);
 		// TODO Auto-generated constructor stub
@@ -59,19 +61,16 @@ public class PagerAdapters extends FragmentStatePagerAdapter{
 	@Override
 	public CharSequence getPageTitle(int position) {
 		// TODO Auto-generated method stub
-		switch(position){
-		case 0:
-			return "File Gallery";
-		case 1:
-			return "Root";
-		case 2:
-			return "SDCARD";
-		case 3:
-			return "App Store";
-		}
-		
-		return null;
+		return TITLES[position];
 	}
 	
+	/**
+	 * 
+	 * @param position
+	 * @param title
+	 */
+	public static void setTitles(int position , String title){
+		TITLES[position] = title;
+	}
 	
 }

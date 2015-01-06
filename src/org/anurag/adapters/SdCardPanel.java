@@ -22,6 +22,7 @@ package org.anurag.adapters;
 import java.util.ArrayList;
 
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.FileQuestHD;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
@@ -78,6 +79,7 @@ public class SdCardPanel extends Fragment{
 				if(item.isDirectory()){
 					//selecting a folder....
 					manager.pushPath(item.getPath());
+					FileQuestHD.notify_Title_Indicator(2, item.getName());
 					load.execute();
 				}else{
 					//selecting a file....
@@ -132,6 +134,7 @@ public class SdCardPanel extends Fragment{
 	 */
 	public static void navigate_to_back(){
 		manager.popTopPath();
+		FileQuestHD.notify_Title_Indicator(2, manager.getCurrentDirectoryName());
 		load.execute();
 	}
 	

@@ -51,7 +51,7 @@ import android.widget.Toast;
  */
 public class FileQuestHD extends FragmentActivity {
 
-	private PagerSlidingTabStrip indicator;
+	private static PagerSlidingTabStrip indicator;
 	private ActionBar actionBar;
 	private ViewPager pager;
 	private PagerAdapters adapters;
@@ -187,5 +187,15 @@ public class FileQuestHD extends FragmentActivity {
 			mBackPressed = true;
 			Toast.makeText(FileQuestHD.this, R.string.pressbackagain, Toast.LENGTH_SHORT).show();
 		}
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @param title
+	 */
+	public static void notify_Title_Indicator(int position , String title){
+		PagerAdapters.setTitles(position, title);
+		indicator.notifyDataSetChanged();
 	}
 }

@@ -19,10 +19,12 @@
 
 package org.anurag.adapters;
 
+
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileGalleryAdapter;
+import org.anurag.file.quest.FileQuestHD;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
@@ -44,7 +46,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 	private static ListView ls;
 	private static LinearLayout file_gallery;
 	private static boolean is_gallery_opened;
-	
+	private static String current_Tile;
 	public FileGallery() {
 		// TODO Auto-generated constructor stub
 	}
@@ -109,47 +111,56 @@ public class FileGallery extends Fragment implements OnClickListener{
 		case R.id.fav:
 			lists = Utils.fav;
 			keys = Utils.favKey;
+			current_Tile = "Favorite";
 			break;
 			
 		case R.id.music:
 			lists = Utils.music;
 			keys = Utils.musicKey;
+			current_Tile = "Music";
 			break;
 			
 		case R.id.apps:
 			lists = Utils.apps;
 			keys = Utils.appKey;
+			current_Tile = "Apps";
 			break;
 			
 		case R.id.docs:
 			lists = Utils.doc;
 			keys = Utils.docKey;
+			current_Tile = "Docs";
 			break;
 			
 		case R.id.photos:
 			lists = Utils.img;
 			keys = Utils.imgKey;
+			current_Tile = "Images";
 			break;
 			
 		case R.id.videos:
 			lists = Utils.vids;
 			keys = Utils.videoKey;
+			current_Tile = "Videos";
 			break;
 			
 		case R.id.zips:
 			lists = Utils.zip;
 			keys = Utils.zipKey;
+			current_Tile = "Archives";
 			break;
 			
 		case R.id.misc:
 			lists = Utils.mis;
 			keys = Utils.misKey;
+			current_Tile = "Unknown";
 			break;
 		}
 		file_gallery.setVisibility(View.GONE);
 		ls.setVisibility(View.VISIBLE);
 		ls.setAdapter(new FileGalleryAdapter(getActivity(), lists, keys));
 		is_gallery_opened = true;
+		FileQuestHD.notify_Title_Indicator(0, current_Tile);
 	}
 	
 	/**
@@ -164,5 +175,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 		ls.setVisibility(View.GONE);
 		file_gallery.setVisibility(View.VISIBLE);
 		is_gallery_opened = false;
+		current_Tile = "FILE GALLERY";
+		FileQuestHD.notify_Title_Indicator(0, current_Tile);
 	}
 }
