@@ -47,9 +47,9 @@ public class RarFileProperties {
 		
 		text = (TextView)dialog.findViewById(R.id.developer);
 		if(!file.isFile()){
-			text.setText(ctx.getString(R.string.folder));
+			text.setText("Folder");
 			text = (TextView)dialog.findViewById(R.id.copyright);
-			text.setText("   "+ctx.getString(R.string.foldername)+" "+file.getFileName());
+			text.setText("   Folder Name :-"+file.getFileName());
 			text = (TextView)dialog.findViewById(R.id.name);
 			String path = file.getPath();
 			if(!path.startsWith("/"))
@@ -57,10 +57,10 @@ public class RarFileProperties {
 			path = path.substring(0, path.lastIndexOf("/"));
 			if(path.length()==0)
 				path = "/";
-			text.setText("   "+ctx.getString(R.string.folderpath)+" "+path);
+			text.setText("   Folder Path :-"+path);
 			
 			text = (TextView)dialog.findViewById(R.id.size);
-			text.setText(ctx.getString(R.string.foldersize));
+			text.setText("Folder Size");
 			
 			text = (TextView)dialog.findViewById(R.id.sizeLenth);
 			text.setText("   ?");
