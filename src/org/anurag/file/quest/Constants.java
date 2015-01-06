@@ -111,4 +111,6 @@ public class Constants {
 	public static boolean SHOW_HIDDEN_FOLDERS;
 	public static Drawable FOLDER_IMAGE;
 	public static Point size;
+	
+	public static int PANEL_NO;
 }

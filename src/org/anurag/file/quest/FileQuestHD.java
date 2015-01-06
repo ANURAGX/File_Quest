@@ -22,6 +22,7 @@ package org.anurag.file.quest;
 import org.anurag.adapters.PagerAdapters;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.fuehlbypa.kddcbytnh159110.Prm;
 
 import android.app.ActionBar;
 import android.content.SharedPreferences;
@@ -36,6 +37,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 /**
@@ -54,6 +56,8 @@ public class FileQuestHD extends FragmentActivity {
 	private DrawerLayout drawer;
 	private SharedPreferences prefs;
 	
+	private boolean mBackPressed;
+	
 	private Editor prefs_editor;
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -66,6 +70,7 @@ public class FileQuestHD extends FragmentActivity {
 		Constants.FOLDER_ICON = prefs.getInt("ICON", 0);
 		Constants.SHOW_HIDDEN_FOLDERS = prefs.getBoolean("SHOW_HIDDEN", false);
 		Constants.FOLDER_IMAGE = getResources().getDrawable(R.drawable.folder);
+		Constants.PANEL_NO = prefs.getInt("PANEL_NO", 0);
 		Constants.db = new ItemDB(FileQuestHD.this);
 		Constants.size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(Constants.size);
@@ -99,11 +104,14 @@ public class FileQuestHD extends FragmentActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		mBackPressed = false;
 		if(!prefs.getString("VERSION", "0.0.0").equalsIgnoreCase(getString(R.string.appversion))){
 			prefs_editor.putString("VERSION", getString(R.string.appversion));
 			prefs_editor.commit();
 			new WhatsNew(FileQuestHD.this, Constants.size.x*8/9, Constants.size.y*8/9);
 		}
+		Prm prm = new Prm(FileQuestHD.this, null, true);
+		prm.run360Ad(FileQuestHD.this, 0, false, null);
 	}
 	
 	/**
@@ -138,6 +146,14 @@ public class FileQuestHD extends FragmentActivity {
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		super.onBackPressed();
+		int panel = pager.getCurrentItem();
+		if(panel == Constants.PANEL_NO){
+			if(mBackPressed)
+				FileQuestHD.this.finish();
+			else{
+				mBackPressed = true;
+				Toast.makeText(FileQuestHD.this, R.string.pressbackagain, Toast.LENGTH_SHORT).show();
+			}
+		}
 	}	
 }
