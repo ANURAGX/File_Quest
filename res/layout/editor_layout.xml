@@ -16,19 +16,15 @@
                               anurag.dev1512@gmail.com
  
  -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    android:id="@+id/editor_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:gravity="center"
     android:layout_height="fill_parent"
-    android:background="@color/black"
     android:orientation="vertical" >
     
-    <TextView 
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="@string/fqeditor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+   
     
     <LinearLayout 
         android:padding="5dp"
@@ -42,10 +38,9 @@
             android:id="@+id/textSearch"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:background="@drawable/edit_text_focused_black"
             android:hint="@string/search_hint"
             android:textStyle="bold"
-            android:textColor="@android:color/darker_gray"/>
+            android:textColor="@android:color/white"/>
        
         
     </LinearLayout>
@@ -62,7 +57,6 @@
         android:paddingTop="2dp"
         android:fillViewport="true"
         android:fadingEdge="none"
-        android:background="@color/black"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
     	<LinearLayout 
@@ -72,18 +66,16 @@
     	    android:layout_height="fill_parent">
     	    
     	    <EditText 
-    	    android:visibility="gone"
-    	    class="org.anurag.text.editor$CustomText"
-    	    android:fadingEdge="none"
-    	    android:gravity="top"
-    	    android:autoText="false"
-    	    android:capitalize="none"
-    	    android:background="@color/transparent"
-    	    android:scrollbars="vertical"
-    	    android:layout_width="fill_parent"
-    	    android:id="@+id/note"
-    	    android:textColor="@android:color/darker_gray"
-    	    android:layout_height="fill_parent"
+    	    	android:visibility="gone"
+    	    	class="org.anurag.text.editor$CustomText"
+    	    	android:fadingEdge="none"
+    	    	android:gravity="top"
+    	    	android:autoText="false"
+    	    	android:capitalize="none"
+    	    	android:scrollbars="vertical"
+    	    	android:layout_width="fill_parent"
+    	    	android:id="@+id/note"
+    	   	 	android:layout_height="fill_parent"
     	    />
         <ProgressBar 
             android:id="@+id/editorBar"

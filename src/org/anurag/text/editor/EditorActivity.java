@@ -26,8 +26,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
 import org.ultimate.root.LinuxShell;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -36,6 +39,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -45,6 +49,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,9 +77,13 @@ public class EditorActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.editor_layout);
 	
+		LinearLayout linear = (LinearLayout) findViewById(R.id.editor_layout);
+		linear.setBackgroundColor(org.anurag.file.quest.Constants.COLOR_STYLE);
 		con = getBaseContext();
 		size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(size);
+		getActionBar().setTitle("File Quest Text Editor");
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Constants.COLOR_STYLE));
 		
 		title = (EditText)findViewById(R.id.textSearch); 
 		main = (EditText)findViewById(R.id.note);
