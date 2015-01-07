@@ -69,13 +69,11 @@
     	       				android:background="@drawable/ic_launcher_fav_gallery"/>
     					<TextView 
     					    android:id="@+id/fSize"
-    	       				android:textStyle="bold"
     	       				android:layout_width="wrap_content"
     	       				android:layout_height="wrap_content"
     	       				android:text="@string/totalfolder"/>
     					<TextView 
     					    android:id="@+id/fFiles"
-    	       				android:textStyle="bold"
     	       				android:layout_width="wrap_content"
     	       				android:layout_height="wrap_content"
     	       				android:text="@string/totalfiles"/>
@@ -109,13 +107,11 @@
     	       				android:background="@drawable/ic_launcher_music_file_gallery"/>
     					<TextView 
     					    android:id="@+id/mSize"
-    	       				android:textStyle="bold"
     	       				android:layout_width="wrap_content"
     	       				android:layout_height="wrap_content"
     	       				android:text="@string/zerosize"/>
     					<TextView 
     					    android:id="@+id/mFiles"
-    	       				android:textStyle="bold"
     	       				android:layout_width="wrap_content"
     	       				android:layout_height="wrap_content"
     	       				android:text="@string/zerofiles"/>
@@ -158,13 +154,11 @@
     	        			android:background="@drawable/ic_launcher_app_file_gallery"/>
     					<TextView 
     					    android:id="@+id/aSize"
-    	        			android:textStyle="bold"
     	        			android:layout_width="wrap_content"
     	        			android:layout_height="wrap_content"
     	        			android:text="@string/zerosize"/>
     					<TextView 
     					    android:id="@+id/aFiles"
-    	        			android:textStyle="bold"
     	        			android:layout_width="wrap_content"
     	        			android:layout_height="wrap_content"
     	        			android:text="@string/zerofiles"/>
@@ -199,13 +193,11 @@
     	    
     	   					<TextView 
     	   					    android:id="@+id/pSize"
-    	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
     	        				android:text="@string/zerosize"/>
     						<TextView 
     						    android:id="@+id/pFiles"
-    	        				android:textStyle="bold"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
     	        				android:text="@string/zerofiles"/>
@@ -243,13 +235,11 @@
     	    
     	  			<TextView 
     	  		    	android:id="@+id/vSize"
-    	        		android:textStyle="bold"
     	        		android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
     	        		android:text="@string/zerosize"/>
     				<TextView 
     				    android:id="@+id/vFiles"
-    	        		android:textStyle="bold"
     	        		android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
     	        		android:text="@string/zerofiles"/>
@@ -279,13 +269,11 @@
    	        				android:background="@drawable/ic_launcher_docs_file_gallery"/>
    	    				<TextView 
    	    			    	android:id="@+id/dSize"
-   	        				android:textStyle="bold"
    	        				android:layout_width="wrap_content"
    	        				android:layout_height="wrap_content"
    	        				android:text="@string/zerosize"/>
    						<TextView 
    					    	android:id="@+id/dFile"
-   	        				android:textStyle="bold"
    	        				android:layout_width="wrap_content"
    	        				android:layout_height="wrap_content"
    	        				android:text="@string/zerofiles"/>
@@ -323,13 +311,11 @@
     	    
     	    		<TextView 
     	    			android:id="@+id/zSize"
-    	        		android:textStyle="bold"
     	        		android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
     	        		android:text="@string/zerosize"/>
     				<TextView 
     				    android:id="@+id/zFiles"
-    	       			android:textStyle="bold"
     	       			android:layout_width="wrap_content"
     	       			android:layout_height="wrap_content"
     	       			android:text="@string/zerofiles"/>
@@ -361,13 +347,11 @@
     	    
     	    		<TextView 
     	        		android:id="@+id/misFiles"
-    	        		android:textStyle="bold"
     	        		android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
     	        		android:text="@string/zerosize"/>
     				<TextView 
     	    			android:id="@+id/misSize"
-    	    			android:textStyle="bold"
     	    			android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
     	        		android:text="@string/zerofiles"/>

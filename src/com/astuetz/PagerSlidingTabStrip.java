@@ -18,6 +18,7 @@ package com.astuetz;
 
 import java.util.Locale;
 
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
 
 import android.annotation.SuppressLint;
@@ -75,15 +76,15 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	private Paint rectPaint;
 	private Paint dividerPaint;
 
-	private int indicatorColor = android.graphics.Color.YELLOW;
-	private int underlineColor = 0x1A000000;
+	private int indicatorColor = 0xFFFFFFFF;
+	private int underlineColor = 0xFFFFFFFF;
 	private int dividerColor = 0x1A000000;
 
 	private boolean shouldExpand = false;
 	private boolean textAllCaps = true;
 
 	private int scrollOffset = 52;
-	private int indicatorHeight = 4;
+	private int indicatorHeight = 5;
 	private int underlineHeight = 2;
 	private int dividerPadding = 12;
 	private int tabPadding = 24;
@@ -350,6 +351,9 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 			View tab = tabsContainer.getChildAt(i);
 			canvas.drawLine(tab.getRight(), dividerPadding, tab.getRight(), height - dividerPadding, dividerPaint);
 		}
+		
+		rectPaint.setColor(Constants.COLOR_STYLE);
+		canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);
 	}
 
 	private class PageListener implements OnPageChangeListener {

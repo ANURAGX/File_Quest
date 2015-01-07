@@ -75,7 +75,7 @@ public class FileQuestHD extends ActionBarActivity {
 		Constants.SHOW_HIDDEN_FOLDERS = prefs.getBoolean("SHOW_HIDDEN", false);
 		Constants.FOLDER_IMAGE = getResources().getDrawable(R.drawable.folder);
 		Constants.PANEL_NO = prefs.getInt("PANEL_NO", 0);
-		Constants.COLOR_STYLE = prefs.getInt("COLOR_STYLE", 0xFFFF5D3D);
+		Constants.COLOR_STYLE = prefs.getInt("COLOR_STYLE", 0xFF5161BC);
 		Constants.db = new ItemDB(FileQuestHD.this);
 		Constants.size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(Constants.size);
@@ -145,7 +145,6 @@ public class FileQuestHD extends ActionBarActivity {
 		adapters = new PagerAdapters(getSupportFragmentManager());
 		drawer = (DrawerLayout)findViewById(R.id.sliding_drawer);
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
-		
 	}
 	
 	
@@ -214,14 +213,30 @@ public class FileQuestHD extends ActionBarActivity {
 		tint.setStatusBarTintColor(Constants.COLOR_STYLE);
 		tint.setNavigationBarTintColor(Constants.COLOR_STYLE);
 		LinearLayout main = (LinearLayout) findViewById(R.id.frame_container);
-		main.setPadding(0, getStatusBarHeight(), 0, 0);
+		main.setPadding(0, getStatusBarHeight(), 0, getNavigationBarHeight());
 		LinearLayout slide_menu = (LinearLayout) findViewById(R.id.drawer_list);
-		slide_menu.setPadding(0, getStatusBarHeight(), 0, 0);
+		slide_menu.setPadding(0, getStatusBarHeight(), 0, getNavigationBarHeight());
 	}
 	
+	/**
+	 * 
+	 * @return height of status bar....
+	 */
 	private int getStatusBarHeight(){
 		int res = 0;
 		int resId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+		if(resId > 0)
+			res = getResources().getDimensionPixelSize(resId);
+		return res;
+	}
+	
+	/**
+	 * 
+	 * @return the height of navigation bar....
+	 */
+	private int getNavigationBarHeight(){
+		int res = 0;
+		int resId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
 		if(resId > 0)
 			res = getResources().getDimensionPixelSize(resId);
 		return res;
