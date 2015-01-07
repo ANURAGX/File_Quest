@@ -23,24 +23,23 @@ import org.anurag.adapters.FileGallery;
 import org.anurag.adapters.PagerAdapters;
 import org.anurag.adapters.RootPanel;
 import org.anurag.adapters.SdCardPanel;
-
-import com.astuetz.PagerSlidingTabStrip;
-import com.fuehlbypa.kddcbytnh159110.Prm;
-
-import android.app.ActionBar;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.astuetz.PagerSlidingTabStrip;
+import com.fuehlbypa.kddcbytnh159110.Prm;
 
 
 /**
@@ -49,12 +48,14 @@ import android.widget.Toast;
  * @author anurag
  *
  */
-public class FileQuestHD extends FragmentActivity {
+public class FileQuestHD extends ActionBarActivity {
 
+	private ActionBar action_bar;
 	private static PagerSlidingTabStrip indicator;
-	private ActionBar actionBar;
 	private ViewPager pager;
 	private PagerAdapters adapters;
+
+	private Toolbar toolbar;
 	private ActionBarDrawerToggle toggle;
 	private DrawerLayout drawer;
 	private SharedPreferences prefs;
@@ -83,22 +84,23 @@ public class FileQuestHD extends FragmentActivity {
 		
 		setContentView(R.layout.fq_ui_hd);
 		findViewIds();
-		
+		setSupportActionBar(toolbar);	
+		action_bar = getSupportActionBar();
+		styleActionBar(Constants.COLOR_STYLE);
 		toggle = new ActionBarDrawerToggle(FileQuestHD.this, drawer,
-				R.drawable.file_quest_icon, R.string.settings, R.string.app_name){
+				R.drawable.file_quest_icon, R.string.settings){
 			public void onDrawerClosed(View view) {
-                getActionBar().setTitle(getString(R.string.app_name));
+                action_bar.setTitle(getString(R.string.app_name));
                 //isDrawerOpen = false;                
             } 
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(getString(R.string.settings));
+                action_bar.setTitle(getString(R.string.settings));
                 //isDrawerOpen = true;
             }
 		};
-			
-		styleActionBar(Constants.COLOR_STYLE);
+		
 		drawer.setDrawerListener(toggle);
-	
+		
 		pager.setAdapter(adapters);
 		indicator.setViewPager(pager);
 		pager.setOffscreenPageLimit(4);
@@ -108,6 +110,7 @@ public class FileQuestHD extends FragmentActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		init_system_ui();
 		mBackPressed = false;
 		if(!prefs.getString("VERSION", "0.0.0").equalsIgnoreCase(getString(R.string.appversion))){
 			prefs_editor.putString("VERSION", getString(R.string.appversion));
@@ -124,15 +127,12 @@ public class FileQuestHD extends FragmentActivity {
 	 */
 	private void styleActionBar(int color) {
 		// TODO Auto-generated method stub
-		actionBar = getActionBar();
-		actionBar.setIcon(R.drawable.file_quest_icon);
-		actionBar.setHomeButtonEnabled(true);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		Drawable clr = new ColorDrawable(color);
-		actionBar.setBackgroundDrawable(clr);
-		drawer.setBackgroundColor(color);
+		toolbar.setBackgroundColor(color);
+		indicator.setBackgroundColor(color);
 		LinearLayout drawermenu = (LinearLayout) findViewById(R.id.drawer_list);
 		drawermenu.setBackgroundColor(color);
+		action_bar.setHomeButtonEnabled(true);
+		action_bar.setDisplayHomeAsUpEnabled(true);		
 	}
 	
 	/**
@@ -144,6 +144,8 @@ public class FileQuestHD extends FragmentActivity {
 		pager = (ViewPager) findViewById(R.id.view);
 		adapters = new PagerAdapters(getSupportFragmentManager());
 		drawer = (DrawerLayout)findViewById(R.id.sliding_drawer);
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		
 	}
 	
 	
@@ -197,5 +199,31 @@ public class FileQuestHD extends FragmentActivity {
 	public static void notify_Title_Indicator(int position , String title){
 		PagerAdapters.setTitles(position, title);
 		indicator.notifyDataSetChanged();
+	}
+	
+	/**
+	 * restyles the system UI like status bar or navigation bar if present....
+	 */
+	private void init_system_ui() {
+		// TODO Auto-generated method stub
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+			return;
+		SystemBarTintManager tint = new SystemBarTintManager(FileQuestHD.this);
+		tint.setStatusBarTintEnabled(true);
+		tint.setNavigationBarTintEnabled(true);
+		tint.setStatusBarTintColor(Constants.COLOR_STYLE);
+		tint.setNavigationBarTintColor(Constants.COLOR_STYLE);
+		LinearLayout main = (LinearLayout) findViewById(R.id.frame_container);
+		main.setPadding(0, getStatusBarHeight(), 0, 0);
+		LinearLayout slide_menu = (LinearLayout) findViewById(R.id.drawer_list);
+		slide_menu.setPadding(0, getStatusBarHeight(), 0, 0);
+	}
+	
+	private int getStatusBarHeight(){
+		int res = 0;
+		int resId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+		if(resId > 0)
+			res = getResources().getDimensionPixelSize(resId);
+		return res;
 	}
 }

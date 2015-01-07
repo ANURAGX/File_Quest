@@ -30,6 +30,14 @@
     		android:orientation="vertical"
     		android:id="@+id/frame_container" >
 
+            <android.support.v7.widget.Toolbar
+    			xmlns:app="http://schemas.android.com/apk/res-auto"
+    			android:id="@+id/toolbar"
+    			android:layout_height="wrap_content"
+    			android:layout_width="match_parent"
+    			android:minHeight="?android:attr/actionBarSize"
+    			android:background="?attr/colorPrimary" />
+            
     		<com.astuetz.PagerSlidingTabStrip
         		android:paddingTop="3dp"
         		android:paddingBottom="3dp"

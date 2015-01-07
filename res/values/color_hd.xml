@@ -40,4 +40,5 @@
     <color name="semi_violet40">#665161BC</color>
     <color name="semi_white15">#26FFFFFF</color>
     <color name="black">#26FFFFFF</color>
+    <color name="white_grey">#ededed</color>
 </resources>

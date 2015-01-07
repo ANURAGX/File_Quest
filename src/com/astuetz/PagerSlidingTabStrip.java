@@ -54,7 +54,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	// @formatter:off
 	private static final int[] ATTRS = new int[] {
 		android.R.attr.textSize,
-		android.R.attr.textColor
+		android.R.color.white
     };
 	// @formatter:on
 
@@ -75,7 +75,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	private Paint rectPaint;
 	private Paint dividerPaint;
 
-	private int indicatorColor = 0xFFFFFFFF;
+	private int indicatorColor = android.graphics.Color.YELLOW;
 	private int underlineColor = 0x1A000000;
 	private int dividerColor = 0x1A000000;
 
@@ -83,7 +83,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	private boolean textAllCaps = true;
 
 	private int scrollOffset = 52;
-	private int indicatorHeight = 3;
+	private int indicatorHeight = 4;
 	private int underlineHeight = 2;
 	private int dividerPadding = 12;
 	private int tabPadding = 24;
