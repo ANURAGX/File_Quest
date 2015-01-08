@@ -54,7 +54,7 @@ public class FileQuestHD extends ActionBarActivity {
 	private static PagerSlidingTabStrip indicator;
 	private ViewPager pager;
 	private PagerAdapters adapters;
-
+	private boolean isDrawerOpen;
 	private Toolbar toolbar;
 	private ActionBarDrawerToggle toggle;
 	private DrawerLayout drawer;
@@ -93,11 +93,11 @@ public class FileQuestHD extends ActionBarActivity {
 				R.drawable.file_quest_icon, R.string.settings){
 			public void onDrawerClosed(View view) {
                 action_bar.setTitle(getString(R.string.app_name));
-                //isDrawerOpen = false;                
+                isDrawerOpen = false;                
             } 
             public void onDrawerOpened(View drawerView) {
                 action_bar.setTitle(getString(R.string.settings));
-                //isDrawerOpen = true;
+                isDrawerOpen = true;
             }
 		};
 		
@@ -153,6 +153,10 @@ public class FileQuestHD extends ActionBarActivity {
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
+		if(isDrawerOpen){
+			drawer.closeDrawers();
+			return;
+		}
 		int panel = pager.getCurrentItem();
 		if(panel == 0){
 			if(FileGallery.isGalleryOpened())

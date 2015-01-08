@@ -75,7 +75,7 @@
         android:layout_width="320dp"
         android:layout_height="match_parent">
     	<include 
-    	    layout="@layout/slide_menu_list"/>        
+    	    layout="@layout/drawer_menu_ls_hd"/>        
         
     </LinearLayout>
     

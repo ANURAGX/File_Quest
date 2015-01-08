@@ -24,13 +24,11 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
-        	android:paddingBottom="20dp"
-        	android:gravity="center"
-       	 	android:orientation="horizontal" 
+        	android:orientation="horizontal" 
         	android:layout_width="match_parent"
         	android:layout_height="84dp">
         	<ImageView 
-            	android:background="@drawable/ic_launcher_stats"
+            	android:background="@drawable/file_quest_icon"
         		android:layout_width="wrap_content"
         		android:layout_height="wrap_content"/>
         
@@ -39,7 +37,7 @@
             	android:textColor="@android:color/white"
             	android:paddingTop="10dp"
         		android:paddingLeft="10dp"
-            	android:textSize="20sp"
+            	android:textSize="16sp"
             	android:textStyle="bold"
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
