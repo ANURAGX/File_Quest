@@ -56,6 +56,7 @@ public class FileQuestHD extends ActionBarActivity {
 	private PagerAdapters adapters;
 	private boolean isDrawerOpen;
 	private Toolbar toolbar;
+	private Toolbar bottom_options;
 	private ActionBarDrawerToggle toggle;
 	private DrawerLayout drawer;
 	private SharedPreferences prefs;
@@ -106,6 +107,10 @@ public class FileQuestHD extends ActionBarActivity {
 		pager.setAdapter(adapters);
 		indicator.setViewPager(pager);
 		pager.setOffscreenPageLimit(4);
+		
+		//inflating menu in standalone mode for bottom options....
+		bottom_options.inflateMenu(R.menu.bottom_options_actionbar_hd);
+	
 	}
 	
 	@Override
@@ -134,7 +139,8 @@ public class FileQuestHD extends ActionBarActivity {
 		LinearLayout drawermenu = (LinearLayout) findViewById(R.id.drawer_list);
 		drawermenu.setBackgroundColor(color);
 		action_bar.setHomeButtonEnabled(true);
-		action_bar.setDisplayHomeAsUpEnabled(true);		
+		//action_bar.setDisplayHomeAsUpEnabled(true);	
+		action_bar.setHomeAsUpIndicator(R.drawable.drawer_menu);
 	}
 	
 	/**
@@ -147,6 +153,7 @@ public class FileQuestHD extends ActionBarActivity {
 		adapters = new PagerAdapters(getSupportFragmentManager());
 		drawer = (DrawerLayout)findViewById(R.id.sliding_drawer);
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		bottom_options = (Toolbar) findViewById(R.id.bottom_options);
 	}
 	
 	

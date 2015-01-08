@@ -5,7 +5,7 @@
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.NoActionBar">
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -13,6 +13,8 @@
         -->
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        
     </style>
 
      <!-- Application theme. -->
