@@ -43,7 +43,7 @@ public class CopyToCloud implements OnClickListener {
 		// TODO Auto-generated constructor stub
 		this.item = itm;
 		this.context = ctx;
-		dialog = new Dialog(ctx, R.style.custom_dialog_theme);
+		dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.copy_to_cloud);
 		dialog.getWindow().getAttributes().width = FileQuest.size.x*8/9;
 		

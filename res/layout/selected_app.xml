@@ -16,8 +16,8 @@
                               anurag.dev1512@gmail.com
  
  -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/black"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" 
@@ -87,12 +87,11 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
    		<ImageView 
-   		android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:background="@color/dialog_border" 
-        android:layout_width="fill_parent" 
-        android:layout_height="3.0dip" 
-         />     
+   			android:paddingLeft="5dp"
+        	android:paddingRight="5dp"
+        	android:background="@color/dialog_border" 
+        	android:layout_width="fill_parent" 
+        	android:layout_height="3.0dip"/>     
     </LinearLayout>
      
      <LinearLayout 

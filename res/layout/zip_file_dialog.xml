@@ -17,7 +17,6 @@
  
  -->
 <LinearLayout 
-    android:background="@color/black"
     android:orientation="vertical" 
     android:paddingLeft="10.0dip" 
     android:paddingRight="10.0dip" 

@@ -104,7 +104,7 @@ public class DeleteFiles{
 				zip_deleted = mis_deleted = false;
 		
 		mContext = context;
-		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
+		dialog = new Dialog(mContext, Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.delete_files);
 		dialog.getWindow().getAttributes().width = width;
 		dialog.setCancelable(true);

@@ -56,7 +56,7 @@ public class OpenAs {
 		final Dialog dialog;
 		mContext = con.getApplicationContext();
 		manager = mContext.getPackageManager();
-		dialog = new Dialog(con, R.style.custom_dialog_theme);
+		dialog = new Dialog(con, Constants.DIALOG_STYLE);
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.launch_file);
 		dialog.getWindow().getAttributes().width = width;

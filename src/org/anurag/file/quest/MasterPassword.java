@@ -48,7 +48,7 @@ public class MasterPassword {
 	 */
 	public MasterPassword(final Context ctx , int width , final Item item , final SharedPreferences prefs ,final Constants.MODES MODE) {
 		// TODO Auto-generated constructor stub
-		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
+		final Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.master_password);
 		dialog.getWindow().getAttributes().width = width;

@@ -91,7 +91,7 @@
      <LinearLayout 
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:paddingBottom="10dp"
+        android:paddingBottom="5dp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
    		<ImageView 

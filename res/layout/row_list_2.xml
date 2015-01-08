@@ -16,34 +16,23 @@
                               anurag.dev1512@gmail.com
  
  -->
-<LinearLayout 
-    android:gravity="center" 
+<LinearLayout
+    android:padding="3dp" 
+    android:gravity="center_vertical"
     android:orientation="horizontal" 
-    android:layout_width="fill_parent" 
-    android:layout_height="fill_parent" 
-    android:minHeight="10.0dip"
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent" 
     xmlns:android="http://schemas.android.com/apk/res/android">
     <ImageView 
-		android:layout_gravity="center"
 		android:id="@+id/iconImage2" 
 		android:layout_width="40.0dp" 
 		android:layout_height="40.0dp" />
-    
-	<LinearLayout 
-		android:orientation="vertical" 
-		android:layout_width="fill_parent" 
-		android:layout_height="fill_parent">
-        	<TextView 
-            	android:textColor="#FFFFFFFF"
-				android:textStyle="bold"
-				android:ellipsize="middle"
-				android:gravity="center_vertical" 
-				android:id="@+id/directoryName2" 
-				android:paddingLeft="10.0dip" 
-				android:layout_width="fill_parent" 
-				android:layout_height="0.0dip" 
-				android:singleLine="false" 
-				android:layout_weight="4.0"
-				android:textIsSelectable="false" />
-    </LinearLayout>
+    <TextView 
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="10dp"
+		android:id="@+id/directoryName2" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:singleLine="false" 
+		android:textIsSelectable="false" />
 </LinearLayout>

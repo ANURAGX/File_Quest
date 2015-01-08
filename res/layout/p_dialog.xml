@@ -16,8 +16,8 @@
                               anurag.dev1512@gmail.com
  
  -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/black"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:padding="15dp"
     android:layout_height="match_parent"

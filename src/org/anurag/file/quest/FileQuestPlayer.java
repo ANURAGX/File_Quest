@@ -69,7 +69,7 @@ public class FileQuestPlayer extends Activity{
 		Point size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(size);
 		Intent intent = getIntent();
-		Dialog dialog = new Dialog(FileQuestPlayer.this, R.style.custom_dialog_theme);
+		Dialog dialog = new Dialog(FileQuestPlayer.this, Constants.DIALOG_STYLE);
 		dialog.setCancelable(true); 
 		dialog.setContentView(R.layout.file_quest_player);
 		seekbar = (SeekBar)dialog.findViewById(R.id.seek);
