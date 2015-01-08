@@ -16,11 +16,17 @@
                               anurag.dev1512@gmail.com
 -->
 
-<resources>
+<menu 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+    
+    <item 
+        android:id="@+id/action_exit"
+        android:title="@string/action_exit"
+        />
+    
+    <item 
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"/>
 
-    <string name="action_search">Search</string>
-    <string name="action_refresh">Refresh</string>
-    <string name="action_gesture">Gesture</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_exit">Exit</string>
-</resources>
+</menu>

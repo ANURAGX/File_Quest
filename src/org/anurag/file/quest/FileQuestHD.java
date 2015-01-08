@@ -23,6 +23,7 @@ import org.anurag.adapters.FileGallery;
 import org.anurag.adapters.PagerAdapters;
 import org.anurag.adapters.RootPanel;
 import org.anurag.adapters.SdCardPanel;
+
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Point;
@@ -34,6 +35,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -113,6 +118,24 @@ public class FileQuestHD extends ActionBarActivity {
 	
 	}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		/*MenuItem gesture = menu.add(0, 0, 0, R.string.action_gesture);
+		gesture.setIcon(R.drawable.gesture);
+		gesture.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		
+		MenuItem expanded_settings = menu.add(1, 0, 0, R.string.action_settings);
+		expanded_settings.setIcon(R.drawable.actions_settings);
+		expanded_settings.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		
+		menu.addSubMenu(0, Menu.NONE, 0, "Exit");
+		*/
+		MenuInflater inf = getMenuInflater();
+		inf.inflate(R.menu.main_actionbar_menu, menu);
+		return true;
+	}
+
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub

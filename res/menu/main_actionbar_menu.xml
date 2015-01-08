@@ -16,11 +16,20 @@
                               anurag.dev1512@gmail.com
 -->
 
-<resources>
+<menu 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+    
+    <item 
+        android:id="@+id/action_gesture"
+        android:icon="@drawable/gesture"
+        android:title="@string/action_gesture"
+        app:showAsAction="always"/>
+    
+    <item 
+        android:id="@+id/action_settings"
+        android:icon="@drawable/actions_settings"
+        android:title="@string/action_settings"
+        app:showAsAction="always"/>
 
-    <string name="action_search">Search</string>
-    <string name="action_refresh">Refresh</string>
-    <string name="action_gesture">Gesture</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_exit">Exit</string>
-</resources>
+</menu>
