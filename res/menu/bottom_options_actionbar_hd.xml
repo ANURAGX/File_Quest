@@ -29,7 +29,7 @@
         android:id="@+id/refresh"
         android:icon="@drawable/button_refresh"
         android:title="@string/action_refresh"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
     
     
 </menu>
