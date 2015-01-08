@@ -63,6 +63,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onViewCreated(v, savedInstanceState);
 		ls = (ListView) v.findViewById(R.id.customListView);
+		ls.setSelector(Constants.SELECTOR_STYLE);
 		file_gallery = (LinearLayout) v.findViewById(R.id.file_gallery_layout);
 		Utils.setContext(null , getActivity());
 		Utils.load();

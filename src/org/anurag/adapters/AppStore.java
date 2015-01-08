@@ -59,7 +59,7 @@ public class AppStore extends Fragment{
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		ls = (ListView) view.findViewById(R.id.list_view_hd);
-		ls.setSelector(R.drawable.list_selector_hd);
+		ls.setSelector(Constants.SELECTOR_STYLE);
 		if(load == null){
 			load = new LoadApps();
 			load.execute();

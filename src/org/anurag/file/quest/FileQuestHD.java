@@ -82,6 +82,8 @@ public class FileQuestHD extends ActionBarActivity {
 		
 		prefs_editor = prefs.edit();
 		
+		//building the theme style as per the color selected by user.... 
+		ThemeOrganizer.BUILD_THEME(Constants.COLOR_STYLE);
 		setContentView(R.layout.fq_ui_hd);
 		findViewIds();
 		setSupportActionBar(toolbar);	

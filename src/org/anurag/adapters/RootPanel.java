@@ -64,7 +64,7 @@ public class RootPanel extends Fragment{
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		list = (ListView)view.findViewById(R.id.list_view_hd);		
-		list.setSelector(R.drawable.list_selector_hd);
+		list.setSelector(Constants.SELECTOR_STYLE);
 		if(load == null){
 			load = new LoadList();
 			load.execute();
