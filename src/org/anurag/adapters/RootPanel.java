@@ -42,7 +42,7 @@ import android.widget.ListView;
 
 public class RootPanel extends Fragment{
 	
-	private static ListView list;
+	private ListView list;
 	private ArrayList<Item> adapter_list;
 	private static LoadList load;
 	private static RootManager manager;
@@ -64,7 +64,7 @@ public class RootPanel extends Fragment{
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		list = (ListView)view.findViewById(R.id.list_view_hd);		
-		list.setSelector(Constants.SELECTOR_STYLE);
+		list.setSelector(R.drawable.list_selector_hd);
 		if(load == null){
 			load = new LoadList();
 			load.execute();
@@ -143,9 +143,9 @@ public class RootPanel extends Fragment{
 	 * sets the list view selector as per selected theme
 	 * dynamically by user....
 	 */
-	public static void setListSelector(){
+	/*public static void setListSelector(){
 		list.setSelector(Constants.SELECTOR_STYLE);
-	}
+	}*/
 	
 	/**
 	 * 

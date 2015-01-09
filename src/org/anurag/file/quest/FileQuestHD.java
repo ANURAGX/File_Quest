@@ -39,8 +39,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
+import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -54,7 +54,7 @@ import com.fuehlbypa.kddcbytnh159110.Prm;
  * @author anurag
  *
  */
-public class FileQuestHD extends ActionBarActivity {
+public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItemClickListener{
 
 	private ActionBar action_bar;
 	private static PagerSlidingTabStrip indicator;
@@ -117,6 +117,8 @@ public class FileQuestHD extends ActionBarActivity {
 		//inflating menu in standalone mode for bottom options....
 		bottom_options.inflateMenu(R.menu.bottom_options_actionbar_hd);
 	
+		bottom_options.setOnMenuItemClickListener(this);
+		
 	}
 	
 	@Override
@@ -135,6 +137,38 @@ public class FileQuestHD extends ActionBarActivity {
 		MenuInflater inf = getMenuInflater();
 		inf.inflate(R.menu.main_actionbar_menu, menu);
 		return true;
+	}
+	
+	
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch(item.getItemId()){
+		case R.id.red:
+			styleActionBar(getResources().getColor(R.color.red));
+			init_system_ui();
+			Toast.makeText(FileQuestHD.this, "Clicked", Toast.LENGTH_SHORT).show();
+			break;
+			
+		case R.id.color_change:
+			styleActionBar(getResources().getColor(R.color.red));
+			init_system_ui();
+			Toast.makeText(FileQuestHD.this, "Clicked", Toast.LENGTH_SHORT).show();
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	
+	
+	@Override
+	public boolean onMenuOpened(int featureId, Menu menu) {
+		// TODO Auto-generated method stub
+		if(featureId == Window.FEATURE_ACTION_BAR && menu !=null){
+			//switch(menu.get)
+		}
+		return super.onMenuOpened(featureId, menu);
 	}
 
 	@Override
@@ -248,25 +282,19 @@ public class FileQuestHD extends ActionBarActivity {
 		tint.setStatusBarTintEnabled(true);
 		tint.setStatusBarTintColor(Constants.COLOR_STYLE);
 		
-		LinearLayout main = (LinearLayout) findViewById(R.id.frame_container);
 		LinearLayout slide_menu = (LinearLayout) findViewById(R.id.drawer_list);
+		LinearLayout main = (LinearLayout) findViewById(R.id.frame_container);
 		
-		//setting padding for status bar...
-		//if not set the activity UI overlaps the status bar
 		main.setPadding(0, getStatusBarHeight(), 0, 0);
 		slide_menu.setPadding(0, getStatusBarHeight(), 0, 0);
 		
-		//setting padding to navigation bar if available....
-		//if not set the activity UI overlaps the navigation bar
 		SystemBarConfig conf = tint.getConfig();
 		if(conf.hasNavigtionBar()){
 			tint.setNavigationBarTintEnabled(true);
 			tint.setNavigationBarTintColor(Constants.COLOR_STYLE);
 			main.setPadding(0, 0, 0, getNavigationBarHeight());
 			slide_menu.setPadding(0, 0, 0, getNavigationBarHeight());
-			
 		}
-		
 	}
 	
 	/**
@@ -291,5 +319,57 @@ public class FileQuestHD extends ActionBarActivity {
 		if(resId > 0)
 			res = getResources().getDimensionPixelSize(resId);
 		return res;
+	}
+
+	@Override
+	public boolean onMenuItemClick(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch(item.getItemId()){
+		case R.id.red:
+			Constants.COLOR_STYLE = getResources().getColor(R.color.red);
+			change_ui_color();
+			return true;
+		
+		case R.id.grey:
+			Constants.COLOR_STYLE = getResources().getColor(R.color.grey);
+			change_ui_color();
+			return true;
+			
+		case R.id.green:
+			Constants.COLOR_STYLE = getResources().getColor(R.color.green);
+			change_ui_color();
+			return true;
+			
+		case R.id.Orange:
+			Constants.COLOR_STYLE = getResources().getColor(R.color.orange);
+			change_ui_color();
+			return true;	
+		
+		case R.id.blue:
+			Constants.COLOR_STYLE = getResources().getColor(R.color.blue);
+			change_ui_color();
+			return true;
+			
+		case R.id.violet:
+			Constants.COLOR_STYLE = getResources().getColor(R.color.violet);
+			change_ui_color();
+			return true;	
+		}
+		
+		return true;
+	}
+
+	/**
+	 * this function is invoked when user changes the color
+	 * and new theme is build and the ui is updated....
+	 */
+	private void change_ui_color() {
+		// TODO Auto-generated method stub
+		styleActionBar(Constants.COLOR_STYLE);
+		init_system_ui();
+		ThemeOrganizer.BUILD_THEME(Constants.COLOR_STYLE);
+		//ThemeOrganizer.UPDATE_LIST_SELECTORS();
+		prefs_editor.putInt("COLOR_STYLE", Constants.COLOR_STYLE);
+		prefs_editor.commit();
 	}
 }

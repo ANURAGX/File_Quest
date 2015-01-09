@@ -63,7 +63,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onViewCreated(v, savedInstanceState);
 		ls = (ListView) v.findViewById(R.id.customListView);
-		ls.setSelector(Constants.SELECTOR_STYLE);
+		ls.setSelector(R.drawable.list_selector_hd);
 		file_gallery = (LinearLayout) v.findViewById(R.id.file_gallery_layout);
 		Utils.setContext(null , getActivity());
 		Utils.load();
@@ -176,9 +176,10 @@ public class FileGallery extends Fragment implements OnClickListener{
 	 * sets the list view selector as per selected theme
 	 * dynamically by user....
 	 */
-	public static void setListSelector(){
+	/*public static void setListSelector(){
 		ls.setSelector(Constants.SELECTOR_STYLE);
 	}
+	*/
 	
 	public static void collapseGallery(){
 		ls.setVisibility(View.GONE);

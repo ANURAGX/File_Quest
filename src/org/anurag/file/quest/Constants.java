@@ -115,5 +115,4 @@ public class Constants {
 	public static int PANEL_NO;
 	public static int COLOR_STYLE;
 	public static int DIALOG_STYLE;
-	public static int SELECTOR_STYLE;
 }

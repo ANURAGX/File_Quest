@@ -19,10 +19,6 @@
 
 package org.anurag.file.quest;
 
-import org.anurag.adapters.AppStore;
-import org.anurag.adapters.FileGallery;
-import org.anurag.adapters.RootPanel;
-import org.anurag.adapters.SdCardPanel;
 
 /**
  * this class builds the theme as per the color scheme at start 
@@ -36,36 +32,37 @@ public class ThemeOrganizer {
 		switch(clr){
 		case 0xFFC74B46:
 			Constants.DIALOG_STYLE = R.style.Dialog_Red;
-			Constants.SELECTOR_STYLE = R.drawable.list_selector_red_hd;
+			//Constants.SELECTOR_STYLE = R.drawable.list_selector_red_hd;
 			break;
 		
 		case 0xFF53AB3A:
 			Constants.DIALOG_STYLE = R.style.Dialog_Green;
-			Constants.SELECTOR_STYLE = R.drawable.list_selector_green_hd;
+			//Constants.SELECTOR_STYLE = R.drawable.list_selector_green_hd;
 			break;
 			
 		case 0xFF666666:
 			Constants.DIALOG_STYLE = R.style.Dialog_Grey;
-			Constants.SELECTOR_STYLE = R.drawable.list_selector_grey_hd;
+			//Constants.SELECTOR_STYLE = R.drawable.list_selector_grey_hd;
 			break;	
 			
 		case 0xFFFF5D3D:
 			Constants.DIALOG_STYLE = R.style.Dialog_Orange;
-			Constants.SELECTOR_STYLE = R.drawable.list_selector_orange_hd;
+			//Constants.SELECTOR_STYLE = R.drawable.list_selector_orange_hd;
 			break;	
 			
 		case 0xFF3F9FE0:
 			Constants.DIALOG_STYLE = R.style.Dialog_Blue;
-			Constants.SELECTOR_STYLE = R.drawable.list_selector_blue_hd;
+			//Constants.SELECTOR_STYLE = R.drawable.list_selector_blue_hd;
 			break;	
 			
 		case 0xFF5161BC:
 			Constants.DIALOG_STYLE = R.style.Dialog_Violet;
-			Constants.SELECTOR_STYLE = R.drawable.list_selector_violet_hd;
+			//Constants.SELECTOR_STYLE = R.drawable.list_selector_violet_hd;
 			break;
 		}		
 	}
 
+	/*
 	public static void UPDATE_LIST_SELECTORS(){
 		//updating the list selector as per new theme....
 		RootPanel.setListSelector();
@@ -73,4 +70,5 @@ public class ThemeOrganizer {
 		AppStore.setListSelector();
 		FileGallery.setListSelector();
 	}
+	*/
 }

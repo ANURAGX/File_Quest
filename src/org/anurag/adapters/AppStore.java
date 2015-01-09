@@ -39,7 +39,7 @@ import android.widget.ListView;
 
 public class AppStore extends Fragment{
 	
-	private static ListView ls;
+	private ListView ls;
 	private ArrayList<ApplicationInfo> apps;
 	private LoadApps load;
 	private AppManager manager;
@@ -59,7 +59,7 @@ public class AppStore extends Fragment{
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		ls = (ListView) view.findViewById(R.id.list_view_hd);
-		ls.setSelector(Constants.SELECTOR_STYLE);
+		ls.setSelector(R.drawable.list_selector_hd);
 		if(load == null){
 			load = new LoadApps();
 			load.execute();
@@ -81,9 +81,9 @@ public class AppStore extends Fragment{
 	 * sets the list view selector as per selected theme
 	 * dynamically by user....
 	 */
-	public static void setListSelector(){
+	/*public static void setListSelector(){
 		ls.setSelector(Constants.SELECTOR_STYLE);
-	}
+	}*/
 	
 	/**
 	 * 
