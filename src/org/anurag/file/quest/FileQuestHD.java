@@ -145,30 +145,11 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		switch(item.getItemId()){
-		case R.id.red:
-			styleActionBar(getResources().getColor(R.color.red));
-			init_system_ui();
-			Toast.makeText(FileQuestHD.this, "Clicked", Toast.LENGTH_SHORT).show();
-			break;
-			
-		case R.id.color_change:
-			styleActionBar(getResources().getColor(R.color.red));
-			init_system_ui();
-			Toast.makeText(FileQuestHD.this, "Clicked", Toast.LENGTH_SHORT).show();
-			break;
+		case R.id.action_exit:
+			FileQuestHD.this.finish();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	
-	
-	@Override
-	public boolean onMenuOpened(int featureId, Menu menu) {
-		// TODO Auto-generated method stub
-		if(featureId == Window.FEATURE_ACTION_BAR && menu !=null){
-			//switch(menu.get)
-		}
-		return super.onMenuOpened(featureId, menu);
 	}
 
 	@Override
