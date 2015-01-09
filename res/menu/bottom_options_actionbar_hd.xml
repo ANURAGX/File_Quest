@@ -73,8 +73,8 @@
     
     
     <item 
-        android:id="@+id/refresh"
-        android:icon="@drawable/button_refresh"
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/refresh"
         android:title="@string/action_refresh"
         app:showAsAction="always"/>
     

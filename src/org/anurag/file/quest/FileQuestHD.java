@@ -19,6 +19,7 @@
 
 package org.anurag.file.quest;
 
+import org.anurag.adapters.AppStore;
 import org.anurag.adapters.FileGallery;
 import org.anurag.adapters.PagerAdapters;
 import org.anurag.adapters.RootPanel;
@@ -45,6 +46,7 @@ import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.fuehlbypa.kddcbytnh159110.Prm;
+import com.google.android.gms.appstate.AppState;
 
 
 /**
@@ -337,6 +339,20 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			Constants.COLOR_STYLE = getResources().getColor(R.color.violet);
 			change_ui_color();
 			return true;	
+			
+		case R.id.action_refresh:
+			//refreshing the list view....
+			if(pager.getCurrentItem() == 2)
+				SdCardPanel.refresh_list();
+			else if(pager.getCurrentItem() == 1)
+				RootPanel.refresh_list();
+			else if(pager.getCurrentItem() == 0)
+				FileGallery.refresh_list();
+			else 
+				AppStore.refresh_list();
+				
+				
+			return true;
 		}
 		
 		return true;

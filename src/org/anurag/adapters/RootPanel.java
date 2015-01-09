@@ -42,7 +42,7 @@ import android.widget.ListView;
 
 public class RootPanel extends Fragment{
 	
-	private ListView list;
+	private static ListView list;
 	private ArrayList<Item> adapter_list;
 	private static LoadList load;
 	private static RootManager manager;
@@ -165,4 +165,19 @@ public class RootPanel extends Fragment{
 		// TODO Auto-generated method stub
 		load.execute();
 	}
+	
+	/**
+	 * refreshes the list view....
+	 */
+	public static void refresh_list(){
+		list.setAdapter(null);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		load.execute();
+	}
+
 }

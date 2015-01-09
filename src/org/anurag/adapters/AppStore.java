@@ -39,9 +39,9 @@ import android.widget.ListView;
 
 public class AppStore extends Fragment{
 	
-	private ListView ls;
+	private static ListView ls;
 	private ArrayList<ApplicationInfo> apps;
-	private LoadApps load;
+	private static LoadApps load;
 	private AppManager manager;
 	public AppStore() {
 		// TODO Auto-generated constructor stub
@@ -97,6 +97,7 @@ public class AppStore extends Fragment{
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			ls.setAdapter(new AppAdapter(getActivity(), R.layout.row_list_2, apps));
+			load = new LoadApps();
 		}
 
 		@Override
@@ -108,6 +109,20 @@ public class AppStore extends Fragment{
 			return null;
 		}
 		
+	}
+	
+	/**
+	 * refreshes the list view....
+	 */
+	public static void refresh_list(){
+		ls.setAdapter(null);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		load.execute();
 	}
 	
 }

@@ -47,6 +47,8 @@ public class FileGallery extends Fragment implements OnClickListener{
 	private static LinearLayout file_gallery;
 	private static boolean is_gallery_opened;
 	private static String current_Tile;
+	
+	private static FileGalleryAdapter adpt;
 	public FileGallery() {
 		// TODO Auto-generated constructor stub
 	}
@@ -159,7 +161,8 @@ public class FileGallery extends Fragment implements OnClickListener{
 		}
 		file_gallery.setVisibility(View.GONE);
 		ls.setVisibility(View.VISIBLE);
-		ls.setAdapter(new FileGalleryAdapter(getActivity(), lists, keys));
+		adpt = new FileGalleryAdapter(getActivity(), lists, keys);
+		ls.setAdapter(adpt);
 		is_gallery_opened = true;
 		FileQuestHD.notify_Title_Indicator(0, current_Tile);
 	}
@@ -187,5 +190,21 @@ public class FileGallery extends Fragment implements OnClickListener{
 		is_gallery_opened = false;
 		current_Tile = "FILE GALLERY";
 		FileQuestHD.notify_Title_Indicator(0, current_Tile);
+	}
+	
+	/**
+	 * refreshes the list view....
+	 */
+	public static void refresh_list(){
+		if(is_gallery_opened)
+			return;
+		ls.setAdapter(null);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ls.setAdapter(adpt);
 	}
 }

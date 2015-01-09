@@ -42,7 +42,7 @@ import android.widget.ListView;
 
 public class SdCardPanel extends Fragment{
 	
-	private ListView list;
+	private static ListView list;
 	private ArrayList<Item> adapter_list;
 	private static LoadList load;
 	private static SDManager manager;
@@ -162,6 +162,20 @@ public class SdCardPanel extends Fragment{
 	 * called when the folder icon has to be changed....
 	 */
 	public static void notifyDataSetChanged(){
+		load.execute();
+	}
+	
+	/**
+	 * refreshes the list view....
+	 */
+	public static void refresh_list(){
+		list.setAdapter(null);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		load.execute();
 	}
 }
