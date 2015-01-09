@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"/>
         
     <TextView 
+        android:paddingRight="30dp"
        	android:gravity="center"
       	android:textColor="@android:color/white"
        	android:paddingTop="10dp"

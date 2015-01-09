@@ -40,7 +40,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -80,7 +79,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		Constants.SORT_TYPE = prefs.getInt("SORT_TYPE", 2);
 		Constants.FOLDER_ICON = prefs.getInt("ICON", 0);
 		Constants.SHOW_HIDDEN_FOLDERS = prefs.getBoolean("SHOW_HIDDEN", false);
-		Constants.FOLDER_IMAGE = getResources().getDrawable(R.drawable.folder);
 		Constants.PANEL_NO = prefs.getInt("PANEL_NO", 0);
 		Constants.COLOR_STYLE = prefs.getInt("COLOR_STYLE", 0xFF5161BC);
 		Constants.db = new ItemDB(FileQuestHD.this);
@@ -91,6 +89,10 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		
 		//building the theme style as per the color selected by user.... 
 		ThemeOrganizer.BUILD_THEME(Constants.COLOR_STYLE);
+		
+		//builds the folder icon after building the theme....
+		ThemeOrganizer.BUILD_FOLDER_ICON(FileQuestHD.this);
+		
 		setContentView(R.layout.fq_ui_hd);
 		findViewIds();
 		setSupportActionBar(toolbar);	
@@ -349,8 +351,12 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		styleActionBar(Constants.COLOR_STYLE);
 		init_system_ui();
 		ThemeOrganizer.BUILD_THEME(Constants.COLOR_STYLE);
+		ThemeOrganizer.BUILD_FOLDER_ICON(FileQuestHD.this);
 		//ThemeOrganizer.UPDATE_LIST_SELECTORS();
+		ThemeOrganizer.APPLY_FOLDER_THEME(pager.getCurrentItem());
+		
 		prefs_editor.putInt("COLOR_STYLE", Constants.COLOR_STYLE);
+		prefs_editor.putInt("ICON", Constants.FOLDER_ICON);
 		prefs_editor.commit();
 	}
 }

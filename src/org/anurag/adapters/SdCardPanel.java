@@ -155,4 +155,13 @@ public class SdCardPanel extends Fragment{
 			return true;
 		return false;
 	}
+	
+
+	/**
+	 * reloads the current folder
+	 * called when the folder icon has to be changed....
+	 */
+	public static void notifyDataSetChanged(){
+		load.execute();
+	}
 }
