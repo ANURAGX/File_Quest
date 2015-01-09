@@ -25,11 +25,11 @@
 
     <item 
         android:state_focused="true"
-        android:drawable="@color/semi_green40"/>
+        android:drawable="@color/green"/>
     
     <item 
         android:state_pressed="true"
-        android:drawable="@color/semi_green40"/>
+        android:drawable="@color/green"/>
     
     <item 
         android:state_enabled="false"
