@@ -77,7 +77,7 @@ public class AppBackup {
 	public AppBackup(final Context ctx , int width, final ArrayList<ApplicationInfo> list) {
 		// TODO Auto-generated constructor stub
 		running = false;
-		final Dialog dialog = new Dialog(ctx, R.style.Dialog_Violet);
+		final Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.app_backup_dialog);
 		dialog.getWindow().getAttributes().width = width;

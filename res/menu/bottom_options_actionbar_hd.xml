@@ -26,6 +26,53 @@
         app:showAsAction="always"/>
 
     <item 
+        android:id="@+id/color_change"
+        android:icon="@drawable/change_color"
+        android:title="@string/action_color"
+        app:showAsAction="always">
+        
+        <menu>
+            <item 
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/grey"
+                android:id="@+id/grey"
+                android:title="Grey"/>
+            
+            <item 
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/red"
+                android:id="@+id/red"
+                android:title="Red"/>
+            
+            <item 
+                app:showAsAction="ifRoom"
+                android:id="@+id/Orange"
+                android:icon="@drawable/orange"
+                android:title="Orange"/>
+            
+            <item 
+                app:showAsAction="ifRoom"
+                android:id="@+id/green"
+                android:icon="@drawable/green"
+                android:title="Green"/>
+            
+            <item 
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/blue"
+                android:id="@+id/blue"
+                android:title="Blue"/>
+            
+            <item 
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/violet"
+                android:id="@+id/violet"
+                android:title="Violet"/>
+        </menu>
+        
+    </item>
+    
+    
+    <item 
         android:id="@+id/refresh"
         android:icon="@drawable/button_refresh"
         android:title="@string/action_refresh"

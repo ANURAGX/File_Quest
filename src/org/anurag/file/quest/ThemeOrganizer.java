@@ -19,6 +19,17 @@
 
 package org.anurag.file.quest;
 
+import org.anurag.adapters.AppStore;
+import org.anurag.adapters.FileGallery;
+import org.anurag.adapters.RootPanel;
+import org.anurag.adapters.SdCardPanel;
+
+/**
+ * this class builds the theme as per the color scheme at start 
+ * of the app as well as during the runtime....
+ * @author Anurag
+ *
+ */
 public class ThemeOrganizer {
 	
 	public static void BUILD_THEME(int clr){
@@ -52,7 +63,14 @@ public class ThemeOrganizer {
 			Constants.DIALOG_STYLE = R.style.Dialog_Violet;
 			Constants.SELECTOR_STYLE = R.drawable.list_selector_violet_hd;
 			break;
-		}
+		}		
 	}
 
+	public static void UPDATE_LIST_SELECTORS(){
+		//updating the list selector as per new theme....
+		RootPanel.setListSelector();
+		SdCardPanel.setListSelector();
+		AppStore.setListSelector();
+		FileGallery.setListSelector();
+	}
 }

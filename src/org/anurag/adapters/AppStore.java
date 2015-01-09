@@ -39,7 +39,7 @@ import android.widget.ListView;
 
 public class AppStore extends Fragment{
 	
-	private ListView ls;
+	private static ListView ls;
 	private ArrayList<ApplicationInfo> apps;
 	private LoadApps load;
 	private AppManager manager;
@@ -75,6 +75,14 @@ public class AppStore extends Fragment{
 				new AppBackup(getActivity(), Constants.size.x*8/9, infos);
 			}
 		});
+	}
+	
+	/**
+	 * sets the list view selector as per selected theme
+	 * dynamically by user....
+	 */
+	public static void setListSelector(){
+		ls.setSelector(Constants.SELECTOR_STYLE);
 	}
 	
 	/**

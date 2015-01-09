@@ -42,7 +42,7 @@ import android.widget.ListView;
 
 public class RootPanel extends Fragment{
 	
-	private ListView list;
+	private static ListView list;
 	private ArrayList<Item> adapter_list;
 	private static LoadList load;
 	private static RootManager manager;
@@ -137,6 +137,14 @@ public class RootPanel extends Fragment{
 		manager.popTopPath();
 		FileQuestHD.notify_Title_Indicator(1, manager.getCurrentDirectoryName());
 		load.execute();
+	}
+	
+	/**
+	 * sets the list view selector as per selected theme
+	 * dynamically by user....
+	 */
+	public static void setListSelector(){
+		list.setSelector(Constants.SELECTOR_STYLE);
 	}
 	
 	/**

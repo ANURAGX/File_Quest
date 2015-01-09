@@ -172,6 +172,14 @@ public class FileGallery extends Fragment implements OnClickListener{
 		return is_gallery_opened;
 	}
 	
+	/**
+	 * sets the list view selector as per selected theme
+	 * dynamically by user....
+	 */
+	public static void setListSelector(){
+		ls.setSelector(Constants.SELECTOR_STYLE);
+	}
+	
 	public static void collapseGallery(){
 		ls.setVisibility(View.GONE);
 		file_gallery.setVisibility(View.VISIBLE);
