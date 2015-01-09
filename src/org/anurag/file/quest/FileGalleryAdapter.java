@@ -241,36 +241,32 @@ public class FileGalleryAdapter extends BaseAdapter {
 		}
 		
 		else if (item.getType().equals("Image")) {
-			if(Constants.SHOW_IMAGE_THUMB){
-				image = imgList.get(item.getPath());
-				if (image != null)
-					h.icon.setImageBitmap(image);
-				else{
-					h.icon.setTag(item.getPath());
-					new LoadImage(h.icon, item).execute();
-				}
+			image = imgList.get(item.getPath());
+			if (image != null)
+				h.icon.setImageBitmap(image);
+			else{
+				h.icon.setTag(item.getPath());
+				new LoadImage(h.icon, item).execute();
 			}
+			
 		} else if (item.getType().equals("App")) {
-			if(Constants.SHOW_APP_THUMB){
-				Drawable draw = apkList.get(item.getPath());
-				if (draw == null){
-					h.icon.setTag(item.getPath());
-					new LoadApkIcon(h.icon, item).execute();
-				}	
-				else{
-					h.icon.setImageDrawable(draw);
-				}
+			Drawable draw = apkList.get(item.getPath());
+			if (draw == null){
+				h.icon.setTag(item.getPath());
+				new LoadApkIcon(h.icon, item).execute();
+			}	
+			else{
+				h.icon.setImageDrawable(draw);
 			}
+			
 		} else if (item.getType().equals("Music")) {
-			if(Constants.SHOW_MUSIC_THUMB){
-				Bitmap music = musicList.get(item.getPath());
-				if (music != null)
-					h.icon.setImageBitmap(music);
-				else{
-					h.icon.setTag(item.getPath());
-					new LoadAlbumArt(h.icon, item).execute();
-				}
-			}
+			Bitmap music = musicList.get(item.getPath());
+			if (music != null)
+				h.icon.setImageBitmap(music);
+			else{
+				h.icon.setTag(item.getPath());
+				new LoadAlbumArt(h.icon, item).execute();
+			}			
 		}
 		return convertView;
 	}
