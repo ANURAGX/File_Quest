@@ -95,5 +95,30 @@
         android:title="@string/action_refresh"
         app:showAsAction="always"/>
     
+    <item 
+        android:id="@+id/action_views"
+        android:icon="@drawable/views"
+        android:title="@string/action_views"
+        app:showAsAction="always">
+        
+        <menu>
+        	<item 
+        	    android:id="@+id/simple_ls"
+        	    android:title="@string/action_simplels"/> 
+        	    
+        	<item 
+        	    android:id="@+id/detail_ls"
+        	    android:title="@string/action_list"/>
+        	
+        	<item 
+        	    android:id="@+id/simple_grid"
+        	    android:title="@string/action_simplegrid"/>
+        	
+        	<item 
+        	    android:id="@+id/detail_grid"
+        	    android:title="@string/action_grid"/> 
+        </menu>
+    </item>
+    
     
 </menu>

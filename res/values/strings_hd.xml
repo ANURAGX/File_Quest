@@ -25,4 +25,10 @@
     <string name="action_exit">Exit</string>
     <string name="action_color">Choose Color</string>
     <string name="action_add_new">Add New</string>
+    <string name="action_views">Views</string>
+    <string name="action_simplels">Simple List</string>
+    <string name="action_list">Detailed List</string>
+    <string name="action_simplegrid">Simple Grid</string>
+    <string name="action_grid">Detailed Grid</string>
+    <string name="action_cloud">Cloud Networks</string>
 </resources>
