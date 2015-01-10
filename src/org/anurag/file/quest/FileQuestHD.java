@@ -26,17 +26,20 @@ import org.anurag.adapters.RootPanel;
 import org.anurag.adapters.SdCardPanel;
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -46,7 +49,7 @@ import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.fuehlbypa.kddcbytnh159110.Prm;
-import com.google.android.gms.appstate.AppState;
+
 
 
 /**
@@ -233,6 +236,20 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			pager.setCurrentItem(Constants.PANEL_NO);
 	}	
 	
+	
+	
+	@Override
+	public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if(keyCode == KeyEvent.KEYCODE_BACK){
+			Vibrator vibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+			vibrate.vibrate(10);
+			android.os.Process.killProcess(android.os.Process.myPid());
+			return true;
+		}
+		return super.onKeyLongPress(keyCode, event);
+	}
+
 	/**
 	 * this function checks how many times back key is pressed
 	 * on second press it finishes the app....

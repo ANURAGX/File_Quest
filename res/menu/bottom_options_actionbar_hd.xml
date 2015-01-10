@@ -24,6 +24,23 @@
         android:icon="@drawable/search_file"
         android:title="@string/action_search"
         app:showAsAction="always"/>
+    
+    <item 
+        android:id="@+id/add_new"
+        android:icon="@drawable/add_new"
+        android:title="@string/action_add_new"
+        app:showAsAction="always">
+        
+        <menu>
+            <item 
+                android:id="@+id/new_folder"
+                android:title="New Folder"/>
+            
+            <item 
+                android:id="@+id/new_file"
+                android:title="New File"/>
+        </menu>
+    </item>
 
     <item 
         android:id="@+id/color_change"
