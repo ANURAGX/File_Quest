@@ -31,6 +31,14 @@
     		android:id="@+id/frame_container" >
 
            
+            <!-- main action bar.... -->
+    		 <android.support.v7.widget.Toolbar
+    			xmlns:app="http://schemas.android.com/apk/res-auto"
+    			android:id="@+id/toolbar_top"
+    			android:layout_height="wrap_content"
+    			android:layout_width="match_parent"
+    			android:minHeight="?android:attr/actionBarSize"
+    			android:background="?attr/colorPrimary" />
             
     		<com.astuetz.PagerSlidingTabStrip
         		android:paddingTop="3dp"

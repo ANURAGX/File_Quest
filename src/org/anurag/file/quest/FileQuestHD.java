@@ -66,6 +66,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	private PagerAdapters adapters;
 	private boolean isDrawerOpen;
 	private Toolbar toolbar;
+	private Toolbar top_toolbar;
 	private Toolbar bottom_options;
 	private ActionBarDrawerToggle toggle;
 	private DrawerLayout drawer;
@@ -86,6 +87,9 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		Constants.SHOW_HIDDEN_FOLDERS = prefs.getBoolean("SHOW_HIDDEN", false);
 		Constants.PANEL_NO = prefs.getInt("PANEL_NO", 0);
 		Constants.COLOR_STYLE = prefs.getInt("COLOR_STYLE", 0xFF5161BC);
+		
+		Constants.ACTION_AT_TOP = prefs.getBoolean("ACTION_AT_TOP", false);
+		
 		Constants.db = new ItemDB(FileQuestHD.this);
 		Constants.size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(Constants.size);
@@ -100,7 +104,15 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		
 		setContentView(R.layout.fq_ui_hd);
 		findViewIds();
-		setSupportActionBar(toolbar);	
+		
+		if(!Constants.ACTION_AT_TOP){
+			setSupportActionBar(toolbar);
+			top_toolbar.setVisibility(View.GONE);
+		}	
+		else{
+			setSupportActionBar(top_toolbar);
+			toolbar.setVisibility(View.GONE);
+		}	
 		action_bar = getSupportActionBar();
 		styleActionBar(Constants.COLOR_STYLE);
 		toggle = new ActionBarDrawerToggle(FileQuestHD.this, drawer,
@@ -123,24 +135,47 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		
 		//inflating menu in standalone mode for bottom options....
 		bottom_options.inflateMenu(R.menu.bottom_options_actionbar_hd);
-	
+		if(!Constants.ACTION_AT_TOP)
+			bottom_options.setNavigationIcon(R.drawable.up_action);
+		else
+			bottom_options.setNavigationIcon(R.drawable.down_action);
 		bottom_options.setOnMenuItemClickListener(this);
+		
+		bottom_options.setNavigationOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				if(!Constants.ACTION_AT_TOP){
+					bottom_options.setNavigationIcon(R.drawable.down_action);
+					top_toolbar.setVisibility(View.VISIBLE);
+					toolbar.setVisibility(View.GONE);
+					setSupportActionBar(top_toolbar);					
+				}else{
+					bottom_options.setNavigationIcon(R.drawable.up_action);
+					top_toolbar.setVisibility(View.GONE);
+					toolbar.setVisibility(View.VISIBLE);
+					setSupportActionBar(toolbar);
+				}
+			
+				//updating the menu....
+				invalidateOptionsMenu();
+				action_bar = getSupportActionBar();
+				action_bar.setHomeButtonEnabled(true);
+				//action_bar.setDisplayHomeAsUpEnabled(true);	
+				action_bar.setHomeAsUpIndicator(R.drawable.drawer_menu);
+				
+				//saving the changes....
+				Constants.ACTION_AT_TOP = !Constants.ACTION_AT_TOP;
+				prefs_editor.putBoolean("ACTION_AT_TOP", Constants.ACTION_AT_TOP);
+				prefs_editor.commit();
+			}
+		});
 		
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		/*MenuItem gesture = menu.add(0, 0, 0, R.string.action_gesture);
-		gesture.setIcon(R.drawable.gesture);
-		gesture.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		
-		MenuItem expanded_settings = menu.add(1, 0, 0, R.string.action_settings);
-		expanded_settings.setIcon(R.drawable.actions_settings);
-		expanded_settings.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		
-		menu.addSubMenu(0, Menu.NONE, 0, "Exit");
-		*/
 		MenuInflater inf = getMenuInflater();
 		inf.inflate(R.menu.main_actionbar_menu, menu);
 		return true;
@@ -181,6 +216,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	private void styleActionBar(int color) {
 		// TODO Auto-generated method stub
 		toolbar.setBackgroundColor(color);
+		top_toolbar.setBackgroundColor(color);
 		indicator.setBackgroundColor(color);
 		LinearLayout drawermenu = (LinearLayout) findViewById(R.id.drawer_list);
 		drawermenu.setBackgroundColor(color);
@@ -200,6 +236,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		drawer = (DrawerLayout)findViewById(R.id.sliding_drawer);
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		bottom_options = (Toolbar) findViewById(R.id.bottom_options);
+		top_toolbar = (Toolbar)findViewById(R.id.toolbar_top);
 	}
 	
 	
@@ -367,9 +404,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				FileGallery.refresh_list();
 			else 
 				AppStore.refresh_list();
-				
-				
-			return true;
+			return true;	
+		
 		}
 		
 		return true;
