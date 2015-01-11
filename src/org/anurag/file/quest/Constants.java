@@ -114,4 +114,6 @@ public class Constants {
 	public static int COLOR_STYLE;
 	public static int DIALOG_STYLE;
 	public static boolean ACTION_AT_TOP;
+	
+	public static int LIST_ANIM;
 }

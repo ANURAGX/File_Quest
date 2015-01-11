@@ -103,22 +103,31 @@
         
         <menu>
         	<item 
+        	    android:checkable="true"
         	    android:id="@+id/simple_ls"
         	    android:title="@string/action_simplels"/> 
         	    
         	<item 
+        	    android:checkable="true"
         	    android:id="@+id/detail_ls"
         	    android:title="@string/action_list"/>
         	
         	<item 
+        	    android:checkable="true"
         	    android:id="@+id/simple_grid"
         	    android:title="@string/action_simplegrid"/>
         	
         	<item 
+        	    android:checkable="true"
         	    android:id="@+id/detail_grid"
         	    android:title="@string/action_grid"/> 
         </menu>
     </item>
     
+    <item 
+        android:id="@+id/action_sort"
+        android:title="@string/action_sort"
+        android:icon="@drawable/sort"
+        app:showAsAction="always"/>
     
 </menu>

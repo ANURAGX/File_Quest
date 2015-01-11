@@ -29,6 +29,8 @@ import org.anurag.file.quest.R;
 import org.anurag.file.quest.SDAdapter;
 import org.anurag.file.quest.SDManager;
 
+import com.twotoasters.jazzylistview.JazzyHelper;
+
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -65,6 +67,7 @@ public class SdCardPanel extends Fragment{
 		super.onViewCreated(view, savedInstanceState);
 		list = (ListView)view.findViewById(R.id.list_view_hd);		
 		list.setSelector(R.drawable.list_selector_hd);
+		setAnim(list);
 		if(load == null){
 			load = new LoadList();
 			load.execute();
@@ -89,9 +92,20 @@ public class SdCardPanel extends Fragment{
 			}
 		});
 	}
-	
-	
-	
+		
+	/**
+	 * this function sets transition effect for list view.... 
+	 * @param list2
+	 */
+	private void setAnim(ListView list2) {
+		// TODO Auto-generated method stub
+		JazzyHelper help = new JazzyHelper(getActivity(), null);
+		help.setTransitionEffect(Constants.LIST_ANIM);
+		list2.setOnScrollListener(help);
+	}
+
+
+
 	/**
 	 * 
 	 * @author anurag

@@ -87,7 +87,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		Constants.SHOW_HIDDEN_FOLDERS = prefs.getBoolean("SHOW_HIDDEN", false);
 		Constants.PANEL_NO = prefs.getInt("PANEL_NO", 0);
 		Constants.COLOR_STYLE = prefs.getInt("COLOR_STYLE", 0xFF5161BC);
-		
+		Constants.LIST_ANIM = prefs.getInt("LIST_ANIM", 3);
 		Constants.ACTION_AT_TOP = prefs.getBoolean("ACTION_AT_TOP", false);
 		
 		Constants.db = new ItemDB(FileQuestHD.this);
@@ -113,8 +113,10 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			setSupportActionBar(top_toolbar);
 			toolbar.setVisibility(View.GONE);
 		}	
+		
 		action_bar = getSupportActionBar();
 		styleActionBar(Constants.COLOR_STYLE);
+		
 		toggle = new ActionBarDrawerToggle(FileQuestHD.this, drawer,
 				R.drawable.file_quest_icon, R.string.settings){
 			public void onDrawerClosed(View view) {
@@ -133,45 +135,10 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		indicator.setViewPager(pager);
 		pager.setOffscreenPageLimit(4);
 		
-		//inflating menu in standalone mode for bottom options....
-		bottom_options.inflateMenu(R.menu.bottom_options_actionbar_hd);
-		if(!Constants.ACTION_AT_TOP)
-			bottom_options.setNavigationIcon(R.drawable.up_action);
-		else
-			bottom_options.setNavigationIcon(R.drawable.down_action);
-		bottom_options.setOnMenuItemClickListener(this);
-		
-		bottom_options.setNavigationOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				if(!Constants.ACTION_AT_TOP){
-					bottom_options.setNavigationIcon(R.drawable.down_action);
-					top_toolbar.setVisibility(View.VISIBLE);
-					toolbar.setVisibility(View.GONE);
-					setSupportActionBar(top_toolbar);					
-				}else{
-					bottom_options.setNavigationIcon(R.drawable.up_action);
-					top_toolbar.setVisibility(View.GONE);
-					toolbar.setVisibility(View.VISIBLE);
-					setSupportActionBar(toolbar);
-				}
-			
-				//updating the menu....
-				invalidateOptionsMenu();
-				action_bar = getSupportActionBar();
-				action_bar.setHomeButtonEnabled(true);
-				//action_bar.setDisplayHomeAsUpEnabled(true);	
-				action_bar.setHomeAsUpIndicator(R.drawable.drawer_menu);
-				
-				//saving the changes....
-				Constants.ACTION_AT_TOP = !Constants.ACTION_AT_TOP;
-				prefs_editor.putBoolean("ACTION_AT_TOP", Constants.ACTION_AT_TOP);
-				prefs_editor.commit();
-			}
-		});
+		init_action_bar();
 		
 	}
+	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -428,4 +395,48 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		prefs_editor.putInt("ICON", Constants.FOLDER_ICON);
 		prefs_editor.commit();
 	}
+	
+	//this function placement of action bar either at top
+	//or bottom....
+	private void init_action_bar() {
+		// TODO Auto-generated method stub
+		//inflating menu in standalone mode for bottom options....
+				bottom_options.inflateMenu(R.menu.bottom_options_actionbar_hd);
+				if(!Constants.ACTION_AT_TOP)
+					bottom_options.setNavigationIcon(R.drawable.up_action);
+				else
+					bottom_options.setNavigationIcon(R.drawable.down_action);
+				bottom_options.setOnMenuItemClickListener(this);
+				
+				bottom_options.setNavigationOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						// TODO Auto-generated method stub
+						if(!Constants.ACTION_AT_TOP){
+							bottom_options.setNavigationIcon(R.drawable.down_action);
+							top_toolbar.setVisibility(View.VISIBLE);
+							toolbar.setVisibility(View.GONE);
+							setSupportActionBar(top_toolbar);					
+						}else{
+							bottom_options.setNavigationIcon(R.drawable.up_action);
+							top_toolbar.setVisibility(View.GONE);
+							toolbar.setVisibility(View.VISIBLE);
+							setSupportActionBar(toolbar);
+						}
+					
+						//updating the menu....
+						invalidateOptionsMenu();
+						action_bar = getSupportActionBar();
+						action_bar.setHomeButtonEnabled(true);
+						//action_bar.setDisplayHomeAsUpEnabled(true);	
+						action_bar.setHomeAsUpIndicator(R.drawable.drawer_menu);
+						
+						//saving the changes....
+						Constants.ACTION_AT_TOP = !Constants.ACTION_AT_TOP;
+						prefs_editor.putBoolean("ACTION_AT_TOP", Constants.ACTION_AT_TOP);
+						prefs_editor.commit();
+					}
+				});
+	}
+
 }

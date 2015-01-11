@@ -27,6 +27,8 @@ import org.anurag.file.quest.AppManager;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
 
+import com.twotoasters.jazzylistview.JazzyHelper;
+
 import android.content.pm.ApplicationInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -60,6 +62,7 @@ public class AppStore extends Fragment{
 		super.onViewCreated(view, savedInstanceState);
 		ls = (ListView) view.findViewById(R.id.list_view_hd);
 		ls.setSelector(R.drawable.list_selector_hd);
+		setAnim(ls);
 		if(load == null){
 			load = new LoadApps();
 			load.execute();
@@ -75,6 +78,17 @@ public class AppStore extends Fragment{
 				new AppBackup(getActivity(), Constants.size.x*8/9, infos);
 			}
 		});
+	}
+	
+	/**
+	 * this function sets transition effect for list view.... 
+	 * @param list2
+	 */
+	private void setAnim(ListView list2) {
+		// TODO Auto-generated method stub
+		JazzyHelper help = new JazzyHelper(getActivity(), null);
+		help.setTransitionEffect(Constants.LIST_ANIM);
+		list2.setOnScrollListener(help);
 	}
 	
 	/**

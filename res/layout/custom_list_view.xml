@@ -368,9 +368,9 @@
 </LinearLayout>
         
   <ListView 
-        style="?android:attr/absListViewStyle"
         android:visibility="gone"
-        android:divider="@color/transparent"
+        android:dividerHeight="0.03dp"
+        android:divider="@color/white_grey"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/customListView"

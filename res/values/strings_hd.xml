@@ -31,4 +31,5 @@
     <string name="action_simplegrid">Simple Grid</string>
     <string name="action_grid">Detailed Grid</string>
     <string name="action_cloud">Cloud Networks</string>
+    <string name="action_sort">Sort</string>
 </resources>

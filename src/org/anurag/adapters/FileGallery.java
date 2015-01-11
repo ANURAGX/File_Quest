@@ -30,6 +30,8 @@ import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.Utils;
 
+import com.twotoasters.jazzylistview.JazzyHelper;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -100,6 +102,8 @@ public class FileGallery extends Fragment implements OnClickListener{
 						Constants.size.x*8/9);
 			}
 		});
+		
+		setAnim(ls);
 	}
 
 	@Override
@@ -206,5 +210,16 @@ public class FileGallery extends Fragment implements OnClickListener{
 			e.printStackTrace();
 		}
 		ls.setAdapter(adpt);
+	}
+	
+	/**
+	 * this function sets transition effect for list view.... 
+	 * @param list2
+	 */
+	private void setAnim(ListView list2) {
+		// TODO Auto-generated method stub
+		JazzyHelper help = new JazzyHelper(getActivity(), null);
+		help.setTransitionEffect(Constants.LIST_ANIM);
+		list2.setOnScrollListener(help);
 	}
 }
