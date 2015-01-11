@@ -66,7 +66,7 @@
 	   	       				android:clickable="false"
     	       				android:layout_width="wrap_content"
     	       				android:layout_height="wrap_content"
-    	       				android:background="@drawable/ic_launcher_fav_gallery"/>
+    	       				android:background="@drawable/favorite_fav_hd"/>
     					<TextView 
     					    android:id="@+id/fSize"
     	       				android:layout_width="wrap_content"
@@ -104,7 +104,7 @@
 	   	       				android:clickable="false"
     	       				android:layout_width="wrap_content"
     	       				android:layout_height="wrap_content"
-    	       				android:background="@drawable/ic_launcher_music_file_gallery"/>
+    	       				android:background="@drawable/music_fav_hd"/>
     					<TextView 
     					    android:id="@+id/mSize"
     	       				android:layout_width="wrap_content"
@@ -151,7 +151,7 @@
     	        			android:clickable="false"
     	        			android:layout_width="wrap_content"
     	        			android:layout_height="wrap_content"
-    	        			android:background="@drawable/ic_launcher_app_file_gallery"/>
+    	        			android:background="@drawable/app_fav_hd"/>
     					<TextView 
     					    android:id="@+id/aSize"
     	        			android:layout_width="wrap_content"
@@ -189,7 +189,7 @@
     	        				android:clickable="false"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
-    	        				android:background="@drawable/ic_launcher_images_file_gallery"/>
+    	        				android:background="@drawable/photo_fav_hd"/>
     	    
     	   					<TextView 
     	   					    android:id="@+id/pSize"
@@ -231,7 +231,7 @@
     	        		android:clickable="false"
     	        		android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
-    	        		android:background="@drawable/ic_launcher_video_file_gallery"/>
+    	        		android:background="@drawable/video_fav_hd"/>
     	    
     	  			<TextView 
     	  		    	android:id="@+id/vSize"
@@ -266,7 +266,7 @@
    	      					android:clickable="false"
    	     					android:layout_width="wrap_content"
    	      					android:layout_height="wrap_content"
-   	        				android:background="@drawable/ic_launcher_docs_file_gallery"/>
+   	        				android:background="@drawable/docs_fav_hd"/>
    	    				<TextView 
    	    			    	android:id="@+id/dSize"
    	        				android:layout_width="wrap_content"
@@ -307,7 +307,7 @@
     	        		android:clickable="false"
     	        		android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
-    	        		android:background="@drawable/ic_launcher_zip_file_gallery"/>
+    	        		android:background="@drawable/archive_fav_hd"/>
     	    
     	    		<TextView 
     	    			android:id="@+id/zSize"
@@ -343,7 +343,7 @@
     	        		android:clickable="false"
     	        		android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
-    	        		android:background="@drawable/ic_launcher_misce_file_gallery"/>
+    	        		android:background="@drawable/unknown_fav_hd"/>
     	    
     	    		<TextView 
     	        		android:id="@+id/misFiles"

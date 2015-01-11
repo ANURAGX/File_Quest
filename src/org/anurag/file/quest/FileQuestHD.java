@@ -39,6 +39,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -157,6 +158,9 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		case R.id.action_exit:
 			FileQuestHD.this.finish();
 			return true;
+			
+		case android.R.id.home:
+			drawer.openDrawer(Gravity.START);
 		}
 		return super.onOptionsItemSelected(item);
 	}
