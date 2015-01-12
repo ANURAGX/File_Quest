@@ -32,4 +32,8 @@
     <string name="action_grid">Detailed Grid</string>
     <string name="action_cloud">Cloud Networks</string>
     <string name="action_sort">Sort</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_copy">Copy</string>
+    <string name="action_cut">Cut</string>
+    <string name="action_paste">Paste</string>
 </resources>

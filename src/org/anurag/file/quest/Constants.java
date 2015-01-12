@@ -116,4 +116,5 @@ public class Constants {
 	public static boolean ACTION_AT_TOP;
 	
 	public static int LIST_ANIM;
+	public static int LIST_TYPE;
 }

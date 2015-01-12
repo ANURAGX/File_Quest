@@ -90,7 +90,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		Constants.COLOR_STYLE = prefs.getInt("COLOR_STYLE", 0xFF5161BC);
 		Constants.LIST_ANIM = prefs.getInt("LIST_ANIM", 3);
 		Constants.ACTION_AT_TOP = prefs.getBoolean("ACTION_AT_TOP", false);
-		
+		Constants.LIST_TYPE = prefs.getInt("LIST_TYPE", 1);
 		Constants.db = new ItemDB(FileQuestHD.this);
 		Constants.size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(Constants.size);
@@ -150,6 +150,28 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	}
 	
 	
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		/*switch(Constants.LIST_TYPE){
+		case 0:
+				menu.findItem(R.id.simple_ls).setChecked(true);
+				return true;
+		case 1:
+				menu.findItem(R.id.detail_ls).setChecked(true);
+				return true;
+				
+		case 2:
+				menu.findItem(R.id.simple_grid).setChecked(true);
+				return true;
+				
+		case 3:
+				menu.findItem(R.id.detail_grid).setChecked(true);
+		}*/
+		return super.onPrepareOptionsMenu(menu);
+	}
+
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
