@@ -29,7 +29,6 @@
     
       
     	 <LinearLayout 
-    	     android:visibility="gone"
     	     android:orientation="horizontal"
     	     android:layout_width="50dp"
     	     android:layout_height="50dp">
@@ -37,12 +36,11 @@
     	    <!-- LAYOUT FOR LOCK.... --> 
     	
             <ImageView 
-                android:visibility="gone"
-                android:background="@drawable/button_click"
+                android:background="@drawable/list_selector_hd"
                 android:id="@+id/lockimg"
                	android:clickable="false"
             	android:layout_gravity="center_vertical"
-            	android:src="@drawable/ic_launcher_unlocked"
+            	android:src="@drawable/unlocked_icon_hd"
             	android:layout_width="25dp"
             	android:layout_height="25dp"/>
            
@@ -50,26 +48,17 @@
          	
     	 	<!-- LAYOUT FOR FAVORITE ITEM... -->
     	 	<ImageView 
-    	 	    android:visibility="gone"
-               	android:background="@drawable/button_click"
+    	 	    android:background="@drawable/list_selector_hd"
                	android:id="@+id/favimg"
                	android:clickable="false"
             	android:layout_gravity="center_vertical"
-            	android:src="@drawable/ic_launcher_not_favorite"
+            	android:src="@drawable/non_fav_icon_hd"
             	android:layout_width="25dp"
             	android:layout_height="25dp"/>
            
          	
     	 </LinearLayout>
     
-    	<CheckBox 
-            android:focusable="false"
-            android:focusableInTouchMode="false"    
-            android:button="@drawable/btn_check_holo_dark"    
-            android:layout_gravity="center_vertical"
-            android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
            
        
         
@@ -79,7 +68,6 @@
             <ImageView 
             android:layout_gravity="center_vertical"
             android:id="@+id/fileIcon"
-            android:paddingTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
            
@@ -97,8 +85,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:textStyle="bold"
-                android:singleLine="true"
-                android:ellipsize="end"
                 android:text="@string/anurag"/>
             <LinearLayout 
                 android:paddingLeft="10dp"

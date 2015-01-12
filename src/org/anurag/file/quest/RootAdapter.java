@@ -89,7 +89,7 @@ public class RootAdapter extends BaseAdapter{
 		TextView fName;
 		TextView fType;
 		TextView fSize;
-		CheckBox box;
+		//CheckBox box;
 		ImageView lockimg;
 		ImageView favimg;
 	}
@@ -106,7 +106,7 @@ public class RootAdapter extends BaseAdapter{
 			h.fName = (TextView)convertView.findViewById(R.id.fileName);
 			h.fType = (TextView)convertView.findViewById(R.id.fileType);
 			h.fSize = (TextView)convertView.findViewById(R.id.fileSize);
-			h.box = (CheckBox)convertView.findViewById(R.id.checkbox);
+		//	h.box = (CheckBox)convertView.findViewById(R.id.checkbox);
 		
 			h.lockimg = (ImageView)convertView.findViewById(R.id.lockimg);
 			h.favimg = (ImageView)convertView.findViewById(R.id.favimg);
@@ -117,9 +117,9 @@ public class RootAdapter extends BaseAdapter{
 		
 		
 		if(item.isLocked())
-			h.lockimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_locked));
+			h.lockimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.lock_icon_hd));
 		else
-			h.lockimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_unlocked));
+			h.lockimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.unlocked_icon_hd));
 		
 		h.lockimg.setId(pos);
 		h.lockimg.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +137,7 @@ public class RootAdapter extends BaseAdapter{
 					}
 					else{
 						list.get(img.getId()).setLockStatus(true);
-						img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_locked));
+						img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.lock_icon_hd));
 						Constants.db.insertNodeToLock(list.get(img.getId()).getFile().getAbsolutePath());
 						Toast.makeText(ctx, R.string.itemlocked, Toast.LENGTH_SHORT).show();
 					}					
@@ -150,9 +150,9 @@ public class RootAdapter extends BaseAdapter{
 		});
 		
 		if(item.isFavItem())
-			h.favimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_favorite));
+			h.favimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.fav_icon_hd));
 		else
-			h.favimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_not_favorite));
+			h.favimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.non_fav_icon_hd));
 		
 		h.favimg.setId(pos);
 		h.favimg.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +161,7 @@ public class RootAdapter extends BaseAdapter{
 				// TODO Auto-generated method stub
 				ImageView im = (ImageView)v;
 				if(list.get(im.getId()).isFavItem()){
-					im.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_not_favorite));
+					im.setImageDrawable(ctx.getResources().getDrawable(R.drawable.non_fav_icon_hd));
 					list.get(im.getId()).setFavStatus(false);
 					Constants.db.deleteFavItem(list.get(im.getId()).getPath());
 					Toast.makeText(ctx, R.string.favremoved, Toast.LENGTH_SHORT).show();
@@ -169,7 +169,7 @@ public class RootAdapter extends BaseAdapter{
 					Utils.buildFavItems(list.get(im.getId()) , false);
 					Utils.fav_Update_Needed = true;
 				}else{
-					im.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_favorite));
+					im.setImageDrawable(ctx.getResources().getDrawable(R.drawable.fav_icon_hd));
 					list.get(im.getId()).setFavStatus(true);
 					Constants.db.insertNodeToFav(list.get(im.getId()).getPath());
 					Toast.makeText(ctx, R.string.favadded, Toast.LENGTH_SHORT).show();
@@ -180,34 +180,6 @@ public class RootAdapter extends BaseAdapter{
 			}
 		});
 		
-		MULTI_FILES.add(null);
-		if(MULTI_SELECT){
-			h.box.setVisibility(View.VISIBLE);
-			h.box.setId(pos);
-			h.box.setOnClickListener(new View.OnClickListener(){
-				@Override
-				public void onClick(View v){
-					// TODO Auto-generated method stub
-					CheckBox ch = (CheckBox) v;
-					int id = ch.getId();
-					if(thumbselection[id]){
-						ch.setChecked(false);
-						thumbselection[id] = false;
-						MULTI_FILES.remove(id);
-						MULTI_FILES.add(id,null);
-						C--;	
-					}else{
-						ch.setChecked(true);
-						thumbselection[id] = true;
-						MULTI_FILES.remove(id);
-						MULTI_FILES.add(id, list.get(id));
-						C++;
-					}
-				}
-			});
-			h.box.setChecked(thumbselection[pos]);
-		}else
-			h.box.setVisibility(View.GONE);
 		
 		h.fName.setText(item.getName());
 		h.fType.setText(item.getType());

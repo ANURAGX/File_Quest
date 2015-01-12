@@ -4535,13 +4535,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								//lock the file...
 								
 								//this condition is true when user has not up the password and tried to lock the item...
-								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_locked));
+								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.lock_icon_hd));
 								Constants.db.insertNodeToLock(sdItemsList.get(id).getFile().getAbsolutePath());
 								sdItemsList.get(id).setLockStatus(true);
 								Toast.makeText(mContext, R.string.itemlocked, Toast.LENGTH_SHORT).show();
 							}else if(sdItemsList.get(id).isLocked()){
 								//after password verification was successful,unlock the file...
-								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_unlocked));
+								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.unlocked_icon_hd));
 								Constants.db.deleteLockedNode(sdItemsList.get(id).getFile().getPath());
 								sdItemsList.get(id).setLockStatus(false);
 								Toast.makeText(mContext, R.string.itemunlocked, Toast.LENGTH_SHORT).show();
@@ -4552,13 +4552,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								//lock the file...
 								
 								//this condition is true when user has not up the password and tried to lock the item...
-								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_locked));
+								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.lock_icon_hd));
 								Constants.db.insertNodeToLock(rootItemList.get(id).getFile().getAbsolutePath());
 								rootItemList.get(id).setLockStatus(true);
 								Toast.makeText(mContext, R.string.itemlocked, Toast.LENGTH_SHORT).show();
 							}else if(rootItemList.get(id).isLocked()){
 								//after password verification was successful,unlock the file...
-								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_unlocked));
+								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.unlocked_icon_hd));
 								Constants.db.deleteLockedNode(rootItemList.get(id).getFile().getPath());
 								rootItemList.get(id).setLockStatus(false);
 								Toast.makeText(mContext, R.string.itemunlocked, Toast.LENGTH_SHORT).show();
@@ -4569,13 +4569,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 								//lock the file...
 								
 								//this condition is true when user has not up the password and tried to lock the item...
-								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_locked));
+								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.lock_icon_hd));
 								Constants.db.insertNodeToLock(getCategoryList(fPos).get(Constants.lockID).getFile().getAbsolutePath());
 								getCategoryList(fPos).get(Constants.lockID).setLockStatus(true);
 								Toast.makeText(mContext, R.string.itemlocked, Toast.LENGTH_SHORT).show();
 							}else if(getCategoryList(fPos).get(Constants.lockID).isLocked()){
 								//after password verification was successful,unlock the file...
-								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_unlocked));
+								Constants.lock.setImageDrawable(getResources().getDrawable(R.drawable.unlocked_icon_hd));
 								Constants.db.deleteLockedNode(getCategoryList(fPos).get(Constants.lockID).getFile().getPath());
 								getCategoryList(fPos).get(Constants.lockID).setLockStatus(false);
 								Toast.makeText(mContext, R.string.itemunlocked, Toast.LENGTH_SHORT).show();

@@ -29,8 +29,7 @@ import org.anurag.file.quest.R;
 import org.anurag.file.quest.SDAdapter;
 import org.anurag.file.quest.SDManager;
 
-import com.twotoasters.jazzylistview.JazzyHelper;
-
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,6 +40,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.twotoasters.jazzylistview.JazzyHelper;
+
 
 public class SdCardPanel extends Fragment{
 	
@@ -48,6 +49,8 @@ public class SdCardPanel extends Fragment{
 	private ArrayList<Item> adapter_list;
 	private static LoadList load;
 	private static SDManager manager;
+	
+	public static int[] ITEMS;
 	
 	public SdCardPanel() {
 		// TODO Auto-generated constructor stub
@@ -91,6 +94,17 @@ public class SdCardPanel extends Fragment{
 				}
 			}
 		});
+		
+		list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				getActivity().sendBroadcast(new Intent("inflate_long_click_menu"));
+				return true;
+			}
+		});
+		
 	}
 		
 	/**

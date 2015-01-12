@@ -26,7 +26,10 @@ import org.anurag.adapters.RootPanel;
 import org.anurag.adapters.SdCardPanel;
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Point;
@@ -145,7 +148,10 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		MenuInflater inf = getMenuInflater();
-		inf.inflate(R.menu.main_actionbar_menu, menu);
+		if(!Constants.LONG_CLICK)
+			inf.inflate(R.menu.main_actionbar_menu, menu);
+		else
+			inf.inflate(R.menu.long_clk_menu_hd, menu);
 		return true;
 	}
 	
@@ -200,6 +206,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		}
 		Prm prm = new Prm(FileQuestHD.this, null, true);
 		prm.run360Ad(FileQuestHD.this, 0, false, null);
+		register_receiver();
 	}
 	
 	/**
@@ -240,6 +247,13 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			drawer.closeDrawers();
 			return;
 		}
+		
+		if(Constants.LONG_CLICK){
+			Constants.LONG_CLICK = false;
+			invalidateOptionsMenu();
+			return;
+		}
+		
 		int panel = pager.getCurrentItem();
 		if(panel == 0){
 			if(FileGallery.isGalleryOpened())
@@ -427,42 +441,72 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	private void init_action_bar() {
 		// TODO Auto-generated method stub
 		//inflating menu in standalone mode for bottom options....
-				bottom_options.inflateMenu(R.menu.bottom_options_actionbar_hd);
-				if(!Constants.ACTION_AT_TOP)
-					bottom_options.setNavigationIcon(R.drawable.up_action);
-				else
-					bottom_options.setNavigationIcon(R.drawable.down_action);
-				bottom_options.setOnMenuItemClickListener(this);
-				
-				bottom_options.setNavigationOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View arg0) {
-						// TODO Auto-generated method stub
-						if(!Constants.ACTION_AT_TOP){
-							bottom_options.setNavigationIcon(R.drawable.down_action);
-							top_toolbar.setVisibility(View.VISIBLE);
-							toolbar.setVisibility(View.GONE);
-							setSupportActionBar(top_toolbar);					
-						}else{
-							bottom_options.setNavigationIcon(R.drawable.up_action);
-							top_toolbar.setVisibility(View.GONE);
-							toolbar.setVisibility(View.VISIBLE);
-							setSupportActionBar(toolbar);
-						}
-					
-						//updating the menu....
-						invalidateOptionsMenu();
-						action_bar = getSupportActionBar();
-						action_bar.setHomeButtonEnabled(true);
-						//action_bar.setDisplayHomeAsUpEnabled(true);	
-						action_bar.setHomeAsUpIndicator(R.drawable.drawer_menu);
-						
-						//saving the changes....
-						Constants.ACTION_AT_TOP = !Constants.ACTION_AT_TOP;
-						prefs_editor.putBoolean("ACTION_AT_TOP", Constants.ACTION_AT_TOP);
-						prefs_editor.commit();
+		bottom_options.inflateMenu(R.menu.bottom_options_actionbar_hd);
+			if(!Constants.ACTION_AT_TOP)
+				bottom_options.setNavigationIcon(R.drawable.up_action);
+			else
+				bottom_options.setNavigationIcon(R.drawable.down_action);
+		bottom_options.setOnMenuItemClickListener(this);
+			
+		bottom_options.setNavigationOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+					if(!Constants.ACTION_AT_TOP){
+						bottom_options.setNavigationIcon(R.drawable.down_action);
+						top_toolbar.setVisibility(View.VISIBLE);
+						toolbar.setVisibility(View.GONE);
+						setSupportActionBar(top_toolbar);					
+					}else{
+						bottom_options.setNavigationIcon(R.drawable.up_action);
+						top_toolbar.setVisibility(View.GONE);
+						toolbar.setVisibility(View.VISIBLE);
+						setSupportActionBar(toolbar);
 					}
-				});
+				
+					//updating the menu....
+					invalidateOptionsMenu();
+					action_bar = getSupportActionBar();
+					action_bar.setHomeButtonEnabled(true);
+					//action_bar.setDisplayHomeAsUpEnabled(true);	
+					action_bar.setHomeAsUpIndicator(R.drawable.drawer_menu);
+					
+					//saving the changes....
+					Constants.ACTION_AT_TOP = !Constants.ACTION_AT_TOP;
+					prefs_editor.putBoolean("ACTION_AT_TOP", Constants.ACTION_AT_TOP);
+					prefs_editor.commit();
+				}
+			});
 	}
-
+	
+	/**
+	 * 
+	 * @author anurag
+	 *
+	 */
+	private class Receive_Broadcasts extends BroadcastReceiver{
+		
+		public Receive_Broadcasts() {
+			// TODO Auto-generated constructor stub
+		}
+		
+		@Override
+		public void onReceive(Context arg0, Intent arg1) {
+			// TODO Auto-generated method stub
+			String action = arg1.getAction();
+			if(action.equalsIgnoreCase("inflate_long_click_menu")){
+				Constants.LONG_CLICK = true;
+				invalidateOptionsMenu();
+			}
+		}
+	}
+	
+	/**
+	 * this function is called in onResume function....
+	 */
+	private void register_receiver(){
+		Receive_Broadcasts broadcasts = new Receive_Broadcasts();
+		IntentFilter filter = new IntentFilter("inflate_long_click_menu");
+		this.registerReceiver(broadcasts, filter);
+	}
 }

@@ -117,4 +117,5 @@ public class Constants {
 	
 	public static int LIST_ANIM;
 	public static int LIST_TYPE;
+	public static boolean LONG_CLICK;
 }
