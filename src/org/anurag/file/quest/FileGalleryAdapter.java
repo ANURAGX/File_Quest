@@ -20,6 +20,7 @@
 package org.anurag.file.quest;
 
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -36,7 +37,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -101,24 +102,21 @@ public class FileGalleryAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int pos, View convertView, ViewGroup arg2) {
+	public View getView(int pos, View convertView2, ViewGroup arg2) {
 		// TODO Auto-generated method stub
 		item = list.get(keys.get("" + pos));
 		Holder h = new Holder();
-		if (convertView == null) {
-			h = new Holder();
-			convertView = inflater.inflate(R.layout.row_list_1, arg2, false);
-			h.icon = (ImageView) convertView.findViewById(R.id.fileIcon);
-			h.fName = (TextView) convertView.findViewById(R.id.fileName);
-			h.fType = (TextView) convertView.findViewById(R.id.fileType);
-			h.fSize = (TextView) convertView.findViewById(R.id.fileSize);
-		//	h.box = (CheckBox) convertView.findViewById(R.id.checkbox);
-
-			h.lockimg = (ImageView) convertView.findViewById(R.id.lockimg);
-			h.favimg = (ImageView) convertView.findViewById(R.id.favimg);
-			convertView.setTag(h);
-		} else
-			h = (Holder) convertView.getTag();
+		View convertView = null;
+		h = new Holder();
+		convertView = inflater.inflate(R.layout.row_list_1, arg2, false);
+		h.icon = (ImageView) convertView.findViewById(R.id.fileIcon);
+		h.fName = (TextView) convertView.findViewById(R.id.fileName);
+		h.fType = (TextView) convertView.findViewById(R.id.fileType);
+		h.fSize = (TextView) convertView.findViewById(R.id.fileSize);
+		h.lockimg = (ImageView) convertView.findViewById(R.id.lockimg);
+		h.favimg = (ImageView) convertView.findViewById(R.id.favimg);
+		convertView.setTag(h);
+		
 
 		if (item.isLocked())
 			h.lockimg.setImageDrawable(ctx.getResources().getDrawable(
@@ -217,14 +215,14 @@ public class FileGalleryAdapter extends BaseAdapter {
 			if (image != null)
 				h.icon.setImageBitmap(image);
 			else{
-				h.icon.setTag(item.getPath());
+				//h.icon.setTag(item.getPath());
 				new LoadImage(h.icon, item).execute();
 			}
 			
 		} else if (item.getType().equals("App")) {
 			Drawable draw = apkList.get(item.getPath());
 			if (draw == null){
-				h.icon.setTag(item.getPath());
+				//h.icon.setTag(item.getPath());
 				new LoadApkIcon(h.icon, item).execute();
 			}	
 			else{
@@ -236,7 +234,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 			if (music != null)
 				h.icon.setImageBitmap(music);
 			else{
-				h.icon.setTag(item.getPath());
+				//h.icon.setTag(item.getPath());
 				new LoadAlbumArt(h.icon, item).execute();
 			}			
 		}
@@ -264,7 +262,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			if(map != null && iView.getTag().equals(itm.getPath()))
+			if(map != null)
 				iView.setImageBitmap(map);
 			map = null;
 		}
@@ -339,7 +337,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			if(dra != null && iView.getTag().equals(itm.getPath()))
+			if(dra != null)
 				iView.setImageDrawable(dra);
 		}
 
@@ -386,7 +384,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 		@Override
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
-			if (map != null && iView.getTag().equals(itm.getPath()))
+			if (map != null)
 				iView.setImageBitmap(map);
 		}
 

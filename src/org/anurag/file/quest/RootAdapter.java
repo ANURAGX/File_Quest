@@ -20,6 +20,7 @@
 package org.anurag.file.quest;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import android.content.Context;
@@ -35,7 +36,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -95,26 +95,20 @@ public class RootAdapter extends BaseAdapter{
 	}
 	
 	@Override
-	public View getView(int pos, View convertView, ViewGroup arg2) {
+	public View getView(int pos, View convertView2, ViewGroup arg2) {
 		// TODO Auto-generated method stub
 		item = list.get(pos);
 		h = new Holder();
-		if(convertView == null){
-			h = new Holder();
-			convertView = inflater.inflate(R.layout.row_list_1, arg2 , false);
-			h.icon = (ImageView)convertView.findViewById(R.id.fileIcon);
-			h.fName = (TextView)convertView.findViewById(R.id.fileName);
-			h.fType = (TextView)convertView.findViewById(R.id.fileType);
-			h.fSize = (TextView)convertView.findViewById(R.id.fileSize);
-		//	h.box = (CheckBox)convertView.findViewById(R.id.checkbox);
-		
-			h.lockimg = (ImageView)convertView.findViewById(R.id.lockimg);
-			h.favimg = (ImageView)convertView.findViewById(R.id.favimg);
-			convertView.setTag(h);
-		}
-		else
-			h = (Holder)convertView.getTag();
-		
+		View convertView = null;
+		h = new Holder();
+		convertView = inflater.inflate(R.layout.row_list_1, arg2 , false);
+		h.icon = (ImageView)convertView.findViewById(R.id.fileIcon);
+		h.fName = (TextView)convertView.findViewById(R.id.fileName);
+		h.fType = (TextView)convertView.findViewById(R.id.fileType);
+		h.fSize = (TextView)convertView.findViewById(R.id.fileSize);
+		h.lockimg = (ImageView)convertView.findViewById(R.id.lockimg);
+		h.favimg = (ImageView)convertView.findViewById(R.id.favimg);
+		convertView.setTag(h);
 		
 		if(item.isLocked())
 			h.lockimg.setImageDrawable(ctx.getResources().getDrawable(R.drawable.lock_icon_hd));
