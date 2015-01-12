@@ -247,14 +247,29 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			drawer.closeDrawers();
 			return;
 		}
+
+		int panel = pager.getCurrentItem();
 		
 		if(Constants.LONG_CLICK){
 			Constants.LONG_CLICK = false;
+			
+			if(panel == 2){
+				SdCardPanel.clear_selected_items();
+				SdCardPanel.ITEMS = null;
+			}else if(panel == 1){
+				RootPanel.clear_selected_items();
+				RootPanel.ITEMS = null;
+			}else if(panel == 3){
+				AppStore.clear_selected_items();
+				AppStore.ITEMS = null;
+			}else if(panel == 0){
+				FileGallery.clear_selected_items();
+				FileGallery.ITEMS = null;
+			}
 			invalidateOptionsMenu();
 			return;
 		}
 		
-		int panel = pager.getCurrentItem();
 		if(panel == 0){
 			if(FileGallery.isGalleryOpened())
 				FileGallery.collapseGallery();
@@ -494,8 +509,20 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		public void onReceive(Context arg0, Intent arg1) {
 			// TODO Auto-generated method stub
 			String action = arg1.getAction();
+			int panel = pager.getCurrentItem();
 			if(action.equalsIgnoreCase("inflate_long_click_menu")){
 				Constants.LONG_CLICK = true;
+				invalidateOptionsMenu();
+			}else if(action.equalsIgnoreCase("inflate_normal_menu")){
+				Constants.LONG_CLICK = false;
+				if(panel == 2)
+					SdCardPanel.ITEMS = null;
+				else if(panel == 1)
+					RootPanel.ITEMS = null;
+				else if(panel == 3)
+					AppStore.ITEMS = null;
+				else if(panel == 0)
+					FileGallery.ITEMS = null;
 				invalidateOptionsMenu();
 			}
 		}
@@ -507,6 +534,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	private void register_receiver(){
 		Receive_Broadcasts broadcasts = new Receive_Broadcasts();
 		IntentFilter filter = new IntentFilter("inflate_long_click_menu");
+		filter.addAction("inflate_normal_menu");
 		this.registerReceiver(broadcasts, filter);
 	}
 }

@@ -31,6 +31,8 @@ import org.anurag.file.quest.RootManager;
 
 import com.twotoasters.jazzylistview.JazzyHelper;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -48,10 +50,12 @@ public class RootPanel extends Fragment{
 	private ArrayList<Item> adapter_list;
 	private static LoadList load;
 	private static RootManager manager;
+	public static int ITEMS[];
+	private int counter;
 	
 	public RootPanel() {
 		// TODO Auto-generated constructor stub
-		
+		counter = 0;
 	}
 	
 	@Override
@@ -79,6 +83,23 @@ public class RootPanel extends Fragment{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
 				// TODO Auto-generated method stub
+				
+				if(Constants.LONG_CLICK){
+					
+					if(ITEMS[position] != 1){
+						ITEMS[position] = 1;
+						arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
+						++counter;
+					}else if(ITEMS[position] == 1){
+						ITEMS[position] = 0;
+						arg1.setBackgroundColor(Color.WHITE);
+						if(--counter == 0)
+							getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
+					}
+					
+					return;					
+				}
+				
 				Item item = adapter_list.get(position);
 				if(item.isDirectory()){
 					//selecting a folder....
@@ -92,6 +113,35 @@ public class RootPanel extends Fragment{
 				}
 			}
 		});		
+		
+		list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				boolean sendBroadcast = false;
+				if(ITEMS == null){
+					ITEMS = new int[adapter_list.size()];
+					sendBroadcast = true;
+				}
+				
+				if(ITEMS[arg2] != 1){
+					arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
+					ITEMS[arg2] = 1;
+					++counter;
+				}else if(ITEMS[arg2] == 1){
+					ITEMS[arg2] = 0;
+					arg1.setBackgroundColor(Color.WHITE);
+					if(--counter == 0)
+						getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
+				}
+				
+				if(sendBroadcast)
+					getActivity().sendBroadcast(new Intent("inflate_long_click_menu"));
+				return true;
+			}
+		});
+		
 	}
 		
 	/**
@@ -192,6 +242,15 @@ public class RootPanel extends Fragment{
 			e.printStackTrace();
 		}
 		load.execute();
+	}
+	/**
+	 * this function clears the selected items via long click from lits view....
+	 */
+	public static void clear_selected_items(){
+		int len = ITEMS.length;
+		for(int i = 0 ; i < len ; ++i)
+			if(ITEMS[i] == 1)
+				list.getChildAt(i).setBackgroundColor(Color.WHITE);
 	}
 
 }

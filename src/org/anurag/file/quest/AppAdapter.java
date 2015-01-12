@@ -23,6 +23,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
+import org.anurag.adapters.AppStore;
+import org.anurag.adapters.SdCardPanel;
+
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -35,7 +39,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -77,52 +80,20 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 		TextView FileName;
 		TextView FileType;
 		TextView FileSize;
-		CheckBox box;
+		//CheckBox box;
 	}
 	@Override
-	public View getView( final int position , View convertView, ViewGroup container){
+	public View getView( final int position , View convertView2, ViewGroup container){
 		info = nList.get(position);
-		if( convertView == null){
-			convertView = inflater.inflate(R.layout.row_list_app, container , false);
-			nHolder = new FileHolder();
-			nHolder.FileIcon = (ImageView)convertView.findViewById(R.id.fileIcon);
-			nHolder.FileName = (TextView)convertView.findViewById(R.id.fileName);
-			nHolder.FileSize = (TextView)convertView.findViewById(R.id.fileSize);
-			nHolder.FileType = (TextView)convertView.findViewById(R.id.fileType);
-			nHolder.box = (CheckBox)convertView.findViewById(R.id.checkbox);
-			convertView.setTag(nHolder); 
-		}else
-			nHolder = (FileHolder)convertView.getTag(); 
-		
-		MULTI_APPS.add(null);
-		if(MULTI_SELECT){
-			nHolder.box.setVisibility(View.VISIBLE);
-			nHolder.box.setId(position);
-			nHolder.box.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					CheckBox ch = (CheckBox) v;
-					int id = ch.getId();
-					if(thumbSelection[id]){
-						ch.setChecked(false);
-						thumbSelection[id] = false;
-						MULTI_APPS.remove(id);
-						MULTI_APPS.add(id,null);
-						C--;
-					}else{
-						C++;
-						MULTI_APPS.remove(id);
-						MULTI_APPS.add(id,nList.get(id));
-						ch.setChecked(true);
-						thumbSelection[id] = true;
-					}
-				}
-			});
-			nHolder.box.setChecked(thumbSelection[position]);
-		}else
-			nHolder.box.setVisibility(View.GONE);
-		
+		View convertView = null;
+		convertView = inflater.inflate(R.layout.row_list_app, container , false);
+		nHolder = new FileHolder();
+		nHolder.FileIcon = (ImageView)convertView.findViewById(R.id.fileIcon);
+		nHolder.FileName = (TextView)convertView.findViewById(R.id.fileName);
+		nHolder.FileSize = (TextView)convertView.findViewById(R.id.fileSize);
+		nHolder.FileType = (TextView)convertView.findViewById(R.id.fileType);
+		convertView.setTag(nHolder); 
+				
 		Drawable img = ls.get(nPManager.getApplicationLabel(info));
 		if(img == null){
 			new AppLoader(nHolder.FileIcon , nHolder.FileName , nHolder.FileSize , nHolder.FileType).execute(info);
@@ -133,6 +104,11 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 			nHolder.FileSize.setText(sizes.get(nm));
 			nHolder.FileType.setText(backups.get(nm));
 		}
+		
+		//true when multi select is on....
+		if(Constants.LONG_CLICK){
+			if(AppStore.ITEMS[position] == 1)
+				convertView.setBackgroundColor(mContext.getResources().getColor(R.color.white_grey));				}
 		return convertView;
 	}
 		

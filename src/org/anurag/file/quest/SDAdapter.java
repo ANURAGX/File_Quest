@@ -20,8 +20,10 @@
 package org.anurag.file.quest;
 
 import java.util.ArrayList;
-
 import java.util.HashMap;
+
+import org.anurag.adapters.SdCardPanel;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -198,6 +200,13 @@ public class SDAdapter extends BaseAdapter{
 				new LoadAlbumArt(h.icon , item).execute();
 			
 		}
+		
+		//true when multi select is on....
+		if(Constants.LONG_CLICK){
+			if(SdCardPanel.ITEMS[pos] == 1)
+				convertView.setBackgroundColor(ctx.getResources().getColor(R.color.white_grey));
+		}
+		
 		return convertView;
 	}	
 	

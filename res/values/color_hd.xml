@@ -39,6 +39,6 @@
     <color name="semi_blue40">#993F9FE0</color>
     <color name="semi_violet40">#995161BC</color>
     <color name="semi_white15">#26FFFFFF</color>
-    <color name="black">#26FFFFFF</color>
+    <color name="black">#00FFFFFF</color>
     <color name="white_grey">#cfcece</color>
 </resources>

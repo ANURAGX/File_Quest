@@ -20,9 +20,11 @@
 package org.anurag.file.quest;
 
 import java.io.File;
-
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.anurag.adapters.FileGallery;
+import org.anurag.adapters.SdCardPanel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -37,7 +39,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -238,6 +239,13 @@ public class FileGalleryAdapter extends BaseAdapter {
 				new LoadAlbumArt(h.icon, item).execute();
 			}			
 		}
+		
+		//true when multi select is on....
+		if(Constants.LONG_CLICK){
+			if(FileGallery.ITEMS[pos] == 1)
+				convertView.setBackgroundColor(ctx.getResources().getColor(R.color.white_grey));
+		}
+		
 		return convertView;
 	}
 

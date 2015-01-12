@@ -29,7 +29,9 @@ import org.anurag.file.quest.R;
 
 import com.twotoasters.jazzylistview.JazzyHelper;
 
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -45,8 +47,13 @@ public class AppStore extends Fragment{
 	private ArrayList<ApplicationInfo> apps;
 	private static LoadApps load;
 	private AppManager manager;
+	
+	private int counter;
+	public static int[] ITEMS;
+	
 	public AppStore() {
 		// TODO Auto-generated constructor stub
+		counter = 0;
 	}
 
 	@Override
@@ -70,14 +77,62 @@ public class AppStore extends Fragment{
 		
 		ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
 				// TODO Auto-generated method stub
+				
+				if(Constants.LONG_CLICK){
+					
+					if(ITEMS[position] != 1){
+						ITEMS[position] = 1;
+						arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
+						++counter;
+					}else if(ITEMS[position] == 1){
+						ITEMS[position] = 0;
+						arg1.setBackgroundColor(Color.WHITE);
+						if(--counter == 0)
+							getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
+					}
+					
+					return;					
+				}
+				
+				
 				ArrayList<ApplicationInfo> infos = new ArrayList<ApplicationInfo>();
-				infos.add(apps.get(arg2));
+				infos.add(apps.get(position));
 				new AppBackup(getActivity(), Constants.size.x*8/9, infos);
 			}
 		});
+		
+		ls.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				boolean sendBroadcast = false;
+				if(ITEMS == null){
+					ITEMS = new int[apps.size()];
+					sendBroadcast = true;
+				}
+				
+				if(ITEMS[arg2] != 1){
+					arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
+					ITEMS[arg2] = 1;
+					++counter;
+				}else if(ITEMS[arg2] == 1){
+					ITEMS[arg2] = 0;
+					arg1.setBackgroundColor(Color.WHITE);
+					if(--counter == 0)
+						getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
+				}
+				
+				if(sendBroadcast)
+					getActivity().sendBroadcast(new Intent("inflate_long_click_menu"));
+				return true;
+			}
+		});
+		
+		
 	}
 	
 	/**
@@ -139,4 +194,13 @@ public class AppStore extends Fragment{
 		load.execute();
 	}
 	
+	/**
+	 * this function clears the selected items via long click from lits view....
+	 */
+	public static void clear_selected_items(){
+		int len = ITEMS.length;
+		for(int i = 0 ; i < len ; ++i)
+			if(ITEMS[i] == 1)
+				ls.getChildAt(i).setBackgroundColor(Color.WHITE);
+	}
 }

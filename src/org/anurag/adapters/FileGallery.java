@@ -32,6 +32,8 @@ import org.anurag.file.quest.Utils;
 
 import com.twotoasters.jazzylistview.JazzyHelper;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -51,8 +53,13 @@ public class FileGallery extends Fragment implements OnClickListener{
 	private static String current_Tile;
 	
 	private static FileGalleryAdapter adpt;
+	
+	private int counter;
+	public static int[] ITEMS;
+	
 	public FileGallery() {
 		// TODO Auto-generated constructor stub
+		counter = 0;
 	}
 
 	@Override
@@ -94,14 +101,61 @@ public class FileGallery extends Fragment implements OnClickListener{
 		
 		ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
 				// TODO Auto-generated method stub
-				Item itm = (Item) ls.getAdapter().getItem(arg2);
+				
+				if(Constants.LONG_CLICK){
+					
+					if(ITEMS[position] != 1){
+						ITEMS[position] = 1;
+						arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
+						++counter;
+					}else if(ITEMS[position] == 1){
+						ITEMS[position] = 0;
+						arg1.setBackgroundColor(Color.WHITE);
+						if(--counter == 0)
+							getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
+					}
+					
+					return;					
+				}
+				
+				
+				Item itm = (Item) ls.getAdapter().getItem(position);
 				new OpenFileDialog(getActivity(), Uri.parse(itm.getPath()),
 						Constants.size.x*8/9);
 			}
 		});
+		
+		ls.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				boolean sendBroadcast = false;
+				if(ITEMS == null){
+					ITEMS = new int[ls.getAdapter().getCount()];
+					sendBroadcast = true;
+				}
+				
+				if(ITEMS[arg2] != 1){
+					arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
+					ITEMS[arg2] = 1;
+					++counter;
+				}else if(ITEMS[arg2] == 1){
+					ITEMS[arg2] = 0;
+					arg1.setBackgroundColor(Color.WHITE);
+					if(--counter == 0)
+						getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
+				}
+				
+				if(sendBroadcast)
+					getActivity().sendBroadcast(new Intent("inflate_long_click_menu"));
+				return true;
+			}
+		});
+		
 		
 		setAnim(ls);
 	}
@@ -222,4 +276,15 @@ public class FileGallery extends Fragment implements OnClickListener{
 		help.setTransitionEffect(Constants.LIST_ANIM);
 		list2.setOnScrollListener(help);
 	}
+
+	/**
+	 * this function clears the selected items via long click from lits view....
+	 */
+	public static void clear_selected_items(){
+		int len = ITEMS.length;
+		for(int i = 0 ; i < len ; ++i)
+			if(ITEMS[i] == 1)
+				ls.getChildAt(i).setBackgroundColor(Color.WHITE);
+	}
+
 }
