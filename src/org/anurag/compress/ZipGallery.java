@@ -393,7 +393,7 @@ public class ZipGallery {
 	 */
 	private void addToFileGallery(File f){
 		String path = f.getPath();
-		Item itm = new Item(f, Utils.arcImg, Utils.arcType, "");
+		Item itm = new Item(f, Constants.ARCHIVE, Utils.arcType, "");
 		Utils.zipKey.put(""+Utils.zipCounter++, path);
 		Utils.zip.put(path, itm);
 		Utils.zipsize+=f.length();

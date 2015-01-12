@@ -58,7 +58,7 @@ public class ErrorDialogs {
 		iTv = (TextView)dialog.findViewById(R.id.popupTitle);
 		
 		if(data.equals("FlashableZips")||data.equalsIgnoreCase("FlashableZip")){
-			iView.setBackgroundResource(R.drawable.ic_launcher_zip_it);
+			iView.setBackgroundResource(R.drawable.archive_icon_hd);
 			b = (Button)dialog.findViewById(R.id.popupCancel);
 			b.setVisibility(View.GONE);
 			iTv.setText("  "+mContext.getString(R.string.ziprecovery));

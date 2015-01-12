@@ -183,7 +183,7 @@ public class GetHomeDirectory {
 				if(list[position].isDirectory())
 					item.Icon.setBackgroundResource(Constants.FOLDERS[Constants.FOLDER_ICON]);
 				else
-					item.Icon.setBackgroundResource(R.drawable.ic_launcher_unknown);
+					item.Icon.setBackgroundResource(R.drawable.unknown_icon_hd);
 				item.Name.setText(list[position].getName());
 			return convertView;
 		}

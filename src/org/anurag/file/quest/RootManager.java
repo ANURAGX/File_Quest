@@ -254,82 +254,82 @@ public class RootManager {
 		if(name.endsWith(".zip")){
 			
 			type=ctx.getString(R.string.zip);
-			return res.getDrawable(R.drawable.ic_launcher_zip_it);
+			return Constants.ARCHIVE;
 			
 		}else if(name.endsWith(".7z")){
 			
 			type=ctx.getString(R.string.zip7);
-			return res.getDrawable(R.drawable.ic_launcher_7zip);
+			return Constants.ARCHIVE;
 			
 		}else if(name.endsWith(".rar")){
 			
 			type=ctx.getString(R.string.rar);
-			return res.getDrawable(R.drawable.ic_launcher_rar);
+			return Constants.ARCHIVE;
 			
 		}else if(name.endsWith(".tar")||name.endsWith(".tar.gz")||name.endsWith(".tar.bz2")){
 			
 			type=ctx.getString(R.string.tar);
-			return res.getDrawable(R.drawable.ic_launcher_7zip);
+			return Constants.ARCHIVE;
 			
 		}
 		else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
 				||name.endsWith(".amr")){
 			
 			type=ctx.getString(R.string.music);
-			return res.getDrawable(R.drawable.ic_launcher_music);
+			return Constants.MUSIC;
 			
 		}
 		else if(name.endsWith(".apk")){
 			
 			type=ctx.getString(R.string.application);
-			return res.getDrawable(R.drawable.ic_launcher_apk);
+			return Constants.APP;
 			
 		}else if(name.endsWith(".sh")||name.endsWith(".prop")||name.endsWith("init")
 				||name.endsWith(".default")||name.endsWith(".rc")){
 			
 			type=ctx.getString(R.string.script);
-			return res.getDrawable(R.drawable.ic_launcher_sh);
+			return Constants.SCRIPT;
 			
 		}else if(name.endsWith(".pdf")){
 			
 			type=ctx.getString(R.string.pdf);
-			return res.getDrawable(R.drawable.ic_launcher_adobe);
+			return Constants.PDF;
 			
 		}else if(name.endsWith(".htm")||name.endsWith(".html")||name.endsWith(".mhtml")){
 			
 			type=ctx.getString(R.string.web);
-			return res.getDrawable(R.drawable.ic_launcher_web_pages);
+			return Constants.WEB;
 			
 		}else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
 				||name.endsWith(".mkv")){
 			
 			type=ctx.getString(R.string.vids);
-			return res.getDrawable(R.drawable.ic_launcher_video);
+			return Constants.VIDEO;
 			
 		}	
 		else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
 				||name.endsWith(".png")){
 			
 			type=ctx.getString(R.string.image);
-			return res.getDrawable(R.drawable.ic_launcher_images);
+			return Constants.IMAGE;
 			
 		}else if(name.endsWith(".txt")||name.endsWith(".log")||name.endsWith(".ini")){
 			
 			type=ctx.getString(R.string.text);
-			return res.getDrawable(R.drawable.ic_launcher_text);
+			return Constants.DOCS;
 			
 		}
 		else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
 				||name.endsWith(".pptx")||name.endsWith(".csv")){
 			
 			type=ctx.getString(R.string.docs);
-			return res.getDrawable(R.drawable.ic_launcher_ppt);
+			return Constants.DOCS;
 			
 		}
 		else{
 			
 			type=ctx.getString(R.string.unknown);
-			return res.getDrawable(R.drawable.ic_launcher_unknown);
+			return Constants.UNKNOWN;
 			
 		}		
 	}

@@ -31,7 +31,7 @@
    
         <Button            
             android:clickable="false"
-            android:background="@drawable/ic_launcher_zip_it"
+            android:background="@drawable/archive_icon_hd"
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"/>
    

@@ -486,7 +486,7 @@ public class MultipleCopyDialog {
 			String path = f.getPath();
 			
 			if(name.endsWith(".zip")){
-				Item itm = new Item(f, Utils.arcImg, Utils.arcType, "");
+				Item itm = new Item(f, Constants.ARCHIVE, Utils.arcType, "");
 				Utils.zipKey.put(""+Utils.zipCounter++, path);
 				Utils.zip.put(path, itm);
 				Utils.zipsize+=f.length();
@@ -494,7 +494,7 @@ public class MultipleCopyDialog {
 				
 				
 			}else if(name.endsWith(".7z")){
-				Item itm = new Item(f, Utils.res.getDrawable(R.drawable.ic_launcher_7zip),
+				Item itm = new Item(f, Constants.ARCHIVE,
 						Utils.arcType, "");
 				
 				Utils.zipKey.put(""+Utils.zipCounter++, path);
@@ -504,7 +504,7 @@ public class MultipleCopyDialog {
 				
 				
 			}else if(name.endsWith(".rar")){
-				Item itm = new Item(f, Utils.res.getDrawable(R.drawable.ic_launcher_rar),
+				Item itm = new Item(f, Constants.ARCHIVE,
 						Utils.arcType, "");
 				Utils.zipKey.put(""+Utils.zipCounter++, path);
 				Utils.zip.put(path, itm);
@@ -514,7 +514,7 @@ public class MultipleCopyDialog {
 				
 			}else if(name.endsWith(".tar")||name.endsWith(".tar.gz")||
 					name.endsWith(".TAT.BZ2")){
-				Item itm = new Item(f, Utils.res.getDrawable(R.drawable.ic_launcher_7zip),
+				Item itm = new Item(f, Constants.ARCHIVE,
 						Utils.arcType, "");
 				
 				Utils.zipKey.put(""+Utils.zipCounter++, path);
@@ -526,7 +526,7 @@ public class MultipleCopyDialog {
 			}
 			else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
 					||name.endsWith(".amr")){
-				Item itm = new Item(f, Utils.musicImg, Utils.musicType, "");
+				Item itm = new Item(f, Constants.MUSIC, Utils.musicType, "");
 				
 				Utils.musicKey.put(""+Utils.musCounter++, path);
 				Utils.music.put(path, itm);
@@ -535,7 +535,7 @@ public class MultipleCopyDialog {
 				
 			}
 			else if(name.endsWith(".apk")){
-				Item itm = new Item(f, Utils.apkImg, Utils.apkType, "");
+				Item itm = new Item(f, Constants.APP, Utils.apkType, "");
 				
 				Utils.appKey.put(""+Utils.appCounter++, path);
 				Utils.apps.put(path, itm);
@@ -545,7 +545,7 @@ public class MultipleCopyDialog {
 				
 			}else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
 					||name.endsWith(".mkv")){
-				Item itm = new Item(f, Utils.vidImg, Utils.vidType, "");
+				Item itm = new Item(f, Constants.VIDEO, Utils.vidType, "");
 				
 				Utils.videoKey.put(""+Utils.vidCounter++, path);
 				Utils.vids.put(path, itm);
@@ -556,7 +556,7 @@ public class MultipleCopyDialog {
 			}	
 			else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
 					||name.endsWith(".png")){
-				Item itm = new Item(f, Utils.imageImg, Utils.imageType, "");
+				Item itm = new Item(f, Constants.IMAGE, Utils.imageType, "");
 				
 				Utils.imgKey.put(""+Utils.imgCounter++, path);
 				Utils.img.put(path, itm);
@@ -565,8 +565,7 @@ public class MultipleCopyDialog {
 				
 				
 			}else if(name.endsWith(".pdf")){
-				Item itm = new Item(f,Utils.res.getDrawable(R.drawable.ic_launcher_adobe),
-									Utils.res.getString(R.string.pdf),"");
+				Item itm = new Item(f,Constants.PDF,Utils.res.getString(R.string.pdf),"");
 				
 				Utils.docKey.put(""+Utils.docCounter++, path);
 				Utils.doc.put(path, itm);
@@ -575,7 +574,7 @@ public class MultipleCopyDialog {
 				
 			}else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
 					||name.endsWith(".pptx")||name.endsWith(".csv")){
-				Item itm = new Item(f , Utils.docImg , Utils.docType , "");
+				Item itm = new Item(f , Constants.DOCS , Utils.docType , "");
 				
 				Utils.docKey.put(""+Utils.docCounter++, path);
 				Utils.doc.put(path, itm);
@@ -584,8 +583,7 @@ public class MultipleCopyDialog {
 				
 			
 			}else if(name.endsWith(".txt")||name.endsWith(".log")||name.endsWith(".ini")){
-				Item itm = new Item(f,Utils.res.getDrawable(R.drawable.ic_launcher_text),
-									Utils.res.getString(R.string.text), "");
+				Item itm = new Item(f, Constants.DOCS,	Utils.res.getString(R.string.text), "");
 				
 				Utils.docKey.put(""+Utils.docCounter++, path);
 				Utils.doc.put(path, itm);
@@ -594,7 +592,7 @@ public class MultipleCopyDialog {
 					
 			}
 			else{
-				Item itm = new Item(f,Utils.misImg, Utils.misType, "");
+				Item itm = new Item(f, Constants.UNKNOWN, Utils.misType, "");
 				
 				Utils.misKey.put(""+Utils.misCounter++, path);
 				Utils.mis.put(path, itm);

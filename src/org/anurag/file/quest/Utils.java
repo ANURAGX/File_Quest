@@ -97,14 +97,14 @@ public class Utils {
 	public static int folderCount,fileCount;
 	
 	//file types icons....
-	public static Drawable musicImg;
-	public static Drawable imageImg;
-	public static Drawable vidImg;
-	public static Drawable docImg;
-	public static Drawable arcImg;
-	public static Drawable misImg;
-	public static Drawable apkImg;
-	static Drawable folderImg;
+	//public static Drawable musicImg;
+	//public static Drawable imageImg;
+	//public static Drawable vidImg;
+	//public static Drawable docImg;
+    //public static Drawable arcImg;
+	//public static Drawable misImg;
+	//public static Drawable apkImg;
+	//static Drawable folderImg;
 	
 	//file type strings...
 	public static String musicType;
@@ -370,14 +370,8 @@ public class Utils {
 		missize=0;
 		imgsize=0;
 		
-		musicImg = res.getDrawable(R.drawable.ic_launcher_music);
-		imageImg = res.getDrawable(R.drawable.ic_launcher_images);
-		apkImg = res.getDrawable(R.drawable.ic_launcher_apk);
-		vidImg = res.getDrawable(R.drawable.ic_launcher_video);
-		docImg = res.getDrawable(R.drawable.ic_launcher_ppt);
-		misImg = res.getDrawable(R.drawable.ic_launcher_unknown);
-		arcImg = res.getDrawable(R.drawable.ic_launcher_zip_it);
-		folderImg = res.getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]);
+		
+		
 		
 		folderCnt = res.getString(R.string.totalfolder);
 		fileCnt = res.getString(R.string.totalfiles);
@@ -523,7 +517,7 @@ public class Utils {
 						}catch(Exception e){
 							it = ctx.getString(R.string.rootd);
 						}
-						Item itm = new Item(file, folderImg, folderType, it);
+						Item itm = new Item(file, Constants.FOLDER_IMAGE , folderType, it);
 						fav.put(file.getPath(), itm);
 						favKey.put(""+favCounter++, file.getPath());
 					}else
@@ -595,7 +589,7 @@ public class Utils {
 		String path = f.getPath();
 		
 		if(name.endsWith(".zip")){
-			Item itm = new Item(f, arcImg, arcType, "");
+			Item itm = new Item(f, Constants.ARCHIVE, arcType, "");
 			if(forFavItem){
 				favKey.put(""+favCounter++, path);
 				fav.put(path, itm);
@@ -613,7 +607,7 @@ public class Utils {
 				handler.sendEmptyMessage(6);
 			
 		}else if(name.endsWith(".7z")){
-			Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_7zip),
+			Item itm = new Item(f, Constants.ARCHIVE,
 					arcType, "");
 			
 			if(forFavItem){
@@ -633,7 +627,7 @@ public class Utils {
 				handler.sendEmptyMessage(6);
 			
 		}else if(name.endsWith(".rar")){
-			Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_rar),
+			Item itm = new Item(f, Constants.ARCHIVE,
 					arcType, "");
 			
 			if(forFavItem){
@@ -654,8 +648,7 @@ public class Utils {
 			
 		}else if(name.endsWith(".tar")||name.endsWith(".tar.gz")||
 				name.endsWith(".TAT.BZ2")){
-			Item itm = new Item(f, res.getDrawable(R.drawable.ic_launcher_7zip),
-					arcType, "");
+			Item itm = new Item(f, Constants.ARCHIVE,arcType, "");
 			
 			if(forFavItem){
 				favKey.put(""+favCounter++, path);
@@ -676,7 +669,7 @@ public class Utils {
 		}
 		else if(name.endsWith(".mp3")||name.endsWith(".ogg")||name.endsWith(".m4a")||name.endsWith(".wav")
 				||name.endsWith(".amr")){
-			Item itm = new Item(f, musicImg, musicType, "");
+			Item itm = new Item(f, Constants.MUSIC, musicType, "");
 			
 			if(forFavItem){
 				favKey.put(""+favCounter++, path);
@@ -695,7 +688,7 @@ public class Utils {
 				handler.sendEmptyMessage(1);
 		}
 		else if(name.endsWith(".apk")){
-			Item itm = new Item(f, apkImg, apkType, "");
+			Item itm = new Item(f, Constants.APP, apkType, "");
 			
 			if(forFavItem){
 				favKey.put(""+favCounter++, path);
@@ -715,7 +708,7 @@ public class Utils {
 			
 		}else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
 				||name.endsWith(".mkv")){
-			Item itm = new Item(f, vidImg, vidType, "");
+			Item itm = new Item(f,Constants.VIDEO, vidType, "");
 			
 			if(forFavItem){
 				favKey.put(""+favCounter++, path);
@@ -736,7 +729,7 @@ public class Utils {
 		}	
 		else if(name.endsWith(".bmp")||name.endsWith(".gif")||name.endsWith(".jpeg")||name.endsWith(".jpg")
 				||name.endsWith(".png")){
-			Item itm = new Item(f, imageImg, imageType, "");
+			Item itm = new Item(f, Constants.IMAGE, imageType, "");
 			
 			if(forFavItem){
 				favKey.put(""+favCounter++, path);
@@ -755,8 +748,7 @@ public class Utils {
 				handler.sendEmptyMessage(3);
 			
 		}else if(name.endsWith(".pdf")){
-			Item itm = new Item(f,res.getDrawable(R.drawable.ic_launcher_adobe),
-								ctx.getString(R.string.pdf),"");
+			Item itm = new Item(f,Constants.PDF,ctx.getString(R.string.pdf),"");
 			
 			if(forFavItem){
 				favKey.put(""+favCounter++, path);
@@ -775,7 +767,7 @@ public class Utils {
 				handler.sendEmptyMessage(5);
 		}else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
 				||name.endsWith(".pptx")||name.endsWith(".csv")){
-			Item itm = new Item(f , docImg , docType , "");
+			Item itm = new Item(f , Constants.DOCS , docType , "");
 			
 			if(forFavItem){
 				favKey.put(""+favCounter++, path);
@@ -794,7 +786,7 @@ public class Utils {
 				handler.sendEmptyMessage(5);
 		
 		}else if(name.endsWith(".txt")||name.endsWith(".log")||name.endsWith(".ini")){
-			Item itm = new Item(f,res.getDrawable(R.drawable.ic_launcher_text),
+			Item itm = new Item(f, Constants.DOCS,
 								ctx.getString(R.string.text), "");
 			if(forFavItem){
 				favKey.put(""+favCounter++, path);
@@ -813,7 +805,7 @@ public class Utils {
 				handler.sendEmptyMessage(5);			
 		}
 		else{
-			Item itm = new Item(f,misImg, misType, "");
+			Item itm = new Item(f, Constants.UNKNOWN , misType, "");
 			
 			if(forFavItem){
 				favKey.put(""+favCounter++, path);

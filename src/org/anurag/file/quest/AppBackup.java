@@ -327,7 +327,7 @@ public class AppBackup {
 	 */
 	private void addToFileGallery(File f){
 		String path = f.getPath();
-		Item itm = new Item(f, Utils.apkImg, Utils.apkType, "");
+		Item itm = new Item(f, Constants.APP, Utils.apkType, "");
 		Utils.appKey.put(""+Utils.appCounter++, path);
 		Utils.apps.put(path, itm);
 		Utils.apksize+=f.length();

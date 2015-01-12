@@ -97,7 +97,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		Constants.db = new ItemDB(FileQuestHD.this);
 		Constants.size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(Constants.size);
-		
+		Constants.BUILD_ICONS(FileQuestHD.this);
 		prefs_editor = prefs.edit();
 		
 		//building the theme style as per the color selected by user.... 

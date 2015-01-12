@@ -2198,13 +2198,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			ActionItem item = new ActionItem();
 
 			if (element == null || !elementInFocus) {
-				item = new ActionItem(-1, getString(R.string.multiforgallery),getResources().getDrawable(R.drawable.ic_launcher_images));
+				//item = new ActionItem(-1, getString(R.string.multiforgallery),getResources().getDrawable(R.drawable.ic_launcher_images));
 				action.addActionItem(item);
 			} else {
 				if (FileGalleryAdapter.MULTI_SELECT)
 					item = new ActionItem(0,getString(R.string.multiforgallery), getResources().getDrawable(R.drawable.ic_launcher_multi_select));
 				else
-					item = new ActionItem(0,getString(R.string.multiforgallery), getResources().getDrawable(R.drawable.ic_launcher_images));
+					//item = new ActionItem(0,getString(R.string.multiforgallery), getResources().getDrawable(R.drawable.ic_launcher_images));
 				action.addActionItem(item);
 			}
 
@@ -2223,7 +2223,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			if (MULTI_SELECT_APPS)
 				item = new ActionItem(3, getString(R.string.multiforapp),getResources().getDrawable(R.drawable.ic_launcher_multi_select));
 			else
-				item = new ActionItem(3, getString(R.string.multiforapp),getResources().getDrawable(R.drawable.ic_launcher_apk));
+				//item = new ActionItem(3, getString(R.string.multiforapp),getResources().getDrawable(R.drawable.ic_launcher_apk));
 			action.addActionItem(item);
 			action.show(v);
 			action.setOnActionItemClickListener(new OnActionItemClickListener() {
@@ -2506,7 +2506,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 										Toast.makeText(mContext,getString(R.string.item_created), Toast.LENGTH_LONG).show();
 										
 										//adding item to unknown file list....
-										Item it = new Item(chFile, Utils.misImg, Utils.misType, "");
+										Item it = new Item(chFile, Constants.UNKNOWN, Utils.misType, "");
 										Utils.mis.put(it.getPath(), it);
 										Utils.misKey.put(""+Utils.misCounter++, it.getPath());
 										Utils.update_Needed = true;
@@ -2529,7 +2529,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 									Toast.makeText(mContext,getString(R.string.item_created), Toast.LENGTH_LONG).show();
 									
 									//adding item to unknown file list....
-									Item it = new Item(chFile, Utils.misImg, Utils.misType, "");
+									Item it = new Item(chFile, Constants.UNKNOWN, Utils.misType, "");
 									Utils.mis.put(it.getPath(), it);
 									Utils.misKey.put(""+Utils.misCounter++, it.getPath());
 									Utils.update_Needed = true;
@@ -2783,25 +2783,25 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				ActionItem i = new ActionItem(7, getString(R.string.jmpfav),getResources().getDrawable(R.drawable.favorite_slider));
 				ac.addActionItem(i);
 				
-				i = new ActionItem(8, getString(R.string.jmpmusic),getResources().getDrawable(R.drawable.ic_launcher_music));
+				i = new ActionItem(8, getString(R.string.jmpmusic),Constants.MUSIC);
 				ac.addActionItem(i);
 
-				i = new ActionItem(9, getString(R.string.jmpapk),getResources().getDrawable(R.drawable.ic_launcher_apk));
+				//i = new ActionItem(9, getString(R.string.jmpapk),getResources().getDrawable(R.drawable.ic_launcher_apk));
 				ac.addActionItem(i);
 
-				i = new ActionItem(10, getString(R.string.jmpimg),getResources().getDrawable(R.drawable.ic_launcher_images));
+				//i = new ActionItem(10, getString(R.string.jmpimg),getResources().getDrawable(R.drawable.ic_launcher_images));
 				ac.addActionItem(i);
 				
-				i = new ActionItem(11, getString(R.string.jmpvids),getResources().getDrawable(R.drawable.ic_launcher_video));
+				//i = new ActionItem(11, getString(R.string.jmpvids),getResources().getDrawable(R.drawable.ic_launcher_video));
 				ac.addActionItem(i);
 				
-				i = new ActionItem(12, getString(R.string.jmpdocs),getResources().getDrawable(R.drawable.ic_launcher_ppt));
+				//i = new ActionItem(12, getString(R.string.jmpdocs),getResources().getDrawable(R.drawable.ic_launcher_ppt));
 				ac.addActionItem(i);
 
-				i = new ActionItem(13, getString(R.string.jmpzip),getResources().getDrawable(R.drawable.ic_launcher_zip_it));
+				//i = new ActionItem(13, getString(R.string.jmpzip),getResources().getDrawable(R.drawable.ic_launcher_zip_it));
 				ac.addActionItem(i);
 
-				i = new ActionItem(14, getString(R.string.jmpmisc),getResources().getDrawable(R.drawable.ic_launcher_rar));
+				//i = new ActionItem(14, getString(R.string.jmpmisc),getResources().getDrawable(R.drawable.ic_launcher_rar));
 				ac.addActionItem(i);
 				ac.setOnActionItemClickListener(this);
 				ac.show(v);
@@ -2816,14 +2816,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				ActionItem download = new ActionItem(1000,getString(R.string.jmpdown), getResources().getDrawable(R.drawable.ic_launcher_downloads));
 				ActionItem camera = new ActionItem(1100,getString(R.string.jmpcam), getResources().getDrawable(R.drawable.ic_launcher_camera));
 				ActionItem songs = new ActionItem(1200,getString(R.string.jmpmusfo), getResources().getDrawable(R.drawable.ic_launcher_music_folder));
-				ActionItem vid = new ActionItem(1201,getString(R.string.jmpvidfo), getResources().getDrawable(R.drawable.ic_launcher_video));
+			//	ActionItem vid = new ActionItem(1201,getString(R.string.jmpvidfo), getResources().getDrawable(R.drawable.ic_launcher_video));
 				ActionItem pro = new ActionItem(1300, getString(R.string.prop),getResources().getDrawable(R.drawable.ic_launcher_stats));
 				ActionItem apps = new ActionItem(1400,getString(R.string.selecteddefaultapp), getResources().getDrawable(R.drawable.ic_launcher_select_app));
 				actionJump.addActionItem(paste);
 				actionJump.addActionItem(download);
 				actionJump.addActionItem(camera);
 				actionJump.addActionItem(songs);
-				actionJump.addActionItem(vid);
+				//actionJump.addActionItem(vid);
 				actionJump.addActionItem(pro);
 				actionJump.addActionItem(apps);
 				actionJump.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
@@ -2957,7 +2957,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			QuickAction c = new QuickAction(mContext);
 			ActionItem i = new ActionItem(100,getString(R.string.deleteearlierbackup), getResources().getDrawable(R.drawable.ic_launcher_backupall));
 			c.addActionItem(i);
-			i = new ActionItem(200, getString(R.string.deletezipbackup),getResources().getDrawable(R.drawable.ic_launcher_zip_it));
+			//i = new ActionItem(200, getString(R.string.deletezipbackup),getResources().getDrawable(R.drawable.ic_launcher_zip_it));
 			c.addActionItem(i);
 			c.show(v);
 			c.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
@@ -3639,7 +3639,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			it.setIcon(in.applicationInfo.loadIcon(man));
 			it.setActionId(500);
 		} catch (NameNotFoundException e) {
-			it = new ActionItem(600, getString(R.string.nomusicapp),getResources().getDrawable(R.drawable.ic_launcher_music));
+			it = new ActionItem(600, getString(R.string.nomusicapp),Constants.MUSIC);
 			ed.putString("MUSIC", null);
 			ed.commit();
 		}
@@ -3655,7 +3655,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		} catch (NameNotFoundException e) {
 			ed.putString("IMAGE", null);
 			ed.commit();
-			it = new ActionItem(800, getString(R.string.noimgapp),getResources().getDrawable(R.drawable.ic_launcher_images));
+		//	it = new ActionItem(800, getString(R.string.noimgapp),getResources().getDrawable(R.drawable.ic_launcher_images));
 
 		}
 		q.addActionItem(it);
@@ -3670,7 +3670,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		} catch (NameNotFoundException e) {
 			ed.putString("VIDEO", null);
 			ed.commit();
-			it = new ActionItem(1000, getString(R.string.novidapp),getResources().getDrawable(R.drawable.ic_launcher_video));
+	//		it = new ActionItem(1000, getString(R.string.novidapp),getResources().getDrawable(R.drawable.ic_launcher_video));
 
 		}
 		q.addActionItem(it);
@@ -3685,7 +3685,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		} catch (NameNotFoundException e) {
 			ed.putString("ZIP", null);
 			ed.commit();
-			it = new ActionItem(1200, getString(R.string.nozipapp),getResources().getDrawable(R.drawable.ic_launcher_zip_it));
+		//	it = new ActionItem(1200, getString(R.string.nozipapp),getResources().getDrawable(R.drawable.ic_launcher_zip_it));
 
 		}
 		q.addActionItem(it);
@@ -3700,7 +3700,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		} catch (NameNotFoundException e) {
 			ed.putString("PDF", null);
 			ed.commit();
-			it = new ActionItem(1400, getString(R.string.nopdfapp),getResources().getDrawable(R.drawable.ic_launcher_adobe));
+		//	it = new ActionItem(1400, getString(R.string.nopdfapp),getResources().getDrawable(R.drawable.ic_launcher_adobe));
 
 		}
 		q.addActionItem(it);
@@ -3715,7 +3715,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		} catch (NameNotFoundException e) {
 			ed.putString("TEXT", null);
 			ed.commit();
-			it = new ActionItem(1600, getString(R.string.nodocapp),getResources().getDrawable(R.drawable.ic_launcher_text));
+	//		it = new ActionItem(1600, getString(R.string.nodocapp),getResources().getDrawable(R.drawable.ic_launcher_text));
 
 		}
 		q.addActionItem(it);
@@ -3730,7 +3730,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		} catch (NameNotFoundException e) {
 			ed.putString("RAR", null);
 			ed.commit();
-			it = new ActionItem(1800, getString(R.string.norarapp),getResources().getDrawable(R.drawable.ic_launcher_rar));
+		//	it = new ActionItem(1800, getString(R.string.norarapp),getResources().getDrawable(R.drawable.ic_launcher_rar));
 
 		}
 		q.addActionItem(it);

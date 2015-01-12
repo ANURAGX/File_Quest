@@ -193,22 +193,22 @@ public class OpenAs {
 				item = (ItemHolder)convertView.getTag();
 				
 			if(position == 0){
-					item.Icon.setBackgroundResource(R.drawable.ic_launcher_text);
+					item.Icon.setBackgroundResource(R.drawable.docs_icon_hd);
 					
 			}
 			else if(position == 1){
-				item.Icon.setBackgroundResource(R.drawable.ic_launcher_music);
+				item.Icon.setBackgroundResource(R.drawable.music_icon_hd);
 				
 			}else if(position == 2){
-				item.Icon.setBackgroundResource(R.drawable.ic_launcher_video);
+				item.Icon.setBackgroundResource(R.drawable.video_icon_hd);
 				
 			}else if(position == 3){
-				item.Icon.setBackgroundResource(R.drawable.ic_launcher_ppt);
+				item.Icon.setBackgroundResource(R.drawable.docs_icon_hd);
 				
 			}else if(position == 5)
-				item.Icon.setBackgroundResource(R.drawable.ic_launcher_zip_it);
+				item.Icon.setBackgroundResource(R.drawable.archive_icon_hd);
 			else if(position==4)
-				item.Icon.setBackgroundResource(R.drawable.ic_launcher_adobe);
+				item.Icon.setBackgroundResource(R.drawable.pdf_icon_hd);
 			item.Name.setText(list[position]);
 			
 			return convertView;

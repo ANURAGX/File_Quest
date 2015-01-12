@@ -90,7 +90,7 @@ public class DBoxAdapter extends BaseAdapter{
 		if(file.isDir())
 			hold.icon.setImageDrawable(ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
 		else
-			hold.icon.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_unknown));
+			hold.icon.setImageDrawable(Constants.UNKNOWN);
 		hold.fName.setText(file.getName());
 		hold.fSize.setText(file.getSize());
 		hold.fType.setText(file.getType());

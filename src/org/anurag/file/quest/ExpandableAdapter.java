@@ -33,13 +33,13 @@ public class ExpandableAdapter extends ArrayAdapter<String>{
 	LayoutInflater INFLATER;
 	int[] res = {
 				 R.drawable.favorite_slider,	
-				 R.drawable.ic_launcher_music,
-			     R.drawable.ic_launcher_apk,
-			     R.drawable.ic_launcher_images,
-			     R.drawable.ic_launcher_video,
-			     R.drawable.ic_launcher_ppt,
-			     R.drawable.ic_launcher_zip_it,
-			     R.drawable.ic_launcher_unknown};
+				 R.drawable.music_icon_hd,
+			     R.drawable.app_icon_hd,
+			     R.drawable.image_icon_hd,
+			     R.drawable.video_icon_hd,
+			     R.drawable.docs_icon_hd,
+			     R.drawable.archive_icon_hd,
+			     R.drawable.unknown_icon_hd};
 	String[] ls;
 	public ExpandableAdapter(Context context, int resource,int textViewResourceId, String[] objects) {
 		super(context, resource, textViewResourceId, objects);

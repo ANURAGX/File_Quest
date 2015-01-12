@@ -162,53 +162,53 @@ public class ZipObj {
 		
 		if(Name.endsWith("jpg")||Name.endsWith(".JPG")|| Name.endsWith(".png") || Name.endsWith(".PNG") || Name.endsWith(".gif") || Name.endsWith(".GIF")
 				|| Name.endsWith(".JPEG") || Name.endsWith(".jpeg") ||Name.endsWith(".bmp") ||Name.endsWith(".BMP")){
-			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_images);
+			this.icon = Constants.ARCHIVE;
 			return ctx.getString(R.string.image);
 		}	
 		else if(Name.endsWith(".zip") || Name.endsWith(".ZIP")){
-			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_zip_it);
+			this.icon = Constants.ARCHIVE;
 			return ctx.getString(R.string.zip);
 		}	
 		else if( Name.endsWith("mhtml")||Name.endsWith(".MHTML")||  Name.endsWith(".HTM") || Name.endsWith(".htm") 
 				||Name.endsWith(".html") || Name.endsWith(".HTML")){
-			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_web_pages);
+			this.icon = Constants.WEB;
 			return ctx.getString(R.string.web);
 		}			
 		else if(Name.endsWith(".tar") || Name.endsWith(".TAR") || Name.endsWith(".rar") 
 				|| Name.endsWith("RAR") || Name.endsWith(".7z") || Name.endsWith(".7Z")
 				||Name.endsWith(".gz") || Name.endsWith(".GZ")){
-			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_rar);
+			this.icon = Constants.ARCHIVE;
 			return ctx.getString(R.string.compr);
 		}	
 		else if(Name.endsWith(".apk") || Name.endsWith(".APK")){
-			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_apk);
+			this.icon = Constants.APP;
 			return ctx.getString(R.string.application);
 		}	
 		else if(Name.endsWith(".mp3") || Name.endsWith(".MP3") || Name.endsWith(".amr") || Name.endsWith(".AMR")
 				|| Name.endsWith(".ogg") || Name.endsWith(".OGG")||Name.endsWith(".m4a")||Name.endsWith(".M4A")){
-			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_music);
+			this.icon = Constants.MUSIC;
 			return ctx.getString(R.string.music);
 		}	
 		else if(Name.endsWith(".doc") ||Name.endsWith(".DOC")
 				|| Name.endsWith(".DOCX") || Name.endsWith(".docx") || Name.endsWith(".ppt") || Name.endsWith(".PPT")){
-			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_ppt);
+			this.icon = Constants.DOCS;
 			return ctx.getString(R.string.document);
 		}	
 		else if(Name.endsWith(".txt") || Name.endsWith(".TXT") || Name.endsWith(".inf") || Name.endsWith(".INF")){
-			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_text);
+			this.icon = Constants.DOCS;
 			return ctx.getString(R.string.text);
 		}	
 		else if(Name.endsWith(".mp4") || Name.endsWith(".MP4") || Name.endsWith(".avi") ||Name.endsWith(".AVI")
 				|| Name.endsWith(".FLV") || Name.endsWith(".flv") || Name.endsWith(".3GP") || Name.endsWith(".3gp")
 				||Name.endsWith(".mkv") || Name.endsWith(".MKV")){
-			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_video);
+			this.icon = Constants.VIDEO;
 			return ctx.getString(R.string.vids);		
 		}	
 		else if(Name.endsWith(".default")||Name.endsWith(".prop")||Name.endsWith(".rc")||Name.endsWith(".sh")||Name.endsWith("init")){
-			this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_sh);
+			this.icon = Constants.SCRIPT;
 			return ctx.getString(R.string.script);
 		}	
-		this.icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_unknown);
+		this.icon = Constants.UNKNOWN;
 		return ctx.getString(R.string.unknown);
 	}
 	

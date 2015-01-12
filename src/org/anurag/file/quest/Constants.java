@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import org.anurag.dropbox.DBoxUsers;
 
+import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
@@ -107,7 +108,19 @@ public class Constants {
 	
 	public static int SORT_TYPE;
 	public static boolean SHOW_HIDDEN_FOLDERS;
+	
 	public static Drawable FOLDER_IMAGE;
+	public static Drawable MUSIC;
+	public static Drawable APP;
+	public static Drawable IMAGE;
+	public static Drawable VIDEO;
+	public static Drawable DOCS;
+	public static Drawable PDF;
+	public static Drawable ARCHIVE;
+	public static Drawable UNKNOWN;
+	public static Drawable WEB;
+	public static Drawable SCRIPT;
+	
 	public static Point size;
 	
 	public static int PANEL_NO;
@@ -118,4 +131,23 @@ public class Constants {
 	public static int LIST_ANIM;
 	public static int LIST_TYPE;
 	public static boolean LONG_CLICK;
+	
+	/**
+	 * 
+	 * @param ctx
+	 */
+	public static void BUILD_ICONS(Context ctx){
+		FOLDER_IMAGE = ctx.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]);
+		MUSIC = ctx.getResources().getDrawable(R.drawable.music_icon_hd);
+		APP = ctx.getResources().getDrawable(R.drawable.app_icon_hd);
+		IMAGE = ctx.getResources().getDrawable(R.drawable.image_icon_hd);
+		VIDEO = ctx.getResources().getDrawable(R.drawable.video_icon_hd);
+		DOCS = ctx.getResources().getDrawable(R.drawable.docs_icon_hd);
+		PDF = ctx.getResources().getDrawable(R.drawable.pdf_icon_hd);
+		ARCHIVE = ctx.getResources().getDrawable(R.drawable.archive_icon_hd);
+		UNKNOWN = ctx.getResources().getDrawable(R.drawable.unknown_icon_hd);
+		WEB = ctx.getResources().getDrawable(R.drawable.web_icon_hd);
+		SCRIPT = ctx.getResources().getDrawable(R.drawable.script_icon_hd);
+	}
+	
 }
