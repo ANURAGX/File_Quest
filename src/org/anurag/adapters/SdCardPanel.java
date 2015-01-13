@@ -52,7 +52,7 @@ public class SdCardPanel extends Fragment{
 	private static SDManager manager;
 	private int counter;
 	public static int[] ITEMS;
-	
+	private static SDAdapter adapter;
 	public SdCardPanel() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
@@ -173,7 +173,8 @@ public class SdCardPanel extends Fragment{
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			list.setAdapter(new SDAdapter(getActivity(), adapter_list));
+			adapter = new SDAdapter(getActivity(), adapter_list);
+			list.setAdapter(adapter);
 			load = new LoadList();
 		}
 
@@ -247,9 +248,6 @@ public class SdCardPanel extends Fragment{
 	 * this function clears the selected items via long click from lits view....
 	 */
 	public static void clear_selected_items(){
-		int len = ITEMS.length;
-		for(int i = 0 ; i < len ; ++i)
-			if(ITEMS[i] == 1)
-				list.getChildAt(i).setBackgroundColor(Color.WHITE);
+		list.setAdapter(adapter);				
 	}
 }

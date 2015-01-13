@@ -281,10 +281,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 	 * this function clears the selected items via long click from lits view....
 	 */
 	public static void clear_selected_items(){
-		int len = ITEMS.length;
-		for(int i = 0 ; i < len ; ++i)
-			if(ITEMS[i] == 1)
-				ls.getChildAt(i).setBackgroundColor(Color.WHITE);
+		ls.setAdapter(adpt);
 	}
 
 }

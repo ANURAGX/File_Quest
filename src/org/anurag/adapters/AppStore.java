@@ -50,7 +50,7 @@ public class AppStore extends Fragment{
 	
 	private int counter;
 	public static int[] ITEMS;
-	
+	private static AppAdapter adapter;
 	public AppStore() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
@@ -165,7 +165,8 @@ public class AppStore extends Fragment{
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			ls.setAdapter(new AppAdapter(getActivity(), R.layout.row_list_2, apps));
+			adapter = new AppAdapter(getActivity(), R.layout.row_list_app, apps);
+			ls.setAdapter(adapter);
 			load = new LoadApps();
 		}
 
@@ -198,9 +199,6 @@ public class AppStore extends Fragment{
 	 * this function clears the selected items via long click from lits view....
 	 */
 	public static void clear_selected_items(){
-		int len = ITEMS.length;
-		for(int i = 0 ; i < len ; ++i)
-			if(ITEMS[i] == 1)
-				ls.getChildAt(i).setBackgroundColor(Color.WHITE);
+		ls.setAdapter(adapter);
 	}
 }

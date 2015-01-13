@@ -52,6 +52,7 @@ public class RootPanel extends Fragment{
 	private static RootManager manager;
 	public static int ITEMS[];
 	private int counter;
+	private static RootAdapter adapter;
 	
 	public RootPanel() {
 		// TODO Auto-generated constructor stub
@@ -174,7 +175,8 @@ public class RootPanel extends Fragment{
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			list.setAdapter(new RootAdapter(getActivity(), adapter_list));
+			adapter = new RootAdapter(getActivity(), adapter_list);
+			list.setAdapter(adapter);
 			load = new LoadList();
 		}
 
@@ -247,10 +249,7 @@ public class RootPanel extends Fragment{
 	 * this function clears the selected items via long click from lits view....
 	 */
 	public static void clear_selected_items(){
-		int len = ITEMS.length;
-		for(int i = 0 ; i < len ; ++i)
-			if(ITEMS[i] == 1)
-				list.getChildAt(i).setBackgroundColor(Color.WHITE);
+		list.setAdapter(adapter);
 	}
 
 }
