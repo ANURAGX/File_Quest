@@ -575,7 +575,18 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				
+				switch(position){
+				case 0:
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				case 4:
+					break;
+				}
 			}
 		});
 	}
@@ -625,17 +636,17 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			view.setTag(h);
 			switch(position){
 			case 0:
-				h.img.setBackgroundResource(R.drawable.file_quest_icon);
+				h.img.setBackgroundResource(R.drawable.graph_analysis_hd);
 				h.nam.setText("Graph Analysis");
 				break;
 				
 			case 1:
-				h.img.setBackgroundResource(R.drawable.file_quest_icon);
+				h.img.setBackgroundResource(R.drawable.file_cleaner_hd);
 				h.nam.setText("File Cleaner");
 				break;
 			
 			case 2:
-				h.img.setBackgroundResource(R.drawable.file_quest_icon);
+				h.img.setBackgroundResource(R.drawable.file_mover_hd);
 				h.nam.setText("File Mover");
 				break;
 				

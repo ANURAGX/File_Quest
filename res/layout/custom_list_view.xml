@@ -18,7 +18,7 @@
  -->
 
 <LinearLayout 
-        android:background="@android:color/white"
+        android:background="@color/transparent"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent" 
         android:orientation="vertical"
@@ -50,7 +50,7 @@
     	    			android:layout_margin="3dp"
     	    			android:clickable="true"
     	    			android:focusable="true"
-    	    			android:background="@drawable/list_selector_hd"
+    	    			android:background="@drawable/fav_selector_hd"
     	    			android:layout_gravity="center"
     	    			android:gravity="center"
     	    			android:layout_width="fill_parent"
@@ -58,6 +58,7 @@
     	    			android:layout_weight="1"
     	    			android:orientation="vertical"> 
     			  	    <TextView 
+    			  	        android:textColor="@android:color/white"
     	       				android:textStyle="bold"
     	       				android:layout_width="wrap_content"
     	       				android:layout_height="wrap_content"
@@ -68,11 +69,13 @@
     	       				android:layout_height="wrap_content"
     	       				android:background="@drawable/favorite_fav_hd"/>
     					<TextView 
+    					    android:textColor="@android:color/white"
     					    android:id="@+id/fSize"
     	       				android:layout_width="wrap_content"
     	       				android:layout_height="wrap_content"
     	       				android:text="@string/totalfolder"/>
     					<TextView 
+    					    android:textColor="@android:color/white"
     					    android:id="@+id/fFiles"
     	       				android:layout_width="wrap_content"
     	       				android:layout_height="wrap_content"
@@ -88,7 +91,7 @@
     	    			android:layout_margin="3dp"
     	    			android:clickable="true"
     	    			android:focusable="true"
-    	    			android:background="@drawable/list_selector_hd"
+    	    			android:background="@drawable/music_selector_hd"
     	    			android:layout_gravity="center"
     	    			android:gravity="center"
     	    			android:layout_width="fill_parent"
@@ -96,6 +99,7 @@
     	    			android:layout_weight="1"
     	    			android:orientation="vertical"> 
     			  	    <TextView 
+    			  	        android:textColor="@android:color/white"
     	       				android:textStyle="bold"
     	       				android:layout_width="wrap_content"
     	       				android:layout_height="wrap_content"
@@ -106,11 +110,13 @@
     	       				android:layout_height="wrap_content"
     	       				android:background="@drawable/music_fav_hd"/>
     					<TextView 
+    					    android:textColor="@android:color/white"
     					    android:id="@+id/mSize"
     	       				android:layout_width="wrap_content"
     	       				android:layout_height="wrap_content"
     	       				android:text="@string/zerosize"/>
     					<TextView 
+    					    android:textColor="@android:color/white"
     					    android:id="@+id/mFiles"
     	       				android:layout_width="wrap_content"
     	       				android:layout_height="wrap_content"
@@ -134,7 +140,7 @@
     	   				android:layout_margin="3dp"
     	   				android:clickable="true"
     	   				android:focusable="true"
-    	   				android:background="@drawable/list_selector_hd"
+    	   				android:background="@drawable/app_selector_hd"
     	   				android:layout_gravity="center"
     	    			android:gravity="center"
     	    			android:layout_width="fill_parent"
@@ -143,6 +149,7 @@
     	    			android:orientation="vertical">   
     	   
     	  				<TextView 
+    	  				    android:textColor="@android:color/white"
     	        			android:textStyle="bold"
     	        			android:layout_width="wrap_content"
     	        			android:layout_height="wrap_content"
@@ -153,11 +160,13 @@
     	        			android:layout_height="wrap_content"
     	        			android:background="@drawable/app_fav_hd"/>
     					<TextView 
+    					    android:textColor="@android:color/white"
     					    android:id="@+id/aSize"
     	        			android:layout_width="wrap_content"
     	        			android:layout_height="wrap_content"
     	        			android:text="@string/zerosize"/>
     					<TextView 
+    					    android:textColor="@android:color/white"
     					    android:id="@+id/aFiles"
     	        			android:layout_width="wrap_content"
     	        			android:layout_height="wrap_content"
@@ -173,7 +182,7 @@
     	    				android:layout_margin="3dp"
     	   					android:clickable="true"
     	    				android:focusable="true"
-    	    				android:background="@drawable/list_selector_hd"
+    	    				android:background="@drawable/image_selector_hd"
     	    				android:layout_gravity="center"
     	    				android:gravity="center"
     	    				android:layout_width="fill_parent"
@@ -181,6 +190,7 @@
     	    				android:layout_weight="1"> 
     	    
     	    				<TextView 
+    	    				     android:textColor="@android:color/white"
     	       					 android:textStyle="bold"
     	       					 android:layout_width="wrap_content"
     	       					 android:layout_height="wrap_content"
@@ -192,11 +202,13 @@
     	        				android:background="@drawable/photo_fav_hd"/>
     	    
     	   					<TextView 
+    	   					    android:textColor="@android:color/white"
     	   					    android:id="@+id/pSize"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
     	        				android:text="@string/zerosize"/>
     						<TextView 
+    						    android:textColor="@android:color/white"
     						    android:id="@+id/pFiles"
     	        				android:layout_width="wrap_content"
     	        				android:layout_height="wrap_content"
@@ -215,13 +227,14 @@
     	     		android:layout_margin="3dp"
     	    		android:clickable="true"
     	    		android:focusable="true"
-    	    		android:background="@drawable/list_selector_hd"
+    	    		android:background="@drawable/video_selector_hd"
     	    		android:layout_gravity="center"
     	    		android:gravity="center"
     	    		android:layout_width="fill_parent"
     	    		android:layout_height="wrap_content"
     	    		android:layout_weight="1"> 
     	    		<TextView 
+    	    		    android:textColor="@android:color/white"
     	        		android:textStyle="bold"
     	        		android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
@@ -234,11 +247,13 @@
     	        		android:background="@drawable/video_fav_hd"/>
     	    
     	  			<TextView 
+    	  		    	android:textColor="@android:color/white"
     	  		    	android:id="@+id/vSize"
     	        		android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
     	        		android:text="@string/zerosize"/>
     				<TextView 
+    				    android:textColor="@android:color/white"
     				    android:id="@+id/vFiles"
     	        		android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
@@ -250,7 +265,7 @@
    	    				android:layout_margin="3dp"
    	    				android:clickable="true"
    	    				android:focusable="true"
-   	    				android:background="@drawable/list_selector_hd"
+   	    				android:background="@drawable/doc_selector_hd"
    	    				android:layout_gravity="center"
    	    				android:gravity="center"
    	    				android:layout_width="fill_parent"
@@ -258,6 +273,7 @@
    	    				android:layout_weight="1"
    	    				android:orientation="vertical">
    	    				<TextView 
+   	    				    android:textColor="@android:color/white"
    	       					android:textStyle="bold"
    	        				android:layout_width="wrap_content"
    	       					android:layout_height="wrap_content"
@@ -268,11 +284,13 @@
    	      					android:layout_height="wrap_content"
    	        				android:background="@drawable/docs_fav_hd"/>
    	    				<TextView 
+   	    				    android:textColor="@android:color/white"
    	    			    	android:id="@+id/dSize"
    	        				android:layout_width="wrap_content"
    	        				android:layout_height="wrap_content"
    	        				android:text="@string/zerosize"/>
    						<TextView 
+   						    android:textColor="@android:color/white"
    					    	android:id="@+id/dFile"
    	        				android:layout_width="wrap_content"
    	        				android:layout_height="wrap_content"
@@ -292,13 +310,14 @@
     	     		android:layout_margin="3dp"
     	    		android:clickable="true"
     	    		android:focusable="true"
-    	    		android:background="@drawable/list_selector_hd"
+    	    		android:background="@drawable/archive_selector_hd"
     	    		android:layout_gravity="center"
     	    		android:gravity="center"
     	    		android:layout_width="fill_parent"
     	    		android:layout_height="wrap_content"
     	    		android:layout_weight="1">  
     	    		<TextView 
+    	    		    android:textColor="@android:color/white"
     	        		android:textStyle="bold"
     	        		android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
@@ -310,11 +329,13 @@
     	        		android:background="@drawable/archive_fav_hd"/>
     	    
     	    		<TextView 
+    	    		    android:textColor="@android:color/white"
     	    			android:id="@+id/zSize"
     	        		android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
     	        		android:text="@string/zerosize"/>
     				<TextView 
+    				    android:textColor="@android:color/white"
     				    android:id="@+id/zFiles"
     	       			android:layout_width="wrap_content"
     	       			android:layout_height="wrap_content"
@@ -327,7 +348,7 @@
     	     		android:layout_margin="3dp"
     	    		android:clickable="true"
     	    		android:focusable="true"
-    	   	 		android:background="@drawable/list_selector_hd"
+    	   	 		android:background="@drawable/unknown_selector_hd"
     	    		android:layout_gravity="center"
     	    		android:gravity="center"
     	    		android:layout_width="fill_parent"
@@ -335,6 +356,7 @@
     	    		android:layout_weight="1">   
     	    
     	   			<TextView 
+    	   			    android:textColor="@android:color/white"
     	        		android:textStyle="bold"
     	        		android:layout_width="wrap_content"
     	       	 		android:layout_height="wrap_content"
@@ -346,11 +368,13 @@
     	        		android:background="@drawable/unknown_fav_hd"/>
     	    
     	    		<TextView 
+    	    		    android:textColor="@android:color/white"
     	        		android:id="@+id/misFiles"
     	        		android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
     	        		android:text="@string/zerosize"/>
     				<TextView 
+    				    android:textColor="@android:color/white"
     	    			android:id="@+id/misSize"
     	    			android:layout_width="wrap_content"
     	        		android:layout_height="wrap_content"
@@ -368,6 +392,7 @@
 </LinearLayout>
         
   <ListView 
+        android:background="@android:color/white"
         android:paddingTop="5dp"
         android:visibility="gone"
         android:dividerHeight="0.03dp"
