@@ -368,6 +368,7 @@
 </LinearLayout>
         
   <ListView 
+        android:paddingTop="5dp"
         android:visibility="gone"
         android:dividerHeight="0.03dp"
         android:divider="@color/white_grey"

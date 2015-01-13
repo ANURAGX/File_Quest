@@ -37,6 +37,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -44,11 +45,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -138,9 +146,28 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		pager.setAdapter(adapters);
 		indicator.setViewPager(pager);
 		pager.setOffscreenPageLimit(4);
-		
+		indicator.setOnPageChangeListener(new OnPageChangeListener() {
+			@Override
+			public void onPageSelected(int arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				// TODO Auto-generated method stub
+				if(Constants.LONG_CLICK)
+					sendBroadcast(new Intent("inflate_normal_menu"));
+			}
+			
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		init_action_bar();
-		
+		init_drawer_menu();
 	}
 	
 	
@@ -526,6 +553,104 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		filter.addAction("inflate_normal_menu");
 		filter.addAction("update_action_bar_long_click");
 		this.registerReceiver(broadcasts, filter);
+	}
+	
+	private void init_drawer_menu() {
+		// TODO Auto-generated method stub
+		ListView drLs = (ListView) drawer.findViewById(R.id.drawer_menu_list);
+		drLs.setAdapter(new drAdpt());		
+		drLs.setSelector(R.drawable.while_list_selector_hd);
+		
+		drLs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
+
+		drLs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	/**
+	 * adapter for drawer....
+	 * @author anurag
+	 *
+	 */
+	class drAdpt extends BaseAdapter{
+
+		LayoutInflater inf;
+		
+		public drAdpt() {
+			// TODO Auto-generated constructor stub
+			inf = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		}
+		
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return 5;
+		}
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return position;
+		}
+		
+		class hold{
+			ImageView img;
+			TextView nam;
+		}
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			View view = inf.inflate(R.layout.row_list_2, parent , false);
+			hold h = new hold();
+			h.img = (ImageView) view.findViewById(R.id.iconImage2);
+			h.nam = (TextView) view.findViewById(R.id.directoryName2);
+			view.setTag(h);
+			switch(position){
+			case 0:
+				h.img.setBackgroundResource(R.drawable.file_quest_icon);
+				h.nam.setText("Graph Analysis");
+				break;
+				
+			case 1:
+				h.img.setBackgroundResource(R.drawable.file_quest_icon);
+				h.nam.setText("File Cleaner");
+				break;
+			
+			case 2:
+				h.img.setBackgroundResource(R.drawable.file_quest_icon);
+				h.nam.setText("File Mover");
+				break;
+				
+			case 3:
+				h.img.setBackgroundResource(R.drawable.file_quest_icon);
+				h.nam.setText("File Zipper");
+				break;
+				
+			case 4:
+				h.img.setBackgroundResource(R.drawable.file_quest_icon);
+				h.nam.setText("Check for update");
+			}
+			return view;
+		}
+		
 	}
 	
 }
