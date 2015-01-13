@@ -54,7 +54,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 	
 	private static FileGalleryAdapter adpt;
 	
-	private int counter;
+	public static int counter;
 	public static int[] ITEMS;
 	
 	public FileGallery() {
@@ -111,11 +111,14 @@ public class FileGallery extends Fragment implements OnClickListener{
 						ITEMS[position] = 1;
 						arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
 						++counter;
+						getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 					}else if(ITEMS[position] == 1){
 						ITEMS[position] = 0;
 						arg1.setBackgroundColor(Color.WHITE);
 						if(--counter == 0)
 							getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
+						else
+							getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));					
 					}
 					
 					return;					
@@ -143,15 +146,19 @@ public class FileGallery extends Fragment implements OnClickListener{
 					arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
 					ITEMS[arg2] = 1;
 					++counter;
+					getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 				}else if(ITEMS[arg2] == 1){
 					ITEMS[arg2] = 0;
 					arg1.setBackgroundColor(Color.WHITE);
 					if(--counter == 0)
 						getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
+					else
+						getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 				}
 				
 				if(sendBroadcast)
 					getActivity().sendBroadcast(new Intent("inflate_long_click_menu"));
+				
 				return true;
 			}
 		});
@@ -282,6 +289,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 	 */
 	public static void clear_selected_items(){
 		ls.setAdapter(adpt);
+		counter = 0;
 	}
 
 }

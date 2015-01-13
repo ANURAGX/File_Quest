@@ -155,30 +155,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		return true;
 	}
 	
-	
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
-		/*switch(Constants.LIST_TYPE){
-		case 0:
-				menu.findItem(R.id.simple_ls).setChecked(true);
-				return true;
-		case 1:
-				menu.findItem(R.id.detail_ls).setChecked(true);
-				return true;
-				
-		case 2:
-				menu.findItem(R.id.simple_grid).setChecked(true);
-				return true;
-				
-		case 3:
-				menu.findItem(R.id.detail_grid).setChecked(true);
-		}*/
-		return super.onPrepareOptionsMenu(menu);
-	}
-
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
@@ -188,7 +164,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			return true;
 			
 		case android.R.id.home:
-			drawer.openDrawer(Gravity.START);
+			if(!Constants.LONG_CLICK)
+				drawer.openDrawer(Gravity.START);
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -251,22 +228,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		int panel = pager.getCurrentItem();
 		
 		if(Constants.LONG_CLICK){
-			Constants.LONG_CLICK = false;
-			
-			if(panel == 2){
-				SdCardPanel.clear_selected_items();
-				SdCardPanel.ITEMS = null;
-			}else if(panel == 1){
-				RootPanel.clear_selected_items();
-				RootPanel.ITEMS = null;
-			}else if(panel == 3){
-				AppStore.clear_selected_items();
-				AppStore.ITEMS = null;
-			}else if(panel == 0){
-				FileGallery.clear_selected_items();
-				FileGallery.ITEMS = null;
-			}
-			invalidateOptionsMenu();
+			sendBroadcast(new Intent("inflate_normal_menu"));
 			return;
 		}
 		
@@ -513,19 +475,46 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			if(action.equalsIgnoreCase("inflate_long_click_menu")){
 				Constants.LONG_CLICK = true;
 				invalidateOptionsMenu();
+				
+				//setting up action bar when an item is long clicked....
+				action_bar.setTitle("1");
+				action_bar.setHomeAsUpIndicator(R.drawable.long_click_check);
 			}else if(action.equalsIgnoreCase("inflate_normal_menu")){
 				Constants.LONG_CLICK = false;
-				if(panel == 2)
+				//long click got disabled,restore default screen.....
+				if(panel == 2){
+					SdCardPanel.clear_selected_items();
 					SdCardPanel.ITEMS = null;
-				else if(panel == 1)
+				}else if(panel == 1){
+					RootPanel.clear_selected_items();
 					RootPanel.ITEMS = null;
-				else if(panel == 3)
+				}else if(panel == 3){
+					AppStore.clear_selected_items();
 					AppStore.ITEMS = null;
-				else if(panel == 0)
+				}else if(panel == 0){
+					FileGallery.clear_selected_items();
 					FileGallery.ITEMS = null;
+				}
 				invalidateOptionsMenu();
+				
+				//setting up action bar when long click is inactive....
+				action_bar.setHomeAsUpIndicator(R.drawable.drawer_menu);
+				action_bar.setTitle(R.string.app_name);
+			}else if(action.equalsIgnoreCase("update_action_bar_long_click")){
+				//update the action bar as per no. of selected items....
+				if(Constants.LONG_CLICK){
+					if(panel == 0){
+						action_bar.setTitle(""+FileGallery.counter);
+					}else if(panel == 1){
+						action_bar.setTitle(""+RootPanel.counter);
+					}else if(panel == 2){
+						action_bar.setTitle(""+SdCardPanel.counter);
+					}else if(panel == 3){
+						action_bar.setTitle(""+AppStore.counter);
+					}
+				}
 			}
-		}
+		}		
 	}
 	
 	/**
@@ -535,6 +524,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		Receive_Broadcasts broadcasts = new Receive_Broadcasts();
 		IntentFilter filter = new IntentFilter("inflate_long_click_menu");
 		filter.addAction("inflate_normal_menu");
+		filter.addAction("update_action_bar_long_click");
 		this.registerReceiver(broadcasts, filter);
 	}
+	
 }

@@ -51,7 +51,7 @@ public class RootPanel extends Fragment{
 	private static LoadList load;
 	private static RootManager manager;
 	public static int ITEMS[];
-	private int counter;
+	public static int counter;
 	private static RootAdapter adapter;
 	
 	public RootPanel() {
@@ -91,11 +91,14 @@ public class RootPanel extends Fragment{
 						ITEMS[position] = 1;
 						arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
 						++counter;
+						getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 					}else if(ITEMS[position] == 1){
 						ITEMS[position] = 0;
 						arg1.setBackgroundColor(Color.WHITE);
 						if(--counter == 0)
 							getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
+						else
+							getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 					}
 					
 					return;					
@@ -130,11 +133,14 @@ public class RootPanel extends Fragment{
 					arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
 					ITEMS[arg2] = 1;
 					++counter;
+					getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 				}else if(ITEMS[arg2] == 1){
 					ITEMS[arg2] = 0;
 					arg1.setBackgroundColor(Color.WHITE);
 					if(--counter == 0)
 						getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
+					else
+						getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 				}
 				
 				if(sendBroadcast)
@@ -250,6 +256,7 @@ public class RootPanel extends Fragment{
 	 */
 	public static void clear_selected_items(){
 		list.setAdapter(adapter);
+		counter = 0;
 	}
 
 }

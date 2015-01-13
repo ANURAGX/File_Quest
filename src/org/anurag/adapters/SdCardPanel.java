@@ -50,7 +50,7 @@ public class SdCardPanel extends Fragment{
 	private ArrayList<Item> adapter_list;
 	private static LoadList load;
 	private static SDManager manager;
-	private int counter;
+	public static int counter;
 	public static int[] ITEMS;
 	private static SDAdapter adapter;
 	public SdCardPanel() {
@@ -89,11 +89,14 @@ public class SdCardPanel extends Fragment{
 						ITEMS[position] = 1;
 						arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
 						++counter;
+						getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 					}else if(ITEMS[position] == 1){
 						ITEMS[position] = 0;
 						arg1.setBackgroundColor(Color.WHITE);
 						if(--counter == 0)
 							getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
+						else
+							getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 					}
 					
 					return;					
@@ -128,11 +131,14 @@ public class SdCardPanel extends Fragment{
 					arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
 					ITEMS[arg2] = 1;
 					++counter;
+					getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 				}else if(ITEMS[arg2] == 1){
 					ITEMS[arg2] = 0;
 					arg1.setBackgroundColor(Color.WHITE);
 					if(--counter == 0)
 						getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
+					else
+						getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 				}
 				
 				if(sendBroadcast)
@@ -249,5 +255,6 @@ public class SdCardPanel extends Fragment{
 	 */
 	public static void clear_selected_items(){
 		list.setAdapter(adapter);				
+		counter = 0;
 	}
 }
