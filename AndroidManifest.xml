@@ -161,7 +161,6 @@
         
         <!-- GRAPH ANALYSIS ACTIVITY.... -->
         <activity 
-            android:theme="@android:style/Theme.Holo"
             android:name="org.anurag.file.quest.GraphAnalysis">            
         </activity>
         

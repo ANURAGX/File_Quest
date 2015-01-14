@@ -577,6 +577,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				// TODO Auto-generated method stub
 				switch(position){
 				case 0:
+					Intent intent = new Intent(FileQuestHD.this, GraphAnalysis.class);
+					startActivity(intent);
 					break;
 				case 1:
 					break;
@@ -585,6 +587,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				case 3:
 					break;
 				case 4:
+					break;
+				case 5:
 					break;
 				}
 			}
@@ -608,7 +612,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return 5;
+			return 6;
 		}
 		@Override
 		public Object getItem(int position) {
@@ -641,27 +645,30 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				break;
 				
 			case 1:
+				h.img.setBackgroundResource(R.drawable.file_shield_hd);
+				h.nam.setText("File Shield");
+				break;
+				
+			case 2:
 				h.img.setBackgroundResource(R.drawable.file_cleaner_hd);
 				h.nam.setText("File Cleaner");
 				break;
 			
-			case 2:
+			case 3:
 				h.img.setBackgroundResource(R.drawable.file_mover_hd);
 				h.nam.setText("File Mover");
 				break;
 				
-			case 3:
+			case 4:
 				h.img.setBackgroundResource(R.drawable.file_quest_icon);
 				h.nam.setText("File Zipper");
 				break;
 				
-			case 4:
+			case 5:
 				h.img.setBackgroundResource(R.drawable.file_quest_icon);
 				h.nam.setText("Check for update");
 			}
 			return view;
-		}
-		
-	}
-	
+		}		
+	}	
 }

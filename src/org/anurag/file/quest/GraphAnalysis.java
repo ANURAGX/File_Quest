@@ -21,18 +21,22 @@ package org.anurag.file.quest;
 
 import java.util.ArrayList;
 
-import android.app.ActionBar;
+import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
+
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.github.mikephil.charting.charts.BarChart;
@@ -48,11 +52,11 @@ import com.github.mikephil.charting.utils.XLabels;
 import com.github.mikephil.charting.utils.Legend.LegendPosition;
 import com.github.mikephil.charting.utils.XLabels.XLabelPosition;
 
-public class GraphAnalysis extends FragmentActivity{
+public class GraphAnalysis extends ActionBarActivity{
 	
 	private PieChart pChart;
 	private BarChart mChart;
-	private ActionBar actionBar;
+	private android.support.v7.app.ActionBar actionBar;
 	private ViewPager pager; 
 	private PagerSlidingTabStrip strip;
 	private PagerFragmentAdapter adpt;
@@ -67,16 +71,22 @@ public class GraphAnalysis extends FragmentActivity{
 							Color.rgb(81, 97, 188),
 							Color.rgb(42, 109, 130)
 						  };
+	
+	private Toolbar action_bar;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.graph_analysis);
 		
-		actionBar = getActionBar();
-		actionBar.setTitle(R.string.graph_stats);
-		actionBar.setIcon(R.drawable.analysis);
-		actionBar.setBackgroundDrawable(new ColorDrawable(0x00000000));
+		action_bar = (Toolbar) findViewById(R.id.toolbar_top);
+		setSupportActionBar(action_bar);
+		actionBar = getSupportActionBar();
+		String title = getString(R.string.graph_stats);
+		actionBar.setTitle("   "+title);
+		actionBar.setIcon(R.drawable.graph_analysis_hd);
+		actionBar.setBackgroundDrawable(new ColorDrawable(Constants.COLOR_STYLE));
 		
 		
 		pager = (ViewPager)findViewById(R.id.graph_pager);
@@ -84,8 +94,67 @@ public class GraphAnalysis extends FragmentActivity{
 		adpt = new PagerFragmentAdapter(getSupportFragmentManager());
 		pager.setAdapter(adpt);
 		strip.setViewPager(pager);
+		
+		strip.setBackgroundColor(Constants.COLOR_STYLE);
+		
 	}
 
+	@Override
+	public void onResume(){
+		super.onResume();
+		init_system_ui();
+	}
+	
+	/**
+	 * restyles the system UI like status bar or navigation bar if present....
+	 */
+	private void init_system_ui() {
+		// TODO Auto-generated method stub
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+			return;
+		SystemBarTintManager tint = new SystemBarTintManager(GraphAnalysis.this);
+		tint.setStatusBarTintEnabled(true);
+		tint.setStatusBarTintColor(Constants.COLOR_STYLE);
+		
+		//LinearLayout slide_menu = (LinearLayout) findViewById(R.id.drawer_list);
+		LinearLayout main = (LinearLayout) findViewById(R.id.main);
+		
+		main.setPadding(0, getStatusBarHeight(), 0, 0);
+		//slide_menu.setPadding(0, getStatusBarHeight(), 0, 0);
+		
+		SystemBarConfig conf = tint.getConfig();
+		if(conf.hasNavigtionBar()){
+			tint.setNavigationBarTintEnabled(true);
+			tint.setNavigationBarTintColor(Constants.COLOR_STYLE);
+			main.setPadding(0, 0, 0, getNavigationBarHeight());
+			//slide_menu.setPadding(0, 0, 0, getNavigationBarHeight());
+		}
+	}
+	
+	/**
+	 * 
+	 * @return height of status bar....
+	 */
+	private int getStatusBarHeight(){
+		int res = 0;
+		int resId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+		if(resId > 0)
+			res = getResources().getDimensionPixelSize(resId);
+		return res;
+	}
+	
+	/**
+	 * 
+	 * @return the height of navigation bar....
+	 */
+	private int getNavigationBarHeight(){
+		int res = 0;
+		int resId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+		if(resId > 0)
+			res = getResources().getDimensionPixelSize(resId);
+		return res;
+	}
+	
 	/**
 	 * 
 	 * @author Anurag....
