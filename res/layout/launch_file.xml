@@ -83,8 +83,9 @@
             android:id="@+id/launch_list" 
             android:layout_width="fill_parent" 
             android:layout_height="fill_parent" 
-            android:divider="@color/black" 
-            android:dividerHeight="0.5dip" 
+            android:divider="@color/semi_white15"
+            android:listSelector="@drawable/while_list_selector_hd" 
+            android:dividerHeight="0.03dip" 
             android:minHeight="10.0dip" />
     </LinearLayout>
     
@@ -95,11 +96,11 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
    		<ImageView 
-   		android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:background="@color/dialog_border" 
-        android:layout_width="fill_parent" 
-        android:layout_height="3.0dip" 
+   			android:paddingLeft="5dp"
+       	 	android:paddingRight="5dp"
+        	android:background="@color/dialog_border" 
+        	android:layout_width="fill_parent" 
+        	android:layout_height="3.0dip" 
          />     
     </LinearLayout>
     

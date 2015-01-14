@@ -72,9 +72,9 @@
             android:id="@+id/open_list" 
             android:layout_width="fill_parent" 
             android:layout_height="fill_parent" 
-            android:listSelector="@drawable/button_click" 
-            android:divider="#ff242424" 
-            android:dividerHeight="0.5dip" 
+            android:listSelector="@drawable/while_list_selector_hd" 
+            android:divider="@color/semi_white15" 
+            android:dividerHeight="0.03dip" 
             android:minHeight="10.0dip" />
     </LinearLayout>
     

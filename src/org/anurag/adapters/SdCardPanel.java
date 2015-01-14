@@ -39,6 +39,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.twotoasters.jazzylistview.JazzyHelper;
@@ -47,12 +48,15 @@ import com.twotoasters.jazzylistview.JazzyHelper;
 public class SdCardPanel extends Fragment{
 	
 	private static ListView list;
+	private LinearLayout empty;
 	private ArrayList<Item> adapter_list;
 	private static LoadList load;
 	private static SDManager manager;
 	public static int counter;
 	public static int[] ITEMS;
 	private static SDAdapter adapter;
+	
+	
 	public SdCardPanel() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
@@ -70,6 +74,7 @@ public class SdCardPanel extends Fragment{
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		list = (ListView)view.findViewById(R.id.list_view_hd);		
+		empty = (LinearLayout) view.findViewById(R.id.empty);
 		list.setSelector(R.drawable.list_selector_hd);
 		setAnim(list);
 		if(load == null){
@@ -179,8 +184,13 @@ public class SdCardPanel extends Fragment{
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			adapter = new SDAdapter(getActivity(), adapter_list);
-			list.setAdapter(adapter);
+			if(adapter_list.size() != 0){
+				empty.setVisibility(View.GONE);
+				adapter = new SDAdapter(getActivity(), adapter_list);
+				list.setAdapter(adapter);
+			}else{
+				empty.setVisibility(View.VISIBLE);
+			}
 			load = new LoadList();
 		}
 

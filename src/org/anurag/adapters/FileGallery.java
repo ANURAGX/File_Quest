@@ -56,7 +56,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 	
 	public static int counter;
 	public static int[] ITEMS;
-	
+	private static LinearLayout empty;
 	public FileGallery() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
@@ -73,6 +73,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 	public void onViewCreated(View v, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(v, savedInstanceState);
+		empty = (LinearLayout) v.findViewById(R.id.empty);
 		ls = (ListView) v.findViewById(R.id.customListView);
 		ls.setSelector(R.drawable.list_selector_hd);
 		file_gallery = (LinearLayout) v.findViewById(R.id.file_gallery_layout);
@@ -225,9 +226,13 @@ public class FileGallery extends Fragment implements OnClickListener{
 			break;
 		}
 		file_gallery.setVisibility(View.GONE);
-		ls.setVisibility(View.VISIBLE);
-		adpt = new FileGalleryAdapter(getActivity(), lists, keys);
-		ls.setAdapter(adpt);
+		if(lists.size() != 0){
+			ls.setVisibility(View.VISIBLE);
+			adpt = new FileGalleryAdapter(getActivity(), lists, keys);
+			ls.setAdapter(adpt);
+		}else{
+			empty.setVisibility(View.VISIBLE); 
+		}
 		is_gallery_opened = true;
 		FileQuestHD.notify_Title_Indicator(0, current_Tile);
 	}
@@ -251,6 +256,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 	
 	public static void collapseGallery(){
 		ls.setVisibility(View.GONE);
+		empty.setVisibility(View.GONE);
 		file_gallery.setVisibility(View.VISIBLE);
 		is_gallery_opened = false;
 		current_Tile = "FILE GALLERY";
