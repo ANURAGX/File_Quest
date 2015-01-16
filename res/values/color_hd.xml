@@ -41,12 +41,12 @@
     <color name="semi_white15">#26FFFFFF</color>
     <color name="black">#00FFFFFF</color>
     <color name="white_grey">#cfcece</color>
-    <color name="fav">#f2d013</color>
-    <color name="music">#0340a8</color>
-    <color name="app">#97c024</color>
-    <color name="img">#ce2b2b</color>
+    <color name="fav">#fff98c25</color>
+    <color name="music">#04a693</color>
+    <color name="app">#ff009f3c</color>
+    <color name="img">#ff693885</color>
     <color name="vids">#db532d</color>
-    <color name="docs">#4679c7</color>
-    <color name="arch">#ff9408</color>
+    <color name="docs">#bc3885</color>
+    <color name="arch">#ff4085f9</color>
     <color name="unknown">#808081</color>
 </resources>
