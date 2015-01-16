@@ -225,6 +225,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		toolbar.setBackgroundColor(color);
 		top_toolbar.setBackgroundColor(color);
 		indicator.setBackgroundColor(color);
+		bottom_options.setBackgroundColor(color);
 		LinearLayout drawermenu = (LinearLayout) findViewById(R.id.drawer_list);
 		drawermenu.setBackgroundColor(color);
 		action_bar.setHomeButtonEnabled(true);
