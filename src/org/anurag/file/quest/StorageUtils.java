@@ -69,6 +69,10 @@ public class StorageUtils {
 			return;
 		}	
 		String emulatedpath = System.getenv("EMULATED_STORAGE_TARGET");
+		if(emulatedpath == null){
+			Constants.EMULATED_PATH = "NOT_AVAILABLE";
+			return;
+		}
 		String id = "";
 		String path = Constants.PATH;
 		Pattern DIRPATTERN = Pattern.compile("/");

@@ -20,12 +20,11 @@
 package org.anurag.file.quest;
 
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.anurag.adapters.FileGallery;
-import org.anurag.adapters.SdCardPanel;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -142,8 +141,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 						
 						//setting lock id here,as it will be used in FileQuest Activity....
 						Constants.lockID = keys.get(""+img.getId());
-						new MasterPassword(ctx, FileQuest.size.x * 8 / 9, null,
-								prefs, Constants.MODES.DEFAULT);
+						new MasterPassword(ctx, Constants.size.x * 8 / 9, null,prefs, Constants.MODES.DEFAULT);
 					} else {
 						list.get(keys.get(""+img.getId())).setLockStatus(true);
 						img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.lock_icon_hd));
@@ -156,8 +154,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 					
 					//setting lock id here,as it will be used in FileQuest Activity.... 
 					Constants.lockID = keys.get(""+img.getId());
-					new MasterPassword(ctx, FileQuest.size.x * 8 / 9, null,
-							prefs, Constants.MODES.DEFAULT);
+					new MasterPassword(ctx, Constants.size.x * 8 / 9, null,prefs, Constants.MODES.DEFAULT);
 				}
 			}
 		});

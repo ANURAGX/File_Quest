@@ -33,7 +33,6 @@
        <EditText 
            android:textColor="@android:color/white"
            android:singleLine="true"
-           android:background="@drawable/edit_text_focused_black"
            android:focusable="true"
            android:layout_weight="1"
            android:id="@+id/editBox"

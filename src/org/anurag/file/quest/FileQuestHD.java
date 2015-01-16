@@ -102,7 +102,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		Constants.LIST_ANIM = prefs.getInt("LIST_ANIM", 3);
 		Constants.ACTION_AT_TOP = prefs.getBoolean("ACTION_AT_TOP", false);
 		Constants.LIST_TYPE = prefs.getInt("LIST_TYPE", 1);
-		Constants.db = new ItemDB(FileQuestHD.this);
+		
 		Constants.size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(Constants.size);
 		Constants.BUILD_ICONS(FileQuestHD.this);
@@ -114,6 +114,9 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		//builds the folder icon after building the theme....
 		ThemeOrganizer.BUILD_FOLDER_ICON(FileQuestHD.this);
 		
+		//reading external pr internal storages.....
+		new StorageUtils();
+		Constants.db = new ItemDB(FileQuestHD.this);
 		setContentView(R.layout.fq_ui_hd);
 		findViewIds();
 		
