@@ -19,7 +19,9 @@
 
 package org.anurag.text.editor;
 
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,7 +39,7 @@ public class SaveOnExit{
 	public SaveOnExit(Context con,int w) {
 		// TODO Auto-generated constructor stub
 		mContext = con;		
-		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
+		dialog = new Dialog(mContext, Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.delete_files);
 		dialog.getWindow().getAttributes().width = w;
 		onCreate();

@@ -29,10 +29,11 @@ import java.io.IOException;
 
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
+import org.anurag.file.quest.SystemBarTintManager;
+import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 import org.ultimate.root.LinuxShell;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -42,8 +43,11 @@ import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -54,8 +58,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+
 @SuppressLint("NewApi")
-public class EditorActivity extends Activity {
+public class EditorActivity extends ActionBarActivity {
 	Intent intent;
 	Context con;
 	EditText main;
@@ -72,18 +78,27 @@ public class EditorActivity extends Activity {
 	boolean MODIFIED;
 	Dialog dialog;
 	BroadcastReceiver rec;
+	StringBuffer rea;
+	private Toolbar toolbar;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.editor_layout);
 	
+		toolbar = (Toolbar) findViewById(R.id.toolbar_top);
+		
+		setSupportActionBar(toolbar);	
+		
 		LinearLayout linear = (LinearLayout) findViewById(R.id.editor_layout);
 		linear.setBackgroundColor(org.anurag.file.quest.Constants.COLOR_STYLE);
 		con = getBaseContext();
 		size = new Point();
+		
 		getWindowManager().getDefaultDisplay().getSize(size);
-		getActionBar().setTitle("File Quest Text Editor");
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Constants.COLOR_STYLE));
+		getSupportActionBar().setTitle("   File Quest Text Editor");
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Constants.COLOR_STYLE));
+		getSupportActionBar().setIcon(R.drawable.file_quest_icon);
 		
 		title = (EditText)findViewById(R.id.textSearch); 
 		main = (EditText)findViewById(R.id.note);
@@ -124,6 +139,13 @@ public class EditorActivity extends Activity {
 	}
 
 	@Override
+	public void onResume(){
+		super.onResume();
+		init_system_ui();
+	}
+	
+	
+	@Override
 	protected void onPause(){
 		super.onPause();
 		this.unregisterReceiver(rec);
@@ -133,7 +155,7 @@ public class EditorActivity extends Activity {
 	 * @param path
 	 */
 	public void openFile(final CharSequence path){
-		final StringBuffer rea = new StringBuffer();		
+		rea = new StringBuffer();		
 		final ProgressBar bar = (ProgressBar)findViewById(R.id.editorBar);
 		final TextView message =(TextView)findViewById(R.id.editorMesage);
 		new AsyncTask<Void,Void,Void>(){
@@ -142,10 +164,15 @@ public class EditorActivity extends Activity {
 				// TODO Auto-generated method stub
 				super.onPostExecute(result);
 				main.setVisibility(View.VISIBLE);
-				openFile(path,rea);
-				ERROR_SAVING = false;
-				bar.setVisibility(View.GONE);
-				message.setVisibility(View.GONE);
+				if(rea != null){
+					openFile(path,rea);
+					ERROR_SAVING = false;
+					bar.setVisibility(View.GONE);
+					message.setVisibility(View.GONE);
+				}else{
+					bar.setVisibility(View.GONE);
+					message.setText("Failed to read file");
+				}
 			}
 			
 			@Override
@@ -168,10 +195,6 @@ public class EditorActivity extends Activity {
 						return null;
 					}
 					FileReader reader = new FileReader(new File(path.toString()));
-					if(reader == null)
-						throw(new FileNotFoundException());
-					if(file.isDirectory())
-						throw(new IOException());
 					if(file.isFile() && file.length()>0){
 						
 						
@@ -181,13 +204,16 @@ public class EditorActivity extends Activity {
 					}
 				}catch(FileNotFoundException e){
 					Toast.makeText(getApplicationContext(), R.string.invalid, Toast.LENGTH_SHORT).show(); 
-					EditorActivity.this.finish();
+					//EditorActivity.this.finish();
+					rea = null;
 				}catch(IOException e){
 					Toast.makeText(getBaseContext(), R.string.readerror,Toast.LENGTH_SHORT).show();
-					EditorActivity.this.finish();
+					//EditorActivity.this.finish();
+					rea = null;
 				}catch(Exception e){
 					Toast.makeText(getBaseContext(), R.string.xerror, Toast.LENGTH_SHORT).show();
-					EditorActivity.this.finish();
+					//EditorActivity.this.finish();
+					rea = null;
 				}
 				return null;
 			}
@@ -293,7 +319,52 @@ public class EditorActivity extends Activity {
 		return false;
 	}
 	
+	/**
+	 * restyles the system UI like status bar or navigation bar if present....
+	 */
+	private void init_system_ui() {
+		// TODO Auto-generated method stub
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+			return;
+		SystemBarTintManager tint = new SystemBarTintManager(EditorActivity.this);
+		tint.setStatusBarTintEnabled(true);
+		tint.setStatusBarTintColor(Constants.COLOR_STYLE);
+		
+		LinearLayout main = (LinearLayout) findViewById(R.id.editor_layout);
+		
+		main.setPadding(0, getStatusBarHeight(), 0, 0);
+				
+		SystemBarConfig conf = tint.getConfig();
+		if(conf.hasNavigtionBar()){
+			tint.setNavigationBarTintEnabled(true);
+			tint.setNavigationBarTintColor(Constants.COLOR_STYLE);
+			main.setPadding(0, 0, 0, getNavigationBarHeight());
+		}
+	}
 	
+	/**
+	 * 
+	 * @return height of status bar....
+	 */
+	private int getStatusBarHeight(){
+		int res = 0;
+		int resId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+		if(resId > 0)
+			res = getResources().getDimensionPixelSize(resId);
+		return res;
+	}
+	
+	/**
+	 * 
+	 * @return the height of navigation bar....
+	 */
+	private int getNavigationBarHeight(){
+		int res = 0;
+		int resId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+		if(resId > 0)
+			res = getResources().getDimensionPixelSize(resId);
+		return res;
+	}
 	
 	
 }
