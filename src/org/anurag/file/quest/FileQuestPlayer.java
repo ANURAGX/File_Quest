@@ -69,6 +69,14 @@ public class FileQuestPlayer extends Activity{
 		Point size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(size);
 		Intent intent = getIntent();
+
+		
+		if(Constants.COLOR_STYLE == 0){
+			//this condition is true then this activity was called explicitly....
+			Constants.COLOR_STYLE = getResources().getColor(R.color.orange);
+			ThemeOrganizer.BUILD_THEME(Constants.COLOR_STYLE);
+		}	
+		
 		Dialog dialog = new Dialog(FileQuestPlayer.this, Constants.DIALOG_STYLE);
 		dialog.setCancelable(true); 
 		dialog.setContentView(R.layout.file_quest_player);
