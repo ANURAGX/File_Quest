@@ -124,8 +124,8 @@ public class Constants {
 	public static Point size;
 	
 	public static int PANEL_NO;
-	public static int COLOR_STYLE;
-	public static int DIALOG_STYLE;
+	public static int COLOR_STYLE = 0;
+	public static int DIALOG_STYLE = 0;
 	public static boolean ACTION_AT_TOP;
 	
 	public static int LIST_ANIM;

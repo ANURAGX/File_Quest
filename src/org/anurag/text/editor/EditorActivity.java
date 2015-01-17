@@ -31,6 +31,7 @@ import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.SystemBarTintManager;
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
+import org.anurag.file.quest.ThemeOrganizer;
 import org.ultimate.root.LinuxShell;
 
 import android.annotation.SuppressLint;
@@ -91,6 +92,13 @@ public class EditorActivity extends ActionBarActivity {
 		setSupportActionBar(toolbar);	
 		
 		LinearLayout linear = (LinearLayout) findViewById(R.id.editor_layout);
+		
+		if(Constants.COLOR_STYLE == 0){
+			//this condition is true then this activity was called explicitly....
+			Constants.COLOR_STYLE = getResources().getColor(R.color.orange);
+			ThemeOrganizer.BUILD_THEME(Constants.COLOR_STYLE);
+		}	
+		
 		linear.setBackgroundColor(org.anurag.file.quest.Constants.COLOR_STYLE);
 		con = getBaseContext();
 		size = new Point();
