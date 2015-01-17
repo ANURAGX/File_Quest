@@ -664,12 +664,12 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				break;
 				
 			case 4:
-				h.img.setBackgroundResource(R.drawable.file_quest_icon);
+				h.img.setBackgroundResource(R.drawable.file_zipper_hd);
 				h.nam.setText("File Zipper");
 				break;
 				
 			case 5:
-				h.img.setBackgroundResource(R.drawable.file_quest_icon);
+				h.img.setBackgroundResource(R.drawable.update_check_hd);
 				h.nam.setText("Check for update");
 			}
 			return view;
