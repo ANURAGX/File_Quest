@@ -229,8 +229,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		LinearLayout drawermenu = (LinearLayout) findViewById(R.id.drawer_list);
 		drawermenu.setBackgroundColor(color);
 		action_bar.setHomeButtonEnabled(true);
-		//action_bar.setDisplayHomeAsUpEnabled(true);	
-		action_bar.setHomeAsUpIndicator(R.drawable.drawer_menu);
+		
 	}
 	
 	/**
@@ -476,8 +475,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 					invalidateOptionsMenu();
 					action_bar = getSupportActionBar();
 					action_bar.setHomeButtonEnabled(true);
-					//action_bar.setDisplayHomeAsUpEnabled(true);	
-					action_bar.setHomeAsUpIndicator(R.drawable.drawer_menu);
 					
 					//saving the changes....
 					Constants.ACTION_AT_TOP = !Constants.ACTION_AT_TOP;
@@ -529,7 +526,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				invalidateOptionsMenu();
 				
 				//setting up action bar when long click is inactive....
-				action_bar.setHomeAsUpIndicator(R.drawable.drawer_menu);
 				action_bar.setTitle(R.string.app_name);
 			}else if(action.equalsIgnoreCase("update_action_bar_long_click")){
 				//update the action bar as per no. of selected items....
