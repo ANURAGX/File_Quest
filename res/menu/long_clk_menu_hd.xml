@@ -46,4 +46,11 @@
         android:title="@string/action_paste"
         app:showAsAction="ifRoom"/>
     
+    
+    <item 
+        android:id="@+id/action_add_gesture"
+        android:icon="@drawable/gesture"
+        android:title="@string/action_add_gesture"
+        app:showAsAction="ifRoom"/>
+    
 </menu>

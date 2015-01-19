@@ -22,6 +22,7 @@ package org.anurag.gesture;
 import java.io.File;
 import java.io.IOException;
 
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
 
 import android.app.Dialog;
@@ -41,9 +42,17 @@ public class AddGesture {
 	GestureOverlayView gesture;
 	Gesture pattern;
 	GestureLibrary library;
+	
+	/**
+	 * 
+	 * @param context
+	 * @param width for window....
+	 * @param height for window
+	 * @param filePath is path of file or folder for which we are saving the gesture....
+	 */
 	public AddGesture(final Context context , int width,int height , final String filePath) {
 		// TODO Auto-generated constructor stub
-		final Dialog dialog = new Dialog(context, R.style.custom_dialog_theme);
+		final Dialog dialog = new Dialog(context, Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.create_gesture);
 		
 		gesture = (GestureOverlayView)dialog.findViewById(R.id.gestures_overlay);

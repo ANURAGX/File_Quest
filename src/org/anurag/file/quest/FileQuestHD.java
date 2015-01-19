@@ -19,13 +19,19 @@
 
 package org.anurag.file.quest;
 
+import java.net.URL;
+import java.util.Scanner;
+
 import org.anurag.adapters.AppStore;
 import org.anurag.adapters.FileGallery;
 import org.anurag.adapters.PagerAdapters;
 import org.anurag.adapters.RootPanel;
 import org.anurag.adapters.SdCardPanel;
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
+import org.anurag.gesture.AddGesture;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -33,9 +39,15 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Point;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
@@ -159,8 +171,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
 				// TODO Auto-generated method stub
-				if(Constants.LONG_CLICK)
-					sendBroadcast(new Intent("inflate_normal_menu"));
+				//if(Constants.LONG_CLICK)
+					//sendBroadcast(new Intent("inflate_normal_menu"));
 			}
 			
 			@Override
@@ -188,6 +200,9 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
+		
+		int panel = pager.getCurrentItem();
+		
 		switch(item.getItemId()){
 		case R.id.action_exit:
 			FileQuestHD.this.finish();
@@ -196,6 +211,10 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		case android.R.id.home:
 			if(!Constants.LONG_CLICK)
 				drawer.openDrawer(Gravity.START);
+			break;
+			
+		case R.id.action_add_gesture:
+			
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -588,7 +607,10 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 					break;
 				case 4:
 					break;
+					
 				case 5:
+					//checks the new update for file quest....
+					update_checker();
 					break;
 				}
 			}
@@ -671,4 +693,80 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			return view;
 		}		
 	}	
+	
+	/**
+	 * this function checks for update for File Quest
+	 * and makes a notification to download link
+	 * in playstore.... 
+	 */
+	private void update_checker() {
+		// TODO Auto-generated method stub
+		Toast.makeText(FileQuestHD.this, R.string.checking_update, Toast.LENGTH_SHORT).show();
+		
+		final Handler hand = new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				switch(msg.what){
+				case 1://update available....
+					{
+						NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(FileQuestHD.this);
+						mBuilder.setSmallIcon(R.drawable.file_quest_icon);																					
+						mBuilder.setContentTitle(getString(R.string.app_name));
+						mBuilder.setContentText(getString(R.string.update_avail));
+						
+						mBuilder.setTicker(getString(R.string.update_avail));
+						
+						Toast.makeText(FileQuestHD.this, R.string.update_avail, Toast.LENGTH_SHORT).show();
+						
+						Intent intent = new Intent(Intent.ACTION_VIEW);
+						intent.setData(Uri.parse("market://details?id=org.anurag.file.quest"));
+						
+						
+						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+											
+						PendingIntent pendint = PendingIntent.getActivity(FileQuestHD.this, 900, intent, 0);
+						mBuilder.setContentIntent(pendint);
+				
+						mBuilder.setAutoCancel(true);
+						
+						NotificationManager notimgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+						notimgr.notify(1, mBuilder.build());
+					}
+					break;
+				case 2://no connectivity....
+					Toast.makeText(FileQuestHD.this, R.string.nointernet, Toast.LENGTH_SHORT).show();
+					break;
+				case 3:
+					//failed to check for update....
+					Toast.makeText(FileQuestHD.this, 
+							R.string.failed_to_check_for_update, Toast.LENGTH_SHORT).show();
+				}
+			}			
+		};
+		
+		Thread th = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try{
+					ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+					NetworkInfo info = cm.getActiveNetworkInfo();
+					if(!info.isConnected()){
+						hand.sendEmptyMessage(2);
+						return;
+					}	
+					Scanner scan = new Scanner(new URL("https://www.dropbox.com/s/x1gp7a6ozdvg81g/FQ_UPDATE.txt?dl=1").openStream());
+					String update = scan.next();
+					if(!update.equalsIgnoreCase(getString(R.string.version)))
+						hand.sendEmptyMessage(1);
+					scan.close();
+				}catch(Exception e){
+					hand.sendEmptyMessage(3);
+				}
+			}
+		});
+		th.start();
+	}
+	
 }

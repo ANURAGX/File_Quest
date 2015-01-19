@@ -37,4 +37,5 @@
     <string name="action_cut">Cut</string>
     <string name="action_paste">Paste</string>
     <string name="empty_list">No Items</string>
+    <string name="action_add_gesture">Add Gesture</string>
 </resources>
