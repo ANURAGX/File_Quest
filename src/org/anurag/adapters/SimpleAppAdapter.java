@@ -90,7 +90,7 @@ public class SimpleAppAdapter extends BaseAdapter{
 	public View getView( final int position , View convertView2, ViewGroup container){
 		info = nList.get(position);
 		View convertView = null;
-		convertView = inflater.inflate(R.layout.simple_list_hd, container , false);
+		convertView = inflater.inflate(R.layout.simple_app_list_hd, container , false);
 		nHolder = new FileHolder();
 		nHolder.FileIcon = (ImageView)convertView.findViewById(R.id.fileIcon);
 		nHolder.FileName = (TextView)convertView.findViewById(R.id.fileName);
