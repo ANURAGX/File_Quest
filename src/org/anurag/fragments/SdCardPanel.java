@@ -40,15 +40,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.twotoasters.jazzylistview.JazzyHelper;
 
 
-public class SdCardPanel extends Fragment{
+public class SdCardPanel extends Fragment implements OnItemClickListener , OnItemLongClickListener{
 	
+	private static GridView grid;
 	private static ListView list;
 	private LinearLayout empty;
 	private ArrayList<Item> adapter_list;
@@ -57,7 +61,7 @@ public class SdCardPanel extends Fragment{
 	public static int counter;
 	public static int[] ITEMS;
 	private static BaseAdapter adapter;
-	
+	private boolean isGirdView;
 	
 	public SdCardPanel() {
 		// TODO Auto-generated constructor stub
@@ -75,7 +79,8 @@ public class SdCardPanel extends Fragment{
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
-		list = (ListView)view.findViewById(R.id.list_view_hd);		
+		list = (ListView)view.findViewById(R.id.list_view_hd);	
+		grid = (GridView) view.findViewById(R.id.grid_view_hd);
 		empty = (LinearLayout) view.findViewById(R.id.empty);
 		list.setSelector(R.drawable.list_selector_hd);
 		setAnim(list);
@@ -84,76 +89,10 @@ public class SdCardPanel extends Fragment{
 			load.execute();
 		}	
 		
-		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-					long arg3) {
-				// TODO Auto-generated method stub
-				
-				if(Constants.LONG_CLICK){
-					
-					if(ITEMS[position] != 1){
-						ITEMS[position] = 1;
-						arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
-						++counter;
-						getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
-					}else if(ITEMS[position] == 1){
-						ITEMS[position] = 0;
-						arg1.setBackgroundColor(Color.WHITE);
-						if(--counter == 0)
-							getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
-						else
-							getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
-					}
-					
-					return;					
-				}
-				
-				Item item = adapter_list.get(position);
-				if(item.isDirectory()){
-					//selecting a folder....
-					manager.pushPath(item.getPath());
-					FileQuestHD.notify_Title_Indicator(2, item.getName());
-					load.execute();
-				}else{
-					//selecting a file....
-					new OpenFileDialog(getActivity(), Uri.parse(item.getPath())
-							, Constants.size.x*8/9);
-				}
-			}
-		});
-		
-		list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				boolean sendBroadcast = false;
-				if(ITEMS == null){
-					ITEMS = new int[adapter_list.size()];
-					sendBroadcast = true;
-				}
-				
-				if(ITEMS[arg2] != 1){
-					arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
-					ITEMS[arg2] = 1;
-					++counter;
-					getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
-				}else if(ITEMS[arg2] == 1){
-					ITEMS[arg2] = 0;
-					arg1.setBackgroundColor(Color.WHITE);
-					if(--counter == 0)
-						getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
-					else
-						getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
-				}
-				
-				if(sendBroadcast)
-					getActivity().sendBroadcast(new Intent("inflate_long_click_menu"));
-				return true;
-			}
-		});
-		
+		list.setOnItemClickListener(this);
+		grid.setOnItemClickListener(this);
+		list.setOnItemLongClickListener(this);
+		grid.setOnItemLongClickListener(this);
 	}
 		
 	/**
@@ -281,8 +220,7 @@ public class SdCardPanel extends Fragment{
 		case 1:
 			return new SimpleSDAdapter(getActivity(), adapter_list);
 		case 2:
-			return new SDAdapter(getActivity(), adapter_list);
-			
+			return new SDAdapter(getActivity(), adapter_list);			
 		}
 		return null; 
 	}
@@ -292,5 +230,70 @@ public class SdCardPanel extends Fragment{
 	 */
 	public static void resetAdapter(){
 		load.execute();
+	}
+
+	@Override
+	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2,
+			long arg3) {
+		// TODO Auto-generated method stub
+		boolean sendBroadcast = false;
+		if(ITEMS == null){
+			ITEMS = new int[adapter_list.size()];
+			sendBroadcast = true;
+		}
+		
+		if(ITEMS[arg2] != 1){
+			arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
+			ITEMS[arg2] = 1;
+			++counter;
+			getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
+		}else if(ITEMS[arg2] == 1){
+			ITEMS[arg2] = 0;
+			arg1.setBackgroundColor(Color.WHITE);
+			if(--counter == 0)
+				getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
+			else
+				getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
+		}
+		
+		if(sendBroadcast)
+			getActivity().sendBroadcast(new Intent("inflate_long_click_menu"));
+		return true;
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+		// TODO Auto-generated method stub
+		if(Constants.LONG_CLICK){
+			
+			if(ITEMS[position] != 1){
+				ITEMS[position] = 1;
+				arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
+				++counter;
+				getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
+			}else if(ITEMS[position] == 1){
+				ITEMS[position] = 0;
+				arg1.setBackgroundColor(Color.WHITE);
+				if(--counter == 0)
+					getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
+				else
+					getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
+			}
+			
+			return;					
+		}
+		
+		Item item = adapter_list.get(position);
+		if(item.isDirectory()){
+			//selecting a folder....
+			manager.pushPath(item.getPath());
+			FileQuestHD.notify_Title_Indicator(2, item.getName());
+			load.execute();
+		}else{
+			//selecting a file....
+			new OpenFileDialog(getActivity(), Uri.parse(item.getPath())
+					, Constants.size.x*8/9);
+		}
+
 	}
 }

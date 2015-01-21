@@ -54,4 +54,12 @@
         android:dividerHeight="0.1dp">        
     </ListView>
     
+    <GridView 
+        android:id="@+id/grid_view_hd"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3">
+        
+    </GridView>
+    
 </LinearLayout>
