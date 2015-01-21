@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import org.anurag.adapters.AppAdapter;
 
 import android.app.Dialog;
 import android.content.Context;

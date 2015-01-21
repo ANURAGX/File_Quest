@@ -27,6 +27,8 @@ import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.ZipFile;
 
+import org.anurag.adapters.AppAdapter;
+import org.anurag.adapters.FileGalleryAdapter;
 import org.anurag.adapters.RootAdapter;
 import org.anurag.adapters.SDAdapter;
 import org.anurag.compress.ArchiveEntryProperties;
@@ -61,7 +63,6 @@ import org.ultimate.menuItems.DeleteBackups;
 import org.ultimate.menuItems.DeleteFlashable;
 import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.GetMoveLocation;
-import org.ultimate.menuItems.MultiSendApps;
 import org.ultimate.menuItems.MultipleCopyDialog;
 import org.ultimate.menuItems.SelectApp;
 import org.ultimate.menuItems.SelectedApp;
@@ -439,7 +440,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		nManager = new AppManager(mContext);
 		nManager.SHOW_APP = SHOW_APP;
 		nList = nManager.giveMeAppList();
-		nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
+		//nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
 		
 		file = new Item(new File("/"), null, null, null);
 		file2 = new Item(new File(PATH),null,null,null);
@@ -681,16 +682,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						rootItemList = rootManager.getList();
 				}
 
-				if (SDAdapter.MULTI_SELECT) {
-					SDAdapter.thumbselection = new boolean[sdItemsList.size()];
-					SDAdapter.MULTI_FILES = new ArrayList<Item>();
-					SDAdapter.C = 0;
-				}
-				if (RootAdapter.MULTI_SELECT) {
-					RootAdapter.thumbselection = new boolean[rootItemList.size()];
-					RootAdapter.MULTI_FILES = new ArrayList<Item>();
-					RootAdapter.C = 0;
-				}
+				
+				
 				mUseBackKey = false;
 				handle.sendEmptyMessage(3);
 				if (ITEM == 0 && elementInFocus)
@@ -2004,9 +1997,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 							if (del.delete()) {
 								Toast.makeText(mContext,R.string.backupdeleted,Toast.LENGTH_SHORT).show();
 								nList = nManager.giveMeAppList();
-								nAppAdapter = new AppAdapter(mContext,R.layout.row_list_1, nList);
-								if (MULTI_SELECT_APPS)
-									nAppAdapter.MULTI_SELECT = true;
+								//nAppAdapter = new AppAdapter(mContext,R.layout.row_list_1, nList);
+								if (MULTI_SELECT_APPS){
+									
+								}
+									//nAppAdapter.MULTI_SELECT = true;
 								APP_LIST_VIEW.setAdapter(nAppAdapter);
 								APP_LIST_VIEW.setSelection(pos);
 							} else
@@ -2203,22 +2198,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				//item = new ActionItem(-1, getString(R.string.multiforgallery),getResources().getDrawable(R.drawable.ic_launcher_images));
 				action.addActionItem(item);
 			} else {
-				if (FileGalleryAdapter.MULTI_SELECT)
+				/*if (FileGalleryAdapter.MULTI_SELECT)
 					item = new ActionItem(0,getString(R.string.multiforgallery), getResources().getDrawable(R.drawable.ic_launcher_multi_select));
 				else
 					//item = new ActionItem(0,getString(R.string.multiforgallery), getResources().getDrawable(R.drawable.ic_launcher_images));
-				action.addActionItem(item);
+				action.addActionItem(item);*/
 			}
 
-			if ((RootAdapter.MULTI_SELECT))
-				item = new ActionItem(1, getString(R.string.multiforroot),getResources().getDrawable(R.drawable.ic_launcher_multi_select));
-			else
 				item = new ActionItem(1, getString(R.string.multiforroot),getResources().getDrawable(R.drawable.ic_launcher_system));
 			action.addActionItem(item);
 
-			if ((SDAdapter.MULTI_SELECT))
-				item = new ActionItem(2, getString(R.string.multiforsd),getResources().getDrawable(R.drawable.ic_launcher_multi_select));
-			else
 				item = new ActionItem(2, getString(R.string.multiforsd),getResources().getDrawable(R.drawable.ic_launcher_sdcard));
 			action.addActionItem(item);
 
@@ -2243,39 +2232,29 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					}
 						break;
 					case 0:
-						if (FileGalleryAdapter.MULTI_SELECT) {
-							element = new FileGalleryAdapter(mContext , getCategoryList(fPos) , getKeys(fPos));
-							FileGalleryAdapter.thumbselection = new boolean[getCategoryList(fPos).size()];
-							FileGalleryAdapter.MULTI_SELECT = false;
+						/*if (FileGalleryAdapter.MULTI_SELECT) {
+						//	element = new FileGalleryAdapter(mContext , getCategoryList(fPos) , getKeys(fPos));
+							//FileGalleryAdapter.thumbselection = new boolean[getCategoryList(fPos).size()];
+						//	FileGalleryAdapter.MULTI_SELECT = false;
 							LIST_VIEW_3D.setAdapter(element);
 						} else {
-							element = new FileGalleryAdapter(mContext , getCategoryList(fPos) , getKeys(fPos));
-							FileGalleryAdapter.thumbselection = new boolean[getCategoryList(fPos).size()];
-							FileGalleryAdapter.MULTI_SELECT = true;
+						//	element = new FileGalleryAdapter(mContext , getCategoryList(fPos) , getKeys(fPos));
+						//	FileGalleryAdapter.thumbselection = new boolean[getCategoryList(fPos).size()];
+						//	FileGalleryAdapter.MULTI_SELECT = true;
 							LIST_VIEW_3D.setAdapter(element);
 							if (CURRENT_ITEM == 3) {
 								mFlipperBottom.showNext();
 								mVFlipper.showPrevious();
 							}
 							mViewPager.setCurrentItem(0);
-						}
+						}*/
 						break;
 
 					case 1:
-						if (RootAdapter.MULTI_SELECT) {
-							rootAdapter = new RootAdapter(mContext,rootItemList);
-							RootAdapter.thumbselection = new boolean[rootItemList.size()];
-							RootAdapter.MULTI_SELECT = false;
-							if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT){
-								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
-								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
-								//OUT OF THE ARCHIVE...
-								simple.setAdapter(rootAdapter);
-							}	
-						} else {
+						{
 							rootAdapter = new RootAdapter(mContext, rootItemList);
-							RootAdapter.thumbselection = new boolean[rootItemList.size()];
-							RootAdapter.MULTI_SELECT = true;
+							//RootAdapter.thumbselection = new boolean[rootItemList.size()];
+							//RootAdapter.MULTI_SELECT = true;
 							if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT){
 								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
 								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
@@ -2285,37 +2264,16 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						}
 						break;
 					case 2:
-						if (SDAdapter.MULTI_SELECT) {
-							sdAdapter = new SDAdapter(mContext,sdItemsList);
-							SDAdapter.thumbselection = new boolean[sdItemsList.size()];
-							SDAdapter.MULTI_SELECT = false;
-							if(!ZIP_SD&&!RAR_SD&&!TAR_SD){
-								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
-								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
-								//OUT OF THE ARCHIVE...
-								root.setAdapter(sdAdapter);
-							}	
-						} else {
-							sdAdapter = new SDAdapter(mContext,sdItemsList);
-							SDAdapter.thumbselection = new boolean[sdItemsList.size()];
-							SDAdapter.MULTI_SELECT = true;
-							if(!ZIP_SD&&!RAR_SD&&!TAR_SD){
-								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
-								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
-								//OUT OF THE ARCHIVE...
-								//root.setAdapter(sdAdapter);
-								root.setAdapter(sdAdapter);
-							}	
-						}
+						
 						break;
 
 					case 3:
 						if (MULTI_SELECT_APPS) {
-							MULTI_SELECT_APPS = nAppAdapter.MULTI_SELECT = false;
+						//	MULTI_SELECT_APPS = nAppAdapter.MULTI_SELECT = false;
 							APP_LIST_VIEW.setAdapter(nAppAdapter);
 							APP_LIST_VIEW.setSelection(pos);
 						} else {
-							MULTI_SELECT_APPS = nAppAdapter.MULTI_SELECT = true;
+							//MULTI_SELECT_APPS = nAppAdapter.MULTI_SELECT = true;
 							mViewPager.setCurrentItem(3);
 							APP_LIST_VIEW.setAdapter(nAppAdapter);
 							APP_LIST_VIEW.setSelection(pos);
@@ -2329,15 +2287,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 		case R.id.bottom_multi_send_app:
 			if (MULTI_SELECT_APPS) {
-				if (nAppAdapter.C > 0) {
-					try {
-						new MultiSendApps(mContext, size,nAppAdapter.MULTI_APPS);
-					} catch (Exception e) {
-						Toast.makeText(mContext, R.string.unabletosend,Toast.LENGTH_SHORT).show();
-					}
-				} else {
-					Toast.makeText(mContext, R.string.someapps,Toast.LENGTH_SHORT).show();
-				}
+				
 			} else {
 				QuickAction ac = new QuickAction(mContext);
 				ActionItem it = new ActionItem(0, getResources().getString((R.string.enablefirstforappstore)));
@@ -2347,11 +2297,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			break;
 		case R.id.bottom_multi_select_backup:
 			if (MULTI_SELECT_APPS) {
-				if (nAppAdapter.C > 0) {
-					new AppBackup(mContext, size.x*8/9,nAppAdapter.MULTI_APPS);
-				} else {
-					Toast.makeText(mContext, R.string.someapps,Toast.LENGTH_SHORT).show();
-				}
+				
 			} else {
 				QuickAction ac = new QuickAction(mContext);
 				ActionItem it = new ActionItem(0, getResources().getString(R.string.enablefirstforappstore));
@@ -2367,7 +2313,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			SHOW_APP = nManager.SHOW_APP = 1;
 			Toast.makeText(mContext,getString(R.string.showinguserapps), Toast.LENGTH_SHORT).show();
 			nList = nManager.giveMeAppList();
-			nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
+		//	nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
 			APP_LIST_VIEW.setAdapter(nAppAdapter);
 			break;
 		case R.id.bottom_system_apps:
@@ -2377,7 +2323,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			SHOW_APP = nManager.SHOW_APP = 2;
 			Toast.makeText(mContext,getString(R.string.showingsystemapps), Toast.LENGTH_SHORT).show();
 			nList = nManager.giveMeAppList();
-			nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
+			//nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
 			APP_LIST_VIEW.setAdapter(nAppAdapter);
 			break;
 
@@ -2388,7 +2334,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			SHOW_APP = nManager.SHOW_APP = 3;
 			Toast.makeText(mContext,getString(R.string.showinguserandsystemapps),Toast.LENGTH_SHORT).show();
 			nList = nManager.giveMeAppList();
-			nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
+			//nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
 			APP_LIST_VIEW.setAdapter(nAppAdapter);
 			break;
 
@@ -3553,7 +3499,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 										else if(CURRENT_ITEM == 1)
 											simple.setAdapter(new RootAdapter(mContext,searchList));
 										else if(CURRENT_ITEM == 0){
-											LIST_VIEW_3D.setAdapter(new FileGalleryAdapter(mContext, list, key));
+											//LIST_VIEW_3D.setAdapter(new FileGalleryAdapter(mContext, list, key));
 										}	
 									}catch(Exception e){
 										
@@ -3834,74 +3780,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * @param str
 	 */
 	public void OPERATION_ON_MULTI_SELECT_FILES(int ITEM, int action, String str) {
-		if (ITEM == 0 && FileGalleryAdapter.MULTI_SELECT) {
-			if (action == 4 && FileGalleryAdapter.C != 0) {// DELETE THE
-															// MULTIPLE FILES IF
-															// ACTIONID = 4
-				new DeleteFiles(mContext, size.x*8/9, FileGalleryAdapter.MULTI_FILES,null);
-			} else if (action == 5 && FileGalleryAdapter.C != 0) {
-				MULTIPLE_COPY_GALLERY = true;
-				MULTIPLE_COPY = MULTIPLE_CUT = COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = MULTIPLE_CUT_GALLERY = SEARCH_FLAG = false;
-				COPY_FILES = FileGalleryAdapter.MULTI_FILES;
-				showToast(FileGalleryAdapter.C + " "+ getString(R.string.selectedforcopy));
-			} else if (action == 2 && FileGalleryAdapter.C != 0) {
-				MULTIPLE_CUT_GALLERY = true;
-				COPY_FILES = FileGalleryAdapter.MULTI_FILES;
-				MULTIPLE_COPY = MULTIPLE_CUT = COPY_COMMAND = CUT_COMMAND = MULTIPLE_COPY_GALLERY = RENAME_COMMAND = SEARCH_FLAG = false;
-				showToast(FileGalleryAdapter.C + " "+ getString(R.string.selectedformove));
-			} else if (action == 3 && FileGalleryAdapter.C != 0) {
-				COPY_FILES = FileGalleryAdapter.MULTI_FILES;
-				new CreateZip(mContext, size.x * 8 / 9, COPY_FILES);
-			} else
-				Toast.makeText(mContext, R.string.firstselectsomefiles,
-						Toast.LENGTH_SHORT).show();
-		} else if (ITEM == 1 && RootAdapter.MULTI_SELECT) {
-			if (action == 4 && RootAdapter.C != 0) {// DELETE THE MULTIPLE
-														// FILES IF ACTIONID = 4
-				new DeleteFiles(mContext, size.x*8/9, RootAdapter.MULTI_FILES,null);
-			} else if (action == 5 && RootAdapter.C > 0) {
-				MULTIPLE_COPY = true;
-				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
-				COPY_FILES = RootAdapter.MULTI_FILES;
-				showToast(RootAdapter.C + " "+ getString(R.string.selectedforcopy));
-			} else if (action == 2 && RootAdapter.C > 0) {
-				MULTIPLE_CUT = true;
-				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
-				COPY_FILES = RootAdapter.MULTI_FILES;
-				showToast(RootAdapter.C + " "+ getString(R.string.selectedformove));
-			} else if (action == 3 && RootAdapter.C > 0) {
-				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
-				COPY_FILES = RootAdapter.MULTI_FILES;
-				/*
-				 * BUG HAS TO BE FIXED WHILE ZIPPING FILES UNDER ROOT DIRECTORY
-				 * FOR NOW SHOWING TOAST MESSAGE SHOWING BCS OF INTERNAL ERROR
-				 * COPYING FAILED
-				 */
-				Toast.makeText(mContext, R.string.serviceUnavaila,Toast.LENGTH_SHORT).show();
-			} else
+		{
 				Toast.makeText(mContext, R.string.firstselectsomefiles,Toast.LENGTH_SHORT).show();
 
-		} else if (ITEM == 2 && SDAdapter.MULTI_SELECT) {
-			if (action == 4 && SDAdapter.C != 0) {
-				// DELETE THE MULTIPLE FILES IF ACTIONID = 4
-				new DeleteFiles(mContext, size.x*8/9, SDAdapter.MULTI_FILES,null);
-			} else if (action == 5 && SDAdapter.C != 0) {
-				MULTIPLE_COPY = true;
-				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
-				COPY_FILES = SDAdapter.MULTI_FILES;
-				showToast(SDAdapter.C + " "+ getString(R.string.selectedforcopy));
-			} else if (action == 2 && SDAdapter.C != 0) {
-				MULTIPLE_CUT = true;
-				COPY_FILES = SDAdapter.MULTI_FILES;
-				COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
-				showToast(SDAdapter.C + " "+ getString(R.string.selectedformove));
-			} else if (action == 3 && SDAdapter.C != 0) {
-				COPY_FILES = SDAdapter.MULTI_FILES;
-				MULTIPLE_COPY = MULTIPLE_CUT = COPY_COMMAND = CUT_COMMAND = RENAME_COMMAND = SEARCH_FLAG = false;
-				new CreateZip(mContext, size.x * 8 / 9, COPY_FILES);
-			} else
-				Toast.makeText(mContext, R.string.firstselectsomefiles,Toast.LENGTH_SHORT).show();
-		} else
+		} 
 			MultiModeDisabled(str);
 	}
 
@@ -4184,11 +4066,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				String ACTION = it.getAction();
 				if (ACTION.equalsIgnoreCase("FQ_BACKUP")|| ACTION.equals(Intent.ACTION_UNINSTALL_PACKAGE)){
 					setAdapter(CURRENT_ITEM);
-					nAppAdapter = new AppAdapter(mContext,R.layout.row_list_1, nList);
+					//nAppAdapter = new AppAdapter(mContext,R.layout.row_list_1, nList);
 					if (MULTI_SELECT_APPS) {
-						nAppAdapter.MULTI_SELECT = true;
+						//nAppAdapter.MULTI_SELECT = true;
 					}else if (!MULTI_SELECT_APPS) {
-						nAppAdapter.MULTI_SELECT = false;
+						//nAppAdapter.MULTI_SELECT = false;
 					}
 					APP_LIST_VIEW.setAdapter(nAppAdapter); 
 					APP_LIST_VIEW.setSelection(pos);
@@ -4218,13 +4100,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						Utils.update_Needed = true;
 					}
 					else if(CURRENT_ITEM == 0){
-						if(elementInFocus){
-							if(!FileGalleryAdapter.MULTI_SELECT)
-								element.notifyDataSetChanged();
-							else{
-								load_FIle_Gallery(fPos);
-							}
-						}	
+						
+							
 						Utils.updateUI();						
 					}					
 				} else if (ACTION.equalsIgnoreCase("FQ_FLASHZIP")) {

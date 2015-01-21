@@ -17,13 +17,15 @@
  *
  */
 
-package org.anurag.file.quest;
+package org.anurag.adapters;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.R;
 import org.anurag.fragments.AppStore;
 
 import android.content.Context;
@@ -37,33 +39,27 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
+public class AppAdapter extends BaseAdapter{
+	
 	private static HashMap<String, Drawable> ls;
 	private static HashMap<String, String> names;
 	private static HashMap<String, String> sizes;
 	private static HashMap<String, String> backups;
+	
 	private LayoutInflater inflater;
-	public static PackageManager nPManager;
+	private static PackageManager nPManager;
 	private ArrayList<ApplicationInfo> nList;
-	public ApplicationInfo info;
+	private ApplicationInfo info;
 	private static Context mContext;
 	private FileHolder nHolder;
-	public boolean[] thumbSelection;
-	public long C;
-	public boolean MULTI_SELECT; 
-	//static Message msg;
-	public ArrayList<ApplicationInfo> MULTI_APPS;
-	public AppAdapter(Context context, int textViewResourceId , ArrayList<ApplicationInfo> nInfo) {
-		super(context,textViewResourceId,nInfo);
+	
+	
+	public AppAdapter(Context context, ArrayList<ApplicationInfo> nInfo) {
 		nList = nInfo;
-		C = 0;
-		MULTI_APPS = new ArrayList<ApplicationInfo>();
-		MULTI_SELECT = false;
-		thumbSelection = new boolean[nList.size()];
 		mContext = context;
 		inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		nPManager = context.getPackageManager();
@@ -73,6 +69,21 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 		backups = new HashMap<String , String>();
 	}
 	
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return nList.size();
+	}
+	@Override
+	public Object getItem(int arg0) {
+		// TODO Auto-generated method stub
+		return nList.get(arg0);
+	}
+	@Override
+	public long getItemId(int arg0) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	private static class FileHolder{
 		ImageView FileIcon;
@@ -111,7 +122,12 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 		return convertView;
 	}
 		
-	public class AppLoader extends AsyncTask<ApplicationInfo, Void, Void>{
+	/**
+	 * class to load the app image,name,backup date,etc....
+	 * @author anurag
+	 *
+	 */
+	public static class AppLoader extends AsyncTask<ApplicationInfo, Void, Void>{
 		Drawable draw;
 		String name;
 		long date;
@@ -157,6 +173,7 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 			return null;
 		}		
 	}	
+	
 	public static long backupExists(ApplicationInfo in){
 		PackageInfo i = null;
 		String PATH = Environment.getExternalStorageDirectory().getPath();
@@ -194,4 +211,5 @@ public class AppAdapter extends ArrayAdapter<ApplicationInfo>{
 		else
 			return String.format(mContext.getString(R.string.sizebytes), (double)size);
 	}
+	
 }

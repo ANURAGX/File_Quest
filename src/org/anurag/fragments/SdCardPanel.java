@@ -22,6 +22,7 @@ package org.anurag.fragments;
 import java.util.ArrayList;
 
 import org.anurag.adapters.SDAdapter;
+import org.anurag.adapters.SimpleSDAdapter;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuestHD;
 import org.anurag.file.quest.Item;
@@ -39,6 +40,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -54,7 +56,7 @@ public class SdCardPanel extends Fragment{
 	private static SDManager manager;
 	public static int counter;
 	public static int[] ITEMS;
-	private static SDAdapter adapter;
+	private static BaseAdapter adapter;
 	
 	
 	public SdCardPanel() {
@@ -186,7 +188,7 @@ public class SdCardPanel extends Fragment{
 			super.onPostExecute(result);
 			if(adapter_list.size() != 0){
 				empty.setVisibility(View.GONE);
-				adapter = new SDAdapter(getActivity(), adapter_list);
+				adapter = getListAdapter();
 				list.setAdapter(adapter);
 			}else{
 				empty.setVisibility(View.VISIBLE);
@@ -266,5 +268,29 @@ public class SdCardPanel extends Fragment{
 	public static void clear_selected_items(){
 		list.setAdapter(adapter);				
 		counter = 0;
+	}
+	
+	/**
+	 * 
+	 * @return the adapter as per the settings....
+	 * will return detailed list adapter,simple list adapter,simple grid adapter or detailed
+	 * grid adapter....
+	 */
+	private BaseAdapter getListAdapter(){
+		switch(Constants.LIST_TYPE){
+		case 1:
+			return new SimpleSDAdapter(getActivity(), adapter_list);
+		case 2:
+			return new SDAdapter(getActivity(), adapter_list);
+			
+		}
+		return null; 
+	}
+	
+	/**
+	 * reloads the adapter when list type is changed....
+	 */
+	public static void resetAdapter(){
+		load.execute();
 	}
 }

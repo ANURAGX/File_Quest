@@ -339,7 +339,7 @@ public class RootManager {
 	 * @param f
 	 * @return
 	 */
-	static String getSize(File f){
+	public static String getSize(File f){
 		if(f.isDirectory()){
 			if(!f.canRead())
 				return ctx.getString(R.string.rootd);

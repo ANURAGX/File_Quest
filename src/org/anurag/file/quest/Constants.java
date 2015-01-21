@@ -121,6 +121,10 @@ public class Constants {
 	public static Drawable WEB;
 	public static Drawable SCRIPT;
 	
+	public static Drawable LOCK_IMG;
+	public static Drawable UNLOCK_IMG;
+	public static Drawable FAV_IMG;
+	public static Drawable NONFAV_IMG;
 	public static Point size;
 	
 	public static int PANEL_NO;
@@ -148,6 +152,17 @@ public class Constants {
 		UNKNOWN = ctx.getResources().getDrawable(R.drawable.unknown_icon_hd);
 		WEB = ctx.getResources().getDrawable(R.drawable.web_icon_hd);
 		SCRIPT = ctx.getResources().getDrawable(R.drawable.script_icon_hd);
+	}
+	
+	/**
+	 * 
+	 * @param ctx
+	 */
+	public static void BUILD_LIST_ICONS(Context ctx){
+		LOCK_IMG = ctx.getResources().getDrawable(R.drawable.lock_icon_hd);
+		UNLOCK_IMG = ctx.getResources().getDrawable(R.drawable.unlocked_icon_hd);
+		FAV_IMG = ctx.getResources().getDrawable(R.drawable.fav_icon_hd);
+		NONFAV_IMG = ctx.getResources().getDrawable(R.drawable.non_fav_icon_hd);
 	}
 	
 }

@@ -17,12 +17,18 @@
  *
  */
 
-package org.anurag.file.quest;
+package org.anurag.adapters;
 
 import java.io.File;
-import java.util.ArrayList;
+
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.Item;
+import org.anurag.file.quest.MasterPassword;
+import org.anurag.file.quest.R;
+import org.anurag.file.quest.RootManager;
+import org.anurag.file.quest.Utils;
 import org.anurag.fragments.FileGallery;
 
 import android.content.Context;
@@ -48,23 +54,18 @@ public class FileGalleryAdapter extends BaseAdapter {
 	private static ConcurrentHashMap<String, Bitmap> imgList;
 	private static ConcurrentHashMap<String, Drawable> apkList;
 	private static ConcurrentHashMap<String, Bitmap> musicList;
+	
 	private Bitmap image;
-	public static boolean MULTI_SELECT;
-	public static boolean[] thumbselection;
-	public static long C;
 	private Item item;
 	private Context ctx;
 	private ConcurrentHashMap<String, Item> list;
 	private LayoutInflater inflater;
-	static ArrayList<Item> MULTI_FILES;
-
+	
 	public FileGalleryAdapter(Context context, ConcurrentHashMap<String, Item> object,
 			ConcurrentHashMap<String, String> key) {
 		// TODO Auto-generated constructor stub
 		ctx = context;
-		MULTI_FILES = new ArrayList<Item>();
 		list = object;
-		thumbselection = new boolean[list.size()];
 		this.keys = key;
 		inflater = (LayoutInflater) ctx
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -119,11 +120,9 @@ public class FileGalleryAdapter extends BaseAdapter {
 		
 
 		if (item.isLocked())
-			h.lockimg.setImageDrawable(ctx.getResources().getDrawable(
-					R.drawable.lock_icon_hd));
+			h.lockimg.setImageDrawable(Constants.LOCK_IMG);
 		else
-			h.lockimg.setImageDrawable(ctx.getResources().getDrawable(
-					R.drawable.unlocked_icon_hd));
+			h.lockimg.setImageDrawable(Constants.UNLOCK_IMG);
 
 		h.lockimg.setId(pos);
 		h.lockimg.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +131,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 				// TODO Auto-generated method stub
 				ImageView img = (ImageView) v;
 				SharedPreferences prefs = ctx.getSharedPreferences(
-						"MY_APP_SETTINGS", 0);
+						"SETTINGS", 0);
 				if (!list.get(keys.get(""+img.getId())).isLocked()) {
 					// checking for master password is set or not
 					String passwd = prefs.getString("MASTER_PASSWORD", null);
@@ -144,7 +143,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 						new MasterPassword(ctx, Constants.size.x * 8 / 9, null,prefs, Constants.MODES.DEFAULT);
 					} else {
 						list.get(keys.get(""+img.getId())).setLockStatus(true);
-						img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.lock_icon_hd));
+						img.setImageDrawable(Constants.LOCK_IMG);
 						Constants.db.insertNodeToLock(list.get(keys.get(""+img.getId())).getFile().getAbsolutePath());
 						Toast.makeText(ctx, R.string.itemlocked,Toast.LENGTH_SHORT).show();
 					}
@@ -160,11 +159,9 @@ public class FileGalleryAdapter extends BaseAdapter {
 		});
 
 		if (Constants.db.isFavItem(item.getPath()))
-			h.favimg.setImageDrawable(ctx.getResources().getDrawable(
-					R.drawable.fav_icon_hd));
+			h.favimg.setImageDrawable(Constants.FAV_IMG);
 		else
-			h.favimg.setImageDrawable(ctx.getResources().getDrawable(
-					R.drawable.non_fav_icon_hd));
+			h.favimg.setImageDrawable(Constants.NONFAV_IMG);
 
 		h.favimg.setId(pos);
 		h.favimg.setOnClickListener(new View.OnClickListener() {
@@ -173,8 +170,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 				// TODO Auto-generated method stub
 				ImageView im = (ImageView) v;
 				if (list.get(keys.get(""+im.getId())).isFavItem()) {
-					im.setImageDrawable(ctx.getResources().getDrawable(
-							R.drawable.non_fav_icon_hd));
+					im.setImageDrawable(Constants.NONFAV_IMG);
 					list.get(keys.get(""+im.getId())).setFavStatus(false);
 					Constants.db.deleteFavItem(list.get(keys.get(""+im.getId())).getPath());
 					Toast.makeText(ctx, R.string.favremoved, Toast.LENGTH_SHORT)
@@ -183,8 +179,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 					// removed....
 					Utils.buildFavItems(list.get(keys.get(""+im.getId())) , false);
 				} else {
-					im.setImageDrawable(ctx.getResources().getDrawable(
-							R.drawable.fav_icon_hd));
+					im.setImageDrawable(Constants.FAV_IMG);
 					list.get(keys.get(""+im.getId())).setFavStatus(true);
 					Constants.db.insertNodeToFav(list.get(keys.get(""+im.getId())).getPath());
 					Toast.makeText(ctx, R.string.favadded, Toast.LENGTH_SHORT)

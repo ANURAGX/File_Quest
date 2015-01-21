@@ -112,12 +112,15 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		Constants.COLOR_STYLE = prefs.getInt("COLOR_STYLE", 0xFF5161BC);
 		Constants.LIST_ANIM = prefs.getInt("LIST_ANIM", 3);
 		Constants.ACTION_AT_TOP = prefs.getBoolean("ACTION_AT_TOP", false);
-		Constants.LIST_TYPE = prefs.getInt("LIST_TYPE", 1);
+		Constants.LIST_TYPE = prefs.getInt("LIST_TYPE", 2);
 		
 		Constants.size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(Constants.size);
 		Constants.BUILD_ICONS(FileQuestHD.this);
 		prefs_editor = prefs.edit();
+		
+		//builds the icons for list view....
+		Constants.BUILD_LIST_ICONS(FileQuestHD.this);
 		
 		//building the theme style as per the color selected by user.... 
 		ThemeOrganizer.BUILD_THEME(Constants.COLOR_STYLE);
@@ -395,6 +398,9 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	@Override
 	public boolean onMenuItemClick(MenuItem item) {
 		// TODO Auto-generated method stub
+		
+		//int panel = pager.getCurrentItem();
+		
 		switch(item.getItemId()){
 		case R.id.red:
 			Constants.COLOR_STYLE = getResources().getColor(R.color.red);
@@ -436,12 +442,84 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				FileGallery.refresh_list();
 			else 
 				AppStore.refresh_list();
-			return true;	
-		
+			return true;
+			
+		case R.id.simple_ls:
+			//setting simple list view for the app....
+			change_list_type(1 , pager.getCurrentItem());
+			return true;
+			
+		case R.id.detail_ls:
+			//setting he detailed list view....
+			change_list_type(2 , pager.getCurrentItem());
+			return true;
+			
+		case R.id.simple_grid:
+		case R.id.detail_grid:	
+					
 		}
 		
 		return true;
 	}
+
+	/**
+	 * 
+	 * @param i tells the kind of list view....
+	 * @param panel current pager item....
+	 */
+	private void change_list_type(int i , int panel) {
+		// TODO Auto-generated method stub
+		
+		//saving the settings....
+		Constants.LIST_TYPE = i;
+		prefs_editor.putInt("LIST_TYPE", Constants.LIST_TYPE);
+		prefs_editor.commit();
+		
+		//setting list view of current pager item....
+		switch(panel){
+		case 0:
+			FileGallery.resetAdapter();
+			break;
+			
+		case 1:
+			RootPanel.resetAdapter();
+			break;
+		
+		case 2:
+			SdCardPanel.resetAdapter();
+			break;
+			
+		case 3:
+			AppStore.resetAdapter();
+			break;
+			
+		}
+		
+		//now setting the list view for other panels which are not visible....
+		for(int j = 0 ; j<4 ; ++j){
+			if(j != panel){
+				switch(j){
+				case 0:
+					FileGallery.resetAdapter();
+					break;
+					
+				case 1:
+					RootPanel.resetAdapter();
+					break;
+				
+				case 2:
+					SdCardPanel.resetAdapter();
+					break;
+					
+				case 3:
+					AppStore.resetAdapter();
+					break;
+					
+				}
+			}
+		}
+	}
+
 
 	/**
 	 * this function is invoked when user changes the color

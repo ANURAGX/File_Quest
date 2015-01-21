@@ -21,13 +21,12 @@ package org.anurag.fragments;
 
 import java.util.ArrayList;
 
-import org.anurag.file.quest.AppAdapter;
+import org.anurag.adapters.AppAdapter;
+import org.anurag.adapters.SimpleAppAdapter;
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.AppManager;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
-
-import com.twotoasters.jazzylistview.JazzyHelper;
 
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -39,7 +38,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+
+import com.twotoasters.jazzylistview.JazzyHelper;
 
 public class AppStore extends Fragment{
 	
@@ -47,10 +49,9 @@ public class AppStore extends Fragment{
 	private ArrayList<ApplicationInfo> apps;
 	private static LoadApps load;
 	private AppManager manager;
-	
 	public static int counter;
 	public static int[] ITEMS;
-	private static AppAdapter adapter;
+	private static BaseAdapter adapter;
 	public AppStore() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
@@ -172,7 +173,7 @@ public class AppStore extends Fragment{
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			adapter = new AppAdapter(getActivity(), R.layout.row_list_app, apps);
+			adapter = getListAdapter();
 			ls.setAdapter(adapter);
 			load = new LoadApps();
 		}
@@ -209,4 +210,28 @@ public class AppStore extends Fragment{
 		ls.setAdapter(adapter);
 		counter = 0;
 	}
+	
+	/**
+	 * 
+	 * @return the adapter as per the settings....
+	 * will return detailed list adapter,simple list adapter,simple grid adapter or detailed
+	 * grid adapter....
+	 */
+	private BaseAdapter getListAdapter(){
+		switch(Constants.LIST_TYPE){
+		case 1:
+			return new SimpleAppAdapter(getActivity(), apps);
+		case 2:
+			return new AppAdapter(getActivity(), apps);
+			
+		}
+		return null; 
+	}
+	
+	/**
+	 * reloads the adapter when list type is changed....
+	 */
+	public static void resetAdapter(){
+		load.execute();
+	}	
 }

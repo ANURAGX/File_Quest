@@ -21,7 +21,9 @@ package org.anurag.fragments;
 
 import java.util.ArrayList;
 
+
 import org.anurag.adapters.RootAdapter;
+import org.anurag.adapters.SimpleRootAdapter;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuestHD;
 import org.anurag.file.quest.Item;
@@ -41,6 +43,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -54,7 +57,7 @@ public class RootPanel extends Fragment{
 	private static RootManager manager;
 	public static int ITEMS[];
 	public static int counter;
-	private static RootAdapter adapter;
+	private static BaseAdapter adapter;
 	
 	public RootPanel() {
 		// TODO Auto-generated constructor stub
@@ -186,7 +189,7 @@ public class RootPanel extends Fragment{
 			super.onPostExecute(result);
 			if(adapter_list.size() != 0){
 				empty.setVisibility(View.GONE);
-				adapter = new RootAdapter(getActivity(), adapter_list);
+				adapter = getListAdapter();
 				list.setAdapter(adapter);
 			}else
 				empty.setVisibility(View.VISIBLE);
@@ -266,4 +269,27 @@ public class RootPanel extends Fragment{
 		counter = 0;
 	}
 
+	/**
+	 * 
+	 * @return the adapter as per the settings....
+	 * will return detailed list adapter,simple list adapter,simple grid adapter or detailed
+	 * grid adapter....
+	 */
+	private BaseAdapter getListAdapter(){
+		switch(Constants.LIST_TYPE){
+		case 1:
+			return new SimpleRootAdapter(getActivity(), adapter_list);
+		case 2:
+			return new RootAdapter(getActivity(), adapter_list);
+			
+		}
+		return null; 
+	}
+	
+	/**
+	 * reloads the adapter when list type is changed....
+	 */
+	public static void resetAdapter(){
+		load.execute();
+	}
 }

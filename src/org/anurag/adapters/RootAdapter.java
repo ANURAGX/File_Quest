@@ -51,20 +51,17 @@ public class RootAdapter extends BaseAdapter{
 	private static HashMap<String, Bitmap> imgList;
 	private static HashMap<String, Drawable> apkList;
 	private static HashMap<String, Bitmap> musicList;
-	Bitmap image;
-	Holder h;
-	public static boolean MULTI_SELECT;
-	public static boolean[] thumbselection;
-	public static long C;
-	Item item;
-	Context ctx;
-	ArrayList<Item> list; 
-	LayoutInflater inflater;
-	public static ArrayList<Item> MULTI_FILES;
+	
+	private Bitmap image;
+	private Holder h;
+	private Item item;
+	private Context ctx;
+	private ArrayList<Item> list; 
+	private LayoutInflater inflater;
+	
 	public RootAdapter(Context context,ArrayList<Item> object) {
 		// TODO Auto-generated constructor stub
 		ctx = context;
-		MULTI_FILES = new ArrayList<Item>();
 		list = object;
 		inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		imgList = new HashMap<String , Bitmap>();

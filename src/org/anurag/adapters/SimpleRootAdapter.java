@@ -1,5 +1,5 @@
 /**
- * Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+ * Copyright(c) 2015 DRAWNZER.ORG PROJECTS -> ANURAG
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,29 +46,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+public class SimpleRootAdapter extends BaseAdapter{
 
-public class SDAdapter extends BaseAdapter{
-	private HashMap<String, Drawable> apkList;
-	private HashMap<String, Bitmap> imgList;
-	private HashMap<String, Bitmap> musicList;
-	
-	private Bitmap image;
-	private Holder h;
+	private LayoutInflater inf;
+	private ArrayList<Item> list;
 	private Item item;
 	private Context ctx;
-	private ArrayList<Item> list; 
-	private LayoutInflater inflater;
 	
-	public SDAdapter(Context context,ArrayList<Item> object) {
+	private static HashMap<String, Drawable> apkList;
+	private static HashMap<String, Bitmap> imgList;
+	private static HashMap<String, Bitmap> musicList;
+	private Bitmap image;
+	
+	public SimpleRootAdapter(Context ct , ArrayList<Item> objs) {
 		// TODO Auto-generated constructor stub
-		ctx = context;
-		list = object;
-		inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		imgList = new HashMap<String , Bitmap>();
-		apkList = new HashMap<String , Drawable>();
-		musicList = new HashMap<String , Bitmap>();
+		list = objs;
+		ctx = ct;
+		inf = (LayoutInflater) ct.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		apkList = new HashMap<>();
+		imgList = new HashMap<>();
+		musicList = new HashMap<>();
 	}
-
+	
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -87,38 +86,32 @@ public class SDAdapter extends BaseAdapter{
 		return arg0;
 	}
 
-	class Holder{
-		ImageView icon;
-		TextView fName;
-		TextView fType;
-		TextView fSize;
-	//	CheckBox box;
+	class hold{
+		ImageView icn;
+		TextView name;
 		ImageView lockimg;
 		ImageView favimg;
 	}
 	
 	@Override
-	public View getView(int pos, View convertView2, ViewGroup arg2) {
+	public View getView(int arg0, View arg1, ViewGroup arg2) {
 		// TODO Auto-generated method stub
-		item = list.get(pos);
-		h = new Holder();
-		View convertView = null;
-		h = new Holder();
-		convertView = inflater.inflate(R.layout.row_list_1, arg2 , false);
-		h.icon = (ImageView)convertView.findViewById(R.id.fileIcon);
-		h.fName = (TextView)convertView.findViewById(R.id.fileName);
-		h.fType = (TextView)convertView.findViewById(R.id.fileType);
-		h.fSize = (TextView)convertView.findViewById(R.id.fileSize);
-		h.lockimg = (ImageView)convertView.findViewById(R.id.lockimg);
-		h.favimg = (ImageView)convertView.findViewById(R.id.favimg);
-		convertView.setTag(h);
+		hold h = new hold();
+		item = list.get(arg0);
+		View view = inf.inflate(R.layout.simple_list_hd, arg2 , false);
+		h.icn = (ImageView) view.findViewById(R.id.fileIcon);
+		h.name = (TextView) view.findViewById(R.id.fileName);
+		h.lockimg = (ImageView) view.findViewById(R.id.lockimg);
+		h.favimg = (ImageView) view.findViewById(R.id.favimg);
+		view.setTag(h);
 		
 		if(item.isLocked())
 			h.lockimg.setImageDrawable(Constants.LOCK_IMG);
 		else
 			h.lockimg.setImageDrawable(Constants.UNLOCK_IMG);
 		
-		h.lockimg.setId(pos);
+		
+		h.lockimg.setId(arg0);
 		h.lockimg.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -134,7 +127,7 @@ public class SDAdapter extends BaseAdapter{
 					}
 					else{
 						list.get(img.getId()).setLockStatus(true);
-						img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.lock_icon_hd));
+						img.setImageDrawable(Constants.LOCK_IMG);
 						Constants.db.insertNodeToLock(list.get(img.getId()).getFile().getAbsolutePath());
 						Toast.makeText(ctx, R.string.itemlocked, Toast.LENGTH_SHORT).show();
 					}					
@@ -145,20 +138,21 @@ public class SDAdapter extends BaseAdapter{
 				}
 			}
 		});
-		
+
 		if(item.isFavItem())
 			h.favimg.setImageDrawable(Constants.FAV_IMG);
 		else
 			h.favimg.setImageDrawable(Constants.NONFAV_IMG);
 		
-		h.favimg.setId(pos);
+
+		h.favimg.setId(arg0);
 		h.favimg.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				ImageView im = (ImageView)v;
 				if(list.get(im.getId()).isFavItem()){
-					im.setImageDrawable(ctx.getResources().getDrawable(R.drawable.non_fav_icon_hd));
+					im.setImageDrawable(Constants.NONFAV_IMG);
 					list.get(im.getId()).setFavStatus(false);
 					Constants.db.deleteFavItem(list.get(im.getId()).getPath());
 					Toast.makeText(ctx, R.string.favremoved, Toast.LENGTH_SHORT).show();
@@ -166,7 +160,7 @@ public class SDAdapter extends BaseAdapter{
 					Utils.buildFavItems(list.get(im.getId()) , false);
 					Utils.fav_Update_Needed = true;
 				}else{
-					im.setImageDrawable(ctx.getResources().getDrawable(R.drawable.fav_icon_hd));
+					im.setImageDrawable(Constants.FAV_IMG);
 					list.get(im.getId()).setFavStatus(true);
 					Constants.db.insertNodeToFav(list.get(im.getId()).getPath());
 					Toast.makeText(ctx, R.string.favadded, Toast.LENGTH_SHORT).show();
@@ -177,40 +171,38 @@ public class SDAdapter extends BaseAdapter{
 			}
 		});
 		
-		h.fName.setText(item.getName());
-		h.fType.setText(item.getType());
-		h.fSize.setText(item.getSize());
-		h.icon.setImageDrawable(item.getIcon());
+		h.name.setText(item.getName());
+		h.icn.setImageDrawable(item.getIcon());
 		if(item.getType().equals("Image")){
 			image = imgList.get(item.getPath());
 			if(image != null)
-				h.icon.setImageBitmap(image);
+				h.icn.setImageBitmap(image);
 			else
-				new LoadImage(h.icon, item).execute();
+				new LoadImage(h.icn, item).execute();
 		}else if(item.getType().equals("App")){
 			Drawable draw = apkList.get(item.getPath());
 			if(draw == null)
-				new LoadApkIcon(h.icon, item).execute();
+				new LoadApkIcon(h.icn, item).execute();
 			else
-				h.icon.setImageDrawable(draw);
+				h.icn.setImageDrawable(draw);
 			
 		}else if(item.getType().equals("Music")){
 			Bitmap music = musicList.get(item.getPath());
 			if(music !=null)
-				h.icon.setImageBitmap(music);
+				h.icn.setImageBitmap(music);
 			else
-				new LoadAlbumArt(h.icon , item).execute();
+				new LoadAlbumArt(h.icn , item).execute();
 			
 		}
-		
+			
 		//true when multi select is on....
 		if(Constants.LONG_CLICK){
-			if(SdCardPanel.ITEMS[pos] == 1)
-				convertView.setBackgroundColor(ctx.getResources().getColor(R.color.white_grey));
+			if(SdCardPanel.ITEMS[arg0] == 1)
+				view.setBackgroundColor(ctx.getResources().getColor(R.color.white_grey));
 		}
-		
-		return convertView;
-	}	
+		return view;
+	}
+
 	
 	/**
 	 * class to load images thumbnail...
@@ -367,5 +359,5 @@ public class SDAdapter extends BaseAdapter{
 			}
 			return null;
 		}		
-	}
+	}	
 }
