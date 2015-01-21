@@ -19,6 +19,11 @@
 
 package org.anurag.adapters;
 
+import org.anurag.fragments.AppStore;
+import org.anurag.fragments.FileGallery;
+import org.anurag.fragments.RootPanel;
+import org.anurag.fragments.SdCardPanel;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;

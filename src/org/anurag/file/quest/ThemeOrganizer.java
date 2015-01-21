@@ -19,8 +19,9 @@
 
 package org.anurag.file.quest;
 
-import org.anurag.adapters.RootPanel;
-import org.anurag.adapters.SdCardPanel;
+
+import org.anurag.fragments.RootPanel;
+import org.anurag.fragments.SdCardPanel;
 
 import android.content.Context;
 

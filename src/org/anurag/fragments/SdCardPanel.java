@@ -17,21 +17,21 @@
  *
  */
 
-package org.anurag.adapters;
+package org.anurag.fragments;
 
 import java.util.ArrayList;
 
-import org.anurag.file.quest.AppAdapter;
-import org.anurag.file.quest.AppBackup;
-import org.anurag.file.quest.AppManager;
+import org.anurag.adapters.SDAdapter;
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.FileQuestHD;
+import org.anurag.file.quest.Item;
+import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
-
-import com.twotoasters.jazzylistview.JazzyHelper;
+import org.anurag.file.quest.SDManager;
 
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,23 +39,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
-public class AppStore extends Fragment{
+import com.twotoasters.jazzylistview.JazzyHelper;
+
+
+public class SdCardPanel extends Fragment{
 	
-	private static ListView ls;
-	private ArrayList<ApplicationInfo> apps;
-	private static LoadApps load;
-	private AppManager manager;
-	
+	private static ListView list;
+	private LinearLayout empty;
+	private ArrayList<Item> adapter_list;
+	private static LoadList load;
+	private static SDManager manager;
 	public static int counter;
 	public static int[] ITEMS;
-	private static AppAdapter adapter;
-	public AppStore() {
+	private static SDAdapter adapter;
+	
+	
+	public SdCardPanel() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
 	}
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -67,15 +73,16 @@ public class AppStore extends Fragment{
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
-		ls = (ListView) view.findViewById(R.id.list_view_hd);
-		ls.setSelector(R.drawable.list_selector_hd);
-		setAnim(ls);
+		list = (ListView)view.findViewById(R.id.list_view_hd);		
+		empty = (LinearLayout) view.findViewById(R.id.empty);
+		list.setSelector(R.drawable.list_selector_hd);
+		setAnim(list);
 		if(load == null){
-			load = new LoadApps();
+			load = new LoadList();
 			load.execute();
-		}			
+		}	
 		
-		ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
@@ -100,21 +107,28 @@ public class AppStore extends Fragment{
 					return;					
 				}
 				
-				
-				ArrayList<ApplicationInfo> infos = new ArrayList<ApplicationInfo>();
-				infos.add(apps.get(position));
-				new AppBackup(getActivity(), Constants.size.x*8/9, infos);
+				Item item = adapter_list.get(position);
+				if(item.isDirectory()){
+					//selecting a folder....
+					manager.pushPath(item.getPath());
+					FileQuestHD.notify_Title_Indicator(2, item.getName());
+					load.execute();
+				}else{
+					//selecting a file....
+					new OpenFileDialog(getActivity(), Uri.parse(item.getPath())
+							, Constants.size.x*8/9);
+				}
 			}
 		});
 		
-		ls.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+		list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				// TODO Auto-generated method stub
 				boolean sendBroadcast = false;
 				if(ITEMS == null){
-					ITEMS = new int[apps.size()];
+					ITEMS = new int[adapter_list.size()];
 					sendBroadcast = true;
 				}
 				
@@ -134,14 +148,12 @@ public class AppStore extends Fragment{
 				
 				if(sendBroadcast)
 					getActivity().sendBroadcast(new Intent("inflate_long_click_menu"));
-				
 				return true;
 			}
 		});
 		
-		
 	}
-	
+		
 	/**
 	 * this function sets transition effect for list view.... 
 	 * @param list2
@@ -152,47 +164,93 @@ public class AppStore extends Fragment{
 		help.setTransitionEffect(Constants.LIST_ANIM);
 		list2.setOnScrollListener(help);
 	}
-	
-	/**
-	 * sets the list view selector as per selected theme
-	 * dynamically by user....
-	 */
-	/*public static void setListSelector(){
-		ls.setSelector(Constants.SELECTOR_STYLE);
-	}*/
-	
+
+
+
 	/**
 	 * 
 	 * @author anurag
 	 *
 	 */
-	private class LoadApps extends AsyncTask<Void, Void , Void>{
-
+	private class LoadList extends AsyncTask<Void , Void , Void>{
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			
+		}		
+		
 		@Override
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			adapter = new AppAdapter(getActivity(), R.layout.row_list_app, apps);
-			ls.setAdapter(adapter);
-			load = new LoadApps();
+			if(adapter_list.size() != 0){
+				empty.setVisibility(View.GONE);
+				adapter = new SDAdapter(getActivity(), adapter_list);
+				list.setAdapter(adapter);
+			}else{
+				empty.setVisibility(View.VISIBLE);
+			}
+			load = new LoadList();
+		}
+
+		@Override
+		protected void onProgressUpdate(Void... values) {
+			// TODO Auto-generated method stub
+			super.onProgressUpdate(values);
 		}
 
 		@Override
 		protected Void doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			if(manager == null)
-				manager = new AppManager(getActivity());
-			apps = manager.get_downloaded_apps();
+				manager = new SDManager(getActivity());
+			adapter_list = manager.getList();
 			return null;
-		}
-		
+		}		
+	}	
+	
+	/**
+	 * moves one level back....
+	 */
+	public static void navigate_to_back(){
+		manager.popTopPath();
+		FileQuestHD.notify_Title_Indicator(2, manager.getCurrentDirectoryName());
+		load.execute();
+	}
+	
+	/**
+	 * sets the list view selector as per selected theme
+	 * dynamically by user....
+	 */
+	/*public static void setListSelector(){
+		list.setSelector(Constants.SELECTOR_STYLE);
+	}*/
+	
+	/**
+	 * 
+	 * @return true if current directory is /
+	 */
+	public static boolean isAtTopLevel(){
+		if(manager.getCurrentDirectory().equalsIgnoreCase(Constants.PATH))
+			return true;
+		return false;
+	}
+	
+
+	/**
+	 * reloads the current folder
+	 * called when the folder icon has to be changed....
+	 */
+	public static void notifyDataSetChanged(){
+		load.execute();
 	}
 	
 	/**
 	 * refreshes the list view....
 	 */
 	public static void refresh_list(){
-		ls.setAdapter(null);
+		list.setAdapter(null);
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
@@ -206,7 +264,7 @@ public class AppStore extends Fragment{
 	 * this function clears the selected items via long click from lits view....
 	 */
 	public static void clear_selected_items(){
-		ls.setAdapter(adapter);
+		list.setAdapter(adapter);				
 		counter = 0;
 	}
 }

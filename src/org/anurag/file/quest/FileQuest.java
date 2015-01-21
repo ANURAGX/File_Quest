@@ -27,6 +27,8 @@ import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.ZipFile;
 
+import org.anurag.adapters.RootAdapter;
+import org.anurag.adapters.SDAdapter;
 import org.anurag.compress.ArchiveEntryProperties;
 import org.anurag.compress.CreateZip;
 import org.anurag.compress.CreateZipApps;

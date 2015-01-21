@@ -22,13 +22,12 @@ package org.anurag.file.quest;
 import java.net.URL;
 import java.util.Scanner;
 
-import org.anurag.adapters.AppStore;
-import org.anurag.adapters.FileGallery;
 import org.anurag.adapters.PagerAdapters;
-import org.anurag.adapters.RootPanel;
-import org.anurag.adapters.SdCardPanel;
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
-import org.anurag.gesture.AddGesture;
+import org.anurag.fragments.AppStore;
+import org.anurag.fragments.FileGallery;
+import org.anurag.fragments.RootPanel;
+import org.anurag.fragments.SdCardPanel;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;

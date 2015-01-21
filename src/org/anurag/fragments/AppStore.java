@@ -17,23 +17,21 @@
  *
  */
 
-package org.anurag.adapters;
+package org.anurag.fragments;
 
 import java.util.ArrayList;
 
+import org.anurag.file.quest.AppAdapter;
+import org.anurag.file.quest.AppBackup;
+import org.anurag.file.quest.AppManager;
 import org.anurag.file.quest.Constants;
-import org.anurag.file.quest.FileQuestHD;
-import org.anurag.file.quest.Item;
-import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
-import org.anurag.file.quest.RootAdapter;
-import org.anurag.file.quest.RootManager;
 
 import com.twotoasters.jazzylistview.JazzyHelper;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -41,26 +39,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
-
-public class RootPanel extends Fragment{
+public class AppStore extends Fragment{
 	
-	private static ListView list;
-	private LinearLayout empty;
-	private ArrayList<Item> adapter_list;
-	private static LoadList load;
-	private static RootManager manager;
-	public static int ITEMS[];
+	private static ListView ls;
+	private ArrayList<ApplicationInfo> apps;
+	private static LoadApps load;
+	private AppManager manager;
+	
 	public static int counter;
-	private static RootAdapter adapter;
-	
-	public RootPanel() {
+	public static int[] ITEMS;
+	private static AppAdapter adapter;
+	public AppStore() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -72,17 +67,15 @@ public class RootPanel extends Fragment{
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
-		list = (ListView)view.findViewById(R.id.list_view_hd);	
-		empty = (LinearLayout) view.findViewById(R.id.empty);
-		list.setSelector(R.drawable.list_selector_hd);
-		setAnim(list);
+		ls = (ListView) view.findViewById(R.id.list_view_hd);
+		ls.setSelector(R.drawable.list_selector_hd);
+		setAnim(ls);
 		if(load == null){
-			load = new LoadList();
+			load = new LoadApps();
 			load.execute();
-		}
+		}			
 		
-
-		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
@@ -107,28 +100,21 @@ public class RootPanel extends Fragment{
 					return;					
 				}
 				
-				Item item = adapter_list.get(position);
-				if(item.isDirectory()){
-					//selecting a folder....
-					manager.pushPath(item.getPath());
-					FileQuestHD.notify_Title_Indicator(1, item.getName());
-					load.execute();
-				}else{
-					//selecting a file....
-					new OpenFileDialog(getActivity(), Uri.parse(item.getPath())
-							, Constants.size.x*8/9);
-				}
+				
+				ArrayList<ApplicationInfo> infos = new ArrayList<ApplicationInfo>();
+				infos.add(apps.get(position));
+				new AppBackup(getActivity(), Constants.size.x*8/9, infos);
 			}
-		});		
+		});
 		
-		list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+		ls.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				// TODO Auto-generated method stub
 				boolean sendBroadcast = false;
 				if(ITEMS == null){
-					ITEMS = new int[adapter_list.size()];
+					ITEMS = new int[apps.size()];
 					sendBroadcast = true;
 				}
 				
@@ -148,12 +134,14 @@ public class RootPanel extends Fragment{
 				
 				if(sendBroadcast)
 					getActivity().sendBroadcast(new Intent("inflate_long_click_menu"));
+				
 				return true;
 			}
 		});
 		
-	}
 		
+	}
+	
 	/**
 	 * this function sets transition effect for list view.... 
 	 * @param list2
@@ -166,90 +154,45 @@ public class RootPanel extends Fragment{
 	}
 	
 	/**
-	 *
-	 * this class loads the list of files and folders in background thread
-	 * and inflates the results in list view....
+	 * sets the list view selector as per selected theme
+	 * dynamically by user....
+	 */
+	/*public static void setListSelector(){
+		ls.setSelector(Constants.SELECTOR_STYLE);
+	}*/
+	
+	/**
+	 * 
 	 * @author anurag
 	 *
 	 */
-	private class LoadList extends AsyncTask<Void , Void , Void>{
-		@Override
-		protected void onPreExecute() {
-			// TODO Auto-generated method stub
-			super.onPreExecute();
-			
-		}		
-		
+	private class LoadApps extends AsyncTask<Void, Void , Void>{
+
 		@Override
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			if(adapter_list.size() != 0){
-				empty.setVisibility(View.GONE);
-				adapter = new RootAdapter(getActivity(), adapter_list);
-				list.setAdapter(adapter);
-			}else
-				empty.setVisibility(View.VISIBLE);
-			load = new LoadList();
-		}
-
-		@Override
-		protected void onProgressUpdate(Void... values) {
-			// TODO Auto-generated method stub
-			super.onProgressUpdate(values);
+			adapter = new AppAdapter(getActivity(), R.layout.row_list_app, apps);
+			ls.setAdapter(adapter);
+			load = new LoadApps();
 		}
 
 		@Override
 		protected Void doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			if(manager == null)
-				manager = new RootManager(getActivity());
-			adapter_list = manager.getList();
+				manager = new AppManager(getActivity());
+			apps = manager.get_downloaded_apps();
 			return null;
-		}		
-	}	
-	
-	/**
-	 * moves one level back....
-	 */
-	public static void navigate_to_back(){
-		manager.popTopPath();
-		FileQuestHD.notify_Title_Indicator(1, manager.getCurrentDirectoryName());
-		load.execute();
-	}
-	
-	/**
-	 * sets the list view selector as per selected theme
-	 * dynamically by user....
-	 */
-	/*public static void setListSelector(){
-		list.setSelector(Constants.SELECTOR_STYLE);
-	}*/
-	
-	/**
-	 * 
-	 * @return true if current directory is /
-	 */
-	public static boolean isAtTopLevel(){
-		if(manager.getCurrentDirectory().equalsIgnoreCase("/"))
-			return true;
-		return false;
-	}
-
-	/**
-	 * reloads the current folder
-	 * called when the folder icon has to be changed....
-	 */
-	public static void notifyDataSetChanged() {
-		// TODO Auto-generated method stub
-		load.execute();
+		}
+		
 	}
 	
 	/**
 	 * refreshes the list view....
 	 */
 	public static void refresh_list(){
-		list.setAdapter(null);
+		ls.setAdapter(null);
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
@@ -258,12 +201,12 @@ public class RootPanel extends Fragment{
 		}
 		load.execute();
 	}
+	
 	/**
 	 * this function clears the selected items via long click from lits view....
 	 */
 	public static void clear_selected_items(){
-		list.setAdapter(adapter);
+		ls.setAdapter(adapter);
 		counter = 0;
 	}
-
 }

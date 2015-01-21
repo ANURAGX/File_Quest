@@ -24,8 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import org.anurag.adapters.AppStore;
-import org.anurag.adapters.SdCardPanel;
+import org.anurag.fragments.AppStore;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

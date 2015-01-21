@@ -17,17 +17,19 @@
  *
  */
 
-package org.anurag.adapters;
+package org.anurag.fragments;
 
 import java.util.ArrayList;
 
+import org.anurag.adapters.RootAdapter;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuestHD;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
-import org.anurag.file.quest.SDAdapter;
-import org.anurag.file.quest.SDManager;
+import org.anurag.file.quest.RootManager;
+
+import com.twotoasters.jazzylistview.JazzyHelper;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -42,22 +44,19 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.twotoasters.jazzylistview.JazzyHelper;
 
-
-public class SdCardPanel extends Fragment{
+public class RootPanel extends Fragment{
 	
 	private static ListView list;
 	private LinearLayout empty;
 	private ArrayList<Item> adapter_list;
 	private static LoadList load;
-	private static SDManager manager;
+	private static RootManager manager;
+	public static int ITEMS[];
 	public static int counter;
-	public static int[] ITEMS;
-	private static SDAdapter adapter;
+	private static RootAdapter adapter;
 	
-	
-	public SdCardPanel() {
+	public RootPanel() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
 	}
@@ -73,15 +72,16 @@ public class SdCardPanel extends Fragment{
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
-		list = (ListView)view.findViewById(R.id.list_view_hd);		
+		list = (ListView)view.findViewById(R.id.list_view_hd);	
 		empty = (LinearLayout) view.findViewById(R.id.empty);
 		list.setSelector(R.drawable.list_selector_hd);
 		setAnim(list);
 		if(load == null){
 			load = new LoadList();
 			load.execute();
-		}	
+		}
 		
+
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
@@ -111,7 +111,7 @@ public class SdCardPanel extends Fragment{
 				if(item.isDirectory()){
 					//selecting a folder....
 					manager.pushPath(item.getPath());
-					FileQuestHD.notify_Title_Indicator(2, item.getName());
+					FileQuestHD.notify_Title_Indicator(1, item.getName());
 					load.execute();
 				}else{
 					//selecting a file....
@@ -119,7 +119,7 @@ public class SdCardPanel extends Fragment{
 							, Constants.size.x*8/9);
 				}
 			}
-		});
+		});		
 		
 		list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 			@Override
@@ -164,11 +164,11 @@ public class SdCardPanel extends Fragment{
 		help.setTransitionEffect(Constants.LIST_ANIM);
 		list2.setOnScrollListener(help);
 	}
-
-
-
+	
 	/**
-	 * 
+	 *
+	 * this class loads the list of files and folders in background thread
+	 * and inflates the results in list view....
 	 * @author anurag
 	 *
 	 */
@@ -186,11 +186,10 @@ public class SdCardPanel extends Fragment{
 			super.onPostExecute(result);
 			if(adapter_list.size() != 0){
 				empty.setVisibility(View.GONE);
-				adapter = new SDAdapter(getActivity(), adapter_list);
+				adapter = new RootAdapter(getActivity(), adapter_list);
 				list.setAdapter(adapter);
-			}else{
+			}else
 				empty.setVisibility(View.VISIBLE);
-			}
 			load = new LoadList();
 		}
 
@@ -204,7 +203,7 @@ public class SdCardPanel extends Fragment{
 		protected Void doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			if(manager == null)
-				manager = new SDManager(getActivity());
+				manager = new RootManager(getActivity());
 			adapter_list = manager.getList();
 			return null;
 		}		
@@ -215,7 +214,7 @@ public class SdCardPanel extends Fragment{
 	 */
 	public static void navigate_to_back(){
 		manager.popTopPath();
-		FileQuestHD.notify_Title_Indicator(2, manager.getCurrentDirectoryName());
+		FileQuestHD.notify_Title_Indicator(1, manager.getCurrentDirectoryName());
 		load.execute();
 	}
 	
@@ -232,17 +231,17 @@ public class SdCardPanel extends Fragment{
 	 * @return true if current directory is /
 	 */
 	public static boolean isAtTopLevel(){
-		if(manager.getCurrentDirectory().equalsIgnoreCase(Constants.PATH))
+		if(manager.getCurrentDirectory().equalsIgnoreCase("/"))
 			return true;
 		return false;
 	}
-	
 
 	/**
 	 * reloads the current folder
 	 * called when the folder icon has to be changed....
 	 */
-	public static void notifyDataSetChanged(){
+	public static void notifyDataSetChanged() {
+		// TODO Auto-generated method stub
 		load.execute();
 	}
 	
@@ -259,12 +258,12 @@ public class SdCardPanel extends Fragment{
 		}
 		load.execute();
 	}
-	
 	/**
 	 * this function clears the selected items via long click from lits view....
 	 */
 	public static void clear_selected_items(){
-		list.setAdapter(adapter);				
+		list.setAdapter(adapter);
 		counter = 0;
 	}
+
 }

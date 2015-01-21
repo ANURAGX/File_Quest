@@ -17,12 +17,17 @@
  *
  */
 
-package org.anurag.file.quest;
+package org.anurag.adapters;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.anurag.adapters.SdCardPanel;
+import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.Item;
+import org.anurag.file.quest.MasterPassword;
+import org.anurag.file.quest.R;
+import org.anurag.file.quest.Utils;
+import org.anurag.fragments.SdCardPanel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -55,7 +60,7 @@ public class SDAdapter extends BaseAdapter{
 	Context ctx;
 	ArrayList<Item> list; 
 	LayoutInflater inflater;
-	static ArrayList<Item> MULTI_FILES;
+	public static ArrayList<Item> MULTI_FILES;
 	public SDAdapter(Context context,ArrayList<Item> object) {
 		// TODO Auto-generated constructor stub
 		ctx = context;

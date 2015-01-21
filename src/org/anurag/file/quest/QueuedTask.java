@@ -18,6 +18,8 @@
  */
 package org.anurag.file.quest;
 
+import java.util.ArrayList;
+
 import android.util.SparseArray;
 
 /**
@@ -43,12 +45,14 @@ public class QueuedTask {
 	 * @param item
 	 * @param task_ID
 	 */
-	public QueuedTask(Item item , int task_ID) {
+	public QueuedTask(ArrayList<Item> item , int task_ID) {
 		// TODO Auto-generated constructor stub
 		if(queue_list == null){
 			queue_list = new SparseArray<Item>();
 			TASK_COUNTER = -1;
 		}	
-		queue_list.put(++TASK_COUNTER, item);
+		
+		for(int i = 0 ; i< item.size() ; ++i)
+			queue_list.put(++TASK_COUNTER, item.get(i));
 	}
 }

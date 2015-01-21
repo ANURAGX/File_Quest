@@ -17,7 +17,7 @@
  *
  */
 
-package org.anurag.adapters;
+package org.anurag.fragments;
 
 
 import java.util.concurrent.ConcurrentHashMap;

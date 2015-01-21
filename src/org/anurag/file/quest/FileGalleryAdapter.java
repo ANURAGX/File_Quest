@@ -20,11 +20,11 @@
 package org.anurag.file.quest;
 
 import java.io.File;
-
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.anurag.adapters.FileGallery;
+import org.anurag.fragments.FileGallery;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
