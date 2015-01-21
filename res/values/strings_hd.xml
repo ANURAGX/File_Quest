@@ -38,4 +38,6 @@
     <string name="action_paste">Paste</string>
     <string name="empty_list">No Items</string>
     <string name="action_add_gesture">Add Gesture</string>
+    <string name="album_name">Album Name</string>
+    <string name="artist_name">Artist Name</string>
 </resources>

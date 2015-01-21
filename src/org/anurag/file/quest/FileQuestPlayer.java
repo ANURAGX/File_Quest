@@ -144,29 +144,39 @@ public class FileQuestPlayer extends Activity{
 				Bitmap img = BitmapFactory.decodeByteArray(art, 0, art.length);
 				album.setImageBitmap(img);
 			}catch(Exception e){
-				album.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_albumart));
+				//album.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_albumart));
 			}
 			
 			//setting the album name...
 			try{
+				String add = getString(R.string.album_name);
 				String name = retreive.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
 				if(name.length() != 0)
-					albumname.setText(retreive.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
-				else
+					albumname.setText(add + " :- " + name);
+				else{
 					albumname.setText(R.string.notavailable);
+					albumname.setText(add + " :- " +albumname.getText());
+				}	
 			}catch(Exception e){
+				String add = getString(R.string.album_name);
 				albumname.setText(R.string.notavailable);
+				albumname.setText(add + " :- " +albumname.getText());
 			}
 			
 			//setting the artist name...
 			try{
+				String add = getString(R.string.artist_name);
 				String name = retreive.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
 				if(name.length() != 0)
-					artist.setText(retreive.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
-				else
-					albumname.setText(R.string.notavailable);
+					artist.setText(add + " :- " + name);
+				else{
+					artist.setText(R.string.notavailable);
+					artist.setText(add + " :- " + artist.getText());
+				}	
 			}catch(Exception e){
-				albumname.setText(R.string.notavailable);
+				String add = getString(R.string.artist_name);
+				artist.setText(R.string.notavailable);
+				artist.setText(add + " :- " + artist.getText());
 			}
 		}			
 		

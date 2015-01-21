@@ -133,6 +133,13 @@ public class Constants {
 	public static boolean ACTION_AT_TOP;
 	
 	public static int LIST_ANIM;
+	
+	/**
+	 * 1 simple list view
+	 * 2 detailed list view
+	 * 3 simple grid view
+	 * 4 detailed grid view
+	 */
 	public static int LIST_TYPE;
 	public static boolean LONG_CLICK;
 	
