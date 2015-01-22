@@ -72,7 +72,6 @@ public class Constants {
 	
 	public static boolean LOCK_CHILD;
 	public static ImageView lock;
-	public static ImageView fav;
 	public static ItemDB db;
 	public static DBoxUsers dboxDB;
 	public static boolean disable_lock;
@@ -134,6 +133,10 @@ public class Constants {
 	
 	public static int LIST_ANIM;
 	
+	/**
+	 * 
+	 */
+	public static int PAGER_ANIM;
 	/**
 	 * 1 simple list view
 	 * 2 detailed list view

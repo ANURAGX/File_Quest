@@ -20,6 +20,7 @@
 package org.anurag.file.quest;
 
 import java.net.URL;
+
 import java.util.Scanner;
 
 import org.anurag.adapters.PagerAdapters;
@@ -47,7 +48,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -70,6 +70,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.abhi.animated.TransitionViewPager;
 import com.astuetz.PagerSlidingTabStrip;
 import com.fuehlbypa.kddcbytnh159110.Prm;
 
@@ -85,7 +86,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 
 	private ActionBar action_bar;
 	private static PagerSlidingTabStrip indicator;
-	private ViewPager pager;
+	public static TransitionViewPager pager;
 	private PagerAdapters adapters;
 	private boolean isDrawerOpen;
 	private Toolbar toolbar;
@@ -113,7 +114,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		Constants.LIST_ANIM = prefs.getInt("LIST_ANIM", 3);
 		Constants.ACTION_AT_TOP = prefs.getBoolean("ACTION_AT_TOP", false);
 		Constants.LIST_TYPE = prefs.getInt("LIST_TYPE", 2);
-		Constants.SORT_TYPE = prefs.getInt("SORT_TYPE", 1);
+		//Constants.SORT_TYPE = prefs.getInt("SORT_TYPE", 1);
+		Constants.PAGER_ANIM = prefs.getInt("PAGER_ANIM", 3);
 		Constants.size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(Constants.size);
 		Constants.BUILD_ICONS(FileQuestHD.this);
@@ -163,6 +165,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		pager.setAdapter(adapters);
 		indicator.setViewPager(pager);
 		pager.setOffscreenPageLimit(4);
+		pager.setTransitionEffedt(Constants.PAGER_ANIM);
+		
 		indicator.setOnPageChangeListener(new OnPageChangeListener() {
 			@Override
 			public void onPageSelected(int arg0) {
@@ -186,7 +190,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		init_action_bar();
 		init_drawer_menu();
 	}
-	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -259,7 +262,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	private void findViewIds() {
 		// TODO Auto-generated method stub
 		indicator = (PagerSlidingTabStrip) findViewById(R.id.pagerSlidingTabStrip1);
-		pager = (ViewPager) findViewById(R.id.view);
+		pager = (TransitionViewPager) findViewById(R.id.view);
 		adapters = new PagerAdapters(getSupportFragmentManager());
 		drawer = (DrawerLayout)findViewById(R.id.sliding_drawer);
 		toolbar = (Toolbar) findViewById(R.id.toolbar);

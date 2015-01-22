@@ -69,6 +69,41 @@ public class TransitionViewPager extends ViewPager {
 		mEffect = effect;
 		// reset();
 	}
+	
+	public void setTransitionEffedt(int effect){
+		switch(effect){
+		case 1:
+			mEffect = TransitionEffect.Standard;
+			break;
+		case 2:
+			mEffect = TransitionEffect.Tablet;
+			break;
+		case 3:
+			mEffect = TransitionEffect.CubeIn;
+			break;
+		case 4:
+			mEffect = TransitionEffect.CubeOut;
+			break;
+		case 5:
+			mEffect = TransitionEffect.FlipVertical;
+			break;
+		case 6:
+			mEffect = TransitionEffect.FlipHorizontal;
+			break;
+		case 7:
+			mEffect = TransitionEffect.ZoomIn;
+			break;
+		case 8:
+			mEffect = TransitionEffect.RotateUp;
+			break;
+		case 9:
+			mEffect = TransitionEffect.RotateDown;
+			break;
+		case 10:
+			mEffect = TransitionEffect.Accordion;
+			break;
+		}
+	}
 
 	public void setPagingEnabled(boolean enabled) {
 		mEnabled = enabled;
