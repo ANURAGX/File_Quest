@@ -113,7 +113,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		Constants.LIST_ANIM = prefs.getInt("LIST_ANIM", 3);
 		Constants.ACTION_AT_TOP = prefs.getBoolean("ACTION_AT_TOP", false);
 		Constants.LIST_TYPE = prefs.getInt("LIST_TYPE", 2);
-		
+		Constants.SORT_TYPE = prefs.getInt("SORT_TYPE", 1);
 		Constants.size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(Constants.size);
 		Constants.BUILD_ICONS(FileQuestHD.this);
@@ -545,10 +545,10 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		// TODO Auto-generated method stub
 		//inflating menu in standalone mode for bottom options....
 		bottom_options.inflateMenu(R.menu.bottom_options_actionbar_hd);
-			if(!Constants.ACTION_AT_TOP)
-				bottom_options.setNavigationIcon(R.drawable.up_action);
-			else
-				bottom_options.setNavigationIcon(R.drawable.down_action);
+		if(!Constants.ACTION_AT_TOP)
+			bottom_options.setNavigationIcon(R.drawable.up_action);
+		else
+			bottom_options.setNavigationIcon(R.drawable.down_action);
 		bottom_options.setOnMenuItemClickListener(this);
 			
 		bottom_options.setNavigationOnClickListener(new View.OnClickListener() {

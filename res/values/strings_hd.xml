@@ -40,4 +40,10 @@
     <string name="action_add_gesture">Add Gesture</string>
     <string name="album_name">Album Name</string>
     <string name="artist_name">Artist Name</string>
+    <string name="action_az">Name (A-Z)</string>
+    <string name="action_za">Name (Z-A)</string>
+    <string name="action_size_smaller">Size (Smaller)</string>
+    <string name="action_size_bigger">Size (Bigger)</string>
+    <string name="action_date_new">Date (Newer)</string>
+    <string name="action_date_old">Date (Older)</string>
 </resources>

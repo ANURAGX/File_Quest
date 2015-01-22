@@ -128,6 +128,36 @@
         android:id="@+id/action_sort"
         android:title="@string/action_sort"
         android:icon="@drawable/sort"
-        app:showAsAction="always"/>
+        app:showAsAction="always">
+        
+        <menu>
+            
+            <item 
+                android:id="@+id/sort_az"
+                android:title="@string/action_az"/>        
+            
+            <item 
+                android:id="@+id/sort_za"
+                android:title="@string/action_za"/>
+            
+            <item 
+                android:id="@+id/size_smaller"
+                android:title="@string/action_size_smaller"/>
+            
+            <item 
+                android:id="@+id/size_bigger"
+                android:title="@string/action_size_bigger"/>
+            
+            <item 
+                android:id="@+id/date_new"
+                android:title="@string/action_date_new"/>
+            
+            
+            <item 
+                android:id="@+id/date_old"
+                android:title="@string/action_date_old"/>
+        </menu>
+        
+    </item>
     
 </menu>
