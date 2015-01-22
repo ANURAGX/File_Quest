@@ -29,6 +29,7 @@ import org.anurag.file.quest.MasterPassword;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.SystemBarTintManager;
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
+
 import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.Info;
 
@@ -319,18 +320,14 @@ public class Settings extends Activity implements View.OnClickListener{
 		SystemBarTintManager tint = new SystemBarTintManager(Settings.this);
 		tint.setStatusBarTintEnabled(true);
 		tint.setStatusBarTintColor(Constants.COLOR_STYLE);
-		
-		
-		LinearLayout main = (LinearLayout) findViewById(R.id.main);
-		
-		main.setPadding(0, getStatusBarHeight(), 0, 0);
-			
 		SystemBarConfig conf = tint.getConfig();
-		if(conf.hasNavigtionBar()){
+		boolean hasNavBar = conf.hasNavigtionBar();
+		if(hasNavBar){
 			tint.setNavigationBarTintEnabled(true);
 			tint.setNavigationBarTintColor(Constants.COLOR_STYLE);
-			main.setPadding(0, 0, 0, getNavigationBarHeight());
 		}
+		LinearLayout main = (LinearLayout) findViewById(R.id.main);
+		main.setPadding(0, getStatusBarHeight(), 0, hasNavBar ? getNavigationBarHeight() :0);
 	}
 	
 	/**

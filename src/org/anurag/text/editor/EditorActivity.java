@@ -19,6 +19,7 @@
 package org.anurag.text.editor;
 
 import java.io.BufferedReader;
+
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -337,17 +338,14 @@ public class EditorActivity extends ActionBarActivity {
 		SystemBarTintManager tint = new SystemBarTintManager(EditorActivity.this);
 		tint.setStatusBarTintEnabled(true);
 		tint.setStatusBarTintColor(Constants.COLOR_STYLE);
-		
-		LinearLayout main = (LinearLayout) findViewById(R.id.editor_layout);
-		
-		main.setPadding(0, getStatusBarHeight(), 0, 0);
-				
 		SystemBarConfig conf = tint.getConfig();
-		if(conf.hasNavigtionBar()){
+		boolean hasNavBar = conf.hasNavigtionBar();
+		if(hasNavBar){
 			tint.setNavigationBarTintEnabled(true);
 			tint.setNavigationBarTintColor(Constants.COLOR_STYLE);
-			main.setPadding(0, 0, 0, getNavigationBarHeight());
 		}
+		LinearLayout main = (LinearLayout) findViewById(R.id.editor_layout);
+		main.setPadding(0, getStatusBarHeight(), 0, hasNavBar ? getNavigationBarHeight() :0);
 	}
 	
 	/**

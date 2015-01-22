@@ -21,8 +21,8 @@ package org.anurag.file.quest;
 
 import java.util.ArrayList;
 
-import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 
+import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -115,20 +115,14 @@ public class GraphAnalysis extends ActionBarActivity{
 		SystemBarTintManager tint = new SystemBarTintManager(GraphAnalysis.this);
 		tint.setStatusBarTintEnabled(true);
 		tint.setStatusBarTintColor(Constants.COLOR_STYLE);
-		
-		//LinearLayout slide_menu = (LinearLayout) findViewById(R.id.drawer_list);
-		LinearLayout main = (LinearLayout) findViewById(R.id.main);
-		
-		main.setPadding(0, getStatusBarHeight(), 0, 0);
-		//slide_menu.setPadding(0, getStatusBarHeight(), 0, 0);
-		
 		SystemBarConfig conf = tint.getConfig();
-		if(conf.hasNavigtionBar()){
+		boolean hasNavBar = conf.hasNavigtionBar();
+		if(hasNavBar){
 			tint.setNavigationBarTintEnabled(true);
 			tint.setNavigationBarTintColor(Constants.COLOR_STYLE);
-			main.setPadding(0, 0, 0, getNavigationBarHeight());
-			//slide_menu.setPadding(0, 0, 0, getNavigationBarHeight());
 		}
+		LinearLayout main = (LinearLayout) findViewById(R.id.main);
+		main.setPadding(0, getStatusBarHeight(), 0, hasNavBar ? getNavigationBarHeight() :0);
 	}
 	
 	/**

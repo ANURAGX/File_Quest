@@ -161,32 +161,12 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		};
 		
 		drawer.setDrawerListener(toggle);
-		
+		adapters = new PagerAdapters(getSupportFragmentManager());
 		pager.setAdapter(adapters);
-		indicator.setViewPager(pager);
 		pager.setOffscreenPageLimit(4);
 		pager.setTransitionEffedt(Constants.PAGER_ANIM);
+		indicator.setViewPager(pager);
 		
-		indicator.setOnPageChangeListener(new OnPageChangeListener() {
-			@Override
-			public void onPageSelected(int arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				// TODO Auto-generated method stub
-				//if(Constants.LONG_CLICK)
-					//sendBroadcast(new Intent("inflate_normal_menu"));
-			}
-			
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		init_action_bar();
 		init_drawer_menu();
 	}
@@ -269,7 +249,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		// TODO Auto-generated method stub
 		indicator = (PagerSlidingTabStrip) findViewById(R.id.pagerSlidingTabStrip1);
 		pager = (TransitionViewPager) findViewById(R.id.view);
-		adapters = new PagerAdapters(getSupportFragmentManager());
 		drawer = (DrawerLayout)findViewById(R.id.sliding_drawer);
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		bottom_options = (Toolbar) findViewById(R.id.bottom_options);
@@ -364,20 +343,17 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		SystemBarTintManager tint = new SystemBarTintManager(FileQuestHD.this);
 		tint.setStatusBarTintEnabled(true);
 		tint.setStatusBarTintColor(Constants.COLOR_STYLE);
-		
+		SystemBarConfig conf = tint.getConfig();
+		boolean hasNavBar = conf.hasNavigtionBar();
+		if(hasNavBar){
+			tint.setNavigationBarTintEnabled(true);
+			tint.setNavigationBarTintColor(Constants.COLOR_STYLE);
+		}
 		LinearLayout slide_menu = (LinearLayout) findViewById(R.id.drawer_list);
 		LinearLayout main = (LinearLayout) findViewById(R.id.frame_container);
 		
-		main.setPadding(0, getStatusBarHeight(), 0, 0);
-		slide_menu.setPadding(0, getStatusBarHeight(), 0, 0);
-		
-		SystemBarConfig conf = tint.getConfig();
-		if(conf.hasNavigtionBar()){
-			tint.setNavigationBarTintEnabled(true);
-			tint.setNavigationBarTintColor(Constants.COLOR_STYLE);
-			main.setPadding(0, 0, 0, getNavigationBarHeight());
-			slide_menu.setPadding(0, 0, 0, getNavigationBarHeight());
-		}
+		main.setPadding(0, getStatusBarHeight(), 0, hasNavBar ? getNavigationBarHeight() :0);
+		slide_menu.setPadding(0, getStatusBarHeight(), 0, hasNavBar ? getNavigationBarHeight() :0);
 	}
 	
 	/**
