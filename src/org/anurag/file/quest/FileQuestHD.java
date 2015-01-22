@@ -20,7 +20,6 @@
 package org.anurag.file.quest;
 
 import java.net.URL;
-
 import java.util.Scanner;
 
 import org.anurag.adapters.PagerAdapters;
@@ -29,6 +28,7 @@ import org.anurag.fragments.AppStore;
 import org.anurag.fragments.FileGallery;
 import org.anurag.fragments.RootPanel;
 import org.anurag.fragments.SdCardPanel;
+import org.anurag.settings.Settings;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -219,6 +219,12 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			break;
 			
 		case R.id.action_add_gesture:
+			break;
+		
+		case R.id.action_setting:
+			Intent intent = new Intent(FileQuestHD.this, Settings.class);
+			startActivity(intent);
+			break;
 			
 		}
 		return super.onOptionsItemSelected(item);

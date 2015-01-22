@@ -22,16 +22,20 @@ package org.anurag.settings;
 
 import java.io.File;
 
+
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.MasterPassword;
 import org.anurag.file.quest.R;
+import org.anurag.file.quest.SystemBarTintManager;
+import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.Info;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -60,10 +64,16 @@ public class Settings extends Activity implements View.OnClickListener{
 		super.onCreate(savedInstanceState);
 		settingsChanged = false;
 		setContentView(R.layout.settings_ui);
-		settingsPrefs = getSharedPreferences("MY_APP_SETTINGS", 0);
+		settingsPrefs = getSharedPreferences("SETTINGS", 0);
 		edit = settingsPrefs.edit();		
 	}
 
+	@Override
+	public void onResume(){
+		super.onResume();
+		init_system_ui();
+	}
+	
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
@@ -296,10 +306,55 @@ public class Settings extends Activity implements View.OnClickListener{
 			case R.id.reset_passwd:
 				new MasterPassword(Settings.this, FileQuest.size.x*8/9, null, FileQuest.preferences, Constants.MODES.RESET);
 				break;
-				
-			
-				
-			
 		}		
-	}		
+	}
+	
+	/**
+	 * restyles the system UI like status bar or navigation bar if present....
+	 */
+	private void init_system_ui() {
+		// TODO Auto-generated method stub
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+			return;
+		SystemBarTintManager tint = new SystemBarTintManager(Settings.this);
+		tint.setStatusBarTintEnabled(true);
+		tint.setStatusBarTintColor(Constants.COLOR_STYLE);
+		
+		
+		LinearLayout main = (LinearLayout) findViewById(R.id.main);
+		
+		main.setPadding(0, getStatusBarHeight(), 0, 0);
+			
+		SystemBarConfig conf = tint.getConfig();
+		if(conf.hasNavigtionBar()){
+			tint.setNavigationBarTintEnabled(true);
+			tint.setNavigationBarTintColor(Constants.COLOR_STYLE);
+			main.setPadding(0, 0, 0, getNavigationBarHeight());
+		}
+	}
+	
+	/**
+	 * 
+	 * @return height of status bar....
+	 */
+	private int getStatusBarHeight(){
+		int res = 0;
+		int resId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+		if(resId > 0)
+			res = getResources().getDimensionPixelSize(resId);
+		return res;
+	}
+	
+	/**
+	 * 
+	 * @return the height of navigation bar....
+	 */
+	private int getNavigationBarHeight(){
+		int res = 0;
+		int resId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+		if(resId > 0)
+			res = getResources().getDimensionPixelSize(resId);
+		return res;
+	}
+
 }
