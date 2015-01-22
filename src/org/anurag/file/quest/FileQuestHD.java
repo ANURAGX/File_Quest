@@ -20,6 +20,7 @@
 package org.anurag.file.quest;
 
 import java.net.URL;
+
 import java.util.Scanner;
 
 import org.anurag.adapters.PagerAdapters;
@@ -48,7 +49,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -186,7 +186,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		
-		int panel = pager.getCurrentItem();
+		//int panel = pager.getCurrentItem();
 		
 		switch(item.getItemId()){
 		case R.id.action_exit:
@@ -238,8 +238,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		bottom_options.setBackgroundColor(color);
 		LinearLayout drawermenu = (LinearLayout) findViewById(R.id.drawer_list);
 		drawermenu.setBackgroundColor(color);
-		action_bar.setHomeButtonEnabled(true);
-		
+		action_bar.setHomeButtonEnabled(true);		
 	}
 	
 	/**

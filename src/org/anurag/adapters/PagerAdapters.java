@@ -18,8 +18,6 @@
  */
 
 package org.anurag.adapters;
-
-import org.anurag.file.quest.FileQuestHD;
 import org.anurag.fragments.AppStore;
 import org.anurag.fragments.FileGallery;
 import org.anurag.fragments.RootPanel;
@@ -44,22 +42,22 @@ public class PagerAdapters extends FragmentStatePagerAdapter{
 		switch(arg0){
 		case 0:
 			Fragment frag1 = new FileGallery();
-			FileQuestHD.pager.setObjectForPosition(frag1, arg0);
+			//FileQuestHD.pager.setObjectForPosition(frag1, arg0);
 			return frag1;
 		
 		case 1:
 			Fragment frag2 = new RootPanel();
-			FileQuestHD.pager.setObjectForPosition(frag2, arg0);
+			//FileQuestHD.pager.setObjectForPosition(frag2, arg0);
 			return frag2;
 			
 		case 2:
 			Fragment frag3 = new SdCardPanel();
-			FileQuestHD.pager.setObjectForPosition(frag3, arg0);
+			//FileQuestHD.pager.setObjectForPosition(frag3, arg0);
 			return frag3;
 			
 		case 3:
 			Fragment frag4 = new AppStore();
-			FileQuestHD.pager.setObjectForPosition(frag4, arg0);
+			//FileQuestHD.pager.setObjectForPosition(frag4, arg0);
 			return frag4;
 			
 		}
@@ -85,6 +83,5 @@ public class PagerAdapters extends FragmentStatePagerAdapter{
 	 */
 	public static void setTitles(int position , String title){
 		TITLES[position] = title;
-	}
-	
+	}	
 }
