@@ -18,8 +18,8 @@
  -->
  
 <resources>
-    <color name="grey">#FF666666</color>
-    <color name="green">#FF53AB3A</color>
+    <color name="grey">#FF222222</color>
+    <color name="green">#FF18ca5b</color>
     <color name="red">#FFC74B46</color>
     <color name="orange">#FFFF5D3D</color>
     <color name="blue">#FF3F9FE0</color>

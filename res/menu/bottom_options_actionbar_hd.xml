@@ -53,7 +53,7 @@
                 app:showAsAction="ifRoom"
                 android:icon="@drawable/grey"
                 android:id="@+id/grey"
-                android:title="Grey"/>
+                android:title="Dark Grey"/>
             
             <item 
                 app:showAsAction="ifRoom"

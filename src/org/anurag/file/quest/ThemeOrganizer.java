@@ -42,13 +42,13 @@ public class ThemeOrganizer {
 			Constants.FOLDER_ICON = 1;
 			break;
 		
-		case 0xFF53AB3A:
+		case 0xFF18ca5b:
 			Constants.DIALOG_STYLE = R.style.Dialog_Green;
 			//Constants.SELECTOR_STYLE = R.drawable.list_selector_green_hd;
 			Constants.FOLDER_ICON = 3;
 			break;
 			
-		case 0xFF666666:
+		case 0xFF222222:
 			Constants.DIALOG_STYLE = R.style.Dialog_Grey;
 			//Constants.SELECTOR_STYLE = R.drawable.list_selector_grey_hd;
 			Constants.FOLDER_ICON = 0;
