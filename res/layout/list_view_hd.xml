@@ -46,7 +46,9 @@
       
   	</LinearLayout>
     
-    <ListView 
+    <ListView         
+	    android:fastScrollEnabled="true"
+	    android:scrollbarStyle="outsideInset"
         android:id="@+id/list_view_hd"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

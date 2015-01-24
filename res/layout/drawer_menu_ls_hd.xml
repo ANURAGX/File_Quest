@@ -73,6 +73,8 @@
     </LinearLayout>
     
     <ListView 
+        android:fastScrollEnabled="true"
+	    android:scrollbarStyle="outsideInset"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:dividerHeight="0.0dp"

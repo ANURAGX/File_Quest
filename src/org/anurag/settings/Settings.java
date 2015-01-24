@@ -147,10 +147,20 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
 	private static class ExpAdapt extends BaseExpandableListAdapter{
 
 		String[] groups ;
+		String[] animls;
+		String[] pagels;
+		String[] panels;
+		String[] bug;
+		String[] lock;
 		LayoutInflater inf;
 		public ExpAdapt(Context ctx) {
 			// TODO Auto-generated constructor stub
 			groups = ctx.getResources().getStringArray(R.array.settings_array );
+			animls = ctx.getResources().getStringArray(R.array.animls);
+			pagels = ctx.getResources().getStringArray(R.array.pagels);
+			panels = ctx.getResources().getStringArray(R.array.panels);
+			bug = ctx.getResources().getStringArray(R.array.bug);		
+			lock = ctx.getResources().getStringArray(R.array.locker);		
 			inf = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
 		
@@ -166,16 +176,68 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
 			return 0;
 		}
 
+		class grpHold{
+			ImageView img;
+			TextView nam;
+		}
+		
 		@Override
 		public View getChildView(int groupPosition, int childPosition,
 				boolean isLastChild, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
-			return null;
+			grpHold h = new grpHold();
+			View view = inf.inflate(R.layout.row_list_2, parent , false);
+			h.img = (ImageView) view.findViewById(R.id.iconImage2);
+			h.nam = (TextView) view.findViewById(R.id.directoryName2);
+			
+			//setting padding to differentiate the expanded sub menus
+			//from visible list....
+			view.setPadding(30, 0, 0, 0);
+			view.setTag(h);
+
+			switch(groupPosition){
+			case 0:
+				h.nam.setText(animls[childPosition]);
+				break;
+				
+			case 1:
+				h.nam.setText(pagels[childPosition]);				
+				break;
+				
+			case 2:
+				h.nam.setText(panels[childPosition]);				
+				break;
+			
+			case 3:
+				h.nam.setText(lock[childPosition]);
+				break;
+				
+			case 7:
+				h.nam.setText(bug[childPosition]);				
+				break;			
+			}		
+			return view;
 		}
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
 			// TODO Auto-generated method stub
+			switch (groupPosition) {
+			case 0:
+				return animls.length;
+
+			case 1:
+				return pagels.length;
+				
+			case 2:
+				return panels.length;
+				
+			case 3:
+				return lock.length;
+				
+			case 7:
+				return bug.length;
+			}
 			return 0;
 		}
 
@@ -197,10 +259,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
 			return 0;
 		}
 
-		class grpHold{
-			ImageView img;
-			TextView nam;
-		}
+		
 		
 		@Override
 		public View getGroupView(int groupPosition, boolean isExpanded,
@@ -229,28 +288,33 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
 				break;
 
 			case 3:
-				h.img.setBackgroundResource(R.drawable.action_settings);
+				h.img.setBackgroundResource(R.drawable.locker);
 				h.nam.setText(groups[groupPosition]);
 				break;
 				
 			case 4:
+				h.img.setBackgroundResource(R.drawable.action_settings);
+				h.nam.setText(groups[groupPosition]);
+				break;
+				
+			case 5:
 				h.img.setBackgroundResource(R.drawable.gesture);
 				h.nam.setText(groups[groupPosition]);
 				break;
 				
 
-			case 5:
+			case 6:
 				h.img.setBackgroundResource(R.drawable.share);
 				h.nam.setText(groups[groupPosition]);
 				break;
 				
-			case 6:
+			case 7:
 				h.img.setBackgroundResource(R.drawable.bug);
 				h.nam.setText(groups[groupPosition]);
 				break;
 		
-			case 7:
-				h.img.setBackgroundResource(R.drawable.task);
+			case 8:
+				h.img.setBackgroundResource(R.drawable.about);
 				h.nam.setText(groups[groupPosition]);
 				break;
 	

@@ -51,6 +51,7 @@
         <item>Listview animation</item>
         <item>Page animation</item>
         <item>Set up default Panel</item>
+        <item>Locker</item>
         <item>Reset settings</item>
         <item>Clear gesture data</item> 
         <item>Share FILE  QUEST</item>
@@ -58,4 +59,52 @@
         <item>About me</item>
     </string-array>
     
+    <string-array name="locker">
+        <item>Change password</item>
+        <item>Disable lock</item>
+        <item>Clear locked items</item>
+    </string-array>
+    
+    <string-array name="animls">
+        <item>Standard</item>
+        <item>Grow</item>
+        <item>Cards</item>
+        <item>Zipper</item>
+        <item>Helix</item>
+        <item>Flip</item>
+        <item>Fly</item>
+        <item>Reverse fly</item>
+        <item>Wave</item>
+        <item>Fan</item>
+        <item>Tilt</item>        	
+        <item>Curl</item>
+        <item>Fade</item>
+        <item>Twirl</item>
+        <item>Slide in</item>
+    </string-array>
+    
+    <string-array name="pagels">
+        <item>Standard</item>
+        <item>Tablet</item>
+        <item>CubeIn</item>
+        <item>CubeOut</item>
+        <item>FlipVertical</item>
+        <item>FlipHorizontal</item>
+        <item>ZoomIn</item>
+        <item>RotateUp</item>
+        <item>RotateDown</item>
+    	<item>Accordion</item>
+    </string-array>
+    
+    <string-array name="panels">
+        <item>File Gallery</item>
+        <item>Root</item>
+        <item>Sd Card</item>
+        <item>App store</item>
+    </string-array>
+    
+    <string-array name="bug">
+        <item>Report on XDA</item>
+        <item>Report directly</item>
+    </string-array>
 </resources>

@@ -32,6 +32,8 @@
     	android:background="?attr/colorPrimary" />
 	
 	<ExpandableListView 
+	    android:fastScrollEnabled="true"
+	    android:scrollbarStyle="outsideInset"
 	    android:paddingTop="10dp"
 	    android:paddingRight="10dp"
 	    android:background="@color/semi_white30"
@@ -42,6 +44,7 @@
 	    android:divider="@color/transparent"
 	    android:dividerHeight="0.03dp"
 	    android:listSelector="@drawable/while_list_selector_hd"
-	    android:groupIndicator="@null"/>
+	    android:groupIndicator="@null"
+	    android:childDivider="@color/transparent"/>
     
 </LinearLayout>
