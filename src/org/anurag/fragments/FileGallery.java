@@ -84,7 +84,14 @@ public class FileGallery extends Fragment implements OnClickListener{
 		ls.setSelector(R.drawable.list_selector_hd);
 		file_gallery = (LinearLayout) v.findViewById(R.id.file_gallery_layout);
 		Utils.setContext(null , getActivity());
-		Utils.load();
+		
+		//loading file list at last....
+		//this allows other threads of other panel to load first as 
+		//they need little time and this thread can take long time and blocking
+		//other threads....
+		
+		//Utils.load();
+		
 		Utils.setView(v);
 		is_gallery_opened = false;
 

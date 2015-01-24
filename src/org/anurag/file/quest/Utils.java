@@ -20,6 +20,7 @@
 package org.anurag.file.quest;
 
 import java.io.File;
+
 import java.io.FileFilter;
 import java.util.Locale;
 import java.util.Map;
@@ -29,7 +30,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -155,34 +155,6 @@ public class Utils {
 	static TextView misText,misTextCount;
 	static TextView favText,favTextCount;
 	
-	/**
-	 * simple function....
-	 */
-	public static void setContext() {
-		// TODO Auto-generated constructor stub
-		
-		update_Needed = false;
-		fav_Update_Needed = false;
-		
-		music = new ConcurrentHashMap<String , Item>();
-		apps = new ConcurrentHashMap<String , Item>();
-		vids = new ConcurrentHashMap<String , Item>();
-		doc = new ConcurrentHashMap<String , Item>();
-		zip = new ConcurrentHashMap<String , Item>();
-		mis = new ConcurrentHashMap<String , Item>();
-		img = new ConcurrentHashMap<String , Item>();
-			
-		musicsize=0;
-		apksize=0;
-		vidsize=0;
-		docsize=0;
-		zipsize=0;
-		missize=0;
-		imgsize=0;
-		
-		musCounter = appCounter = imgCounter = vidCounter = docCounter =
-				zipCounter = misCounter = favCounter = 0;
-	}
 	
 	/**
 	 * 

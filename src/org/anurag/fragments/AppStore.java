@@ -27,6 +27,7 @@ import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.AppManager;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
+import org.anurag.file.quest.Utils;
 
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -140,7 +141,9 @@ public class AppStore extends Fragment{
 			}
 		});
 		
-		
+		//loading file gallery thread here after all less time consuming
+		//thread are done....
+		Utils.load();
 	}
 	
 	/**
