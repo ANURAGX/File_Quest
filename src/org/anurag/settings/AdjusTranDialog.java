@@ -19,8 +19,10 @@
 
 package org.anurag.settings;
 
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.R;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -42,7 +44,7 @@ public class AdjusTranDialog {
 	int pos;
 	public AdjusTranDialog(final Context ctx , int width ,final  SharedPreferences.Editor edit) {
 		// TODO Auto-generated constructor stub
-		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
+		final Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.launch_file);
 		dialog.getWindow().getAttributes().width = width;
@@ -57,7 +59,7 @@ public class AdjusTranDialog {
 		
 		//dialog image....
 		ImageView img = (ImageView)dialog.findViewById(R.id.launchImage);
-		img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_appreance));
+		img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.task));
 		
 		//dialog title....
 		TextView title = (TextView)dialog.findViewById(R.id.open);
@@ -165,11 +167,11 @@ public class AdjusTranDialog {
 			else if(arg0 == 4)
 				po = 1.0f;
 			
-			if(FileQuest.TRANSPARENCY_LEVEL == po)
+			/*if(FileQuest.TRANSPARENCY_LEVEL == po)
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.selected));
 			else
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_appreance));
-			return convert;
+			*/return convert;
 		}
 		
 	}

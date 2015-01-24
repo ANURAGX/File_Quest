@@ -111,7 +111,7 @@ public class EditorActivity extends ActionBarActivity {
 		title = (EditText)findViewById(R.id.textSearch); 
 		main = (EditText)findViewById(R.id.note);
 		main.setText("");
-		dialog = new Dialog(getApplicationContext(), R.style.custom_dialog_theme);
+		dialog = new Dialog(getApplicationContext(), Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.delete_files);
 		//dialog.getWindow().getAttributes().width = size.x*4/5;
 		main.setLinksClickable(true);

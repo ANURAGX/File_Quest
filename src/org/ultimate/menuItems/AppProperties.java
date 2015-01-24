@@ -20,8 +20,10 @@
 package org.ultimate.menuItems;
 
 import java.io.File;
+
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -43,7 +45,7 @@ public class AppProperties {
 		// TODO Auto-generated constructor stub
     	mContext = context;
     	packageName = data;
-    	dialog = new Dialog(mContext, R.style.custom_dialog_theme);
+    	dialog = new Dialog(mContext, Constants.DIALOG_STYLE);
     	dialog.setContentView(R.layout.info_layout);
     	dialog.getWindow().getAttributes().width = width;
     	onCreate();

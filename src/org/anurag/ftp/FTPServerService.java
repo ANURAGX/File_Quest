@@ -249,7 +249,7 @@ public class FTPServerService extends Service implements Runnable {
         // http://developer.android.com/guide/topics/ui/notifiers/notifications.html
 
         // Instantiate a Notification
-        int icon = R.drawable.ic_launcher_info;
+        int icon = R.drawable.task ;
         CharSequence tickerText = ("Server Notification");
         long when = System.currentTimeMillis();
         Notification notification = new Notification(icon, tickerText, when);

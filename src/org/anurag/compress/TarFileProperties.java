@@ -20,10 +20,12 @@
 package org.anurag.compress;
 
 
+import org.anurag.file.quest.Constants;
+
 import org.anurag.file.quest.R;
+
 import android.app.Dialog;
 import android.content.Context;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -40,15 +42,13 @@ public class TarFileProperties {
 	
 	public TarFileProperties(Context ctx , TarObj file , int width) {
 		// TODO Auto-generated constructor stub
-		Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
+		Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.info_layout);
 		dialog.getWindow().getAttributes().width = width;
 		TextView text = (TextView)dialog.findViewById(R.id.infoName);
 		text.setText(ctx.getString(R.string.properties));
 		
-		ImageView icon = (ImageView)dialog.findViewById(R.id.infoIcon);
-		icon.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_stats));
 		
 		text = (TextView)dialog.findViewById(R.id.developer);
 		if(!file.isFile()){

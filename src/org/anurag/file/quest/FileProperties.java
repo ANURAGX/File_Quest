@@ -107,7 +107,7 @@ public class FileProperties extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.file_properties);
 		
-		getActionBar().setIcon(R.drawable.ic_launcher_stats);
+		getActionBar().setIcon(R.drawable.task);
 		getActionBar().setBackgroundDrawable(new ColorDrawable(0x00000000));
 		getActionBar().setTitle(R.string.properties);
 		

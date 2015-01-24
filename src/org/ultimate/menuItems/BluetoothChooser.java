@@ -21,7 +21,10 @@ package org.ultimate.menuItems;
 
 import java.io.File;
 import java.util.List;
+
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
+
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -56,12 +59,12 @@ public class BluetoothChooser{
 		// TODO Auto-generated constructor stub
 		mContext = context;
 		
-		dialog = new Dialog(context, R.style.custom_dialog_theme);
+		dialog = new Dialog(context, Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.launch_file);
 		dialog.getWindow().getAttributes().width = width;
 		dialog.setCancelable(true);
 		ImageView view = (ImageView)dialog.findViewById(R.id.launchImage);
-		view.setBackgroundResource(R.drawable.ic_launcher_file_task);
+		view.setBackgroundResource(R.drawable.share);
 		if(Data!=null)
 			f = new File(Data);
 		if(url!=null)

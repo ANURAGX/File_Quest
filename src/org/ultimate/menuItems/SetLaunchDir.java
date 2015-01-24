@@ -61,7 +61,7 @@ public class SetLaunchDir{
 	public SetLaunchDir(Context context,int width,SharedPreferences.Editor edit,int m) {
 		// TODO Auto-generated constructor stub
 		mContext = context;
-		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
+		dialog = new Dialog(mContext, Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.open_file_dialog);
 		dialog.getWindow().getAttributes().width = width;
 		ed = edit;
@@ -85,7 +85,7 @@ public class SetLaunchDir{
 		lv = (ListView)dialog.findViewById(R.id.open_list);
 		image= (ImageView)dialog.findViewById(R.id.getImage);
 		
-		image.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_file_task));
+		image.setImageDrawable(mContext.getResources().getDrawable(R.drawable.task));
 		list = file.listFiles();
 		lv.setAdapter(new Adapter(mContext, R.layout.row_list_2, list));
 		go = (Button)dialog.findViewById(R.id.goBack);

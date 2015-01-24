@@ -43,7 +43,7 @@ public class FolderIconDialog {
 	int pos;
 	public FolderIconDialog(final Context ctx , int width ,final  SharedPreferences.Editor edit) {
 		// TODO Auto-generated constructor stub
-		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
+		final Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.launch_file);
 		dialog.getWindow().getAttributes().width = width;
@@ -59,7 +59,7 @@ public class FolderIconDialog {
 		list[6] = ctx.getString(R.string.bluefolder);
 		//dialog image....
 		ImageView img = (ImageView)dialog.findViewById(R.id.launchImage);
-		img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_appreance));
+		img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.task));
 		
 		//dialog title....
 		TextView title = (TextView)dialog.findViewById(R.id.open);
@@ -143,11 +143,11 @@ public class FolderIconDialog {
 			}else
 				g = (grp) convert.getTag();
 			g.txt.setText(list[arg0]);
-			if(Constants.FOLDER_ICON == arg0)
+			/*if(Constants.FOLDER_ICON == arg0)
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.selected));
 			else
 				g.img.setImageDrawable(context.getResources().getDrawable(Constants.FOLDERS[arg0]));
-			return convert;
+			*/return convert;
 		}
 		
 	}

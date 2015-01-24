@@ -59,7 +59,7 @@ public class SelectApp{
 		action = data;
 		mContext = context;
 		mode = MODE;
-		dialog = new Dialog(mContext,R.style.custom_dialog_theme);
+		dialog = new Dialog(mContext,Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.launch_file);
 		dialog.getWindow().getAttributes().width = width;
 		onCreate();

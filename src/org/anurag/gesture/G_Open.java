@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
 
 import android.app.Dialog;
@@ -44,7 +45,7 @@ public class G_Open {
 	
 	public G_Open(final Context context,int width,int height) {
 		// TODO Auto-generated constructor stub
-		final Dialog dialog = new Dialog(context, R.style.custom_dialog_theme);
+		final Dialog dialog = new Dialog(context, Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.create_gesture);
 		
 		gesture = (GestureOverlayView)dialog.findViewById(R.id.gestures_overlay);

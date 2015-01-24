@@ -84,7 +84,7 @@ public class CreateZipApps {
 	 */
 	public CreateZipApps(final Context ctx,int width , final ArrayList<ApplicationInfo> list) {
 		// TODO Auto-generated constructor stub
-		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
+		final Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.zip_file_dialog);
 		running = false;

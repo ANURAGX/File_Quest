@@ -28,7 +28,7 @@
     android:orientation="vertical" >
 	
     <LinearLayout 
-        android:paddingBottom="30dp"
+        android:paddingBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -50,17 +50,37 @@
        		android:text="@string/manage"/>
     </LinearLayout>
     
+    <LinearLayout
+            android:clickable="true"
+        	android:layout_marginLeft="1dp" 
+        	android:orientation="horizontal" 
+        	android:layout_width="match_parent"
+        	android:layout_height="60dp">
+        	<ImageView 
+            	android:background="@drawable/device"
+        		android:layout_width="60dp"
+        		android:layout_height="60dp"/>
+        
+        	<TextView 
+        	    android:gravity="center_vertical"
+            	android:id="@+id/dev_id"
+            	android:textColor="@android:color/white"
+    	        android:paddingLeft="10dp"
+            	android:textStyle="bold"
+            	android:layout_width="match_parent"
+            	android:layout_height="match_parent"
+            	android:text="@string/unknown"/>
+    </LinearLayout>
+    
     <ListView 
-        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
         android:dividerHeight="0.0dp"
         android:divider="@color/transparent"
         android:id="@+id/drawer_menu_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         
-    </ListView>
-
-    
-    
+    </ListView>    
     
 </LinearLayout>

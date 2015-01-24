@@ -44,7 +44,7 @@ public class SortDialog {
 	int pos;
 	public SortDialog(final Context ctx , int width ,final  SharedPreferences.Editor edit) {
 		// TODO Auto-generated constructor stub
-		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
+		final Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.launch_file);
 		dialog.getWindow().getAttributes().width = width;
@@ -143,11 +143,11 @@ public class SortDialog {
 			}else
 				g = (grp) convert.getTag();
 			g.txt.setText(list[arg0]);
-			if(FileQuest.SORT_TYPE== (arg0+1))
+			/*if(FileQuest.SORT_TYPE== (arg0+1))
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.selected));
 			else
 				g.img.setImageDrawable(context.getResources().getDrawable(Constants.FOLDERS[Constants.FOLDER_ICON]));
-			return convert;
+			*/return convert;
 		}
 		
 	}

@@ -19,6 +19,7 @@
 
 package org.anurag.settings;
 
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.R;
 
@@ -43,7 +44,7 @@ public class StartUpPanelDialog {
 	int pos;
 	public StartUpPanelDialog(final Context ctx , int width ,final  SharedPreferences.Editor edit) {
 		// TODO Auto-generated constructor stub
-		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
+		final Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.launch_file);
 		dialog.getWindow().getAttributes().width = width;
@@ -56,7 +57,7 @@ public class StartUpPanelDialog {
 		list[3] = ctx.getString(R.string.appstore);
 		//dialog image....
 		ImageView img = (ImageView)dialog.findViewById(R.id.launchImage);
-		img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_startup));
+		img.setImageDrawable(ctx.getResources().getDrawable(R.drawable.task));
 		
 		//dialog title....
 		TextView title = (TextView)dialog.findViewById(R.id.open);
@@ -139,11 +140,11 @@ public class StartUpPanelDialog {
 			}else
 				g = (grp) convert.getTag();
 			g.txt.setText(list[arg0]);
-			if(FileQuest.CURRENT_PREF_ITEM == arg0)
+			/*if(FileQuest.CURRENT_PREF_ITEM == arg0)
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.selected));
 			else
 				g.img.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_startup));
-			return convert;
+			*/return convert;
 		}
 		
 	}

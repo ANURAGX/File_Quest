@@ -20,6 +20,7 @@
 package org.anurag.file.quest;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -59,7 +60,6 @@ import org.anurag.settings.Settings;
 import org.ultimate.menuItems.AppProperties;
 import org.ultimate.menuItems.BluetoothChooser;
 import org.ultimate.menuItems.DeleteBackups;
-import org.ultimate.menuItems.DeleteFlashable;
 import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.MultipleCopyDialog;
 import org.ultimate.menuItems.SelectApp;
@@ -390,10 +390,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 
 		setContentView(R.layout.new_ui);
 	
-		editBox = (EditText) findViewById(R.id.editBox);
-		sd = (ProgressBar) findViewById(R.id.space_indicator);
-		avail = (TextView) findViewById(R.id.avail);
-		total = (TextView) findViewById(R.id.total);
+		//editBox = (EditText) findViewById(R.id.editBox);
+	
 		//error = false;
 		
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -418,13 +416,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 			LAST_PAGE = 3;
 
 		if (CURRENT_PREF_ITEM == 0) {
-			Button b = (Button) findViewById(R.id.change);
+			/*Button b = (Button) findViewById(R.id.change);
 			TextView t = (TextView) findViewById(R.id.addText);
 			b.setBackgroundResource(R.drawable.ic_launcher_select_app);
 			t.setText(R.string.apps);
 			mFlipperBottom.showNext();
 			new load().execute();
-			LAST_PAGE = 0;
+			LAST_PAGE = 0;*/
 		}
 		else if (CURRENT_PREF_ITEM == 3) {
 			mVFlipper.showNext();
@@ -443,14 +441,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 				// TODO Auto-generated method stub
 				mUseBackKey = false;
 				CURRENT_ITEM = page;
-				Button b = (Button) findViewById(R.id.change);
-				TextView t = (TextView) findViewById(R.id.addText);
+				//Button b = (Button) findViewById(R.id.change);
+				//TextView t = (TextView) findViewById(R.id.addText);
 				if (page == 0){
 					if (!elementInFocus) {
 						mFlipperBottom.showNext();
 					}
-					b.setBackgroundResource(R.drawable.ic_launcher_select_app);
-					t.setText(getString(R.string.apps));
+				//	b.setBackgroundResource(R.drawable.ic_launcher_select_app);
+					//t.setText(getString(R.string.apps));
 					LAST_PAGE = 0;
 					
 					//delete or copy operation was performed....
@@ -471,8 +469,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 					}
 					
 				} else if (page != 0) {
-					b.setBackgroundResource(R.drawable.ic_launcher_add_new);
-					t.setText(R.string.New);
+					//b.setBackgroundResource(R.drawable.ic_launcher_add_new);
+					//t.setText(R.string.New);
 				}
 				if (page == 1 && LAST_PAGE == 0) {
 					LAST_PAGE = 1;
@@ -877,11 +875,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 			});
 		
 
-			final Dialog d = new Dialog(mContext,R.style.custom_dialog_theme);
+			final Dialog d = new Dialog(mContext,Constants.DIALOG_STYLE);
 			d.setContentView(R.layout.long_click_dialog);
 			ListView lo = (ListView) d.findViewById(R.id.list);
-			AdapterLoaders loaders = new AdapterLoaders(getActivity(), false,0);
-			lo.setAdapter(loaders.getLongClickAdapter());
+			//AdapterLoaders loaders = new AdapterLoaders(getActivity(), false,0);
+			//lo.setAdapter(loaders.getLongClickAdapter());
 			lo.setSelector(getResources().getDrawable(R.drawable.button_click));
 			d.getWindow().getAttributes().width = size.x*8/9;
 			LIST_VIEW_3D.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -927,7 +925,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 						break;
 					case 1:
 						// copy to CLOUD.....
-						new CopyToCloud(mContext, file0);
+				//		new CopyToCloud(mContext, file0);
 						break;
 
 					case 2:
@@ -1142,11 +1140,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 				}
 			});
 
-			final Dialog d = new Dialog(mContext, R.style.custom_dialog_theme);
+			final Dialog d = new Dialog(mContext, Constants.DIALOG_STYLE);
 			d.setContentView(R.layout.long_click_dialog);
 			ListView lo = (ListView) d.findViewById(R.id.list);
-			AdapterLoaders loaders = new AdapterLoaders(getActivity(), false , 1);
-			lo.setAdapter(loaders.getLongClickAdapter());
+			//AdapterLoaders loaders = new AdapterLoaders(getActivity(), false , 1);
+			//lo.setAdapter(loaders.getLongClickAdapter());
 			lo.setSelector(getResources().getDrawable(R.drawable.button_click));
 			d.getWindow().getAttributes().width = size.x*8/9;
 			simple.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -1252,7 +1250,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 
 					case 1:
 						// COPY TO CLOUD
-						new CopyToCloud(mContext, file);
+				//		new CopyToCloud(mContext, file);
 						break;
 
 					case 2:
@@ -1478,11 +1476,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 				//sdItemsList = sdManager.getList();
 				setListAdapter(sdAdapter);
 			}	
-			dialog = new Dialog(getActivity(), R.style.custom_dialog_theme);
+			dialog = new Dialog(getActivity(), Constants.DIALOG_STYLE);
 			dialog.setContentView(R.layout.long_click_dialog);
 			ListView lo = (ListView) dialog.findViewById(R.id.list);
-			AdapterLoaders loaders = new AdapterLoaders(mContext, false , 2);
-			lo.setAdapter(loaders.getLongClickAdapter());
+			//AdapterLoaders loaders = new AdapterLoaders(mContext, false , 2);
+			//lo.setAdapter(loaders.getLongClickAdapter());
 			lo.setSelector(getResources().getDrawable(R.drawable.button_click));
 			dialog.getWindow().getAttributes().width = size.x*8/9;
 			root.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -1595,7 +1593,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 
 					case 1:
 						// COPY TO CLOUD
-						new CopyToCloud(mContext, file2);
+					//	new CopyToCloud(mContext, file2);
 						break;
 
 					case 2:
@@ -1915,11 +1913,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 				}
 			});
 			final Dialog dia = new Dialog(getActivity(),
-					R.style.custom_dialog_theme);
+					Constants.DIALOG_STYLE);
 			dia.setContentView(R.layout.long_click_dialog);
 			ListView lo = (ListView) dia.findViewById(R.id.list);
-			AdapterLoaders loaders = new AdapterLoaders(mContext, true , 3);
-			lo.setAdapter(loaders.getLongClickAdapter());
+			//AdapterLoaders loaders = new AdapterLoaders(mContext, true , 3);
+			//lo.setAdapter(loaders.getLongClickAdapter());
 			lo.setSelector(getResources().getDrawable(R.drawable.button_click));
 			dia.getWindow().getAttributes().width = size.x*8/9;
 			APP_LIST_VIEW
@@ -2023,126 +2021,30 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 	@Override
 	public void onClick(final View v) {
 		CURRENT_ITEM = mViewPager.getCurrentItem();
-		switch (v.getId()) {
-
-		case R.id.grphbtn:
-			//starting analysis of file gallery items....
-			startActivity(new Intent(mContext, GraphAnalysis.class));
-			break;		
-		
-		case R.id.cld:
-			
-			{
-				//displaying currently available cloud networks and hiding also....
-				final LinearLayout drp = (LinearLayout)findViewById(R.id.cld_drp);
-				final LinearLayout gogl = (LinearLayout)findViewById(R.id.cld_gogledrv);
-				final LinearLayout sky = (LinearLayout)findViewById(R.id.cld_skydrv);
-				final LinearLayout mefire = (LinearLayout)findViewById(R.id.cld_mdfire);
-				final LinearLayout sugar = (LinearLayout)findViewById(R.id.cld_sugar);
-				final LinearLayout copy = (LinearLayout)findViewById(R.id.cld_copy);
-				if(drp.getVisibility() == View.VISIBLE){
-					drp.setVisibility(View.GONE);
-					gogl.setVisibility(View.GONE);
-					sky.setVisibility(View.GONE);
-					mefire.setVisibility(View.GONE);
-					sugar.setVisibility(View.GONE);
-					copy.setVisibility(View.GONE);
-				}else{
-					drp.setVisibility(View.VISIBLE);
-					gogl.setVisibility(View.VISIBLE);
-					sky.setVisibility(View.VISIBLE);
-					mefire.setVisibility(View.VISIBLE);
-					sugar.setVisibility(View.VISIBLE);
-					copy.setVisibility(View.VISIBLE);
-				}
-			}
-			break;
+		/*switch (v.getId()) {
 			
 		//options under development....may be available in next update.... 	
-		case R.id.http:
-		case R.id.ftp:
-		case R.id.cld_drp:
-		case R.id.cld_gogledrv:
-		case R.id.cld_mdfire:
-		case R.id.cld_sugar:	
-		case R.id.cld_skydrv:
-		case R.id.cld_copy:	
+		case 1:
+		//case R.id.cld_drp:
+		//case R.id.cld_gogledrv:
+		//case R.id.cld_mdfire:
+		//case R.id.cld_sugar:	
+		//case R.id.cld_skydrv:
+	//	case R.id.cld_copy:	
 			Toast.makeText(mContext, R.string.coming_soon, Toast.LENGTH_SHORT).show();
 			break;
 		
-		case R.id.serv:
-			{
-				//displaying currently available server options and hiding also....	
-				final LinearLayout http = (LinearLayout)findViewById(R.id.http);
-				final LinearLayout ftp = (LinearLayout)findViewById(R.id.ftp);
-				if(http.getVisibility() == View.VISIBLE){
-					http.setVisibility(View.GONE);
-					ftp.setVisibility(View.GONE);
-				}else{
-					http.setVisibility(View.VISIBLE);
-					ftp.setVisibility(View.VISIBLE);
-				}
-			}
-			break;
-			
-		case R.id.lckItm:
-			{
-				//displaying the available options in lock .....
-				final LinearLayout disLock = (LinearLayout)findViewById(R.id.dis_next_restart);
-				final LinearLayout unlockAll = (LinearLayout)findViewById(R.id.unlock_all);
-				if(disLock.getVisibility() == View.VISIBLE){
-					disLock.setVisibility(View.GONE);
-					unlockAll.setVisibility(View.GONE);
-				}else{
-					disLock.setVisibility(View.VISIBLE);
-					unlockAll.setVisibility(View.VISIBLE);
-					if(Constants.disable_lock){
-						TextView msg = (TextView)findViewById(R.id.dis_msg);
-						msg.setText(R.string.lock_disabled);
-					}else{
-						TextView msg = (TextView)findViewById(R.id.dis_msg);
-						msg.setText(R.string.dis_next_restart);
-					}
-				}
-			}
-			break;
-			
-		case R.id.dis_next_restart:
-			//disabling the lock till next restart....
-			if(preferences.getString("MASTER_PASSWORD", null) != null)
-				new MasterPassword(mContext, size.x*8/9, null, preferences, Constants.MODES.DISABLE_NEXT_RESTART);
-			else
-				Toast.makeText(mContext, R.string.no_locked_items, Toast.LENGTH_SHORT).show();
-			break;
-			
-		case R.id.unlock_all:
-			//unlocking all items....
-			if(preferences.getString("MASTER_PASSWORD", null) != null)
-				new MasterPassword(mContext, size.x*8/9, null, preferences, Constants.MODES.UNLOCK_ALL);
-			else
-				Toast.makeText(mContext, R.string.no_locked_items, Toast.LENGTH_SHORT).show();
-			break;
-			
-		case R.id.upd_check:			
-			//checking for update....	
-			update_checker();
-			break;
-			
-		case R.id.whats_new:
-			//new features....
-			new WhatsNew(mContext, size.x*8/9, size.y*8/9);
-			break;
-			
-		case R.id.g_open:
+					
+		//case R.id.g_open:
 			new G_Open(mContext, size.x, size.y);
 			break;
 
-		case R.id.bottom_Quit:
+		//case R.id.bottom_Quit:
 			FileQuest.this.finish();
 			android.os.Process.killProcess(android.os.Process.myPid());
 			break;
 
-		case R.id.bottom_paste:
+		//case R.id.bottom_paste:
 			if (CURRENT_ITEM == 0||ZIP_SD||ZIP_ROOT||RAR_SD||RAR_ROOT) {
 				Toast.makeText(mContext, getString(R.string.pastenotallowed), Toast.LENGTH_SHORT).show();
 			}else{
@@ -2150,48 +2052,48 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 			}
 			break;
 
-		case R.id.bottom_copy:
+	//	case R.id.bottom_copy:
 			if(ZIP_SD||ZIP_ROOT||RAR_SD||RAR_ROOT){
 				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
 			}else
 				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 5,getString(R.string.enablemultiselect));
 			break;
 
-		case R.id.bottom_cut:
+		//case R.id.bottom_cut:
 			if(ZIP_SD||ZIP_ROOT||RAR_SD||RAR_ROOT){
 				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
 			}else
 				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 2,getString(R.string.enablemultiselect));
 			break;
 
-		case R.id.bottom_zip:
+		//case R.id.bottom_zip:
 			if(ZIP_SD||ZIP_ROOT||RAR_SD||RAR_ROOT){
 				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
 			}else
 				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 3,getString(R.string.enablemultiselect));
 			break;
 
-		case R.id.bottom_delete:
+		//case R.id.bottom_delete:
 			if((ZIP_SD||ZIP_ROOT||RAR_SD||RAR_ROOT)){
 				Toast.makeText(mContext, getString(R.string.operationnotsupported), Toast.LENGTH_SHORT).show();
 			}else
 				OPERATION_ON_MULTI_SELECT_FILES(CURRENT_ITEM, 4,getString(R.string.enablemultiselect));
 			break;
 
-		case R.id.appSettings:
+		//case R.id.appSettings:
 			startActivityForResult(new Intent(mContext , Settings.class), 100);
 			break;
 
-		case R.id.bottom_multi: 
+		//case R.id.bottom_multi: 
 
 			break;
 
-		case R.id.bottom_multi_send_app:
+		//case R.id.bottom_multi_send_app:
 			if (MULTI_SELECT_APPS) {
 				
 			} else {			}
 			break;
-		case R.id.bottom_multi_select_backup:
+		//case R.id.bottom_multi_select_backup:
 			if (MULTI_SELECT_APPS) {
 				
 			} else {
@@ -2199,7 +2101,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 			}
 			break;
 
-		case R.id.bottom_user_apps:
+		//case R.id.bottom_user_apps:
 			// SETS THE SETTING TO SHOW DOWNLOADED APPS ONLY
 			edit.putInt("SHOW_APP", 1);
 			edit.commit();
@@ -2209,7 +2111,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 		//	nAppAdapter = new AppAdapter(mContext, R.layout.row_list_1,nList);
 			APP_LIST_VIEW.setAdapter(nAppAdapter);
 			break;
-		case R.id.bottom_system_apps:
+		//case R.id.bottom_system_apps:
 			// SETS THE SETTING TO SHOW SYSTEM APPS ONLY
 			edit.putInt("SHOW_APP", 2);
 			edit.commit();
@@ -2220,7 +2122,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 			APP_LIST_VIEW.setAdapter(nAppAdapter);
 			break;
 
-		case R.id.bottom_both_apps:
+		//case R.id.bottom_both_apps:
 			// SETS THE SETTING TO SHOW DOWNLOADED AND SYSTEM APPS
 			edit.putInt("SHOW_APP", 3);
 			edit.commit();
@@ -2231,7 +2133,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 			APP_LIST_VIEW.setAdapter(nAppAdapter);
 			break;
 
-		case R.id.searchBtn:
+		//case R.id.searchBtn:
 				if(ZIP_SD||ZIP_ROOT){
 					if(SEARCH_FLAG){//DISABLING SEARCH COMMAND....
 						SEARCH_FLAG = false;
@@ -2260,10 +2162,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 				}	
 				break;
 
-		case R.id.applyBtn:
+	//	case R.id.applyBtn:
 			// rename the file with given name from editBox
 			editBox = new EditText(mContext);
-			editBox = (EditText) findViewById(R.id.editBox);
+		//	editBox = (EditText) findViewById(R.id.editBox);
 			String name = editBox.getText().toString();
 			// String ext = extBox.getText().toString();
 			if (name.length()>0){
@@ -2284,7 +2186,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 								/**
 								 * TODO create folders that needs root permisionns
 								 * to create....
-								 */
+								 
 								if(!RootManager.getCurrentDirectory().equals("/"))
 									name = RootManager.getCurrentDirectory() + name;
 								boolean exists = new File(name).exists();
@@ -2338,7 +2240,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 										setAdapter(CURRENT_ITEM);
 									}catch(Exception e){
 										Toast.makeText(mContext,getString(R.string.creation_failed),Toast.LENGTH_LONG).show();
-									}*/
+									}
 									Toast.makeText(mContext,getString(R.string.creation_failed),Toast.LENGTH_LONG).show();
 								}else{
 									chFile = new File(name);
@@ -2433,7 +2335,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 						try {
 							/*
 							 * yet to implement rename command for root files
-							 */
+							 
 							
 							//file with same name already exists....
 							if(new File(name).exists())
@@ -2523,7 +2425,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 				Toast.makeText(mContext, R.string.entervalidname,Toast.LENGTH_SHORT).show();
 			break;
 
-		case R.id.homeDirBtn:
+	//	case R.id.homeDirBtn:
 			HOME_DIRECTORY = preferences.getString("HOME_DIRECTORY", null);
 			if (HOME_DIRECTORY == null) {
 				new GetHomeDirectory(mContext, size.x*8/9, preferences);
@@ -2590,7 +2492,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 
 			break;
 
-		case R.id.jumpToBtn:
+		//case R.id.jumpToBtn:
 
 			if (CURRENT_ITEM == 0) {
 				// IF CURRENT ITEM == 0
@@ -2604,7 +2506,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 							}
 			break;
 
-		case R.id.addBtn:
+		//case R.id.addBtn:
 
 			if (CURRENT_ITEM == 0) {
 				//showDefaultApps(v);
@@ -2614,10 +2516,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 
 			break;
 
-		case R.id.backupAll:
+	//	case R.id.backupAll:
 						break;
 
-		case R.id.cleanBackups:
+		//case R.id.cleanBackups:
 			// THIS BUTTON DISPLAYS TWO OPTIONS -1.TO DELETED THE BACKUPS
 			// 2. DELETE THE FLASHABLE ZIPS CREATED
 						break;
@@ -2626,7 +2528,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 			if (CURRENT_ITEM == 3)
 				new ErrorDialogs(mContext, size.x*8/9, "FlashableZips");
 			break;
-		}
+		}*/
 	}
 
 	
@@ -2973,8 +2875,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 						searchList = new ArrayList<Item>();
 					else
 						searchList.clear();
-					LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
-					a.setVisibility(View.GONE);
+				//	LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
+				//	a.setVisibility(View.GONE);
 					// Search Flipper is loaded
 					mVFlipper.showNext();
 					mVFlipper.showNext();
@@ -3829,8 +3731,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 		// TODO Auto-generated method stub
 		zSearch = new ArrayList<ZipObj>();
 		try{
-			LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
-			a.setVisibility(View.GONE);
+			//LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
+		//	a.setVisibility(View.GONE);
 			// Search Flipper is loaded
 			mVFlipper.showNext();
 			mVFlipper.showNext();
@@ -3913,8 +3815,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 		// TODO Auto-generated method stub
 		tSearch = new ArrayList<TarObj>();
 		try{
-			LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
-			a.setVisibility(View.GONE);
+			//LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
+			//a.setVisibility(View.GONE);
 			// Search Flipper is loaded
 			mVFlipper.showNext();
 			mVFlipper.showNext();
@@ -3998,8 +3900,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 		// TODO Auto-generated method stub
 		rSearch = new ArrayList<RarObj>();
 		try{
-			LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
-			a.setVisibility(View.GONE);
+		//	LinearLayout a = (LinearLayout) findViewById(R.id.applyBtn);
+			//a.setVisibility(View.GONE);
 			// Search Flipper is loaded
 			mVFlipper.showNext();
 			mVFlipper.showNext();
@@ -4080,7 +3982,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 	 *THIS FUNCTION SETS THE ADAPTER WHEN ZIP FILE IS OPERATED.... 
 	 */
 	private static void setZipAdapter(){
-		final Dialog progDial = new Dialog(mContext, R.style.custom_dialog_theme);
+		final Dialog progDial = new Dialog(mContext, Constants.DIALOG_STYLE);
 		progDial.setContentView(R.layout.p_dialog);
 		progDial.setCancelable(false);
 		progDial.getWindow().getAttributes().width = size.x*8/9;
@@ -4156,7 +4058,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 	 * AT THE PROVIDED PATH....
 	 */
 	private static void setRarAdapter(){
-		final Dialog progDial = new Dialog(mContext, R.style.custom_dialog_theme);
+		final Dialog progDial = new Dialog(mContext, Constants.DIALOG_STYLE);
 		progDial.setContentView(R.layout.p_dialog);
 		progDial.setCancelable(false);
 		progDial.getWindow().getAttributes().width = size.x*8/9;
@@ -4240,7 +4142,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 	 * AT THE PROVIDED PATH....
 	 */
 	private static void setTarAdapter(){
-		final Dialog progDial = new Dialog(mContext, R.style.custom_dialog_theme);
+		final Dialog progDial = new Dialog(mContext, Constants.DIALOG_STYLE);
 		progDial.setContentView(R.layout.p_dialog);
 		progDial.getWindow().getAttributes().width = size.x*8/9;
 		WebView web = (WebView)progDial.findViewById(R.id.p_Web_View);

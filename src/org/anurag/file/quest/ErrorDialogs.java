@@ -77,7 +77,7 @@ public class ErrorDialogs {
 			b = (Button)dialog.findViewById(R.id.popupCancel);
 			b.setVisibility(View.GONE);
 			iTv.setText(R.string.cantrename);
-			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_rename));
+			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.rename));
 			tv.setText(R.string.delete_frm_ext_sd);
 			b= (Button)dialog.findViewById(R.id.popupOk);
 			b.setText("Ok");
@@ -93,7 +93,7 @@ public class ErrorDialogs {
 			b = (Button)dialog.findViewById(R.id.popupCancel);
 			b.setVisibility(View.GONE);
 			iTv.setText(R.string.nohome);
-			iView.setBackgroundResource(R.drawable.ic_launcher_droid_home);
+			iView.setBackgroundResource(R.drawable.task);
 			tv.setText(R.string.nohomeerror);
 			b= (Button)dialog.findViewById(R.id.popupOk);
 			b.setText(ctx.getString(R.string.ok));
@@ -108,7 +108,7 @@ public class ErrorDialogs {
 			b = (Button)dialog.findViewById(R.id.popupCancel);
 			b.setVisibility(View.GONE);
 			iTv.setText(R.string.noApp);
-			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_file_task));
+			iView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.task));
 			tv.setText(R.string.noapperror);
 			b= (Button)dialog.findViewById(R.id.popupOk);
 			b.setText(ctx.getString(R.string.ok));

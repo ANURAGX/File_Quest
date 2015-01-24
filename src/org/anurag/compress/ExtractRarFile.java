@@ -72,7 +72,7 @@ public class ExtractRarFile {
 		errors = false;
 		prog = 0;
 		read = 0;
-		final Dialog dialog = new Dialog(ctx, R.style.custom_dialog_theme);
+		final Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.extract_file);
 		dialog.getWindow().getAttributes().width = width;

@@ -19,7 +19,9 @@
 
 package org.ultimate.menuItems;
 
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
+
 import android.app.Dialog;
 import android.content.Context;
 
@@ -33,7 +35,7 @@ public class Info{
 	public Info(Context context,int width) {
 		// TODO Auto-generated constructor stub
 		mContext = context;
-		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
+		dialog = new Dialog(mContext, Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.info_layout);
 		dialog.setCancelable(true);
 		dialog.getWindow().getAttributes().width = width;

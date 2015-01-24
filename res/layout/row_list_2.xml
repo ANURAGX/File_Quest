@@ -34,5 +34,6 @@
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content" 
 		android:singleLine="false" 
+		android:textStyle="bold"
 		android:textIsSelectable="false" />
 </LinearLayout>

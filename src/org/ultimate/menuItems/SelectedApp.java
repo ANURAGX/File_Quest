@@ -22,7 +22,9 @@ package org.ultimate.menuItems;
 
 
 
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -46,7 +48,7 @@ public class SelectedApp {
 		mode = MODE;
 		TYPE = ac;
 		action = data;
-		dialog = new Dialog(context, R.style.custom_dialog_theme);
+		dialog = new Dialog(context, Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.selected_app);
 		dialog.getWindow().getAttributes().width = width;
 		onCreate();

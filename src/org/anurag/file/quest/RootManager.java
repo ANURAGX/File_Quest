@@ -243,7 +243,7 @@ public class RootManager {
 			type = ctx.getString(R.string.directory);
 			if(Constants.isExtAvailable)
 				if(f.getAbsolutePath().equalsIgnoreCase(Constants.EXT_PATH))
-					return res.getDrawable(R.drawable.ic_launcher_sdcard);
+					return res.getDrawable(R.drawable.sdcard);
 			return Constants.FOLDER_IMAGE;
 		}
 		

@@ -191,7 +191,7 @@ public class FileGallerySimpleAdapter extends BaseAdapter {
 		if(item.isDirectory()){
 			if(Constants.isExtAvailable)
 				if(item.getPath().startsWith(Constants.EXT_PATH))
-					h.icon.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_launcher_sdcard));
+					h.icon.setImageDrawable(ctx.getResources().getDrawable(R.drawable.sdcard));
 		}
 		
 		else if (item.getType().equals("Image")) {

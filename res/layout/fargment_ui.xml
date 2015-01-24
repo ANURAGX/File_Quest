@@ -36,12 +36,9 @@
 			android:id="@+id/viewFlipperMenu" 
 			android:layout_width="fill_parent" 
 			android:layout_height="fill_parent">
-			<include
-        	       layout="@layout/main_menu_bar"/>
-      		<include 
-      	           layout="@layout/app_menu_bar"/> 
-      	    <include 
-            	   layout="@layout/edit_menu"/>
+			
+      		 
+      	    
         </ViewFlipper>
     </LinearLayout>
 	
@@ -61,13 +58,7 @@
 			android:id="@+id/viewFlipperMenuBottom" 
 			android:layout_width="fill_parent" 
 			android:layout_height="fill_parent">
-		<include
-               layout="@layout/menu_bottom"/>
-		<include 
-		    	layout="@layout/sdcard_space"/>
-		<include 
-		    	layout="@layout/menu_bottom_app"/>
-        
+		
         </ViewFlipper>
     </LinearLayout>
      

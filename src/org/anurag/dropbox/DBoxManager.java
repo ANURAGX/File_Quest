@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.R;
 
@@ -106,7 +107,7 @@ public class DBoxManager {
     }
     
     public static void setDropBoxAdapter(final int ITEM ,final Context ctx){
-    	final Dialog dialog = new Dialog(ctx , R.style.custom_dialog_theme);
+    	final Dialog dialog = new Dialog(ctx , Constants.DIALOG_STYLE);
     	dialog.setCancelable(false);
     	dialog.setContentView(R.layout.p_dialog);
     	dialog.getWindow().getAttributes().width = FileQuest.size.x*8/9;

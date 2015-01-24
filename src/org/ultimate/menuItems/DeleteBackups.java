@@ -21,6 +21,7 @@ package org.ultimate.menuItems;
 
 import java.io.File;
 
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.RootManager;
 
@@ -51,7 +52,7 @@ public class DeleteBackups{
 	public DeleteBackups(Context context,int width) {
 		// TODO Auto-generated constructor stub
 		mContext = context;
-		dialog = new Dialog(context, R.style.custom_dialog_theme);
+		dialog = new Dialog(context, Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.delete_files);
 		dialog.getWindow().getAttributes().width = width;
 		dialog.setCancelable(false);
@@ -65,7 +66,7 @@ public class DeleteBackups{
 		String PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
 		btn1 = (Button)dialog.findViewById(R.id.popupOk);
 		ImageView v = (ImageView)dialog.findViewById(R.id.popupImage);
-		v.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_delete ));
+		v.setImageDrawable(mContext.getResources().getDrawable(R.drawable.delete ));
 		btn2 = (Button)dialog.findViewById(R.id.popupCancel);
 		popupTitle = (TextView)dialog.findViewById(R.id.popupTitle);
 		popupMessage = (TextView)dialog.findViewById(R.id.textMessage);

@@ -47,7 +47,7 @@ public class SaveOnExit{
 	
 	void onCreate() {
 		ImageView v = (ImageView)dialog.findViewById(R.id.popupImage);
-		v.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_launcher_save));
+		v.setImageDrawable(mContext.getResources().getDrawable(R.drawable.save));
 		TextView popupTitle = (TextView)dialog.findViewById(R.id.popupTitle);
 		popupTitle.setText(R.string.saveOnExit);
 		TextView popupMessage = (TextView)dialog.findViewById(R.id.textMessage);

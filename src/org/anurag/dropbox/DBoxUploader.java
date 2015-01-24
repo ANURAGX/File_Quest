@@ -21,6 +21,8 @@ package org.anurag.dropbox;
 
 import java.util.ArrayList;
 
+
+import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
@@ -28,7 +30,6 @@ import org.anurag.file.quest.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -64,12 +65,10 @@ public class DBoxUploader {
 		// TODO Auto-generated constructor stub
 		list_to_upload = list;
 		
-		dialog = new Dialog(context , R.style.custom_dialog_theme);
+		dialog = new Dialog(context , Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.copy_dialog);
 		dialog.getWindow().getAttributes().width = FileQuest.size.x*8/9;
 		
-		ImageView icn = (ImageView)dialog.findViewById(R.id.headerImage);
-		icn.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_drop_box));
 		
 		TextView tv = (TextView)dialog.findViewById(R.id.header);
 		tv.setText(context.getString(R.string.uploading));

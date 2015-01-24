@@ -69,7 +69,7 @@ public class OpenAs {
 		list = lit;
 		
 		ImageView im = (ImageView)dialog.findViewById(R.id.launchImage);
-		im.setBackgroundResource(R.drawable.ic_launcher_file_task);
+		im.setBackgroundResource(R.drawable.task);
 		
 		Button q = (Button)dialog.findViewById(R.id.justOnce);
 		Button s = (Button) dialog.findViewById(R.id.always);

@@ -125,7 +125,7 @@ public class OpenFileDialog {
 			dialog.setContentView(R.layout.launch_file);
 			dialog.getWindow().getAttributes().width = width;
 			header = (ImageView)dialog.findViewById(R.id.launchImage);
-			header.setImageResource(R.drawable.ic_launcher_file_task);
+			header.setImageResource(R.drawable.task);
 			prefs = mContext.getSharedPreferences("DEFAULT_APPS", 0);
 			edit = prefs.edit();
 			manager = mContext.getPackageManager();

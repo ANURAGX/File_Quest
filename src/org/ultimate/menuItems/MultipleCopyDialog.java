@@ -104,7 +104,7 @@ public class MultipleCopyDialog {
 	//	BUFFER = 256;
 		list = obj;
 		running = true;
-		dialog = new Dialog(mContext, R.style.custom_dialog_theme);
+		dialog = new Dialog(mContext, Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.copy_dialog);
 		dialog.setCancelable(false);
 		dialog.getWindow().getAttributes().width = windowSize;
@@ -113,7 +113,7 @@ public class MultipleCopyDialog {
 		//cut = command;
 		
 		iM = (ImageView)dialog.findViewById(R.id.headerImage);
-		iM.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher_file_task));
+		iM.setImageDrawable(context.getResources().getDrawable(R.drawable.copy));
 		btn1 = (Button)dialog.findViewById(R.id.copyOk);
 		btn2 = (Button)dialog.findViewById(R.id.copyCancel);
 		btn1.setVisibility(View.GONE);

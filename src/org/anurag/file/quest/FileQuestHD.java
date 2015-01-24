@@ -168,6 +168,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		
 		init_action_bar();
 		init_drawer_menu();
+		init_with_device_id();
 	}
 	
 	@Override
@@ -827,6 +828,26 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			}
 		});
 		th.start();
+	}
+	
+	/**
+	 * this function finds the device information and sets in drawer menu....
+	 */
+	private void init_with_device_id(){
+		TextView devId = (TextView)findViewById(R.id.dev_id);
+		String dev = Build.MODEL;
+		String man = Build.MANUFACTURER;
+		if(dev.length() == 0 || dev == null)
+			dev = getString(R.string.unknown);
+		else{
+			if(!dev.contains(man))
+				dev = man + " " + dev;
+			char a = dev.charAt(0);
+			if(!Character.isUpperCase(a)){
+				dev = Character.toUpperCase(a) + dev.substring(1);
+			}
+		}		
+		devId.setText(dev);
 	}
 	
 }

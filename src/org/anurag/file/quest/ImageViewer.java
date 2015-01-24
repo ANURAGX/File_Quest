@@ -68,12 +68,12 @@ public class ImageViewer extends Activity{
 							@Override
 							public void onClick(View v) {
 								// TODO Auto-generated method stub
-								final Dialog dialog = new Dialog(ImageViewer.this,R.style.custom_dialog_theme);
+								final Dialog dialog = new Dialog(ImageViewer.this,Constants.DIALOG_STYLE);
 								dialog.setContentView(R.layout.delete_files);
 								dialog.getWindow().getAttributes().width = FileQuest.size.x*8/9;
 								
 								ImageView ic = (ImageView)dialog.findViewById(R.id.popupImage);
-								ic.setBackgroundResource(R.drawable.ic_launcher_delete);
+								ic.setBackgroundResource(R.drawable.delete);
 								
 								TextView t = (TextView)dialog.findViewById(R.id.popupTitle);
 								t.setText(R.string.deleteimage);

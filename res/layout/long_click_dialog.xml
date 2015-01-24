@@ -36,7 +36,7 @@
         
         <ImageView 
             android:id="@+id/longClickDialogIcon" 
-            android:background="@drawable/ic_launcher_file_task" 
+            android:background="@drawable/task" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content" 
             />

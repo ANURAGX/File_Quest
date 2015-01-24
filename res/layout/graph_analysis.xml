@@ -35,7 +35,7 @@
     	android:background="?attr/colorPrimary" />
             
     
-    <com.astuetz.PagerSlidingTabStrip
+    <com.extra.libs.PagerSlidingTabStrip
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
         	android:id="@+id/graph_ind"

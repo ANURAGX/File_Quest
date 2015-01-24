@@ -115,7 +115,7 @@
 
         	<SeekBar
             	android:id="@+id/seek"
-            	android:progressDrawable="@drawable/sd_status"
+            	android:progressDrawable="@drawable/progress_bar_hd"
             	android:thumb="@null"
             	android:layout_width="match_parent"
             	android:layout_height="10dp"
