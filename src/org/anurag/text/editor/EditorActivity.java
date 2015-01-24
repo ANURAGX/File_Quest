@@ -19,7 +19,6 @@
 package org.anurag.text.editor;
 
 import java.io.BufferedReader;
-
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -29,11 +28,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.LinuxShell;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.SystemBarTintManager;
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 import org.anurag.file.quest.ThemeOrganizer;
-import org.ultimate.root.LinuxShell;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;

@@ -47,7 +47,6 @@ import org.anurag.compress.TarFileProperties;
 import org.anurag.compress.TarManager;
 import org.anurag.compress.TarObj;
 import org.anurag.compress.ZipAdapter;
-import org.anurag.compress.ZipGallery;
 import org.anurag.compress.ZipManager;
 import org.anurag.compress.ZipObj;
 import org.anurag.dropbox.DBoxAdapter;
@@ -62,13 +61,9 @@ import org.ultimate.menuItems.BluetoothChooser;
 import org.ultimate.menuItems.DeleteBackups;
 import org.ultimate.menuItems.DeleteFlashable;
 import org.ultimate.menuItems.GetHomeDirectory;
-import org.ultimate.menuItems.GetMoveLocation;
 import org.ultimate.menuItems.MultipleCopyDialog;
 import org.ultimate.menuItems.SelectApp;
 import org.ultimate.menuItems.SelectedApp;
-import org.ultimate.quickaction3D.ActionItem;
-import org.ultimate.quickaction3D.QuickAction;
-import org.ultimate.quickaction3D.QuickAction.OnActionItemClickListener;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -127,16 +122,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.abhi.animated.TransitionViewPager;
-import com.abhi.animated.TransitionViewPager.TransitionEffect;
-import com.astuetz.PagerSlidingTabStrip;
 import com.dropbox.client2.android.AndroidAuthSession;
+import com.extra.libs.JazzyHelper;
+import com.extra.libs.PagerSlidingTabStrip;
+import com.extra.libs.TransitionViewPager;
+import com.extra.libs.TransitionViewPager.TransitionEffect;
 import com.fuehlbypa.kddcbytnh159110.Prm;
 import com.github.junrar.Archive;
 import com.github.junrar.exception.RarException;
-import com.rey.slidelayout.SlideLayout;
-import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
-import com.twotoasters.jazzylistview.JazzyHelper;
 
 
 
@@ -147,7 +140,7 @@ import com.twotoasters.jazzylistview.JazzyHelper;
  */
 
 @SuppressLint({ "HandlerLeak", "SdCardPath" })
-public class FileQuest extends FragmentActivity implements OnClickListener, QuickAction.OnActionItemClickListener {
+public class FileQuest extends FragmentActivity implements OnClickListener{
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -284,7 +277,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	private static boolean mUseBackKey = false;
 	private static ViewFlipper mVFlipper;
 	private static int LAST_PAGE;
-	static SlideLayout slidemenu;
+	//static SlideLayout slidemenu;
 	private static View v;
 	
 	private boolean delete_from_slider_menu;
@@ -631,8 +624,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		//ShowMenu();
-		if(!slidemenu.isLeftMenuOpen())
-			slidemenu.openLeftMenu(true);
+		
 		return false;
 	}
 
@@ -2190,119 +2182,20 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			startActivityForResult(new Intent(mContext , Settings.class), 100);
 			break;
 
-		case R.id.bottom_multi: {
-			QuickAction action = new QuickAction(mContext);
-			ActionItem item = new ActionItem();
+		case R.id.bottom_multi: 
 
-			if (element == null || !elementInFocus) {
-				//item = new ActionItem(-1, getString(R.string.multiforgallery),getResources().getDrawable(R.drawable.ic_launcher_images));
-				action.addActionItem(item);
-			} else {
-				/*if (FileGalleryAdapter.MULTI_SELECT)
-					item = new ActionItem(0,getString(R.string.multiforgallery), getResources().getDrawable(R.drawable.ic_launcher_multi_select));
-				else
-					//item = new ActionItem(0,getString(R.string.multiforgallery), getResources().getDrawable(R.drawable.ic_launcher_images));
-				action.addActionItem(item);*/
-			}
-
-				item = new ActionItem(1, getString(R.string.multiforroot),getResources().getDrawable(R.drawable.ic_launcher_system));
-			action.addActionItem(item);
-
-				item = new ActionItem(2, getString(R.string.multiforsd),getResources().getDrawable(R.drawable.ic_launcher_sdcard));
-			action.addActionItem(item);
-
-			if (MULTI_SELECT_APPS)
-				item = new ActionItem(3, getString(R.string.multiforapp),getResources().getDrawable(R.drawable.ic_launcher_multi_select));
-			else
-				//item = new ActionItem(3, getString(R.string.multiforapp),getResources().getDrawable(R.drawable.ic_launcher_apk));
-			action.addActionItem(item);
-			action.show(v);
-			action.setOnActionItemClickListener(new OnActionItemClickListener() {
-				@Override
-				public void onItemClick(QuickAction source, int pos,
-						int actionId) {
-					// TODO Auto-generated method stub
-					switch (actionId) {
-
-					case -1: {
-						QuickAction ac = new QuickAction(mContext);
-						ActionItem it = new ActionItem(0,getString(R.string.selectcategoryfromgallery));
-						ac.addActionItem(it);
-						ac.show(v);
-					}
-						break;
-					case 0:
-						/*if (FileGalleryAdapter.MULTI_SELECT) {
-						//	element = new FileGalleryAdapter(mContext , getCategoryList(fPos) , getKeys(fPos));
-							//FileGalleryAdapter.thumbselection = new boolean[getCategoryList(fPos).size()];
-						//	FileGalleryAdapter.MULTI_SELECT = false;
-							LIST_VIEW_3D.setAdapter(element);
-						} else {
-						//	element = new FileGalleryAdapter(mContext , getCategoryList(fPos) , getKeys(fPos));
-						//	FileGalleryAdapter.thumbselection = new boolean[getCategoryList(fPos).size()];
-						//	FileGalleryAdapter.MULTI_SELECT = true;
-							LIST_VIEW_3D.setAdapter(element);
-							if (CURRENT_ITEM == 3) {
-								mFlipperBottom.showNext();
-								mVFlipper.showPrevious();
-							}
-							mViewPager.setCurrentItem(0);
-						}*/
-						break;
-
-					case 1:
-						{
-							rootAdapter = new RootAdapter(mContext, rootItemList);
-							//RootAdapter.thumbselection = new boolean[rootItemList.size()];
-							//RootAdapter.MULTI_SELECT = true;
-							if(!ZIP_ROOT&&!RAR_ROOT&&!TAR_ROOT){
-								//MULTI SELECT NOT FUNCTION INSIDE ZIP FILE...
-								//MULTI SELECT IS ENABLED,AND ITS EFFECT WILL COME AFTER COMING
-								//OUT OF THE ARCHIVE...
-								simple.setAdapter(rootAdapter);
-							}								
-						}
-						break;
-					case 2:
-						
-						break;
-
-					case 3:
-						if (MULTI_SELECT_APPS) {
-						//	MULTI_SELECT_APPS = nAppAdapter.MULTI_SELECT = false;
-							APP_LIST_VIEW.setAdapter(nAppAdapter);
-							APP_LIST_VIEW.setSelection(pos);
-						} else {
-							//MULTI_SELECT_APPS = nAppAdapter.MULTI_SELECT = true;
-							mViewPager.setCurrentItem(3);
-							APP_LIST_VIEW.setAdapter(nAppAdapter);
-							APP_LIST_VIEW.setSelection(pos);
-						}
-						break;
-						}
-					}
-				});
-			}
 			break;
 
 		case R.id.bottom_multi_send_app:
 			if (MULTI_SELECT_APPS) {
 				
-			} else {
-				QuickAction ac = new QuickAction(mContext);
-				ActionItem it = new ActionItem(0, getResources().getString((R.string.enablefirstforappstore)));
-				ac.addActionItem(it);
-				ac.show(v);
-			}
+			} else {			}
 			break;
 		case R.id.bottom_multi_select_backup:
 			if (MULTI_SELECT_APPS) {
 				
 			} else {
-				QuickAction ac = new QuickAction(mContext);
-				ActionItem it = new ActionItem(0, getResources().getString(R.string.enablefirstforappstore));
-				ac.addActionItem(it);
-				ac.show(v);
+				
 			}
 			break;
 
@@ -2686,31 +2579,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						new MasterPassword(mContext, size.x*8/9, new Item(new File(HOME_DIRECTORY), null, null, null),
 								preferences, Constants.MODES.HOME);
 				} else if (CURRENT_ITEM == 0) {
-					QuickAction d = new QuickAction(mContext);
-					ActionItem df = new ActionItem(8, "/", getResources().getDrawable(R.drawable.ic_launcher_droid_home));
-					d.addActionItem(df);
-					df = new ActionItem(9, getString(R.string.sd),getResources().getDrawable(R.drawable.ic_launcher_droid_home));
-					d.addActionItem(df);
-					d.show(v);
-					d.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
-						@Override
-						public void onItemClick(QuickAction source, int pos,
-								int actionId) {
-							// TODO Auto-generated method stub
-							switch (actionId) {
-							case 8:
-								RootManager.nStack.push(HOME_DIRECTORY);
-								setAdapter(1);
-								break;
-							case 9:
-								LAST_PAGE = 0;
-								SDManager.nStack.push(HOME_DIRECTORY);
-								setAdapter(2);
-								break;
-							}
-						}
-					});
-
+					
 				}
 			} else {
 				HOME_DIRECTORY = PATH;
@@ -2727,202 +2596,31 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				// IF CURRENT ITEM == 0
 				// DISPLAYS LIST THAT IS APPLICABLE TO ONLY ALL FILE PANEL
 
-				QuickAction ac = new QuickAction(mContext);
-				ActionItem i = new ActionItem(7, getString(R.string.jmpfav),getResources().getDrawable(R.drawable.favorite_slider));
-				ac.addActionItem(i);
 				
-				i = new ActionItem(8, getString(R.string.jmpmusic),Constants.MUSIC);
-				ac.addActionItem(i);
-
-				//i = new ActionItem(9, getString(R.string.jmpapk),getResources().getDrawable(R.drawable.ic_launcher_apk));
-				ac.addActionItem(i);
-
-				//i = new ActionItem(10, getString(R.string.jmpimg),getResources().getDrawable(R.drawable.ic_launcher_images));
-				ac.addActionItem(i);
-				
-				//i = new ActionItem(11, getString(R.string.jmpvids),getResources().getDrawable(R.drawable.ic_launcher_video));
-				ac.addActionItem(i);
-				
-				//i = new ActionItem(12, getString(R.string.jmpdocs),getResources().getDrawable(R.drawable.ic_launcher_ppt));
-				ac.addActionItem(i);
-
-				//i = new ActionItem(13, getString(R.string.jmpzip),getResources().getDrawable(R.drawable.ic_launcher_zip_it));
-				ac.addActionItem(i);
-
-				//i = new ActionItem(14, getString(R.string.jmpmisc),getResources().getDrawable(R.drawable.ic_launcher_rar));
-				ac.addActionItem(i);
-				ac.setOnActionItemClickListener(this);
-				ac.show(v);
-
 			} else {
 				// IF CURRENT ITMEM !=0
 				// This option allows user to directly go to specified directory
 				// from any directory
-				final QuickAction actionJump = new QuickAction(
-						mContext, 1);
-				ActionItem paste = new ActionItem(900,getString(R.string.pastehere), getResources().getDrawable(R.drawable.ic_launcher_paste));
-				ActionItem download = new ActionItem(1000,getString(R.string.jmpdown), getResources().getDrawable(R.drawable.ic_launcher_downloads));
-				ActionItem camera = new ActionItem(1100,getString(R.string.jmpcam), getResources().getDrawable(R.drawable.ic_launcher_camera));
-				ActionItem songs = new ActionItem(1200,getString(R.string.jmpmusfo), getResources().getDrawable(R.drawable.ic_launcher_music_folder));
-			//	ActionItem vid = new ActionItem(1201,getString(R.string.jmpvidfo), getResources().getDrawable(R.drawable.ic_launcher_video));
-				ActionItem pro = new ActionItem(1300, getString(R.string.prop),getResources().getDrawable(R.drawable.ic_launcher_stats));
-				ActionItem apps = new ActionItem(1400,getString(R.string.selecteddefaultapp), getResources().getDrawable(R.drawable.ic_launcher_select_app));
-				actionJump.addActionItem(paste);
-				actionJump.addActionItem(download);
-				actionJump.addActionItem(camera);
-				actionJump.addActionItem(songs);
-				//actionJump.addActionItem(vid);
-				actionJump.addActionItem(pro);
-				actionJump.addActionItem(apps);
-				actionJump.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
-							@Override
-							public void onItemClick(QuickAction source,int pos, int actionId) {
-								// TODO Auto-generated method stub
-								File fJump = null;
-								switch (actionId) {
-								case 900:
-									pasteCommand(false);
-									break;
-								case 1000:
-									fJump = new File(PATH + "/Download");
-									if (!fJump.exists())
-										fJump.mkdir();
-									if (CURRENT_ITEM == 2)
-										SDManager.nStack.push(fJump.getAbsolutePath());
-									else if (CURRENT_ITEM == 1)
-										RootManager.nStack.push(fJump.getAbsolutePath());
-									setAdapter(CURRENT_ITEM);
-									break;
-								case 1100:
-									fJump = new File(PATH + "/DCIM");
-									if (!fJump.exists())
-										fJump.mkdir();
-									if (CURRENT_ITEM == 2)
-										SDManager.nStack.push(fJump.getAbsolutePath());
-									else if (CURRENT_ITEM == 1)
-										RootManager.nStack.push(fJump.getAbsolutePath());
-									setAdapter(CURRENT_ITEM);
-									break;
-								case 1200:
-									fJump = new File(PATH + "/Music");
-									if (!fJump.exists())
-										fJump.mkdir();
-									if (CURRENT_ITEM == 2)
-										SDManager.nStack.push(fJump.getAbsolutePath());
-									else if (CURRENT_ITEM == 1)
-										RootManager.nStack.push(fJump.getAbsolutePath());
-									setAdapter(CURRENT_ITEM);
-									break;
-
-								case 1201:
-									fJump = new File(PATH + "/Video");
-									if (!fJump.exists())
-										fJump.mkdir();
-									if (CURRENT_ITEM == 2)
-										SDManager.nStack.push(fJump.getAbsolutePath());
-									else if (CURRENT_ITEM == 1)
-										RootManager.nStack.push(fJump.getAbsolutePath());
-									setAdapter(CURRENT_ITEM);
-									break;
-								case 1300:
-									//getting the current properties for opened path.....
-									if (CURRENT_ITEM == 1){
-										if(ZIP_ROOT && zFileSimple !=null)
-											new ArchiveEntryProperties(mContext, zFileSimple, size.x*8/9);
-										else if(TAR_ROOT && tFileRoot !=null)
-											new TarFileProperties(mContext, tFileRoot, size.x*8/9);
-										else if(RAR_ROOT && rFileRoot !=null)
-											new RarFileProperties(mContext, rFileRoot, size.x*8/9);
-										else{
-											Intent fprp = new Intent(mContext, org.anurag.file.quest.FileProperties.class);
-											fprp.putExtra("path", file.getPath());
-											startActivity(fprp);
-										}	
-									} else if (CURRENT_ITEM == 2) {
-										if(ZIP_SD && zFileSD != null)
-											new ArchiveEntryProperties(mContext, zFileSD, size.x*8/9);
-										else if(TAR_SD && tFileSD!=null)
-											new TarFileProperties(mContext, tFileSD, size.x*8/9);
-										else if(RAR_SD && rarFileSD !=null)
-											new RarFileProperties(mContext, rarFileSD, size.x*8/9);
-										else{
-											Intent fprp = new Intent(mContext, org.anurag.file.quest.FileProperties.class);
-											fprp.putExtra("path", file2.getPath());
-											startActivity(fprp);
-										}	
-									}
-									break;
-								case 1400:
-									showDefaultApps(v);
-								}
 							}
-						});
-				actionJump.show(v);
-			}
 			break;
 
 		case R.id.addBtn:
 
 			if (CURRENT_ITEM == 0) {
-				showDefaultApps(v);
+				//showDefaultApps(v);
 			} else {
-				NEW_OPTIONS(v);
+			//	NEW_OPTIONS(v);
 			}
 
 			break;
 
 		case R.id.backupAll:
-			QuickAction as = new QuickAction(mContext);
-			ActionItem o = new ActionItem(100,getString(R.string.backupuserapp), getResources().getDrawable(R.drawable.ic_launcher_user));
-			as.addActionItem(o);
-			o = new ActionItem(200, getString(R.string.backupsystemapp),getResources().getDrawable(R.drawable.ic_launcher_system));
-			as.addActionItem(o);
-			o = new ActionItem(300, getString(R.string.backupboth),getResources().getDrawable(R.drawable.ic_launcher_both));
-			as.addActionItem(o);
-			as.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
-				@Override
-				public void onItemClick(QuickAction source, int pos, int Id) {
-					// TODO Auto-generated method stub
-					// ArrayList<ApplicationInfo> li;
-					switch (Id) {
-					case 100:
-						new AppBackup(mContext, size.x*8/9, nList);
 						break;
-					case 200:
-						new AppBackup(mContext, size.x*8/9, nManager.getSysApps());
-						break;
-					case 300:
-						new AppBackup(mContext, size.x*8/9, nManager.getAllApps());
-					}
-				}
-			});
-			as.show(v);
-			break;
 
 		case R.id.cleanBackups:
 			// THIS BUTTON DISPLAYS TWO OPTIONS -1.TO DELETED THE BACKUPS
 			// 2. DELETE THE FLASHABLE ZIPS CREATED
-			QuickAction c = new QuickAction(mContext);
-			ActionItem i = new ActionItem(100,getString(R.string.deleteearlierbackup), getResources().getDrawable(R.drawable.ic_launcher_backupall));
-			c.addActionItem(i);
-			//i = new ActionItem(200, getString(R.string.deletezipbackup),getResources().getDrawable(R.drawable.ic_launcher_zip_it));
-			c.addActionItem(i);
-			c.show(v);
-			c.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
-				@Override
-				public void onItemClick(QuickAction source, int pos,
-						int actionId) {
-					// TODO Auto-generated method stub
-					switch (actionId) {
-					case 100:
-						new DeleteBackups(mContext, size.x *8/9);
 						break;
-					case 200:
-						new DeleteFlashable(mContext, size.x*8/9);
-					}
-				}
-			});
-			break;
 
 		case R.id.zipItBtn:
 			if (CURRENT_ITEM == 3)
@@ -2933,120 +2631,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 
 	
 
-	/**
-	 * THIS FUNCTION SHOWS THE BOX GINIG THE OPTIONS TO ADD NEW FOLDER AND CLOUD
-	 * STUFFS
-	 * 
-	 * @param v
-	 */
-	private void NEW_OPTIONS(View v) {
-		// TODO Auto-generated method stub
-		final QuickAction action = new QuickAction(mContext, 1);
-		ActionItem hiddenItem = new ActionItem(-10000,getString(R.string.dropbox), getResources().getDrawable(R.drawable.ic_launcher_drop_box));
-		action.addActionItem(hiddenItem);
-		hiddenItem = new ActionItem(-9000, getString(R.string.googledrive),getResources().getDrawable(R.drawable.ic_launcher_google_drive));
-		action.addActionItem(hiddenItem);
-
-		hiddenItem = new ActionItem(-7000, getString(R.string.skydrive),getResources().getDrawable(R.drawable.ic_launcher_sky_drive));
-		action.addActionItem(hiddenItem);
-		
-		hiddenItem = new ActionItem(-6000, getString(R.string.mediafire),getResources().getDrawable(R.drawable.mediafire));
-		action.addActionItem(hiddenItem);
-		
-		hiddenItem = new ActionItem(-5000, getString(R.string.sugarsync),getResources().getDrawable(R.drawable.sugar_sync));
-		action.addActionItem(hiddenItem);
-
-		hiddenItem = new ActionItem(-4000, getString(R.string.copy_cld),getResources().getDrawable(R.drawable.copy));
-		action.addActionItem(hiddenItem);
-		hiddenItem = new ActionItem(500,getString(R.string.createhiddenfolder), getResources().getDrawable(R.drawable.ic_launcher_add_new));
-		action.addActionItem(hiddenItem);
-		ActionItem folderItem = new ActionItem(600,getString(R.string.createfolder), getResources().getDrawable(R.drawable.ic_launcher_add_new));
-		action.addActionItem(folderItem);
-		ActionItem fileItem = new ActionItem(700,getString(R.string.createfile), getResources().getDrawable(R.drawable.ic_launcher_new_file));
-		action.addActionItem(fileItem);
-		action.show(v);
-		action.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
-			@Override
-			public void onItemClick(QuickAction source, int pos, int actionId) {
-				// TODO Auto-generated method stub
-				if (actionId >= 500) {
-					CREATE_FILE = true;
-					editBox.setText(null);
-					switch (actionId) {
-					case 500:
-
-						editBox.setHint(getString(R.string.enterfoldername));
-						CREATE_FLAG = 1;
-						LinearLayout l = (LinearLayout) findViewById(R.id.applyBtn);
-						l.setVisibility(View.VISIBLE);
-						editBox.setTextColor(Color.WHITE);
-						// if file is to created then edittext for extension of
-						// file is also displayed
-						// then mViewFlipper is rotated to editText for getting
-						// text
-						mVFlipper.showNext();
-						mVFlipper.showNext();
-						break;
-					case 600:
-
-						editBox.setHint(getString(R.string.enterfoldername));
-						CREATE_FLAG = 2;
-						LinearLayout l2 = (LinearLayout) findViewById(R.id.applyBtn);
-						l2.setVisibility(View.VISIBLE);
-						editBox.setTextColor(Color.WHITE);
-						// if file is to created then edittext for extension of
-						// file is also displayed
-						// then mViewFlipper is rotated to editText for getting
-						// text
-						mVFlipper.showNext();
-						mVFlipper.showNext();
-						break;
-					case 700:
-						editBox.setHint(getString(R.string.enterfilename));
-						CREATE_FLAG = 3;
-						LinearLayout l3 = (LinearLayout) findViewById(R.id.applyBtn);
-						l3.setVisibility(View.VISIBLE);
-						editBox.setTextColor(Color.WHITE);
-						// if file is to created then edittext for extension of
-						// file is also displayed
-						// then mViewFlipper is rotated to editText for getting
-						// text
-						mVFlipper.showNext();
-						mVFlipper.showNext();
-					}
-
-				} else {
-					/**
-					 * CLOUD STORAGE OPTIONS
-					 */
-					switch (actionId) {
-					
-						case -10000:
-							DBoxAuth.DoAuth(FileQuest.this);
-							break;
-						case -9000:
-						case -7000: 
-						case -6000:
-						case -5000:
-						case -4000:	
-									/*
-								 	* DROPBOX STUFF
-								 	*/
-									//
-							        Toast.makeText(mContext, R.string.coming_soon, Toast.LENGTH_SHORT).show();
-									break;
-									
-						default:
-							
-									Toast.makeText(mContext, ""+Constants.dboxDB.getTotalUsers(),
-											Toast.LENGTH_SHORT).show();
-									//Toast.makeText(mContext, R.string.supporttakenBack,Toast.LENGTH_SHORT).show();
-									break;
-					}
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * OnActivityResult For FileQuest Class
@@ -3070,9 +2655,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			CURRENT_ITEM = mViewPager.getCurrentItem();
 			
-			if(slidemenu.isLeftMenuOpen())
-				slidemenu.closeLeftMenu(true);
-			else if ((SEARCH_FLAG || RENAME_COMMAND || CREATE_FILE)
+			
+			if ((SEARCH_FLAG || RENAME_COMMAND || CREATE_FILE)
 					&& (CURRENT_ITEM == 1 || CURRENT_ITEM == 2 || CURRENT_ITEM == 0)) {
 				setAdapter(CURRENT_ITEM);
 				mVFlipper.showNext();
@@ -3345,73 +2929,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	
 
 	/**
-	 * 
-	 */
-	@Override
-	public void onItemClick(QuickAction source, int pos, int actionId) {
-		CURRENT_ITEM = mViewPager.getCurrentItem();
-		switch (actionId) {
-		
-		case 7:
-			load_FIle_Gallery((fPos = 0));
-			break;
-		case 8:
-
-			// IF CURRENT ITEM IS 0 AND USER SELECTS JUMP TO BUTTON
-			// THEN SEVEN LOCATIONS ARE SHOWN
-			// FIRST LOCATION IS CASE 8
-			load_FIle_Gallery((fPos = 1));
-			break;
-
-		case 9:
-			// IF CURRENT ITEM IS 0 AND USER SELECTS JUMP TO BUTTON
-			// THEN SEVEN LOCATIONS ARE SHOWN
-			// SECOND LOCATION IS CASE 9
-			// loadMediaList(pos=1);
-			// elementInFocus = true;
-			// media.setAdapter(new FileGalleryAdapter(mContext,
-			// R.layout.row_list_1, mediaFileList));
-			load_FIle_Gallery((fPos = 2));
-			break;
-
-		case 10:
-			// IF CURRENT ITEM IS 0 AND USER SELECTS JUMP TO BUTTON
-			// THEN SEVEN LOCATIONS ARE SHOWN
-			// THIRD LOCATION IS CASE 10
-			load_FIle_Gallery((fPos = 3));
-			break;
-
-		case 11:
-			// IF CURRENT ITEM IS 0 AND USER SELECTS JUMP TO BUTTON
-			// THEN SEVEN LOCATIONS ARE SHOWN
-			// FOURTH LOCATION IS CASE 11
-			load_FIle_Gallery((fPos = 4));
-			break;
-
-		case 12:
-			// IF CURRENT ITEM IS 0 AND USER SELECTS JUMP TO BUTTON
-			// THEN SEVEN LOCATIONS ARE SHOWN
-			// FIFTH LOCATION IS CASE 12
-			load_FIle_Gallery((fPos = 5));
-			break;
-
-		case 13:
-			// IF CURRENT ITEM IS 0 AND USER SELECTS JUMP TO BUTTON
-			// THEN SEVEN LOCATIONS ARE SHOWN
-			// SIXTH LOCATION IS CASE 13
-			load_FIle_Gallery((fPos = 6));
-			break;
-
-		case 14:
-			// IF CURRENT ITEM IS 0 AND USER SELECTS JUMP TO BUTTON
-			// THEN SEVEN LOCATIONS ARE SHOWN
-			// SEVENTH LOCATION IS CASE 14
-			load_FIle_Gallery((fPos = 7));
-			break;		
-		}
-	}
-
-	/**
 	 * Returns the path only (without file name).
 	 * 
 	 * @param file
@@ -3566,206 +3083,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	
 
 	/**
-	 * THIS FUNCTION IS USED AT TWO PLACE IN THIS FILE THIS FUNCTION DISPLAYS
-	 * THE QUICKACTION VIEW SHOWING THE DEFAULT APPS SET BY USER FOR CRETAIN
-	 * FILE TYPES
-	 */
-	public void showDefaultApps(View v) {
-		/**
-		 * 
-		 */
-		PackageInfo in;
-		PackageManager man = getPackageManager();
-		QuickAction q = new QuickAction(mContext);
-		final SharedPreferences p = getSharedPreferences("DEFAULT_APPS",MODE_PRIVATE);
-		final SharedPreferences.Editor ed = p.edit();
-		final String MUSIC = p.getString("MUSIC", null);
-		ActionItem it = new ActionItem();
-		try {
-			in = man.getPackageInfo(MUSIC, 0);
-			it.setTitle(getString(R.string.music) + " - "+ in.applicationInfo.loadLabel(man));
-			it.setIcon(in.applicationInfo.loadIcon(man));
-			it.setActionId(500);
-		} catch (NameNotFoundException e) {
-			it = new ActionItem(600, getString(R.string.nomusicapp),Constants.MUSIC);
-			ed.putString("MUSIC", null);
-			ed.commit();
-		}
-		q.addActionItem(it);
-
-		it = new ActionItem();
-		final String IMAGE = p.getString("IMAGE", null);
-		try {
-			in = man.getPackageInfo(IMAGE, 0);
-			it.setTitle(getString(R.string.image) + " - "+ in.applicationInfo.loadLabel(man));
-			it.setIcon(in.applicationInfo.loadIcon(man));
-			it.setActionId(700);
-		} catch (NameNotFoundException e) {
-			ed.putString("IMAGE", null);
-			ed.commit();
-		//	it = new ActionItem(800, getString(R.string.noimgapp),getResources().getDrawable(R.drawable.ic_launcher_images));
-
-		}
-		q.addActionItem(it);
-
-		it = new ActionItem();
-		final String VIDEO = p.getString("VIDEO", null);
-		try {
-			in = man.getPackageInfo(VIDEO, 0);
-			it.setTitle(getString(R.string.vids) + " - "+ in.applicationInfo.loadLabel(man));
-			it.setIcon(in.applicationInfo.loadIcon(man));
-			it.setActionId(900);
-		} catch (NameNotFoundException e) {
-			ed.putString("VIDEO", null);
-			ed.commit();
-	//		it = new ActionItem(1000, getString(R.string.novidapp),getResources().getDrawable(R.drawable.ic_launcher_video));
-
-		}
-		q.addActionItem(it);
-
-		it = new ActionItem();
-		final String ZIP = p.getString("ZIP", null);
-		try {
-			in = man.getPackageInfo(ZIP, 0);
-			it.setTitle(getString(R.string.zip) + " - "	+ in.applicationInfo.loadLabel(man));
-			it.setIcon(in.applicationInfo.loadIcon(man));
-			it.setActionId(1100);
-		} catch (NameNotFoundException e) {
-			ed.putString("ZIP", null);
-			ed.commit();
-		//	it = new ActionItem(1200, getString(R.string.nozipapp),getResources().getDrawable(R.drawable.ic_launcher_zip_it));
-
-		}
-		q.addActionItem(it);
-
-		it = new ActionItem();
-		final String PDF = p.getString("PDF", null);
-		try {
-			in = man.getPackageInfo(PDF, 0);
-			it.setTitle(getString(R.string.pdf) + " - "	+ in.applicationInfo.loadLabel(man));
-			it.setIcon(in.applicationInfo.loadIcon(man));
-			it.setActionId(1300);
-		} catch (NameNotFoundException e) {
-			ed.putString("PDF", null);
-			ed.commit();
-		//	it = new ActionItem(1400, getString(R.string.nopdfapp),getResources().getDrawable(R.drawable.ic_launcher_adobe));
-
-		}
-		q.addActionItem(it);
-
-		it = new ActionItem();
-		final String TEXT = p.getString("TEXT", null);
-		try {
-			in = man.getPackageInfo(TEXT, 0);
-			it.setTitle(getString(R.string.docs) + " - "+in.applicationInfo.loadLabel(man));
-			it.setIcon(in.applicationInfo.loadIcon(man));
-			it.setActionId(1500);
-		} catch (NameNotFoundException e) {
-			ed.putString("TEXT", null);
-			ed.commit();
-	//		it = new ActionItem(1600, getString(R.string.nodocapp),getResources().getDrawable(R.drawable.ic_launcher_text));
-
-		}
-		q.addActionItem(it);
-
-		it = new ActionItem();
-		final String RAR = p.getString("RAR", null);
-		try {
-			in = man.getPackageInfo(RAR, 0);
-			it.setTitle(getString(R.string.rar) + " - "	+ in.applicationInfo.loadLabel(man));
-			it.setIcon(in.applicationInfo.loadIcon(man));
-			it.setActionId(1700);
-		} catch (NameNotFoundException e) {
-			ed.putString("RAR", null);
-			ed.commit();
-		//	it = new ActionItem(1800, getString(R.string.norarapp),getResources().getDrawable(R.drawable.ic_launcher_rar));
-
-		}
-		q.addActionItem(it);
-		it = new ActionItem(1900, getString(R.string.cleardefaults),getResources().getDrawable(R.drawable.ic_launcher_delete));
-		q.addActionItem(it);
-		q.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
-			@Override
-			public void onItemClick(QuickAction source, int pos, int actionId) {
-				// TODO Auto-generated method stub
-				switch (actionId) {
-				case 500:
-					/**
-					 * MUSIC APP HAS BEEN SET TO DEFAULT THEN DISPLAY ITS INFO
-					 * AND GIVE OPTION TO CLEAR DEFAULT
-					 */
-					new SelectedApp(mContext, size.x*8/9, MODE_PRIVATE,	MUSIC, "MUSIC");
-					break;
-				case 600:
-					new SelectApp(mContext, size.x*8/9, "MUSIC",MODE_PRIVATE);
-					break;
-				case 700:
-					new SelectedApp(mContext, size.x*8/9, MODE_PRIVATE,	IMAGE, "IMAGE");
-					break;
-				case 800:
-					new SelectApp(mContext, size.x*8/9, "IMAGE",MODE_PRIVATE);
-					break;
-				case 900:
-					new SelectedApp(mContext, size.x*8/9, MODE_PRIVATE,	VIDEO, "VIDEO");
-					break;
-				case 1000:
-					new SelectApp(mContext, size.x*8/9, "VIDEO",MODE_PRIVATE);
-					break;
-				case 1100:
-					new SelectedApp(mContext, size.x*8/9, MODE_PRIVATE,	ZIP, "ZIP");
-					break;
-				case 1200:
-					new SelectApp(mContext, size.x*8/9, "ZIP", MODE_PRIVATE);
-					break;
-				case 1300:
-					new SelectedApp(mContext, size.x*8/9, MODE_PRIVATE,	PDF, "PDF");
-					break;
-				case 1400:
-					new SelectApp(mContext, size.x*8/9, "PDF", MODE_PRIVATE);
-					break;
-				case 1500:
-					new SelectedApp(mContext, size.x*8/9, MODE_PRIVATE,	TEXT, "TEXT");
-					break;
-				case 1600:
-					new SelectApp(mContext, size.x*8/9, "TEXT",MODE_PRIVATE);
-					break;
-				case 1700:
-					new SelectedApp(mContext, size.x*8/9, MODE_PRIVATE,RAR, "RAR");
-					break;
-				case 1800:
-					new SelectApp(mContext, size.x*8/9, "RAR", MODE_PRIVATE);
-					break;
-				case 1900:
-					SharedPreferences.Editor ed = p.edit();
-					ed.clear();
-					ed.commit();
-					Toast.makeText(mContext, R.string.settingsapplied,Toast.LENGTH_SHORT).show();
-					break;
-				}
-			}
-		});
-		q.show(v);
-	}
-
-	/**
-	 * THIS FUNCTION RESETS THE HORIZONTAL SCROLL VIEW TO START AND DISPLAYS THE
-	 * APPROPRIATE MESSAGE WHEN MULTI SELECT IS DISABLED
-	 * 
-	 * @param str
-	 */
-	public void MultiModeDisabled(String str) {
-		HorizontalScrollView v = (HorizontalScrollView) findViewById(R.id.hscrollView);
-		if (CURRENT_ITEM == 3)
-			v = (HorizontalScrollView) findViewById(R.id.hscrollView2);
-		LinearLayout btn = (LinearLayout ) findViewById(R.id.bottom_multi);
-		QuickAction action = new QuickAction(mContext);
-		ActionItem item = new ActionItem(1, str);
-		action.addActionItem(item);
-		v.scrollTo(0, 0);
-		action.show(btn);
-	}
-
-	/**
 	 * 
 	 * @param str
 	 */
@@ -3784,7 +3101,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				Toast.makeText(mContext, R.string.firstselectsomefiles,Toast.LENGTH_SHORT).show();
 
 		} 
-			MultiModeDisabled(str);
+			//MultiModeDisabled(str);
 	}
 
 	/**
@@ -4110,7 +3427,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				} else if (ACTION.equalsIgnoreCase("FQ_DROPBOX_STARTLINK")) {
 					// LINK A USER....
 					Toast.makeText(mContext, R.string.linkanaccount,Toast.LENGTH_SHORT).show();
-					NEW_OPTIONS(indicator);
+				//	NEW_OPTIONS(indicator);
 				} else if (ACTION.equalsIgnoreCase("FQ_G_OPEN")) {
 					Toast.makeText(mContext, R.string.openingfile,Toast.LENGTH_SHORT).show();
 					if (CURRENT_ITEM == 0 || CURRENT_ITEM == 3)
@@ -5059,7 +4376,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 	 * THIS METHOD INITIALIZES THE SLIDE MENU IN ONCREATE METHOD....
 	 */
 	private void initLeftMenu(){
-		slidemenu = (SlideLayout)findViewById(R.id.slide_left_menu);
 		
 		//setting the device name here....
 		TextView devId = (TextView)findViewById(R.id.dev_id);
@@ -5076,7 +4392,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 			}
 		}		
 		devId.setText(dev);
-				
+				/*
 		final ActionSlideExpandableListView lsView = (ActionSlideExpandableListView)findViewById(R.id.expandable_list);
 				
 				String[] values = getResources().getStringArray(R.array.slideList);
@@ -5085,7 +4401,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 				
 				/**
 				 * click listener for single item inside slide menu list...
-				 */
+				 
 				lsView.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
 					@Override
 					public void onClick(View itemView, View clickedView, int position) {
@@ -5129,7 +4445,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 						
 						/**
 						 * switching to different actions of buttons in expanded list....
-						 */
+						 
 						switch(clickedView.getId()){
 							case R.id.button_delete:
 									if(position == 0){
@@ -5167,7 +4483,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener, Quic
 					else
 						lsView.setVisibility(View.GONE);
 				}
-			});						
+			});		*/				
 	}
 	
 	/**

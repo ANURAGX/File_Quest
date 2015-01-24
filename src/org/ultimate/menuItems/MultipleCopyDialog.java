@@ -36,9 +36,9 @@ import java.util.Map;
 
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.Item;
+import org.anurag.file.quest.LinuxShell;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.Utils;
-import org.ultimate.root.LinuxShell;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;

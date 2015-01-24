@@ -41,7 +41,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
-import com.twotoasters.jazzylistview.JazzyHelper;
+import com.extra.libs.JazzyHelper;
 
 public class AppStore extends Fragment{
 	

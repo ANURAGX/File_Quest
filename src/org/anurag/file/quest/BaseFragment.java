@@ -19,10 +19,12 @@
 
 package org.anurag.file.quest;
 
-import com.twotoasters.jazzylistview.JazzyHelper;
+
 
 import android.support.v4.app.ListFragment;
 import android.widget.ListView;
+
+import com.extra.libs.JazzyHelper;
 
 
 /**

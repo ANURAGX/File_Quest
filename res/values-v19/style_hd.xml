@@ -37,7 +37,8 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:actionButtonStyle">@style/ActionButtonPaddingStyle</item>
-        <item name="actionButtonStyle">@style/ActionButtonPaddingStyle</item>
+        <item name="actionButtonStyle">@style/ActionButtonPaddingStyle</item><item name="android:actionOverflowButtonStyle">@style/OverFlowMenuStyle</item>
+    	<item name="actionOverflowButtonStyle">@style/OverFlowMenuStyle</item>
     </style>
 
      <!-- Application theme. -->
@@ -49,21 +50,4 @@
         <item name="android:actionBarStyle">@style/ActionBarTheme</item>   
         <item name="android:textColor">@android:color/black</item>   
     </style>
-    
-    <!-- Theme for action Bar -->
-    <style name="ActionBarTheme" parent="android:Widget.Holo.ActionBar">
-        <item name="android:titleTextStyle">@style/ActionBarThemeTitleStyle</item>
-    </style>
-
-    <!-- Theme for action Bar -->
-    <style name="ActionBarThemeTitleStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textStyle">bold</item>
-    </style>
-    
-    <!-- this style is used only to reduce the padding between action buttons in action bar -->
-    <style name="ActionButtonPaddingStyle" parent="@android:style/Widget.Holo.Light.ActionButton">
-        <item name="android:padding">0dip</item>
-        <item name="android:minWidth">42dip</item>
-    </style>
-    
 </resources>

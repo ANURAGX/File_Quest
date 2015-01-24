@@ -21,7 +21,6 @@ package org.anurag.fragments;
 
 import java.util.ArrayList;
 
-
 import org.anurag.adapters.RootAdapter;
 import org.anurag.adapters.SimpleRootAdapter;
 import org.anurag.file.quest.Constants;
@@ -30,8 +29,6 @@ import org.anurag.file.quest.Item;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.RootManager;
-
-import com.twotoasters.jazzylistview.JazzyHelper;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -46,6 +43,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import com.extra.libs.JazzyHelper;
 
 
 public class RootPanel extends Fragment{

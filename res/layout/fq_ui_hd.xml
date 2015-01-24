@@ -40,20 +40,20 @@
     			android:minHeight="?android:attr/actionBarSize"
     			android:background="?attr/colorPrimary" />
             
-    		<com.astuetz.PagerSlidingTabStrip
+    		<com.extra.libs.PagerSlidingTabStrip
         		android:paddingTop="3dp"
         		android:paddingBottom="3dp"
         		android:id="@+id/pagerSlidingTabStrip1"
         		android:layout_width="match_parent"
         		android:layout_height="36dp" >
-    		</com.astuetz.PagerSlidingTabStrip>
+    		</com.extra.libs.PagerSlidingTabStrip>
 
-    		<com.abhi.animated.TransitionViewPager 
+    		<com.extra.libs.TransitionViewPager 
         		android:layout_width="match_parent"
         		android:layout_weight="1.0"
         		android:layout_height="0.0dp"
         		android:id="@+id/view">        
-    		</com.abhi.animated.TransitionViewPager> 
+    		</com.extra.libs.TransitionViewPager> 
     
     		<!-- action bar to provide extra options.... -->
     		<android.support.v7.widget.Toolbar

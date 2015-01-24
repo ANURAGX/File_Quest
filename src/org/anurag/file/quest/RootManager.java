@@ -27,8 +27,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Stack;
 
-import org.ultimate.root.LinuxShell;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;

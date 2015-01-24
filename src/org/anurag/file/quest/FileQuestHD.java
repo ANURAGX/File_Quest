@@ -20,7 +20,6 @@
 package org.anurag.file.quest;
 
 import java.net.URL;
-
 import java.util.Scanner;
 
 import org.anurag.adapters.PagerAdapters;
@@ -70,8 +69,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.abhi.animated.TransitionViewPager;
-import com.astuetz.PagerSlidingTabStrip;
+import com.extra.libs.PagerSlidingTabStrip;
+import com.extra.libs.TransitionViewPager;
 import com.fuehlbypa.kddcbytnh159110.Prm;
 
 

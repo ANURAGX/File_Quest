@@ -17,7 +17,7 @@
  
  -->
 
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -34,6 +34,8 @@
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:actionButtonStyle">@style/ActionButtonPaddingStyle</item>
         <item name="actionButtonStyle">@style/ActionButtonPaddingStyle</item>
+    	<item name="android:actionOverflowButtonStyle">@style/OverFlowMenuStyle</item>
+    	<item name="actionOverflowButtonStyle">@style/OverFlowMenuStyle</item>
     </style>
 
     <!-- Application theme. -->
@@ -109,4 +111,10 @@
         <item name="android:padding">0dip</item>
         <item name="android:minWidth">42dip</item>
     </style>
+    
+    <!-- style to override black overflow menu icon of action bar.... -->
+    <style name="OverFlowMenuStyle" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+   		<item name="android:src">@drawable/action_settings</item>     
+    </style>
+    
 </resources>

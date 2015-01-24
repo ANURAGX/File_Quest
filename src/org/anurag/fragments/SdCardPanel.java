@@ -47,7 +47,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.twotoasters.jazzylistview.JazzyHelper;
+import com.extra.libs.JazzyHelper;
 
 
 public class SdCardPanel extends Fragment implements OnItemClickListener , OnItemLongClickListener{

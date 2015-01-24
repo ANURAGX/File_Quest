@@ -22,7 +22,6 @@ package org.anurag.fragments;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-
 import org.anurag.adapters.FileGalleryAdapter;
 import org.anurag.adapters.FileGallerySimpleAdapter;
 import org.anurag.file.quest.Constants;
@@ -31,6 +30,7 @@ import org.anurag.file.quest.Item;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.Utils;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -46,7 +46,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.twotoasters.jazzylistview.JazzyHelper;
+import com.extra.libs.JazzyHelper;
 
 public class FileGallery extends Fragment implements OnClickListener{
 	

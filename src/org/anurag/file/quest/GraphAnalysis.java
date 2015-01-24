@@ -21,8 +21,8 @@ package org.anurag.file.quest;
 
 import java.util.ArrayList;
 
-
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
+
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -38,7 +38,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.astuetz.PagerSlidingTabStrip;
+import com.extra.libs.PagerSlidingTabStrip;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarData;
@@ -48,8 +48,8 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.Legend;
-import com.github.mikephil.charting.utils.XLabels;
 import com.github.mikephil.charting.utils.Legend.LegendPosition;
+import com.github.mikephil.charting.utils.XLabels;
 import com.github.mikephil.charting.utils.XLabels.XLabelPosition;
 
 public class GraphAnalysis extends ActionBarActivity{
