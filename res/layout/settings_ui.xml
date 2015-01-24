@@ -17,38 +17,31 @@
  
  -->
 <LinearLayout 
-    android:background="@android:color/white"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
     xmlns:android="http://schemas.android.com/apk/res/android">
     
-    
-     <LinearLayout 
-        android:layout_gravity="center_vertical" 
-        android:paddingBottom="10dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-         <ImageView
-             android:layout_marginTop="5dp"
-             android:layout_marginLeft="20dp"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:background="@drawable/action_settings"
-             android:layout_gravity="center"
-             android:paddingRight="10dp" />
-        
-        <TextView 
-            android:paddingLeft="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings"/>
-    </LinearLayout>
+	<android.support.v7.widget.Toolbar
+    	xmlns:app="http://schemas.android.com/apk/res-auto"
+    	android:id="@+id/toolbar_top"
+    	android:layout_height="wrap_content"
+    	android:layout_width="match_parent"
+    	android:minHeight="?android:attr/actionBarSize"
+    	android:background="?attr/colorPrimary" />
+	
+	<ExpandableListView 
+	    android:paddingTop="10dp"
+	    android:paddingRight="10dp"
+	    android:background="@color/semi_white30"
+        android:paddingLeft="10dp"
+        android:id="@+id/list"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:divider="@color/transparent"
+	    android:dividerHeight="0.03dp"
+	    android:listSelector="@drawable/while_list_selector_hd"
+	    android:groupIndicator="@null"/>
     
 </LinearLayout>

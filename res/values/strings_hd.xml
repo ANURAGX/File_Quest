@@ -46,4 +46,16 @@
     <string name="action_size_bigger">Size (Bigger)</string>
     <string name="action_date_new">Date (Newer)</string>
     <string name="action_date_old">Date (Older)</string>
+    
+    <string-array name="settings_array">
+        <item>Listview animation</item>
+        <item>Page animation</item>
+        <item>Set up default Panel</item>
+        <item>Reset settings</item>
+        <item>Clear gesture data</item> 
+        <item>Share FILE  QUEST</item>
+        <item>Report a bug</item>
+        <item>About me</item>
+    </string-array>
+    
 </resources>

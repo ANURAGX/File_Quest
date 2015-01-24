@@ -26,20 +26,24 @@ import org.anurag.file.quest.SystemBarTintManager;
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-
-
-
+import android.widget.TextView;
 
 @SuppressLint("CommitPrefEdits")
-public class Settings extends Activity implements View.OnClickListener{
+public class Settings extends ActionBarActivity implements View.OnClickListener{
 
 	
 	SharedPreferences settingsPrefs;
@@ -49,7 +53,8 @@ public class Settings extends Activity implements View.OnClickListener{
 	public static ImageView applied;
 	public static boolean settingsChanged;
 	public static boolean pagerAnimSettingsChanged;
-	
+	private ExpandableListView listview;
+	private Toolbar bar;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +62,19 @@ public class Settings extends Activity implements View.OnClickListener{
 		settingsChanged = false;
 		setContentView(R.layout.settings_ui);
 		settingsPrefs = getSharedPreferences("SETTINGS", 0);
-		edit = settingsPrefs.edit();		
+		edit = settingsPrefs.edit();	
+		
+		bar = (Toolbar) findViewById(R.id.toolbar_top);
+		listview = (ExpandableListView) findViewById(R.id.list);
+		
+		setSupportActionBar(bar);
+		getSupportActionBar().setTitle(R.string.settings);
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Constants.COLOR_STYLE)); 
+		getSupportActionBar().setIcon(R.drawable.action_settings);
+		
+		LinearLayout main = (LinearLayout) findViewById(R.id.main);
+		main.setBackgroundColor(Constants.COLOR_STYLE);
+		listview.setAdapter(new ExpAdapt(Settings.this));
 	}
 
 	@Override
@@ -126,5 +143,131 @@ public class Settings extends Activity implements View.OnClickListener{
 			res = getResources().getDimensionPixelSize(resId);
 		return res;
 	}
+	
+	private static class ExpAdapt extends BaseExpandableListAdapter{
 
+		String[] groups ;
+		LayoutInflater inf;
+		public ExpAdapt(Context ctx) {
+			// TODO Auto-generated constructor stub
+			groups = ctx.getResources().getStringArray(R.array.settings_array );
+			inf = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		}
+		
+		@Override
+		public Object getChild(int groupPosition, int childPosition) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getChildId(int groupPosition, int childPosition) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getChildView(int groupPosition, int childPosition,
+				boolean isLastChild, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public int getChildrenCount(int groupPosition) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public Object getGroup(int groupPosition) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public int getGroupCount() {
+			// TODO Auto-generated method stub
+			return groups.length;
+		}
+
+		@Override
+		public long getGroupId(int groupPosition) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		class grpHold{
+			ImageView img;
+			TextView nam;
+		}
+		
+		@Override
+		public View getGroupView(int groupPosition, boolean isExpanded,
+				View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			grpHold h = new grpHold();
+			View view = inf.inflate(R.layout.row_list_2, parent , false);
+			h.img = (ImageView) view.findViewById(R.id.iconImage2);
+			h.nam = (TextView) view.findViewById(R.id.directoryName2);
+			view.setTag(h);
+			
+			switch(groupPosition){
+			case 0:
+				h.img.setBackgroundResource(R.drawable.views);
+				h.nam.setText(groups[0]);
+				break;
+				
+			case 1:
+				h.img.setBackgroundResource(R.drawable.pager_anim);
+				h.nam.setText(groups[groupPosition]);
+				break;
+				
+			case 2:
+				h.img.setBackgroundResource(R.drawable.startup_panel);
+				h.nam.setText(groups[groupPosition]);
+				break;
+
+			case 3:
+				h.img.setBackgroundResource(R.drawable.action_settings);
+				h.nam.setText(groups[groupPosition]);
+				break;
+				
+			case 4:
+				h.img.setBackgroundResource(R.drawable.gesture);
+				h.nam.setText(groups[groupPosition]);
+				break;
+				
+
+			case 5:
+				h.img.setBackgroundResource(R.drawable.share);
+				h.nam.setText(groups[groupPosition]);
+				break;
+				
+			case 6:
+				h.img.setBackgroundResource(R.drawable.bug);
+				h.nam.setText(groups[groupPosition]);
+				break;
+		
+			case 7:
+				h.img.setBackgroundResource(R.drawable.task);
+				h.nam.setText(groups[groupPosition]);
+				break;
+	
+			}
+			return view;
+		}
+
+		@Override
+		public boolean hasStableIds() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean isChildSelectable(int groupPosition, int childPosition) {
+			// TODO Auto-generated method stub
+			return false;
+		}		
+	}
 }
