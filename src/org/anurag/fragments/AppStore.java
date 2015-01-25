@@ -53,6 +53,8 @@ public class AppStore extends Fragment{
 	public static int counter;
 	public static int[] ITEMS;
 	private static BaseAdapter adapter;
+	private static JazzyHelper list_anim_helper;
+	
 	public AppStore() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
@@ -71,6 +73,7 @@ public class AppStore extends Fragment{
 		super.onViewCreated(view, savedInstanceState);
 		ls = (ListView) view.findViewById(R.id.list_view_hd);
 		ls.setSelector(R.drawable.list_selector_hd);
+		list_anim_helper = new JazzyHelper(getActivity(), null);
 		setAnim(ls);
 		if(load == null){
 			load = new LoadApps();
@@ -152,9 +155,9 @@ public class AppStore extends Fragment{
 	 */
 	private void setAnim(ListView list2) {
 		// TODO Auto-generated method stub
-		JazzyHelper help = new JazzyHelper(getActivity(), null);
-		help.setTransitionEffect(Constants.LIST_ANIM);
-		list2.setOnScrollListener(help);
+		//JazzyHelper help = new JazzyHelper(getActivity(), null);
+		list_anim_helper.setTransitionEffect(Constants.LIST_ANIM);
+		list2.setOnScrollListener(list_anim_helper);
 	}
 	
 	/**
@@ -237,4 +240,12 @@ public class AppStore extends Fragment{
 	public static void resetAdapter(){
 		load.execute();
 	}	
+	
+	/**
+	 * this function is called when list view animation has to be changed....
+	 */
+	public static void change_list_anim(){
+		list_anim_helper.setTransitionEffect(Constants.LIST_ANIM);
+		ls.setOnScrollListener(list_anim_helper);
+	}
 }

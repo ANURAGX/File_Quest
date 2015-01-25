@@ -57,6 +57,7 @@ public class RootPanel extends Fragment{
 	public static int ITEMS[];
 	public static int counter;
 	private static BaseAdapter adapter;
+	private static JazzyHelper list_anim_helper;
 	
 	public RootPanel() {
 		// TODO Auto-generated constructor stub
@@ -77,6 +78,7 @@ public class RootPanel extends Fragment{
 		list = (ListView)view.findViewById(R.id.list_view_hd);	
 		empty = (LinearLayout) view.findViewById(R.id.empty);
 		list.setSelector(R.drawable.list_selector_hd);
+		list_anim_helper = new JazzyHelper(getActivity(), null);
 		setAnim(list);
 		if(load == null){
 			load = new LoadList();
@@ -162,9 +164,9 @@ public class RootPanel extends Fragment{
 	 */
 	private void setAnim(ListView list2) {
 		// TODO Auto-generated method stub
-		JazzyHelper help = new JazzyHelper(getActivity(), null);
-		help.setTransitionEffect(Constants.LIST_ANIM);
-		list2.setOnScrollListener(help);
+		//JazzyHelper help = new JazzyHelper(getActivity(), null);
+		list_anim_helper.setTransitionEffect(Constants.LIST_ANIM);
+		list2.setOnScrollListener(list_anim_helper);
 	}
 	
 	/**
@@ -290,5 +292,13 @@ public class RootPanel extends Fragment{
 	 */
 	public static void resetAdapter(){
 		load.execute();
+	}
+	
+	/**
+	 * this function is called when list view animation has to be changed....
+	 */
+	public static void change_list_anim(){
+		list_anim_helper.setTransitionEffect(Constants.LIST_ANIM);
+		list.setOnScrollListener(list_anim_helper);
 	}
 }

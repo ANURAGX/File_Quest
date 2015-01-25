@@ -62,7 +62,8 @@ public class FileGallery extends Fragment implements OnClickListener{
 	public static int[] ITEMS;
 	private static LinearLayout empty;
 	private int id;
-
+	private static JazzyHelper list_anim_helper;
+	
 	public FileGallery() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
@@ -177,7 +178,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 			}
 		});
 		
-		
+		list_anim_helper = new JazzyHelper(getActivity(), null);
 		setAnim(ls);
 	}
 
@@ -323,9 +324,8 @@ public class FileGallery extends Fragment implements OnClickListener{
 	 */
 	private void setAnim(ListView list2) {
 		// TODO Auto-generated method stub
-		JazzyHelper help = new JazzyHelper(getActivity(), null);
-		help.setTransitionEffect(Constants.LIST_ANIM);
-		list2.setOnScrollListener(help);
+		list_anim_helper.setTransitionEffect(Constants.LIST_ANIM);
+		list2.setOnScrollListener(list_anim_helper);
 	}
 
 	/**
@@ -361,4 +361,13 @@ public class FileGallery extends Fragment implements OnClickListener{
 			return;
 		loader.execute();
 	}
+	
+	/**
+	 * this function is called when list view animation has to be changed....
+	 */
+	public static void change_list_anim(){
+		list_anim_helper.setTransitionEffect(Constants.LIST_ANIM);
+		ls.setOnScrollListener(list_anim_helper);
+	}
+	
 }

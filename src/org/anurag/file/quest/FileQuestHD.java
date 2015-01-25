@@ -166,6 +166,9 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		pager.setTransitionEffedt(Constants.PAGER_ANIM);
 		indicator.setViewPager(pager);
 		
+		//setting the pager to user's setting....
+		pager.setCurrentItem(Constants.PANEL_NO);
+		
 		init_action_bar();
 		init_drawer_menu();
 		init_with_device_id();
@@ -274,7 +277,9 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			if(FileGallery.isGalleryOpened())
 				FileGallery.collapseGallery();
 			else if(panel == Constants.PANEL_NO)
-				detect_back_press();			
+				detect_back_press();		
+			else if(panel != Constants.PANEL_NO)
+				pager.setCurrentItem(Constants.PANEL_NO);
 		}else if(panel == 1){
 			if(RootPanel.isAtTopLevel() && panel != Constants.PANEL_NO)
 				pager.setCurrentItem(Constants.PANEL_NO);
@@ -621,6 +626,15 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 					}
 				}
 			}
+			
+			//list view animation is changed from settings....
+			//so notify the fragments about this event....
+			else if(action.equalsIgnoreCase("list_view_anim_changed")){
+				FileGallery.change_list_anim();
+				RootPanel.change_list_anim();
+				SdCardPanel.change_list_anim();
+				AppStore.change_list_anim();
+			}
 		}		
 	}
 	
@@ -632,6 +646,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		IntentFilter filter = new IntentFilter("inflate_long_click_menu");
 		filter.addAction("inflate_normal_menu");
 		filter.addAction("update_action_bar_long_click");
+		filter.addAction("list_view_anim_changed");
 		this.registerReceiver(broadcasts, filter);
 	}
 	
@@ -806,7 +821,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		@Override
 		public boolean isChildSelectable(int arg0, int arg1) {
 			// TODO Auto-generated method stub
-			return false;
+			return true;
 		}		
 	}	
 	

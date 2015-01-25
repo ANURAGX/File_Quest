@@ -27,6 +27,7 @@ import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -38,6 +39,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -75,6 +77,38 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
 		LinearLayout main = (LinearLayout) findViewById(R.id.main);
 		main.setBackgroundColor(Constants.COLOR_STYLE);
 		listview.setAdapter(new ExpAdapt(Settings.this));
+		
+		listview.setOnChildClickListener(new OnChildClickListener() {
+			@Override
+			public boolean onChildClick(ExpandableListView arg0, View arg1, int group,
+					int arg3, long arg4) {
+				// TODO Auto-generated method stub
+				switch(group){
+				case 0:
+					Constants.LIST_ANIM = arg3;
+					edit.putInt("LIST_ANIM", Constants.LIST_ANIM);
+					edit.commit();
+					listview.collapseGroup(group);
+					listview.expandGroup(group, true);
+					sendBroadcast(new Intent("list_view_anim_changed"));
+					break;
+					
+				case 1:
+					
+					break;
+					
+				case 2:
+					Constants.PANEL_NO = arg3;
+					edit.putInt("PANEL_NO", Constants.PANEL_NO);
+					edit.commit();
+					listview.collapseGroup(group);
+					listview.expandGroup(group, true);
+					break;
+				}
+				return false;
+			}
+		});
+		
 	}
 
 	@Override
@@ -197,15 +231,22 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
 
 			switch(groupPosition){
 			case 0:
+				if(Constants.LIST_ANIM == childPosition)
+					h.img.setBackgroundResource(R.drawable.selected);
 				h.nam.setText(animls[childPosition]);
 				break;
 				
 			case 1:
+				if(Constants.PAGER_ANIM == childPosition)
+					h.img.setBackgroundResource(R.drawable.selected);
+				
 				h.nam.setText(pagels[childPosition]);				
 				break;
 				
 			case 2:
-				h.nam.setText(panels[childPosition]);				
+				h.nam.setText(panels[childPosition]);	
+				if(Constants.PANEL_NO == childPosition)
+					h.img.setBackgroundResource(R.drawable.selected);
 				break;
 			
 			case 3:
@@ -331,7 +372,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
 		@Override
 		public boolean isChildSelectable(int groupPosition, int childPosition) {
 			// TODO Auto-generated method stub
-			return false;
+			return true;
 		}		
 	}
 }

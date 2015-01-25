@@ -52,7 +52,7 @@
         android:id="@+id/list_view_hd"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/white_grey"
+        android:divider="@color/transparent"
         android:dividerHeight="0.1dp">        
     </ListView>
     
