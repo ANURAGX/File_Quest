@@ -61,11 +61,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -637,43 +637,28 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	
 	private void init_drawer_menu() {
 		// TODO Auto-generated method stub
-		ListView drLs = (ListView) drawer.findViewById(R.id.drawer_menu_list);
+		ExpandableListView drLs = (ExpandableListView) drawer.findViewById(R.id.drawer_menu_list);
 		drLs.setAdapter(new drAdpt());		
 		drLs.setSelector(R.drawable.while_list_selector_hd);
 		
-		drLs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-		});
 
-		drLs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		drLs.setOnGroupClickListener(new OnGroupClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public boolean onGroupClick(ExpandableListView arg0, View arg1, int arg2,
+					long arg3) {
 				// TODO Auto-generated method stub
-				switch(position){
+				switch(arg2){
 				case 0:
 					Intent intent = new Intent(FileQuestHD.this, GraphAnalysis.class);
 					startActivity(intent);
 					break;
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				case 4:
-					break;
-					
+		
 				case 5:
 					//checks the new update for file quest....
 					update_checker();
 					break;
 				}
+				return false;
 			}
 		});
 	}
@@ -683,75 +668,145 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	 * @author anurag
 	 *
 	 */
-	class drAdpt extends BaseAdapter{
+	class drAdpt extends BaseExpandableListAdapter{
 
 		LayoutInflater inf;
+		String[] drawer_ls = getResources().getStringArray(R.array.drawer_ls);
+		String[] cleaner = getResources().getStringArray(R.array.cleaner);
+		String[] mover = getResources().getStringArray(R.array.mover);
+		String[] ziper = getResources().getStringArray(R.array.ziper);
 		
 		public drAdpt() {
 			// TODO Auto-generated constructor stub
 			inf = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
-		
-		@Override
-		public int getCount() {
-			// TODO Auto-generated method stub
-			return 6;
-		}
-		@Override
-		public Object getItem(int position) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		@Override
-		public long getItemId(int position) {
-			// TODO Auto-generated method stub
-			return position;
-		}
-		
+				
 		class hold{
 			ImageView img;
 			TextView nam;
 		}
 		
+		
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public Object getChild(int arg0, int arg1) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getChildId(int arg0, int arg1) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getChildView(int groupPosition, int childPosition,
+				boolean isLastChild, View convertView, ViewGroup parent){
 			// TODO Auto-generated method stub
 			View view = inf.inflate(R.layout.row_list_2, parent , false);
 			hold h = new hold();
 			h.img = (ImageView) view.findViewById(R.id.iconImage2);
 			h.nam = (TextView) view.findViewById(R.id.directoryName2);
+			view.setPadding(30, 0, 0, 0);
+			
 			view.setTag(h);
-			switch(position){
+			
+			switch(groupPosition){
+			case 1:
+				h.nam.setText(cleaner[childPosition]);
+				break;
+			case 2:
+				h.nam.setText(mover[childPosition]);
+				break;
+			case 3:
+				h.nam.setText(ziper[childPosition]);
+				break;
+			}
+			
+			return view;
+		}
+
+		@Override
+		public int getChildrenCount(int arg0) {
+			// TODO Auto-generated method stub
+			switch(arg0){
+			case 1:
+				return cleaner.length;
+				
+			case 2:
+				return mover.length;
+			case 3:
+				return ziper.length;
+			}
+			return 0;
+		}
+
+		@Override
+		public Object getGroup(int arg0) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public int getGroupCount() {
+			// TODO Auto-generated method stub
+			return drawer_ls.length;
+		}
+
+		@Override
+		public long getGroupId(int arg0) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		public View getGroupView(int groupPosition, boolean isExpanded,
+				View convertView, ViewGroup parent){
+			// TODO Auto-generated method stub
+			
+			View view = inf.inflate(R.layout.row_list_2, parent , false);
+			hold h = new hold();
+			h.img = (ImageView) view.findViewById(R.id.iconImage2);
+			h.nam = (TextView) view.findViewById(R.id.directoryName2);
+			view.setTag(h);
+			switch(groupPosition){
 			case 0:
 				h.img.setBackgroundResource(R.drawable.graph_analysis_hd);
-				h.nam.setText("Graph Analysis");
 				break;
 				
 			case 1:
-				h.img.setBackgroundResource(R.drawable.file_shield_hd);
-				h.nam.setText("File Shield");
+				h.img.setBackgroundResource(R.drawable.file_cleaner_hd);
 				break;
 				
 			case 2:
-				h.img.setBackgroundResource(R.drawable.file_cleaner_hd);
-				h.nam.setText("File Cleaner");
+				h.img.setBackgroundResource(R.drawable.file_mover_hd);
 				break;
 			
 			case 3:
-				h.img.setBackgroundResource(R.drawable.file_mover_hd);
-				h.nam.setText("File Mover");
+				h.img.setBackgroundResource(R.drawable.file_zipper_hd);
 				break;
 				
 			case 4:
-				h.img.setBackgroundResource(R.drawable.file_zipper_hd);
-				h.nam.setText("File Zipper");
+				h.img.setBackgroundResource(R.drawable.file_shield_hd);
 				break;
 				
 			case 5:
 				h.img.setBackgroundResource(R.drawable.update_check_hd);
-				h.nam.setText("Check for update");
 			}
+			h.nam.setText(drawer_ls[groupPosition]);
 			return view;
+			
+		}
+
+		@Override
+		public boolean hasStableIds() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean isChildSelectable(int arg0, int arg1) {
+			// TODO Auto-generated method stub
+			return false;
 		}		
 	}	
 	

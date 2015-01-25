@@ -72,17 +72,18 @@
             	android:text="@string/unknown"/>
     </LinearLayout>
     
-    <ListView 
-        android:fastScrollEnabled="true"
+    <ExpandableListView 
+	    android:fastScrollEnabled="true"
 	    android:scrollbarStyle="outsideInset"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:dividerHeight="0.0dp"
-        android:divider="@color/transparent"
+	    android:paddingTop="10dp"
+	    android:paddingRight="10dp"
+        android:paddingLeft="10dp"
         android:id="@+id/drawer_menu_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        
-    </ListView>    
-    
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:divider="@color/transparent"
+	    android:dividerHeight="0.03dp"
+	    android:listSelector="@drawable/while_list_selector_hd"
+	    android:groupIndicator="@null"
+	    android:childDivider="@color/transparent"/>
 </LinearLayout>

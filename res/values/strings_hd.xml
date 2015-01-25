@@ -107,4 +107,48 @@
         <item>Report on XDA</item>
         <item>Report directly</item>
     </string-array>
+    
+    <string-array name="drawer_ls">
+        <item>Graph Analysis</item>
+        <item>File Cleaner</item>
+        <item>File Mover</item>
+        <item>File Zipper</item>
+        <item>File Shield</item>
+        <item>Check for update</item>
+    </string-array>
+    
+    <string-array name="cleaner">
+        <item>Clean favorites</item>
+        <item>Clean music</item>
+        <item>Clean apps</item>
+        <item>Clean photos</item>
+        <item>Clean videos</item>
+        <item>Clean docs</item>
+        <item>Clean archives</item>
+        <item>Clean unknowns</item>
+    </string-array>
+    
+    <string-array name="mover">
+        <item>Move favorites</item>
+        <item>Move music</item>
+        <item>Move apps</item>
+        <item>Move photos</item>
+        <item>Move videos</item>
+        <item>Move docs</item>
+        <item>Move archives</item>
+        <item>Move unknowns</item>
+    </string-array>
+    
+    <string-array name="ziper">
+        <item>Zip favorites</item>
+        <item>Zip music</item>
+        <item>Zip apps</item>
+        <item>Zip photos</item>
+        <item>Zip videos</item>
+        <item>Zip docs</item>
+        <item>Zip archives</item>
+        <item>Zip unknowns</item>
+    </string-array>
+    
+    
 </resources>
