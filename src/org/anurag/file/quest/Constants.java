@@ -75,7 +75,7 @@ public class Constants {
 	public static ItemDB db;
 	public static DBoxUsers dboxDB;
 	public static boolean disable_lock;
-	
+	public static Context ctx;
 	
 	/**
 	 * THIS ENUM IS FOR MASTER PASSWORD ....

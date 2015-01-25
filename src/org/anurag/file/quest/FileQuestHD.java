@@ -118,6 +118,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		Constants.size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(Constants.size);
 		Constants.BUILD_ICONS(FileQuestHD.this);
+		Constants.ctx = FileQuestHD.this;
 		prefs_editor = prefs.edit();
 		
 		//builds the icons for list view....
@@ -634,7 +635,29 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				RootPanel.change_list_anim();
 				SdCardPanel.change_list_anim();
 				AppStore.change_list_anim();
+			}			
+			
+			else if(action.equals("FQ_FILE_LOCKED_OR_UNLOCKED")){
+				if(Constants.activeMode == Constants.MODES.OPEN){
+					//master password is verified and open the selected
+					//item for user....
+					switch(panel){
+					case 0:
+						FileGallery.open_locked_item();
+						pager.setCurrentItem(0);
+						break;
+					case 1:
+						RootPanel.open_locked_item();
+						pager.setCurrentItem(1);
+						break;
+					case 2:
+						SdCardPanel.open_locked_item();
+						pager.setCurrentItem(2);
+						break;
+					}
+				}
 			}
+			
 		}		
 	}
 	
@@ -647,6 +670,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		filter.addAction("inflate_normal_menu");
 		filter.addAction("update_action_bar_long_click");
 		filter.addAction("list_view_anim_changed");
+		filter.addAction("FQ_FILE_LOCKED_OR_UNLOCKED");
 		this.registerReceiver(broadcasts, filter);
 	}
 	

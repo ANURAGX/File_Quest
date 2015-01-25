@@ -26,6 +26,7 @@ import org.anurag.adapters.SimpleSDAdapter;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuestHD;
 import org.anurag.file.quest.Item;
+import org.anurag.file.quest.MasterPassword;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.SDManager;
@@ -61,9 +62,8 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	public static int counter;
 	public static int[] ITEMS;
 	private static BaseAdapter adapter;
-	
+	private static Item item;
 	private static JazzyHelper list_anim_helper;
-	private boolean isGirdView;
 	
 	public SdCardPanel() {
 		// TODO Auto-generated constructor stub
@@ -286,7 +286,13 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 			return;					
 		}
 		
-		Item item = adapter_list.get(position);
+		item = adapter_list.get(position);
+		
+		if(item.isLocked()){
+			new MasterPassword(getActivity(), Constants.size.x*8/9, item, null, Constants.MODES.OPEN);
+			return;
+		}
+		
 		if(item.isDirectory()){
 			//selecting a folder....
 			manager.pushPath(item.getPath());
@@ -295,6 +301,23 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 		}else{
 			//selecting a file....
 			new OpenFileDialog(getActivity(), Uri.parse(item.getPath())
+					, Constants.size.x*8/9);
+		}
+	}
+	
+
+	/**
+	 * this function is invoked when password is verified for locked item....
+	 */
+	public static void open_locked_item(){
+		if(item.isDirectory()){
+			//selecting a folder....
+			manager.pushPath(item.getPath());
+			FileQuestHD.notify_Title_Indicator(2, item.getName());
+			load.execute();
+		}else{
+			//selecting a file....
+			new OpenFileDialog(Constants.ctx, Uri.parse(item.getPath())
 					, Constants.size.x*8/9);
 		}
 	}

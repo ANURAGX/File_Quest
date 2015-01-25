@@ -24,18 +24,21 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.widget.ListView;
 /**
  * 
  * @author Anurag
  */
 public class ZipManager {
-	ArrayList<ZipObj> list;
-	ZipEntry entry;
-	Enumeration<? extends ZipEntry> zList;
-	String zipPath;
+	
+	private static ArrayList<ZipObj> list;
+	private ZipEntry entry;
+	private Enumeration<? extends ZipEntry> zList;
+	private String zipPath;
 	int len = 0;
-	String entryname;
-	Context ctx;
+	private String entryname;
+	private Context ctx;
 	
 	public ZipManager(ZipFile file ,String pathToShow , Context context){
 		// TODO Auto-generated constructor stub
@@ -143,4 +146,28 @@ public class ZipManager {
 		Collections.sort(list, comp);
 	}
 	
+	/**
+	 * 
+	 * @param ls
+	 * @param ctx
+	 * @param src
+	 * @param path
+	 */
+	public static void setZipAdapter(final ListView ls , final Context ctx , final ZipFile src , final String path){
+		new AsyncTask<Void , Void , Void>(){
+			@Override
+			protected void onPostExecute(Void result) {
+				// TODO Auto-generated method stub
+				super.onPostExecute(result);
+				ls.setAdapter(new ZipAdapter(list, ctx));
+			}
+
+			@Override
+			protected Void doInBackground(Void... arg0) {
+				// TODO Auto-generated method stub
+				list = new ZipManager(src, path, ctx).generateList();
+				return null;
+			}
+		}.execute();
+	}
 }

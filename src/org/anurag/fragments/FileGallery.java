@@ -27,6 +27,7 @@ import org.anurag.adapters.FileGallerySimpleAdapter;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuestHD;
 import org.anurag.file.quest.Item;
+import org.anurag.file.quest.MasterPassword;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.Utils;
@@ -63,7 +64,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 	private static LinearLayout empty;
 	private int id;
 	private static JazzyHelper list_anim_helper;
-	
+	private static Item item;
 	public FileGallery() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
@@ -140,8 +141,12 @@ public class FileGallery extends Fragment implements OnClickListener{
 				}
 				
 				
-				Item itm = (Item) ls.getAdapter().getItem(position);
-				new OpenFileDialog(getActivity(), Uri.parse(itm.getPath()),
+				item = (Item) ls.getAdapter().getItem(position);
+				if(item.isLocked()){
+					new MasterPassword(getActivity(), Constants.size.x*8/9, item, null, Constants.MODES.OPEN);
+					return;
+				}	
+				new OpenFileDialog(getActivity(), Uri.parse(item.getPath()),
 						Constants.size.x*8/9);
 			}
 		});
@@ -182,6 +187,14 @@ public class FileGallery extends Fragment implements OnClickListener{
 		setAnim(ls);
 	}
 
+	/**
+	 * this function is invoked when password is verified for locked item....
+	 */
+	public static void open_locked_item(){
+		new OpenFileDialog(Constants.ctx, Uri.parse(item.getPath())
+				, Constants.size.x*8/9);
+	}
+	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub

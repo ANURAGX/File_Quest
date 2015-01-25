@@ -26,6 +26,7 @@ import org.anurag.adapters.SimpleRootAdapter;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuestHD;
 import org.anurag.file.quest.Item;
+import org.anurag.file.quest.MasterPassword;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.RootManager;
@@ -57,6 +58,7 @@ public class RootPanel extends Fragment{
 	public static int ITEMS[];
 	public static int counter;
 	private static BaseAdapter adapter;
+	private static Item item;
 	private static JazzyHelper list_anim_helper;
 	
 	public RootPanel() {
@@ -111,7 +113,13 @@ public class RootPanel extends Fragment{
 					return;					
 				}
 				
-				Item item = adapter_list.get(position);
+				item = adapter_list.get(position);
+				
+				if(item.isLocked()){
+					new MasterPassword(getActivity(), Constants.size.x*8/9, item, null,Constants.MODES.OPEN);
+					return;
+				}
+				
 				if(item.isDirectory()){
 					//selecting a folder....
 					manager.pushPath(item.getPath());
@@ -157,7 +165,23 @@ public class RootPanel extends Fragment{
 		});
 		
 	}
-		
+	
+	/**
+	 * this function is invoked when password is verified for locked item....
+	 */
+	public static void open_locked_item(){
+		if(item.isDirectory()){
+			//selecting a folder....
+			manager.pushPath(item.getPath());
+			FileQuestHD.notify_Title_Indicator(2, item.getName());
+			load.execute();
+		}else{
+			//selecting a file....
+			new OpenFileDialog(Constants.ctx, Uri.parse(item.getPath())
+					, Constants.size.x*8/9);
+		}
+	}
+	
 	/**
 	 * this function sets transition effect for list view.... 
 	 * @param list2

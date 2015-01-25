@@ -46,7 +46,7 @@ public class MasterPassword {
 	 * @param prefs
 	 * @param MODE
 	 */
-	public MasterPassword(final Context ctx , int width , final Item item , final SharedPreferences prefs ,final Constants.MODES MODE) {
+	public MasterPassword(final Context ctx , int width , final Item item ,  SharedPreferences prefs2 ,final Constants.MODES MODE) {
 		// TODO Auto-generated constructor stub
 		final Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
 		dialog.setCancelable(true);
@@ -55,6 +55,12 @@ public class MasterPassword {
 		final EditText pass = (EditText)dialog.findViewById(R.id.password);
 		final EditText confirm = (EditText)dialog.findViewById(R.id.confirmpassword);
 		final EditText newpass = (EditText)dialog.findViewById(R.id.newpassword);
+		
+		SharedPreferences prefs = prefs2;
+		if(prefs == null)
+			prefs = ctx.getSharedPreferences("SETTINGS", 0);
+
+		final SharedPreferences.Editor  editor = prefs.edit();
 		final String password = prefs.getString("MASTER_PASSWORD", null);
 		
 		
@@ -139,7 +145,7 @@ public class MasterPassword {
 					}else if(pass.getText().toString().equals(confirm.getText().toString())){
 						//passwords matched...
 						//save the password here....
-						SharedPreferences.Editor  editor = prefs.edit();
+						//editor = prefs.edit();
 						editor.putString("MASTER_PASSWORD", pass.getText().toString());
 						editor.commit();
 						
@@ -172,7 +178,7 @@ public class MasterPassword {
 					}else if(newpass.getText().toString().equals(confirm.getText().toString())){
 						//passwords matched...
 						//save the password here....
-						SharedPreferences.Editor  editor = prefs.edit();
+						//editor = prefs.edit();
 						editor.putString("MASTER_PASSWORD", newpass.getText().toString());
 						editor.commit();
 						Toast.makeText(ctx, R.string.passwdreset, Toast.LENGTH_SHORT).show();
