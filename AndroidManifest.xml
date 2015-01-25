@@ -159,6 +159,7 @@
         <activity 
             android:name="org.anurag.settings.Settings"/>
         
+        
         <!-- GRAPH ANALYSIS ACTIVITY.... -->
         <activity 
             android:name="org.anurag.file.quest.GraphAnalysis">            
