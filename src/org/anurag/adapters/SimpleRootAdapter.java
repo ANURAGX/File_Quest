@@ -20,8 +20,8 @@
 package org.anurag.adapters;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
+import java.util.HashMap;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.MasterPassword;
@@ -36,8 +36,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore.Video.Thumbnails;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +58,7 @@ public class SimpleRootAdapter extends BaseAdapter{
 	private static HashMap<String, Drawable> apkList;
 	private static HashMap<String, Bitmap> imgList;
 	private static HashMap<String, Bitmap> musicList;
+	private static HashMap<String, Bitmap> vidList;
 	private Bitmap image;
 	
 	public SimpleRootAdapter(Context ct , ArrayList<Item> objs) {
@@ -66,6 +69,7 @@ public class SimpleRootAdapter extends BaseAdapter{
 		apkList = new HashMap<>();
 		imgList = new HashMap<>();
 		musicList = new HashMap<>();
+		vidList = new HashMap<>();
 	}
 	
 	@Override
@@ -194,6 +198,14 @@ public class SimpleRootAdapter extends BaseAdapter{
 				new LoadAlbumArt(h.icn , item).execute();
 			
 		}
+		else if(item.getType().equals("Video")){
+			Bitmap vi = vidList.get(item.getPath());
+			if(vi != null)
+				h.icn.setImageBitmap(vi);
+			else
+				new VidThumb(h.icn, item).execute();
+		}
+		
 			
 		//true when multi select is on....
 		if(Constants.LONG_CLICK){
@@ -360,4 +372,44 @@ public class SimpleRootAdapter extends BaseAdapter{
 			return null;
 		}		
 	}	
+	/**
+	 * 
+	 * @author anurag
+	 *
+	 */
+	private class VidThumb extends AsyncTask<Void, Void, Void>{
+
+		ImageView iview;
+		Item itm;
+		Bitmap thmb;
+		public VidThumb(ImageView img ,Item items) {
+			// TODO Auto-generated constructor stub
+			itm = items;
+			iview = img;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if(thmb != null)
+				iview.setImageBitmap(thmb);
+		}
+
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			// TODO Auto-generated method stub
+			try{
+				thmb = ThumbnailUtils.createVideoThumbnail(itm.getPath(), Thumbnails.MICRO_KIND);
+				vidList.put(item.getPath(), thmb);
+			}catch(OutOfMemoryError e){
+				vidList.clear();
+				vidList = null;
+				thmb = null;
+				vidList = new HashMap<>();
+			}
+			return null;
+		}
+		
+	}
 }

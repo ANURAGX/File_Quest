@@ -21,8 +21,8 @@ package org.anurag.adapters;
 
 import java.io.File;
 
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.MasterPassword;
@@ -38,8 +38,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore.Video.Thumbnails;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +56,8 @@ public class FileGalleryAdapter extends BaseAdapter {
 	private static ConcurrentHashMap<String, Bitmap> imgList;
 	private static ConcurrentHashMap<String, Drawable> apkList;
 	private static ConcurrentHashMap<String, Bitmap> musicList;
-	
+	private static HashMap<String, Bitmap> vidList;
+
 	private Bitmap image;
 	private Item item;
 	private Context ctx;
@@ -72,6 +75,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 		imgList = new ConcurrentHashMap<String, Bitmap>();
 		apkList = new ConcurrentHashMap<String, Drawable>();
 		musicList = new ConcurrentHashMap<String, Bitmap>();
+		vidList = new HashMap<>();
 	}
 
 	@Override
@@ -231,6 +235,14 @@ public class FileGalleryAdapter extends BaseAdapter {
 				new LoadAlbumArt(h.icon, item).execute();
 			}			
 		}
+		else if(item.getType().equals("Video")){
+			Bitmap vi = vidList.get(item.getPath());
+			if(vi != null)
+				h.icon.setImageBitmap(vi);
+			else
+				new VidThumb(h.icon, item).execute();
+		}
+		
 		
 		//true when multi select is on....
 		if(Constants.LONG_CLICK){
@@ -409,4 +421,46 @@ public class FileGalleryAdapter extends BaseAdapter {
 			return null;
 		}
 	}
+	
+	/**
+	 * 
+	 * @author anurag
+	 *
+	 */
+	private class VidThumb extends AsyncTask<Void, Void, Void>{
+
+		ImageView iview;
+		Item itm;
+		Bitmap thmb;
+		public VidThumb(ImageView img ,Item items) {
+			// TODO Auto-generated constructor stub
+			itm = items;
+			iview = img;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if(thmb != null)
+				iview.setImageBitmap(thmb);
+		}
+
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			// TODO Auto-generated method stub
+			try{
+				thmb = ThumbnailUtils.createVideoThumbnail(itm.getPath(), Thumbnails.MICRO_KIND);
+				vidList.put(item.getPath(), thmb);
+			}catch(OutOfMemoryError e){
+				vidList.clear();
+				vidList = null;
+				thmb = null;
+				vidList = new HashMap<>();
+			}
+			return null;
+		}
+		
+	}
+	
 }
