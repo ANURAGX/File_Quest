@@ -52,7 +52,7 @@ public class RootPanel extends Fragment{
 	
 	private static ListView list;
 	private LinearLayout empty;
-	private ArrayList<Item> adapter_list;
+	private static ArrayList<Item> adapter_list;
 	private static LoadList load;
 	private static RootManager manager;
 	public static int ITEMS[];
@@ -324,5 +324,18 @@ public class RootPanel extends Fragment{
 	public static void change_list_anim(){
 		list_anim_helper.setTransitionEffect(Constants.LIST_ANIM);
 		list.setOnScrollListener(list_anim_helper);
+	}
+	
+	/**
+	 * 
+	 * @return the list of selected items by long press..... 
+	 */
+	public static ArrayList<Item> get_selected_items(){
+		ArrayList<Item> lss = new ArrayList<>();
+		int len = adapter_list.size();
+		for(int i = 0 ; i < len ; ++i)
+			if(ITEMS[i] == 1)
+				lss.add(adapter_list.get(i));
+		return lss;
 	}
 }

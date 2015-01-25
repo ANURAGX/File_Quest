@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.anurag.fragments.FileGallery;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -91,7 +93,8 @@ public class DeleteFiles{
 		ArrayList<Item> itms = new ArrayList<Item>();
 		len = list.size();
 		for(int i = 0 ; i<len ; ++i){
-			itms.add(list.get(lsKeys.get(""+i)));
+			if(FileGallery.ITEMS[i] == 1)
+				itms.add(list.get(lsKeys.get(""+i)));
 		}
 		
 		new DeleteFiles(ctx, width, itms, msg);

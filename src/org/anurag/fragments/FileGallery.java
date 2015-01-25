@@ -57,8 +57,8 @@ public class FileGallery extends Fragment implements OnClickListener{
 	private static String current_Tile;
 	private static Loader loader;
 	private static BaseAdapter adpt;
-	private static ConcurrentHashMap<String , Item> lists;
-	private static ConcurrentHashMap<String , String> keys;
+	public static ConcurrentHashMap<String , Item> lists;
+	public static ConcurrentHashMap<String , String> keys;
 	public static int counter;
 	public static int[] ITEMS;
 	private static LinearLayout empty;
@@ -347,6 +347,10 @@ public class FileGallery extends Fragment implements OnClickListener{
 	public static void clear_selected_items(){
 		ls.setAdapter(adpt);
 		counter = 0;
+		if(lists.size() == 0){
+			ls.setVisibility(View.GONE);
+			empty.setVisibility(View.VISIBLE);
+		}
 	}
 	
 	/**

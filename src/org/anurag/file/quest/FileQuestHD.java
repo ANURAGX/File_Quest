@@ -190,7 +190,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		
-		//int panel = pager.getCurrentItem();
+		int panel = pager.getCurrentItem();
 		
 		switch(item.getItemId()){
 		case R.id.action_exit:
@@ -208,6 +208,23 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		case R.id.action_setting:
 			Intent intent = new Intent(FileQuestHD.this, Settings.class);
 			startActivity(intent);
+			break;
+		
+		case R.id.action_delete:
+			switch(panel){
+			case 0:
+				new DeleteFiles(FileQuestHD.this, Constants.size.x*8/9, FileGallery.lists,
+						FileGallery.keys , null);
+				break;
+			case 1:
+				new DeleteFiles(FileQuestHD.this, Constants.size.x*8/9,
+						RootPanel.get_selected_items(), null);
+				break;
+				
+			case 2:
+				new DeleteFiles(FileQuestHD.this, Constants.size.x*8/9,
+						SdCardPanel.get_selected_items() , null);
+			}
 			break;
 			
 		}
@@ -658,6 +675,27 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				}
 			}
 			
+			else if(action.equalsIgnoreCase("FQ_DELETE")){
+
+				Constants.LONG_CLICK = false;
+				invalidateOptionsMenu();
+				Utils.updateUI();
+				
+				switch(panel){
+				case 0:
+					FileGallery.clear_selected_items();
+					break;
+					
+				case 1:
+					RootPanel.notifyDataSetChanged();
+					break;
+					
+				case 2:
+					SdCardPanel.notifyDataSetChanged();
+					break;
+				}
+			}
+			
 		}		
 	}
 	
@@ -671,6 +709,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		filter.addAction("update_action_bar_long_click");
 		filter.addAction("list_view_anim_changed");
 		filter.addAction("FQ_FILE_LOCKED_OR_UNLOCKED");
+		filter.addAction("FQ_DELETE");
 		this.registerReceiver(broadcasts, filter);
 	}
 	

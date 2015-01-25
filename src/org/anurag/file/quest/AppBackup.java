@@ -333,5 +333,6 @@ public class AppBackup {
 		Utils.apps.put(path, itm);
 		Utils.apksize+=f.length();
 		Utils.asize = Utils.size(Utils.apksize);
+		
 	}
 }
