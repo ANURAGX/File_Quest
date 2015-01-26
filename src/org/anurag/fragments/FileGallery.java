@@ -346,6 +346,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 	 */
 	public static void clear_selected_items(){
 		ls.setAdapter(adpt);
+		FileGallery.ITEMS = null;
 		counter = 0;
 		if(lists.size() == 0){
 			ls.setVisibility(View.GONE);

@@ -214,6 +214,7 @@ public class AppStore extends Fragment{
 	 */
 	public static void clear_selected_items(){
 		ls.setAdapter(adapter);
+		AppStore.ITEMS = null;
 		counter = 0;
 	}
 	

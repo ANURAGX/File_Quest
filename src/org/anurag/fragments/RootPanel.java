@@ -19,6 +19,7 @@
 
 package org.anurag.fragments;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.anurag.adapters.RootAdapter;
@@ -291,6 +292,7 @@ public class RootPanel extends Fragment{
 	 */
 	public static void clear_selected_items(){
 		list.setAdapter(adapter);
+		RootPanel.ITEMS = null;
 		counter = 0;
 	}
 
@@ -338,4 +340,14 @@ public class RootPanel extends Fragment{
 				lss.add(adapter_list.get(i));
 		return lss;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static Item get_current_working_dir(){
+		return new Item(new File(manager.getCurrentDirectory()),
+				null, null, null);
+	}
+	
 }

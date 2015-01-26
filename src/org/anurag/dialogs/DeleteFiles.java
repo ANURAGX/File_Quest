@@ -17,13 +17,17 @@
  *
  */
 
-package org.anurag.file.quest;
+package org.anurag.dialogs;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.Item;
+import org.anurag.file.quest.R;
+import org.anurag.file.quest.Utils;
 import org.anurag.fragments.FileGallery;
 
 import android.annotation.SuppressLint;
@@ -144,6 +148,7 @@ public class DeleteFiles{
 					case 1:
 						message.setText(currentFile);
 						break;
+					
 					case 2 :  	
 						try{
 							mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.fromFile(new File(Constants.PATH))));
@@ -154,11 +159,15 @@ public class DeleteFiles{
 						Toast.makeText(mContext, ctx.getString(R.string.deleted),Toast.LENGTH_SHORT).show();
 						dialog.dismiss();	
 						break;
+						
 					case 3:
 						TextView title = (TextView)dialog.findViewById(R.id.popupTitle);
 						title.setText(ctx.getString(R.string.delete_frm_ext_sd_title));
 						popupMessage.setText(ctx.getResources().getString(R.string.delete_frm_ext_sd));
+						message.setVisibility(View.GONE);
 						btn2.setVisibility(View.VISIBLE);
+						btn2.setText(R.string.ok);
+						dialog.setCancelable(true);
 						break;
 						
 				}

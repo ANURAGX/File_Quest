@@ -20,7 +20,6 @@
 package org.anurag.file.quest;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -50,20 +49,16 @@ import org.anurag.compress.TarObj;
 import org.anurag.compress.ZipAdapter;
 import org.anurag.compress.ZipManager;
 import org.anurag.compress.ZipObj;
+import org.anurag.dialogs.DeleteFiles;
 import org.anurag.dropbox.DBoxAdapter;
 import org.anurag.dropbox.DBoxAuth;
 import org.anurag.dropbox.DBoxManager;
 import org.anurag.dropbox.DBoxUsers;
-import org.anurag.gesture.AddGesture;
-import org.anurag.gesture.G_Open;
 import org.anurag.settings.Settings;
 import org.ultimate.menuItems.AppProperties;
 import org.ultimate.menuItems.BluetoothChooser;
-import org.ultimate.menuItems.DeleteBackups;
 import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.MultipleCopyDialog;
-import org.ultimate.menuItems.SelectApp;
-import org.ultimate.menuItems.SelectedApp;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -111,9 +106,7 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;

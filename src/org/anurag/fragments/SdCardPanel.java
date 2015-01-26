@@ -19,6 +19,7 @@
 
 package org.anurag.fragments;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.anurag.adapters.SDAdapter;
@@ -208,7 +209,8 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	 * this function clears the selected items via long click from lits view....
 	 */
 	public static void clear_selected_items(){
-		list.setAdapter(adapter);				
+		list.setAdapter(adapter);		
+		SdCardPanel.ITEMS = null;
 		counter = 0;
 	}
 	
@@ -342,4 +344,14 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 				lss.add(adapter_list.get(i));
 		return lss;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static Item get_current_working_dir(){
+		return new Item(new File(manager.getCurrentDirectory()),
+				null, null, null);
+	}
+	
 }

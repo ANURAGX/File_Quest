@@ -23,6 +23,8 @@ import java.net.URL;
 import java.util.Scanner;
 
 import org.anurag.adapters.PagerAdapters;
+import org.anurag.dialogs.CreateItem;
+import org.anurag.dialogs.DeleteFiles;
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 import org.anurag.fragments.AppStore;
 import org.anurag.fragments.FileGallery;
@@ -413,7 +415,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	public boolean onMenuItemClick(MenuItem item) {
 		// TODO Auto-generated method stub
 		
-		//int panel = pager.getCurrentItem();
+		int panel = pager.getCurrentItem();
 		
 		switch(item.getItemId()){
 		case R.id.red:
@@ -467,9 +469,46 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			//setting he detailed list view....
 			change_list_type(2 , pager.getCurrentItem());
 			return true;
+		
+		case R.id.new_folder:
+			switch(panel){
+			case 0:
+				Toast.makeText(FileQuestHD.this, R.string.cant_create_here, Toast.LENGTH_SHORT).show();
+				break;
+			case 3:
+				Toast.makeText(FileQuestHD.this, R.string.cant_create_here, Toast.LENGTH_SHORT).show();
+				break;
+				
+			case 1:
+				new CreateItem(FileQuestHD.this, RootPanel.get_current_working_dir()
+						, true , panel);
+				break;
+			case 2:
+				new CreateItem(FileQuestHD.this, SdCardPanel.get_current_working_dir() ,
+						true , panel);
+				break;
+			}
+			break;
 			
-		case R.id.simple_grid:
-		case R.id.detail_grid:	
+		case R.id.new_file:
+			switch(panel){
+			case 0:
+				Toast.makeText(FileQuestHD.this, R.string.cant_create_here, Toast.LENGTH_SHORT).show();
+				break;
+			case 3:
+				Toast.makeText(FileQuestHD.this, R.string.cant_create_here, Toast.LENGTH_SHORT).show();
+				break;
+				
+			case 1:
+				new CreateItem(FileQuestHD.this, RootPanel.get_current_working_dir()
+						, false , panel);
+				break;
+			case 2:
+				new CreateItem(FileQuestHD.this, SdCardPanel.get_current_working_dir() 
+						, false , panel);
+				break;
+			}
+			break;
 					
 		}
 		
@@ -622,16 +661,15 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				//long click got disabled,restore default screen.....
 				if(panel == 2){
 					SdCardPanel.clear_selected_items();
-					SdCardPanel.ITEMS = null;
+					
 				}else if(panel == 1){
 					RootPanel.clear_selected_items();
-					RootPanel.ITEMS = null;
+					
 				}else if(panel == 3){
 					AppStore.clear_selected_items();
-					AppStore.ITEMS = null;
+				
 				}else if(panel == 0){
 					FileGallery.clear_selected_items();
-					FileGallery.ITEMS = null;
 				}
 				invalidateOptionsMenu();
 				
@@ -685,14 +723,20 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			else if(action.equalsIgnoreCase("FQ_DELETE")){
 
 				Constants.LONG_CLICK = false;
+
+				try{
+					FileGallery.clear_selected_items();
+				}catch(Exception e){
+					
+				}
+				RootPanel.clear_selected_items();
+				SdCardPanel.clear_selected_items();
+				AppStore.clear_selected_items();
+				
 				invalidateOptionsMenu();
 				Utils.updateUI();
 				
 				switch(panel){
-				case 0:
-					FileGallery.clear_selected_items();
-					break;
-					
 				case 1:
 					RootPanel.notifyDataSetChanged();
 					break;
@@ -701,8 +745,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 					SdCardPanel.notifyDataSetChanged();
 					break;
 				}
-			}
-			
+			}			
 		}		
 	}
 	

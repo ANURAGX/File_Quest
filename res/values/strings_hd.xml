@@ -151,5 +151,10 @@
     </string-array>
     
     <string name="invalid_gesture">Gesture length is not good</string>
-    
+    <string name="cant_create_here">Cannot create new item here</string>
+    <string name="folder_name">Enter new folder name</string>
+    <string name="file_name">Enter new file name</string>
+    <string name="create">Create</string>
+    <string name="failed_to_create">Failed to create new item</string>
+    <string name="itm_created">One new item created</string>
 </resources>
