@@ -25,6 +25,7 @@ import java.util.Scanner;
 import org.anurag.adapters.PagerAdapters;
 import org.anurag.dialogs.CreateItem;
 import org.anurag.dialogs.DeleteFiles;
+import org.anurag.dialogs.Rename;
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 import org.anurag.fragments.AppStore;
 import org.anurag.fragments.FileGallery;
@@ -230,6 +231,22 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		case R.id.action_add_gesture:
 			Intent intnt = new Intent(FileQuestHD.this , AddGesture.class);
 			startActivity(intnt);
+			break;
+			
+		case R.id.action_rename:
+			//renaming the file...
+			if(Constants.LONG_CLICK)
+				switch(panel){
+				case 0:
+					new Rename(FileQuestHD.this, FileGallery.lists, FileGallery.keys , panel);
+					break;
+				case 1:
+					new Rename(FileQuestHD.this, RootPanel.get_selected_items(), panel);
+					break;
+				case 2:
+					new Rename(FileQuestHD.this, SdCardPanel.get_selected_items(), panel);
+					break;
+				}
 			break;
 		}
 		return super.onOptionsItemSelected(item);

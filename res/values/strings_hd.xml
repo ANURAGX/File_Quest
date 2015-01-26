@@ -162,4 +162,9 @@
     <string name="create">Create</string>
     <string name="failed_to_create">Failed to create new item</string>
     <string name="itm_created">One new item created</string>
+    <string name="enter_name">Enter new name</string>
+    <string name="itm_renamed">Item renamed</string>
+    <string name="failed_to_rename">Failed to rename the item</string>
+    <string name="rename">Rename</string>
+    <string name="enter_valid_name">Enter name properly</string>
 </resources>

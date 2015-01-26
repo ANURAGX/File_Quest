@@ -1,3 +1,22 @@
+/**
+ * Copyright(c) 2015 DRAWNZER.ORG PROJECTS -> ANURAG
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *      
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *                             
+ *                             anurag.dev1512@gmail.com
+ *
+ */
+
 package org.anurag.dialogs;
 
 import java.io.File;
@@ -15,6 +34,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +51,9 @@ public class CreateItem {
 	private EditText getName;
 	
 	/**
-	 * 
+	 * ImageView img = (ImageView) dialog.findViewById(R.id.headerImage);
+		
+		img.setBackgroundResource(R.drawable.rename);
 	 * @param ctx
 	 * @param currentDir the folder in which the item has to be created....
 	 * @param isDir true then create folder....
@@ -44,6 +66,9 @@ public class CreateItem {
 		dialog.setCancelable(true);
 		dialog.getWindow().getAttributes().width = Constants.size.x*8/9;
 		dialog.show();
+		
+		ImageView img = (ImageView) dialog.findViewById(R.id.headerImage);
+		img.setBackgroundResource(R.drawable.add_new);
 		
 		getName = (EditText) dialog.findViewById(R.id.folder_nam);
 		

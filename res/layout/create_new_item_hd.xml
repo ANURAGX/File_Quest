@@ -33,12 +33,12 @@
         android:layout_weight="0.8"
         android:orientation="horizontal"
         android:gravity="center_vertical">
+        
         <ImageView 
             android:id="@+id/headerImage"
             android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:background="@drawable/add_new"
-            />
+            android:layout_height="45dp"/>
+        
         <TextView 
             android:paddingLeft="15dp"
             android:id="@+id/header"
