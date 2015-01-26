@@ -46,6 +46,11 @@
     <string name="action_size_bigger">Size (Bigger)</string>
     <string name="action_date_new">Date (Newer)</string>
     <string name="action_date_old">Date (Older)</string>
+    <string name="action_rename">Rename</string>
+    <string name="action_zip">Compress</string>
+    <string name="action_share">Share</string>
+    <string name="action_properties">Properties</string>
+    
     
     <string-array name="settings_array">
         <item>Listview animation</item>

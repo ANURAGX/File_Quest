@@ -38,19 +38,34 @@
         android:id="@+id/action_cut"
         android:icon="@drawable/cut"
         android:title="@string/action_cut"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
     
     <item 
-        android:id="@+id/action_paste"
-        android:icon="@drawable/paste"
-        android:title="@string/action_paste"
-        app:showAsAction="ifRoom"/>
-    
+        android:id="@+id/action_rename"
+        android:title="@string/action_rename"
+        android:icon="@drawable/rename"
+        app:showAsAction="always"/>
     
     <item 
+        app:showAsAction="ifRoom"
         android:id="@+id/action_add_gesture"
         android:icon="@drawable/gesture"
         android:title="@string/action_add_gesture"
+        />
+    
+    <item 
+        app:showAsAction="ifRoom"
+        android:id="@+id/action_share"
+        android:icon="@drawable/share"
+        android:title="@string/action_share"/>
+    
+    <item 
+        android:id="@+id/action_zip"
+        android:title="@string/action_zip"
         app:showAsAction="ifRoom"/>
+    
+    <item 
+        android:id="@+id/action_properties"
+        android:title="@string/action_properties"/>
     
 </menu>
