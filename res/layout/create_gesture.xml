@@ -15,25 +15,28 @@
 -->
 
 <LinearLayout
+    android:id="@+id/main"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical">
-
-    <TextView 
-        android:paddingBottom="5dp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/drawgesture"/>
+	
+    <!-- main action bar.... -->
+    <android.support.v7.widget.Toolbar
+    	xmlns:app="http://schemas.android.com/apk/res-auto"
+    	android:id="@+id/toolbar_top"
+    	android:layout_height="wrap_content"
+    	android:layout_width="match_parent"
+    	android:minHeight="?android:attr/actionBarSize"
+    	android:background="?attr/colorPrimary" />
+    
     <android.gesture.GestureOverlayView
         android:id="@+id/gestures_overlay"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1.0"
-
+		android:background="@color/semi_white30"
         android:gestureStrokeType="multiple" />
 
     <LinearLayout
@@ -45,19 +48,18 @@
 
         <Button
             android:textStyle="bold"
-            android:textColor="@android:color/darker_gray"
             android:background="@drawable/button_click"
             android:id="@+id/done"
             android:layout_width="0dip"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:enabled="false"
+            android:textColor="@android:color/white"
             android:text="@string/save" />
     
         <Button
             android:id="@+id/discard"
             android:textStyle="bold"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/white"
             android:background="@drawable/button_click"
             android:layout_width="0dip"
             android:layout_height="40dp"

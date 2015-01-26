@@ -150,5 +150,6 @@
         <item>Zip unknowns</item>
     </string-array>
     
+    <string name="invalid_gesture">Gesture length is not good</string>
     
 </resources>

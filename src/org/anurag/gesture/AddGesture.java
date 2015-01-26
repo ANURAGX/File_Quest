@@ -24,49 +24,65 @@ import java.io.IOException;
 
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
+import org.anurag.file.quest.SystemBarTintManager;
+import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class AddGesture {
+/**
+ * 
+ * @author anurag
+ *
+ */
+public class AddGesture extends ActionBarActivity{
 	
-	GestureOverlayView gesture;
-	Gesture pattern;
-	GestureLibrary library;
-	
-	/**
-	 * 
-	 * @param context
-	 * @param width for window....
-	 * @param height for window
-	 * @param filePath is path of file or folder for which we are saving the gesture....
-	 */
-	public AddGesture(final Context context , int width,int height , final String filePath) {
-		// TODO Auto-generated constructor stub
-		final Dialog dialog = new Dialog(context, Constants.DIALOG_STYLE);
-		dialog.setContentView(R.layout.create_gesture);
+	private GestureOverlayView gesture;
+	private Gesture pattern;
+	private GestureLibrary library;
+	private Toolbar bar;
+	private boolean saved;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		saved = false;
+		setContentView(R.layout.create_gesture);
 		
-		gesture = (GestureOverlayView)dialog.findViewById(R.id.gestures_overlay);
-		dialog.setCancelable(true);
-		dialog.getWindow().getAttributes().width = width;
-		dialog.getWindow().getAttributes().height = height;		
-		dialog.getWindow().getAttributes().alpha = 0.85f;
-		dialog.show();
+		String title = getResources().getString(R.string.drawgesture);
 		
-		final Button save = (Button)dialog.findViewById(R.id.done);
+		gesture = (GestureOverlayView) findViewById(R.id.gestures_overlay);
+		bar = (Toolbar) findViewById(R.id.toolbar_top);
+		setSupportActionBar(bar);
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Constants.COLOR_STYLE));
+		getSupportActionBar().setTitle("  " + title);
+		getSupportActionBar().setIcon(R.drawable.gesture);
+		
+		
+		final Button save = (Button) findViewById(R.id.done);
 		save.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+				
+				if(!saved){
+					Toast.makeText(AddGesture.this, R.string.invalid_gesture, Toast.LENGTH_SHORT).show();
+					return;
+				}
+				
 				File file = new File(Environment.getExternalStorageDirectory().getPath()+"/File Quest");
 				if(!file.exists())
 					file.mkdirs();
@@ -80,29 +96,28 @@ public class AddGesture {
 					}
 				library = GestureLibraries.fromFile(file.getAbsolutePath());
 				library.load();
-				library.addGesture(filePath, pattern);
+				library.addGesture("path", pattern);
 				library.save();
-				Toast.makeText(context, context.getString(R.string.gesturesaved), Toast.LENGTH_SHORT).show();
-				dialog.dismiss();
-				}
+				Toast.makeText(AddGesture.this, getResources().getString(R.string.gesturesaved), Toast.LENGTH_SHORT).show();
+				AddGesture.this.finish();
+			}
 		}); 
 		
-		Button discard = (Button)dialog.findViewById(R.id.discard);
+		Button discard = (Button)findViewById(R.id.discard);
 		discard.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				dialog.dismiss();				
+				
+				AddGesture.this.finish();			
 			}
 		});
-		
-		
 		
 		gesture.addOnGestureListener(new GestureOverlayView.OnGestureListener() {
 			@Override
 			public void onGestureStarted(GestureOverlayView arg0, MotionEvent arg1) {
 				// TODO Auto-generated method stub
-				save.setEnabled(false);
+				//save.setEnabled(false);
 				pattern = null;
 			}
 			
@@ -111,9 +126,9 @@ public class AddGesture {
 				// TODO Auto-generated method stub
 				pattern = arg0.getGesture();
 				if(pattern.getLength()<120.f){
-					arg0.clear(false);
-				}
-				save.setEnabled(true);
+					saved = false;
+				}else
+					saved = (true);
 			}
 			
 			@Override
@@ -127,7 +142,58 @@ public class AddGesture {
 				// TODO Auto-generated method stub
 				
 			}
-		});
+		});		
+	}	
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		init_system_ui();
 	}
-
+	
+	/**
+	 * restyles the system UI like status bar or navigation bar if present....
+	 */
+	private void init_system_ui() {
+		// TODO Auto-generated method stub
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+			return;
+		SystemBarTintManager tint = new SystemBarTintManager(AddGesture.this);
+		tint.setStatusBarTintEnabled(true);
+		tint.setStatusBarTintColor(Constants.COLOR_STYLE);
+		SystemBarConfig conf = tint.getConfig();
+		boolean hasNavBar = conf.hasNavigtionBar();
+		if(hasNavBar){
+			tint.setNavigationBarTintEnabled(true);
+			tint.setNavigationBarTintColor(Constants.COLOR_STYLE);
+		}
+		LinearLayout main = (LinearLayout) findViewById(R.id.main);
+		main.setBackgroundColor(Constants.COLOR_STYLE);
+		main.setPadding(0, getStatusBarHeight(), 0, hasNavBar ? getNavigationBarHeight() :0);
+	}
+	
+	/**
+	 * 
+	 * @return height of status bar....
+	 */
+	private int getStatusBarHeight(){
+		int res = 0;
+		int resId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+		if(resId > 0)
+			res = getResources().getDimensionPixelSize(resId);
+		return res;
+	}
+	
+	/**
+	 * 
+	 * @return the height of navigation bar....
+	 */
+	private int getNavigationBarHeight(){
+		int res = 0;
+		int resId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+		if(resId > 0)
+			res = getResources().getDimensionPixelSize(resId);
+		return res;
+	}
+	
 }

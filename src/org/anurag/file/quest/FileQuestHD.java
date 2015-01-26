@@ -28,6 +28,7 @@ import org.anurag.fragments.AppStore;
 import org.anurag.fragments.FileGallery;
 import org.anurag.fragments.RootPanel;
 import org.anurag.fragments.SdCardPanel;
+import org.anurag.gesture.AddGesture;
 import org.anurag.settings.Settings;
 
 import android.app.NotificationManager;
@@ -202,9 +203,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				drawer.openDrawer(Gravity.START);
 			break;
 			
-		case R.id.action_add_gesture:
-			break;
-		
 		case R.id.action_setting:
 			Intent intent = new Intent(FileQuestHD.this, Settings.class);
 			startActivity(intent);
@@ -227,8 +225,17 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			}
 			break;
 			
+		case R.id.action_add_gesture:
+			Intent intnt = new Intent(FileQuestHD.this , AddGesture.class);
+			startActivity(intnt);
+			break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void test() {
+		// TODO Auto-generated method stub
+		Toast.makeText(FileQuestHD.this, "Got",Toast.LENGTH_LONG).show();
 	}
 
 	@Override

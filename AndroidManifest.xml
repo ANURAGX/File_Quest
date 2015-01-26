@@ -171,6 +171,10 @@
             android:theme="@android:style/Theme.Holo">
         </activity>
         
+        <!-- ACTIVITY TO ADD GESTURE FOR A FILE.... -->
+        <activity 
+            android:name="org.anurag.gesture.AddGesture"/>
+            
    </application>
 
 </manifest>

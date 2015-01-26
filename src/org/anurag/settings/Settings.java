@@ -232,13 +232,13 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
 			switch(groupPosition){
 			case 0:
 				if(Constants.LIST_ANIM == childPosition)
-					h.img.setBackgroundResource(R.drawable.selected);
+					h.img.setBackgroundResource(R.drawable.long_click_check);
 				h.nam.setText(animls[childPosition]);
 				break;
 				
 			case 1:
 				if(Constants.PAGER_ANIM == childPosition)
-					h.img.setBackgroundResource(R.drawable.selected);
+					h.img.setBackgroundResource(R.drawable.long_click_check);
 				
 				h.nam.setText(pagels[childPosition]);				
 				break;
@@ -246,7 +246,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
 			case 2:
 				h.nam.setText(panels[childPosition]);	
 				if(Constants.PANEL_NO == childPosition)
-					h.img.setBackgroundResource(R.drawable.selected);
+					h.img.setBackgroundResource(R.drawable.long_click_check);
 				break;
 			
 			case 3:

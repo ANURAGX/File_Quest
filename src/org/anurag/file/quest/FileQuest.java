@@ -985,7 +985,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 							new BluetoothChooser(mContext, file0.getPath(), size.x*8/9, null);
 						break;
 					case 9:
-						new AddGesture(mContext, size.x, size.y*8/9, file0.getPath());
+						//new AddGesture(mContext, size.x, size.y*8/9, file0.getPath());
 						break;
 					case 10:
 						// PROPERTIES
@@ -1421,8 +1421,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 						//ADD GESTURE...
 						if(ZIP_ROOT||RAR_ROOT||TAR_ROOT)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
-						else
-							new AddGesture(mContext, size.x, size.y*8/9, file.getPath());
+						//else
+							//new AddGesture(mContext, size.x, size.y*8/9, file.getPath());
 						break;
 					case 10:
 						// PROPERTIES
@@ -1762,8 +1762,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 						// gesture to the selected file....
 						if(ZIP_SD||RAR_SD||TAR_SD)
 							Toast.makeText(mContext, R.string.operationnotsupported, Toast.LENGTH_SHORT).show();
-						else
-							new AddGesture(mContext, size.x, size.y*8/9,file2.getPath());
+						//else
+						//	new AddGesture(mContext, size.x, size.y*8/9,file2.getPath());
 						break;
 					case 10:
 						// PROPERTIES
