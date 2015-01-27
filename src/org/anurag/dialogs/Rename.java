@@ -97,6 +97,15 @@ public class Rename {
 		head.setText(R.string.enter_name);
 		getName.setHint(R.string.enter_name);
 		
+
+		Item itm = currentItem.get(0);
+		String str = itm.getName();
+		getName.setText(str);
+		
+		if(!itm.isDirectory() && !itm.getName().startsWith(".") && itm.getName().contains("."))
+			getName.setSelection(0, str.lastIndexOf("."));
+		else
+			getName.setSelection(str.length());
 		
 		btn = (Button) dialog.findViewById(R.id.create);
 		btn.setText(R.string.rename);
@@ -139,7 +148,10 @@ public class Rename {
 							Constants.db.deleteFavItem(item.getPath());
 							Utils.buildFavItems(item, false);
 							Constants.db.insertNodeToFav(newFile.getAbsolutePath());
-							Utils.buildFavItems(item, true);
+							
+							//Item newItem = new Item(newFile, item.getIcon(), item.getType(),
+								//	item.getSize());
+							//Utils.buildFavItems(newItem, true);
 						}
 						
 						if(item.isLocked()){
@@ -212,12 +224,14 @@ public class Rename {
 									Item item = currentItem.get(i);
 									if(item.isFavItem()){
 										Constants.db.deleteFavItem(item.getPath());
+										Utils.buildFavItems(item, false);
 										Constants.db.insertNodeToFav(newFile.getAbsolutePath());
-										Utils.rebuildFavList();
+										//Utils.rebuildFavList();
 									}
 									
 									if(item.isLocked()){
 										Constants.db.deleteLockedNode(item.getPath());
+										Utils.buildFavItems(item, false);
 										Constants.db.insertNodeToLock(newFile.getAbsolutePath());
 									}
 								}					
@@ -248,4 +262,4 @@ public class Rename {
 		}		
 		return name;
 	}
-}
+}	
