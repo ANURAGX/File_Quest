@@ -20,10 +20,12 @@
 package org.anurag.file.quest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.anurag.dropbox.DBoxUsers;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
@@ -76,6 +78,16 @@ public class Constants {
 	public static DBoxUsers dboxDB;
 	public static boolean disable_lock;
 	public static Context ctx;
+	
+	/**
+	 * variables for adapter classes used....
+	 * they are common in 8 adapter classes....
+	 */
+	public static HashMap<String, Drawable> apkList = new HashMap<>();
+	public static HashMap<String, Bitmap> imgList = new HashMap<>();
+	public static HashMap<String, Bitmap> musicList = new HashMap<>();
+	public static HashMap<String, Bitmap> vidList = new HashMap<>();
+	
 	
 	/**
 	 * THIS ENUM IS FOR MASTER PASSWORD ....

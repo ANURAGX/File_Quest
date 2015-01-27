@@ -54,11 +54,6 @@ public class SimpleRootAdapter extends BaseAdapter{
 	private ArrayList<Item> list;
 	private Item item;
 	private Context ctx;
-	
-	private static HashMap<String, Drawable> apkList;
-	private static HashMap<String, Bitmap> imgList;
-	private static HashMap<String, Bitmap> musicList;
-	private static HashMap<String, Bitmap> vidList;
 	private Bitmap image;
 	
 	public SimpleRootAdapter(Context ct , ArrayList<Item> objs) {
@@ -66,10 +61,6 @@ public class SimpleRootAdapter extends BaseAdapter{
 		list = objs;
 		ctx = ct;
 		inf = (LayoutInflater) ct.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		apkList = new HashMap<>();
-		imgList = new HashMap<>();
-		musicList = new HashMap<>();
-		vidList = new HashMap<>();
 	}
 	
 	@Override
@@ -178,20 +169,20 @@ public class SimpleRootAdapter extends BaseAdapter{
 		h.name.setText(item.getName());
 		h.icn.setImageDrawable(item.getIcon());
 		if(item.getType().equals("Image")){
-			image = imgList.get(item.getPath());
+			image = Constants.imgList.get(item.getPath());
 			if(image != null)
 				h.icn.setImageBitmap(image);
 			else
 				new LoadImage(h.icn, item).execute();
 		}else if(item.getType().equals("App")){
-			Drawable draw = apkList.get(item.getPath());
+			Drawable draw = Constants.apkList.get(item.getPath());
 			if(draw == null)
 				new LoadApkIcon(h.icn, item).execute();
 			else
 				h.icn.setImageDrawable(draw);
 			
 		}else if(item.getType().equals("Music")){
-			Bitmap music = musicList.get(item.getPath());
+			Bitmap music = Constants.musicList.get(item.getPath());
 			if(music !=null)
 				h.icn.setImageBitmap(music);
 			else
@@ -199,7 +190,7 @@ public class SimpleRootAdapter extends BaseAdapter{
 			
 		}
 		else if(item.getType().equals("Video")){
-			Bitmap vi = vidList.get(item.getPath());
+			Bitmap vi = Constants.vidList.get(item.getPath());
 			if(vi != null)
 				h.icn.setImageBitmap(vi);
 			else
@@ -246,7 +237,7 @@ public class SimpleRootAdapter extends BaseAdapter{
 		protected Void doInBackground(Void... arg0) {
 			// TODO Auto-generated method stub
 			try{
-				map = imgList.get(itm.getPath());
+				map = Constants.imgList.get(itm.getPath());
 				if(map == null){
 					long len_kb = itm.getFile().length() / 1024;
 					
@@ -268,13 +259,13 @@ public class SimpleRootAdapter extends BaseAdapter{
 						options.inPurgeable = true;
 						map = (Bitmap.createScaledBitmap(BitmapFactory.decodeFile(itm.getPath()),50,50,false));
 					}
-					imgList.put(itm.getPath(), map);
+					Constants.imgList.put(itm.getPath(), map);
 				}
 			}catch(OutOfMemoryError e){
 				map = null;
-				imgList.clear();
-				imgList = null;
-				imgList = new HashMap<String , Bitmap>();
+				Constants.imgList.clear();
+				Constants.imgList = null;
+				Constants.imgList = new HashMap<String , Bitmap>();
 			}catch(Exception e){
 				map = null;
 			}
@@ -313,13 +304,13 @@ public class SimpleRootAdapter extends BaseAdapter{
 				PackageInfo inf = ctx.getPackageManager().getPackageArchiveInfo(itm.getPath(),0);
 				inf.applicationInfo.publicSourceDir = itm.getPath();
 				dra = inf.applicationInfo.loadIcon(ctx.getPackageManager());
-				apkList.put(itm.getPath(), dra);
+				Constants.apkList.put(itm.getPath(), dra);
 				
 			}catch(OutOfMemoryError e){
 				dra = null;
-				apkList.clear();
-				apkList = null;
-				apkList = new HashMap<String , Drawable>();
+				Constants.apkList.clear();
+				Constants.apkList = null;
+				Constants.apkList = new HashMap<String , Drawable>();
 			}catch(Exception e){
 				dra = null;
 			}
@@ -359,12 +350,12 @@ public class SimpleRootAdapter extends BaseAdapter{
 				ret.setDataSource(ctx, Uri.parse(itm.getPath()));
 				map = BitmapFactory.decodeByteArray(ret.getEmbeddedPicture(), 0, ret.getEmbeddedPicture().length);
 				if(map!=null)
-					musicList.put(itm.getPath(), map);
+					Constants.musicList.put(itm.getPath(), map);
 			}catch(OutOfMemoryError e){
 				map = null;
-				musicList.clear();
-				musicList = null;
-				musicList = new HashMap<String , Bitmap>();
+				Constants.musicList.clear();
+				Constants.musicList = null;
+				Constants.musicList = new HashMap<String , Bitmap>();
 			}
 			catch(Exception e){
 				map = null;
@@ -401,12 +392,12 @@ public class SimpleRootAdapter extends BaseAdapter{
 			// TODO Auto-generated method stub
 			try{
 				thmb = ThumbnailUtils.createVideoThumbnail(itm.getPath(), Thumbnails.MICRO_KIND);
-				vidList.put(item.getPath(), thmb);
+				Constants.vidList.put(item.getPath(), thmb);
 			}catch(OutOfMemoryError e){
-				vidList.clear();
-				vidList = null;
+				Constants.vidList.clear();
+				Constants.vidList = null;
 				thmb = null;
-				vidList = new HashMap<>();
+				Constants.vidList = new HashMap<>();
 			}
 			return null;
 		}
