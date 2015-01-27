@@ -291,7 +291,13 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	    case 10:
 	    	if(resultCode == RESULT_OK){
 	    		String path = data.getStringExtra("gesture_path");
-	    		open_gesture_recognized_item(path , panel);
+	    		if(!Constants.db.isLocked(path)) // item is not locked....
+	    			open_gesture_recognized_item(path , panel);
+	    		
+	    		else //item is locked.... 
+	    			new MasterPassword(FileQuestHD.this, Constants.size.x*8/9,
+	    					new Item(new File(path), null , null , null), 
+	    					prefs , Constants.MODES.G_OPEN);
 	    	}
 	    	break;
 	    }
@@ -322,20 +328,20 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			case 3:
 				SdCardPanel.push_path(path);
 				FileQuestHD.notify_Title_Indicator(2, file.getName());
-					SdCardPanel.resetAdapter();
-					break;
+				SdCardPanel.resetAdapter();
+				break;
 			
 			case 1:
 				RootPanel.push_path(path);
 				FileQuestHD.notify_Title_Indicator(1, file.getName());
-					RootPanel.resetAdapter();
+				RootPanel.resetAdapter();
 				break;
 			
 			case 2:
 				SdCardPanel.push_path(path);
 				FileQuestHD.notify_Title_Indicator(panel, file.getName());
-					SdCardPanel.resetAdapter();
-					break;
+				SdCardPanel.resetAdapter();
+				break;
 		}
 		else
 			if(file.exists())
@@ -343,6 +349,14 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 						Constants.size.x*8/9);
 	}
 
+	/**
+	 * 
+	 * @return the current panel number....
+	 */
+	public static int getCurrentItem(){
+		return pager.getCurrentItem();
+	}
+	
 	/**
 	 * 
 	 * @param color
@@ -807,7 +821,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 						pager.setCurrentItem(2);
 						break;
 					}
-				}
+				}else if(Constants.activeMode == Constants.MODES.G_OPEN)
+					open_gesture_recognized_item(arg1.getStringExtra("g_open_path"), panel);
 			}
 			
 			else if(action.equalsIgnoreCase("FQ_DELETE")){

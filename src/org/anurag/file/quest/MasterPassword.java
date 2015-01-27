@@ -209,10 +209,15 @@ public class MasterPassword {
 						}
 						
 						//It is specific to G_open (gesture open for locked files)
-						if(Constants.activeMode == Constants.MODES.G_OPEN)
-							intent.putExtra("g_open_path", item.getPath());
-						ctx.sendBroadcast(intent);
+						if(Constants.activeMode == Constants.MODES.G_OPEN){
+							//intent.putExtra("g_open_path", item.getPath());
+							FileQuestHD.open_gesture_recognized_item(item.getPath(), FileQuestHD.getCurrentItem());
+						}	
+						else{
+							ctx.sendBroadcast(intent);
+						}
 						dialog.dismiss();
+						
 					}else if(!pass.getText().toString().equals(confirm.getText().toString())){
 						//passwords didn't matched... 
 						Toast.makeText(ctx, R.string.passworddidnotmatch, Toast.LENGTH_SHORT).show();
