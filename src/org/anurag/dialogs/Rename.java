@@ -26,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
+import org.anurag.file.quest.Utils;
 import org.anurag.fragments.FileGallery;
 import org.anurag.fragments.RootPanel;
 import org.anurag.fragments.SdCardPanel;
@@ -126,7 +127,26 @@ public class Rename {
 						name = getSimilarName(file.getParentFile() , name);
 					}
 					renamed = file.renameTo(new File(file.getParentFile(), name));
-					if(renamed){										
+					newFile = new File(file.getParentFile(), name);
+					
+					if(renamed){					
+					
+						//is user renames the locked or favorite item
+						//then after renaming them maintaining their
+						//status....
+						Item item = currentItem.get(0);
+						if(item.isFavItem()){
+							Constants.db.deleteFavItem(item.getPath());
+							Utils.buildFavItems(item, false);
+							Constants.db.insertNodeToFav(newFile.getAbsolutePath());
+							Utils.buildFavItems(item, true);
+						}
+						
+						if(item.isLocked()){
+							Constants.db.deleteLockedNode(item.getPath());
+							Constants.db.insertNodeToLock(newFile.getAbsolutePath());
+						}
+												
 						if(panel == 1){
 							RootPanel.notifyDataSetChanged();
 						}else if(panel == 2){
@@ -183,6 +203,25 @@ public class Rename {
 								
 								renamed = file.renameTo(newFile);
 							
+								if(renamed){
+									
+									//is user renames the locked or favorite item
+									//then after renaming them maintaining their
+									//status....
+									
+									Item item = currentItem.get(i);
+									if(item.isFavItem()){
+										Constants.db.deleteFavItem(item.getPath());
+										Constants.db.insertNodeToFav(newFile.getAbsolutePath());
+										Utils.rebuildFavList();
+									}
+									
+									if(item.isLocked()){
+										Constants.db.deleteLockedNode(item.getPath());
+										Constants.db.insertNodeToLock(newFile.getAbsolutePath());
+									}
+								}					
+								
 							}
 							return null;
 						}

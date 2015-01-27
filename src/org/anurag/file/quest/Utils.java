@@ -20,11 +20,12 @@
 package org.anurag.file.quest;
 
 import java.io.File;
-
 import java.io.FileFilter;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.anurag.fragments.FileGallery;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -468,7 +469,7 @@ public class Utils {
 				//sqlite...
 				//in any case I m syncing thread with main UI....
 				synchronized(lock){
-					while(FileQuest.elementInFocus){
+					while(FileGallery.isGalleryOpened()){
 						try {
 							lock.wait(2000);
 						} catch (InterruptedException e) {
@@ -526,7 +527,7 @@ public class Utils {
 						//category....
 						//synchronizing the thread with main ui....
 						synchronized(lock){
-							while(FileQuest.elementInFocus){
+							while(FileGallery.isGalleryOpened()){
 								try {
 									lock.wait(2000);
 								} catch (InterruptedException e) {
@@ -860,10 +861,6 @@ public class Utils {
 	 * item was added or removed from DB..... 
 	 */
 	public static void buildFavItems(Item itm , boolean add){
-		//if true no need to call the function...
-		//as it will be reloaded in restart function....
-		if(Utils.update_Needed)
-				return;
 			
 		//checking whether file scanning is running or not...
 		//if running,then waiting till it finishes....
@@ -925,4 +922,65 @@ public class Utils {
 		update_fav();
 	}
 	
+	/**
+	 * prepares the list of favorite items from db....
+	 */
+	public static void rebuildFavList(){
+		fav = new ConcurrentHashMap<>();
+		favKey = new ConcurrentHashMap<>();
+		folderCount = 0;
+		fileCount = 0;
+		favCounter = 0;
+		Cursor cursor = Constants.db.getReadableDatabase().query("FAVITEMS",
+				null, 
+				"DUP = 0", 
+				null, 
+				null, 
+				null, 
+				null);
+		while(cursor.moveToNext()){
+			
+			//waiting here till user navigates back to file gallery from any selected
+			//category....
+			//synchronizing the thread with main ui....
+			
+			//it is almost impossible that thread will cause any issue while reading from
+			//sqlite...
+			//in any case I m syncing thread with main UI....
+			
+			
+			/**synchronized(lock){
+				while(FileGallery.isGalleryOpened()){
+					try {
+						lock.wait(2000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}*/
+			
+			File file = new File(cursor.getString(0));
+			if(file.exists()){
+				//file exists,so proceed....
+				if(file.isDirectory()){
+					folderCount++;
+					String it = null;
+					try{
+						it = file.list().length +" "+ Items;
+					}catch(Exception e){
+						it = ctx.getString(R.string.rootd);
+					}
+					Item itm = new Item(file, Constants.FOLDER_IMAGE , folderType, it);
+					fav.put(file.getPath(), itm);
+					favKey.put(""+favCounter++, file.getPath());
+				}else
+					makeIcon(file , true , handler);
+			}else if(!file.exists()){
+				//item has been deleted,so delete the item from the db also....
+				Constants.db.deleteFavItem(cursor.getString(0));
+			}
+		}
+		cursor.close();
+	}
 }
