@@ -87,7 +87,7 @@ public class AddGesture extends ActionBarActivity{
 		gest_list = getLs();
 		len = gest_list.size();
 		
-		fName.setText(gest_list.get(i++).getName().toUpperCase());
+		fName.setText(gest_list.get(i).getName().toUpperCase());
 		
 		final Button save = (Button) findViewById(R.id.done);
 		save.setOnClickListener(new View.OnClickListener() {
@@ -100,23 +100,23 @@ public class AddGesture extends ActionBarActivity{
 					return;
 				}
 				
+				File file = new File(Environment.getExternalStorageDirectory().getPath()+"/File Quest");
+				if(!file.exists())
+					file.mkdirs();
+				file = new File(file,".gesture");
+				if(!file.exists())
+					try {
+						file.createNewFile();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				library = GestureLibraries.fromFile(file.getAbsolutePath());
+				library.load();
+				library.addGesture(gest_list.get(i++).getPath(), pattern);
+				library.save();
 				if(len > i){
-					File file = new File(Environment.getExternalStorageDirectory().getPath()+"/File Quest");
-					if(!file.exists())
-						file.mkdirs();
-					file = new File(file,".gesture");
-					if(!file.exists())
-						try {
-							file.createNewFile();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					library = GestureLibraries.fromFile(file.getAbsolutePath());
-					library.load();
-					library.addGesture(gest_list.get(i).getPath(), pattern);
-					library.save();
-					fName.setText(gest_list.get(i++).getName().toUpperCase());
+					fName.setText(gest_list.get(i).getName().toUpperCase());
 					gesture.clear(true);
 					Toast.makeText(AddGesture.this, getResources().getString(R.string.gesturesaved), Toast.LENGTH_SHORT).show();
 				}

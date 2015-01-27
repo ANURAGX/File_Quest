@@ -310,13 +310,13 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			case 0:
 				if(file.canRead()){
 					SdCardPanel.push_path(path);
-						FileQuestHD.notify_Title_Indicator(2, file.getName());
-						SdCardPanel.resetAdapter();
-					}else{
-						RootPanel.push_path(path);
-						FileQuestHD.notify_Title_Indicator(1, file.getName());
-						RootPanel.resetAdapter();
-					}    						
+					FileQuestHD.notify_Title_Indicator(2, file.getName());
+					SdCardPanel.resetAdapter();
+				}else{
+					RootPanel.push_path(path);
+					FileQuestHD.notify_Title_Indicator(1, file.getName());
+					RootPanel.resetAdapter();
+				}    						
 				break;
 				
 			case 3:
@@ -759,7 +759,9 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				}else if(panel == 0){
 					FileGallery.clear_selected_items();
 				}
+				
 				invalidateOptionsMenu();
+				pager.setCurrentItem(panel);
 				
 				//setting up action bar when long click is inactive....
 				action_bar.setTitle(R.string.app_name);
