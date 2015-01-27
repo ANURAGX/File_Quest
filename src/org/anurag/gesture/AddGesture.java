@@ -21,11 +21,16 @@ package org.anurag.gesture;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.SystemBarTintManager;
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
+import org.anurag.fragments.FileGallery;
+import org.anurag.fragments.RootPanel;
+import org.anurag.fragments.SdCardPanel;
 
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
@@ -41,6 +46,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -55,14 +61,20 @@ public class AddGesture extends ActionBarActivity{
 	private GestureLibrary library;
 	private Toolbar bar;
 	private boolean saved;
+	private TextView fName;
+	private ArrayList<Item> gest_list;
+	int i;
+	int len;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		saved = false;
 		setContentView(R.layout.create_gesture);
+		i = 0;
+		String title = getResources().getString(R.string.create_gesture);
 		
-		String title = getResources().getString(R.string.drawgesture);
+		fName = (TextView) findViewById(R.id.fName);
 		
 		gesture = (GestureOverlayView) findViewById(R.id.gestures_overlay);
 		bar = (Toolbar) findViewById(R.id.toolbar_top);
@@ -71,6 +83,11 @@ public class AddGesture extends ActionBarActivity{
 		getSupportActionBar().setTitle("  " + title);
 		getSupportActionBar().setIcon(R.drawable.gesture);
 		
+		gest_list = new ArrayList<>();
+		gest_list = getLs();
+		len = gest_list.size();
+		
+		fName.setText(gest_list.get(i++).getName().toUpperCase());
 		
 		final Button save = (Button) findViewById(R.id.done);
 		save.setOnClickListener(new View.OnClickListener() {
@@ -83,23 +100,30 @@ public class AddGesture extends ActionBarActivity{
 					return;
 				}
 				
-				File file = new File(Environment.getExternalStorageDirectory().getPath()+"/File Quest");
-				if(!file.exists())
-					file.mkdirs();
-				file = new File(file,".gesture");
-				if(!file.exists())
-					try {
-						file.createNewFile();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				library = GestureLibraries.fromFile(file.getAbsolutePath());
-				library.load();
-				library.addGesture("path", pattern);
-				library.save();
-				Toast.makeText(AddGesture.this, getResources().getString(R.string.gesturesaved), Toast.LENGTH_SHORT).show();
-				AddGesture.this.finish();
+				if(len > i){
+					File file = new File(Environment.getExternalStorageDirectory().getPath()+"/File Quest");
+					if(!file.exists())
+						file.mkdirs();
+					file = new File(file,".gesture");
+					if(!file.exists())
+						try {
+							file.createNewFile();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					library = GestureLibraries.fromFile(file.getAbsolutePath());
+					library.load();
+					library.addGesture(gest_list.get(i).getPath(), pattern);
+					library.save();
+					fName.setText(gest_list.get(i++).getName().toUpperCase());
+					gesture.clear(true);
+					Toast.makeText(AddGesture.this, getResources().getString(R.string.gesturesaved), Toast.LENGTH_SHORT).show();
+				}
+				else{
+					Toast.makeText(AddGesture.this, getResources().getString(R.string.gesturesaved), Toast.LENGTH_SHORT).show();
+					AddGesture.this.finish();
+				}
 			}
 		}); 
 		
@@ -194,6 +218,33 @@ public class AddGesture extends ActionBarActivity{
 		if(resId > 0)
 			res = getResources().getDimensionPixelSize(resId);
 		return res;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private ArrayList<Item> getLs(){
+		if(FileGallery.ITEMS != null){
+			int len = FileGallery.lists.size();
+			for(int i = 0 ; i < len ; ++i)
+				if(FileGallery.ITEMS[i] == 1)
+					gest_list.add(FileGallery.lists.get(FileGallery.keys.get(""+i)));
+		}
+		
+		if(RootPanel.ITEMS != null){
+			int len = RootPanel.get_selected_items().size();
+			for(int i = 0 ; i < len ; ++i)
+				gest_list.add(RootPanel.get_selected_items().get(i));
+		}
+		
+		if(SdCardPanel.ITEMS != null){
+			int len = SdCardPanel.get_selected_items().size();
+			for(int i = 0 ; i < len ; ++i)
+				gest_list.add(SdCardPanel.get_selected_items().get(i));
+		}
+		
+		return gest_list;
 	}
 	
 }

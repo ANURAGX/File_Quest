@@ -122,7 +122,8 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
-			
+			SdCardPanel.ITEMS = null;
+			SdCardPanel.counter = 0;
 		}		
 		
 		@Override
@@ -354,4 +355,11 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 				null, null, null);
 	}
 	
+	/**
+	 * 
+	 * @param path is puhsed to top of stacked indicating top dir....
+	 */
+	public static void push_path(String path){
+		manager.nStack.push(path);
+	}
 }

@@ -31,6 +31,18 @@
     	android:minHeight="?android:attr/actionBarSize"
     	android:background="?attr/colorPrimary" />
     
+    <TextView 
+        android:textSize="18sp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:textStyle="bold"
+        android:id="@+id/fName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/semi_white30"
+        android:textColor="#FFFFFFFF"/>
+    
     <android.gesture.GestureOverlayView
         android:id="@+id/gestures_overlay"
         android:layout_width="match_parent"
@@ -40,6 +52,7 @@
         android:gestureStrokeType="multiple" />
 
     <LinearLayout
+        android:id="@+id/btns"
         android:gravity="center"
         android:padding="5dp"
         android:layout_width="match_parent"

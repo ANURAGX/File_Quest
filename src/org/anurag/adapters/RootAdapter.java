@@ -180,7 +180,7 @@ public class RootAdapter extends BaseAdapter{
 		h.icon.setImageDrawable(item.getIcon());
 		if(item.getType().equals("Image")){
 			image = Constants.imgList.get(item.getPath());
-			if(image == null)
+			if(image != null)
 				h.icon.setImageBitmap(image);
 			else
 				new LoadImage(h.icon, item).execute();

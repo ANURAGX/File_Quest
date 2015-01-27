@@ -29,6 +29,8 @@ import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.Utils;
 import org.anurag.fragments.FileGallery;
+import org.anurag.fragments.RootPanel;
+import org.anurag.fragments.SdCardPanel;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -155,6 +157,15 @@ public class DeleteFiles{
 						}catch(Exception e){
 							mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(Constants.PATH))));
 						}
+						
+						RootPanel.notifyDataSetChanged();
+						SdCardPanel.notifyDataSetChanged();
+						try{
+							FileGallery.clear_selected_items();
+						}catch(Exception e){}
+						
+						Utils.updateUI();
+						
 						mContext.sendBroadcast(new Intent("FQ_DELETE"));
 						Toast.makeText(mContext, ctx.getString(R.string.deleted),Toast.LENGTH_SHORT).show();
 						dialog.dismiss();	

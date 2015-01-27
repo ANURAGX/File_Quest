@@ -167,4 +167,6 @@
     <string name="failed_to_rename">Failed to rename the item</string>
     <string name="rename">Rename</string>
     <string name="enter_valid_name">Enter name properly</string>
+    <string name="create_gesture">Create Gesture</string>
+    <string name="opening">Opening item....</string>
 </resources>

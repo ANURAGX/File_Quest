@@ -206,7 +206,8 @@ public class RootPanel extends Fragment{
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
-			
+			RootPanel.ITEMS = null;
+			RootPanel.counter = 0;
 		}		
 		
 		@Override
@@ -350,4 +351,11 @@ public class RootPanel extends Fragment{
 				null, null, null);
 	}
 	
+	/**
+	 * 
+	 * @param path is puhsed to top of stacked indicating top dir....
+	 */
+	public static void push_path(String path){
+		manager.nStack.push(path);
+	}
 }

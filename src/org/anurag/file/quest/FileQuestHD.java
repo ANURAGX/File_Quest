@@ -19,6 +19,7 @@
 
 package org.anurag.file.quest;
 
+import java.io.File;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -32,6 +33,7 @@ import org.anurag.fragments.FileGallery;
 import org.anurag.fragments.RootPanel;
 import org.anurag.fragments.SdCardPanel;
 import org.anurag.gesture.AddGesture;
+import org.anurag.gesture.G_Open;
 import org.anurag.settings.Settings;
 
 import android.app.NotificationManager;
@@ -248,6 +250,12 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 					break;
 				}
 			break;
+			
+		case R.id.action_gesture:
+			//launching activity to recognize the gesture....
+			Intent innt = new Intent(FileQuestHD.this , G_Open.class);
+			startActivityForResult(innt , 10);
+			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -273,6 +281,68 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		register_receiver();
 	}
 	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		int panel = pager.getCurrentItem();
+		
+	    switch(requestCode){
+	    case 10:
+	    	if(resultCode == RESULT_OK){
+	    		String path = data.getStringExtra("gesture_path");
+	    		open_gesture_recognized_item(path , panel);
+	    	}
+	    	break;
+	    }
+	}
+	
+	/**
+	 * 
+	 * @param path
+	 * @param panel
+	 */
+	public static void open_gesture_recognized_item(String path, int panel) {
+		// TODO Auto-generated method stub
+		File file = new File(path);
+		if(file.isDirectory() && file.exists())
+			switch(panel){
+			case 0:
+				if(file.canRead()){
+					SdCardPanel.push_path(path);
+						FileQuestHD.notify_Title_Indicator(2, file.getName());
+						SdCardPanel.resetAdapter();
+					}else{
+						RootPanel.push_path(path);
+						FileQuestHD.notify_Title_Indicator(1, file.getName());
+						RootPanel.resetAdapter();
+					}    						
+				break;
+				
+			case 3:
+				SdCardPanel.push_path(path);
+				FileQuestHD.notify_Title_Indicator(2, file.getName());
+					SdCardPanel.resetAdapter();
+					break;
+			
+			case 1:
+				RootPanel.push_path(path);
+				FileQuestHD.notify_Title_Indicator(1, file.getName());
+					RootPanel.resetAdapter();
+				break;
+			
+			case 2:
+				SdCardPanel.push_path(path);
+				FileQuestHD.notify_Title_Indicator(panel, file.getName());
+					SdCardPanel.resetAdapter();
+					break;
+		}
+		else
+			if(file.exists())
+				new OpenFileDialog(Constants.ctx, Uri.parse(path) ,
+						Constants.size.x*8/9);
+	}
+
 	/**
 	 * 
 	 * @param color
@@ -379,6 +449,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	public static void notify_Title_Indicator(int position , String title){
 		PagerAdapters.setTitles(position, title);
 		indicator.notifyDataSetChanged();
+		pager.setCurrentItem(position);
 	}
 	
 	/**
@@ -738,30 +809,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			}
 			
 			else if(action.equalsIgnoreCase("FQ_DELETE")){
-
 				Constants.LONG_CLICK = false;
-
-				try{
-					FileGallery.clear_selected_items();
-				}catch(Exception e){
-					
-				}
-				RootPanel.clear_selected_items();
-				SdCardPanel.clear_selected_items();
-				AppStore.clear_selected_items();
-				
 				invalidateOptionsMenu();
-				Utils.updateUI();
-				
-				switch(panel){
-				case 1:
-					RootPanel.notifyDataSetChanged();
-					break;
-					
-				case 2:
-					SdCardPanel.notifyDataSetChanged();
-					break;
-				}
 			}			
 		}		
 	}

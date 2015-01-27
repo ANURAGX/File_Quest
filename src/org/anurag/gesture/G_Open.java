@@ -41,8 +41,8 @@ import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class G_Open extends ActionBarActivity{
 	
@@ -80,10 +80,8 @@ public class G_Open extends ActionBarActivity{
 		library = GestureLibraries.fromFile(file);
 		library.load();
 		
-		Button save = (Button) findViewById(R.id.done);
-		save.setVisibility(View.GONE);
-		Button discard = (Button) findViewById(R.id.discard);
-		discard.setVisibility(View.GONE);
+		LinearLayout btns = (LinearLayout) findViewById(R.id.btns);
+		btns.setVisibility(View.GONE);
 		
 		gesture.addOnGesturePerformedListener(new GestureOverlayView.OnGesturePerformedListener() {
 			@Override
@@ -95,7 +93,9 @@ public class G_Open extends ActionBarActivity{
 						String name = list.get(0).name;
 						Intent intent = new Intent("FQ_G_OPEN");
 						intent.putExtra("gesture_path", name);
-						sendBroadcast(intent);
+						setResult(RESULT_OK, intent);
+						Toast.makeText(G_Open.this, R.string.opening, Toast.LENGTH_SHORT).show();
+						G_Open.this.finish();
 					}					
 				}
 			}
@@ -152,8 +152,4 @@ public class G_Open extends ActionBarActivity{
 			res = getResources().getDimensionPixelSize(resId);
 		return res;
 	}
-	
-	
-	
-
 }
