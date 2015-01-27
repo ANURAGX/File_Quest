@@ -25,35 +25,46 @@ import java.util.ArrayList;
 
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
+import org.anurag.file.quest.SystemBarTintManager;
+import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
 import android.gesture.Prediction;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
-public class G_Open {
+public class G_Open extends ActionBarActivity{
 	
-	GestureOverlayView gesture;
-	GestureLibrary library;
 	
-	public G_Open(final Context context,int width,int height) {
-		// TODO Auto-generated constructor stub
-		final Dialog dialog = new Dialog(context, Constants.DIALOG_STYLE);
-		dialog.setContentView(R.layout.create_gesture);
+	private GestureOverlayView gesture;
+	private GestureLibrary library;
+	private Toolbar bar;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.create_gesture);
 		
-		gesture = (GestureOverlayView)dialog.findViewById(R.id.gestures_overlay);
-		dialog.setCancelable(true);
-		dialog.getWindow().getAttributes().width = width;
-		dialog.getWindow().getAttributes().height = height;		
-		dialog.getWindow().getAttributes().alpha = 0.85f;
-		dialog.show();
+		String title = getResources().getString(R.string.drawgesture);
+		bar = (Toolbar) findViewById(R.id.toolbar_top);
+		setSupportActionBar(bar);
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Constants.COLOR_STYLE));
+		getSupportActionBar().setTitle("  " + title);
+		getSupportActionBar().setIcon(R.drawable.gesture);
+		
+		gesture = (GestureOverlayView) findViewById(R.id.gestures_overlay);
 		
 		File file = new File(Environment.getExternalStorageDirectory().getPath()+"/File Quest");
 		if(!file.exists())
@@ -68,10 +79,12 @@ public class G_Open {
 			}
 		library = GestureLibraries.fromFile(file);
 		library.load();
-		Button save = (Button)dialog.findViewById(R.id.done);
+		
+		Button save = (Button) findViewById(R.id.done);
 		save.setVisibility(View.GONE);
-		Button discard = (Button)dialog.findViewById(R.id.discard);
+		Button discard = (Button) findViewById(R.id.discard);
 		discard.setVisibility(View.GONE);
+		
 		gesture.addOnGesturePerformedListener(new GestureOverlayView.OnGesturePerformedListener() {
 			@Override
 			public void onGesturePerformed(GestureOverlayView arg0, Gesture arg1) {
@@ -82,12 +95,65 @@ public class G_Open {
 						String name = list.get(0).name;
 						Intent intent = new Intent("FQ_G_OPEN");
 						intent.putExtra("gesture_path", name);
-						context.sendBroadcast(intent);
-						dialog.dismiss();
+						sendBroadcast(intent);
 					}					
 				}
 			}
 		});
 	}
+
+	@Override
+	public void onResume(){
+		super.onResume();
+		init_system_ui();
+	}
+	
+	/**
+	 * restyles the system UI like status bar or navigation bar if present....
+	 */
+	private void init_system_ui() {
+		// TODO Auto-generated method stub
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+			return;
+		SystemBarTintManager tint = new SystemBarTintManager(G_Open.this);
+		tint.setStatusBarTintEnabled(true);
+		tint.setStatusBarTintColor(Constants.COLOR_STYLE);
+		SystemBarConfig conf = tint.getConfig();
+		boolean hasNavBar = conf.hasNavigtionBar();
+		if(hasNavBar){
+			tint.setNavigationBarTintEnabled(true);
+			tint.setNavigationBarTintColor(Constants.COLOR_STYLE);
+		}
+		LinearLayout main = (LinearLayout) findViewById(R.id.main);
+		main.setBackgroundColor(Constants.COLOR_STYLE);
+		main.setPadding(0, getStatusBarHeight(), 0, hasNavBar ? getNavigationBarHeight() :0);
+	}
+	
+	/**
+	 * 
+	 * @return height of status bar....
+	 */
+	private int getStatusBarHeight(){
+		int res = 0;
+		int resId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+		if(resId > 0)
+			res = getResources().getDimensionPixelSize(resId);
+		return res;
+	}
+	
+	/**
+	 * 
+	 * @return the height of navigation bar....
+	 */
+	private int getNavigationBarHeight(){
+		int res = 0;
+		int resId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+		if(resId > 0)
+			res = getResources().getDimensionPixelSize(resId);
+		return res;
+	}
+	
+	
+	
 
 }
