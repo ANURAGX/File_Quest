@@ -50,7 +50,7 @@
     <string name="action_zip">Compress</string>
     <string name="action_share">Share</string>
     <string name="action_properties">Properties</string>
-    
+    <string name="action_queued">Queued Task</string>
     
     <string-array name="settings_array">
         <item>Listview animation</item>

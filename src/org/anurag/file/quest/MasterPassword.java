@@ -19,12 +19,18 @@
 
 package org.anurag.file.quest;
 
+import org.anurag.dialogs.Rename;
+import org.anurag.fragments.FileGallery;
+import org.anurag.fragments.RootPanel;
+import org.anurag.fragments.SdCardPanel;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -98,29 +104,29 @@ public class MasterPassword {
 			
 			TextView msg = (TextView)dialog.findViewById(R.id.Message);
 			if(MODE == Constants.MODES.ARCHIVE)
-				msg.setText(ctx.getResources().getString(R.string.arcpasswd));
+				msg.setText((R.string.arcpasswd));
 			else if(MODE == Constants.MODES.COPY)
-				msg.setText(ctx.getResources().getString(R.string.copypasswd));
+				msg.setText((R.string.copypasswd));
 			else if(MODE == Constants.MODES.DELETE)
-				msg.setText(ctx.getResources().getString(R.string.delpasswd));
+				msg.setText((R.string.delpasswd));
 			else if(MODE == Constants.MODES.G_OPEN)
-				msg.setText(ctx.getResources().getString(R.string.openpasswd));
+				msg.setText((R.string.openpasswd));
 			else if(MODE == Constants.MODES.OPEN)
-				msg.setText(ctx.getResources().getString(R.string.openpasswd));
+				msg.setText((R.string.openpasswd));
 			else if(MODE == Constants.MODES.PASTEINTO)
-				msg.setText(ctx.getResources().getString(R.string.pasteppasswd));
+				msg.setText((R.string.pasteppasswd));
 			else if(MODE == Constants.MODES.RENAME)
-				msg.setText(ctx.getResources().getString(R.string.renamepasswd));
+				msg.setText((R.string.renamepasswd));
 			else if(MODE == Constants.MODES.SEND)
-				msg.setText(ctx.getResources().getString(R.string.sendpasswd));
+				msg.setText((R.string.sendpasswd));
 			else if(MODE == Constants.MODES.UNLOCK_ALL)
-				msg.setText(ctx.getResources().getString(R.string.unlockpasswd));
+				msg.setText((R.string.unlockpasswd));
 			else if(MODE == Constants.MODES.DISABLE_NEXT_RESTART)
-				msg.setText(ctx.getString(R.string.dis_next_restart));
+				msg.setText((R.string.dis_next_restart));
 			else if(MODE == Constants.MODES.HOME)
-				msg.setText(ctx.getResources().getString(R.string.homepasswd));
+				msg.setText((R.string.homepasswd));
 			else if(MODE == Constants.MODES.DEFAULT)
-				msg.setText(ctx.getResources().getString(R.string.unlockpasswd));
+				msg.setText((R.string.unlockpasswd));
 			confirm.setVisibility(View.GONE);
 			TextView con = (TextView)dialog.findViewById(R.id.currentFile);
 			con.setVisibility(View.GONE);
@@ -210,14 +216,48 @@ public class MasterPassword {
 						
 						//It is specific to G_open (gesture open for locked files)
 						if(Constants.activeMode == Constants.MODES.G_OPEN){
-							//intent.putExtra("g_open_path", item.getPath());
 							FileQuestHD.open_gesture_recognized_item(item.getPath(), FileQuestHD.getCurrentItem());
-						}	
+						}
+						
+						//AFTER PASSWORD IS VERIFIED RENAMING THE LIST OF FILES....
+						else if(Constants.activeMode == Constants.MODES.RENAME){
+							switch(FileQuestHD.getCurrentItem()){
+							
+							case 0:
+								new Rename(Constants.ctx, FileGallery.get_selected_items(), 0);
+								break;
+								
+							case 1:
+								new Rename(Constants.ctx, RootPanel.get_selected_items() , 1);
+								break;
+								
+							case 2:
+								new Rename(Constants.ctx, SdCardPanel.get_selected_items(), 2);
+								break;
+							}
+						}
+						
+						//opening the locked item after password verification....
+						else if(Constants.activeMode == Constants.MODES.OPEN){
+							switch(FileQuestHD.getCurrentItem()){
+							case 0:
+								FileGallery.open_locked_item();
+								break;
+								
+							case 1:
+								RootPanel.open_locked_item();
+								break;
+								
+							case 2:
+								SdCardPanel.open_locked_item();
+							}
+						}
 						else{
 							ctx.sendBroadcast(intent);
 						}
-						dialog.dismiss();
+						hide_keyboard(ctx , pass);
 						
+						dialog.dismiss();
 					}else if(!pass.getText().toString().equals(confirm.getText().toString())){
 						//passwords didn't matched... 
 						Toast.makeText(ctx, R.string.passworddidnotmatch, Toast.LENGTH_SHORT).show();
@@ -225,6 +265,7 @@ public class MasterPassword {
 				}
 			}
 		});		
+		
 		dialog.show();
 		if(Constants.disable_lock)
 			lock_disabled(ctx, item, dialog, MODE);
@@ -260,5 +301,15 @@ public class MasterPassword {
 			intent.putExtra("g_open_path", item.getPath());
 		ctx.sendBroadcast(intent);
 		dialog.dismiss();
+	}
+	
+	/**
+	 * this function  hides the keyboard....
+	 * @param ctx
+	 */
+	private void hide_keyboard(Context ctx , EditText getName) {
+		// TODO Auto-generated method stub
+		InputMethodManager input = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
+		input.hideSoftInputFromWindow(getName.getWindowToken(), 0);
 	}
 }

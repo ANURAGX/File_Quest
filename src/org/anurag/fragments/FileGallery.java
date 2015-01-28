@@ -20,6 +20,7 @@
 package org.anurag.fragments;
 
 
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.anurag.adapters.FileGalleryAdapter;
@@ -65,6 +66,8 @@ public class FileGallery extends Fragment implements OnClickListener{
 	private int id;
 	private static JazzyHelper list_anim_helper;
 	private static Item item;
+	private static boolean isListHasLockedItem;
+	
 	public FileGallery() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
@@ -386,6 +389,35 @@ public class FileGallery extends Fragment implements OnClickListener{
 	public static void change_list_anim(){
 		list_anim_helper.setTransitionEffect(Constants.LIST_ANIM);
 		ls.setOnScrollListener(list_anim_helper);
+	}
+	
+	/**
+	 * 
+	 * @return the list of selected items by long press..... 
+	 */
+	public static ArrayList<Item> get_selected_items(){
+		FileGallery.isListHasLockedItem = false;
+		ArrayList<Item> lss = new ArrayList<>();
+		int len = lists.size();
+		for(int i = 0 ; i < len ; ++i)
+			if(FileGallery.ITEMS[i] == 1){
+				Item im = lists.get(keys.get(""+i));
+					if(im.isLocked()){
+						FileGallery.isListHasLockedItem = true;
+						//break;
+					}	
+				lss.add(im);	
+			}	
+		return lss;
+	}
+	
+	/**
+	 * 
+	 * @return true if items selected via long click contains
+	 * a locked item....
+	 */
+	public static boolean does_list_has_locked_item(){
+		return isListHasLockedItem;
 	}
 	
 }

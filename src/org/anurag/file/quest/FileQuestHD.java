@@ -21,6 +21,7 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.anurag.adapters.PagerAdapters;
@@ -185,8 +186,10 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		MenuInflater inf = getMenuInflater();
-		if(!Constants.LONG_CLICK)
+		if(!Constants.LONG_CLICK){
 			inf.inflate(R.menu.main_actionbar_menu, menu);
+			menu.getItem(0).setVisible(false);
+		}	
 		else
 			inf.inflate(R.menu.long_clk_menu_hd, menu);
 		return true;
@@ -239,14 +242,43 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			//renaming the file...
 			if(Constants.LONG_CLICK)
 				switch(panel){
+				
 				case 0:
-					new Rename(FileQuestHD.this, FileGallery.lists, FileGallery.keys , panel);
+					//first checking the locked status of files to be renamed....
+					{
+						ArrayList<Item> re_ls = FileGallery.get_selected_items();
+						if(!FileGallery.does_list_has_locked_item())
+							new Rename(FileQuestHD.this, re_ls , panel);
+						else
+							new MasterPassword(FileQuestHD.this, Constants.size.x*8/9, null ,
+									prefs, Constants.MODES.RENAME);
+					}
+					
 					break;
+				
 				case 1:
-					new Rename(FileQuestHD.this, RootPanel.get_selected_items(), panel);
+					//first checking the locked status of files to be renamed....
+					{
+						ArrayList<Item> re_ls = RootPanel.get_selected_items();
+						if(!RootPanel.does_list_has_locked_item())
+							new Rename(FileQuestHD.this, re_ls, panel);
+						else
+							new MasterPassword(FileQuestHD.this, Constants.size.x*8/9, null ,
+									prefs, Constants.MODES.RENAME);
+					}
 					break;
+				
 				case 2:
-					new Rename(FileQuestHD.this, SdCardPanel.get_selected_items(), panel);
+					//first checking the locked status of files to be renamed....
+					{
+						ArrayList<Item> re_ls = SdCardPanel.get_selected_items();
+						if(!SdCardPanel.does_list_has_locked_item())
+							new Rename(FileQuestHD.this, re_ls, panel);
+						else
+							new MasterPassword(FileQuestHD.this, Constants.size.x*8/9, null, 
+									prefs, Constants.MODES.RENAME);
+							
+					}
 					break;
 				}
 			break;
@@ -803,28 +835,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				AppStore.change_list_anim();
 			}			
 			
-			else if(action.equals("FQ_FILE_LOCKED_OR_UNLOCKED")){
-				if(Constants.activeMode == Constants.MODES.OPEN){
-					//master password is verified and open the selected
-					//item for user....
-					switch(panel){
-					case 0:
-						FileGallery.open_locked_item();
-						pager.setCurrentItem(0);
-						break;
-					case 1:
-						RootPanel.open_locked_item();
-						pager.setCurrentItem(1);
-						break;
-					case 2:
-						SdCardPanel.open_locked_item();
-						pager.setCurrentItem(2);
-						break;
-					}
-				}else if(Constants.activeMode == Constants.MODES.G_OPEN)
-					open_gesture_recognized_item(arg1.getStringExtra("g_open_path"), panel);
-			}
-			
 			else if(action.equalsIgnoreCase("FQ_DELETE")){
 				Constants.LONG_CLICK = false;
 				invalidateOptionsMenu();
@@ -841,7 +851,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		filter.addAction("inflate_normal_menu");
 		filter.addAction("update_action_bar_long_click");
 		filter.addAction("list_view_anim_changed");
-		filter.addAction("FQ_FILE_LOCKED_OR_UNLOCKED");
 		filter.addAction("FQ_DELETE");
 		this.registerReceiver(broadcasts, filter);
 	}

@@ -61,6 +61,7 @@ public class RootPanel extends Fragment{
 	private static BaseAdapter adapter;
 	private static Item item;
 	private static JazzyHelper list_anim_helper;
+	private static boolean isListHasLockedItem;
 	
 	public RootPanel() {
 		// TODO Auto-generated constructor stub
@@ -174,7 +175,7 @@ public class RootPanel extends Fragment{
 		if(item.isDirectory()){
 			//selecting a folder....
 			manager.pushPath(item.getPath());
-			FileQuestHD.notify_Title_Indicator(2, item.getName());
+			FileQuestHD.notify_Title_Indicator(1, item.getName());
 			load.execute();
 		}else{
 			//selecting a file....
@@ -334,13 +335,30 @@ public class RootPanel extends Fragment{
 	 * @return the list of selected items by long press..... 
 	 */
 	public static ArrayList<Item> get_selected_items(){
+		RootPanel.isListHasLockedItem = false;
 		ArrayList<Item> lss = new ArrayList<>();
 		int len = adapter_list.size();
 		for(int i = 0 ; i < len ; ++i)
-			if(ITEMS[i] == 1)
-				lss.add(adapter_list.get(i));
+			if(RootPanel.ITEMS[i] == 1){
+				Item im = adapter_list.get(i);
+					if(im.isLocked()){
+						RootPanel.isListHasLockedItem = true;
+					//break;
+				}	
+				lss.add(im);	
+			}	
 		return lss;
 	}
+	
+	/**
+	 * 
+	 * @return true if items selected via long click contains
+	 * a locked item....
+	 */
+	public static boolean does_list_has_locked_item(){
+		return isListHasLockedItem;
+	}
+	
 	
 	/**
 	 * 

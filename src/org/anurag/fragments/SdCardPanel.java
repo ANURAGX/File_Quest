@@ -65,6 +65,8 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	private static BaseAdapter adapter;
 	private static Item item;
 	private static JazzyHelper list_anim_helper;
+	private static boolean isListHasLockedItem;
+	
 	
 	public SdCardPanel() {
 		// TODO Auto-generated constructor stub
@@ -124,6 +126,7 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 			super.onPreExecute();
 			SdCardPanel.ITEMS = null;
 			SdCardPanel.counter = 0;
+			//SdCardPanel.isListHasLockedItem = false;			
 		}		
 		
 		@Override
@@ -212,7 +215,7 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	public static void clear_selected_items(){
 		list.setAdapter(adapter);		
 		SdCardPanel.ITEMS = null;
-		counter = 0;
+		SdCardPanel.counter = 0;
 	}
 	
 	/**
@@ -270,6 +273,9 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 		// TODO Auto-generated method stub
+
+		item = adapter_list.get(position);
+		
 		if(Constants.LONG_CLICK){
 			
 			if(ITEMS[position] != 1){
@@ -285,11 +291,10 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 				else
 					getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 			}
-			
+			if(item.isLocked())
+				isListHasLockedItem = true;
 			return;					
 		}
-		
-		item = adapter_list.get(position);
 		
 		if(item.isLocked()){
 			new MasterPassword(getActivity(), Constants.size.x*8/9, item, null, Constants.MODES.OPEN);
@@ -338,12 +343,28 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	 * @return the list of selected items by long press..... 
 	 */
 	public static ArrayList<Item> get_selected_items(){
+		SdCardPanel.isListHasLockedItem = false;
 		ArrayList<Item> lss = new ArrayList<>();
 		int len = adapter_list.size();
 		for(int i = 0 ; i < len ; ++i)
-			if(ITEMS[i] == 1)
+			if(SdCardPanel.ITEMS[i] == 1){
+				Item im = adapter_list.get(i);
+				if(im.isLocked()){
+					SdCardPanel.isListHasLockedItem = true;
+					//break;
+				}	
 				lss.add(adapter_list.get(i));
+			}	
 		return lss;
+	}
+	
+	/**
+	 * 
+	 * @return true if items selected via long click contains
+	 * a locked item....
+	 */
+	public static boolean does_list_has_locked_item(){
+		return isListHasLockedItem;
 	}
 	
 	/**

@@ -21,6 +21,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
     
     <item 
+        android:id="@+id/action_queued"
+        android:icon="@drawable/queued_task"
+        android:title="@string/action_queued"
+        app:showAsAction="always"/>
+    
+    <item 
         android:id="@+id/action_gesture"
         android:icon="@drawable/gesture"
         android:title="@string/action_gesture"
