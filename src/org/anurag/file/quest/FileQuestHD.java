@@ -214,7 +214,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		MenuInflater inf = getMenuInflater();
 		if(!Constants.LONG_CLICK[pager.getCurrentItem()]){
 			inf.inflate(R.menu.main_actionbar_menu, menu);
-			menu.getItem(0).setVisible(false);
 			action_bar.setTitle("File Quest");
 			getMainToolBar().setNavigationIcon(null);
 		}	
