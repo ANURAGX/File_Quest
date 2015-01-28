@@ -86,7 +86,7 @@ public class AppStore extends Fragment{
 					long arg3) {
 				// TODO Auto-generated method stub
 				
-				if(Constants.LONG_CLICK){
+				if(Constants.LONG_CLICK[3]){
 					
 					if(ITEMS[position] != 1){
 						ITEMS[position] = 1;

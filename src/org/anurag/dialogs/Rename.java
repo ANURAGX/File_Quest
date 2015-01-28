@@ -170,7 +170,7 @@ public class Rename {
 						SdCardPanel.counter = 0;
 						FileGallery.counter = 0;
 						
-						Constants.LONG_CLICK = false;
+						Constants.LONG_CLICK[panel] = false;
 						
 						if(panel == 1){
 							RootPanel.notifyDataSetChanged();
@@ -207,7 +207,7 @@ public class Rename {
 								SdCardPanel.counter = 0;
 								FileGallery.counter = 0;
 								
-								Constants.LONG_CLICK = false;
+								Constants.LONG_CLICK[panel] = false;
 								
 								if(panel == 1){
 									RootPanel.notifyDataSetChanged();

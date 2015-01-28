@@ -156,7 +156,7 @@ public class Constants {
 	 * 4 detailed grid view
 	 */
 	public static int LIST_TYPE;
-	public static boolean LONG_CLICK;
+	public static boolean LONG_CLICK[] = new boolean[4];
 	
 	/**
 	 * 

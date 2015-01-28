@@ -196,7 +196,7 @@ public class SimpleSDAdapter extends BaseAdapter{
 		}
 			
 		//true when multi select is on....
-		if(Constants.LONG_CLICK){
+		if(Constants.LONG_CLICK[2]){
 			if(SdCardPanel.ITEMS[arg0] == 1)
 				view.setBackgroundColor(ctx.getResources().getColor(R.color.white_grey));
 		}

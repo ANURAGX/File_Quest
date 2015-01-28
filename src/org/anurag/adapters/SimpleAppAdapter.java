@@ -106,7 +106,7 @@ public class SimpleAppAdapter extends BaseAdapter{
 		}
 		
 		//true when multi select is on....
-		if(Constants.LONG_CLICK){
+		if(Constants.LONG_CLICK[3]){
 			if(AppStore.ITEMS[position] == 1)
 				convertView.setBackgroundColor(mContext.getResources().getColor(R.color.white_grey));				}
 		return convertView;

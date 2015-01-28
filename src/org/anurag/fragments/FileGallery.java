@@ -124,7 +124,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 					long arg3) {
 				// TODO Auto-generated method stub
 				
-				if(Constants.LONG_CLICK){
+				if(Constants.LONG_CLICK[0]){
 					
 					if(ITEMS[position] != 1){
 						ITEMS[position] = 1;

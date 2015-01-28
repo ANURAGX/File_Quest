@@ -55,12 +55,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -180,18 +180,49 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		init_action_bar();
 		init_drawer_menu();
 		init_with_device_id();
+
+		indicator.setOnPageChangeListener(new OnPageChangeListener() {
+			
+			@Override
+			public void onPageSelected(int arg0) {
+				// TODO Auto-generated method stub
+				for(int i = 0 ; i < 4 ; ++i)
+					if(Constants.LONG_CLICK[i]){
+						invalidateOptionsMenu();
+						break;
+					}
+			}
+			
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		MenuInflater inf = getMenuInflater();
-		if(!Constants.LONG_CLICK){
+		if(!Constants.LONG_CLICK[pager.getCurrentItem()]){
 			inf.inflate(R.menu.main_actionbar_menu, menu);
 			menu.getItem(0).setVisible(false);
+			action_bar.setTitle("File Quest");
+			getMainToolBar().setNavigationIcon(null);
 		}	
-		else
+		else{
 			inf.inflate(R.menu.long_clk_menu_hd, menu);
+			getMainToolBar().setNavigationIcon(R.drawable.long_click_check);
+			sendBroadcast(new Intent("update_action_bar_long_click"));
+		}	
 		return true;
 	}
 	
@@ -207,8 +238,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			return true;
 			
 		case android.R.id.home:
-			if(!Constants.LONG_CLICK)
-				drawer.openDrawer(Gravity.START);
+			//if(!Constants.LONG_CLICK)
+				//drawer.openDrawer(Gravity.START);
 			break;
 			
 		case R.id.action_setting:
@@ -240,7 +271,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			
 		case R.id.action_rename:
 			//renaming the file...
-			if(Constants.LONG_CLICK)
+			if(Constants.LONG_CLICK[panel])
 				switch(panel){
 				
 				case 0:
@@ -428,7 +459,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 
 		int panel = pager.getCurrentItem();
 		
-		if(Constants.LONG_CLICK){
+		if(Constants.LONG_CLICK[panel]){
 			sendBroadcast(new Intent("inflate_normal_menu"));
 			return;
 		}
@@ -769,6 +800,16 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	
 	/**
 	 * 
+	 * @return the current active toolbar which is being used as actionbar....
+	 */
+	private Toolbar getMainToolBar(){
+		if(Constants.ACTION_AT_TOP)
+			return top_toolbar;
+		return toolbar;
+	}
+	
+	/**
+	 * 
 	 * @author anurag
 	 *
 	 */
@@ -784,14 +825,14 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			String action = arg1.getAction();
 			int panel = pager.getCurrentItem();
 			if(action.equalsIgnoreCase("inflate_long_click_menu")){
-				Constants.LONG_CLICK = true;
+				Constants.LONG_CLICK[panel] = true;
 				invalidateOptionsMenu();
 				
 				//setting up action bar when an item is long clicked....
 				action_bar.setTitle("1");
 				action_bar.setHomeAsUpIndicator(R.drawable.long_click_check);
 			}else if(action.equalsIgnoreCase("inflate_normal_menu")){
-				Constants.LONG_CLICK = false;
+				Constants.LONG_CLICK[panel] = false;
 				//long click got disabled,restore default screen.....
 				if(panel == 2){
 					SdCardPanel.clear_selected_items();
@@ -811,9 +852,10 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				
 				//setting up action bar when long click is inactive....
 				action_bar.setTitle(R.string.app_name);
+				getMainToolBar().setNavigationIcon(null);
 			}else if(action.equalsIgnoreCase("update_action_bar_long_click")){
 				//update the action bar as per no. of selected items....
-				if(Constants.LONG_CLICK){
+				if(Constants.LONG_CLICK[panel]){
 					if(panel == 0){
 						action_bar.setTitle(""+FileGallery.counter);
 					}else if(panel == 1){
@@ -836,7 +878,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			}			
 			
 			else if(action.equalsIgnoreCase("FQ_DELETE")){
-				Constants.LONG_CLICK = false;
+				Constants.LONG_CLICK[panel] = false;
 				invalidateOptionsMenu();
 			}			
 		}		

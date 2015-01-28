@@ -210,7 +210,7 @@ public class RootAdapter extends BaseAdapter{
 		
 		
 		//true when multi select is on....
-		if(Constants.LONG_CLICK){
+		if(Constants.LONG_CLICK[1]){
 			if(RootPanel.ITEMS[pos] == 1)
 				convertView.setBackgroundColor(ctx.getResources().getColor(R.color.white_grey));
 		}

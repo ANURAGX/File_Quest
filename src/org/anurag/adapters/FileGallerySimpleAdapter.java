@@ -227,7 +227,7 @@ public class FileGallerySimpleAdapter extends BaseAdapter {
 		
 		
 		//true when multi select is on....
-		if(Constants.LONG_CLICK){
+		if(Constants.LONG_CLICK[0]){
 			if(FileGallery.ITEMS[pos] == 1)
 				convertView.setBackgroundColor(ctx.getResources().getColor(R.color.white_grey));
 		}

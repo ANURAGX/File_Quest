@@ -276,7 +276,7 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 
 		item = adapter_list.get(position);
 		
-		if(Constants.LONG_CLICK){
+		if(Constants.LONG_CLICK[2]){
 			
 			if(ITEMS[position] != 1){
 				ITEMS[position] = 1;
