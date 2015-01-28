@@ -33,9 +33,11 @@ import org.anurag.fragments.SdCardPanel;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -158,13 +160,26 @@ public class Rename {
 							Constants.db.deleteLockedNode(item.getPath());
 							Constants.db.insertNodeToLock(newFile.getAbsolutePath());
 						}
-												
+						
+						hide_keyboard(ctx);
+						
+						RootPanel.ITEMS = null;
+						SdCardPanel.ITEMS = null;
+						FileGallery.ITEMS = null;
+						RootPanel.counter = 0;
+						SdCardPanel.counter = 0;
+						FileGallery.counter = 0;
+						
+						Constants.LONG_CLICK = false;
+						
 						if(panel == 1){
 							RootPanel.notifyDataSetChanged();
 						}else if(panel == 2){
 							SdCardPanel.notifyDataSetChanged();
 						}else if(panel == 0)
 							FileGallery.resetAdapter();
+						
+						ctx.sendBroadcast(new Intent("FQ_DELETE"));
 						
 						Toast.makeText(ctx, R.string.itm_renamed, Toast.LENGTH_SHORT).show();
 					}	
@@ -183,13 +198,24 @@ public class Rename {
 						protected void onPostExecute(Void result) {
 							// TODO Auto-generated method stub
 							super.onPostExecute(result);
-							if(renamed){										
+							if(renamed){				
+								
+								RootPanel.ITEMS = null;
+								SdCardPanel.ITEMS = null;
+								FileGallery.ITEMS = null;
+								RootPanel.counter = 0;
+								SdCardPanel.counter = 0;
+								FileGallery.counter = 0;
+								
+								Constants.LONG_CLICK = false;
+								
 								if(panel == 1){
 									RootPanel.notifyDataSetChanged();
 								}else if(panel == 2){
 									SdCardPanel.notifyDataSetChanged();
 								}
-								
+
+								ctx.sendBroadcast(new Intent("FQ_DELETE"));
 								Toast.makeText(ctx, R.string.itm_renamed, Toast.LENGTH_SHORT).show();
 							}	
 							else
@@ -247,6 +273,16 @@ public class Rename {
 		});		
 	}
 	
+	/**
+	 * this function  hides the keyboard....
+	 * @param ctx
+	 */
+	private void hide_keyboard(Context ctx) {
+		// TODO Auto-generated method stub
+		InputMethodManager input = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
+		input.hideSoftInputFromWindow(getName.getWindowToken(), 0);
+	}
+
 	/**
 	 * 
 	 * @param parentFile

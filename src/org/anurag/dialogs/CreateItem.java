@@ -32,6 +32,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -95,6 +96,10 @@ public class CreateItem {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				
+				//hiding the keyboard....
+				hide_keyboard(ctx);
+				
 				if(file.exists()){
 										
 					if(panel == 1){
@@ -114,4 +119,13 @@ public class CreateItem {
 		
 	}
 
+	/**
+	 * this function  hides the keyboard....
+	 * @param ctx
+	 */
+	private void hide_keyboard(Context ctx) {
+		// TODO Auto-generated method stub
+		InputMethodManager input = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
+		input.hideSoftInputFromWindow(getName.getWindowToken(), 0);
+	}
 }
