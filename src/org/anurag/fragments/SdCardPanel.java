@@ -48,6 +48,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.extra.libs.JazzyHelper;
 
@@ -291,26 +292,27 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 				else
 					getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 			}
-			if(item.isLocked())
-				isListHasLockedItem = true;
 			return;					
 		}
 		
-		if(item.isLocked()){
-			new MasterPassword(getActivity(), Constants.size.x*8/9, item, null, Constants.MODES.OPEN);
-			return;
-		}
-		
-		if(item.isDirectory()){
-			//selecting a folder....
-			manager.pushPath(item.getPath());
-			FileQuestHD.notify_Title_Indicator(2, item.getName());
-			load.execute();
-		}else{
-			//selecting a file....
-			new OpenFileDialog(getActivity(), Uri.parse(item.getPath())
-					, Constants.size.x*8/9);
-		}
+		if(item.exists()){
+			if(item.isLocked()){
+				new MasterPassword(getActivity(), Constants.size.x*8/9, item, null, Constants.MODES.OPEN);
+				return;
+			}
+			
+			if(item.isDirectory()){
+				//selecting a folder....
+				manager.pushPath(item.getPath());
+				FileQuestHD.notify_Title_Indicator(2, item.getName());
+				load.execute();
+			}else{
+				//selecting a file....
+				new OpenFileDialog(getActivity(), Uri.parse(item.getPath())
+						, Constants.size.x*8/9);
+			}
+		}else
+			Toast.makeText(getActivity(), R.string.not_exists, Toast.LENGTH_SHORT).show();
 	}
 	
 
@@ -318,16 +320,19 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	 * this function is invoked when password is verified for locked item....
 	 */
 	public static void open_locked_item(){
-		if(item.isDirectory()){
-			//selecting a folder....
-			manager.pushPath(item.getPath());
-			FileQuestHD.notify_Title_Indicator(2, item.getName());
-			load.execute();
-		}else{
-			//selecting a file....
-			new OpenFileDialog(Constants.ctx, Uri.parse(item.getPath())
-					, Constants.size.x*8/9);
-		}
+		if(item.exists()){
+			if(item.isDirectory()){
+				//selecting a folder....
+				manager.pushPath(item.getPath());
+				FileQuestHD.notify_Title_Indicator(2, item.getName());
+				load.execute();
+			}else{
+				//selecting a file....
+				new OpenFileDialog(Constants.ctx, Uri.parse(item.getPath())
+						, Constants.size.x*8/9);
+			}
+		}else
+			Toast.makeText(Constants.ctx, R.string.not_exists, Toast.LENGTH_SHORT).show();
 	}
 	
 	/**

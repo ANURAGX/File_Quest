@@ -47,6 +47,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.extra.libs.JazzyHelper;
 
@@ -145,12 +146,15 @@ public class FileGallery extends Fragment implements OnClickListener{
 				
 				
 				item = (Item) ls.getAdapter().getItem(position);
-				if(item.isLocked()){
-					new MasterPassword(getActivity(), Constants.size.x*8/9, item, null, Constants.MODES.OPEN);
-					return;
-				}	
-				new OpenFileDialog(getActivity(), Uri.parse(item.getPath()),
-						Constants.size.x*8/9);
+				if(item.exists()){
+					if(item.isLocked()){
+						new MasterPassword(getActivity(), Constants.size.x*8/9, item, null, Constants.MODES.OPEN);
+						return;
+					}	
+					new OpenFileDialog(getActivity(), Uri.parse(item.getPath()),
+							Constants.size.x*8/9);
+				}else
+					Toast.makeText(getActivity(), R.string.not_exists, Toast.LENGTH_SHORT).show();
 			}
 		});
 		
@@ -194,8 +198,11 @@ public class FileGallery extends Fragment implements OnClickListener{
 	 * this function is invoked when password is verified for locked item....
 	 */
 	public static void open_locked_item(){
-		new OpenFileDialog(Constants.ctx, Uri.parse(item.getPath())
-				, Constants.size.x*8/9);
+		if(item.exists())
+			new OpenFileDialog(Constants.ctx, Uri.parse(item.getPath())
+					, Constants.size.x*8/9);
+		else
+			Toast.makeText(Constants.ctx, R.string.not_exists, Toast.LENGTH_SHORT).show();
 	}
 	
 	@Override

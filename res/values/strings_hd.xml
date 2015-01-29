@@ -169,4 +169,6 @@
     <string name="enter_valid_name">Enter name properly</string>
     <string name="create_gesture">Create Gesture</string>
     <string name="opening">Opening item....</string>
+    <string name="not_exists">Item doesnot exist</string>
+    
 </resources>
