@@ -162,7 +162,7 @@ public class DeleteFiles{
 						switch(FileQuestHD.getCurrentItem()){
 						case 0:
 							try{
-								FileGallery.clear_selected_items();
+								FileGallery.resetAdapter();
 							}catch(Exception e){}
 							break;
 							

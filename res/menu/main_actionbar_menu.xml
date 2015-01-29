@@ -24,7 +24,15 @@
         android:id="@+id/action_queued"
         android:icon="@drawable/queued_task"
         android:title="@string/action_queued"
-        app:showAsAction="always"/>
+        app:showAsAction="always">
+        
+        <menu >
+            <item 
+                android:id="@+id/no_task"
+                android:title="@string/action_no_task"/>
+        </menu>
+        
+    </item>    
     
     <item 
         android:id="@+id/action_gesture"

@@ -28,6 +28,7 @@ import org.anurag.adapters.PagerAdapters;
 import org.anurag.dialogs.CreateItem;
 import org.anurag.dialogs.DeleteFiles;
 import org.anurag.dialogs.Rename;
+import org.anurag.dialogs.ZipFiles;
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 import org.anurag.fragments.AppStore;
 import org.anurag.fragments.FileGallery;
@@ -216,6 +217,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			inf.inflate(R.menu.main_actionbar_menu, menu);
 			action_bar.setTitle("File Quest");
 			getMainToolBar().setNavigationIcon(null);
+			menu.findItem(R.id.action_queued).getSubMenu().add("added");
 		}	
 		else{
 			inf.inflate(R.menu.long_clk_menu_hd, menu);
@@ -317,6 +319,50 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			//launching activity to recognize the gesture....
 			Intent innt = new Intent(FileQuestHD.this , G_Open.class);
 			startActivityForResult(innt , 10);
+			break;
+			
+		case R.id.action_zip:
+			//zipping the files...
+			if(Constants.LONG_CLICK[panel])
+				switch(panel){
+				
+				case 0:
+					//first checking the locked status of files to be renamed....
+					{
+						ArrayList<Item> re_ls = FileGallery.get_selected_items();
+						if(!FileGallery.does_list_has_locked_item())
+							new ZipFiles(FileQuestHD.this ,  re_ls);
+						else
+							new MasterPassword(FileQuestHD.this, Constants.size.x*8/9, null ,
+									prefs, Constants.MODES.ARCHIVE);
+					}
+					
+					break;
+				
+				case 1:
+					//first checking the locked status of files to be renamed....
+					{
+						ArrayList<Item> re_ls = RootPanel.get_selected_items();
+						if(!RootPanel.does_list_has_locked_item())
+							new ZipFiles(FileQuestHD.this,  re_ls);
+						else
+							new MasterPassword(FileQuestHD.this, Constants.size.x*8/9, null ,
+									prefs, Constants.MODES.ARCHIVE);
+					}
+					break;
+				
+				case 2:
+					//first checking the locked status of files to be renamed....
+					{
+						ArrayList<Item> re_ls = SdCardPanel.get_selected_items();
+						if(!SdCardPanel.does_list_has_locked_item())
+							new ZipFiles(FileQuestHD.this,  re_ls);
+						else
+							new MasterPassword(FileQuestHD.this, Constants.size.x*8/9, null, 
+									prefs, Constants.MODES.ARCHIVE);							
+					}
+					break;
+				}
 			break;
 		}
 		return super.onOptionsItemSelected(item);

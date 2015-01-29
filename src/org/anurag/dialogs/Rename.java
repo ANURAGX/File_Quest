@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.FileQuestHD;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.Utils;
@@ -163,21 +164,21 @@ public class Rename {
 						
 						hide_keyboard(ctx);
 						
-						RootPanel.ITEMS = null;
-						SdCardPanel.ITEMS = null;
-						FileGallery.ITEMS = null;
-						RootPanel.counter = 0;
-						SdCardPanel.counter = 0;
-						FileGallery.counter = 0;
-						
-						Constants.LONG_CLICK[panel] = false;
-						
-						if(panel == 1){
+						switch(FileQuestHD.getCurrentItem()){
+						case 0:
+							try{
+								FileGallery.resetAdapter();
+							}catch(Exception e){}
+							break;
+							
+						case 1:
 							RootPanel.notifyDataSetChanged();
-						}else if(panel == 2){
+							break;
+							
+						case 2:
 							SdCardPanel.notifyDataSetChanged();
-						}else if(panel == 0)
-							FileGallery.resetAdapter();
+							break;
+						}
 						
 						ctx.sendBroadcast(new Intent("FQ_DELETE"));
 						

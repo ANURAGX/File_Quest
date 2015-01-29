@@ -390,9 +390,7 @@
   </LinearLayout>
         
   <ListView 
-        android:fastScrollEnabled="true"
-	    android:scrollbarStyle="outsideInset"
-        android:background="@android:color/white"
+      	android:background="@android:color/white"
         android:paddingTop="5dp"
         android:visibility="gone"
         android:dividerHeight="0.03dp"

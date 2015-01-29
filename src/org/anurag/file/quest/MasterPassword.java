@@ -20,6 +20,7 @@
 package org.anurag.file.quest;
 
 import org.anurag.dialogs.Rename;
+import org.anurag.dialogs.ZipFiles;
 import org.anurag.fragments.FileGallery;
 import org.anurag.fragments.RootPanel;
 import org.anurag.fragments.SdCardPanel;
@@ -250,6 +251,24 @@ public class MasterPassword {
 								
 							case 2:
 								SdCardPanel.open_locked_item();
+							}
+						}
+						
+						//zipping th locked items....
+						else if(Constants.activeMode == Constants.MODES.ARCHIVE){
+							switch(FileQuestHD.getCurrentItem()){
+							
+							case 0:
+								new ZipFiles(Constants.ctx, FileGallery.get_selected_items());
+								break;
+								
+							case 1:
+								new ZipFiles(Constants.ctx, RootPanel.get_selected_items());
+								break;
+								
+							case 2:
+								new ZipFiles(Constants.ctx, SdCardPanel.get_selected_items());
+								break;
 							}
 						}
 						else{
