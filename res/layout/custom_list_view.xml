@@ -394,7 +394,7 @@
         android:paddingTop="5dp"
         android:visibility="gone"
         android:dividerHeight="0.03dp"
-        android:divider="@color/white_grey"
+        android:divider="@color/transparent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/customListView"/>

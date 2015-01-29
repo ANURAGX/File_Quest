@@ -92,12 +92,17 @@ public class ThemeOrganizer {
 	 */
 	public static void APPLY_FOLDER_THEME(int first){
 		if(first == 2){
-			SdCardPanel.notifyDataSetChanged();
-			RootPanel.notifyDataSetChanged();
+			if(!Constants.LONG_CLICK[2])
+				SdCardPanel.notifyDataSetChanged();
+			
+			if(!Constants.LONG_CLICK[1])
+				RootPanel.notifyDataSetChanged();
 			return;
 		}
-		RootPanel.notifyDataSetChanged();
-		SdCardPanel.notifyDataSetChanged();		
+		if(!Constants.LONG_CLICK[1])
+			RootPanel.notifyDataSetChanged();
+		if(!Constants.LONG_CLICK[2])
+			SdCardPanel.notifyDataSetChanged();		
 	}
 
 	/*
