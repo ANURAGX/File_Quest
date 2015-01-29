@@ -22,8 +22,10 @@ package org.anurag.file.quest;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
+
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,12 +33,17 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
@@ -56,7 +63,7 @@ import com.github.mikephil.charting.utils.Legend.LegendPosition;
  * calculate folder size of folders that needed root access....
  */
 @SuppressLint("HandlerLeak")
-public class FileProperties extends Activity{
+public class FileProperties extends ActionBarActivity{
 
 	private PieChart pChart;
 	private File file;
@@ -67,6 +74,8 @@ public class FileProperties extends Activity{
 	private TextView prp_path;
 	private TextView prp_type;
 	private TextView prp_size;
+	
+	private Toolbar toolbar;
 	
 	//color for pie chart....
 	private int color[] = {
@@ -107,10 +116,14 @@ public class FileProperties extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.file_properties);
 		
-		getActionBar().setIcon(R.drawable.task);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(0x00000000));
-		getActionBar().setTitle(R.string.properties);
+		toolbar = (Toolbar) findViewById(R.id.toolbar_top);
 		
+		setSupportActionBar(toolbar);
+		
+		getSupportActionBar().setIcon(R.drawable.task);
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Constants.COLOR_STYLE));
+		getSupportActionBar().setTitle(R.string.properties);
+		/*
     	file = new File(getIntent().getStringExtra("path"));
 		size = 0;
 		pChart = (PieChart)findViewById(R.id.chart);
@@ -161,8 +174,61 @@ public class FileProperties extends Activity{
         l.setYEntrySpace(5f);
         
         if(file.isDirectory())
-        	thread.start();
+        	thread.start();*/
 	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		init_system_ui();
+	}
+	
+	/**
+	 * restyles the system UI like status bar or navigation bar if present....
+	 */
+	private void init_system_ui() {
+		// TODO Auto-generated method stub
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+			return;
+		SystemBarTintManager tint = new SystemBarTintManager(FileProperties.this);
+		tint.setStatusBarTintEnabled(true);
+		tint.setStatusBarTintColor(Constants.COLOR_STYLE);
+		SystemBarConfig conf = tint.getConfig();
+		boolean hasNavBar = conf.hasNavigtionBar();
+		if(hasNavBar){
+			tint.setNavigationBarTintEnabled(true);
+			tint.setNavigationBarTintColor(Constants.COLOR_STYLE);
+		}
+		LinearLayout main = (LinearLayout) findViewById(R.id.main);
+		main.setBackgroundColor(Constants.COLOR_STYLE);
+		main.setPadding(0, getStatusBarHeight(), 0, hasNavBar ? getNavigationBarHeight() :0);
+	}
+	
+	/**
+	 * 
+	 * @return height of status bar....
+	 */
+	private int getStatusBarHeight(){
+		int res = 0;
+		int resId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+		if(resId > 0)
+			res = getResources().getDimensionPixelSize(resId);
+		return res;
+	}
+	
+	/**
+	 * 
+	 * @return the height of navigation bar....
+	 */
+	private int getNavigationBarHeight(){
+		int res = 0;
+		int resId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+		if(resId > 0)
+			res = getResources().getDimensionPixelSize(resId);
+		return res;
+	}
+	
+	
 	/**
 	 * this function sets the pie chart data....
 	 */

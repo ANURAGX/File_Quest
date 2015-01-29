@@ -49,33 +49,10 @@
         
         
         <meta-data android:name="com.google.android.gms.version"
-           android:value="5077000" />
+           android:value="6587000" />
         
         
-		<meta-data 
-		    android:name="com.fuehlbypa.kddcbytnh159110.APPID" 
-		    android:value="187564" />
-		        
-		<meta-data 
-		    android:name="com.fuehlbypa.kddcbytnh159110.APIKEY" 
-		    android:value="android*1377959896159110585"/>
-		
-		<activity 
-		    android:exported="false" 
-		    android:name="com.fuehlbypa.kddcbytnh159110.MainActivity"
-    	 	android:configChanges="orientation|screenSize"
-    	 	android:theme="@style/Theme.Holo.Translucent" />
-		
-		<activity 
-		    android:name="com.fuehlbypa.kddcbytnh159110.BrowserActivity"
-			android:configChanges="orientation|screenSize" />
-		
-		<activity 
-		    android:name="com.fuehlbypa.kddcbytnh159110.VDActivity"
-            android:configChanges="orientation|screenSize" 
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
-		</activity>       
+		   
         
         <!-- main activity.... -->
         <activity
@@ -167,8 +144,7 @@
         
         <!-- FILE PROPERTIES ACTIVITY.... -->
         <activity 
-            android:name="org.anurag.file.quest.FileProperties"
-            android:theme="@android:style/Theme.Holo">
+            android:name="org.anurag.file.quest.FileProperties">
         </activity>
         
         <!-- ACTIVITY TO ADD GESTURE FOR A FILE.... -->

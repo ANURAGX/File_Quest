@@ -20,6 +20,7 @@
 package org.anurag.file.quest;
 
 import java.io.File;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -79,7 +80,6 @@ import android.widget.Toast;
 
 import com.extra.libs.PagerSlidingTabStrip;
 import com.extra.libs.TransitionViewPager;
-import com.fuehlbypa.kddcbytnh159110.Prm;
 
 
 
@@ -364,6 +364,14 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 					break;
 				}
 			break;
+			
+		case R.id.action_properties:
+			//showing properties of files....
+			{
+				Intent itent = new Intent(FileQuestHD.this, FileProperties.class);
+				startActivity(itent);
+			}
+			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -384,8 +392,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			prefs_editor.commit();
 			new WhatsNew(FileQuestHD.this, Constants.size.x*8/9, Constants.size.y*8/9);
 		}
-		Prm prm = new Prm(FileQuestHD.this, null, true);
-		prm.run360Ad(FileQuestHD.this, 0, false, null);
 		register_receiver();
 	}
 	

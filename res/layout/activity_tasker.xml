@@ -37,19 +37,6 @@
 		android:layout_weight="1.0" >
 	</com.abhi.animated.TransitionViewPager>
 	
-	<com.fuehlbypa.kddcbytnh159110.AdView
-	    android:layout_gravity="center"
-		xmlns:ap="http://schemas.android.com/apk/res-auto"
-		android:id="@+id/myAdView"
-		android:visibility="gone"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		ap:animation="fade"
-		ap:banner_type="inappad"
-		ap:placementType="interstitial"
-		ap:test_mode="false"
-		ap:canShowMR="false"
-	/>
 	
 	
 </LinearLayout>

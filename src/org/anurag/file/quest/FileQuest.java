@@ -20,6 +20,7 @@
 package org.anurag.file.quest;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -120,7 +121,6 @@ import com.extra.libs.JazzyHelper;
 import com.extra.libs.PagerSlidingTabStrip;
 import com.extra.libs.TransitionViewPager;
 import com.extra.libs.TransitionViewPager.TransitionEffect;
-import com.fuehlbypa.kddcbytnh159110.Prm;
 import com.github.junrar.Archive;
 import com.github.junrar.exception.RarException;
 
@@ -274,7 +274,6 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 	private static View v;
 	
 	private boolean delete_from_slider_menu;
-	private Prm prm;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -535,10 +534,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 		}
         
 		super.onCreate(savedInstanceState);
-		if(prm == null){
-			prm = new Prm(FileQuest.this, null , false);
-			prm.run360Ad(FileQuest.this, 10 , false, null);
-		}	
+			
 	}
 
 	@Override
