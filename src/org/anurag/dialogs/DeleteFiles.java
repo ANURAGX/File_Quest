@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.FileQuestHD;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.Utils;
@@ -158,12 +159,21 @@ public class DeleteFiles{
 							mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(Constants.PATH))));
 						}
 						
-						RootPanel.notifyDataSetChanged();
-						SdCardPanel.notifyDataSetChanged();
-						try{
-							FileGallery.clear_selected_items();
-						}catch(Exception e){}
-						
+						switch(FileQuestHD.getCurrentItem()){
+						case 0:
+							try{
+								FileGallery.clear_selected_items();
+							}catch(Exception e){}
+							break;
+							
+						case 1:
+							RootPanel.notifyDataSetChanged();
+							break;
+							
+						case 2:
+							SdCardPanel.notifyDataSetChanged();
+							break;
+						}
 						Utils.updateUI();
 						
 						mContext.sendBroadcast(new Intent("FQ_DELETE"));
