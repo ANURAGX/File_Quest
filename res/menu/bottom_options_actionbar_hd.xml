@@ -120,7 +120,7 @@
         	<item 
         	    android:checkable="true"
         	    android:id="@+id/detail_grid"
-        	    android:title="@string/action_grid"/> 
+        	    android:title="@string/action_grid"/>
         </menu>
     </item>
     
@@ -133,28 +133,34 @@
         <menu>
             
             <item 
-                android:id="@+id/sort_az"
+        	    android:checkable="true"
+        	    android:id="@+id/sort_az"
                 android:title="@string/action_az"/>        
             
             <item 
-                android:id="@+id/sort_za"
+                android:checkable="true"
+        	    android:id="@+id/sort_za"
                 android:title="@string/action_za"/>
             
             <item 
-                android:id="@+id/size_smaller"
+        	    android:checkable="true"
+        	    android:id="@+id/size_smaller"
                 android:title="@string/action_size_smaller"/>
             
-            <item 
-                android:id="@+id/size_bigger"
+            <item
+                android:checkable="true"
+        	    android:id="@+id/size_bigger"
                 android:title="@string/action_size_bigger"/>
             
             <item 
-                android:id="@+id/date_new"
+        	    android:checkable="true"
+        	    android:id="@+id/date_new"
                 android:title="@string/action_date_new"/>
             
             
             <item 
-                android:id="@+id/date_old"
+        	    android:checkable="true"
+        	    android:id="@+id/date_old"
                 android:title="@string/action_date_old"/>
         </menu>
         

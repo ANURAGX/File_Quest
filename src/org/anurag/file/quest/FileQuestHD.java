@@ -673,11 +673,15 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		case R.id.simple_ls:
 			//setting simple list view for the app....
 			change_list_type(1 , pager.getCurrentItem());
+			bottom_options.getMenu().findItem(R.id.simple_ls).setChecked(true);
+			bottom_options.getMenu().findItem(R.id.detail_ls).setChecked(false);
 			return true;
 			
 		case R.id.detail_ls:
 			//setting he detailed list view....
 			change_list_type(2 , pager.getCurrentItem());
+			bottom_options.getMenu().findItem(R.id.simple_ls).setChecked(false);
+			bottom_options.getMenu().findItem(R.id.detail_ls).setChecked(true);			
 			return true;
 		
 		case R.id.new_folder:
@@ -814,6 +818,12 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			bottom_options.setNavigationIcon(R.drawable.down_action);
 		bottom_options.setOnMenuItemClickListener(this);
 			
+		if(Constants.LIST_TYPE == 2)
+			bottom_options.getMenu().findItem(R.id.detail_ls).setChecked(true);
+		else
+			bottom_options.getMenu().findItem(R.id.simple_ls).setChecked(true);
+		
+		
 		bottom_options.setNavigationOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
