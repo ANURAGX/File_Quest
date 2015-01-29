@@ -380,15 +380,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 		}
 		
 
-		setContentView(R.layout.new_ui);
+		//setContentView(R.layout.new_ui);
 	
 		//editBox = (EditText) findViewById(R.id.editBox);
 	
 		//error = false;
 		
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-		mViewPager = (TransitionViewPager) findViewById(R.id.pager);
-		indicator = (PagerSlidingTabStrip) findViewById(R.id.indicator);
+		//mViewPager = (TransitionViewPager) findViewById(R.id.pager);
+		//indicator = (PagerSlidingTabStrip) findViewById(R.id.indicator);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		
 		//setting view pager limit to hold fragments off screen....
@@ -399,8 +399,8 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 		
 		indicator.setViewPager(mViewPager);
 		mViewPager.setCurrentItem(CURRENT_PREF_ITEM);
-		mVFlipper = (ViewFlipper) findViewById(R.id.viewFlipperMenu);
-		mFlipperBottom = (ViewFlipper) findViewById(R.id.viewFlipperMenuBottom);
+		//mVFlipper = (ViewFlipper) findViewById(R.id.viewFlipperMenu);
+		// = (ViewFlipper) findViewById(R.id.viewFlipperMenuBottom);
 		
 		if (CURRENT_PREF_ITEM != 3)
 			LAST_PAGE = 2;

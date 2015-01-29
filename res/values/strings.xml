@@ -400,7 +400,6 @@
     <string name="cut">Cut</string>
     <string name="paste">Paste</string>
     <string name="delete">Delete</string>
-	<string name="rename">Rename</string>
 	<string name="properties">Properties</string>
 	<string name="send">Send</string>
 	<string name="archive">Create Archive</string>
