@@ -386,6 +386,6 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	 * @param path is puhsed to top of stacked indicating top dir....
 	 */
 	public static void push_path(String path){
-		manager.nStack.push(path);
+		manager.pushPath(path);
 	}
 }

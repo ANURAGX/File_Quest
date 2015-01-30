@@ -121,7 +121,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		Constants.LIST_ANIM = prefs.getInt("LIST_ANIM", 3);
 		Constants.ACTION_AT_TOP = prefs.getBoolean("ACTION_AT_TOP", false);
 		Constants.LIST_TYPE = prefs.getInt("LIST_TYPE", 2);
-		//Constants.SORT_TYPE = prefs.getInt("SORT_TYPE", 1);
+		Constants.SORT_TYPE = prefs.getInt("SORT_TYPE", 3);
 		Constants.PAGER_ANIM = prefs.getInt("PAGER_ANIM", 3);
 		Constants.size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(Constants.size);
@@ -736,12 +736,128 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				break;
 			}
 			break;
-					
+
+		case R.id.sort_az:
+			change_sort_type( 1 , panel);
+			break;
+			
+		case R.id.sort_za:
+			change_sort_type( 2 , panel);
+			break;
+			
+		case R.id.size_smaller:
+			change_sort_type( 3 , panel);
+			break;
+			
+		case R.id.size_bigger:
+			change_sort_type( 4 , panel);
+			break;
+			
+		case R.id.date_new:
+			change_sort_type( 5 , panel);
+			break;
+			
+		case R.id.date_old:
+			change_sort_type( 6 , panel);
+			break;
 		}
+		
 		
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param i sort type....
+	 * @param panel currently selected panel....
+	 */
+	private void change_sort_type(int i, int panel) {
+		// TODO Auto-generated method stub
+		//saving the settings....
+		Constants.SORT_TYPE = i;
+		prefs_editor.putInt("SORT_TYPE", Constants.SORT_TYPE);
+		prefs_editor.commit();
+		
+		bottom_options.getMenu().findItem(R.id.sort_az).setChecked(false);
+		bottom_options.getMenu().findItem(R.id.sort_za).setChecked(false);
+		bottom_options.getMenu().findItem(R.id.size_smaller).setChecked(false);
+		bottom_options.getMenu().findItem(R.id.size_bigger).setChecked(false);
+		bottom_options.getMenu().findItem(R.id.date_new).setChecked(false);
+		bottom_options.getMenu().findItem(R.id.date_old).setChecked(false);
+		
+		switch(Constants.SORT_TYPE){
+		case 1:
+			bottom_options.getMenu().findItem(R.id.sort_az).setChecked(true);
+			break;
+		case 2:
+			bottom_options.getMenu().findItem(R.id.sort_za).setChecked(true);
+			break;
+		case 3:
+			bottom_options.getMenu().findItem(R.id.size_smaller).setChecked(true);
+			break;
+		case 4:
+			bottom_options.getMenu().findItem(R.id.size_bigger).setChecked(true);
+			break;
+		case 5:
+			bottom_options.getMenu().findItem(R.id.date_new).setChecked(true);
+			break;
+		case 6:
+			bottom_options.getMenu().findItem(R.id.date_old).setChecked(true);
+			break;
+		}
+		
+		//setting list view of current pager item....
+		switch(panel){
+			case 0:
+				if(!Constants.LONG_CLICK[0])
+					FileGallery.resetAdapter();
+				break;
+				
+			case 1:
+				if(!Constants.LONG_CLICK[1])
+				RootPanel.resetAdapter();
+				break;
+			
+			case 2:
+				if(!Constants.LONG_CLICK[2])
+					SdCardPanel.resetAdapter();
+				break;
+				
+			case 3:
+				if(!Constants.LONG_CLICK[3])
+					AppStore.resetAdapter();
+				break;
+				
+			}
+			
+			//now setting the list view for other panels which are not visible....
+			for(int j = 0 ; j<4 ; ++j){
+				if(j != panel){
+					switch(j){
+					case 0:
+						if(!Constants.LONG_CLICK[0])
+							FileGallery.resetAdapter();
+						break;
+						
+					case 1:
+						if(!Constants.LONG_CLICK[1])
+							RootPanel.resetAdapter();
+						break;
+					
+					case 2:
+						if(!Constants.LONG_CLICK[2])
+							SdCardPanel.resetAdapter();
+						break;
+						
+					case 3:
+						if(!Constants.LONG_CLICK[3])
+							AppStore.resetAdapter();
+						break;					
+					}
+				}
+			}
+	}
+	
 	/**
 	 * 
 	 * @param i tells the kind of list view....
@@ -838,11 +954,33 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			bottom_options.setNavigationIcon(R.drawable.down_action);
 		bottom_options.setOnMenuItemClickListener(this);
 			
+		//restoring list type setting....
 		if(Constants.LIST_TYPE == 2)
 			bottom_options.getMenu().findItem(R.id.detail_ls).setChecked(true);
 		else
 			bottom_options.getMenu().findItem(R.id.simple_ls).setChecked(true);
 		
+		//restoring sort setting....
+		switch(Constants.SORT_TYPE){
+		case 1:
+			bottom_options.getMenu().findItem(R.id.sort_az).setChecked(true);
+			break;
+		case 2:
+			bottom_options.getMenu().findItem(R.id.sort_za).setChecked(true);
+			break;
+		case 3:
+			bottom_options.getMenu().findItem(R.id.size_smaller).setChecked(true);
+			break;
+		case 4:
+			bottom_options.getMenu().findItem(R.id.size_bigger).setChecked(true);
+			break;
+		case 5:
+			bottom_options.getMenu().findItem(R.id.date_new).setChecked(true);
+			break;
+		case 6:
+			bottom_options.getMenu().findItem(R.id.date_old).setChecked(true);
+			break;
+		}
 		
 		bottom_options.setNavigationOnClickListener(new View.OnClickListener() {
 			@Override

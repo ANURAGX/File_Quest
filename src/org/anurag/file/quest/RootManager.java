@@ -20,13 +20,11 @@
 package org.anurag.file.quest;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Stack;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -38,12 +36,14 @@ import android.graphics.drawable.Drawable;
  */
 public class RootManager {
 
-	public static Stack<String> nStack;
-	ArrayList<Item> items;
-	private static Context ctx;
+	private Stack<String> nStack;
+	private ArrayList<Item> items;
+	private Context ctx;
 	private File file;
-	String type;
-	private static Resources res;
+	private String type;
+	private Resources res;
+	private FileUtils utils;
+	
 	public RootManager(Context context) {
 		// TODO Auto-generated constructor stub
 		ctx = context;
@@ -51,13 +51,15 @@ public class RootManager {
 		nStack.push("/");
 		items = new ArrayList<Item>();
 		res = ctx.getResources();
+		
+		utils = new FileUtils();
 	}
 	
 	/**
 	 * Function to return current path  
 	 * @return
 	 */
-	public static String getCurrentDirectory(){
+	public String getCurrentDirectory(){
 		return nStack.peek();
 	}
 	
@@ -65,23 +67,12 @@ public class RootManager {
 	 * Function To return Current File Name
 	 * @return
 	 */
-	public static String getCurrentDirectoryName(){
+	public String getCurrentDirectoryName(){
 		File file = new File(nStack.peek());
 		return file.getName();
 	}
 	
-	/**
-	 * THIS CLASS FILTERS OUT THOSE FILES THAT CANNOT BE READ
-	 * @author anurag
-	 *
-	 */
-	public static class ReadFileFilter implements FileFilter{
-		@Override
-		public boolean accept(File f) {
-			// TODO Auto-generated method stub
-			return f.canRead();
-		}		
-	}
+	
 	
 	/**
 	 * THIS CLASS FILTERS OUT THOS FILE THAT CANNOT BE READ AND ARE HIDDEN
@@ -98,142 +89,51 @@ public class RootManager {
 	}
 	
 	/**
-	 * SORTS THE FILE[] ALPHABETICALLY WITH HAVING FOLDERS FIRST
-	 */
-	public static Comparator<File> alphaFolderFirst = new Comparator<File>() {
-		@Override
-		public int compare(File a, File b) {
-			boolean aIsFolder = a.isDirectory();
-			boolean bIsFolder = b.isDirectory();
-			if(bIsFolder == aIsFolder )
-				return a.getName().compareToIgnoreCase(b.getName());
-			else if(bIsFolder)
-				return 1;
-			return -1;
-		}
-	}; 
-	
-	
-	/**
-	 * SORTS THE FILE[] ALPHABETICALLY WITH HAVING FILES FIRST
-	 */
-	public static Comparator<File> alphaFileFirst = new Comparator<File>() {
-		@Override
-		public int compare(File a, File b) {
-			boolean aIsFolder = a.isDirectory();
-			boolean bIsFolder = b.isDirectory();
-			if(bIsFolder == aIsFolder )
-				return a.getName().compareToIgnoreCase(b.getName());
-			else if(bIsFolder)
-				return -1;
-			return 1;
-		}
-	}; 
-	
-	/**
-	 * SORTS THE FILE[] ALPHABETICALLY IRRESPECTIVE OF FILE OR FOLDER
-	 */
-	
-	public static Comparator<File> alpha = new Comparator<File>() {
-		@Override
-		public int compare(File a, File b) {
-				return a.getName().compareToIgnoreCase(b.getName());
-		}
-	}; 
-	
-	/**
 	 * 
 	 * @return
 	 */
 	public ArrayList<Item> getList(){
-		items.clear();
+		items.clear();		
 		file = new File(nStack.peek());
-		if(Constants.SORT_TYPE == 4)
-			return getCurrentFileListWithHiddenItemFirst();
-		else if(Constants.SORT_TYPE == 5)
-			return getCurrentFileListWithHiddenItemLast();
-		if(file.exists()){
-			File[] files = null;
-			files = listFiles(file);			
-			if(Constants.SORT_TYPE == 1)
-				Arrays.sort(files,alpha);
-			else if(Constants.SORT_TYPE == 2)
-				Arrays.sort(files,alphaFolderFirst);
-			else if(Constants.SORT_TYPE == 3)
-				Arrays.sort(files,alphaFileFirst);
-			int l = files.length;
-			for(int i = 0 ;i<l ; ++i){
-				File f = files[i];
-				items.add(new Item(f,buildIcon(f),type,getSize(f)));
-			}	
-		}
-		return items;
-	}
-
-	/**
-	 * Function to Generate Current Directory File List Without Having Hidden Folders In List
-	 * Sorted in alphabetical order
-	 * @return
-	 */
-	public ArrayList<Item> getCurrentFileListWithoutHiddenFolders(){
-		items.clear();
-		file = new File(nStack.peek());
-		if(file.exists()){
-			File[] files = listFiles(file);
-			int l = files.length;
-			for(int i = 0 ;i<l ; ++i)
-				items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
-		}
-		return  items;
-	}
-
-	/**
-	 * function sorting files in alphabetical order
-	 * keeping hidden items first
-	 * @return
-	 */
-	public ArrayList<Item> getCurrentFileListWithHiddenItemFirst(){
-		items.clear();
-		file = new File(nStack.peek());
-		if(file.exists()){
-			File[] files = listFiles(file);
-			Arrays.sort(files,alphaFolderFirst);
-			int l = files.length;
-			if(Constants.SHOW_HIDDEN_FOLDERS)
-				for(int i = 0 ;i<l ; ++i)
-					if(files[i].getName().startsWith("."))
-						items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
-			for(int i = 0 ;i<l ; ++i)
-				if(!files[i].getName().startsWith("."))
-					items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
-		}
+		File[] files = listFiles(file);
+		int len = files.length;
+		for(int i = 0 ; i < len ; ++i)
+			items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
 		
-		return items;
-	}
-	
-	
-	/**
-	 * function sorting files in alphabetical order
-	 * keeping hidden items first
-	 * @return
-	 */
-	public ArrayList<Item> getCurrentFileListWithHiddenItemLast(){
-		items.clear();
-		file = new File(nStack.peek());
-		if(file.exists()){
-			File[] files = listFiles(file);
-			Arrays.sort(files,alphaFolderFirst);
-			for(int i = 0 ;i<files.length ; ++i)
-				if(!files[i].getName().startsWith("."))
-					items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
-			if(Constants.SHOW_HIDDEN_FOLDERS)
-				for(int i = 0 ;i<files.length ; ++i)
-					if( files[i].getName().startsWith("."))
-						items.add(new Item(files[i], buildIcon(files[i]), type, getSize(files[i])));
+		switch(Constants.SORT_TYPE){
+		case 1:
+			//a-z sort
+			utils.a_zSort(items);
+			break;
+			
+		case 2:
+			//z-a sort
+			utils.z_aSort(items);
+			break;
+			
+		case 3:
+			//smaller size first sort....
+			utils.smallSize_Sort(items);
+			break;
+			
+		case 4:
+			//larger size first sort....
+			utils.bigSize_Sort(items);
+			break;
+			
+		case 5:
+			//new date file first....
+			utils.newDate_Sort(items);
+			break;
+			
+		case 6:
+			//old date file first....
+			utils.oldDate_Sort(items);
 		}
+
 		return items;
 	}
-	
+
 	/**
 	 * 
 	 * @return icon for the file....
@@ -337,7 +237,7 @@ public class RootManager {
 	 * @param f
 	 * @return
 	 */
-	public static String getSize(File f){
+	private String getSize(File f){
 		if(f.isDirectory()){
 			if(!f.canRead())
 				return ctx.getString(R.string.rootd);
@@ -349,16 +249,16 @@ public class RootManager {
 		}	
 		long size = f.length();
 		if(size>Constants.GB)
-			return String.format(ctx.getString(R.string.sizegb), (double)size/(Constants.GB));
+			return String.format(Constants.GB_STR , (double)size/(Constants.GB));
 		
 		else if(size > Constants.MB)
-			return String.format(ctx.getString(R.string.sizemb), (double)size/(Constants.MB));
+			return String.format(Constants.MB_STR, (double)size/(Constants.MB));
 		
 		else if(size>1024)
-			return String.format(ctx.getString(R.string.sizekb), (double)size/(1024));
+			return String.format(Constants.KB_STR, (double)size/(1024));
 		
 		else
-			return String.format(ctx.getString(R.string.sizebytes), (double)size);
+			return String.format(Constants.BYT_STR , (double)size);
 	}
 	
 	/**
@@ -378,11 +278,9 @@ public class RootManager {
 	 */
 	public File[] listFiles(File f){
 		if(f.canRead()){
-			if(!Constants.SHOW_HIDDEN_FOLDERS)
-				return f.listFiles(new HiddenFileFilter());
-			else 
-				return f.listFiles(new ReadFileFilter());
+			return f.listFiles(new HiddenFileFilter());
 		}else{
+			
 			ArrayList<File> tList = new ArrayList<File>();
 			BufferedReader reader = null; // errReader = null;
 			try {
@@ -400,11 +298,9 @@ public class RootManager {
 				}
 			}catch(Exception e){
 				nStack.pop();
-				if(!Constants.SHOW_HIDDEN_FOLDERS)
-					return f.listFiles(new HiddenFileFilter());
-				else 
-					return f.listFiles(new ReadFileFilter());
-			}	
+				return f.listFiles(new HiddenFileFilter());
+			}
+			
 			int l = tList.size();
 			File[] r = new File[l];
 			for(int i = 0 ; i<l;++i)
@@ -413,33 +309,6 @@ public class RootManager {
 		}
 	}
 	
-	/**
-	 * Function To Delete The Given File And Returns Message To Handler
-	 * If Deletion is successful returns 0 else returns -1
-	 * @param path
-	 * @return
-	 */
-	public static void deleteTarget(File file) {
-		File target = file;
-		if(target.exists() && target.isFile() && target.canWrite())
-			target.delete();
-		else if(target.exists() && target.isDirectory() && target.canRead()) {
-			String[] file_list = target.list();
-			if(file_list != null && file_list.length == 0) {
-				target.delete();
-			} else if(file_list != null && file_list.length > 0) {
-				for(int i = 0; i < file_list.length; i++) {
-					File temp_f = new File(target.getAbsolutePath() + "/" + file_list[i]);
-					if(temp_f.isDirectory())
-						deleteTarget(temp_f);
-					else if(temp_f.isFile())
-						temp_f.delete();
-				}
-			}
-			if(target.exists())
-				if(target.delete()){}
-		}
-	}
 	
 	/**
 	 * pushes a path to top of stack....

@@ -132,6 +132,11 @@ public class Constants {
 	public static Drawable WEB;
 	public static Drawable SCRIPT;
 	
+	public static String GB_STR;
+	public static String MB_STR;
+	public static String KB_STR;
+	public static String BYT_STR;
+	
 	public static Drawable LOCK_IMG;
 	public static Drawable UNLOCK_IMG;
 	public static Drawable FAV_IMG;
@@ -174,6 +179,11 @@ public class Constants {
 		UNKNOWN = ctx.getResources().getDrawable(R.drawable.unknown_icon_hd);
 		WEB = ctx.getResources().getDrawable(R.drawable.web_icon_hd);
 		SCRIPT = ctx.getResources().getDrawable(R.drawable.script_icon_hd);
+		
+		GB_STR = "%.2f GB";
+		MB_STR = "%.2f MB";
+		KB_STR = "%.2f KB";
+		BYT_STR = "%.2f Byte";
 	}
 	
 	/**

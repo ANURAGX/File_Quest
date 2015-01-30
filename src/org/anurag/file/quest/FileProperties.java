@@ -247,7 +247,7 @@ public class FileProperties extends ActionBarActivity{
 					prp_img.setImageBitmap(map);
 			}
 			yVal.add(new BarEntry(file.length(), 1));
-			prp_size.setText(getString(R.string.filesize) + " - " + RootManager.getSize(file));
+		//	prp_size.setText(getString(R.string.filesize) + " - " + RootManager.getSize(file));
 		}	
 		else if(file.isDirectory()){
 			yVal.add(new BarEntry(size, 1));

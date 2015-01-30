@@ -23,11 +23,11 @@ import java.io.File;
 
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
+
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.MasterPassword;
 import org.anurag.file.quest.R;
-import org.anurag.file.quest.RootManager;
 import org.anurag.file.quest.Utils;
 import org.anurag.fragments.FileGallery;
 
@@ -189,7 +189,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 		
 		h.fName.setText(item.getName());
 		h.fType.setText(item.getType());
-		h.fSize.setText(RootManager.getSize(new File(item.getPath())));
+		h.fSize.setText(getSize(item.getFile()));
 		h.icon.setImageDrawable(item.getIcon());
 		
 		if(item.isDirectory()){
@@ -453,5 +453,32 @@ public class FileGalleryAdapter extends BaseAdapter {
 		}
 		
 	}
-	
+	/**
+	 * THIS FUNCTION RETURN THE SIZE IF THE GIVEN FIZE IN PARAMETER
+	 * @param f
+	 * @return
+	 */
+	private String getSize(File f){
+		if(f.isDirectory()){
+			if(!f.canRead())
+				return ctx.getString(R.string.rootd);
+			try{
+				return f.list().length+" "+ctx.getString(R.string.items);
+			}catch(NullPointerException e){
+				return 0+" "+ctx.getString(R.string.items);
+			}
+		}	
+		long size = f.length();
+		if(size>Constants.GB)
+			return String.format(Constants.GB_STR , (double)size/(Constants.GB));
+		
+		else if(size > Constants.MB)
+			return String.format(Constants.MB_STR, (double)size/(Constants.MB));
+		
+		else if(size>1024)
+			return String.format(Constants.KB_STR, (double)size/(1024));
+		
+		else
+			return String.format(Constants.BYT_STR , (double)size);
+	}
 }

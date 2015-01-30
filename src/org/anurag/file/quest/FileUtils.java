@@ -22,16 +22,22 @@ package org.anurag.file.quest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 import org.anurag.file.quest.Item;
 
+/**
+ * this class contains sorting functions ....
+ * @author anurag
+ *
+ */
 public class FileUtils {
 	
 	/**
 	 * this function sorts the list of files in a-z order
 	 * keeping folders at first
 	 */
-	private ArrayList<Item> a_zSort(ArrayList<Item> items){
+	public ArrayList<Item> a_zSort(ArrayList<Item> items){
 		Comparator<Item> compare = new Comparator<Item>() {
 			@Override
 			public int compare(Item lhs, Item rhs) {
@@ -53,7 +59,7 @@ public class FileUtils {
 	 * this function sorts the list of files in z-a order
 	 * keeping folders at first
 	 */
-	private ArrayList<Item> z_aSort(ArrayList<Item> items){
+	public ArrayList<Item> z_aSort(ArrayList<Item> items){
 		Comparator<Item> compare = new Comparator<Item>() {
 			@Override
 			public int compare(Item lhs, Item rhs) {
@@ -71,4 +77,133 @@ public class FileUtils {
 		return items;
 	}
 
+	/**
+	 * this function sorts the list of files in small to big size order
+	 * keeping folders at first
+	 */
+	public ArrayList<Item> smallSize_Sort(ArrayList<Item> items){
+		Comparator<Item> compare = new Comparator<Item>() {
+			@Override
+			public int compare(Item lhs, Item rhs) {
+				// TODO Auto-generated method stub
+				boolean lhsIsFolder = lhs.isDirectory();
+				boolean rhsIsFolder = rhs.isDirectory();
+				if(lhsIsFolder == rhsIsFolder){
+					if(lhsIsFolder)
+						return lhs.getName().compareTo(rhs.getName());
+					else{
+						long lhslen = lhs.getFile().length();
+						long rhsLen = rhs.getFile().length();
+						
+						if(lhslen < rhsLen)
+							return -1;
+						else if (lhslen > rhsLen)
+							return 1;
+						else 
+							return 0;
+					}
+				}if(rhsIsFolder)
+					return 1;
+				return -1;
+			}
+		};
+		Collections.sort(items, compare);		
+		return items;
+	}
+	
+	/**
+	 * this function sorts the list of files in big to small size order
+	 * keeping folders at first
+	 */
+	public ArrayList<Item> bigSize_Sort(ArrayList<Item> items){
+		Comparator<Item> compare = new Comparator<Item>() {
+			@Override
+			public int compare(Item lhs, Item rhs) {
+				// TODO Auto-generated method stub
+				boolean lhsIsFolder = lhs.isDirectory();
+				boolean rhsIsFolder = rhs.isDirectory();
+				if(lhsIsFolder == rhsIsFolder){
+					if(lhsIsFolder)
+						return lhs.getName().compareTo(rhs.getName());
+					else{
+						long lhslen = lhs.getFile().length();
+						long rhsLen = rhs.getFile().length();
+						
+						if(lhslen < rhsLen)
+							return 1;
+						else if (lhslen > rhsLen)
+							return -1;
+						else 
+							return 0;
+					}
+				}if(rhsIsFolder)
+					return 1;
+				return -1;
+			}
+		};
+		Collections.sort(items, compare);		
+		return items;
+	}
+	
+	/**
+	 * this function sorts the list of files in small to big size order
+	 * keeping folders at first
+	 */
+	public ArrayList<Item> newDate_Sort(ArrayList<Item> items){
+		Comparator<Item> compare = new Comparator<Item>() {
+			@Override
+			public int compare(Item lhs, Item rhs) {
+				// TODO Auto-generated method stub
+				boolean lhsIsFolder = lhs.isDirectory();
+				boolean rhsIsFolder = rhs.isDirectory();
+				if(lhsIsFolder == rhsIsFolder){
+					if(lhsIsFolder)
+						return lhs.getName().compareTo(rhs.getName());
+					else{
+						long lhslen = lhs.getFile().lastModified();
+						long rhsLen = rhs.getFile().lastModified();
+					
+						Date lhsD = new Date(lhslen);
+						Date rhsD = new Date(rhsLen);
+						return -lhsD.compareTo(rhsD);
+					}
+				}if(rhsIsFolder)
+					return 1;
+				return -1;
+			}
+		};
+		Collections.sort(items, compare);		
+		return items;
+	}
+	
+	/**
+	 * this function sorts the list of files in small to big size order
+	 * keeping folders at first
+	 */
+	public ArrayList<Item> oldDate_Sort(ArrayList<Item> items){
+		Comparator<Item> compare = new Comparator<Item>() {
+			@Override
+			public int compare(Item lhs, Item rhs) {
+				// TODO Auto-generated method stub
+				boolean lhsIsFolder = lhs.isDirectory();
+				boolean rhsIsFolder = rhs.isDirectory();
+				if(lhsIsFolder == rhsIsFolder){
+					if(lhsIsFolder)
+						return lhs.getName().compareTo(rhs.getName());
+					else{
+						long lhslen = lhs.getFile().lastModified();
+						long rhsLen = rhs.getFile().lastModified();
+					
+						Date lhsD = new Date(lhslen);
+						Date rhsD = new Date(rhsLen);
+						return lhsD.compareTo(rhsD);
+					}
+				}if(rhsIsFolder)
+					return 1;
+				return -1;
+			}
+		};
+		Collections.sort(items, compare);		
+		return items;
+	}
 }

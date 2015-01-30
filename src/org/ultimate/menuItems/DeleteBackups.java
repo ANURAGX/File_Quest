@@ -21,10 +21,9 @@ package org.ultimate.menuItems;
 
 import java.io.File;
 
+
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
-import org.anurag.file.quest.RootManager;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -104,7 +103,7 @@ public class DeleteBackups{
 				thread = new Thread(new Runnable() {
 					@Override
 					public void run() {
-						RootManager.deleteTarget(file);
+						deleteTarget(file);
 						mHandler.sendEmptyMessage(2);
 					}
 				});
@@ -159,6 +158,33 @@ public class DeleteBackups{
 	}
 	
 
+	/**
+	 * Function To Delete The Given File And Returns Message To Handler
+	 * If Deletion is successful returns 0 else returns -1
+	 * @param path
+	 * @return
+	 */
+	public void deleteTarget(File file) {
+		File target = file;
+		if(target.exists() && target.isFile() && target.canWrite())
+			target.delete();
+		else if(target.exists() && target.isDirectory() && target.canRead()) {
+			String[] file_list = target.list();
+			if(file_list != null && file_list.length == 0) {
+				target.delete();
+			} else if(file_list != null && file_list.length > 0) {
+				for(int i = 0; i < file_list.length; i++) {
+					File temp_f = new File(target.getAbsolutePath() + "/" + file_list[i]);
+					if(temp_f.isDirectory())
+						deleteTarget(temp_f);
+					else if(temp_f.isFile())
+						temp_f.delete();
+				}
+			}
+			if(target.exists())
+				if(target.delete()){}
+		}
+	}
 	
 	
 }

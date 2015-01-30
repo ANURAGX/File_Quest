@@ -323,16 +323,13 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 		
 		if (ENABLE_ON_LAUNCH) {
 			if (new File(INTERNAL_PATH_TWO).exists()) {
-				if (PATH != INTERNAL_PATH_TWO)
-					SDManager.nStack.push(INTERNAL_PATH_TWO);
 			} else {
 				edit.putString("INTERNAL_PATH_TWO", PATH);
 				edit.commit();
 				showToast(getResources().getString(R.string.startupfoldernotfound));
 			}
 			if (new File(INTERNAL_PATH_ONE).exists()) {
-				if (PATH != INTERNAL_PATH_ONE)
-					RootManager.nStack.push(INTERNAL_PATH_ONE);
+				
 			} else {
 				edit.putString("INTERNAL_PATH_ONE", PATH);
 				edit.commit();
@@ -718,13 +715,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 						return getString(R.string.filegallery);
 					return titles[fPos];
 				case 1:
-					if (RootManager.nStack.size() == 1)
-						pageTitleRoot = "/";
-					else
-						pageTitleRoot = RootManager.getCurrentDirectoryName();
+					
 					return pageTitleRoot;
 				case 2:
-					pageTitleSD = SDManager.getCurrentDirectoryName();
+					//pageTitleSD = SDManager.getCurrentDirectoryName();
 					return pageTitleSD;
 				case 3:
 					return getString(R.string.appstore);
@@ -904,7 +898,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 								new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
 							else{
 								//a folder was requested to open from favorite tile...
-								SDManager.nStack.push(file0.getPath());
+								//SDManager.nStack.push(file0.getPath());
 								setAdapter(2);
 								mViewPager.setCurrentItem(2);
 							}
@@ -1001,7 +995,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 									new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
 								else{
 									//folder is tried to open from favorite tile...
-									SDManager.nStack.push(file0.getPath());
+									//SDManager.nStack.push(file0.getPath());
 									setAdapter(2);
 									mViewPager.setCurrentItem(2);
 								}
@@ -1083,7 +1077,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 						}else{
 							//DIRECTORY HAS TO BE OPENED....
 							zipPathRoot = zFileSimple.getPath();
-							RootManager.nStack.push(zipPathRoot+" -> Zip");
+							///RootManager.nStack.push(zipPathRoot+" -> Zip");
 							if(zipPathRoot.startsWith("/"))
 								zipPathRoot = zipPathRoot.substring(1, zipPathRoot.length());
 							setZipAdapter();
@@ -1097,7 +1091,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 							rarPathRoot = rFileRoot.getPath();
 							if(rarPathRoot.startsWith("\\"))
 								rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
-							RootManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
+							//RootManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
 							setRarAdapter();
 						}
 						
@@ -1107,7 +1101,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 							new ExtractTarFile(mContext, tFileRoot, size.x*8/9, null, file.getFile(), 0);	
 						}else{
 							tarPathRoot = tFileRoot.getPath();
-							RootManager.nStack.push(tFileRoot.getName()+" -> Tar");
+							//.nStack.push(tFileRoot.getName()+" -> Tar");
 							setTarAdapter();
 						}
 					}else{
@@ -1118,7 +1112,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 								if (!file.isDirectory())
 									new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
 								else if (file.isDirectory()){
-									RootManager.nStack.push(file.getPath());
+									//RootManager.nStack.push(file.getPath());
 									setAdapter(1);
 								}
 							}else
@@ -1194,7 +1188,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 							}else{
 								//DIRECTORY HAS TO BE OPENED....
 								zipPathRoot = zFileSimple.getPath();
-								RootManager.nStack.push(zipPathRoot+" -> Zip");
+								//RootManager.nStack.push(zipPathRoot+" -> Zip");
 								if(zipPathRoot.startsWith("/"))
 									zipPathRoot = zipPathRoot.substring(1, zipPathRoot.length());
 								setZipAdapter();
@@ -1208,7 +1202,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 								rarPathRoot = rFileRoot.getPath();
 								if(rarPathRoot.startsWith("\\"))
 									rarPathRoot = rarPathRoot.substring(0,rarPathRoot.length());
-								RootManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
+								//RootManager.nStack.push(rFileRoot.getFileName()+" -> Rar");
 								setRarAdapter();
 							}
 							
@@ -1218,7 +1212,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 								new ExtractTarFile(mContext, tFileRoot, size.x*8/9, null, file.getFile(), 0);	
 							}else{
 								tarPathRoot = tFileRoot.getPath();
-								RootManager.nStack.push(tFileRoot.getName()+" -> Tar");
+								//RootManager.nStack.push(tFileRoot.getName()+" -> Tar");
 								setTarAdapter();
 							}
 						}else{
@@ -1229,7 +1223,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 								if (!file.isDirectory())
 									new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
 								else if (file.isDirectory()){
-									RootManager.nStack.push(file.getPath());
+									//RootManager.nStack.push(file.getPath());
 									setAdapter(1);
 								}
 							}else
@@ -1538,7 +1532,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 								}else{
 									//DIRECTORY HAS TO BE OPENED....
 									zipPathSD = zFileSD.getPath();
-									SDManager.nStack.push(zipPathSD+" -> Zip");
+									//SDManager.nStack.push(zipPathSD+" -> Zip");
 									if(zipPathSD.startsWith("/"))
 										zipPathSD = zipPathSD.substring(1, zipPathSD.length());
 									setZipAdapter();
@@ -1552,7 +1546,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 									rarPathSD = rarFileSD.getPath();
 									if(rarPathSD.startsWith("\\"))
 										rarPathSD = rarPathSD.substring(0,rarPathSD.length());
-									SDManager.nStack.push(rarFileSD.getFileName()+" -> Rar");
+									//SDManager.nStack.push(rarFileSD.getFileName()+" -> Rar");
 									setRarAdapter();
 								}
 							}else if(TAR_SD){//HANDLING TAR FILE....
@@ -1561,7 +1555,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 									new ExtractTarFile(mContext, tFileSD, size.x*8/9, null, file2.getFile(), 0);
 								}else{
 									tarPathSD = tFileSD.getPath();
-									SDManager.nStack.push(tFileSD.getName()+" -> Tar");
+									//SDManager.nStack.push(tFileSD.getName()+" -> Tar");
 									setTarAdapter();
 								}
 							}else{//ORDINARY FILE HANDLING....
@@ -1570,7 +1564,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 									if (!file2.isDirectory()) {
 										new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
 									} else if (file2.isDirectory()) {
-										SDManager.nStack.push(file2.getPath());
+										//SDManager.nStack.push(file2.getPath());
 										setAdapter(2);
 										//resetPager();
 									}
@@ -1822,7 +1816,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 						}else{
 							//DIRECTORY HAS TO BE OPENED....
 							zipPathSD = zFileSD.getPath();
-							SDManager.nStack.push(zipPathSD+" -> Zip");
+							//SDManager.nStack.push(zipPathSD+" -> Zip");
 							if(zipPathSD.startsWith("/"))
 								zipPathSD = zipPathSD.substring(1, zipPathSD.length());
 							setZipAdapter();
@@ -1836,7 +1830,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 							rarPathSD = rarFileSD.getPath();
 							if(rarPathSD.startsWith("\\"))
 								rarPathSD = rarPathSD.substring(0,rarPathSD.length());
-							SDManager.nStack.push(rarFileSD.getFileName()+" -> Rar");
+							//.nStack.push(rarFileSD.getFileName()+" -> Rar");
 							setRarAdapter();
 						}
 					}else if(TAR_SD){//HANDLING TAR FILE....
@@ -1845,7 +1839,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 							new ExtractTarFile(mContext, tFileSD, size.x*8/9, null, file2.getFile(), 0);
 						}else{
 							tarPathSD = tFileSD.getPath();
-							SDManager.nStack.push(tFileSD.getName()+" -> Tar");
+							//SDManager.nStack.push(tFileSD.getName()+" -> Tar");
 							setTarAdapter();
 						}
 					}else{//ordinary file handling...
@@ -1855,7 +1849,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 								if (!file2.isDirectory()) {
 									new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
 								} else if (file2.isDirectory()) {
-									SDManager.nStack.push(file2.getPath());
+									//SDManager.nStack.push(file2.getPath());
 									setAdapter(2);
 									//resetPager();
 								}
@@ -2629,7 +2623,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 				}
 			}else if(ZIP_ROOT && CURRENT_ITEM==1){
 				//POPING OUT THE ZIP PATH.....
-				RootManager.nStack.pop();
+				//RootManager.nStack.pop();
 				/**
 				 * ZIP FILE IS OPENED IN SDCARD_PANEL...
 				 * HANDLE IT HERE.....
@@ -2661,7 +2655,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 				}
 				
 			}else if(RAR_ROOT&&CURRENT_ITEM==1){//RAR FILE HANDLING ON BACK KEY PRESS...
-				RootManager.nStack.pop();
+				//RootManager.nStack.pop();
 				if(rarPathRoot.equalsIgnoreCase("/")){
 					RAR_ROOT = false;
 					rarPathRoot = null;
@@ -2677,7 +2671,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 					}
 				}
 			}else if(TAR_ROOT&&CURRENT_ITEM==1){//TAR FILE HANDLING ON BACK KEY PRESS...
-				RootManager.nStack.pop();
+				//RootManager.nStack.pop();
 				if(tarPathRoot.equals("/")){
 					TAR_ROOT = false;
 					tarPathRoot = null;
@@ -2693,11 +2687,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 					}
 				}
 			}
-			else if (CURRENT_ITEM == 1&& !RootManager.getCurrentDirectory().equals("/")) {
-				RootManager.nStack.pop();
+			else if (CURRENT_ITEM == 1) {
+				//RootManager.nStack.pop();
 				setAdapter(1);
-				file = new Item(new File(RootManager.getCurrentDirectory()),null, null, null);
-			} else if (CURRENT_ITEM == 1&&RootManager.getCurrentDirectory().endsWith("/")) {
+				//file = new Item(new File(RootManager.getCurrentDirectory()),null, null, null);
+			} else if (CURRENT_ITEM == 1) {
 				/**
 				 * CHECKS WHETHER THE CURRENT PREF IS 1 IF IT IS FOUND 3 THEN IT
 				 * TAKES ACTION TO EXIT ON CURRENT ITEM = 1
@@ -2722,7 +2716,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 			else if(ZIP_SD && CURRENT_ITEM==2){
 				//POPING OUT THE ZIP PATH....
 				
-				SDManager.nStack.pop();
+				//SDManager.nStack.pop();
 				/**
 				 * ZIP FILE IS OPENED IN SDCARD_PANEL...
 				 * HANDLE IT HERE.....
@@ -2755,7 +2749,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 				
 			}else if(RAR_SD&&CURRENT_ITEM==2){
 				//BACK KEY HANDLING FOR RAR FILES....
-				SDManager.nStack.pop();
+				//SDManager.nStack.pop();
 				if(rarPathSD.equalsIgnoreCase("/")){
 					RAR_SD = false;
 					rarPathSD = null;
@@ -2771,7 +2765,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 					}
 				}
 			}else if(TAR_SD&&CURRENT_ITEM==2){//TAR FILE HANDLING ON BACK KEY PRESS...
-				SDManager.nStack.pop();
+				//SDManager.nStack.pop();
 				if(tarPathSD.equals("/")){
 					TAR_SD = false;
 					tarPathSD = null;
@@ -2786,11 +2780,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 						setTarAdapter();
 					}
 				}
-			}else if (CURRENT_ITEM == 2 && (SDManager.nStack.size() >= 2)) {
-				SDManager.nStack.pop();
+			}else if (CURRENT_ITEM == 2  ) {
+				//.nStack.pop();
 				setAdapter(2);
-				file2 = new Item(new File(SDManager.getCurrentDirectory()), null, null, null);
-			} else if (CURRENT_ITEM == 2 && SDManager.nStack.size() < 2) {
+				//file2 = new Item(new File(SDManager.getCurrentDirectory()), null, null, null);
+			} else if (CURRENT_ITEM == 2 ) {
 				/**
 				 * CHECKS WHETHER THE CURRENT PREF IS 2 IF IT IS FOUND 3 THEN IT
 				 * TAKES ACTION TO EXIT ON CURRENT ITEM = 2
@@ -3220,22 +3214,14 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 			if (CURRENT_ITEM == 2) {
 				if (longC)
 					dest = file2.getFile().getAbsolutePath();
-				else
-					dest = SDManager.getCurrentDirectory();
-				if (MULTIPLE_COPY)
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, dest, false);
-				else if (MULTIPLE_CUT)
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, dest, true);
+				
+				
 
 			} else if (CURRENT_ITEM == 1) {
 				if (longC)
 					dest = file.getFile().getAbsolutePath();
-				else
-					dest = RootManager.getCurrentDirectory();
-				if (MULTIPLE_COPY)
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, dest, false);
-				else if (MULTIPLE_CUT)
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, dest, true);
+				
+				
 
 			}
 			COPY_COMMAND = CUT_COMMAND = CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = false;
@@ -3245,15 +3231,15 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 			 */
 			if (CURRENT_ITEM == 2) {
 				if (MULTIPLE_COPY_GALLERY) {
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, SDManager.getCurrentDirectory(),	false);
+					//new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, SDManager.getCurrentDirectory(),	false);
 				} else if (MULTIPLE_CUT_GALLERY) {
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, SDManager.getCurrentDirectory(),	true);
+					//new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, SDManager.getCurrentDirectory(),	true);
 				}
 			} else if (CURRENT_ITEM == 1) {
 				if (MULTIPLE_COPY_GALLERY) {
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, RootManager.getCurrentDirectory(),false);
+				//	new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, RootManager.getCurrentDirectory(),false);
 				} else if (MULTIPLE_CUT_GALLERY) {
-					new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, RootManager.getCurrentDirectory(),	true);
+					//new MultipleCopyDialog(mContext, COPY_FILES,size.x*8/9, RootManager.getCurrentDirectory(),	true);
 				}
 			}
 			COPY_COMMAND = CUT_COMMAND = CREATE_FILE = RENAME_COMMAND = SEARCH_FLAG = MULTIPLE_COPY = MULTIPLE_CUT = MULTIPLE_COPY_GALLERY = MULTIPLE_CUT_GALLERY = false;
@@ -3336,7 +3322,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 						} else {
 							if (CURRENT_ITEM == 1) {
 								if(!tempItem.isLocked()){
-									RootManager.nStack.push(value);
+									//RootManager.nStack.push(value);
 									setAdapter(CURRENT_ITEM);
 									mViewPager.setCurrentItem(1);
 								}else
@@ -3344,7 +3330,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 								
 							} else if (CURRENT_ITEM == 2){
 								if(!tempItem.isLocked()){
-									SDManager.nStack.push(value);
+									//SDManager.nStack.push(value);
 									setAdapter(2);
 									mViewPager.setCurrentItem(2, true);
 								}else
@@ -3362,11 +3348,11 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 					
 					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
 						ZIP_SD = true;
-						SDManager.nStack.push("/ -> Zip");
+						//SDManager.nStack.push("/ -> Zip");
 					}	
 					else{
 						ZIP_ROOT = true;
-						RootManager.nStack.push("/ -> Zip");
+						//RootManager.nStack.push("/ -> Zip");
 					}	
 					setZipAdapter();
 				}else if(ACTION.equalsIgnoreCase("FQ_EXTRACT_PATH")){
@@ -3379,10 +3365,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 					
 					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
 						RAR_SD = true;
-						SDManager.nStack.push("/ -> Rar");
+						//SDManager.nStack.push("/ -> Rar");
 					}else{
 						RAR_ROOT = true;
-						RootManager.nStack.push("/ -> Rar");
+						//RootManager.nStack.push("/ -> Rar");
 					}
 					setRarAdapter();
 				}else if(ACTION.equalsIgnoreCase("FQ_TAR_OPEN")){
@@ -3392,10 +3378,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 					
 					if(CURRENT_ITEM==0||CURRENT_ITEM==2){
 						TAR_SD = true;
-						SDManager.nStack.push("/ -> Tar");
+						//SDManager.nStack.push("/ -> Tar");
 					}else if(CURRENT_ITEM==1){
 						TAR_ROOT = true;
-						RootManager.nStack.push("/ -> Tar");
+						//RootManager.nStack.push("/ -> Tar");
 					}
 					setTarAdapter();
 				}else if(ACTION.equalsIgnoreCase("FQ_7Z_OPEN")){
@@ -3445,7 +3431,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 								if (!file2.isDirectory()) {
 									new OpenFileDialog(mContext, Uri.parse(file2.getPath()), size.x*8/9);
 								} else if (file2.isDirectory()) {
-									SDManager.nStack.push(file2.getPath());
+									//SDManager.nStack.push(file2.getPath());
 									
 									//using separate handler and thread only because
 									//setAdapter() function was causing app to force close....
@@ -3508,7 +3494,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 							
 							//opening the home folder....
 							else if(Constants.activeMode == Constants.MODES.HOME){
-								SDManager.nStack.push(HOME_DIRECTORY);
+								//SDManager.nStack.push(HOME_DIRECTORY);
 								setAdapter(2);
 							}
 						}else if(CURRENT_ITEM==1){
@@ -3518,7 +3504,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 								if(!file.isDirectory()){
 									new OpenFileDialog(mContext, Uri.parse(file.getPath()), size.x*8/9);
 								}else if(file.isDirectory()){
-									RootManager.nStack.push(file.getPath());
+								//	RootManager.nStack.push(file.getPath());
 									setAdapter(1);
 								}
 							}
@@ -3533,7 +3519,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 								if(f.isFile())
 									new OpenFileDialog(mContext, Uri.parse(f.getPath()), size.x*8/9);
 								else{
-									RootManager.nStack.push(f.getPath());
+									//RootManager.nStack.push(f.getPath());
 									setAdapter(1);
 								}
 							}
@@ -3568,7 +3554,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 							
 							//opening the home folder..
 							else if(Constants.activeMode == Constants.MODES.HOME){
-								RootManager.nStack.push(HOME_DIRECTORY);
+							//	RootManager.nStack.push(HOME_DIRECTORY);
 								setAdapter(1);
 							}
 						}else if(CURRENT_ITEM == 0){
@@ -3580,7 +3566,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 									new OpenFileDialog(mContext, Uri.parse(file0.getPath()), size.x*8/9);
 								else{
 									//a folder was requested to open from favorite tile...
-									SDManager.nStack.push(file0.getPath());
+									//SDManager.nStack.push(file0.getPath());
 									setAdapter(2);
 								}
 							}
@@ -3990,10 +3976,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 					/**
 					 * ZIP ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
 					 */
-					if(CURRENT_ITEM==1)
-						RootManager.nStack.pop();
-					else if(CURRENT_ITEM==2)
-						SDManager.nStack.pop();
+					//if(CURRENT_ITEM==1)
+				//		RootManager.nStack.pop();
+					//else if(CURRENT_ITEM==2)
+						//SDManager.nStack.pop();
 					resetPager();
 					if(progDial.isShowing())
 						progDial.dismiss();
@@ -4066,10 +4052,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 					/**
 					 * RAR ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
 					 */
-					if(CURRENT_ITEM==1)
-						RootManager.nStack.pop();
-					else if(CURRENT_ITEM==2)
-						SDManager.nStack.pop();
+					//if(CURRENT_ITEM==1)
+				//		RootManager.nStack.pop();
+				//else if(CURRENT_ITEM==2)
+						//SDManager.nStack.pop();
 					resetPager();
 					if(progDial.isShowing())
 						progDial.dismiss();
@@ -4149,10 +4135,10 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 					/**
 					 * RAR ARCHIVE IS CORRUPTED OR AN ERROR WAS OCCURED WHILE READING...
 					 */
-					if(CURRENT_ITEM==1)
-						RootManager.nStack.pop();
-					else if(CURRENT_ITEM==2)
-						SDManager.nStack.pop();
+				//	if(CURRENT_ITEM==1)
+					//	RootManager.nStack.pop();
+					//else if(CURRENT_ITEM==2)
+						//SDManager.nStack.pop();
 					resetPager();
 					if(progDial.isShowing())
 						progDial.dismiss();
@@ -4215,21 +4201,21 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 	 */
 	private void cleanStack(String p){
 		if(CURRENT_ITEM==1&&(RAR_ROOT||ZIP_ROOT||TAR_ROOT)){
-			while(RootManager.nStack.peek().contains("->"))
-				RootManager.nStack.pop();
+			//while(RootManager.nStack.peek().contains("->"))
+			//	RootManager.nStack.pop();
 			RAR_ROOT = TAR_ROOT= ZIP_ROOT = false;
 			if(p != null)
 				file = new Item(new File(p), null, null, null);
-			else
-				file = new Item(new File(RootManager.nStack.peek()), null, null, null);
+			//else
+			//	file = new Item(new File(RootManager.nStack.peek()), null, null, null);
 		}else if(CURRENT_ITEM==2&&(RAR_SD||TAR_SD||ZIP_SD)){
-			while(SDManager.nStack.peek().contains("->"))
-				SDManager.nStack.pop();
-			RAR_SD = ZIP_SD = TAR_SD = false;
+			//while(SDManager.nStack.peek().contains("->"))
+		//.nStack.pop();
+		//	RAR_SD = ZIP_SD = TAR_SD = false;
 			if(p != null)
 				file2 = new Item(new File(p), null, null, null);
-			else
-				file2 = new Item(new File(SDManager.nStack.peek()), null, null, null);
+			else{}
+				//file2 = new Item(new File(SDManager.nStack.peek()), null, null, null);
 		}
 	}
 	
