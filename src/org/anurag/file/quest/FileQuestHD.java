@@ -751,19 +751,23 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		//setting list view of current pager item....
 		switch(panel){
 		case 0:
-			FileGallery.resetAdapter();
+			if(!Constants.LONG_CLICK[0])
+				FileGallery.resetAdapter();
 			break;
 			
 		case 1:
-			RootPanel.resetAdapter();
+			if(!Constants.LONG_CLICK[1])
+				RootPanel.resetAdapter();
 			break;
 		
 		case 2:
-			SdCardPanel.resetAdapter();
+			if(!Constants.LONG_CLICK[2])
+				SdCardPanel.resetAdapter();
 			break;
 			
 		case 3:
-			AppStore.resetAdapter();
+			if(!Constants.LONG_CLICK[3])
+				AppStore.resetAdapter();
 			break;
 			
 		}
@@ -773,21 +777,24 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			if(j != panel){
 				switch(j){
 				case 0:
-					FileGallery.resetAdapter();
+					if(!Constants.LONG_CLICK[0])
+						FileGallery.resetAdapter();
 					break;
 					
 				case 1:
-					RootPanel.resetAdapter();
+					if(!Constants.LONG_CLICK[1])
+						RootPanel.resetAdapter();
 					break;
 				
 				case 2:
-					SdCardPanel.resetAdapter();
+					if(!Constants.LONG_CLICK[2])
+						SdCardPanel.resetAdapter();
 					break;
 					
 				case 3:
-					AppStore.resetAdapter();
-					break;
-					
+					if(!Constants.LONG_CLICK[3])
+						AppStore.resetAdapter();
+					break;					
 				}
 			}
 		}
