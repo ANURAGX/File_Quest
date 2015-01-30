@@ -666,14 +666,21 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			
 		case R.id.action_refresh:
 			//refreshing the list view....
-			if(pager.getCurrentItem() == 2)
-				SdCardPanel.refresh_list();
-			else if(pager.getCurrentItem() == 1)
-				RootPanel.refresh_list();
-			else if(pager.getCurrentItem() == 0)
-				FileGallery.refresh_list();
-			else 
-				AppStore.refresh_list();
+			if(!Constants.LONG_CLICK[panel]){
+				switch(panel){
+				case 0:
+					FileGallery.refresh_list();
+					break;
+				case 1:
+					RootPanel.refresh_list();
+					break;
+				case 2:
+					SdCardPanel.refresh_list();
+					break;
+				case 3:
+					AppStore.refresh_list();
+				}
+			}
 			return true;
 			
 		case R.id.simple_ls:

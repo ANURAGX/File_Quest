@@ -20,7 +20,7 @@ package org.anurag.file.quest;
 
 import java.util.ArrayList;
 
-import android.util.SparseArray;
+
 
 /**
  * 
@@ -29,30 +29,35 @@ import android.util.SparseArray;
  */
 public class QueuedTask {
 	
-	
-	public int DELETE = 0;
-	public int COPY = 1;
-	public int CUT = 2;
-	public int PASTE = 3;
-	public int COMPRESS = 4;
-	public int ADD_GESTURE = 5;
-	
-	public static int TASK_COUNTER;
-	public static SparseArray<Item> queue_list;
+	private int TASK_ID;
+	private ArrayList<Item> ls;
+	private String parentDir;
 	
 	/**
 	 * 
 	 * @param item
 	 * @param task_ID
 	 */
-	public QueuedTask(ArrayList<Item> item , int task_ID) {
+	public QueuedTask(ArrayList<Item> item , int task_ID , String parentPath) {
 		// TODO Auto-generated constructor stub
-		if(queue_list == null){
-			queue_list = new SparseArray<Item>();
-			TASK_COUNTER = -1;
-		}	
-		
-		for(int i = 0 ; i< item.size() ; ++i)
-			queue_list.put(++TASK_COUNTER, item.get(i));
+		this.ls = item;
+		this.TASK_ID = task_ID;
+		this.parentDir = parentPath;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Item> getList(){
+		return this.ls;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getTaskID(){
+		return this.TASK_ID;
 	}
 }
