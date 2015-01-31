@@ -1,5 +1,5 @@
 /**
- * Copyright(c) 2013 DRAWNZER.ORG PROJECTS -> ANURAG
+ * Copyright(c) 2015 DRAWNZER.ORG PROJECTS -> ANURAG
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,36 +17,48 @@
  *
  */
 
-package org.ultimate.menuItems;
+package org.anurag.file.quest;
 
-import org.anurag.file.quest.Constants;
-import org.anurag.file.quest.R;
+import java.util.HashMap;
 
-import android.app.Dialog;
-import android.content.Context;
-
-
-
-public class Info{
-
-	Context mContext; 
-	Dialog dialog; 
+/**
+ * this class handles the queued tasks like copying,moving,etc....
+ * 
+ * @author anurag
+ *
+ */
+public class QueuedTaskManager {
 	
-	public Info(Context context,int width) {
+	private static HashMap<String , QueuedTask> task_list;
+	
+	public QueuedTaskManager() {
 		// TODO Auto-generated constructor stub
-		mContext = context;
-		dialog = new Dialog(mContext, Constants.DIALOG_STYLE);
-		dialog.setContentView(R.layout.info_layout);
-		dialog.setCancelable(true);
-		dialog.getWindow().getAttributes().width = width;
-		dialog.show();
+	}
+
+	/**
+	 * 
+	 * @param task to be queued in the list....
+	 */
+	public static void add_task(QueuedTask task){
+		if(task_list == null)
+			task_list = new HashMap<>();
+		
+		
 	}
 	
-	public void onCreate() {
-		// TODO Auto-generated method stub
+	/**
+	 * 
+	 * @param id of the task to be removed....
+	 */
+	public static void remove_task(String id){
+		if(task_list == null)
+			return;
 		
-		//params.alpha = 0.8f;
-		//setContentView(R.layout.info_layout);
-		
+		try{
+			task_list.remove(id);
+		}catch(Exception e){
+			
+		}
 	}
+	
 }
