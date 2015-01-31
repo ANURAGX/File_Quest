@@ -239,6 +239,10 @@ public class DeleteFiles{
 			@Override
 			public void onClick(View v) {
 				dialog.setCancelable(false);
+				
+				//this broadcast is sent to imageviewer class in case if its open....
+				ctx.sendBroadcast(new Intent("DELETE_IMAGE"));
+				
 				thread.start();
 				//message.setVisibility(View.VISIBLE);
 			}

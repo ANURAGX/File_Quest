@@ -28,13 +28,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 
+import org.anurag.dialogs.BluetoothChooser;
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-import org.ultimate.menuItems.BluetoothChooser;
 
 import android.app.Dialog;
 import android.content.Context;

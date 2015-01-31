@@ -28,11 +28,11 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.anurag.dialogs.BluetoothChooser;
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
-import org.ultimate.menuItems.BluetoothChooser;
 
 import android.app.Dialog;
 import android.content.Context;

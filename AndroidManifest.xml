@@ -89,8 +89,7 @@
         </activity>
         
         <!-- FQ IMAGE VIEWER -->
-        <activity 
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+        <activity
             android:label="FQ Image Viewer"
             android:name="org.anurag.file.quest.ImageViewer">
             <intent-filter >

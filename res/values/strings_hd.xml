@@ -173,4 +173,6 @@
     <string name="opening">Opening item....</string>
     <string name="not_exists">Item doesnot exist</string>
     <string name="items_zipped">Items successfully zipped</string>
+    <string name="loading_image">Loading image</string>
+    <string name="failed_to_load_image">Failed to load image</string>
 </resources>

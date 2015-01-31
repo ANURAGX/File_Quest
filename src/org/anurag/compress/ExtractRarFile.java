@@ -24,11 +24,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+
+import org.anurag.dialogs.BluetoothChooser;
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
-import org.ultimate.menuItems.BluetoothChooser;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
@@ -40,6 +42,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.github.junrar.Archive;
 import com.github.junrar.exception.RarException;
 import com.github.junrar.rarfile.FileHeader;

@@ -49,13 +49,13 @@ import org.anurag.compress.TarObj;
 import org.anurag.compress.ZipAdapter;
 import org.anurag.compress.ZipManager;
 import org.anurag.compress.ZipObj;
+import org.anurag.dialogs.BluetoothChooser;
 import org.anurag.dialogs.DeleteFiles;
 import org.anurag.dropbox.DBoxAdapter;
 import org.anurag.dropbox.DBoxAuth;
 import org.anurag.dropbox.DBoxManager;
 import org.anurag.dropbox.DBoxUsers;
 import org.ultimate.menuItems.AppProperties;
-import org.ultimate.menuItems.BluetoothChooser;
 import org.ultimate.menuItems.GetHomeDirectory;
 import org.ultimate.menuItems.MultipleCopyDialog;
 

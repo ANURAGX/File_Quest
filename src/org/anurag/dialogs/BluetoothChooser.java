@@ -17,7 +17,7 @@
  *
  */
 
-package org.ultimate.menuItems;
+package org.anurag.dialogs;
 
 import java.io.File;
 import java.util.List;
@@ -45,17 +45,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+/**
+ * 
+ * @author anurag
+ *
+ */
 public class BluetoothChooser{
-	static Context mContext;
-	static PackageManager pack;
-	String CLASS;
-	String CLASS_NAME;
-	boolean seleted = false;
-	Dialog dialog;
-	Intent i;
-	File f;
-	String u;
-	public BluetoothChooser(Context context,String Data,int width,String url) {
+	
+	private Context mContext;
+	private PackageManager pack;
+	private String CLASS;
+	private String CLASS_NAME;
+	private boolean seleted = false;
+	private Dialog dialog;
+	private Intent i;
+	private File f;
+	private String u;
+	
+	
+	public BluetoothChooser(Context context, String Data,int  width, String url) {
 		// TODO Auto-generated constructor stub
 		mContext = context;
 		
@@ -163,7 +171,7 @@ public class BluetoothChooser{
 	 * @author Anurag
 	 *
 	 */
-	public static class OpenItems extends ArrayAdapter<ResolveInfo>{
+	class OpenItems extends ArrayAdapter<ResolveInfo>{
 		List<ResolveInfo> mList;
 		public OpenItems(Context context, int textViewResourceId,List<ResolveInfo> objects) {
 			super(context, textViewResourceId , objects);
