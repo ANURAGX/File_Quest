@@ -94,7 +94,7 @@ public class GraphAnalysis extends ActionBarActivity{
 		adpt = new PagerFragmentAdapter(getSupportFragmentManager());
 		pager.setAdapter(adpt);
 		strip.setViewPager(pager);
-		
+		pager.setBackgroundColor(Constants.COLOR_STYLE);
 		strip.setBackgroundColor(Constants.COLOR_STYLE);
 		
 	}
@@ -123,6 +123,7 @@ public class GraphAnalysis extends ActionBarActivity{
 		}
 		LinearLayout main = (LinearLayout) findViewById(R.id.main);
 		main.setPadding(0, getStatusBarHeight(), 0, hasNavBar ? getNavigationBarHeight() :0);
+		main.setBackgroundColor(Constants.COLOR_STYLE);
 	}
 	
 	/**
@@ -259,7 +260,7 @@ public class GraphAnalysis extends ActionBarActivity{
 			pChart = (PieChart)view.findViewById(R.id.chart2);
 			
 			// change the color of the center-hole
-	        pChart.setHoleColor(Color.rgb(235, 235, 235));
+	        pChart.setHoleColor(getResources().getColor(R.color.semi_white30));
 
 	        pChart.setHoleRadius(40f);
 	        pChart.setDescription("");
@@ -282,7 +283,7 @@ public class GraphAnalysis extends ActionBarActivity{
 	        
 	        //pChart.setTouchEnabled(false);
 
-	        pChart.setCenterText(getResources().getString(R.string.graph_stats));
+	        pChart.setCenterText("");
 	        
 	        setPieData();
 	        pChart.animateXY(1500, 1500);

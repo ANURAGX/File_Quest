@@ -1,4 +1,6 @@
-<!-- 
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
   Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
   
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,20 +16,24 @@
   limitations under the License.
                               
                               anuraxsharma1512@gmail.com
- 
- -->
- 
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
- 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/chart1"
-        android:background="@color/semi_white30"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="20dp"/>
+-->
 
-</LinearLayout>
+
+<menu 
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item 
+        android:icon="@drawable/left"
+        app:showAsAction="always"
+        android:id="@+id/left"
+        android:title="@string/left"/>
+
+    
+    <item
+        android:icon="@drawable/right"
+        app:showAsAction="always"
+        android:id="@+id/right"
+        android:title="@string/right"/>
+    
+</menu>

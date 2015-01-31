@@ -233,15 +233,17 @@ public class AddGesture extends ActionBarActivity{
 		}
 		
 		if(RootPanel.ITEMS != null){
-			int len = RootPanel.get_selected_items().size();
+			ArrayList<Item> ls = RootPanel.get_selected_items();
+			int len = ls.size();
 			for(int i = 0 ; i < len ; ++i)
-				gest_list.add(RootPanel.get_selected_items().get(i));
+				gest_list.add(ls.get(i));
 		}
 		
 		if(SdCardPanel.ITEMS != null){
-			int len = SdCardPanel.get_selected_items().size();
+			ArrayList<Item> ls = SdCardPanel.get_selected_items();
+			int len = ls.size();
 			for(int i = 0 ; i < len ; ++i)
-				gest_list.add(SdCardPanel.get_selected_items().get(i));
+				gest_list.add(ls.get(i));
 		}
 		
 		return gest_list;

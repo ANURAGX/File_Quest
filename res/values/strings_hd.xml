@@ -52,6 +52,8 @@
     <string name="action_properties">Properties</string>
     <string name="action_queued">Queued Task</string>
     <string name="action_no_task">No pending task</string>
+    <string name="left">Left</string>
+    <string name="right">Right</string>
     
     
     <string-array name="settings_array">
