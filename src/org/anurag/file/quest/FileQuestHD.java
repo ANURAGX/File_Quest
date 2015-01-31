@@ -20,7 +20,6 @@
 package org.anurag.file.quest;
 
 import java.io.File;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -37,7 +36,6 @@ import org.anurag.fragments.RootPanel;
 import org.anurag.fragments.SdCardPanel;
 import org.anurag.gesture.AddGesture;
 import org.anurag.gesture.G_Open;
-import org.anurag.settings.Settings;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;

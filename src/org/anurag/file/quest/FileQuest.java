@@ -20,7 +20,6 @@
 package org.anurag.file.quest;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -55,7 +54,6 @@ import org.anurag.dropbox.DBoxAdapter;
 import org.anurag.dropbox.DBoxAuth;
 import org.anurag.dropbox.DBoxManager;
 import org.anurag.dropbox.DBoxUsers;
-import org.anurag.settings.Settings;
 import org.ultimate.menuItems.AppProperties;
 import org.ultimate.menuItems.BluetoothChooser;
 import org.ultimate.menuItems.GetHomeDirectory;

@@ -18,7 +18,7 @@
  */
 
 
-package org.anurag.settings;
+package org.anurag.file.quest;
 
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.R;
