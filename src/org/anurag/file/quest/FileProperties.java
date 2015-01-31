@@ -28,16 +28,12 @@ import org.anurag.fragments.RootPanel;
 import org.anurag.fragments.SdCardPanel;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.MediaMetadataRetriever;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -46,6 +42,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -79,8 +76,9 @@ public class FileProperties extends ActionBarActivity{
 	private PieChart pChart;
 	private File file;
 	private long size;
-	
+	private int counter;
 	private Toolbar toolbar;
+	
 	
 	//color for pie chart....
 	private int color[] = {
@@ -88,39 +86,12 @@ public class FileProperties extends ActionBarActivity{
 				Color.rgb(255, 93, 61)
 			};
 
-	private Handler handler = new Handler(){
-		@Override
-		public void handleMessage(Message msg) {
-			// TODO Auto-generated method stub
-			if(msg.what == 1){
-				pChart.animateXY(1500, 1500);
-				return;
-			}
-			setPieData();
-		//	pChart.animateXY(1500, 1500);
-	        Legend l = pChart.getLegend();
-	        l.setPosition(LegendPosition.RIGHT_OF_CHART);
-	        l.setXEntrySpace(7f);
-	        l.setYEntrySpace(5f);
-		}
-		
-	};
-	
-	private Thread thread = new Thread(new Runnable() {
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			calculateLength();
-			handler.sendEmptyMessage(1);
-		}
-	});
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stubidPage
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.graph_analysis);
-		
+		counter = -1;
 		indicator = (PagerSlidingTabStrip) findViewById(R.id.graph_ind);
 		pager = (ViewPager) findViewById(R.id.graph_pager);
 		toolbar = (Toolbar) findViewById(R.id.toolbar_top);
@@ -130,18 +101,38 @@ public class FileProperties extends ActionBarActivity{
 		getSupportActionBar().setIcon(R.drawable.graph_analysis_hd);
 		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Constants.COLOR_STYLE));
 		getSupportActionBar().setTitle(R.string.properties);
-		
+		getLs();
 		adapter = new PageAdpt(getSupportFragmentManager());
-		
 		pager.setAdapter(adapter);
 		indicator.setViewPager(pager);
-
+		
 	}
 	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		
 		getMenuInflater().inflate(R.menu.file_properties, menu);
+		if(lss.size() == 1){
+			menu.findItem(R.id.left).setVisible(false);
+			menu.findItem(R.id.right).setVisible(false);
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch(item.getItemId()){
+		case R.id.left:
+			
+			break;
+			
+		case R.id.right:
+			
+			break;
+		}
 		return true;
 	}
 	
@@ -189,19 +180,49 @@ public class FileProperties extends ActionBarActivity{
 		
 		public pie_chart() {
 			// TODO Auto-generated constructor stub
+			size = 0;
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			// TODO Auto-generated method stub
-			return inflater.inflate(R.layout.bar_graph_analysis_fragment, container , false);
+			return inflater.inflate(R.layout.pie_chart_analysis, container , false);
 		}
 
 		@Override
 		public void onViewCreated(View view, Bundle savedInstanceState) {
 			// TODO Auto-generated method stub
-			super.onViewCreated(view, savedInstanceState);
+			pChart = (PieChart) view.findViewById(R.id.chart2);
+			// change the color of the center-hole
+	        pChart.setHoleColor(getResources().getColor(R.color.semi_white30));
+
+	        pChart.setHoleRadius(40f);
+	        pChart.setDescription("");
+
+	        pChart.setDrawYValues(true);
+	        pChart.setDrawCenterText(true);
+
+	        pChart.setDrawHoleEnabled(true);
+
+	        pChart.setRotationAngle(0);
+			
+	        // draws the corresponding description value into the slice
+	        pChart.setDrawXValues(true);
+
+	        // enable rotation of the chart by touch
+	        pChart.setRotationEnabled(true);
+
+	        // display percentage values
+	        pChart.setUsePercentValues(true);
+	        
+	        //pChart.setTouchEnabled(false);
+
+	        pChart.setCenterText("");
+	        
+	        setPieData();
+		
+	        
 		}	
 	}
 	
@@ -279,38 +300,58 @@ public class FileProperties extends ActionBarActivity{
 	 */
 	private void setPieData() {
 		// TODO Auto-generated method stub
-		ArrayList<Entry> yVal = new ArrayList<Entry>();
-		yVal.add(new BarEntry(Environment.getExternalStorageDirectory().getTotalSpace(), 0));
-		if(file.isFile()){
-			//if(type.equalsIgnoreCase("MUSIC")){
-				//if type is music then load the album art....
-				MediaMetadataRetriever ret = new MediaMetadataRetriever();
-				ret.setDataSource(file.getPath());
-				byte[] data = ret.getEmbeddedPicture();
-				Bitmap map = BitmapFactory.decodeByteArray(data, 0, data.length);
-				//if(map != null)
-					//prp_img.setImageBitmap(map);
-			//}
-			yVal.add(new BarEntry(file.length(), 1));
-		//	prp_size.setText(getString(R.string.filesize) + " - " + RootManager.getSize(file));
-		}	
-		else if(file.isDirectory()){
-			yVal.add(new BarEntry(size, 1));
-			//prp_size.setText(Utils.size(size));
-		}	
-		
-		ArrayList<String> xVal = new ArrayList<String>();
-		xVal.add(getResources().getString(R.string.sd));
-		xVal.add(file.getName());
-		
-		PieDataSet set = new PieDataSet(yVal, "");
-		set.setSliceSpace(4f);
-		
-        set.setColors(color);
-        PieData data = new PieData(xVal, set);
-        pChart.setData(data);
-        pChart.highlightValues(null);
-        pChart.invalidate();
+		new AsyncTask<Void, Void, Void>() {
+        	ArrayList<String> xVal = new ArrayList<String>();
+        	ArrayList<Entry> yVal = new ArrayList<Entry>();
+        	
+			@Override
+			protected void onPostExecute(Void result) {
+				// TODO Auto-generated method stub
+				super.onPostExecute(result);
+				pChart.setVisibility(View.VISIBLE);
+				pChart.invalidate();
+
+		        pChart.animateXY(1500, 1500);
+		        Legend l = pChart.getLegend();
+		        l.setPosition(LegendPosition.RIGHT_OF_CHART);
+		        l.setXEntrySpace(7f);
+		        l.setYEntrySpace(5f);
+			}
+
+			@Override
+			protected void onPreExecute() {
+				// TODO Auto-generated method stub
+				super.onPreExecute();
+				pChart.setVisibility(View.GONE); 
+			}
+
+			@Override
+			protected Void doInBackground(Void... params) {
+				// TODO Auto-generated method stub
+				yVal.add(new BarEntry(Environment.getExternalStorageDirectory().getTotalSpace(), 0));
+				file = lss.get(++counter).getFile();
+				if(file.isFile())
+					yVal.add(new BarEntry(file.length(), 1));
+				else{
+					//folder....
+					size = calculateLength();
+					yVal.add(new BarEntry(size, 1));
+				}
+
+				xVal.add(getResources().getString(R.string.sd));
+				xVal.add(file.getName());
+				
+				PieDataSet set = new PieDataSet(yVal, "");
+				set.setSliceSpace(4f);
+				
+		        set.setColors(color);
+		        PieData data = new PieData(xVal, set);
+		        pChart.setData(data);
+		        pChart.highlightValues(null);
+				
+				return null;
+			}
+		}.execute();
 	}
 	
 	/**
@@ -333,15 +374,13 @@ public class FileProperties extends ActionBarActivity{
 	 */
 	private void getFileSize(File file){
 		if(file.isFile()){
-			size = file.length();
-			handler.sendEmptyMessage(0);
+			size += file.length();
 		}	
 		else if(file.isDirectory() && file.listFiles().length !=0){
 			File[] a = file.listFiles();
 			for(int i = 0 ; i<a.length ; ++i){
 				if(a[i].isFile()){
 					size = size + a[i].length();
-					handler.sendEmptyMessage(0);
 				}	
 				else
 					getFileSize(a[i]);
@@ -359,30 +398,18 @@ public class FileProperties extends ActionBarActivity{
 		lss = new ArrayList<>();
 		switch(FileQuestHD.getCurrentItem()){
 		case 0:
-			if(FileGallery.ITEMS != null){
-				int len = FileGallery.lists.size();
-				for(int i = 0 ; i < len ; ++i)
-					if(FileGallery.ITEMS[i] == 1)
-						lss.add(FileGallery.lists.get(FileGallery.keys.get(""+i)));
-			}
+			if(Constants.LONG_CLICK[0])
+				lss = FileGallery.get_selected_items();
 			break;
 			
 		case 1:
-			if(RootPanel.ITEMS != null){
-				ArrayList<Item> ls = RootPanel.get_selected_items();
-				int len = ls.size();
-				for(int i = 0 ; i < len ; ++i)
-					lss.add(ls.get(i));
-			}
+			if(Constants.LONG_CLICK[1])
+				lss = RootPanel.get_selected_items();
 			break;
 			
 		case 2:
-			if(SdCardPanel.ITEMS != null){
-				ArrayList<Item> ls = SdCardPanel.get_selected_items();
-				int len = ls.size();
-				for(int i = 0 ; i < len ; ++i)
-					lss.add(ls.get(i));
-			}
+			if(Constants.LONG_CLICK[2])
+				lss = SdCardPanel.get_selected_items();
 			break;
 		}
 		

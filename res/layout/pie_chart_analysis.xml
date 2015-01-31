@@ -24,9 +24,34 @@
     android:background="@color/semi_white30"
     android:orientation="vertical" >
  
-    <com.github.mikephil.charting.charts.PieChart
+    <com.github.mikephil.charting.charts.PieChart        
         android:id="@+id/chart2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    
+    
+    <LinearLayout 
+        android:gravity="center"
+        android:id="@+id/progress_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <TextView 
+            android:id="@+id/img_msg"
+            android:gravity="center"
+            android:text="@string/loading_image"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        
+        <ProgressBar 
+            android:paddingTop="5dp"
+            android:gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="50dp"/>
+        
+    </LinearLayout>
 
 </LinearLayout>
