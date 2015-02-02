@@ -105,7 +105,8 @@ public class FileProperties extends ActionBarActivity{
 		adapter = new PageAdpt(getSupportFragmentManager());
 		pager.setAdapter(adapter);
 		indicator.setViewPager(pager);
-		
+		pager.setBackgroundColor(Constants.COLOR_STYLE);
+		indicator.setBackgroundColor(Constants.COLOR_STYLE);
 	}
 	
 
@@ -237,7 +238,7 @@ public class FileProperties extends ActionBarActivity{
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			// TODO Auto-generated method stub
-			return inflater.inflate(R.layout.bar_graph_analysis_fragment, container , false);
+			return inflater.inflate(R.layout.file_properties, container , false);
 		}
 
 		@Override
@@ -266,7 +267,6 @@ public class FileProperties extends ActionBarActivity{
 		}
 		LinearLayout main = (LinearLayout) findViewById(R.id.main);
 		main.setBackgroundColor(Constants.COLOR_STYLE);
-		indicator.setBackgroundColor(Constants.COLOR_STYLE);
 		main.setPadding(0, getStatusBarHeight(), 0, hasNavBar ? getNavigationBarHeight() :0);
 	}
 	
