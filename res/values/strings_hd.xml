@@ -177,4 +177,12 @@
     <string name="items_zipped">Items successfully zipped</string>
     <string name="loading_image">Loading image</string>
     <string name="failed_to_load_image">Failed to load image</string>
+    <string name="name">Name</string>
+    <string name="path">Path</string>
+    <string name="hidden">Hidden</string>
+    <string name="readable">Readable</string>
+    <string name="writable">Writable</string>
+    <string name="executable">Executable</string>
+    <string name="size">Size</string>
+    <string name="parentpath">Parent path</string>
 </resources>

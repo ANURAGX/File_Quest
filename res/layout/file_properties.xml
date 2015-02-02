@@ -18,10 +18,249 @@
  -->
 <LinearLayout
     android:id="@+id/main" 
+    android:background="@color/semi_white30"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
         
+    <LinearLayout 
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout 
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+            <TextView 
+                android:textStyle="bold"
+                android:textColor="@color/white_grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name"/>
+        </LinearLayout>        
+        <LinearLayout 
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">            
+            <TextView 
+                android:id="@+id/fname"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>            
+        </LinearLayout>        
+    </LinearLayout>
+    
+    
+    <LinearLayout 
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout 
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+            <TextView
+                android:textStyle="bold"
+                android:textColor="@color/white_grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/path"/>
+        </LinearLayout>        
+        <LinearLayout 
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">            
+            <TextView 
+                android:id="@+id/fpath"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>            
+        </LinearLayout>        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout 
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+            <TextView 
+                android:textStyle="bold"
+                android:textColor="@color/white_grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/parentpath"/>
+        </LinearLayout>        
+        <LinearLayout 
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">            
+            <TextView 
+                android:id="@+id/fparpath"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>            
+        </LinearLayout>        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout 
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+            <TextView 
+                android:textStyle="bold"
+                android:textColor="@color/white_grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/size"/>
+        </LinearLayout>        
+        <LinearLayout 
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">            
+            <TextView 
+                android:id="@+id/fsize"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>            
+        </LinearLayout>        
+    </LinearLayout>
+    
+    
+    <LinearLayout 
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout 
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+            <TextView 
+                android:textStyle="bold"
+                android:textColor="@color/white_grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hidden"/>
+        </LinearLayout>        
+        <LinearLayout 
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">            
+            <TextView 
+                android:id="@+id/fhidden"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>            
+        </LinearLayout>        
+    </LinearLayout>
+    
+    
+    <LinearLayout 
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout 
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+            <TextView 
+                android:textStyle="bold"
+                android:textColor="@color/white_grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/executable"/>
+        </LinearLayout>        
+        <LinearLayout 
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">            
+            <TextView 
+                android:id="@+id/faccess"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>            
+        </LinearLayout>        
+    </LinearLayout>
+    
+    
+    <LinearLayout 
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout 
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+            <TextView 
+                android:textStyle="bold"
+                android:textColor="@color/white_grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/readable"/>
+        </LinearLayout>        
+        <LinearLayout 
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">            
+            <TextView 
+                android:id="@+id/fread"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>            
+        </LinearLayout>        
+    </LinearLayout>
+    
+    
+    <LinearLayout 
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout 
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+            <TextView 
+                android:textStyle="bold"
+                android:textColor="@color/white_grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/writable"/>
+        </LinearLayout>        
+        <LinearLayout 
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">            
+            <TextView 
+                android:id="@+id/fwrite"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>            
+        </LinearLayout>        
+    </LinearLayout>
+    
+    
 </LinearLayout>

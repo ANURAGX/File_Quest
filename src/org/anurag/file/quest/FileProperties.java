@@ -46,6 +46,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.extra.libs.PagerSlidingTabStrip;
 import com.github.mikephil.charting.charts.PieChart;
@@ -78,8 +79,8 @@ public class FileProperties extends ActionBarActivity{
 	private long size;
 	private int counter;
 	private Toolbar toolbar;
-	
-	
+	private TextView Fsize;
+	private int ls_size;
 	//color for pie chart....
 	private int color[] = {
 				Color.rgb(81, 171, 56),
@@ -91,7 +92,7 @@ public class FileProperties extends ActionBarActivity{
 		// TODO Auto-generated method stubidPage
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.graph_analysis);
-		counter = -1;
+		counter = 0;
 		indicator = (PagerSlidingTabStrip) findViewById(R.id.graph_ind);
 		pager = (ViewPager) findViewById(R.id.graph_pager);
 		toolbar = (Toolbar) findViewById(R.id.toolbar_top);
@@ -102,6 +103,9 @@ public class FileProperties extends ActionBarActivity{
 		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Constants.COLOR_STYLE));
 		getSupportActionBar().setTitle(R.string.properties);
 		getLs();
+		
+		getSupportActionBar().setTitle("  " + lss.get(0).getName());
+		
 		adapter = new PageAdpt(getSupportFragmentManager());
 		pager.setAdapter(adapter);
 		indicator.setViewPager(pager);
@@ -118,7 +122,10 @@ public class FileProperties extends ActionBarActivity{
 		if(lss.size() == 1){
 			menu.findItem(R.id.left).setVisible(false);
 			menu.findItem(R.id.right).setVisible(false);
-		}
+		}else if(counter == 0){
+			menu.findItem(R.id.left).setVisible(false);
+		}else if(counter == ls_size-1)
+			menu.findItem(R.id.right).setVisible(false);
 		return true;
 	}
 	
@@ -127,13 +134,24 @@ public class FileProperties extends ActionBarActivity{
 		// TODO Auto-generated method stub
 		switch(item.getItemId()){
 		case R.id.left:
-			
+			if(counter - 1 > -1){
+				getSupportActionBar().setTitle("  " + lss.get(--counter).getName());
+				adapter = new PageAdpt(getSupportFragmentManager());
+				pager.setAdapter(adapter);
+				indicator.setViewPager(pager);				
+			}
 			break;
 			
 		case R.id.right:
-			
+			if(counter + 1 < ls_size){
+				getSupportActionBar().setTitle("  " + lss.get(++counter).getName());
+				adapter = new PageAdpt(getSupportFragmentManager());
+				pager.setAdapter(adapter);
+				indicator.setViewPager(pager);				
+			}
 			break;
 		}
+		invalidateOptionsMenu();
 		return true;
 	}
 	
@@ -245,6 +263,42 @@ public class FileProperties extends ActionBarActivity{
 		public void onViewCreated(View view, Bundle savedInstanceState) {
 			// TODO Auto-generated method stub
 			super.onViewCreated(view, savedInstanceState);
+			
+			TextView name = (TextView) view.findViewById(R.id.fname);
+			TextView path = (TextView) view.findViewById(R.id.fpath);
+			TextView parent = (TextView) view.findViewById(R.id.fparpath);
+			Fsize = (TextView) view.findViewById(R.id.fsize);
+			TextView hidden = (TextView) view.findViewById(R.id.fhidden);
+			TextView read = (TextView) view.findViewById(R.id.fread);
+			TextView access = (TextView) view.findViewById(R.id.faccess);
+			TextView write = (TextView) view.findViewById(R.id.fwrite);
+			
+			File f = lss.get(counter).getFile();
+			
+			name.setText(f.getName());
+			path.setText(f.getAbsolutePath());
+			parent.setText(f.getParent());
+			if(f.isHidden())
+				hidden.setText("YES");
+			else
+				hidden.setText("No");
+			
+			if(f.canRead())
+				read.setText("Yes");
+			else
+				read.setText("NO");
+			
+			if(f.canExecute())
+				access.setText("Yes");
+			else
+				access.setText("No");
+			
+			if(f.canWrite())
+				write.setText("Yes");
+			else
+				write.setText("No");
+			
+			Fsize.setText(size(size));
 		}	
 	}
 	
@@ -316,7 +370,11 @@ public class FileProperties extends ActionBarActivity{
 		        l.setPosition(LegendPosition.RIGHT_OF_CHART);
 		        l.setXEntrySpace(7f);
 		        l.setYEntrySpace(5f);
-			}
+		        
+		        try{
+			        Fsize.setText(size(size));				
+		        }catch(Exception e){}
+		    }
 
 			@Override
 			protected void onPreExecute() {
@@ -329,7 +387,7 @@ public class FileProperties extends ActionBarActivity{
 			protected Void doInBackground(Void... params) {
 				// TODO Auto-generated method stub
 				yVal.add(new BarEntry(Environment.getExternalStorageDirectory().getTotalSpace(), 0));
-				file = lss.get(++counter).getFile();
+				file = lss.get(counter).getFile();
 				if(file.isFile())
 					yVal.add(new BarEntry(file.length(), 1));
 				else{
@@ -412,8 +470,25 @@ public class FileProperties extends ActionBarActivity{
 				lss = SdCardPanel.get_selected_items();
 			break;
 		}
-		
+		ls_size = lss.size();
 		return lss;
 	}
 	
+	/**
+	 * 
+	 * @param dat
+	 * @return
+	 */
+	private String size(long dat){
+		long size = dat;
+		if(size>Constants.GB)
+			return String.format(Constants.GB_STR, (double)size/(Constants.GB));
+		else if(size > Constants.MB)
+			return String.format(Constants.MB_STR, (double)size/(Constants.MB));
+		
+		else if(size>1024)
+			return String.format(Constants.KB_STR, (double)size/(1024));		
+		else
+			return String.format(Constants.BYT_STR ,  (double)size);
+	}
 }

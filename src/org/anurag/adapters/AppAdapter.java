@@ -199,17 +199,17 @@ public class AppAdapter extends BaseAdapter{
 	 * @param f
 	 * @return
 	 */
-	public static String size(File f){
+	private static String size(File f){
 		long size = f.length();
 		if(size>Constants.GB)
-			return String.format(mContext.getString(R.string.sizegb), (double)size/(Constants.GB));
+			return String.format(Constants.GB_STR, (double)size/(Constants.GB));
 		else if(size > Constants.MB)
-			return String.format(mContext.getString(R.string.sizemb), (double)size/(Constants.MB));
+			return String.format(Constants.MB_STR, (double)size/(Constants.MB));
 		
 		else if(size>1024)
-			return String.format(mContext.getString(R.string.sizekb), (double)size/(1024));		
+			return String.format(Constants.KB_STR, (double)size/(1024));		
 		else
-			return String.format(mContext.getString(R.string.sizebytes), (double)size);
+			return String.format(Constants.BYT_STR ,  (double)size);
 	}
 	
 }
