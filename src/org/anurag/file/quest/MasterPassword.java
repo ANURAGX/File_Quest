@@ -254,7 +254,7 @@ public class MasterPassword {
 							}
 						}
 						
-						//zipping th locked items....
+						//zipping the locked items....
 						else if(Constants.activeMode == Constants.MODES.ARCHIVE){
 							switch(FileQuestHD.getCurrentItem()){
 							
@@ -270,6 +270,14 @@ public class MasterPassword {
 								new ZipFiles(Constants.ctx, SdCardPanel.get_selected_items());
 								break;
 							}
+						}
+						
+						//removing the locked item from the db....
+						else if(Constants.activeMode == Constants.MODES.DEFAULT){
+							Constants.lock.setImageDrawable(Constants.UNLOCK_IMG);
+							item.setLockStatus(false);
+							Constants.db.deleteLockedNode(item.getPath());
+							Toast.makeText(ctx, R.string.item_unlocked, Toast.LENGTH_SHORT).show();
 						}
 						else{
 							ctx.sendBroadcast(intent);

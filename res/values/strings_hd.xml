@@ -185,4 +185,5 @@
     <string name="executable">Executable</string>
     <string name="size">Size</string>
     <string name="parentpath">Parent path</string>
+    <string name="item_unlocked">One item unlocked</string>
 </resources>

@@ -128,7 +128,7 @@ public class SimpleSDAdapter extends BaseAdapter{
 				}else{
 					//unlocking file,before that asking the password...
 					Constants.lock = img;
-					new MasterPassword(ctx, Constants.size.x*8/9,  null,prefs,Constants.MODES.DEFAULT);
+					new MasterPassword(ctx, Constants.size.x*8/9,  list.get(img.getId()) ,prefs,Constants.MODES.DEFAULT);
 				}
 			}
 		});

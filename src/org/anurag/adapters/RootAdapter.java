@@ -120,7 +120,7 @@ public class RootAdapter extends BaseAdapter{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				ImageView img = (ImageView)v;
-				SharedPreferences prefs = ctx.getSharedPreferences("MY_APP_SETTINGS", 0);
+				SharedPreferences prefs = ctx.getSharedPreferences("SETTINGS", 0);
 				if(!list.get(img.getId()).isLocked()){
 					//checking for master password is set or not
 					String passwd = prefs.getString("MASTER_PASSWORD", null);
@@ -137,7 +137,7 @@ public class RootAdapter extends BaseAdapter{
 				}else{
 					//unlocking file,before that asking the password...
 					Constants.lock = img;
-					new MasterPassword(ctx, Constants.size.x*8/9,  null,prefs,Constants.MODES.DEFAULT );
+					new MasterPassword(ctx, Constants.size.x*8/9,  list.get(img.getId()) ,prefs,Constants.MODES.DEFAULT );
 				}
 			}
 		});
