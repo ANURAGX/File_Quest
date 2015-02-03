@@ -49,8 +49,10 @@ import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
@@ -61,6 +63,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -87,7 +90,7 @@ import com.extra.libs.TransitionViewPager;
  * @author anurag
  *
  */
-public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItemClickListener{
+public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItemClickListener,View.OnClickListener{
 
 	private ActionBar action_bar;
 	private static PagerSlidingTabStrip indicator;
@@ -153,20 +156,26 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		
 		action_bar = getSupportActionBar();
 		styleActionBar(Constants.COLOR_STYLE);
+		init_actionbar_custom_view();
 		
 		toggle = new ActionBarDrawerToggle(FileQuestHD.this, drawer,
 				R.drawable.file_quest_icon, R.string.settings){
 			public void onDrawerClosed(View view) {
-                action_bar.setTitle(getString(R.string.app_name));
+                action_bar.setTitle("");
                 isDrawerOpen = false;                
             } 
             public void onDrawerOpened(View drawerView) {
-                action_bar.setTitle(getString(R.string.settings));
+                action_bar.setTitle("");
                 isDrawerOpen = true;
             }
 		};
 		
 		drawer.setDrawerListener(toggle);
+		
+		//loading internal sd card info on action bar
+		//in background thread....
+		load_sd_space();
+		
 		adapters = new PagerAdapters(getSupportFragmentManager());
 		pager.setAdapter(adapters);
 		pager.setOffscreenPageLimit(4);
@@ -207,13 +216,23 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		
 	}
 	
+	//setting custom views to action bar....
+	private void init_actionbar_custom_view() {
+		// TODO Auto-generated method stub
+		setSupportActionBar(toolbar);
+		getSupportActionBar().setCustomView(R.layout.space_action_bar_hd);
+		getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+		setSupportActionBar(top_toolbar);
+		getSupportActionBar().setCustomView(R.layout.space_action_bar_hd);
+		getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		MenuInflater inf = getMenuInflater();
 		if(!Constants.LONG_CLICK[pager.getCurrentItem()]){
 			inf.inflate(R.menu.main_actionbar_menu, menu);
-			action_bar.setTitle("File Quest");
 			getMainToolBar().setNavigationIcon(null);
 			menu.findItem(R.id.action_queued).getSubMenu().add("added");
 		}	
@@ -481,7 +500,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		bottom_options.setBackgroundColor(color);
 		LinearLayout drawermenu = (LinearLayout) findViewById(R.id.drawer_list);
 		drawermenu.setBackgroundColor(color);
-		action_bar.setHomeButtonEnabled(true);		
 	}
 	
 	/**
@@ -999,8 +1017,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 					//updating the menu....
 					invalidateOptionsMenu();
 					action_bar = getSupportActionBar();
-					action_bar.setHomeButtonEnabled(true);
-					
+					action_bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+				
 					//saving the changes....
 					Constants.ACTION_AT_TOP = !Constants.ACTION_AT_TOP;
 					prefs_editor.putBoolean("ACTION_AT_TOP", Constants.ACTION_AT_TOP);
@@ -1062,7 +1080,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				pager.setCurrentItem(panel);
 				
 				//setting up action bar when long click is inactive....
-				action_bar.setTitle(R.string.app_name);
+				action_bar.setTitle("");
 				getMainToolBar().setNavigationIcon(null);
 			}else if(action.equalsIgnoreCase("update_action_bar_long_click")){
 				//update the action bar as per no. of selected items....
@@ -1377,5 +1395,63 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		}		
 		devId.setText(dev);
 	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch(v.getId()){
+		
+		case R.id.open_drawer_menu:
+			drawer.openDrawer(Gravity.START);
+			break;
+		}
+	}
 	
+	/**
+	 * this function loads the sd card space and shows it in action
+	 * bar.... 
+	 */
+	private void load_sd_space(){
+		new AsyncTask<Void, Void , Void>() {
+			String avail = getString(R.string.free);
+			String total = getString(R.string.total);
+			
+			@Override
+			protected void onPostExecute(Void result) {
+				// TODO Auto-generated method stub
+				super.onPostExecute(result);
+				TextView av = (TextView) findViewById(R.id.avail_space);
+				TextView to = (TextView) findViewById(R.id.total_space);
+				av.setText(avail);
+				to.setText(total);
+			}
+
+			@Override
+			protected Void doInBackground(Void... params) {
+				// TODO Auto-generated method stub
+				long av = Environment.getExternalStorageDirectory().getFreeSpace();
+				long to = Environment.getExternalStorageDirectory().getTotalSpace();
+				
+				if(av > Constants.GB)
+					avail = avail + " " + String.format(Constants.GB_STR, (double)av/Constants.GB);
+				else if(av > Constants.MB)
+					avail = avail + " " + String.format(Constants.MB_STR, (double)av/Constants.MB);
+				else if(av > 1024)
+					avail = avail + " " + String.format(Constants.KB_STR, (double)av/1024);
+				else 
+					avail = avail + " " + String.format(Constants.BYT_STR, (double)av);
+				
+				if(to > Constants.GB)
+					total = total + " " + String.format(Constants.GB_STR, (double)to/Constants.GB);
+				else if(to > Constants.MB)
+					total = total + " " + String.format(Constants.MB_STR, (double)to/Constants.MB);
+				else if(to > 1024)
+					total = total + " " + String.format(Constants.KB_STR, (double)to/1024);
+				else 
+					total = total + " " + String.format(Constants.BYT_STR, (double)to);
+								
+				return null;
+			}
+		}.execute();
+	}	
 }

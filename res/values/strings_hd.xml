@@ -186,4 +186,7 @@
     <string name="size">Size</string>
     <string name="parentpath">Parent path</string>
     <string name="item_unlocked">One item unlocked</string>
+    <string name="internal_sd">Internal SD</string>
+    <string name="total">Total</string>
+    <string name="free">Free</string>
 </resources>
