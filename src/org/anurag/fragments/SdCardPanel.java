@@ -387,5 +387,5 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	 */
 	public static void push_path(String path){
 		manager.pushPath(path);
-	}
+	}	
 }
