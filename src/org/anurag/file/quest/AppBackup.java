@@ -30,6 +30,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 import org.anurag.adapters.AppAdapter;
+import org.anurag.fragments.AppStore;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -54,20 +55,19 @@ import android.widget.Toast;
  */
 public class AppBackup {
 
-	long size=0;
-	boolean running;
-	int read;
-	PackageManager mPack;
-	File file ;
-	byte data[] = new byte[Constants.BUFFER];
-	long prog;
+	private boolean running;
+	private int read;
+	private PackageManager mPack;
+	private File file ;
+	private byte data[] = new byte[Constants.BUFFER];
+	private long prog;
 	
-	String appsize;
-	String status;
-	String space;
-	String pname;
-	String vname;
-	String appnam;
+	private String appsize;
+	private String status;
+	private String space;
+	private String pname;
+	private String vname;
+	private String appnam;
 	
 	/**
 	 * 
@@ -170,8 +170,9 @@ public class AppBackup {
 								cancel.setText(ctx.getString(R.string.ok));
 							}else
 								Toast.makeText(ctx, ctx.getString(R.string.backupinterrupted), Toast.LENGTH_SHORT).show();
-							ctx.sendBroadcast(new Intent("FQ_BACKUP"));
-							
+							if(FileQuestHD.getCurrentItem() == 3){
+								AppStore.resetAdapter();
+							}
 				}
 			}
 		};
