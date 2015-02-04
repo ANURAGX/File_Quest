@@ -81,6 +81,8 @@ import android.widget.Toast;
 
 import com.extra.libs.PagerSlidingTabStrip;
 import com.extra.libs.TransitionViewPager;
+import com.placed.client.android.persistent.PlacedAgent;
+import com.placed.client.android.persistent.SurveyStatusCallback;
 
 
 
@@ -409,10 +411,26 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			prefs_editor.commit();
 			new WhatsNew(FileQuestHD.this, Constants.size.x*8/9, Constants.size.y*8/9);
 		}
+		init_surveys();
 		register_receiver();
 	}
 	
 	
+	private void init_surveys() {
+		// TODO Auto-generated method stub
+		PlacedAgent.registerAppWithDialog(FileQuestHD.this, "f93b120ab379");
+		PlacedAgent.setRestrictDeviceIds(FileQuestHD.this, true);
+		PlacedAgent.checkSurveyStatus(FileQuestHD.this , new SurveyStatusCallback() {
+			@Override
+			public void onSurveyStatusUpdate(boolean arg0) {
+				// TODO Auto-generated method stub
+				if(arg0){
+					PlacedAgent.launchSurveyActivity(FileQuestHD.this);
+				}
+			}
+		});
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		

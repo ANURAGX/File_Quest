@@ -32,6 +32,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
     
     <uses-sdk
         android:minSdkVersion="14"
@@ -153,7 +156,28 @@
         <!-- ACTIIVITY TO RECOGNIZE THE SAVED GESTURE AND OPEN ITEM.... -->
         <activity 
             android:name="org.anurag.gesture.G_Open"/>
-            
+        
+        
+        <meta-data 
+            android:name="placed_app_key" android:value="f93b120ab379" />
+		<service 
+		    android:name="com.placed.client.android.persistent.PlacedService"/>
+		<receiver 
+		    android:name="com.placed.client.android.persistent.PlacedReceiver" 
+		    android:exported="true">
+			<intent-filter>
+				<action 
+			    	android:name="android.intent.action.BOOT_COMPLETED"/>
+				<action 
+			    	android:name="android.intent.action.PACKAGE_REPLACED"/>
+				<data 
+				    android:scheme="package" />
+			</intent-filter>
+		</receiver>
+		
+		<activity 
+		    android:name="com.placed.client.android.persistent.PlacedSurveyActivity"
+			android:theme="@android:style/Theme.Translucent"/>
+		
    </application>
-
 </manifest>
