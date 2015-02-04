@@ -1495,10 +1495,16 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			protected void onPostExecute(Void result) {
 				// TODO Auto-generated method stub
 				super.onPostExecute(result);
-				TextView av = (TextView) findViewById(R.id.avail_space);
-				TextView to = (TextView) findViewById(R.id.total_space);
+				TextView av = (TextView) toolbar.findViewById(R.id.avail_space);
+				TextView to = (TextView) toolbar.findViewById(R.id.total_space);
 				av.setText(avail);
 				to.setText(total);
+				
+				av = (TextView) top_toolbar.findViewById(R.id.avail_space);
+				to = (TextView) top_toolbar.findViewById(R.id.total_space);
+				av.setText(avail);
+				to.setText(total);
+			
 			}
 
 			@Override

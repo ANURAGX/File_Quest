@@ -44,8 +44,17 @@ public class ConfirmTweakTask {
 	private String msg;
 	private TextView message;
 	private Button btn;
+	
+	/**
+	 * 
+	 * @param ctx
+	 * @param tweaktype
+	 * @param type
+	 * @param tweakwhat
+	 */
 	public ConfirmTweakTask(final Context ctx , final int tweaktype , String type , final int tweakwhat) {
 		// TODO Auto-generated constructor stub
+		
 		dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.confirm_tweak_hd);
 		dialog.setCancelable(true);
@@ -137,6 +146,5 @@ public class ConfirmTweakTask {
 		});
 		
 		dialog.show();
-	}
-	
+	}	
 }
