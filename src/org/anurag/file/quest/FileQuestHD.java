@@ -96,21 +96,63 @@ import com.placed.client.android.persistent.SurveyStatusCallback;
  */
 public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItemClickListener,View.OnClickListener{
 
+	//action bar instance....
 	private ActionBar action_bar;
+	
+	//strip indicator for view pager....
 	private static PagerSlidingTabStrip indicator;
+	
+	//extends view pager 
 	public static TransitionViewPager pager;
+	
+	//adapter for view pager....
 	private PagerAdapters adapters;
+	
+	//true then drawer is open...
 	private boolean isDrawerOpen;
+	
+	//toolbar used as action bar at bottom....
 	private Toolbar toolbar;
+	
+	//toolbar used as action bar at top position...
 	private Toolbar top_toolbar;
+	
+	//extra options shown in this toolbar....
 	private Toolbar bottom_options;
+	
+	//toggle listener for drawer layout...
 	private ActionBarDrawerToggle toggle;
+	
+	//sliding drawer layout....
 	private DrawerLayout drawer;
+	
+	//retrieving the app's preferences....
 	private SharedPreferences prefs;
 	
+	//detecting back press....
 	private boolean mBackPressed;
 	
+	//editor for saving settings....
 	private Editor prefs_editor;
+	
+	//navigation icon in main action bar....
+	private ImageView navIcon;
+	
+	//indicates no. of folder when long press is active....
+	private TextView no_folder;
+	
+	//indicates no. of files when long press is active....
+	private TextView no_files;
+	
+	//indicates no. of selected items when long press is active....
+	private TextView no_selection;
+	
+	//holds the available space of sd card
+	private String avail ;
+	
+	//holds the total space of sd card....
+	private String total;
+	
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
@@ -194,7 +236,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		init_with_device_id();
 
 		indicator.setOnPageChangeListener(new OnPageChangeListener() {
-			
 			@Override
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
@@ -208,16 +249,13 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
 				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
 				// TODO Auto-generated method stub
-				
 			}
-		});
-		
+		});		
 	}
 	
 	//setting custom views to action bar....
@@ -237,12 +275,35 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		MenuInflater inf = getMenuInflater();
 		if(!Constants.LONG_CLICK[pager.getCurrentItem()]){
 			inf.inflate(R.menu.main_actionbar_menu, menu);
-			getMainToolBar().setNavigationIcon(null);
 			menu.findItem(R.id.action_queued).getSubMenu().add("added");
+					
+			//setting up action bar to normal....
+			action_bar.setTitle("");
+			navIcon = (ImageView) toolbar.findViewById(R.id.open_drawer_menu);
+			navIcon.setBackgroundColor(Constants.COLOR_STYLE);
+			navIcon.setImageDrawable(getResources().getDrawable(R.drawable.menu));
+			navIcon = (ImageView) top_toolbar.findViewById(R.id.open_drawer_menu);
+			navIcon.setBackgroundColor(Constants.COLOR_STYLE);
+			navIcon.setImageDrawable(getResources().getDrawable(R.drawable.menu));
+			
+			no_selection = (TextView) top_toolbar.findViewById(R.id.no_selection);
+			no_selection.setText(R.string.internal_sd);
+			no_selection = (TextView) toolbar.findViewById(R.id.no_selection);
+			no_selection.setText(R.string.internal_sd);
+			
+			no_folder = (TextView) top_toolbar.findViewById(R.id.total_space);
+			no_folder.setText(total);
+			no_folder = (TextView) toolbar.findViewById(R.id.total_space);
+			no_folder.setText(total);
+			
+			no_files = (TextView) top_toolbar.findViewById(R.id.avail_space);
+			no_files.setText(avail);
+			no_folder = (TextView) toolbar.findViewById(R.id.total_space);
+			no_folder.setText(total);
+			
 		}	
 		else{
 			inf.inflate(R.menu.long_clk_menu_hd, menu);
-			getMainToolBar().setNavigationIcon(R.drawable.long_click_check);
 			sendBroadcast(new Intent("update_action_bar_long_click"));
 		}	
 		return true;
@@ -611,6 +672,10 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	 * @param title
 	 */
 	public static void notify_Title_Indicator(int position , String title){
+		if(position == 1){
+			if(title.equalsIgnoreCase(""))
+				title = "/";
+		}
 		PagerAdapters.setTitles(position, title);
 		indicator.notifyDataSetChanged();
 		pager.setCurrentItem(position);
@@ -796,9 +861,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		case R.id.date_old:
 			change_sort_type( 6 , panel);
 			break;
-		}
-		
-		
+		}		
 		return true;
 	}
 
@@ -1026,12 +1089,14 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 						bottom_options.setNavigationIcon(R.drawable.down_action);
 						top_toolbar.setVisibility(View.VISIBLE);
 						toolbar.setVisibility(View.GONE);
-						setSupportActionBar(top_toolbar);					
+						setSupportActionBar(top_toolbar);	
+						
 					}else{
 						bottom_options.setNavigationIcon(R.drawable.up_action);
 						top_toolbar.setVisibility(View.GONE);
 						toolbar.setVisibility(View.VISIBLE);
 						setSupportActionBar(toolbar);
+						
 					}
 				
 					//updating the menu....
@@ -1077,9 +1142,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				Constants.LONG_CLICK[panel] = true;
 				invalidateOptionsMenu();
 				
-				//setting up action bar when an item is long clicked....
-				action_bar.setTitle("1");
-				action_bar.setHomeAsUpIndicator(R.drawable.long_click_check);
 			}else if(action.equalsIgnoreCase("inflate_normal_menu")){
 				Constants.LONG_CLICK[panel] = false;
 				//long click got disabled,restore default screen.....
@@ -1098,21 +1160,90 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				
 				invalidateOptionsMenu();
 				pager.setCurrentItem(panel);
-				
-				//setting up action bar when long click is inactive....
-				action_bar.setTitle("");
-				getMainToolBar().setNavigationIcon(null);
+								
 			}else if(action.equalsIgnoreCase("update_action_bar_long_click")){
 				//update the action bar as per no. of selected items....
 				if(Constants.LONG_CLICK[panel]){
-					if(panel == 0){
-						action_bar.setTitle(""+FileGallery.counter);
-					}else if(panel == 1){
-						action_bar.setTitle(""+RootPanel.counter);
-					}else if(panel == 2){
-						action_bar.setTitle(""+SdCardPanel.counter);
-					}else if(panel == 3){
-						action_bar.setTitle(""+AppStore.counter);
+					
+					//setting up action bar when an item is long clicked....
+					navIcon = (ImageView) toolbar.findViewById(R.id.open_drawer_menu);
+					navIcon.setBackgroundColor(Constants.COLOR_STYLE);
+					navIcon.setImageDrawable(getResources().getDrawable(R.drawable.long_click_check));
+				
+					navIcon = (ImageView) top_toolbar.findViewById(R.id.open_drawer_menu);
+					navIcon.setBackgroundColor(Constants.COLOR_STYLE);
+					navIcon.setImageDrawable(getResources().getDrawable(R.drawable.long_click_check));
+				
+					switch(panel){
+					case 0:
+						no_selection = (TextView) top_toolbar.findViewById(R.id.no_selection);
+						no_selection.setText(FileGallery.counter + " selected");
+						no_selection = (TextView) toolbar.findViewById(R.id.no_selection);
+						no_selection.setText(FileGallery.counter + " selected");
+						
+						no_folder = (TextView) top_toolbar.findViewById(R.id.total_space);
+						no_folder.setText(FileGallery.folder_count + " folder");
+						no_folder = (TextView) toolbar.findViewById(R.id.total_space);
+						no_folder.setText(FileGallery.folder_count + " folder");
+						
+						no_files = (TextView) top_toolbar.findViewById(R.id.avail_space);
+						no_files.setText(FileGallery.file_count + " file");
+						no_folder = (TextView) toolbar.findViewById(R.id.total_space);
+						no_folder.setText(FileGallery.file_count + " file");
+						
+						break;
+						
+					case 1:
+						no_selection = (TextView) top_toolbar.findViewById(R.id.no_selection);
+						no_selection.setText(RootPanel.counter + " selected");
+						no_selection = (TextView) toolbar.findViewById(R.id.no_selection);
+						no_selection.setText(RootPanel.counter + " selected");
+						
+						no_folder = (TextView) top_toolbar.findViewById(R.id.total_space);
+						no_folder.setText(RootPanel.folder_count + " folder");
+						no_folder = (TextView) toolbar.findViewById(R.id.total_space);
+						no_folder.setText(RootPanel.folder_count + " folder");
+						
+						no_files = (TextView) top_toolbar.findViewById(R.id.avail_space);
+						no_files.setText(RootPanel.file_count + " file");
+						no_folder = (TextView) toolbar.findViewById(R.id.total_space);
+						no_folder.setText(RootPanel.file_count + " file");
+						
+						break;
+						
+					case 2:
+						no_selection = (TextView) top_toolbar.findViewById(R.id.no_selection);
+						no_selection.setText(SdCardPanel.counter + " selected");
+						no_selection = (TextView) toolbar.findViewById(R.id.no_selection);
+						no_selection.setText(SdCardPanel.counter + " selected");
+						
+						no_folder = (TextView) top_toolbar.findViewById(R.id.total_space);
+						no_folder.setText(SdCardPanel.folder_count + " folder");
+						no_folder = (TextView) toolbar.findViewById(R.id.total_space);
+						no_folder.setText(SdCardPanel.folder_count + " folder");
+						
+						no_files = (TextView) top_toolbar.findViewById(R.id.avail_space);
+						no_files.setText(SdCardPanel.file_count + " file");
+						no_folder = (TextView) toolbar.findViewById(R.id.total_space);
+						no_folder.setText(SdCardPanel.file_count + " file");
+						break;
+						
+					case 3:
+						no_selection = (TextView) top_toolbar.findViewById(R.id.no_selection);
+						no_selection.setText(AppStore.counter + " selected");
+						no_selection = (TextView) toolbar.findViewById(R.id.no_selection);
+						no_selection.setText(AppStore.counter + " selected");
+							
+						no_folder = (TextView) top_toolbar.findViewById(R.id.total_space);
+						no_folder.setText(total);
+						no_folder = (TextView) toolbar.findViewById(R.id.total_space);
+						no_folder.setText(total);
+						
+						no_files = (TextView) top_toolbar.findViewById(R.id.avail_space);
+						no_files.setText(avail);
+						no_folder = (TextView) toolbar.findViewById(R.id.total_space);
+						no_folder.setText(total);
+						
 					}
 				}
 			}
@@ -1477,7 +1608,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		switch(v.getId()){
 		
 		case R.id.open_drawer_menu:
-			drawer.openDrawer(Gravity.START);
+			if(!Constants.LONG_CLICK[pager.getCurrentItem()])
+				drawer.openDrawer(Gravity.START);
 			break;
 		}
 	}
@@ -1488,9 +1620,15 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	 */
 	private void load_sd_space(){
 		new AsyncTask<Void, Void , Void>() {
-			String avail = getString(R.string.free);
-			String total = getString(R.string.total);
 			
+			@Override
+			protected void onPreExecute() {
+				// TODO Auto-generated method stub
+				super.onPreExecute();
+				avail = getString(R.string.free);
+				total = getString(R.string.total);
+			}
+
 			@Override
 			protected void onPostExecute(Void result) {
 				// TODO Auto-generated method stub

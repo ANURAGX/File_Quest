@@ -68,10 +68,14 @@ public class FileGallery extends Fragment implements OnClickListener{
 	private static JazzyHelper list_anim_helper;
 	private static Item item;
 	private static boolean isListHasLockedItem;
+	public static int folder_count;
+	public static int file_count;
 	
 	public FileGallery() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
+		file_count = 0;
+		folder_count = 0;
 	}
 
 	@Override
@@ -124,6 +128,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
 				// TODO Auto-generated method stub
+				item = (Item) ls.getAdapter().getItem(position);
 				
 				if(Constants.LONG_CLICK[0]){
 					
@@ -131,10 +136,24 @@ public class FileGallery extends Fragment implements OnClickListener{
 						ITEMS[position] = 1;
 						arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
 						++counter;
+						
+						//updating folder and file count while long press is active....
+						if(item.isDirectory())
+							folder_count++;
+						else
+							file_count++;
+						
 						getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 					}else if(ITEMS[position] == 1){
 						ITEMS[position] = 0;
 						arg1.setBackgroundColor(Color.WHITE);
+						
+						//updating folder and file count while long press is active....
+						if(item.isDirectory())
+							folder_count--;
+						else
+							file_count--;
+						
 						if(--counter == 0)
 							getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
 						else
@@ -144,8 +163,6 @@ public class FileGallery extends Fragment implements OnClickListener{
 					return;					
 				}
 				
-				
-				item = (Item) ls.getAdapter().getItem(position);
 				if(item.exists()){
 					if(item.isLocked()){
 						new MasterPassword(getActivity(), Constants.size.x*8/9, item, null, Constants.MODES.OPEN);
@@ -164,6 +181,8 @@ public class FileGallery extends Fragment implements OnClickListener{
 					int arg2, long arg3) {
 				// TODO Auto-generated method stub
 				boolean sendBroadcast = false;
+				item = (Item) ls.getAdapter().getItem(arg2);
+				
 				if(ITEMS == null){
 					ITEMS = new int[ls.getAdapter().getCount()];
 					sendBroadcast = true;
@@ -173,10 +192,25 @@ public class FileGallery extends Fragment implements OnClickListener{
 					arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
 					ITEMS[arg2] = 1;
 					++counter;
+					
+					//updating folder and file count while long press is active....
+					if(item.isDirectory())
+						folder_count++;
+					else
+						file_count++;
+					
 					getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 				}else if(ITEMS[arg2] == 1){
 					ITEMS[arg2] = 0;
 					arg1.setBackgroundColor(Color.WHITE);
+					
+
+					//updating folder and file count while long press is active....
+					if(item.isDirectory())
+						folder_count--;
+					else
+						file_count--;
+					
 					if(--counter == 0)
 						getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
 					else

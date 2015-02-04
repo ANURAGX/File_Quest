@@ -44,7 +44,7 @@
         android:id="@+id/action_rename"
         android:title="@string/action_rename"
         android:icon="@drawable/rename"
-        app:showAsAction="always"/>
+        />
     
     <item 
         app:showAsAction="ifRoom"

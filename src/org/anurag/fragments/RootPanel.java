@@ -63,10 +63,15 @@ public class RootPanel extends Fragment{
 	private static Item item;
 	private static JazzyHelper list_anim_helper;
 	private static boolean isListHasLockedItem;
+	public static int folder_count;
+	public static int file_count;
+	
 	
 	public RootPanel() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
+		file_count = 0;
+		folder_count = 0;
 	}
 	
 	@Override
@@ -96,17 +101,31 @@ public class RootPanel extends Fragment{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
 				// TODO Auto-generated method stub
-				
+				item = adapter_list.get(position);
 				if(Constants.LONG_CLICK[1]){
-					
+										
 					if(ITEMS[position] != 1){
 						ITEMS[position] = 1;
 						arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
 						++counter;
+						
+						//updating folder and file count while long press is active....
+						if(item.isDirectory())
+							folder_count++;
+						else
+							file_count++;
+						
 						getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 					}else if(ITEMS[position] == 1){
 						ITEMS[position] = 0;
 						arg1.setBackgroundColor(Color.WHITE);
+						
+						//updating folder and file count while long press is active....
+						if(item.isDirectory())
+							folder_count--;
+						else
+							file_count--;
+						
 						if(--counter == 0)
 							getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
 						else
@@ -115,8 +134,6 @@ public class RootPanel extends Fragment{
 					
 					return;					
 				}
-				
-				item = adapter_list.get(position);
 				
 				if(item.exists()){
 					if(item.isLocked()){
@@ -145,19 +162,34 @@ public class RootPanel extends Fragment{
 					int arg2, long arg3) {
 				// TODO Auto-generated method stub
 				boolean sendBroadcast = false;
+				item = adapter_list.get(arg2);
 				if(ITEMS == null){
 					ITEMS = new int[adapter_list.size()];
 					sendBroadcast = true;
 				}
-				
+								
 				if(ITEMS[arg2] != 1){
 					arg1.setBackgroundColor(getResources().getColor(R.color.white_grey));
 					ITEMS[arg2] = 1;
 					++counter;
+					
+					//updating folder and file count while long press is active....
+					if(item.isDirectory())
+						folder_count++;
+					else
+						file_count++;
+					
 					getActivity().sendBroadcast(new Intent("update_action_bar_long_click"));
 				}else if(ITEMS[arg2] == 1){
 					ITEMS[arg2] = 0;
 					arg1.setBackgroundColor(Color.WHITE);
+					
+					//updating folder and file count while long press is active....
+					if(item.isDirectory())
+						folder_count--;
+					else
+						file_count--;
+					
 					if(--counter == 0)
 						getActivity().sendBroadcast(new Intent("inflate_normal_menu"));
 					else
@@ -302,7 +334,9 @@ public class RootPanel extends Fragment{
 	public static void clear_selected_items(){
 		list.setAdapter(adapter);
 		RootPanel.ITEMS = null;
-		counter = 0;
+		RootPanel.counter = 0;
+		RootPanel.folder_count = 0 ; 
+		RootPanel.file_count = 0;
 	}
 
 	/**

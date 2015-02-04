@@ -26,7 +26,7 @@
     android:orientation="horizontal"
     android:id="@+id/space_indicator" >
     
-    <ImageButton 
+    <ImageView 
         android:onClick="onClick"
         android:layout_gravity="center"
         android:id="@+id/open_drawer_menu"
@@ -43,6 +43,7 @@
 	    android:orientation="vertical">
 	    
 	    <TextView 
+	        android:id="@+id/no_selection"
         	android:textColor="@android:color/white"
         	android:textStyle="bold"
         	android:layout_width="wrap_content"
