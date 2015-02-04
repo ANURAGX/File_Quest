@@ -34,7 +34,6 @@ import org.anurag.fragments.AppStore;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.anurag.adapters.PagerAdapters;
+import org.anurag.dialogs.ConfirmTweakTask;
 import org.anurag.dialogs.CreateItem;
 import org.anurag.dialogs.DeleteFiles;
 import org.anurag.dialogs.Rename;
@@ -73,6 +74,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -1167,6 +1169,61 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 					update_checker();
 					break;
 				}
+				return false;
+			}
+		});
+		
+		drLs.setOnChildClickListener(new OnChildClickListener() {
+			@Override
+			public boolean onChildClick(ExpandableListView arg0, View arg1, int arg2,
+					int arg3, long arg4) {
+				// TODO Auto-generated method stub
+				String type = null;
+				int tweakwhat = 0;
+				switch(arg3){
+				case 0:
+					tweakwhat = 0;
+					type = " favorite ";
+					break;
+					
+				case 1:
+					tweakwhat = 1;
+					type = " music ";
+					break;
+					
+				case 2:
+					tweakwhat = 2;
+					type = " apps ";
+					break;
+						
+				case 3:
+					tweakwhat = 3;
+					type = " photos ";
+					break;
+					
+				case 4:
+					tweakwhat = 4;
+					type = " videos ";
+					break;
+					
+				case 5:
+					tweakwhat = 5;
+					type = " documents ";
+					break;
+					
+				case 6:
+					tweakwhat = 6;
+					type = " archives ";
+					break;
+					
+				case 7:
+					tweakwhat = 7;
+					type = " unknown ";
+					break;					
+				}
+				
+				new ConfirmTweakTask(FileQuestHD.this, arg2, type , tweakwhat);
+				
 				return false;
 			}
 		});

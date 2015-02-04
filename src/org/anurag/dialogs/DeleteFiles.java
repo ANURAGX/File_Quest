@@ -107,6 +107,23 @@ public class DeleteFiles{
 		new DeleteFiles(ctx, width, itms, msg);
 	}
 	
+	/**
+	 * 
+	 * @param ctx
+	 * @param width
+	 * @param list
+	 * @param lsKeys
+	 */
+	public DeleteFiles(Context ctx,int width , ConcurrentHashMap<String , Item> list ,ConcurrentHashMap<String, String> lsKeys){
+		// TODO Auto-generated constructor stub
+		ArrayList<Item> itms = new ArrayList<Item>();
+		len = list.size();
+		for(int i = 0 ; i<len ; ++i){
+			itms.add(list.get(lsKeys.get(""+i)));
+		}		
+		new DeleteFiles(ctx, width, itms, null);
+	}
+	
 	public DeleteFiles(Context context,int width,ArrayList<Item> list,String msg) {
 		// TODO Auto-generated constructor stub
 		
