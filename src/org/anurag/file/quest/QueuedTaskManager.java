@@ -21,6 +21,8 @@ package org.anurag.file.quest;
 
 import java.util.HashMap;
 
+import android.widget.TextView;
+
 /**
  * this class handles the queued tasks like copying,moving,etc....
  * 
@@ -30,6 +32,7 @@ import java.util.HashMap;
 public class QueuedTaskManager {
 	
 	private static HashMap<String , QueuedTask> task_list;
+	private static HashMap<String , TextView> action_views;
 	
 	public QueuedTaskManager() {
 		// TODO Auto-generated constructor stub
@@ -39,11 +42,12 @@ public class QueuedTaskManager {
 	 * 
 	 * @param task to be queued in the list....
 	 */
-	public static void add_task(QueuedTask task){
-		if(task_list == null)
+	public static void add_task(QueuedTask task ,String id){
+		if(task_list == null){
 			task_list = new HashMap<>();
-		
-		
+			action_views = new HashMap<>();
+		}	
+		task_list.put(id, task);		
 	}
 	
 	/**
@@ -61,4 +65,7 @@ public class QueuedTaskManager {
 		}
 	}
 	
+	private static void build_action_view(String id){
+		
+	}
 }
