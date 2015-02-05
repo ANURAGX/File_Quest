@@ -329,10 +329,17 @@ public class RootPanel extends Fragment{
 		load.execute();
 	}
 	/**
-	 * this function clears the selected items via long click from lits view....
+	 * this function clears the selected items via long click from list view....
 	 */
 	public static void clear_selected_items(){
-		list.setAdapter(adapter);
+		int last = list.getLastVisiblePosition();
+		int first = list.getFirstVisiblePosition();
+		for(int i = first; i <= last ; ++i){
+			try{
+				list.getChildAt(i - first).setBackgroundResource(R.drawable.list_selector_hd);
+			}catch(RuntimeException e){}
+		}
+		
 		RootPanel.ITEMS = null;
 		RootPanel.counter = 0;
 		RootPanel.folder_count = 0 ; 

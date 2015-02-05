@@ -1039,6 +1039,13 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		prefs_editor.putInt("COLOR_STYLE", Constants.COLOR_STYLE);
 		prefs_editor.putInt("ICON", Constants.FOLDER_ICON);
 		prefs_editor.commit();
+		
+		navIcon = (ImageView) toolbar.findViewById(R.id.open_drawer_menu);
+		navIcon.setBackgroundColor(Constants.COLOR_STYLE);
+		navIcon.setImageDrawable(getResources().getDrawable(R.drawable.menu));
+		navIcon = (ImageView) top_toolbar.findViewById(R.id.open_drawer_menu);
+		navIcon.setBackgroundColor(Constants.COLOR_STYLE);
+		navIcon.setImageDrawable(getResources().getDrawable(R.drawable.menu));
 	}
 	
 	//this function placement of action bar either at top

@@ -210,10 +210,18 @@ public class AppStore extends Fragment{
 	}
 	
 	/**
-	 * this function clears the selected items via long click from lits view....
+	 * this function clears the selected items via long click from list view....
 	 */
 	public static void clear_selected_items(){
-		ls.setAdapter(adapter);
+		
+		int last = ls.getLastVisiblePosition();
+		int first = ls.getFirstVisiblePosition();
+		for(int i = first; i <= last ; ++i){
+			try{
+				ls.getChildAt(i - first).setBackgroundResource(R.drawable.list_selector_hd);
+			}catch(RuntimeException e){}
+		}
+		
 		AppStore.ITEMS = null;
 		counter = 0;
 	}

@@ -214,10 +214,18 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	}
 	
 	/**
-	 * this function clears the selected items via long click from lits view....
+	 * this function clears the selected items via long click from list view....
 	 */
 	public static void clear_selected_items(){
-		list.setAdapter(adapter);		
+		//list.setAdapter(adapter);
+		int last = list.getLastVisiblePosition();
+		int first = list.getFirstVisiblePosition();
+		for(int i = first; i <= last ; ++i){
+			try{
+				list.getChildAt(i - first).setBackgroundResource(R.drawable.list_selector_hd);
+			}catch(RuntimeException e){}
+		}
+		
 		SdCardPanel.ITEMS = null;
 		SdCardPanel.counter = 0;
 		SdCardPanel.folder_count = 0 ; 
