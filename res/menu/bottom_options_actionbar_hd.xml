@@ -23,7 +23,8 @@
         android:id="@+id/search_file"
         android:icon="@drawable/search_file"
         android:title="@string/action_search"
-        app:showAsAction="always"/>
+        app:showAsAction="always"
+        app:actionViewClass="android.support.v7.widget.SearchView"/>
     
     <item 
         android:id="@+id/add_new"
