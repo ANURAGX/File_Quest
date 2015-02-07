@@ -176,6 +176,8 @@ public class DeleteFiles{
 							mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(Constants.PATH))));
 						}
 						
+						mContext.sendBroadcast(new Intent("FQ_DELETE"));
+												
 						switch(FileQuestHD.getCurrentItem()){
 						case 0:
 							try{
@@ -193,7 +195,6 @@ public class DeleteFiles{
 						}
 						Utils.updateUI();
 						
-						mContext.sendBroadcast(new Intent("FQ_DELETE"));
 						Toast.makeText(mContext, ctx.getString(R.string.deleted),Toast.LENGTH_SHORT).show();
 						dialog.dismiss();	
 						break;
