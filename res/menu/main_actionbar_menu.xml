@@ -21,6 +21,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
     
     <item 
+        android:id="@+id/action_search"
+        android:icon="@drawable/gesture"
+        android:title="@string/action_search"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.SearchView"/>
+    
+    
+    <item 
         android:id="@+id/action_queued"
         android:icon="@drawable/queued_task"
         android:title="@string/action_queued"

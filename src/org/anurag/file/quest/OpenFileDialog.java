@@ -43,43 +43,49 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * 
+ * @author Anurag
+ *
+ */
 public class OpenFileDialog {
 	
-	Intent intent;
-	static Context mContext;
-	String mData;
-	Dialog dialog;
-	static PackageManager manager;
-	ResolveInfo info;
-	List<ResolveInfo> list;
-	SharedPreferences prefs;
-	SharedPreferences.Editor edit;
-	boolean showDialog;
-	String NAME;
-	String CLASS_NAME;
-	String MUSIC;
-	String MUSIC_CLASS_NAME;
-	String VIDEO;
-	String VIDEO_CLASS_NAME;
-	String APK ;
-	String APK_CLASS_NAME;
-	String PDF ;
-	String PDF_CLASS_NAME;
-	String IMAGE;
-	String IMAGE_CLASS_NAME;
-	String TEXT ;
-	String TEXT_CLASS_NAME;
-	String ZIP ;
-	String ZIP_CLASS_NAME;
-	String RAR ;
-	String RAR_CLASS_NAME;
-	boolean intentSelected;
-	Button justOnce;
-	Button always;
-	ListView view;
-	File file;
-	int wi;
-	ImageView header;
+	private Intent intent;
+	private Context mContext;
+	private String mData;
+	private Dialog dialog;
+	private PackageManager manager;
+	private	ResolveInfo info;
+	private List<ResolveInfo> list;
+	private SharedPreferences prefs;
+	private SharedPreferences.Editor edit;
+	private boolean showDialog;
+	private String NAME;
+	private String CLASS_NAME;
+	private String MUSIC;
+	private String MUSIC_CLASS_NAME;
+	private String VIDEO;
+	private String VIDEO_CLASS_NAME;
+	private String APK ;
+	private String APK_CLASS_NAME;
+	private String PDF ;
+	private String PDF_CLASS_NAME;
+	private String IMAGE;
+	private String IMAGE_CLASS_NAME;
+	private String TEXT ;
+	private String TEXT_CLASS_NAME;
+	private String ZIP ;
+	private String ZIP_CLASS_NAME;
+	private String RAR ;
+	private String RAR_CLASS_NAME;
+	private boolean intentSelected;
+	private Button justOnce;
+	private Button always;
+	private ListView view;
+	private File file;
+	private int wi;
+	private ImageView header;
+	
 	public OpenFileDialog(Context context,Uri uri,int width ) {
 		// TODO Auto-generated constructor stub
 		showDialog = true;

@@ -35,7 +35,7 @@ import android.widget.ListView;
  */
 public class ZipManager {
 	
-	private static ArrayList<ZipObj> list;
+	private ArrayList<ZipObj> list;
 	private ZipEntry entry;
 	private Enumeration<? extends ZipEntry> zList;
 	private String zipPath;
@@ -156,7 +156,7 @@ public class ZipManager {
 	 * @param src
 	 * @param path
 	 */
-	public static void setZipAdapter(final ListView ls , final Context ctx , final ZipFile src , final String path){
+	public void setZipAdapter(final ListView ls , final Context ctx , final ZipFile src , final String path){
 		new AsyncTask<Void , Void , Void>(){
 			@Override
 			protected void onPostExecute(Void result) {

@@ -256,6 +256,12 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		});		
 	}
 	
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		unregisterReceiver(new Receive_Broadcasts());
+	}
+	
 	//setting custom views to action bar....
 	private void init_actionbar_custom_view() {
 		// TODO Auto-generated method stub
