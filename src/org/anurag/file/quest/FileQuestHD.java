@@ -151,6 +151,9 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	//holds the total space of sd card....
 	private String total;
 	
+	//broadcast for certain actions within the app
+	private Receive_Broadcasts broadcasts;
+	
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
@@ -259,7 +262,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
-		unregisterReceiver(new Receive_Broadcasts());
+		unregisterReceiver(broadcasts);
 	}
 	
 	//setting custom views to action bar....
@@ -1253,7 +1256,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	 * this function is called in onResume function....
 	 */
 	private void register_receiver(){
-		Receive_Broadcasts broadcasts = new Receive_Broadcasts();
+		broadcasts = new Receive_Broadcasts();
 		IntentFilter filter = new IntentFilter("inflate_long_click_menu");
 		filter.addAction("inflate_normal_menu");
 		filter.addAction("update_action_bar_long_click");
