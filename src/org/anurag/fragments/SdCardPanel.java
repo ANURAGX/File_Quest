@@ -59,8 +59,8 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	private static ListView list;
 	private LinearLayout empty;
 	private static ArrayList<Item> adapter_list;
-	private static LoadList load;
-	private static SDManager manager;
+	static LoadList load;
+	public static SDManager manager;
 	public static int counter;
 	public static int[] ITEMS;
 	private static BaseAdapter adapter;
@@ -123,7 +123,7 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	 * @author anurag
 	 *
 	 */
-	private class LoadList extends AsyncTask<Void , Void , Void>{
+	class LoadList extends AsyncTask<Void , Void , Void>{
 		@Override
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
@@ -339,24 +339,12 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 			return;					
 		}
 		
-		if(item.exists()){
-			if(item.isLocked()){
-				new MasterPassword(getActivity(), Constants.size.x*8/9, item, null, Constants.MODES.OPEN);
-				return;
-			}
-			
-			if(item.isDirectory()){
-				//selecting a folder....
-				manager.pushPath(item.getPath());
-				FileQuestHD.notify_Title_Indicator(2, item.getName());
-				load.execute();
-			}else{
-				//selecting a file....
-				new OpenFileDialog(getActivity(), Uri.parse(item.getPath())
-						, Constants.size.x*8/9);
-			}
-		}else
-			Toast.makeText(getActivity(), R.string.not_exists, Toast.LENGTH_SHORT).show();
+		if(item.isLocked()){
+			new MasterPassword(getActivity(), Constants.size.x*8/9, item, null, Constants.MODES.OPEN);
+			return;
+		}
+		
+		open_locked_item();
 	}
 	
 
@@ -367,7 +355,7 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 		if(item.exists()){
 			if(item.isDirectory()){
 				//selecting a folder....
-				manager.pushPath(item.getPath());
+				SdCardPanel.manager.pushPath(item.getPath());
 				FileQuestHD.notify_Title_Indicator(2, item.getName());
 				load.execute();
 			}else{

@@ -161,17 +161,8 @@ public class FileGallery extends Fragment implements OnClickListener{
 					}
 					
 					return;					
-				}
-				
-				if(item.exists()){
-					if(item.isLocked()){
-						new MasterPassword(getActivity(), Constants.size.x*8/9, item, null, Constants.MODES.OPEN);
-						return;
-					}	
-					new OpenFileDialog(getActivity(), Uri.parse(item.getPath()),
-							Constants.size.x*8/9);
-				}else
-					Toast.makeText(getActivity(), R.string.not_exists, Toast.LENGTH_SHORT).show();
+				}			
+				open_locked_item();				
 			}
 		});
 		
@@ -232,10 +223,26 @@ public class FileGallery extends Fragment implements OnClickListener{
 	 * this function is invoked when password is verified for locked item....
 	 */
 	public static void open_locked_item(){
-		if(item.exists())
-			new OpenFileDialog(Constants.ctx, Uri.parse(item.getPath())
-					, Constants.size.x*8/9);
-		else
+		if(item.exists()){
+			if(item.isDirectory()){
+				//selecting a folder....
+				
+				//folder can be read
+				if(item.canRead()){
+					SdCardPanel.manager.pushPath(item.getPath());
+					FileQuestHD.notify_Title_Indicator(2, item.getName());
+					SdCardPanel.load.execute();
+				}else{//can't read folder
+					RootPanel.manager.pushPath(item.getPath());
+					FileQuestHD.notify_Title_Indicator(1, item.getName());
+					RootPanel.load.execute();
+				}
+			}else{
+				//selecting a file....
+				new OpenFileDialog(Constants.ctx, Uri.parse(item.getPath())
+						, Constants.size.x*8/9);
+			}
+		}else
 			Toast.makeText(Constants.ctx, R.string.not_exists, Toast.LENGTH_SHORT).show();
 	}
 	
