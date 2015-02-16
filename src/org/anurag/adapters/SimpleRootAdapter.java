@@ -20,14 +20,14 @@
 package org.anurag.adapters;
 
 import java.util.ArrayList;
-
 import java.util.HashMap;
+
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.MasterPassword;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.Utils;
-import org.anurag.fragments.SdCardPanel;
+import org.anurag.fragments.RootPanel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -200,7 +200,7 @@ public class SimpleRootAdapter extends BaseAdapter{
 			
 		//true when multi select is on....
 		if(Constants.LONG_CLICK[1]){
-			if(SdCardPanel.ITEMS[arg0] == 1)
+			if(RootPanel.ITEMS[arg0] == 1)
 				view.setBackgroundColor(ctx.getResources().getColor(R.color.white_grey));
 		}
 		return view;

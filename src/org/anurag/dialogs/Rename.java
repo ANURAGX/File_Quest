@@ -201,13 +201,6 @@ public class Rename {
 							super.onPostExecute(result);
 							if(renamed){				
 								
-								RootPanel.ITEMS = null;
-								SdCardPanel.ITEMS = null;
-								FileGallery.ITEMS = null;
-								RootPanel.counter = 0;
-								SdCardPanel.counter = 0;
-								FileGallery.counter = 0;
-								
 								Constants.LONG_CLICK[panel] = false;
 								
 								if(panel == 1){

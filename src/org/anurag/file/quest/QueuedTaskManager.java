@@ -21,7 +21,7 @@ package org.anurag.file.quest;
 
 import java.util.HashMap;
 
-import android.widget.TextView;
+import android.view.SubMenu;
 
 /**
  * this class handles the queued tasks like copying,moving,etc....
@@ -31,8 +31,9 @@ import android.widget.TextView;
  */
 public class QueuedTaskManager {
 	
-	private static HashMap<String , QueuedTask> task_list;
-	private static HashMap<String , TextView> action_views;
+	private HashMap<String , QueuedTask> task_list;
+	public int COPY_ID = 1;
+	public int CUT_ID = 2;
 	
 	public QueuedTaskManager() {
 		// TODO Auto-generated constructor stub
@@ -42,10 +43,9 @@ public class QueuedTaskManager {
 	 * 
 	 * @param task to be queued in the list....
 	 */
-	public static void add_task(QueuedTask task ,String id){
+	public void add_task(QueuedTask task ,String id){
 		if(task_list == null){
 			task_list = new HashMap<>();
-			action_views = new HashMap<>();
 		}	
 		task_list.put(id, task);		
 	}
@@ -54,9 +54,10 @@ public class QueuedTaskManager {
 	 * 
 	 * @param id of the task to be removed....
 	 */
-	public static void remove_task(String id){
-		if(task_list == null)
+	public void remove_task(String id){
+		if(task_list == null){
 			return;
+		}	
 		
 		try{
 			task_list.remove(id);
@@ -65,7 +66,33 @@ public class QueuedTaskManager {
 		}
 	}
 	
-	private static void build_action_view(String id){
-		
+	/**
+	 * 
+	 * @return
+	 */
+	public String getId(){
+		if(task_list == null){
+			return "";
+		}
+		return (""+task_list.size() + 1);
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean hasTask(){
+		if(task_list == null)
+			return false;
+		return task_list.size() > 0;
+	}
+
+	/**
+	 * 
+	 * @param subMenu
+	 */
+	public void prepareMenu(SubMenu subMenu) {
+		// TODO Auto-generated method stub
+		
+	}		
 }

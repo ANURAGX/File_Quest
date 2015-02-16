@@ -28,7 +28,6 @@ import org.anurag.adapters.FileGallerySimpleAdapter;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuestHD;
 import org.anurag.file.quest.Item;
-import org.anurag.file.quest.MasterPassword;
 import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.Utils;
@@ -51,25 +50,64 @@ import android.widget.Toast;
 
 import com.extra.libs.JazzyHelper;
 
+/**
+ * file gallery class that represents the metro like UI.
+ * @author anurag
+ *
+ */
 public class FileGallery extends Fragment implements OnClickListener{
 	
+	//list view 
 	private static ListView ls;
+	
+	//metro like ui layout
 	private static LinearLayout file_gallery;
+	
+	//true then a category from file gallery is selected
 	private static boolean is_gallery_opened;
+	
+	//current title of file gallery
 	private static String current_Tile;
+	
+	//async task instance to load the list of files 
 	private static Loader loader;
+	
+	//adapter for list view
 	private static BaseAdapter adpt;
+	
+	//list of files selected
 	public static ConcurrentHashMap<String , Item> lists;
+	
+	//keys for list of files
 	public static ConcurrentHashMap<String , String> keys;
+	
+	//no. of selected files via long press
 	public static int counter;
+	
+	//ITEMS[i]=1 if lists[i] is selected
 	public static int[] ITEMS;
+	
+	//enpty list view
 	private static LinearLayout empty;
+	
+	
 	private int id;
+	
+	//animation helper for list view
 	private static JazzyHelper list_anim_helper;
+	
+	//currently selected item from list vier
 	private static Item item;
+	
+	//true then selected list of files contains one or more locked files
 	private static boolean isListHasLockedItem;
+	
+	//folder count from selected list
 	public static int folder_count;
+	
+	//file count from selected list
 	public static int file_count;
+	
 	
 	public FileGallery() {
 		// TODO Auto-generated constructor stub

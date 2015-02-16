@@ -31,6 +31,11 @@ public class PagerAdapters extends FragmentStatePagerAdapter{
 
 	private static String TITLES[] = {"FILE GALLERY" , "/" , "SDCARD" , "APP STORE"}; 
 	
+	private FileGallery gallery;
+	private RootPanel rootPanel;
+	private SdCardPanel sdCard;
+	private AppStore appStore;
+	
 	public PagerAdapters(FragmentManager fm) {
 		super(fm);
 		// TODO Auto-generated constructor stub
@@ -41,25 +46,25 @@ public class PagerAdapters extends FragmentStatePagerAdapter{
 		// TODO Auto-generated method stub
 		switch(arg0){
 		case 0:
-			Fragment frag1 = new FileGallery();
+			gallery = new FileGallery();
 			//FileQuestHD.pager.setObjectForPosition(frag1, arg0);
-			return frag1;
+			return gallery;
 		
 		case 1:
-			Fragment frag2 = new RootPanel();
+			rootPanel = new RootPanel();
 			//FileQuestHD.pager.setObjectForPosition(frag2, arg0);
-			return frag2;
+			return rootPanel;
 			
 		case 2:
-			Fragment frag3 = new SdCardPanel();
+			sdCard = new SdCardPanel();
+			
 			//FileQuestHD.pager.setObjectForPosition(frag3, arg0);
-			return frag3;
+			return sdCard;
 			
 		case 3:
-			Fragment frag4 = new AppStore();
+			appStore = new AppStore();
 			//FileQuestHD.pager.setObjectForPosition(frag4, arg0);
-			return frag4;
-			
+			return appStore;			
 		}
 		return null;
 	}
@@ -84,4 +89,5 @@ public class PagerAdapters extends FragmentStatePagerAdapter{
 	public static void setTitles(int position , String title){
 		TITLES[position] = title;
 	}	
+		
 }

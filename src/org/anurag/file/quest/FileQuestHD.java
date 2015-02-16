@@ -154,6 +154,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	//broadcast for certain actions within the app
 	private Receive_Broadcasts broadcasts;
 	
+	//manager to manager copy ,cut and paste operations
+	private QueuedTaskManager mgr;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
@@ -282,8 +284,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		MenuInflater inf = getMenuInflater();
 		if(!Constants.LONG_CLICK[pager.getCurrentItem()]){
 			inf.inflate(R.menu.main_actionbar_menu, menu);
-			menu.findItem(R.id.action_queued).getSubMenu().add("added");
-					
+			
+								
 			//setting up action bar to normal....
 			action_bar.setTitle("");
 			navIcon = (ImageView) toolbar.findViewById(R.id.open_drawer_menu);
@@ -308,6 +310,14 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			no_folder = (TextView) toolbar.findViewById(R.id.total_space);
 			no_folder.setText(total);
 			
+			if(!mgr.hasTask()){
+				//no copy , paste and cut task
+				menu.findItem(R.id.action_queued).setVisible(false);
+			}else{
+				//there's copy , paste or cut task
+				//so queue it in the list
+				mgr.prepareMenu(menu.findItem(R.id.action_queued).getSubMenu());
+			}
 		}	
 		else{
 			inf.inflate(R.menu.long_clk_menu_hd, menu);
@@ -461,6 +471,43 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				startActivity(itent);
 			}
 			break;
+			
+		case R.id.action_copy:
+			{
+				QueuedTask task = null;
+				switch(panel){
+				case 0:
+					
+					break;
+					
+				case 1:
+					task = new QueuedTask(RootPanel.get_selected_items(), mgr.COPY_ID,
+							RootPanel.get_current_working_dir().getParent(),
+							RootPanel.folder_count, RootPanel.file_count);
+					RootPanel.clear_selected_items();
+					break;
+					
+				case 2:
+					task = new QueuedTask(SdCardPanel.get_selected_items(), mgr.COPY_ID,
+							SdCardPanel.get_current_working_dir().getParent(),
+							SdCardPanel.folder_count, SdCardPanel.file_count);
+					SdCardPanel.clear_selected_items();
+					break;
+				}
+				
+				Constants.LONG_CLICK[panel] = false;
+				task.setId(mgr.getId());
+				mgr.add_task(task , task.getId());
+				invalidateOptionsMenu();
+			}
+			break;
+			
+		case R.id.action_cut:
+			{
+				
+				
+			}
+			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -585,6 +632,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
 		bottom_options = (Toolbar) findViewById(R.id.bottom_options);
 		top_toolbar = (Toolbar)findViewById(R.id.toolbar_top);
+		mgr = new QueuedTaskManager();
 	}
 	
 	

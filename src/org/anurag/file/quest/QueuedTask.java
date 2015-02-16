@@ -21,8 +21,6 @@ package org.anurag.file.quest;
 
 import java.util.ArrayList;
 
-
-
 /**
  * 
  * @author anurag
@@ -35,6 +33,8 @@ public class QueuedTask {
 	private String parentDir;
 	private int folders;
 	private int files;
+	private String id;
+	
 	/**
 	 * 
 	 * @param item
@@ -88,5 +88,21 @@ public class QueuedTask {
 	 */
 	public String get_parent_dir(){
 		return this.parentDir;
+	}
+	
+	/**
+	 * 
+	 * @param ID to be set for current task
+	 */
+	public void setId(String ID){
+		this.id = ID;
+	}
+	
+	/**
+	 * 
+	 * @return the id of current task
+	 */
+	public String getId(){
+		return this.id;
 	}
 }

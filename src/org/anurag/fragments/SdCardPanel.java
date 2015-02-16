@@ -52,22 +52,53 @@ import android.widget.Toast;
 
 import com.extra.libs.JazzyHelper;
 
-
+/**
+ * this fragment represents the sdcard panel in pager
+ * @author anurag
+ *
+ */
 public class SdCardPanel extends Fragment implements OnItemClickListener , OnItemLongClickListener{
 	
+	//grid view
 	private static GridView grid;
+	
+	//list view
 	private static ListView list;
+	
+	//empty liust view
 	private LinearLayout empty;
+	
+	//list of files in list view
 	private static ArrayList<Item> adapter_list;
+	
+	//async task to load list of files in background
 	static LoadList load;
+	
+	//helper class to sort,load icons of files
 	public static SDManager manager;
+	
+	//no. of selected files in long press
 	public static int counter;
+	
+	//ITEMS[i]=1 if lists[i] is selected
 	public static int[] ITEMS;
+	
+	//adapter for list view
 	private static BaseAdapter adapter;
+	
+	//selected item	
 	private static Item item;
+	
+	//animation helper for list view
 	private static JazzyHelper list_anim_helper;
+	
+	//true then selected list of files contains one or more locked item
 	private static boolean isListHasLockedItem;
+	
+	//no. of selected folders in selected files
 	public static int folder_count;
+	
+	//no. of selected files in selected files
 	public static int file_count;
 	
 	public SdCardPanel() {

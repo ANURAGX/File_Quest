@@ -44,15 +44,35 @@ import android.widget.ListView;
 
 import com.extra.libs.JazzyHelper;
 
+/**
+ * this class represents the app store fragment in pager adapter
+ * @author anurag
+ *
+ */
 public class AppStore extends Fragment{
 	
+	//list view 
 	private static ListView ls;
+	
+	//list of apps in list view
 	private ArrayList<ApplicationInfo> apps;
+	
+	//asynct task to load the list of apps in backgrount
 	private static LoadApps load;
+	
+	//manager class to load app's information
 	private AppManager manager;
+	
+	//no. of selected apps via long press
 	public static int counter;
+
+	//ITEMS[i]=1 if lists[i] is selected
 	public static int[] ITEMS;
+	
+	//adapter for list view
 	private static BaseAdapter adapter;
+	
+	//animation helper for list view
 	private static JazzyHelper list_anim_helper;
 	
 	public AppStore() {
