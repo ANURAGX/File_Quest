@@ -1,0 +1,199 @@
+<!--
+  Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+                              
+                              anuraxsharma1512@gmail.com
+-->
+
+<resources>
+
+    <string name="action_search">Search</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_gesture">Gesture</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_exit">Exit</string>
+    <string name="action_color">Choose Color</string>
+    <string name="action_add_new">Add New</string>
+    <string name="action_views">Views</string>
+    <string name="action_simplels">Simple List</string>
+    <string name="action_list">Detailed List</string>
+    <string name="action_simplegrid">Simple Grid</string>
+    <string name="action_grid">Detailed Grid</string>
+    <string name="action_cloud">Cloud Networks</string>
+    <string name="action_sort">Sort</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_copy">Copy</string>
+    <string name="action_cut">Cut</string>
+    <string name="action_paste">Paste</string>
+    <string name="empty_list">No Items</string>
+    <string name="action_add_gesture">Add Gesture</string>
+    <string name="album_name">Album Name</string>
+    <string name="artist_name">Artist Name</string>
+    <string name="action_az">Name (A-Z)</string>
+    <string name="action_za">Name (Z-A)</string>
+    <string name="action_size_smaller">Size (Smaller)</string>
+    <string name="action_size_bigger">Size (Bigger)</string>
+    <string name="action_date_new">Date (Newer)</string>
+    <string name="action_date_old">Date (Older)</string>
+    <string name="action_rename">Rename</string>
+    <string name="action_zip">Compress</string>
+    <string name="action_share">Share</string>
+    <string name="action_properties">Properties</string>
+    <string name="action_queued">Queued Task</string>
+    <string name="action_no_task">No pending task</string>
+    <string name="left">Left</string>
+    <string name="right">Right</string>
+    
+    
+    <string-array name="settings_array">
+        <item>Listview animation</item>
+        <item>Page animation</item>
+        <item>Set up default Panel</item>
+        <item>Locker</item>
+        <item>Reset settings</item>
+        <item>Clear gesture data</item> 
+        <item>Share FILE  QUEST</item>
+        <item>Report a bug</item>
+        <item>About me</item>
+    </string-array>
+    
+    <string-array name="locker">
+        <item>Change password</item>
+        <item>Disable lock</item>
+        <item>Clear locked items</item>
+    </string-array>
+    
+    <string-array name="animls">
+        <item>Standard</item>
+        <item>Grow</item>
+        <item>Cards</item>
+        <item>Zipper</item>
+        <item>Helix</item>
+        <item>Flip</item>
+        <item>Fly</item>
+        <item>Reverse fly</item>
+        <item>Wave</item>
+        <item>Fan</item>
+        <item>Tilt</item>        	
+        <item>Curl</item>
+        <item>Fade</item>
+        <item>Twirl</item>
+        <item>Slide in</item>
+    </string-array>
+    
+    <string-array name="pagels">
+        <item>Standard</item>
+        <item>Tablet</item>
+        <item>CubeIn</item>
+        <item>CubeOut</item>
+        <item>FlipVertical</item>
+        <item>FlipHorizontal</item>
+        <item>ZoomIn</item>
+        <item>RotateUp</item>
+        <item>RotateDown</item>
+    	<item>Accordion</item>
+    </string-array>
+    
+    <string-array name="panels">
+        <item>File Gallery</item>
+        <item>Root</item>
+        <item>Sd Card</item>
+        <item>App store</item>
+    </string-array>
+    
+    <string-array name="bug">
+        <item>Report on XDA</item>
+        <item>Report directly</item>
+    </string-array>
+    
+    <string-array name="drawer_ls">
+        <item>Graph Analysis</item>
+        <item>File Cleaner</item>
+        <item>File Mover</item>
+        <item>File Zipper</item>
+        <item>File Shield</item>
+        <item>Check for update</item>
+    </string-array>
+    
+    <string-array name="cleaner">
+        <item>Clean favorites</item>
+        <item>Clean music</item>
+        <item>Clean apps</item>
+        <item>Clean photos</item>
+        <item>Clean videos</item>
+        <item>Clean docs</item>
+        <item>Clean archives</item>
+        <item>Clean unknowns</item>
+    </string-array>
+    
+    <string-array name="mover">
+        <item>Move favorites</item>
+        <item>Move music</item>
+        <item>Move apps</item>
+        <item>Move photos</item>
+        <item>Move videos</item>
+        <item>Move docs</item>
+        <item>Move archives</item>
+        <item>Move unknowns</item>
+    </string-array>
+    
+    <string-array name="ziper">
+        <item>Zip favorites</item>
+        <item>Zip music</item>
+        <item>Zip apps</item>
+        <item>Zip photos</item>
+        <item>Zip videos</item>
+        <item>Zip docs</item>
+        <item>Zip archives</item>
+        <item>Zip unknowns</item>
+    </string-array>
+    <string name="delete_message">All the selected items will be deleted permanently!</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="invalid_gesture">Gesture length is not good</string>
+    <string name="cant_create_here">Cannot create new item here</string>
+    <string name="folder_name">Enter new folder name</string>
+    <string name="file_name">Enter new file name</string>
+    <string name="create">Create</string>
+    <string name="add_item">Create new Item</string>
+    <string name="failed_to_create">Failed to create new item</string>
+    <string name="itm_created">One new item created</string>
+    <string name="enter_name">Enter new name</string>
+    <string name="itm_renamed">Item renamed</string>
+    <string name="failed_to_rename">Failed to rename the item</string>
+    <string name="rename">Rename</string>
+    <string name="enter_valid_name">Enter name properly</string>
+    <string name="create_gesture">Create Gesture</string>
+    <string name="opening">Opening item....</string>
+    <string name="not_exists">Item doesnot exist</string>
+    <string name="items_zipped">Items successfully zipped</string>
+    <string name="loading_image">Loading image</string>
+    <string name="failed_to_load_image">Failed to load image</string>
+    <string name="name">Name</string>
+    <string name="path">Path</string>
+    <string name="hidden">Hidden</string>
+    <string name="readable">Readable</string>
+    <string name="writable">Writable</string>
+    <string name="executable">Executable</string>
+    <string name="size">Size</string>
+    <string name="parentpath">Parent path</string>
+    <string name="item_unlocked">One item unlocked</string>
+    <string name="internal_sd">Internal SD</string>
+    <string name="total">Total</string>
+    <string name="free">Free</string>
+    <string name="move_tweak">All your %s files will be moved to selected folder.</string>
+    <string name="clean_tweak">All your %s files will be deleted permanently.</string>
+    <string name="zip_tweak">All your %s files will be zipped to selected folder.</string>
+    <string name="confirmdeletion">Are you sure to delete the selected items :- All the items in this category will be deleted permanently....</string>
+	
+</resources>

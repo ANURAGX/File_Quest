@@ -1,0 +1,85 @@
+<!-- 
+  Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+                              
+                              anuraxsharma1512@gmail.com
+ 
+ -->
+ 
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="center_vertical"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:paddingLeft="10dp">  
+    
+        
+       <LinearLayout 
+           android:layout_width="60dp"
+           android:layout_height="60dp">
+            <ImageView 
+            android:layout_gravity="center_vertical"
+            android:id="@+id/fileIcon"
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+           
+       </LinearLayout>
+       
+       <LinearLayout 
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView 
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:id="@+id/fileName"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textStyle="bold"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="@string/anurag"/>
+            <LinearLayout 
+                android:paddingLeft="10dp"
+                android:id="@+id/row1BtnLayout"
+                android:layout_weight="1.5"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+                <TextView 
+                    android:id="@+id/fileType"
+                    android:singleLine="true"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="@string/anurag"/>
+                <TextView 
+                    android:id="@+id/fileSize"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="@string/anurag"/>
+                
+            </LinearLayout>             
+        </LinearLayout>
+   
+    
+       
+    
+</LinearLayout>

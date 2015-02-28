@@ -1,0 +1,13 @@
+/bin
+*.iml
+.classpath
+project.properties
+.idea/
+.gradle/
+build
+gen/
+.settings/
+.project
+local.properties
+lint.xml
+**/*.iml

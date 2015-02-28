@@ -1,0 +1,64 @@
+<!-- 
+  Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+                              
+                              anuraxsharma1512@gmail.com
+ 
+ -->
+ 
+<resources>
+    <color name="grey">#FF222222</color>
+    <color name="green">#FF18ca5b</color>
+    <color name="red">#FFC74B46</color>
+    <color name="orange">#FFFF5D3D</color>
+    <color name="blue">#FF3F9FE0</color>
+    <color name="violet">#FF5161BC</color>
+    <color name="semi_white">#FFFFFFFF</color>
+    <color name="semi_white30">#4DFFFFFF</color>
+    <color name="semi_grey70">#CC666666</color>
+    <color name="semi_green70">#CC53AB3A</color>
+    <color name="semi_red70">#CCC74B46</color>
+    <color name="semi_orange70">#CCFF5D3D</color>
+    <color name="semi_blue70">#CC3F9FE0</color>
+    <color name="semi_violet70">#CC5161BC</color>
+    <color name="semi_grey40">#99666666</color>
+    <color name="semi_green40">#9953AB3A</color>
+    <color name="semi_red40">#99C74B46</color>
+    <color name="semi_orange40">#99FF5D3D</color>
+    <color name="semi_blue40">#993F9FE0</color>
+    <color name="semi_violet40">#995161BC</color>
+    <color name="semi_white15">#26FFFFFF</color>
+    <color name="black">#00FFFFFF</color>
+    <color name="white_grey">#cfcece</color>
+    <color name="fav">#fff98c25</color>
+    <color name="music">#04a693</color>
+    <color name="app">#ff009f3c</color>
+    <color name="img">#ff693885</color>
+    <color name="vids">#db532d</color>
+    <color name="docs">#bc3885</color>
+    <color name="arch">#ff4085f9</color>
+    <color name="unknown">#454245</color>
+    
+    
+    <!-- Material colors -->
+    <color name="sdl_text_primary">#DE000000</color>
+    <!-- 87% -->
+    <color name="sdl_text_secondary">#8A000000</color>
+    <!-- 54% -->
+    <color name="sdl_divider">#1F000000</color>
+    <!-- 12% -->
+    <color name="sdl_pressed">#D5D5D5</color>
+    <color name="sdl_textColor_primary_dark">#FFFFFFFF</color>
+    
+</resources>

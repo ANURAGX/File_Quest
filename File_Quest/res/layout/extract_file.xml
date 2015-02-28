@@ -1,0 +1,185 @@
+<!-- 
+  Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+                              
+                              anuraxsharma1512@gmail.com
+ 
+ -->
+<LinearLayout 
+    android:layout_gravity="center"
+    android:background="@color/black"
+    android:orientation="vertical" 
+    android:paddingLeft="10.0dip" 
+    android:paddingRight="10.0dip" 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <LinearLayout 
+         
+        android:orientation="horizontal" 
+        android:paddingLeft="10.0dip" 
+        android:paddingTop="10.0dip" 
+        android:paddingRight="10.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="0.0dip" 
+        android:layout_weight="0.9">
+       
+        <ImageView 
+            android:layout_gravity="center_vertical" 
+            android:background="@drawable/archive_icon_hd" 
+            android:paddingLeft="15.0dip" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />
+        <TextView 
+            android:textStyle="bold" 
+            android:id="@+id/preparing"
+            android:layout_gravity="center_vertical" 
+            android:paddingLeft="20.0dip" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:text="@string/archiveoperation" />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:paddingLeft="15.0dip" 
+        android:paddingRight="15.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent">
+        <ImageView 
+            android:background="@color/dialog_border" 
+            android:paddingLeft="5.0dip" 
+            android:paddingRight="5.0dip" 
+            android:layout_width="fill_parent" 
+            android:layout_height="3.0dip" />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:orientation="vertical" 
+        android:paddingLeft="10.0dip" 
+        android:paddingTop="8.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        >
+        <TextView 
+            android:paddingTop="3dp"
+            android:textStyle="bold" 
+            android:id="@+id/zipFileName" 
+            android:paddingBottom="3.0dip" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:text="@string/extractingto" />
+        
+        
+        <TextView 
+            android:paddingTop="3dp"
+            android:text="@string/extractingfrom"
+            android:textStyle="bold" 
+            android:id="@+id/zipLoc" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:singleLine="false" 
+            android:textIsSelectable="false" />
+      
+        <TextView 
+            android:paddingTop="3dp"
+            android:text="@string/extractingfile"
+            android:textStyle="bold" 
+            android:id="@+id/zipSize" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:textIsSelectable="false" />
+      
+        
+        
+        <TextView 
+            android:paddingTop="3dp"
+            android:text="@string/appsizebytes"
+            android:textStyle="bold" 
+            android:id="@+id/zipNoOfFiles" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:textIsSelectable="false" />
+     
+        
+        
+        <TextView 
+            android:paddingTop="3dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/extstatusbytes"                
+            android:textStyle="bold" 
+            android:id="@+id/zipFileLocation" 
+            android:layout_width="wrap_content" 
+            android:layout_height="0.0dip" 
+            android:singleLine="false" 
+            android:layout_weight="1.0" 
+            android:textIsSelectable="false" />
+       
+        
+    </LinearLayout>
+    
+    <ProgressBar 
+        android:visibility="gone"
+        android:id="@+id/zipProgressBar" 
+        android:padding="2.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="10dp" 
+        android:progress="100" 
+        android:progressDrawable="@drawable/progress_bar_hd" 
+        style="?android:attr/progressBarStyleHorizontal" />
+    
+    <LinearLayout 
+        android:paddingTop="5dp"
+        android:paddingLeft="15.0dip" 
+        android:paddingRight="15.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent">
+        <ImageView 
+            android:background="@color/dialog_border" 
+            android:paddingLeft="5.0dip" 
+            android:paddingRight="5.0dip" 
+            android:layout_width="fill_parent" 
+            android:layout_height="3.0dip" />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:orientation="horizontal"
+        android:id="@+id/zipButtonLayout" 
+        android:paddingTop="5.0dip" 
+        android:paddingBottom="5.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="0.0dip" 
+        android:layout_weight="0.8">
+        <Button 
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray" 
+            android:id="@+id/extractButton" 
+            android:background="@drawable/button_click" 
+            android:layout_width="fill_parent" 
+            android:layout_height="40.0dip" 
+            android:text="@string/extract" 
+            android:layout_weight="1.0" 
+            android:onClick="onClick" />
+        <Button 
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray" 
+            android:id="@+id/calcelButton" 
+            android:background="@drawable/button_click" 
+            android:layout_width="fill_parent" 
+            android:layout_height="40.0dip" 
+            android:text="@string/cancel" 
+            android:layout_weight="1.0" 
+            android:onClick="onClick" />
+    </LinearLayout>
+</LinearLayout>

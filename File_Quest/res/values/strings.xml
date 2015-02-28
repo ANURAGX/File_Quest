@@ -1,0 +1,668 @@
+<!-- 
+  Copyright(c) 2013 DRAWNZER.ORG PROJECTS -> ANURAG
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+                              
+                              anuraxsharma1512@gmail.com
+ 
+ -->
+
+
+<resources>
+
+    <!--APP MANIFEST RELATED STRINGS.... -->
+	<string name="version">0.3.5</string>
+    <string name="app_name">File Quest</string>
+    <string name="versioncode">035</string>
+    
+   
+    
+    
+    
+     <!-- STRING ARRAYS.... -->
+    <string-array name="effects">
+        <item>Standard</item>
+        <item>Tablet</item>
+        <item>CubeIn</item>
+        <item>CubeOut</item>
+        <item>FlipVertical</item>
+        <item>FlipHorizontal</item>
+        <item>ZoomIn</item>
+        <item>RotateUp</item>
+        <item>RotateDown</item>
+    	<item>Accordion</item>
+    </string-array>
+    <string-array name="effects2">
+        <item>Standard</item>
+        <item>Tablet</item>
+        <item>CubeIn</item>
+        <item>CubeOut</item>
+        <item>FlipVertical</item>
+        <item>FlipHorizontal</item>
+        <item>ZoomIn</item>
+       	<item>RotateUp</item>
+        <item>RotateDown</item>
+    	<item>Accordion</item>
+    </string-array>
+    
+    
+    <string-array name="slideList">
+        <item>Favorite</item>
+        <item>Music </item>
+        <item>Apps </item>
+        <item>Images</item>
+        <item>Videos</item>
+        <item>Documents</item>
+        <item>Archives</item>
+        <item>Unknown</item>
+    </string-array>
+    
+
+    <string-array name="listAnims" >
+          	<item>Standard</item>
+        	<item>Grow</item>
+        	<item>Cards</item>
+        	<item>Zipper</item>
+        	<item>Helix</item>
+        	<item>Flip</item>
+        	<item>Fly</item>
+        	<item>Reverse fly</item>
+        	<item>Wave</item>
+        	<item>Fan</item>
+        	<item>Tilt</item>        	
+        	<item>Curl</item>
+        	<item>Fade</item>
+        	<item>Twirl</item>
+        	<item>Slide in</item>
+    </string-array>
+    
+    <string-array  name="graph_titles">
+        <item>Bar Graph</item>
+        <item>Pie Chart</item>
+    </string-array>
+    
+   
+    
+    <!-- Editor Activity -->
+	<string name="empty">No Files</string>
+	<string name="New">New</string>
+	<string name="overwrite">Overwrite</string>
+	<string name="search_hint">Enter Text To Search</string>
+	<string name="label">File Quest Text Editor</string>
+	<string name="failtowrite">Unable To Save File</string>
+	<string name="invalid">Selected file is invalid</string>
+	<string name="readerror">Unable To Read The File</string>
+	<string name="xerror">Unknown Error Encountered</string>
+	<string name="saved">File saved successfully</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	<string name="openwith">Open with</string>
+	<string name="wait">Please wait while loading file</string>
+	<string name="sd">SD Card</string>
+	<string name="setasdefault">Set as default</string>
+	<string name="internalstorage">Internal Phone Storage</string>
+	<string name="modified">Modified on</string>
+	<string name="type">Type</string>
+	<string name="longClick">Select an action</string>
+	<string name="use">Use</string>
+	<string name="noApp">No such application is found</string>
+	<string name="selectFirst">First select an application</string>
+	<string name="always">Always</string>
+	<string name="once">Once</string>
+	<string name="nohome">Home directory not found</string>
+	<string name="nohomeerror">It seems that the defined path for home directory deosnot exists,setting home directory to default location /sdcard,you can change the default location</string>
+	<string name="noapperror">Currently there is no app installed on this device that can handle this type of file</string>
+	<string name="noactivity">This app donot have activity to launch</string>
+	<string name="failtodeletebackup">Unable to delete the backup</string>
+	<string name="senderror">An error encountered while sending files,try later</string>
+	<string name="unabletosend">Unable to send right now try later</string>
+	<string name="someapps">First select some apps</string>
+	<string name="enablefirstforappstore">First enable multi select mode for your app store then you can send multiple apps</string>
+	<string name="serviceUnavaila">This service is unavailable for system files</string>
+	<string name="pasteNotAllowed">Paste not allowed here</string>
+	<string name="fsaved">File have been saved</string>
+	<string name="saveOnExit">Save file before quiting</string>
+	<string name="saveMesage">Do you want to save the file before quiting?</string>
+	<string name="selectFiles">First select some files</string>
+	<string name="failedToRetrieve">Failed to retrieve file properties</string>
+	<string name="p_String">Please wait while loading list</string>
+	<string name="cleargesturedata">Clear gesture data</string>
+	<string name="gesturedatacleared">All gesture data has been cleared</string>
+	<string name="zipexception">Corrupt or protected archive,failed to open</string>
+	<string name="fileextracted">Files extracted successfully</string>
+	<string name="preparing">Preparing,please wait</string>
+	<string name="extaborted">Extraction was interrupted</string>
+	<string name="errorinext">There were few errors while extracting</string>
+	<string name="cannotexthere">Cannot extract files here</string>
+	<string name="search">Search</string>
+	<string name="multi">Multi-sel</string>
+	<string name="copybottom">Copy</string>
+	<string name="multiback">Multi-bac</string>
+	<string name="sysapp">Sys-app</string>
+	<string name="userapp">User-app</string>
+	<string name="allapp">All-app</string>
+	<string name="animation">Animation Effects</string>
+	<string name="panelanim">Panel Animation</string>
+	<string name="listanim">Listview Animation</string>
+	<string name="operationnotsupported">Operation not allowed</string>
+	<string name="deflated">Deflated</string>
+	<string name="stored">Stored</string>
+	<string name="compmethod">Compression method</string>
+	<string name="preparingtoshare">Preparing to share</string>
+	<string name="cannotsendfolder">Cannot send a folder</string>
+	<string name="http">Server</string>
+	<string name="starthttp">Connect to Http Server</string>
+	<string name="startftp">Connect to Ftp Server</string>
+	<string name="none">None</string>
+	<string name="manage">File Quest Tweaks</string>
+	<string name="deleteall">Delete all files</string>
+	<string name="zip7">7 Zip</string>
+	<string name="tar">Tar</string>
+	<string name="set">Set</string>
+	<string name="setmasterpassword">Set master password</string>
+	<string name="locker">Item locker</string>
+	<string name="copyingfile">Copying file</string>
+	<string name="movealltoonelocation">Move all to one location</string>
+	<string name="compressallfiles">Compress all files</string>
+	<string name="cantextractfromrar">Can\'t extract files from rar archives....</string>
+	<string name="choosealocation">Choose a location</string>
+	<string name="enterPassword">Enter password</string>
+	<string name="confirmPassword">Confirm new password</string>
+	<string name="password">Password</string>
+	<string name="minimumpasswordlength">Minimum password length should be 4</string>
+	<string name="passworddidnotmatch">Password didn\'t match</string>
+	<string name="itemlocked">One item locked</string>
+	<string name="itemunlocked">One item unlocked</string>
+	<string name="entermaster">Enter master password</string> 
+	<string name="passwdreset">Password set successfully</string>
+	<string name="lockeditemsunlocked">All locked items unlocked successfully</string>
+	<string name="unabletounlock">Unable to unlock them</string>
+	<string name="enternewpassword">Enter new password</string>
+	<string name="resetmasterpassword">Reset master password</string>
+	<string name="failedtoplay">Failed to play the music</string>
+	<string name="notavailable">Not available</string> 
+	<string name="archivefiles">Archive Files</string>    
+	<string name="favorite">Favorite</string>
+	<string name="favadded">One item added to list</string>
+	<string name="favremoved">One item removed</string>
+	<string name="setpasswd">Setting password for first time....</string>
+	<string name="arcpasswd">Archiving the locked item....</string>
+	<string name="delpasswd">Deleting the locked item....</string>
+	<string name="copypasswd">Copying the locked item....</string>
+	<string name="openpasswd">Opening the locked item....</string>
+	<string name="pasteppasswd">Pasting into locked item....</string>
+	<string name="renamepasswd">Renaming the locked item....</string>
+	<string name="sendpasswd">Sending the locked item....</string>
+	<string name="unlockpasswd">Unlocking the locked items....</string>
+	<string name="changepasswd">Changing the password....</string>
+	<string name="homepasswd">Opening the home item....</string>
+	<string name="totalfolder">Folders :- %d Folders</string>
+	<string name="totalfiles">Files :- %d Files</string>
+	<string name="deletingfile">DELETING FILE :- </string>
+	<string name="allfavdeleted">All favorite items removed from list</string>
+	<string name="inter">INTERFACE</string>
+	<string name="folderoptions">FOLDER OPTIONS</string>
+	<string name="about">ABOUT</string>
+	<string name="graph_stats">Graphical Stats</string>
+	<string name="cloud_networks">Cloud Networks</string>
+	<string name="connect_server">Connect to Server</string>
+	<string name="locked_items">Locked Items</string>
+	<string name="coming_soon">This feature is arriving soon....</string>
+	<string name="update_check">Check for update</string>
+	<string name="nointernet">No internet connectivity....</string>
+	<string name="checking_update">Wait while checking for update</string>
+	<string name="failed_to_check_for_update">Failed to check for update</string>
+	<string name="update_avail">New update of FILE QUEST is available</string>
+	<string name="delete_frm_ext_sd">Beginning from Android 4.4 Kitkat,it may not possible to remove or rename files on external storage due to change of Android security policy.</string>
+	<string name="delete_frm_ext_sd_title">Cannot delete from external storage!</string>
+	<string name="dis_next_restart">Disable lock till next restart</string>
+	<string name="unlock_all">Unlock all locked items</string>
+	<string name="lock_disabled">Lock disabled till next restart</string>
+	<string name="no_locked_items">No items are locked</string>
+	<string name="mediafire">Mediafire</string>
+	<string name="sugarsync">Sugarsync</string>
+	<string name="copy_cld">Copy</string>
+	<string name="no_file_available">No files available</string>
+	<string name="faile_to_rename">Failed to rename file</string>
+	<string name="thumb_loading">Thumbnail Loading....</string>
+	<string name="load_app_thumb">Load app thumb</string>
+	<string name="load_img_thumb">Load image thumb</string>
+	<string name="load_music_thumb">Load album art</string>
+	<string name="wrong_old_passws">Wrong old password</string>
+	
+	
+	
+	
+	<!-- FILE QUEST PLAYER -->
+	<string name="fqplayer">FILE  QUEST  PLAYER</string>
+	
+	<!-- TASKER ACTIVITY STRINGS..... -->
+	<string name="startupfoldernotfound">Startup folder not found</string>
+	<string name="noappsinstalled">No apps are installed</string>
+	<string name="appstore">Your app store</string>
+	<string name="filegallery">File Gallery</string>
+	<string name="compressandsend">Compress and sent it</string>
+	<string name="nobackuptodelete">No backup to delete</string>
+	<string name="quit">Quit</string>
+	<string name="pastenotallowed">Paste operation not allowed here</string>
+	<string name="enablemultiselect">First enable multi select mode</string>
+	<string name="multiforgallery">Enable multi select for File Gallery</string>
+	<string name="multiforroot">Enable multi select for Root Panel</string>
+	<string name="multiforsd">Enable multi select for SD Card Panel</string>
+	<string name="multiforapp">Enable multi select for Your app store</string>
+	<string name="selectcategoryfromgallery">First select any category in File Gallery</string>
+	<string name="showinguserapps">Now showing user apps</string>
+	<string name="showingsystemapps">Now showing system apps</string>
+	<string name="showinguserandsystemapps">Now showing user and system apps</string>
+	<string name="item_created">Item successfully created</string>
+	<string name="creation_failed">Failed to create item</string>
+	<string name="fileexists">File with same name already exists</string>
+	<string name="renamed">Successfully renamed to : </string>
+	<string name="entervalidname">Enter a valid name</string>
+	<string name="jmpfav">Jump to favorite</string>
+	<string name="jmpmusic">Jump to music</string>
+	<string name="jmpvids">Jump to video</string>
+	<string name="jmpmarch">Jump to archive</string>
+	<string name="jmpdocs">Jump to document</string>
+	<string name="jmpzip">Jump to archive</string>
+	<string name="jmpapk">Jump to apps</string>
+	<string name="jmpmisc">Jump to unknown</string>
+    <string name="jmpimg">Jump to image</string>
+    <string name="pastehere">Paste here</string>
+    <string name="jmpdown">Jump to download folder</string>
+    <string name="jmpcam">Jump to camera folder</string>
+    <string name="jmpmusfo">Jump to music folder</string>
+    <string name="jmpvidfo">Jump to video folder</string>
+    <string name="prop">Properties</string>
+    <string name="selecteddefaultapp">Selected default apps</string>
+    <string name="backupuserapp">Backup user apps</string>
+    <string name="backupsystemapp">Backup system apps</string>
+    <string name="backupboth">Backup both of them</string>
+    <string name="whatsnew">What\'s New</string>
+    
+    <string name="dropbox">DropBox</string>
+    <string name="googledrive">Google Drive</string>
+	<string name="skydrive">Sky Drive</string>
+    <string name="createfolder">Create folder</string>
+    <string name="createhiddenfolder">Create hidden folder</string>
+    <string name="createfile">Create empty file</string>
+    <string name="enterfoldername">Enter folder name</string>
+    <string name="enterfilename">Enter file name</string>
+    <string name="settingsapplied">Settings have been applied</string>
+    <string name="pressbackagain">Press back key to exit</string>
+    <string name="rootaccessfailed">I m unable to gain root access</string>
+    <string name="adjusttrans">Adjust transparency</string>
+    <string name="setfoldericn">Set folder icon</string>
+    <string name="orangefolder">Orange folder</string>
+    <string name="bluefolder">Blue folder</string>
+    <string name="greenfolder">Green folder</string>
+    <string name="brownfolder">Brown folder</string>
+    <string name="greyfolder">Grey folder</string> 
+    <string name="violetfolder">Violet folder</string>
+    <string name="cyanfolder">Cyan folder</string>
+    <string name="opaque60">60 % opaque</string>
+    <string name="opaque70">70 % opaque</string>
+    <string name="opaque80">80 % opaque</string>
+    <string name="opaque90">90 % opaque</string>
+    <string name="opaque100">100 % opaque</string>
+    <string name="setstartpanel">Set startup panel</string>
+    <string name="setstartdir">Set startup directory</string>
+    <string name="showhidden">Show hidden folder</string>
+    <string name="sort">Sorting</string>
+    <string name="restored">Restored to default</string>
+    <string name="rootpanel">Root panel</string>
+    <string name="enableonlaunch">Enable on launch</string>
+    <string name="alphafirst">Alphabetical order</string>
+    <string name="folderfirst">Folder first</string>
+    <string name="filefirst">File first</string>
+    <string name="hidfirst">Hidden item first</string>
+    <string name="nonhidfirst">Non hidden item first</string> 
+    <string name="settingssaved">Settings saved,restart app manually</string>    
+    <string name="showdownapp">Show downloaded apps</string>
+    <string name="showsysapp">Show system apps</string>
+    <string name="showboth">Show both of them</string>
+    <string name="nametofilterout">Enter name to filter out</string>
+   
+	<string name="apps">Apps</string>
+	<string name="docs">Docs</string>
+
+	
+	
+    <string name="rar">Rar</string>
+    <string name="norarapp">Rar - No rar app set as default</string>    
+    <string name="nomusicapp">Music - No music app set as default</string>
+    <string name="novidapp">Video - No video app set as default</string>
+    <string name="noimgapp">Image - No image app set as default</string>
+    <string name="nozipapp">Zip - No zip app set as default</string>
+    <string name="nopdfapp">Pdf - No pdf app set as default</string>
+    <string name="nodocapp">Doc - No doc app set as default</string>
+    <string name="cleardefaults">Clear all defaults</string>
+    <string name="appearance">Appearance</string>
+    <string name="abtme">About me and my app</string>
+    <string name="startup">Start up</string>
+    <string name="folderopt">Folder options</string>
+    <string name="sethomdir">Set home directory</string>
+    <string name="restoretodefault">Restore to default</string>
+    <string name="selectedforcopy">Files selected for copying</string>
+    <string name="selectedformove">Files selected for moving</string>
+    <string name="firstselectsomefiles">First select some files</string>
+    <string name="errorinloadingfiles">An exception encountered please wait while loading files list</string>
+    <string name="availgb">Available %.2f GB</string>
+    <string name="availmb">Available %.2f MB</string>
+    <string name="availkb">Available %.2f KB</string>
+    <string name="availbytes">Available %.2f Bytes</string>
+    <string name="totgb">Total Space %.2f GB</string>
+    <string name="totmb">Total Space %.2f MB</string>
+    <string name="totkb">Total Space %.2f KB</string>
+    <string name="totbytes">Total Space %.2f Bytes</string>
+    <string name="linkanaccount">First link an account</string>
+    <string name="openingfile">Opening file,wait</string>
+    <string name="filedoesnotexists">File doesn\'t exists</string>
+    <string name="forceclose">File Quest get force closed,wait while restarting</string>
+    
+    
+    
+    
+    
+    
+    
+    <!-- COPY DIALOG STRINGS... -->
+    <string name="copyingto">COPYING TO :-</string>
+    <string name="copying">COPYING :-</string>
+    <string name="copyingfrom">COPYING FROM :-</string>
+    <string name="copsuccess">Copying was successful</string>
+    <string name="copintr">Copying was interrupted</string>
+    <string name="fsizegb">FILE SIZE :- %.2f GB</string>
+    <string name="fsizemb">FILE SIZE :- %.2f MB</string>
+    <string name="fsizekb">FILE SIZE :- %.2f KB</string>
+    <string name="fsizebyte">FILE SIZE :- %.2f Bytes</string>    
+    <string name="copstatusgb">Status :- %.2f GB copied</string>
+    <string name="copstatusmb">Status :- %.2f MB copied</string>
+    <string name="copstatuskb">Status :- %.2f KB copied</string>
+    <string name="copstatusbyte">Status :- %.2f Bytes copied</string>
+    <string name="reqroot">Waiting for ROOT ACCESS</string>
+    <string name="time">Time left</string>
+    
+    <!-- ADAPTER LOADERS.. -->
+    <string name="open">Open</string>
+    <string name="copy">Copy/Select</string>
+    <string name="cut">Cut</string>
+    <string name="paste">Paste</string>
+    <string name="delete">Delete</string>
+	<string name="properties">Properties</string>
+	<string name="send">Send</string>
+	<string name="archive">Create Archive</string>
+    <string name="addgesture">Add Gesture</string>
+    <string name="copytocloud">Copy to cloud</string>
+    <string name="launch">Launch App</string>
+    <string name="uninstall">Uninstall</string>
+    <string name="takebackup">Take Backup</string>
+    <string name="deleteearlierbackup">Delete earlier backup</string>
+    <string name="createbackupzip">Create backup zip</string>
+    <string name="shareapp">Share App</string>
+    <string name="appproperties">App Properties</string>    
+    <string name="nobackup">No Backup</string>
+    <string name="backupon">Backup on :-</string>
+    <string name="sizegb">%.2f GB</string>
+    <string name="sizemb">%.2f MB</string>
+    <string name="sizekb">%.2f KB</string>
+    <string name="sizebytes">%.2f Bytes</string>
+    <string name="application">App</string>
+    <string name="image">Image</string>
+    <string name="music">Music</string> 
+    <string name="vids">Video</string>
+	<string name="zip">Zip</string>
+    <string name="compr">Compressed</string>
+    <string name="web">Web</string>
+    <string name="mis">Unknown</string>
+    <string name="pdf">Pdf</string>
+    <string name="document">Document</string>
+    <string name="text">Text</string>
+    <string name="unknown">Unknown</string>
+    <string name="directory">Directory</string>
+    <string name="rootd">Root Access</string>
+    <string name="items">Items</string>
+    <string name="script">Script</string>
+        
+    
+    
+    
+    
+    
+    
+    <!-- GESTURE ADD STRINGS -->
+    <string name="drawgesture">Draw Gesture</string>
+    <string name="save">Save</string>
+    <string name="discard">Discard</string>
+    <string name="gesturesaved">Gesture saved successfully....</string>
+    
+    
+    
+    
+    
+    
+    
+    <!-- XML Strings -->
+    <string name="cancel">Cancel</string>
+    <string name="appBackupTask">App Backup Task</string>
+    <string name="spaceleft">SPACE LEFT :-</string>
+    <string name="spaceavail">SPACE AVAILABLE :-</string>
+    <string name="packagename">PACKAGE NAME :-</string>
+    <string name="appversion">VERSION :-</string>
+    <string name="appsizegb">SIZE :- %.2f GB</string>
+    <string name="appsizemb">SIZE :- %.2f MB</string>
+    <string name="appsizekb">SIZE :- %.2f KB</string>
+    <string name="appsizebytes">SIZE :- %.2f Bytes</string>
+    <string name="backupexists">Last Backup On :-</string>
+    <string name="nobackupexists">No Earlier backup Exists</string>
+    <string name="totalapps">Total apps to backup :-</string>
+   	<string name="appstatusgb">Status :- %.2f GB done</string>
+   	<string name="appstatusmb">Status :- %.2f MB done</string>
+    <string name="appstatuskb">Status :- %.2f KB done</string>
+    <string name="appstatusbytes">Status :- %.2f Bytes done</string> 
+    <string name="spaceavailgb">SPACE AVAILABLE :- %.2f GB</string>
+    <string name="spaceavailmb">SPACE AVAILABLE :- %.2f MB</string>
+    <string name="spaceavailkb">SPACE AVAILABLE :- %.2f KB</string>
+    <string name="spaceavailbytes">SPACE AVAILABLE :- %.2f Bytes</string>    
+    <string name="spaceleftgb">SPACE LEFT :- %.2f GB</string>
+    <string name="spaceleftmb">SPACE LEFT :- %.2f MB</string>
+    <string name="spaceleftkb">SPACE LEFT :- %.2f KB</string>
+    <string name="spaceleftbytes">SPACE LEFT :- %.2f Bytes</string>  
+    <string name="backupsuccessful">Backup operation was successful</string>
+    <string name="ok">Ok</string>
+    <string name="appname">APP NAME :-</string>
+    <string name="backupinterrupted">Backup operation was interrupted</string>
+    <string name="zerosize">SIZE :- 0.0 MB</string>
+    <string name="zerofiles">0 Items</string>
+    <string name="chart">Chart</string>
+    <string name="action">Action</string>
+    <string name="backup">Backup</string>
+    <string name="clean">Clean</string>
+    <string name="entername">Enter new name</string>
+    <string name="fqeditor">File Quest Text Editor</string>
+    <string name="gopen">G-Open</string>
+    <string name="home">Home</string>
+    <string name="fqviewer">File Quest Image Viewer</string>
+    <string name="developer">Developer</string>
+    <string name="copyright">Copyright 2014</string>
+    <string name="anurag">ANURAG</string>
+    <string name="version2">Version</string>
+    <string name="released">Released Status</string>
+    <string name="beta">Experimental-Beta</string>
+    <string name="license">License</string>
+    <string name="apache">Apache v2.0</string>
+    <string name="contact">Contact</string>
+    <string name="email">anurag.dev1512@gmail.com</string>
+    <string name="share">Share</string>
+    <string name="goback">Go back</string>
+    <string name="available">Available</string>
+    <string name="cleardefault">Clear default</string>
+    <string name="settings">Settings</string>
+    
+    
+    <!-- ZIP DIALOG -->
+    <string name="archname">Archive Name</string>
+    <string name="ziptype">Create Archive</string>
+    <string name="options">Options</string>
+    <string name="deleteafterzip">Delete files after zipping</string>
+    <string name="keepafterzip">Keep files after zipping</string>
+    <string name="start">Start</string>
+    <string name="ziperror">An unknown error has occurred</string>
+    <string name="zipsuccessful">Zip operation completed successfully</string>
+    <string name="zipinterrupted">Zip operation was interrupted</string> 
+    <string name="dest">DESTINATION :-</string>
+    <string name="currentfile">CURRENT FILE :-</string>
+    <string name="deleteingfile">Deleting files</string>
+    
+    
+    
+    <!-- ERROR DIALOG STRINGS -->
+    <string name="ziprecovery">Zip Recovery</string>
+    <string name="ziprecoverymessage">This will create a zip file containing all the installed apps..</string>
+    <string name="cantrename">Cannot rename</string>
+    <string name="renameerror">An error encountered while renaming....</string>
+    
+    
+    
+    <!-- DELETE_FILES DIALOG STRINGS... -->
+    <string name="deletefiles">Delete files ?</string>
+    <string name="confirmdelete">Are you sure to delete the files of folder :- Currently selected files or folders will be deleted permanently....</string>
+    <string name="waitwhiledeleting">Please wait while deleting files or folders</string>
+    <string name="deleted">Files deleted successfully</string>
+    <string name="deletebackupmsg">All your earlier backup of installed apps will be deleted,are you sure to delete them</string>
+    <string name="backupdeleted">All earlier backups of apps have been deleted</string>
+    <string name="message">Message</string>
+    <string name="failtolocate">Unable to locate earlier backups,probably no backup was taken</string>
+    <string name="deletezipbackup">Delete zipped backups</string>
+    <string name="deletezipbackups">All your zip backups of app will be deleted,are you sure to delete them</string>
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- EDITOR STRINGS -->
+    <string name="errorinopening">An error encountered while opening file....</string>
+    
+    
+    <!-- IMAGE VIEWER STRINGS -->
+    <string name="deleteimage">Confirm Deletion of file ?</string>
+    <string name="suretodelete">Are you sure to delete the file :-</string> 
+    <string name="imagedeleted">Image file deleted successfully</string>    
+    <string name="failtodeleteimage">Failed to delete image file</string>
+    <string name="wrongselec">Selected file is invalid image file</string>
+    <string name="failtoopenimage">Failed to open the image file</string>
+    
+    
+    
+    <!-- OPEN AS FILE DIALOG STRINGS... -->
+    <string name="textfile">Text file</string>
+    <string name="musicfile">Music file</string>
+    <string name="videofile">Video file</string>
+    <string name="docfile">Document file</string>
+    <string name="pdffile">Pdf file</string>
+    <string name="arcfile">Archive file</string>
+    <string name="openas">Open file as</string>
+    <string name="makeaselection">Make a selection first</string>
+    
+    
+    
+    <!-- APP PROPERTIES DIALOG... -->
+    <string name="applicationname">App name</string>
+    <string name="appsize">Size</string>
+    <string name="noappversion">Unable to find app version</string>
+    <string name="apppackage">Package name</string>
+    <string name="appprocess">Process name</string>
+    <string name="selectapp">Select an application</string>
+    
+    
+    <!-- FILE PROPERTIES DIALOG STRING... -->
+    <string name="modon">Modified on :-</string>
+    <string name="free">Free</string>
+    <string name="total">Total</string>
+    <string name="foldersizegb">Folder size :- %.2f GB</string>
+    <string name="foldersizemb">Folder size :- %.2f MB</string>
+    <string name="foldersizekb">Folder size :- %.2f KB</string>
+    <string name="foldersizebytes">Folder size :- %.2f Bytes</string>
+    <string name="file">File</string>
+    <string name="filename">NAME</string>
+    <string name="filepath">PATH</string>
+    <string name="filesize">SIZE</string>
+    <string name="filesizegb">File size :- %.2f GB</string>
+    <string name="filesizemb">File size :- %.2f MB</string>
+    <string name="filesizekb">File size :- %.2f KB</string>
+    <string name="filesizebytes">File size :- %.2f Bytes</string>
+    
+    
+    <!-- GET HOME DIRECTORY DIALOG... -->
+    <string name="choosehome">Choose any directory for home</string>
+    <string name="homeset">Home directory got set successfully</string>
+    
+    
+    <!-- SELECT APP DIALOG STRINGS.... -->
+    <string name="selectmusicapp">Select app for music files</string>
+    <string name="selectimageapp">Select app for image files</string>
+    <string name="selectzipapp">Select app for zip files</string>
+    <string name="selectpdfapp">Select app for pdf files</string>
+    <string name="selectdocsapp">Select app for document files</string>
+    <string name="selectrarapp">Select app for rar files</string>
+    <string name="selectvideoapp">Select app for video files</string>
+    
+    
+    
+    <!-- SET LAUNCH DIR DIALOG STRINGS... -->
+    <string name="setstartupdir">Choose any directory for startup</string>
+    <string name="startupset">Directory set for launch on startup</string>
+    
+    
+    <!-- EXTRACT ZIP FILE DIALOG... -->
+    <string name="archiveoperation">Archive Operation</string>
+    <string name="extract">Extract</string>
+    <string name="extractingto">EXTRACTING TO :-</string>
+    <string name="extractingfrom">EXTRACTING FROM :-</string>
+    <string name="extractingfile">EXTRACTING FILE :-</string>
+    <string name="extstatusgb">Status :- %.2f GB extracted</string>
+   	<string name="extstatusmb">Status :- %.2f MB extracted</string>
+    <string name="extstatuskb">Status :- %.2f KB extracted</string>
+    <string name="extstatusbytes">Status :- %.2f Bytes extracted</string> 
+    <string name="extractto">Extract to</string>
+    <string name="extracthere">Extract here</string>
+    
+    
+    
+    <!-- cloud networks -->
+    <string name="uploading">Uploading file</string>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</resources>

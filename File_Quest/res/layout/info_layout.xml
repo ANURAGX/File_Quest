@@ -1,0 +1,177 @@
+<!-- 
+  Copyright(c) 2013 DRAWNZER.ORG PROJECTS -> ANURAG
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+                              
+                              anuraxsharma1512@gmail.com
+ 
+ -->
+<LinearLayout 
+    android:background="@color/black"
+    android:weightSum="7"
+    android:layout_gravity="center"
+    android:paddingTop="10dp"
+    android:paddingBottom="20dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:orientation="vertical" 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <LinearLayout 
+        android:orientation="horizontal" 
+        android:paddingLeft="10.0dip"
+        android:paddingTop="10.0dip" 
+        android:layout_width="fill_parent"
+        android:layout_gravity="center_vertical" 
+        android:layout_height="0dp" 
+        android:paddingBottom="10dp"
+        android:layout_weight="4.5">
+        <ImageView 
+            android:background="@drawable/task"
+            android:id="@+id/infoIcon"
+            android:gravity="center_vertical" 
+            android:layout_width="45.0dip" 
+            android:layout_height="45.0dip" />
+        <TextView 
+            android:id="@+id/infoName"
+            android:gravity="center_vertical"
+            android:textStyle="bold" 
+            android:paddingLeft="10.0dip" 
+            android:paddingTop="15.0dip" 
+            android:textSize="15dip"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:text="@string/abtme" />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:background="@color/dialog_border" 
+        android:layout_width="fill_parent" 
+        android:layout_height="3dp" 
+         />
+    	 <TextView 
+    	       android:id="@+id/developer"	
+         	   android:gravity="center_vertical"
+         	   android:textStyle="bold" 
+         	   android:paddingLeft="10.0dip" 
+         	   android:layout_width="wrap_content" 
+          	   android:layout_height="wrap_content" 
+          	   android:textSize="20dip"
+          	   android:text="@string/developer" />
+    	 
+    	 <TextView 
+    	       android:id="@+id/copyright"
+    	       android:singleLine="true"
+         	   android:gravity="center_vertical"
+         	   android:textStyle="bold" 
+         	   android:paddingLeft="10.0dip" 
+         	   android:layout_width="wrap_content" 
+          	   android:layout_height="wrap_content" 
+          	   android:text="@string/copyright" />
+    	 
+    	 <TextView 
+    	       android:id="@+id/name"
+    	       android:singleLine="true"
+         	   android:gravity="center_vertical"
+         	   android:textStyle="bold" 
+         	   android:paddingLeft="10.0dip" 
+         	   android:layout_width="wrap_content" 
+          	   android:layout_height="wrap_content" 
+          	   android:text="@string/anurag" />
+    	 
+    	 
+    	 <TextView 
+    	       android:id="@+id/version"
+         	   android:gravity="center_vertical"
+         	   android:textStyle="bold" 
+         	   android:paddingLeft="10.0dip" 
+         	   android:paddingTop="5.0dip" 
+          	   android:layout_width="wrap_content" 
+          	   android:layout_height="wrap_content"
+          	   android:textSize="20dip" 
+          	   android:text="@string/version2" />
+    	 <TextView 
+    	       android:id="@+id/versionCode"
+         	   android:gravity="center_vertical"
+         	   android:textStyle="bold" 
+         	   android:paddingLeft="10.0dip" 
+         	   android:layout_width="wrap_content" 
+          	   android:layout_height="wrap_content" 
+          	   android:text="@string/version" />
+    	 
+    	 <TextView 
+         	   android:id="@+id/size"
+         	   android:gravity="center_vertical"
+         	   android:textStyle="bold" 
+         	   android:paddingLeft="10.0dip" 
+         	   android:paddingTop="5.0dip" 
+          	   android:layout_width="wrap_content" 
+          	   android:layout_height="wrap_content"
+          	   android:textSize="20dip" 
+          	   android:text="@string/released" />
+    	 <TextView 
+    	       android:id="@+id/sizeLenth"
+         	   android:gravity="center_vertical"
+         	   android:textStyle="bold" 
+         	   android:paddingLeft="10.0dip" 
+          	   android:layout_width="wrap_content" 
+          	   android:layout_height="wrap_content" 
+          	   android:text="@string/beta" />
+    
+    	  <TextView 
+    	       android:id="@+id/packageT"
+         	   android:gravity="center_vertical"
+         	   android:textStyle="bold" 
+         	   android:paddingLeft="10.0dip" 
+         	   android:paddingTop="5.0dip" 
+          	   android:layout_width="wrap_content" 
+          	   android:layout_height="wrap_content"
+          	   android:textSize="20dip" 
+          	   android:text="@string/license" />
+    	 <TextView 
+    	       android:id="@+id/pName"
+    	       android:singleLine="true"
+         	   android:gravity="center_vertical"
+         	   android:textStyle="bold" 
+         	   android:paddingLeft="10.0dip" 
+         	   android:layout_width="wrap_content" 
+          	   android:layout_height="wrap_content"
+          	   android:text="@string/apache" />
+    	 
+    	 <TextView 
+         	   android:id="@+id/process"
+         	   android:gravity="center_vertical"
+         	   android:textStyle="bold" 
+         	   android:paddingLeft="10.0dip" 
+         	   android:paddingTop="5.0dip" 
+          	   android:layout_width="wrap_content" 
+          	   android:layout_height="wrap_content"
+          	   android:textSize="20dip" 
+          	   android:text="@string/contact" />
+    	 <TextView 
+    	      android:id="@+id/proName"
+    	      android:singleLine="true"
+         	   android:gravity="center_vertical"
+         	   android:textStyle="bold" 
+         	   android:paddingLeft="10.0dip" 
+         	   android:layout_width="wrap_content" 
+          	   android:layout_height="wrap_content"
+          	   android:text="@string/email" />
+    	
+    	 
+    	 
+   
+</LinearLayout>
+

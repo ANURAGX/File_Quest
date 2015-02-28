@@ -1,0 +1,63 @@
+<!--
+  Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  
+                              anuraxsharma1512@gmail.com
+-->
+
+<menu 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+    
+    <item 
+        android:visible="false"
+        android:id="@+id/action_search"
+        android:icon="@drawable/gesture"
+        android:title="@string/action_search"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.SearchView"/>
+    
+    
+    <item 
+        android:id="@+id/action_queued"
+        android:icon="@drawable/queued_task"
+        android:title="@string/action_queued"
+        app:showAsAction="always">
+               
+    </item>    
+    
+    <item 
+        android:id="@+id/action_gesture"
+        android:icon="@drawable/gesture"
+        android:title="@string/action_gesture"
+        app:showAsAction="always"/>
+    
+    <item 
+        android:id="@+id/action_settings"
+        android:icon="@drawable/action_settings"
+        android:title="@string/action_settings"
+        app:showAsAction="always">
+        
+        <menu>
+    		<item 
+        		android:id="@+id/action_setting"
+        		android:title="@string/action_settings"/>
+    		<item 
+        		android:id="@+id/action_exit"
+        		android:title="@string/action_exit"/>    		
+		</menu>
+
+    </item>
+
+</menu>

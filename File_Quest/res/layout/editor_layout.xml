@@ -1,0 +1,106 @@
+<!-- 
+  Copyright(c) 2013 DRAWNZER.ORG PROJECTS -> ANURAG
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+                              
+                             anuraxsharma1512@gmail.com
+ 
+ -->
+<LinearLayout 
+    android:id="@+id/editor_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:gravity="center"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+   
+    
+    <android.support.v7.widget.Toolbar
+    	xmlns:app="http://schemas.android.com/apk/res-auto"
+    	android:id="@+id/toolbar_top"
+    	android:layout_height="wrap_content"
+    	android:layout_width="match_parent"
+    	android:minHeight="?android:attr/actionBarSize"
+    	android:background="?attr/colorPrimary" />
+    
+    
+    <LinearLayout 
+        android:padding="5dp"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <EditText 
+            android:gravity="center"
+            android:clickable="false"
+            android:layout_weight="1"
+            android:id="@+id/textSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:hint="@string/search_hint"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"/>
+       
+        
+    </LinearLayout>
+    
+    
+    
+    <!-- SCROLL VIEW-->
+    
+    
+   
+   
+    
+    <ScrollView 
+        android:paddingTop="2dp"
+        android:fillViewport="true"
+        android:fadingEdge="none"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    	<LinearLayout 
+    	    android:gravity="center"
+    	    android:orientation="vertical"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="fill_parent">
+    	    
+    	    <EditText 
+    	    	android:visibility="gone"
+    	    	class="org.anurag.text.editor$CustomText"
+    	    	android:fadingEdge="none"
+    	    	android:gravity="top"
+    	    	android:autoText="false"
+    	    	android:capitalize="none"
+    	    	android:scrollbars="vertical"
+    	    	android:layout_width="fill_parent"
+    	    	android:id="@+id/note"
+    	   	 	android:layout_height="fill_parent"
+    	    />
+        <ProgressBar 
+            android:id="@+id/editorBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    	 <TextView
+    	     android:textColor="@android:color/white" 
+    	     android:paddingTop="10dp"
+    	     android:id="@+id/editorMesage"
+    	     android:layout_width="wrap_content"
+    	     android:layout_height="wrap_content"
+    	     android:textStyle="bold"
+    	     android:text="@string/wait"/>   
+    	</LinearLayout>
+    </ScrollView>
+    
+    
+
+</LinearLayout>

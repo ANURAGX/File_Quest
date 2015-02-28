@@ -1,0 +1,169 @@
+<!--
+  Copyright(c) 2014 DRAWNZER.ORG PROJECTS -> ANURAG
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+       
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+                              
+                              anuraxsharma1512@gmail.com
+-->
+
+<menu 
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item 
+        android:id="@+id/search_file"
+        android:icon="@drawable/search_file"
+        android:title="@string/action_search"
+        app:showAsAction="always"/>
+        
+    <item 
+        android:id="@+id/add_new"
+        android:icon="@drawable/add_new"
+        android:title="@string/action_add_new"
+        app:showAsAction="always">
+        
+        <menu>
+            <item 
+                android:id="@+id/new_folder"
+                android:title="New Folder"/>
+            
+            <item 
+                android:id="@+id/new_file"
+                android:title="New File"/>
+        </menu>
+    </item>
+
+    <item 
+        android:id="@+id/color_change"
+        android:icon="@drawable/change_color"
+        android:title="@string/action_color"
+        app:showAsAction="always">
+        
+        <menu>
+            <item 
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/grey"
+                android:id="@+id/grey"
+                android:title="Dark Grey"/>
+            
+            <item 
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/red"
+                android:id="@+id/red"
+                android:title="Red"/>
+            
+            <item 
+                app:showAsAction="ifRoom"
+                android:id="@+id/Orange"
+                android:icon="@drawable/orange"
+                android:title="Orange"/>
+            
+            <item 
+                app:showAsAction="ifRoom"
+                android:id="@+id/green"
+                android:icon="@drawable/green"
+                android:title="Green"/>
+            
+            <item 
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/blue"
+                android:id="@+id/blue"
+                android:title="Blue"/>
+            
+            <item 
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/violet"
+                android:id="@+id/violet"
+                android:title="Violet"/>
+        </menu>
+        
+    </item>
+    
+    
+    <item 
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/refresh"
+        android:title="@string/action_refresh"
+        app:showAsAction="always"/>
+    
+    <item 
+        android:id="@+id/action_views"
+        android:icon="@drawable/views"
+        android:title="@string/action_views"
+        app:showAsAction="always">
+        
+        <menu>
+        	<item 
+        	    android:checkable="true"
+        	    android:id="@+id/simple_ls"
+        	    android:title="@string/action_simplels"/> 
+        	    
+        	<item 
+        	    android:checkable="true"
+        	    android:id="@+id/detail_ls"
+        	    android:title="@string/action_list"/>
+        	
+        	<item 
+        	    android:checkable="true"
+        	    android:id="@+id/simple_grid"
+        	    android:title="@string/action_simplegrid"/>
+        	
+        	<item 
+        	    android:checkable="true"
+        	    android:id="@+id/detail_grid"
+        	    android:title="@string/action_grid"/>
+        </menu>
+    </item>
+    
+    <item 
+        android:id="@+id/action_sort"
+        android:title="@string/action_sort"
+        android:icon="@drawable/sort"
+        app:showAsAction="always">
+        
+        <menu>
+            
+            <item 
+        	    android:checkable="true"
+        	    android:id="@+id/sort_az"
+                android:title="@string/action_az"/>        
+            
+            <item 
+                android:checkable="true"
+        	    android:id="@+id/sort_za"
+                android:title="@string/action_za"/>
+            
+            <item 
+        	    android:checkable="true"
+        	    android:id="@+id/size_smaller"
+                android:title="@string/action_size_smaller"/>
+            
+            <item
+                android:checkable="true"
+        	    android:id="@+id/size_bigger"
+                android:title="@string/action_size_bigger"/>
+            
+            <item 
+        	    android:checkable="true"
+        	    android:id="@+id/date_new"
+                android:title="@string/action_date_new"/>
+            
+            
+            <item 
+        	    android:checkable="true"
+        	    android:id="@+id/date_old"
+                android:title="@string/action_date_old"/>
+        </menu>
+        
+    </item>
+    
+</menu>
