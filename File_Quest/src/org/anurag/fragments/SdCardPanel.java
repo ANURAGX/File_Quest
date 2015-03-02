@@ -120,8 +120,10 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		list = (ListView)view.findViewById(R.id.list_view_hd);	
+		list.setBackgroundColor(Color.WHITE);
 		grid = (GridView) view.findViewById(R.id.grid_view_hd);
 		empty = (LinearLayout) view.findViewById(R.id.empty);
+		empty.setBackgroundColor(Color.WHITE);
 		list.setSelector(R.drawable.list_selector_hd);
 		list_anim_helper = new JazzyHelper(getActivity(), null);
 		setAnim(list);

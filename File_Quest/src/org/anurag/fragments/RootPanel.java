@@ -115,7 +115,9 @@ public class RootPanel extends Fragment{
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		list = (ListView)view.findViewById(R.id.list_view_hd);	
+		list.setBackgroundColor(Color.WHITE);
 		empty = (LinearLayout) view.findViewById(R.id.empty);
+		empty.setBackgroundColor(Color.WHITE);
 		list.setSelector(R.drawable.list_selector_hd);
 		list_anim_helper = new JazzyHelper(getActivity(), null);
 		setAnim(list);

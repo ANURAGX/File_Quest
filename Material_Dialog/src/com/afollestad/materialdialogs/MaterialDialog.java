@@ -58,6 +58,7 @@ import java.util.List;
 /**
  * @author Aidan Follestad (afollestad)
  */
+@SuppressLint("NewApi")
 public class MaterialDialog extends DialogBase implements View.OnClickListener {
 
     protected final View view;

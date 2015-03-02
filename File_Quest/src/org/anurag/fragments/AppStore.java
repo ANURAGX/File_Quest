@@ -92,6 +92,7 @@ public class AppStore extends Fragment{
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		ls = (ListView) view.findViewById(R.id.list_view_hd);
+		ls.setBackgroundColor(Color.WHITE);
 		ls.setSelector(R.drawable.list_selector_hd);
 		list_anim_helper = new JazzyHelper(getActivity(), null);
 		setAnim(ls);

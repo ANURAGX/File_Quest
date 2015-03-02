@@ -21,7 +21,7 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.util.List;
-import android.app.Dialog;
+
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
@@ -29,19 +29,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
 
 /**
  * 
@@ -53,7 +53,6 @@ public class OpenFileDialog {
 	private Intent intent;
 	private Context mContext;
 	private String mData;
-	private Dialog dialog;
 	private PackageManager manager;
 	private	ResolveInfo info;
 	private List<ResolveInfo> list;
@@ -79,18 +78,12 @@ public class OpenFileDialog {
 	private String RAR ;
 	private String RAR_CLASS_NAME;
 	private boolean intentSelected;
-	private Button justOnce;
-	private Button always;
-	private ListView view;
 	private File file;
-	private int wi;
-	private ImageView header;
 	
 	public OpenFileDialog(Context context,Uri uri,int width ) {
 		// TODO Auto-generated constructor stub
 		showDialog = true;
 		try{
-			wi = width;
 			mData = uri.toString();
 			file = new File(mData);
 			mContext = context;
@@ -126,12 +119,6 @@ public class OpenFileDialog {
 			}
 			
 			
-			dialog = new Dialog(mContext, Constants.DIALOG_STYLE);
-			dialog.setCancelable(true);
-			dialog.setContentView(R.layout.launch_file);
-			dialog.getWindow().getAttributes().width = width;
-			header = (ImageView)dialog.findViewById(R.id.launchImage);
-			header.setImageResource(R.drawable.task);
 			prefs = mContext.getSharedPreferences("DEFAULT_APPS", 0);
 			edit = prefs.edit();
 			manager = mContext.getPackageManager();
@@ -154,9 +141,6 @@ public class OpenFileDialog {
 			ZIP_CLASS_NAME = prefs.getString("ZIP_CLASS_NAME", null);	
 			RAR = prefs.getString("RAR", null);
 			RAR_CLASS_NAME = prefs.getString("RAR_CLASS_NAME", null);	
-			view = (ListView)dialog.findViewById(R.id.launch_list);
-			justOnce = (Button)dialog.findViewById(R.id.justOnce);
-			always = (Button)dialog.findViewById(R.id.always);
 			if(showDialog)
 				init();
 		}catch(RuntimeException e){
@@ -180,7 +164,7 @@ public class OpenFileDialog {
 					 * IS AVAILABLE
 					 */
 					//Toast.makeText(mContext, R.string.noApp, Toast.LENGTH_SHORT).show();
-					new OpenAs(mContext, wi,Uri.parse(file.getAbsolutePath()));
+					//new OpenAs(mContext, wi,Uri.parse(file.getAbsolutePath()));
 				}
 			}
 			else{
@@ -190,7 +174,7 @@ public class OpenFileDialog {
 				 * IS AVAILABLE
 				 */
 				//Toast.makeText(mContext, R.string.noApp, Toast.LENGTH_SHORT).show();
-				new OpenAs(mContext, wi,Uri.fromFile(file));
+				//new OpenAs(mContext, wi,Uri.fromFile(file));
 			}
 		}catch(RuntimeException e){
 			
@@ -211,101 +195,94 @@ public class OpenFileDialog {
 			 * THIS DIALOG IS SHOWN IN RUNTIME EXCEPTION, IF THERE IS NO DEFAULT SELECTED APP
 			 * THEN IT WILL CAUSE EXCEPTION THEN LIST OF APPS WILL BE OFFERED TO USER TO SELECT
 			 */
-			view.setAdapter(new OpenItems(mContext, R.layout.row_list_2, list));
-			view.setSelector(mContext.getResources().getDrawable(R.drawable.action_item_btn2));
-			if(list.size()>0)
-				dialog.show();
-			view.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1, int position,long arg3) {
-					info = list.get(position);
-					intentSelected = true; 
-					intent = new Intent(Intent.ACTION_MAIN);
-					intent.setAction(Intent.ACTION_VIEW);
-					NAME = info.activityInfo.packageName;
-					CLASS_NAME = info.activityInfo.name;
-					intent.setComponent(new ComponentName(info.activityInfo.packageName, info.activityInfo.name));
-					//intent.setClassName(info.activityInfo.packageName, info.activityInfo.name);
-					intent.setData(Uri.fromFile(file));
-				}
-			});
 			
+			if(list.size()>0){
+				LayoutInflater inf = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				View view = inf.inflate(R.layout.list_view_hd, null , false);
+				
+				new MaterialDialog.Builder(mContext)
+				.title(R.string.open)
+				.positiveText(R.string.once)
+				.negativeText(R.string.always)
+				.callback(new ButtonCallback() {
+					@Override
+					public void onPositive(MaterialDialog dialog) {
+						// TODO Auto-generated method stub
+						super.onPositive(dialog);
+						if(intentSelected){
+							try{
+								mContext.startActivity(intent);
+								dialog.dismiss();
+								//OpenFiles.this.finish();
+							}catch(ActivityNotFoundException e){
+								Toast.makeText(mContext, R.string.xerror, Toast.LENGTH_SHORT).show();
+							}catch(SecurityException e){
+								Toast.makeText(mContext, R.string.xerror, Toast.LENGTH_SHORT).show();
+							}
+						}
+						else
+							Toast.makeText(mContext, R.string.selectFirst, Toast.LENGTH_SHORT).show();
+					}
+
+					@Override
+					public void onNegative(MaterialDialog dialog) {
+						// TODO Auto-generated method stub
+						super.onNegative(dialog);
+						
+						if(intentSelected){
+							try{
+								if(getFileType(file)=="image"){
+									edit.putString("IMAGE", NAME);
+									edit.putString("IMAGE_CLASS_NAME", CLASS_NAME);
+									edit.commit();
+								}
+								else if(getFileType(file)=="music"){
+									edit.putString("MUSIC", NAME);
+									edit.putString("MUSIC_CLASS_NAME", CLASS_NAME);
+									edit.commit();
+								}else if(getFileType(file)=="apk"){
+									edit.putString("APK", NAME);
+									edit.putString("APK_CLASS_NAME", CLASS_NAME);
+									edit.commit();
+								}else if(getFileType(file)=="video"){
+									edit.putString("VIDEO", NAME);
+									edit.putString("VIDEO_CLASS_NAME", CLASS_NAME);
+									edit.commit();
+								}else if(getFileType(file)=="zip"){
+									edit.putString("ZIP", NAME);
+									edit.putString("ZIP_CLASS_NAME", CLASS_NAME);
+									edit.commit();
+								}else if(getFileType(file)=="rar"){
+									edit.putString("RAR", NAME);
+									edit.putString("RAR_CLASS_NAME", CLASS_NAME);
+									edit.commit();
+								}else if(getFileType(file)=="text"){
+									edit.putString("TEXT", NAME);
+									edit.putString("TEXT_CLASS_NAME", CLASS_NAME);
+									edit.commit();
+								}else if(getFileType(file)=="pdf"){
+									edit.putString("PDF", NAME);
+									edit.putString("PDF_CLASS_NAME", CLASS_NAME);
+									edit.commit();
+								}
+								mContext.startActivity(intent);
+								dialog.dismiss();
+							}catch(ActivityNotFoundException e){
+								Toast.makeText(mContext, R.string.xerror, Toast.LENGTH_SHORT).show();
+							}
+						}
+						else
+							Toast.makeText(mContext, R.string.makeaselection, Toast.LENGTH_SHORT).show();
+						
+					}					
+				})
+				.customView(view, true)
+				.show();
+				
+				ListView ls = (ListView) view.findViewById(R.id.list_view_hd);
+				ls.setAdapter(new OpenItems(mContext, list));
+			}
 		}	
-		
-		try{
-			
-			justOnce.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					if(intentSelected){
-						try{
-							mContext.startActivity(intent);
-							dialog.dismiss();
-							//OpenFiles.this.finish();
-						}catch(ActivityNotFoundException e){
-							Toast.makeText(mContext, R.string.xerror, Toast.LENGTH_SHORT).show();
-						}catch(SecurityException e){
-							Toast.makeText(mContext, R.string.xerror, Toast.LENGTH_SHORT).show();
-						}
-					}
-					else
-						Toast.makeText(mContext, R.string.selectFirst, Toast.LENGTH_SHORT).show();
-				}
-			});
-			
-			always.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					if(intentSelected){
-						try{
-							if(getFileType(file)=="image"){
-								edit.putString("IMAGE", NAME);
-								edit.putString("IMAGE_CLASS_NAME", CLASS_NAME);
-								edit.commit();
-							}
-							else if(getFileType(file)=="music"){
-								edit.putString("MUSIC", NAME);
-								edit.putString("MUSIC_CLASS_NAME", CLASS_NAME);
-								edit.commit();
-							}else if(getFileType(file)=="apk"){
-								edit.putString("APK", NAME);
-								edit.putString("APK_CLASS_NAME", CLASS_NAME);
-								edit.commit();
-							}else if(getFileType(file)=="video"){
-								edit.putString("VIDEO", NAME);
-								edit.putString("VIDEO_CLASS_NAME", CLASS_NAME);
-								edit.commit();
-							}else if(getFileType(file)=="zip"){
-								edit.putString("ZIP", NAME);
-								edit.putString("ZIP_CLASS_NAME", CLASS_NAME);
-								edit.commit();
-							}else if(getFileType(file)=="rar"){
-								edit.putString("RAR", NAME);
-								edit.putString("RAR_CLASS_NAME", CLASS_NAME);
-								edit.commit();
-							}else if(getFileType(file)=="text"){
-								edit.putString("TEXT", NAME);
-								edit.putString("TEXT_CLASS_NAME", CLASS_NAME);
-								edit.commit();
-							}else if(getFileType(file)=="pdf"){
-								edit.putString("PDF", NAME);
-								edit.putString("PDF_CLASS_NAME", CLASS_NAME);
-								edit.commit();
-							}
-							mContext.startActivity(intent);
-							dialog.dismiss();
-						}catch(ActivityNotFoundException e){
-							Toast.makeText(mContext, R.string.xerror, Toast.LENGTH_SHORT).show();
-						}
-					}
-					else
-						Toast.makeText(mContext, R.string.makeaselection, Toast.LENGTH_SHORT).show();
-				}
-			});
-			
-		}catch(RuntimeException e){
-			
-		}
 	}	
 	
 	
@@ -448,10 +425,6 @@ public class OpenFileDialog {
 		else intent = null;		
 	}
 	
-	
-	
-	
-	
 	/**
 	 * 
 	 * @author Anurag
@@ -467,13 +440,13 @@ public class OpenFileDialog {
 	 * @author Anurag
 	 *
 	 */
-	public class OpenItems extends ArrayAdapter<ResolveInfo>{
+	public class OpenItems extends BaseAdapter{
 		List<ResolveInfo> mList;
-		public OpenItems(Context context, int textViewResourceId,List<ResolveInfo> objects) {
-			super(context, textViewResourceId , objects);
+		public OpenItems(Context context,List<ResolveInfo> objects) {
 			mList = objects;
 			//mContext = context;
 		}
+				
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ResolveInfo info = mList.get(position);
@@ -487,14 +460,28 @@ public class OpenFileDialog {
 				convertView.setTag(holder);
 			}else
 				holder = (ItemHolder)convertView.getTag();
-				holder.Name.setText(info.loadLabel(manager));
-				holder.Icon.setImageDrawable(info.loadIcon(manager));
+			
+			holder.Name.setText(info.loadLabel(manager));
+			holder.Icon.setImageDrawable(info.loadIcon(manager));
+			holder.Name.setTextColor(Color.BLACK);
 			return convertView;
 		}
-	}
-	
-	
-	
-	
-	
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return mList.size();
+		}
+
+		@Override
+		public Object getItem(int arg0) {
+			// TODO Auto-generated method stub
+			return mList.get(arg0);
+		}
+
+		@Override
+		public long getItemId(int arg0) {
+			// TODO Auto-generated method stub
+			return arg0;
+		}
+	}	
 }
