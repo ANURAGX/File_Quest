@@ -567,7 +567,7 @@ public class Utils {
 				favKey.put(""+favCounter++, path);
 				fav.put(path, itm);
 				fileCount++;
-				if(!FileQuest.elementInFocus)	
+				if(!FileGallery.isGalleryOpened())	
 					handler.sendEmptyMessage(0);
 				return;
 			}
@@ -576,7 +576,7 @@ public class Utils {
 			zip.put(path, itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
-			if(!FileQuest.elementInFocus)
+			if(!FileGallery.isGalleryOpened())
 				handler.sendEmptyMessage(6);
 			
 		}else if(name.endsWith(".7z")){
@@ -587,7 +587,7 @@ public class Utils {
 				favKey.put(""+favCounter++, path);
 				fav.put(path, itm);
 				fileCount++;
-				if(!FileQuest.elementInFocus)
+				if(!FileGallery.isGalleryOpened())
 					handler.sendEmptyMessage(0);
 				return;
 			}
@@ -596,7 +596,7 @@ public class Utils {
 			zip.put(path, itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
-			if(!FileQuest.elementInFocus)
+			if(!FileGallery.isGalleryOpened())
 				handler.sendEmptyMessage(6);
 			
 		}else if(name.endsWith(".rar")){
@@ -607,7 +607,7 @@ public class Utils {
 				favKey.put(""+favCounter++, path);
 				fav.put(path, itm);
 				fileCount++;
-				if(!FileQuest.elementInFocus)
+				if(!FileGallery.isGalleryOpened())
 					handler.sendEmptyMessage(0);
 				return;
 			}
@@ -616,7 +616,7 @@ public class Utils {
 			zip.put(path, itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
-			if(!FileQuest.elementInFocus)
+			if(!FileGallery.isGalleryOpened())
 				handler.sendEmptyMessage(6);
 			
 		}else if(name.endsWith(".tar")||name.endsWith(".tar.gz")||
@@ -627,7 +627,7 @@ public class Utils {
 				favKey.put(""+favCounter++, path);
 				fav.put(path, itm);
 				fileCount++;
-				if(!FileQuest.elementInFocus)
+				if(!FileGallery.isGalleryOpened())
 					handler.sendEmptyMessage(0);
 				return;
 			}
@@ -636,7 +636,7 @@ public class Utils {
 			zip.put(path, itm);
 			zipsize+=f.length();
 			zsize = size(zipsize);
-			if(!FileQuest.elementInFocus)
+			if(!FileGallery.isGalleryOpened())
 				handler.sendEmptyMessage(6);
 						
 		}
@@ -648,7 +648,7 @@ public class Utils {
 				favKey.put(""+favCounter++, path);
 				fav.put(path, itm);
 				fileCount++;
-				if(!FileQuest.elementInFocus)
+				if(!FileGallery.isGalleryOpened())
 					handler.sendEmptyMessage(0);
 				return;
 			}
@@ -657,7 +657,7 @@ public class Utils {
 			music.put(path, itm);
 			musicsize+=f.length();
 			msize = size(musicsize);
-			if(!FileQuest.elementInFocus)
+			if(!FileGallery.isGalleryOpened())
 				handler.sendEmptyMessage(1);
 		}
 		else if(name.endsWith(".apk")){
@@ -667,7 +667,7 @@ public class Utils {
 				favKey.put(""+favCounter++, path);
 				fav.put(path, itm);
 				fileCount++;
-				if(!FileQuest.elementInFocus)
+				if(!FileGallery.isGalleryOpened())
 					handler.sendEmptyMessage(0);
 				return;
 			}			
@@ -676,7 +676,7 @@ public class Utils {
 			apps.put(path, itm);
 			apksize+=f.length();
 			asize = size(apksize);
-			if(!FileQuest.elementInFocus)
+			if(!FileGallery.isGalleryOpened())
 				handler.sendEmptyMessage(2);
 			
 		}else if(name.endsWith(".flv")||name.endsWith(".mp4")||name.endsWith(".3gp")||name.endsWith(".avi")
@@ -687,7 +687,7 @@ public class Utils {
 				favKey.put(""+favCounter++, path);
 				fav.put(path, itm);
 				fileCount++;
-				if(!FileQuest.elementInFocus)
+				if(!FileGallery.isGalleryOpened())
 					handler.sendEmptyMessage(0);
 				return;
 			}
@@ -696,7 +696,7 @@ public class Utils {
 			vids.put(path, itm);
 			vidsize+=f.length();
 			vsize = size(vidsize);
-			if(!FileQuest.elementInFocus)
+			if(!FileGallery.isGalleryOpened())
 				handler.sendEmptyMessage(4);
 			
 		}	
@@ -708,7 +708,7 @@ public class Utils {
 				favKey.put(""+favCounter++, path);
 				fav.put(path, itm);
 				fileCount++;
-				if(!FileQuest.elementInFocus)
+				if(!FileGallery.isGalleryOpened())
 					handler.sendEmptyMessage(0);
 				return;
 			}			
@@ -717,7 +717,7 @@ public class Utils {
 			img.put(path, itm);
 			imgsize+=f.length();
 			psize = size(imgsize);
-			if(!FileQuest.elementInFocus)
+			if(!FileGallery.isGalleryOpened())
 				handler.sendEmptyMessage(3);
 			
 		}else if(name.endsWith(".pdf")){
@@ -727,7 +727,7 @@ public class Utils {
 				favKey.put(""+favCounter++, path);
 				fav.put(path, itm);
 				fileCount++;
-				if(!FileQuest.elementInFocus)
+				if(!FileGallery.isGalleryOpened())
 					handler.sendEmptyMessage(0);
 				return;
 			}
@@ -736,7 +736,7 @@ public class Utils {
 			doc.put(path, itm);
 			docsize+=f.length();
 			dsize = size(docsize);
-			if(!FileQuest.elementInFocus)
+			if(!FileGallery.isGalleryOpened())
 				handler.sendEmptyMessage(5);
 		}else if(name.endsWith(".doc")||name.endsWith(".ppt")||name.endsWith(".docx")||name.endsWith(".DOC")
 				||name.endsWith(".pptx")||name.endsWith(".csv")){
@@ -746,7 +746,7 @@ public class Utils {
 				favKey.put(""+favCounter++, path);
 				fav.put(path, itm);
 				fileCount++;
-				if(!FileQuest.elementInFocus)
+				if(!FileGallery.isGalleryOpened())
 					handler.sendEmptyMessage(0);
 				return;
 			}
@@ -755,7 +755,7 @@ public class Utils {
 			doc.put(path, itm);
 			docsize+=f.length();
 			dsize = size(docsize);
-			if(!FileQuest.elementInFocus)
+			if(!FileGallery.isGalleryOpened())
 				handler.sendEmptyMessage(5);
 		
 		}else if(name.endsWith(".txt")||name.endsWith(".log")||name.endsWith(".ini")){
@@ -765,7 +765,7 @@ public class Utils {
 				favKey.put(""+favCounter++, path);
 				fav.put(path, itm);
 				fileCount++;
-				if(!FileQuest.elementInFocus)
+				if(!FileGallery.isGalleryOpened())
 					handler.sendEmptyMessage(0);
 				return;
 			}
@@ -774,7 +774,7 @@ public class Utils {
 			doc.put(path, itm);
 			docsize+=f.length();
 			dsize = size(docsize);
-			if(!FileQuest.elementInFocus)
+			if(!FileGallery.isGalleryOpened())
 				handler.sendEmptyMessage(5);			
 		}
 		else{
@@ -784,7 +784,7 @@ public class Utils {
 				favKey.put(""+favCounter++, path);
 				fav.put(path, itm);
 				fileCount++;
-				if(!FileQuest.elementInFocus)
+				if(!FileGallery.isGalleryOpened())
 					handler.sendEmptyMessage(0);
 				return;
 			}
@@ -793,7 +793,7 @@ public class Utils {
 			mis.put(path, itm);
 			missize+=f.length();
 			misize = size(missize);
-			if(!FileQuest.elementInFocus)
+			if(!FileGallery.isGalleryOpened())
 				handler.sendEmptyMessage(7);
 			
 		}		

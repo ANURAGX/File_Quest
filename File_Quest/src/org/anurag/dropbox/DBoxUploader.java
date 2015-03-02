@@ -21,9 +21,7 @@ package org.anurag.dropbox;
 
 import java.util.ArrayList;
 
-
 import org.anurag.file.quest.Constants;
-import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
 
@@ -67,7 +65,7 @@ public class DBoxUploader {
 		
 		dialog = new Dialog(context , Constants.DIALOG_STYLE);
 		dialog.setContentView(R.layout.copy_dialog);
-		dialog.getWindow().getAttributes().width = FileQuest.size.x*8/9;
+		dialog.getWindow().getAttributes().width = Constants.size.x*8/9;
 		
 		
 		TextView tv = (TextView)dialog.findViewById(R.id.header);

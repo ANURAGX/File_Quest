@@ -64,9 +64,9 @@ public class MultiSendApps{
 		p = width;
 		mContext = context;
 		dialog = new Dialog(mContext, Constants.DIALOG_STYLE);
-		dialog.setContentView(R.layout.launch_file);
-		ImageView view = (ImageView)dialog.findViewById(R.id.launchImage);
-		view.setBackgroundResource(R.drawable.share);
+		//dialog.setContentView(R.layout.launch_file);
+		//ImageView view = (ImageView)dialog.findViewById(R.id.launchImage);
+		//view.setBackgroundResource(R.drawable.share);
 		dialog.getWindow().getAttributes().width = width.x*8/9;
 		onCreate();
 	}
@@ -79,7 +79,7 @@ public class MultiSendApps{
 		Intent i = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
 		i.setDataAndType(Uri.fromFile(new File("/")),"*/*");		
 		
-		Button q = (Button)dialog.findViewById(R.id.justOnce);
+		/*Button q = (Button)dialog.findViewById(R.id.justOnce);
 		Button s = (Button) dialog.findViewById(R.id.always);
 		TextView tv = (TextView)dialog.findViewById(R.id.open);
 		tv.setText(R.string.selectFirst);
@@ -91,7 +91,7 @@ public class MultiSendApps{
 			 * FINISH THIS CLASS AND SHOW THE MESSAGE THAT NO APP
 			 * IS AVAILABLE
 			 */
-			}
+			/*}/*
 		new PushUris().execute();
 		ListView lv = (ListView)dialog.findViewById(R.id.launch_list);
 		lv.setSelector(R.drawable.button_click);
@@ -116,7 +116,7 @@ public class MultiSendApps{
 				if(seleted){
 					Intent it = new Intent(Intent.ACTION_SEND_MULTIPLE);
 					it.setAction(Intent.ACTION_SEND_MULTIPLE);
-					it.setType("*/*");
+					it.setType("*//*");
 					it.setComponent(new ComponentName(CLASS, CLASS_NAME));
 					//it.putExtra(Intent.EXTRA_STREAM, list3);
 					it.putParcelableArrayListExtra(Intent.EXTRA_STREAM, list3);
@@ -138,7 +138,7 @@ public class MultiSendApps{
 				// TODO Auto-generated method stub
 				dialog.dismiss();
 			}
-		});
+		});*/
 		if(list3.size()>0)
 			dialog.show();
 	}

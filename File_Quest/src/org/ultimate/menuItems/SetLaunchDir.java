@@ -62,7 +62,7 @@ public class SetLaunchDir{
 		// TODO Auto-generated constructor stub
 		mContext = context;
 		dialog = new Dialog(mContext, Constants.DIALOG_STYLE);
-		dialog.setContentView(R.layout.open_file_dialog);
+		//dialog.setContentView(R.layout.open_file_dialog);
 		dialog.getWindow().getAttributes().width = width;
 		ed = edit;
 		mode = m;
@@ -72,7 +72,7 @@ public class SetLaunchDir{
 	
 	protected void onCreate() {
 		// TODO Auto-generated method stub
-		final ListView lv;
+		/*final ListView lv;
 		Button ju = (Button)dialog.findViewById(R.id.justOnce);
 		Button on = (Button)dialog.findViewById(R.id.always);
 		file = new File(Environment.getExternalStorageDirectory().getPath());
@@ -144,7 +144,7 @@ public class SetLaunchDir{
 				// TODO Auto-generated method stub
 				dialog.dismiss();
 			}
-		});
+		});*/
 	}
 	
 	private class ItemHolder{

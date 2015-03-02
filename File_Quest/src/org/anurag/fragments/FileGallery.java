@@ -25,10 +25,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.anurag.adapters.FileGalleryAdapter;
 import org.anurag.adapters.FileGallerySimpleAdapter;
+import org.anurag.dialogs.OpenFileDialog;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuestHD;
 import org.anurag.file.quest.Item;
-import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.Utils;
 
@@ -277,8 +277,7 @@ public class FileGallery extends Fragment implements OnClickListener{
 				}
 			}else{
 				//selecting a file....
-				new OpenFileDialog(Constants.ctx, Uri.parse(item.getPath())
-						, Constants.size.x*8/9);
+				new OpenFileDialog(Constants.ctx, Uri.parse(item.getPath()));
 			}
 		}else
 			Toast.makeText(Constants.ctx, R.string.not_exists, Toast.LENGTH_SHORT).show();

@@ -17,49 +17,65 @@
  *
  */
 
-package org.anurag.file.quest;
+package org.anurag.dialogs;
 
 import java.io.File;
 import java.util.List;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.app.Dialog;
+
+import org.anurag.file.quest.R;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
+
+/**
+ * 
+ * This class prompts user to open a file to open as per his
+ * choice of app type.
+ * 
+ * @author anurag
+ *
+ */
 public class OpenAs {
 	
-	PackageManager manager;
-	Context mContext; 
-	Dialog dialog;
-	String list[];
-	List<ResolveInfo> rList;
-	int p = -1;
-	Intent intent;
-	boolean appSelected = false;
-	public OpenAs(final Context con,final int width,final Uri uri) {
+	private PackageManager manager;
+	private Context mContext; 
+	private String list[];
+	private List<ResolveInfo> rList;
+	private int p = -1;
+	private Intent intent;
+	private ListView lv;
+	private boolean appSelected;
+	
+	/**
+	 * 
+	 * @param con
+	 * @param uri of the file to be opened
+	 */
+	public OpenAs(final Context con,final Uri uri) {
 		// TODO Auto-generated constructor stub
-		final Dialog dialog;
-		mContext = con.getApplicationContext();
-		manager = mContext.getPackageManager();
-		dialog = new Dialog(con, Constants.DIALOG_STYLE);
-		dialog.setCancelable(true);
-		dialog.setContentView(R.layout.launch_file);
-		dialog.getWindow().getAttributes().width = width;
+		LayoutInflater inf = (LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		final View view = inf.inflate(R.layout.list_view_hd, null , false);
+		view.setPadding(20, 0, 20, 0);
+		mContext = con;
+		
 		String lit[] = {mContext.getString(R.string.textfile),
 				mContext.getString(R.string.musicfile),
 				mContext.getString(R.string.videofile),
@@ -67,40 +83,18 @@ public class OpenAs {
 				mContext.getString(R.string.pdffile),
 				mContext.getString(R.string.arcfile)};
 		list = lit;
-		
-		ImageView im = (ImageView)dialog.findViewById(R.id.launchImage);
-		im.setBackgroundResource(R.drawable.task);
-		
-		Button q = (Button)dialog.findViewById(R.id.justOnce);
-		Button s = (Button) dialog.findViewById(R.id.always);
-		TextView tv = (TextView)dialog.findViewById(R.id.open);
-		tv.setText(mContext.getString(R.string.openas));
-		
-		final ListView lv = (ListView)dialog.findViewById(R.id.launch_list);
-		q.setText(mContext.getString(R.string.quit));
-		s.setText(mContext.getString(R.string.use));
-		lv.setAdapter(new Adapter(con, R.layout.row_list_2, list));
-		lv.setSelector(R.drawable.action_item_btn2);
-		lv.setOnItemClickListener(new OnItemClickListener() {
+		appSelected = false;
+		new MaterialDialog.Builder(con)
+		.title(R.string.openas)
+		.customView(view, false)
+		.positiveText(R.string.open)
+		.negativeText(R.string.dismiss)
+		.autoDismiss(false)
+		.callback(new ButtonCallback() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-					long arg3) {
+			public void onPositive(MaterialDialog dialog) {
 				// TODO Auto-generated method stub
-				p = position;
-			}
-		});
-		dialog.show();
-		q.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				dialog.dismiss();
-			}
-		});
-		s.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
+				super.onPositive(dialog);
 				if(p==-1)
 					Toast.makeText(con, con.getString(R.string.makeaselection), Toast.LENGTH_SHORT).show();
 				else{
@@ -109,25 +103,39 @@ public class OpenAs {
 						rList = setIntent(file, p);	
 						lv.setAdapter(new OpenItems(con, R.layout.row_list_2, rList));
 						appSelected = true;
-						p = -1;
 					}
 					else{
 						ResolveInfo info = rList.get(p);
 						intent = new Intent(Intent.ACTION_MAIN);
 						intent.setAction(Intent.ACTION_VIEW);
-						//String NAME = info.activityInfo.packageName;
-						//String CLASS_NAME = info.activityInfo.name;
 						intent.setComponent(new ComponentName(info.activityInfo.packageName, info.activityInfo.name));
-						//intent.setClassName(info.activityInfo.packageName, info.activityInfo.name);
 						intent.setData(Uri.fromFile(file));
 						con.startActivity(intent);
 						dialog.dismiss();
 					}
 				}
 			}
-		});
+
+			@Override
+			public void onNegative(MaterialDialog dialog) {
+				// TODO Auto-generated method stub
+				super.onNegative(dialog);
+				dialog.dismiss();
+			}			
+		})
+		.show();
 		
-		
+		lv = (ListView)view.findViewById(R.id.list_view_hd);		
+		lv.setAdapter(new Adapter(con, R.layout.row_list_2, list));
+		lv.setSelector(R.color.white_grey);
+		lv.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
+				// TODO Auto-generated method stub
+				p = position;
+			}
+		});		
 	}
 
 	/**
@@ -137,6 +145,7 @@ public class OpenAs {
 	public List<ResolveInfo> setIntent(File f ,int it){
 		intent = new Intent();
 		intent.setAction(android.content.Intent.ACTION_VIEW);
+		manager = mContext.getPackageManager();
 		switch(it){
 			case 0:
 				intent.setDataAndType(Uri.fromFile(f) , "text/plain");	
@@ -161,17 +170,15 @@ public class OpenAs {
 		}
 		rList = manager.queryIntentActivities(intent, 0);
 		return rList;
-	}
-	
-	
-	
+	}	
 	
 	private class ItemHolder{
 		ImageView Icon;
 		TextView Name;
 	}
 	
-	public class Adapter extends ArrayAdapter<String>{
+	private class Adapter extends ArrayAdapter<String>{
+		
 		public Adapter(Context context, int textViewResourceId,	String[] objects) {
 			super(context, textViewResourceId, objects);
 			// TODO Auto-generated constructor stub
@@ -193,8 +200,7 @@ public class OpenAs {
 				item = (ItemHolder)convertView.getTag();
 				
 			if(position == 0){
-					item.Icon.setBackgroundResource(R.drawable.docs_icon_hd);
-					
+					item.Icon.setBackgroundResource(R.drawable.docs_icon_hd);					
 			}
 			else if(position == 1){
 				item.Icon.setBackgroundResource(R.drawable.music_icon_hd);
@@ -210,20 +216,10 @@ public class OpenAs {
 			else if(position==4)
 				item.Icon.setBackgroundResource(R.drawable.pdf_icon_hd);
 			item.Name.setText(list[position]);
-			
+			item.Name.setTextColor(Color.BLACK);
 			return convertView;
 		}
 	}
-	
-	
-	
-	
-	
-	/**
-	 * 
-	 * @author Anurag
-	 *
-	 */
 	private class Item{
 		ImageView Icon;
 		TextView Name;
@@ -234,7 +230,7 @@ public class OpenAs {
 	 * @author Anurag
 	 *
 	 */
-	public class OpenItems extends ArrayAdapter<ResolveInfo>{
+	private class OpenItems extends ArrayAdapter<ResolveInfo>{
 		List<ResolveInfo> mList;
 		public OpenItems(Context context, int textViewResourceId,List<ResolveInfo> objects) {
 			super(context, textViewResourceId , objects);
@@ -254,8 +250,9 @@ public class OpenAs {
 				convertView.setTag(holder);
 			}else
 				holder = (Item)convertView.getTag();
-				holder.Name.setText(info.loadLabel(manager));
-				holder.Icon.setImageDrawable(info.loadIcon(manager));
+			holder.Name.setText(info.loadLabel(manager));
+			holder.Icon.setImageDrawable(info.loadIcon(manager));
+			holder.Name.setTextColor(Color.BLACK); 
 			return convertView;
 		}
 	}

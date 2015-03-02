@@ -17,10 +17,12 @@
  *
  */
 
-package org.anurag.file.quest;
+package org.anurag.dialogs;
 
 import java.io.File;
 import java.util.List;
+
+import org.anurag.file.quest.R;
 
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -34,6 +36,8 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -45,20 +49,43 @@ import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
 
 /**
  * 
+ * This class finds the list of apps that can handle given file and presents the list 
+ * of apps in dialog list view. 
+ * 
  * @author Anurag
  *
  */
 public class OpenFileDialog {
 	
+	//used to start the selected app
 	private Intent intent;
+	
+	//context
 	private Context mContext;
+	
+	//gets the data from getIntent function
 	private String mData;
+	
+	//package manager to find list of apps
 	private PackageManager manager;
+	
+	//selected app
 	private	ResolveInfo info;
+	
+	//list of apps for a file type
 	private List<ResolveInfo> list;
+	
+	//prefs to store settings 
 	private SharedPreferences prefs;
+	
+	//to edit the prefs
 	private SharedPreferences.Editor edit;
+	
+	//false then open rar,zip or tar file via File Quest ,no need to show third party
+	//apps
 	private boolean showDialog;
+	
+	//Classes for different file types
 	private String NAME;
 	private String CLASS_NAME;
 	private String MUSIC;
@@ -77,10 +104,17 @@ public class OpenFileDialog {
 	private String ZIP_CLASS_NAME;
 	private String RAR ;
 	private String RAR_CLASS_NAME;
+	
+	
 	private boolean intentSelected;
 	private File file;
 	
-	public OpenFileDialog(Context context,Uri uri,int width ) {
+	/**
+	 * 
+	 * @param context
+	 * @param uri of file to be opened
+	 */
+	public OpenFileDialog(Context context,Uri uri) {
 		// TODO Auto-generated constructor stub
 		showDialog = true;
 		try{
@@ -122,6 +156,7 @@ public class OpenFileDialog {
 			prefs = mContext.getSharedPreferences("DEFAULT_APPS", 0);
 			edit = prefs.edit();
 			manager = mContext.getPackageManager();
+			
 			/**
 			 * LOADS THE DEFAULT APPS IF SELECTED
 			 */
@@ -141,8 +176,9 @@ public class OpenFileDialog {
 			ZIP_CLASS_NAME = prefs.getString("ZIP_CLASS_NAME", null);	
 			RAR = prefs.getString("RAR", null);
 			RAR_CLASS_NAME = prefs.getString("RAR_CLASS_NAME", null);	
-			if(showDialog)
-				init();
+			if(showDialog){
+				showApps();
+			}	
 		}catch(RuntimeException e){
 			Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
 		}
@@ -152,7 +188,7 @@ public class OpenFileDialog {
 	 * FUNCTION INITIALIZES THE INTENT TO A PARTICULAR FILE TYPE AND MAKING
 	 * IT READY TO BE QUERIED,TELLS THAT WHETHER AN APP IS AVAILABLE TO HANDLW IT OR NOT
 	 */
-	void init(){
+	void showApps(){
 		try{
 			setIntent(file);
 			if(intent != null){
@@ -164,7 +200,7 @@ public class OpenFileDialog {
 					 * IS AVAILABLE
 					 */
 					//Toast.makeText(mContext, R.string.noApp, Toast.LENGTH_SHORT).show();
-					//new OpenAs(mContext, wi,Uri.parse(file.getAbsolutePath()));
+					new OpenAs(mContext, Uri.parse(file.getAbsolutePath()));
 				}
 			}
 			else{
@@ -174,7 +210,7 @@ public class OpenFileDialog {
 				 * IS AVAILABLE
 				 */
 				//Toast.makeText(mContext, R.string.noApp, Toast.LENGTH_SHORT).show();
-				//new OpenAs(mContext, wi,Uri.fromFile(file));
+				new OpenAs(mContext, Uri.fromFile(file));
 			}
 		}catch(RuntimeException e){
 			
@@ -199,11 +235,12 @@ public class OpenFileDialog {
 			if(list.size()>0){
 				LayoutInflater inf = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				View view = inf.inflate(R.layout.list_view_hd, null , false);
-				
+				view.setPadding(20, 0, 20, 0);
 				new MaterialDialog.Builder(mContext)
-				.title(R.string.open)
+				.title(R.string.openwith)
 				.positiveText(R.string.once)
 				.negativeText(R.string.always)
+				.autoDismiss(false)
 				.callback(new ButtonCallback() {
 					@Override
 					public void onPositive(MaterialDialog dialog) {
@@ -273,20 +310,39 @@ public class OpenFileDialog {
 						}
 						else
 							Toast.makeText(mContext, R.string.makeaselection, Toast.LENGTH_SHORT).show();
-						
 					}					
 				})
-				.customView(view, true)
+				.customView(view, false)
 				.show();
 				
 				ListView ls = (ListView) view.findViewById(R.id.list_view_hd);
+				ls.setSelector(R.color.white_grey);
 				ls.setAdapter(new OpenItems(mContext, list));
+				ls.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						// TODO Auto-generated method stub
+						info = list.get(arg2);
+						intentSelected = true; 
+						intent = new Intent(Intent.ACTION_MAIN);
+						intent.setAction(Intent.ACTION_VIEW);
+						NAME = info.activityInfo.packageName;
+						CLASS_NAME = info.activityInfo.name;
+						intent.setComponent(new ComponentName(info.activityInfo.packageName, info.activityInfo.name));
+						//intent.setClassName(info.activityInfo.packageName, info.activityInfo.name);
+						intent.setData(Uri.fromFile(file));
+					}
+				});
 			}
 		}	
 	}	
 	
-	
-	
+	/**
+	 * 	
+	 * @param f
+	 * @return file type
+	 */
 	public String getFileType(File f){
 		String na = f.getName();
 		if( na.endsWith("jpg")||na.endsWith(".JPG")||  na.endsWith(".png") || na.endsWith(".PNG") || na.endsWith(".gif") || na.endsWith(".GIF")
@@ -436,6 +492,8 @@ public class OpenFileDialog {
 	}
 		
 	/**
+	 * 
+	 * adapter for list view
 	 * 
 	 * @author Anurag
 	 *

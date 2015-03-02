@@ -26,9 +26,9 @@ import java.io.IOException;
 import java.util.List;
 
 import org.anurag.dialogs.BluetoothChooser;
+import org.anurag.dialogs.OpenFileDialog;
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
-import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
 
 import android.app.Dialog;
@@ -130,7 +130,7 @@ public class ExtractRarFile {
 								dialog.dismiss();
 							    if(mode==0){
 							    	//after extracting file ,it has to be opened....
-							    	new OpenFileDialog(ctx, Uri.parse(dest), width);
+							    	new OpenFileDialog(ctx, Uri.parse(dest));
 							    }else if(mode==2){
 							    	//FILE HAS TO BE SHARED....
 							    	new BluetoothChooser(ctx, new File(dest).getAbsolutePath(), width, null);

@@ -76,7 +76,7 @@ public class GetMoveLocation {
 		// TODO Auto-generated constructor stub
 		mContext = context;
 		dialog = new Dialog(mContext, Constants.DIALOG_STYLE);
-		dialog.setContentView(R.layout.open_file_dialog);
+	//	dialog.setContentView(R.layout.open_file_dialog);
 		dialog.getWindow().getAttributes().width = width;
 		hashList = itemList;
 		key = keys;
@@ -89,20 +89,20 @@ public class GetMoveLocation {
 	protected void onCreate() {
 		// TODO Auto-generated method stub
 		final ListView lv;
-		Button ju = (Button)dialog.findViewById(R.id.justOnce);
-		Button on = (Button)dialog.findViewById(R.id.always);
+		//Button ju = (Button)dialog.findViewById(R.id.justOnce);
+		//Button on = (Button)dialog.findViewById(R.id.always);
 		file = new File(Environment.getExternalStorageDirectory().getPath());
 		stack = new Stack<File>();
 		stack.push(file);
-		t = (TextView)dialog.findViewById(R.id.open);
+	//	t = (TextView)dialog.findViewById(R.id.open);
 		t.setText(mContext.getString(R.string.choosealocation));
-		lv = (ListView)dialog.findViewById(R.id.open_list);
-		image= (ImageView)dialog.findViewById(R.id.getImage);
+	//	lv = (ListView)dialog.findViewById(R.id.open_list);
+	//	image= (ImageView)dialog.findViewById(R.id.getImage);
 		
 		image.setImageDrawable(mContext.getResources().getDrawable(R.drawable.task));
 		list = file.listFiles();
-		lv.setAdapter(new Adapter(mContext, R.layout.row_list_2, list));
-		go = (Button)dialog.findViewById(R.id.goBack);
+		/*lv.setAdapter(new Adapter(mContext, R.layout.row_list_2, list));
+		//go = (Button)dialog.findViewById(R.id.goBack);
 		go.setVisibility(View.GONE);
 		
 		lv.setSelector(R.drawable.button_click);
@@ -132,10 +132,10 @@ public class GetMoveLocation {
 				if(stack.size()<2)
 					go.setVisibility(View.GONE);
 			}
-		});
+		});*/
 		dialog.show();
 		
-		ju.setOnClickListener(new OnClickListener() {
+		/*ju.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -162,7 +162,7 @@ public class GetMoveLocation {
 				// TODO Auto-generated method stub
 				dialog.dismiss();
 			}
-		});
+		});*/
 	}
 	
 	private class ItemHolder{

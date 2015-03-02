@@ -60,7 +60,7 @@ public class SelectApp{
 		mContext = context;
 		mode = MODE;
 		dialog = new Dialog(mContext,Constants.DIALOG_STYLE);
-		dialog.setContentView(R.layout.launch_file);
+		//dialog.setContentView(R.layout.launch_file);
 		dialog.getWindow().getAttributes().width = width;
 		onCreate();
 	}
@@ -76,7 +76,7 @@ public class SelectApp{
 		Intent i = new Intent(android.content.Intent.ACTION_VIEW);
 		File file = null;
 		
-		ImageView iv = (ImageView)dialog.findViewById(R.id.launchImage);
+		/*ImageView iv = (ImageView)dialog.findViewById(R.id.launchImage);
 		Button q = (Button)dialog.findViewById(R.id.justOnce);
 		Button s = (Button)dialog. findViewById(R.id.always);
 		TextView tv = (TextView)dialog.findViewById(R.id.open);
@@ -124,7 +124,7 @@ public class SelectApp{
 			 * NO APPS AVAILABLE TO HANDLE THIS KIND OF FILE TYPE
 			 * FINISH THIS CLASS AND SHOW THE MESSAGE THAT NO APP
 			 * IS AVAILABLE
-			 */
+			 *//*
 			Toast.makeText(mContext, R.string.noApp, Toast.LENGTH_SHORT).show();
 		}
 		
@@ -199,7 +199,7 @@ public class SelectApp{
 				dialog.dismiss();
 			}
 		});
-		dialog.show();
+		dialog.show();*/
 	}
 	
 	

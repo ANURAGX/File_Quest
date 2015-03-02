@@ -25,7 +25,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.anurag.file.quest.Constants;
-import org.anurag.file.quest.FileQuest;
 import org.anurag.file.quest.R;
 
 import android.app.Dialog;
@@ -110,7 +109,7 @@ public class DBoxManager {
     	final Dialog dialog = new Dialog(ctx , Constants.DIALOG_STYLE);
     	dialog.setCancelable(false);
     	dialog.setContentView(R.layout.p_dialog);
-    	dialog.getWindow().getAttributes().width = FileQuest.size.x*8/9;
+    	dialog.getWindow().getAttributes().width = Constants.size.x*8/9;
     	WebView prog = (WebView)dialog.findViewById(R.id.p_Web_View);
     	prog.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
 		prog.setEnabled(false);

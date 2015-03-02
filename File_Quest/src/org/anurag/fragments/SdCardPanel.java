@@ -24,11 +24,11 @@ import java.util.ArrayList;
 
 import org.anurag.adapters.SDAdapter;
 import org.anurag.adapters.SimpleSDAdapter;
+import org.anurag.dialogs.OpenFileDialog;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuestHD;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.MasterPassword;
-import org.anurag.file.quest.OpenFileDialog;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.SDManager;
 
@@ -393,8 +393,7 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 				load.execute();
 			}else{
 				//selecting a file....
-				new OpenFileDialog(Constants.ctx, Uri.parse(item.getPath())
-						, Constants.size.x*8/9);
+				new OpenFileDialog(Constants.ctx, Uri.parse(item.getPath()));
 			}
 		}else
 			Toast.makeText(Constants.ctx, R.string.not_exists, Toast.LENGTH_SHORT).show();

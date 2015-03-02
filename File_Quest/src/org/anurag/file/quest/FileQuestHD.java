@@ -28,6 +28,7 @@ import org.anurag.adapters.PagerAdapters;
 import org.anurag.dialogs.ConfirmTweakTask;
 import org.anurag.dialogs.CreateItem;
 import org.anurag.dialogs.DeleteFiles;
+import org.anurag.dialogs.OpenFileDialog;
 import org.anurag.dialogs.Rename;
 import org.anurag.dialogs.WhatsNew;
 import org.anurag.dialogs.ZipFiles;
@@ -608,8 +609,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		}
 		else
 			if(file.exists())
-				new OpenFileDialog(Constants.ctx, Uri.parse(path) ,
-						Constants.size.x*8/9);
+				new OpenFileDialog(Constants.ctx, Uri.parse(path));
 	}
 
 	/**
