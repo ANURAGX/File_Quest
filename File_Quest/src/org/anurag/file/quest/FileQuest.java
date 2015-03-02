@@ -525,7 +525,7 @@ public class FileQuest extends FragmentActivity implements OnClickListener{
 				getString(R.string.version))) {
 			edit.putString("APP_VERSION", getString(R.string.version));
 			edit.commit();
-			new WhatsNew(mContext, size.x * 8 / 9, size.y * 8 / 9);
+			//new WhatsNew(mContext, size.x * 8 / 9, size.y * 8 / 9);
 		}
         
 		super.onCreate(savedInstanceState);

@@ -29,6 +29,7 @@ import org.anurag.dialogs.ConfirmTweakTask;
 import org.anurag.dialogs.CreateItem;
 import org.anurag.dialogs.DeleteFiles;
 import org.anurag.dialogs.Rename;
+import org.anurag.dialogs.WhatsNew;
 import org.anurag.dialogs.ZipFiles;
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 import org.anurag.fragments.AppStore;
@@ -538,7 +539,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		if(!prefs.getString("VERSION", "0.0.0").equalsIgnoreCase(getString(R.string.appversion))){
 			prefs_editor.putString("VERSION", getString(R.string.appversion));
 			prefs_editor.commit();
-			new WhatsNew(FileQuestHD.this, Constants.size.x*8/9, Constants.size.y*8/9);
+			new WhatsNew(FileQuestHD.this);
 		}
 		register_receiver();
 	}

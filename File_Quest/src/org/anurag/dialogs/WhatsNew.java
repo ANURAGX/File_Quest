@@ -18,30 +18,34 @@
  */
 
 
-package org.anurag.file.quest;
+package org.anurag.dialogs;
 
-import android.app.Dialog;
+import org.anurag.file.quest.R;
+
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
+/**
+ * 
+ * this class shows a dialog when app is updated,
+ * shows the new new feature of this update.
+ * 
+ * @author anurag
+ *
+ */
 public class WhatsNew {
 
-	public WhatsNew(Context ctx,int width,int height) {
+	public WhatsNew(Context ctx) {
 		// TODO Auto-generated constructor stub
-		final Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
-		dialog.setCancelable(false);
-		dialog.setContentView(R.layout.whats_new);
-		Button btn = (Button)dialog.findViewById(R.id.whats_new_btn);
-		btn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				dialog.dismiss();
-			}
-		});
-		dialog.getWindow().getAttributes().width = width;
-		dialog.getWindow().getAttributes().height = height;
-		dialog.show();
+		LayoutInflater inf = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inf.inflate(R.layout.whats_new, null , false);
+		new MaterialDialog.Builder(ctx)
+		.customView(view, true)
+		.title("What's new")
+		.positiveText(R.string.ok)
+		.show();
 	}
 }
