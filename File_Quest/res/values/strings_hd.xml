@@ -158,6 +158,8 @@
         <item>Zip archives</item>
         <item>Zip unknowns</item>
     </string-array>
+    
+    <string name="added_to_ls">Added to task list</string>
     <string name="delete_message">All the selected items will be deleted permanently!</string>
     <string name="dismiss">Dismiss</string>
     <string name="invalid_gesture">Gesture length is not good</string>

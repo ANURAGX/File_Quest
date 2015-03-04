@@ -21,6 +21,10 @@ package org.anurag.file.quest;
 
 import java.util.HashMap;
 
+import org.anurag.dialogs.CopyDialog;
+import org.anurag.fragments.RootPanel;
+import org.anurag.fragments.SdCardPanel;
+
 import android.content.Context;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -31,12 +35,10 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * this class handles the queued tasks like copying,moving,etc....
@@ -50,7 +52,7 @@ public class QueuedTaskManager {
 	public int COPY_ID = 1;
 	public int CUT_ID = 2;
 	private Context ctx;
-	
+	private ListView ls;
 	private PopupWindow popupWindow;
 	private boolean isPopupShowing;
 	
@@ -58,6 +60,15 @@ public class QueuedTaskManager {
 		// TODO Auto-generated constructor stub
 		this.ctx = context;
 		popupWindow = new PopupWindow(ctx);
+		
+		popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {			
+			@Override
+			public void onDismiss() {
+				// TODO Auto-generated method stub
+				isPopupShowing = false;
+			}
+		});
+		
 		this.isPopupShowing = false;
 	}
 
@@ -115,7 +126,7 @@ public class QueuedTaskManager {
 	 * @param view
 	 */
 	public void showQueuedPopupWindow(final View view ,final int gravity){
-		ListView ls = new ListView(ctx);
+		ls = new ListView(ctx);
 		prepareList(ls);
 		popupWindow.setOutsideTouchable(true);
 		popupWindow.setWidth(Constants.size.x*7/10);
@@ -129,17 +140,30 @@ public class QueuedTaskManager {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				ImageButton btn = (ImageButton) arg1.findViewById(R.id.clear);
-				btn.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View arg0) {
-						// TODO Auto-generated method stub
-						int id = arg0.getId();
-						remove_task(""+id);
-						showQueuedPopupWindow(view, gravity);
-					}
-				});
-				Toast.makeText(ctx, "DONE", Toast.LENGTH_SHORT).show();
+				QueuedTask tsk = task_list.get(""+arg2);
+				if(tsk == null){
+					return;
+				}
+				
+				String path = null;
+				switch(FileQuestHD.getCurrentItem()){
+				case 1:
+					path = RootPanel.get_current_working_dir().getPath();
+					break;
+					
+				case 2:
+					path = SdCardPanel.get_current_working_dir().getPath(); 
+					break;
+				}
+				
+				if(path == null){
+					return;
+				}
+				
+				new CopyDialog(ctx, tsk.getList(), path, 
+						tsk.getTaskID() == COPY_ID ? false : true);
+				task_list.remove(""+arg2);
+				closePopupWindow();
 			}
 		});		
 		isPopupShowing = true;
@@ -230,9 +254,19 @@ public class QueuedTaskManager {
 				h.file.setText(task.file_count());
 				h.folder.setText("   " + task.folder_count());
 				String main = "<b>" + task.getTaskType() + "</b>  <font color=#222222>" + task.getItemList() + "</font>";
-				h.Name.setText(Html.fromHtml(main));				
+				h.Name.setText(Html.fromHtml(main));	
 			}
 			
+
+			h.icon.setId(arg0);
+			h.icon.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					task_list.remove(""+arg0.getId());
+					closePopupWindow();					
+				}
+			});			
 			return view;
 		}		
 	}

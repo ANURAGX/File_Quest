@@ -487,44 +487,56 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			break;
 			
 		case R.id.action_copy:
-			{
-				QueuedTask task = null;
-				switch(panel){
-				case 0:
-					
-					break;
-					
-				case 1:
-					task = new QueuedTask(RootPanel.get_selected_items(), mgr.COPY_ID,
-							RootPanel.get_current_working_dir().getParent(),
-							RootPanel.folder_count, RootPanel.file_count);
-					RootPanel.clear_selected_items();
-					break;
-					
-				case 2:
-					task = new QueuedTask(SdCardPanel.get_selected_items(), mgr.COPY_ID,
-							SdCardPanel.get_current_working_dir().getParent(),
-							SdCardPanel.folder_count, SdCardPanel.file_count);
-					SdCardPanel.clear_selected_items();
-					break;
-				}
-				
-				Constants.LONG_CLICK[panel] = false;
-				task.setId(mgr.getId());
-				mgr.add_task(task , task.getId());
-				invalidateOptionsMenu();
+			{	//queues the files for copy
+				int ID = mgr.COPY_ID;
+				queueItems(panel , ID);
 			}
 			break;
 			
 		case R.id.action_cut:
-			{
-				
+			{	//queues the files for cut
+				int ID = mgr.CUT_ID;
+				queueItems(panel , ID);
 				
 			}
 			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+	/**
+	 * 
+	 * @param panel
+	 * @param ID
+	 */
+	private void queueItems(int panel, int ID) {
+		// TODO Auto-generated method stub
+		QueuedTask task = null;
+		switch(panel){
+		case 0:
+			
+			break;
+			
+		case 1:
+			task = new QueuedTask(RootPanel.get_selected_items(), ID,
+					RootPanel.folder_count, RootPanel.file_count);
+			RootPanel.clear_selected_items();
+			break;
+			
+		case 2:
+			task = new QueuedTask(SdCardPanel.get_selected_items(), ID,
+					SdCardPanel.folder_count, SdCardPanel.file_count);
+			SdCardPanel.clear_selected_items();
+			break;
+		}
+		Toast.makeText(FileQuestHD.this, R.string.added_to_ls, Toast.LENGTH_SHORT).show();
+		
+		Constants.LONG_CLICK[panel] = false;
+		task.setId(mgr.getId());
+		mgr.add_task(task , task.getId());
+		invalidateOptionsMenu();		
+	}
+	
 
 	private void test() {
 		// TODO Auto-generated method stub

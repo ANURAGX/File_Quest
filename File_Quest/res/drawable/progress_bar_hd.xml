@@ -64,19 +64,19 @@
                 <item android:state_pressed="true">
                     <shape>
                         <stroke android:width="4.0dip" android:color="#00000000" />
-                        <solid android:color="#FFFFFFFF" />
+                        <solid android:color="@color/md_material_blue_600" />
                     </shape>
                 </item>
                 <item android:state_focused="true">
                     <shape>
                         <stroke android:width="4.0dip" android:color="#00000000" />
-                        <solid android:color="#FFFFFFFF" />
+                        <solid android:color="@color/md_material_blue_600" />
                     </shape>
                 </item>
                 <item>
                     <shape>
                         <stroke android:width="4.0dip" android:color="#00000000" />
-                        <solid android:color="#FFFFFFFF" />
+                        <solid android:color="@color/md_material_blue_600" />
                     </shape>
                 </item>
             </selector>

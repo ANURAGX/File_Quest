@@ -45,6 +45,8 @@
             android:orientation="vertical">
             <TextView 
                 android:gravity="center_vertical"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:layout_weight="1"
                 android:id="@+id/taskName"
                 android:layout_width="fill_parent"

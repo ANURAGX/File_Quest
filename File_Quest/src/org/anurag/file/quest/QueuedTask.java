@@ -30,7 +30,6 @@ public class QueuedTask {
 	
 	private int TASK_ID;
 	private ArrayList<Item> ls;
-	private String parentDir;
 	private int folders;
 	private int files;
 	private String id;
@@ -40,12 +39,10 @@ public class QueuedTask {
 	 * @param item
 	 * @param task_ID
 	 */
-	public QueuedTask(ArrayList<Item> item , int task_ID , String parentPath
-			, int folder_c , int file_c) {
+	public QueuedTask(ArrayList<Item> item , int task_ID , int folder_c , int file_c) {
 		// TODO Auto-generated constructor stub
 		this.ls = item;
 		this.TASK_ID = task_ID;
-		this.parentDir = parentPath;
 		this.folders = folder_c;
 		this.files = file_c;
 		
@@ -88,13 +85,7 @@ public class QueuedTask {
 		return (files + " file");
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public String get_parent_dir(){
-		return this.parentDir;
-	}
+	
 	
 	/**
 	 * 

@@ -1,5 +1,5 @@
 /**
- * Copyright(c) 2013 DRAWNZER.ORG PROJECTS -> ANURAG
+ * Copyright(c) 2015 DRAWNZER.ORG PROJECTS -> ANURAG
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
  */
 
 
-package org.ultimate.menuItems;
+package org.anurag.dialogs;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -35,30 +35,40 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.FileQuestHD;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.LinuxShell;
 import org.anurag.file.quest.R;
 import org.anurag.file.quest.Utils;
+import org.anurag.fragments.FileGallery;
+import org.anurag.fragments.RootPanel;
+import org.anurag.fragments.SdCardPanel;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.Builder;
+import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
 import com.stericson.RootTools.RootTools;
 
-@SuppressLint({ "HandlerLeak", "SdCardPath" })
-public class MultipleCopyDialog {
+/**
+ * 
+ * This class performs the copying and cutting of files  
+ * 
+ * @author anurag
+ *
+ */
+public class CopyDialog {
 	
 	//boolean values true tells type of file deleted
 	private boolean music_deleted;
@@ -69,69 +79,76 @@ public class MultipleCopyDialog {
 	private boolean zip_deleted;
 	private boolean mis_deleted;
 	
-	static long max;
-	static String copFrom;
-	static String copSize;
-	static String cop;
-	static String status;
-	ProgressBar progress;
-	static Context mContext;
-	//static int BUFFER = 256;
-	Dialog dialog;
-	ArrayList<Item> list;
-	static long si = 0;
-	String DEST;
-	int len = 0;
-	Button btn1,btn2;
-	TextView copyTo;
-	TextView copyFrom;
-	TextView copying;
-	TextView contentSize;
-	TextView time;
-	boolean command;
-	ImageView iM;
-	static Handler handle;
-	static boolean running ;
-	//private static boolean cut;
+	private View view;
 	
+	private long max;
+	private String copFrom;
+	private String copSize;
+	private String cop;
+	private String status;
+	private ProgressBar progress;
+	private Context mContext;
 	
-	public MultipleCopyDialog(Context context,ArrayList<Item> obj,int windowSize,String dest,boolean comm) {
+	private ArrayList<Item> list;
+	private long si = 0;
+	private String DEST;
+	private int len = 0;
+	private TextView copyTo;
+	private TextView copyFrom;
+	private TextView copying;
+	private TextView contentSize;
+	private TextView time;
+	private boolean cut;
+	private Handler handle;
+	private boolean running ;
+	
+	/**
+	 * 
+	 * @param context
+	 * @param obj list of files to be copied
+	 * @param dest where to copy the files
+	 * @param comm true then cut files to dest
+	 */
+	public CopyDialog(Context context,ArrayList<Item> obj,String dest,boolean comm) {
 		// TODO Auto-generated constructor stub
 		mContext = context;
 		DEST = dest;
-		command = comm;
+		cut = comm;
 		si = 0;
-	//	BUFFER = 256;
 		list = obj;
+		
+		LayoutInflater inf = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
+		view  = inf.inflate(R.layout.copy_dialog, null , false);
 		running = true;
-		dialog = new Dialog(mContext, Constants.DIALOG_STYLE);
-		dialog.setContentView(R.layout.copy_dialog);
-		dialog.setCancelable(false);
-		dialog.getWindow().getAttributes().width = windowSize;
-		progress = (ProgressBar)dialog.findViewById(R.id.progress);
 		
-		//cut = command;
 		
-		iM = (ImageView)dialog.findViewById(R.id.headerImage);
-		iM.setImageDrawable(context.getResources().getDrawable(R.drawable.copy));
-		btn1 = (Button)dialog.findViewById(R.id.copyOk);
-		btn2 = (Button)dialog.findViewById(R.id.copyCancel);
-		btn1.setVisibility(View.GONE);
-		copyTo = (TextView)dialog.findViewById(R.id.copyTo);
-		copyFrom = (TextView)dialog.findViewById(R.id.copyFrom);
-		copying  = (TextView)dialog.findViewById(R.id.currentFile);
-		time = (TextView)dialog.findViewById(R.id.timeLeft);
-		contentSize = (TextView)dialog.findViewById(R.id.copyFileSize);
-		len = list.size();
 		
-		btn2.setOnClickListener(new View.OnClickListener() {
+		Builder build = new MaterialDialog.Builder(mContext);
+		build.title(R.string.copy)
+		.customView(view, true)
+		.positiveText(R.string.cancel)
+		.autoDismiss(false)
+		.callback(new ButtonCallback() {
 			@Override
-			public void onClick(View arg0) {
+			public void onPositive(MaterialDialog dialog) {
 				// TODO Auto-generated method stub
+				super.onPositive(dialog);
 				running = false;
-				handle.sendEmptyMessage(10);				
+				endOfCopy(dialog);
 			}
 		});
+		
+		final MaterialDialog dialog = build.show();
+		
+		progress = (ProgressBar)view.findViewById(R.id.progress);
+		copyTo = (TextView)view.findViewById(R.id.copyTo);
+		copyFrom = (TextView)view.findViewById(R.id.copyFrom);
+		copying  = (TextView)view.findViewById(R.id.currentFile);
+		time = (TextView)view.findViewById(R.id.timeLeft);
+		contentSize = (TextView)view.findViewById(R.id.copyFileSize);
+		
+		len = list.size();
 		
 		copyTo.setText(mContext.getResources().getString(R.string.copyingto) + " "+DEST);
 		
@@ -156,39 +173,23 @@ public class MultipleCopyDialog {
 							progress.setProgress((int)si);
 							break;
 							
-					case 4:
-						
+					case 4:						
 							progress.setProgress(0);
 							break;
 							
 					case 10:
-							if(dialog.isShowing()){
-								//scanning the files into the local android db after performing the copying operation....
-								try{
-									mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.fromFile(new File(Constants.PATH))));
-								}catch(Exception e){
-									mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(Constants.PATH))));
-								}
-								dialog.dismiss();
-								if(running){
-									mContext.sendBroadcast(new Intent("FQ_COPY"));
-									Toast.makeText(mContext, mContext.getResources().getString(R.string.copsuccess), Toast.LENGTH_SHORT).show();
-									running = false;
-								}else
-									Toast.makeText(mContext, mContext.getResources().getString(R.string.copintr), Toast.LENGTH_SHORT).show();
-								
-							}	
+							endOfCopy(dialog);
 				}
 			}
-		};
-		
-		
-		
+		};		
 		startCopying();
 	}
 
-	public void startCopying(){
-		dialog.show();
+	/**
+	 * this function starts the copying of files to destination in background thread
+	 * and notifies the dialog via handler
+	 */
+	private void startCopying(){
 		Thread thr = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -200,7 +201,7 @@ public class MultipleCopyDialog {
 						file = list.get(i).getFile();
 						if(file!=null){
 							copyToDirectory(file.getPath(), DEST);
-							if(command){
+							if(cut){
 								if(Dest.canWrite())
 									deleteTargetForCut(file);
 								else{
@@ -220,6 +221,41 @@ public class MultipleCopyDialog {
 		thr.start();
 	}
 	
+	/**
+	 * this function invoked when copying is complete or interrupted so that the proper message is
+	 * displayed and UI is updated
+	 */
+	private void endOfCopy(MaterialDialog dial){
+		//scanning the files into the local android db after performing the copying operation....
+		try{
+			mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.fromFile(new File(Constants.PATH))));
+		}catch(Exception e){
+			mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(Constants.PATH))));
+		}
+		if(running){
+			Toast.makeText(mContext, mContext.getResources().getString(R.string.copsuccess), Toast.LENGTH_SHORT).show();
+			running = false;
+		}else
+			Toast.makeText(mContext, mContext.getResources().getString(R.string.copintr), Toast.LENGTH_SHORT).show();
+		
+		dial.dismiss();
+		switch(FileQuestHD.getCurrentItem()){
+		case 0:
+			try{
+				FileGallery.resetAdapter();
+			}catch(Exception e){}
+			break;
+			
+		case 1:
+			RootPanel.notifyDataSetChanged();
+			break;
+			
+		case 2:
+			SdCardPanel.notifyDataSetChanged();
+			break;
+		}
+		Utils.updateUI();
+	}
 	
 	/**
 	 * 
@@ -357,7 +393,7 @@ public class MultipleCopyDialog {
 	 * @param f
 	 * @return
 	 */
-	public static String size(long size){
+	public String size(long size){
 		if(size>Constants.GB){
 			return String.format(mContext.getResources().getString(R.string.fsizegb), (double)size/(Constants.GB));
 		}
@@ -378,7 +414,7 @@ public class MultipleCopyDialog {
 	 * @param size
 	 * @return
 	 */
-	public static String status(long size){
+	public String status(long size){
 		if(size>Constants.GB){
 			return String.format(mContext.getResources().getString(R.string.copstatusgb), (double)size/(Constants.GB));
 		}
@@ -480,7 +516,7 @@ public class MultipleCopyDialog {
 		 * function to add the items to file gallery on copying file....
 		 * @param f
 		 */
-		private static void addToFileGallery(File f ){
+		private void addToFileGallery(File f ){
 			
 			String name = f.getName().toLowerCase(Locale.ENGLISH);
 			String path = f.getPath();
