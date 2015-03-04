@@ -34,9 +34,9 @@
     
     <item 
         android:state_enabled="false"
-        android:drawable="@android:color/transparent"/>
+        android:drawable="@color/transparent"/>
     
     <item 
-        android:drawable="@android:color/transparent"/>
+        android:drawable="@color/transparent"/>
     
 </selector>

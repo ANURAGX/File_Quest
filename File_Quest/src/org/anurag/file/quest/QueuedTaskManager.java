@@ -32,6 +32,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -108,6 +109,7 @@ public class QueuedTaskManager {
 		return task_list.size() > 0;
 	}
 
+	
 	/**
 	 * 
 	 * @param view
@@ -171,7 +173,14 @@ public class QueuedTaskManager {
 		ls.setAdapter(new QueueTaskAdapter()); 
 		ls.setSelector(R.drawable.list_selector_hd);
 	}		
-	
+
+	class holder{
+		ImageView icon;
+		TextView Name;
+		TextView file;
+		TextView folder;
+	}
+		
 	class QueueTaskAdapter extends BaseAdapter{
 		
 		private LayoutInflater inf;
@@ -204,19 +213,12 @@ public class QueuedTaskManager {
 			return arg0;
 		}
 
-		class holder{
-			ImageButton icon;
-			TextView Name;
-			TextView file;
-			TextView folder;
-		}
-		
 		@Override
 		public View getView(int arg0, View Convert, ViewGroup arg2) {
 			// TODO Auto-generated method stub
 			View view = inf.inflate(R.layout.queue_row_hd, arg2 , false);
 			holder h = new holder();
-			h.icon = (ImageButton) view.findViewById(R.id.clear);
+			h.icon = (ImageView) view.findViewById(R.id.clear);
 			h.Name = (TextView) view.findViewById(R.id.taskName);
 			h.file = (TextView) view.findViewById(R.id.file);
 			h.folder = (TextView) view.findViewById(R.id.folder);

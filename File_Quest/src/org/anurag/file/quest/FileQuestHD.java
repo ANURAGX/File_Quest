@@ -340,9 +340,9 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			{
 				//showing the list of queued task in popup window
 				if(Constants.ACTION_AT_TOP){
-					mgr.showQueuedPopupWindow(top_toolbar , Gravity.LEFT | Gravity.TOP);
+					mgr.showQueuedPopupWindow(top_toolbar , Gravity.START | Gravity.TOP);
 				}	else{
-					mgr.showQueuedPopupWindow(top_toolbar , Gravity.LEFT | Gravity.BOTTOM);						
+					mgr.showQueuedPopupWindow(top_toolbar , Gravity.START | Gravity.BOTTOM);						
 				}
 			}
 			break;

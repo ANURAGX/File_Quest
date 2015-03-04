@@ -22,21 +22,21 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:orientation="horizontal"
-    android:paddingLeft="10dp"
     android:paddingTop="2dp"
+    android:paddingLeft="10dp"
     android:paddingBottom="2dp"
     android:layout_gravity="center_vertical">  
     
       
-    <ImageButton
-        android:focusable="true"
+    <ImageView
+        android:padding="5dp"
     	android:background="@drawable/list_selector_hd"
         android:id="@+id/clear"
-        android:clickable="false"
+        android:clickable="true"
         android:layout_gravity="center_vertical"
         android:src="@drawable/clear"
-        android:layout_width="20dp"
-        android:layout_height="20dp"/>
+        android:layout_width="30dp"
+        android:layout_height="30dp"/>
 	
 	<LinearLayout 
             android:paddingLeft="10dp"
