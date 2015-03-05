@@ -167,7 +167,7 @@ public class RootPanel extends Fragment{
 				}
 				
 				if(item.isLocked()){
-					new MasterPassword(getActivity(), Constants.size.x*8/9, item, null,Constants.MODES.OPEN);
+					new MasterPassword(getActivity(), item, null,Constants.MODES.OPEN,null);
 					return;
 				}
 				

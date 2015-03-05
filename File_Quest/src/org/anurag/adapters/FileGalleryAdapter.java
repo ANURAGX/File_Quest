@@ -132,7 +132,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 						
 						//setting lock id here,as it will be used in FileQuest Activity....
 						Constants.lockID = keys.get(""+img.getId());
-						new MasterPassword(ctx, Constants.size.x * 8 / 9, null,prefs, Constants.MODES.DEFAULT);
+						new MasterPassword(ctx,  null,prefs, Constants.MODES.DEFAULT,null);
 					} else {
 						list.get(keys.get(""+img.getId())).setLockStatus(true);
 						img.setImageDrawable(Constants.LOCK_IMG);
@@ -145,7 +145,8 @@ public class FileGalleryAdapter extends BaseAdapter {
 					
 					//setting lock id here,as it will be used in FileQuest Activity.... 
 					Constants.lockID = keys.get(""+img.getId());
-					new MasterPassword(ctx, Constants.size.x * 8 / 9, list.get(keys.get(""+img.getId())),prefs, Constants.MODES.DEFAULT);
+					new MasterPassword(ctx,  list.get(keys.get(""+img.getId())),prefs,
+							Constants.MODES.DEFAULT,null);
 				}
 			}
 		});

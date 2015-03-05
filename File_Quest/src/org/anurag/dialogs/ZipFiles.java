@@ -39,19 +39,22 @@ import org.anurag.fragments.FileGallery;
 import org.anurag.fragments.RootPanel;
 import org.anurag.fragments.SdCardPanel;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.Builder;
+import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
 
 
 /**
@@ -62,7 +65,7 @@ import android.widget.Toast;
 public class ZipFiles {
 
 	private byte[] data = new byte[Constants.BUFFER];
-	private static Handler handle;
+	private Handler handle;
 	private boolean running;
 	private ZipOutputStream zout;
 	private FileInputStream fin;
@@ -77,6 +80,17 @@ public class ZipFiles {
 	private String fname;
 	private String stat;
 	
+	private final CheckBox keep;
+	private final CheckBox delete;
+	private EditText getname;
+	private ProgressBar progress;
+	private TextView destination;
+	private TextView filesize;
+	private TextView filename;
+	private TextView status;
+	
+	private Thread thread;
+	
 	/**
 	 * 
 	 * @param ctx
@@ -85,24 +99,74 @@ public class ZipFiles {
 	 */
 	public ZipFiles(final Context ctx, final ArrayList<Item> list) {
 		// TODO Auto-generated constructor stub
-		final Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
-		dialog.setCancelable(true);
-		dialog.setContentView(R.layout.zip_file_dialog);
-		
 		running = false;
 		
-		dialog.getWindow().getAttributes().width = Constants.size.x*8/9;
+		LayoutInflater inf = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inf.inflate(R.layout.zip_file_dialog, null , false);
 		
-		final Button cancel = (Button)dialog.findViewById(R.id.zipCalcelButton);
-		final EditText getname = (EditText)dialog.findViewById(R.id.getArchiveName);
-		final ProgressBar progress = (ProgressBar)dialog.findViewById(R.id.zipProgressBar);
-		final TextView destination = (TextView)dialog.findViewById(R.id.zipLoc);
-		final TextView filesize = (TextView)dialog.findViewById(R.id.zipSize);
-		final TextView filename = (TextView)dialog.findViewById(R.id.zipNoOfFiles);
-		final TextView status = (TextView)dialog.findViewById(R.id.zipFileLocation);
+		Builder builder = new MaterialDialog.Builder(ctx);
+		builder.title(R.string.action_zip)
+		.positiveText(R.string.action_zip)
+		.negativeText(R.string.dismiss)
+		.autoDismiss(false)
+		.customView(view, true)
+		.callback(new ButtonCallback() {
+
+			@Override
+			public void onPositive(MaterialDialog dialog) {
+				// TODO Auto-generated method stub
+				super.onPositive(dialog);
+				
+				if(running){
+					//already background thread is running
+					return;
+				}
+				
+				running = true;
+				if(DEST.endsWith("/"))
+					DEST = DEST.substring(0, DEST.length()-1);
+				try {
+					main = DEST+"/"+getname.getText().toString()+".zip";
+					zout = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(new File(main))));
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					zout=null;
+				}
+				delete.setEnabled(false);
+				keep.setEnabled(false);
+				progress.setVisibility(View.VISIBLE);
+				filesize.setVisibility(View.VISIBLE);
+				filename.setVisibility(View.VISIBLE);
+				status.setVisibility(View.VISIBLE);
+				getname.setEnabled(false);
+				thread.start();
+			}
+
+			@Override
+			public void onNegative(MaterialDialog dialog) {
+				// TODO Auto-generated method stub
+				super.onNegative(dialog);
+				if(running){
+					running = false;
+					handle.sendEmptyMessage(3);
+				}else
+					dialog.dismiss();
+			}
+			
+		});
 		
-		final CheckBox delete = (CheckBox)dialog.findViewById(R.id.zipChioce);
-		final CheckBox keep = (CheckBox)dialog.findViewById(R.id.tarChioce);
+		final MaterialDialog dial = builder.show();
+				
+		getname = (EditText)view.findViewById(R.id.getArchiveName);
+		progress = (ProgressBar)view.findViewById(R.id.zipProgressBar);
+		destination = (TextView)view.findViewById(R.id.zipLoc);
+		filesize = (TextView)view.findViewById(R.id.zipSize);
+		filename = (TextView)view.findViewById(R.id.zipNoOfFiles);
+		status = (TextView)view.findViewById(R.id.zipFileLocation);
+		
+		delete = (CheckBox)view.findViewById(R.id.zipChioce);
+		keep = (CheckBox)view.findViewById(R.id.tarChioce);
 		
 		delete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
@@ -128,25 +192,21 @@ public class ZipFiles {
 		}else{
 			getname.setText("MULTIPLE_FILE");
 		}
+		
 		/**
 		 * GENERATING DESTINATION PATH FOR ZIP FILE...
 		 */
-		int l=list.size();
-		for(int i=0;i<l;++i){
-			try{
-				File file = list.get(i).getFile();
-				if(file!=null){
-					DEST = file.getParent();
-					break;
-				}
-			}catch(NullPointerException e){
-				
-			}
+		switch(FileQuestHD.getCurrentItem()){
+		case 1:
+			DEST = RootPanel.get_current_working_dir().getPath();
+			break;
+			
+		case 2:
+			DEST= SdCardPanel.get_current_working_dir().getPath(); 
+			break;
 		}
-		destination.setText(ctx.getString(R.string.dest)+" "+DEST);
 		
-		
-		
+		destination.setText(ctx.getString(R.string.dest)+" "+DEST);		
 		handle = new Handler(){
 			@Override
 			public void handleMessage(Message msg){
@@ -175,9 +235,12 @@ public class ZipFiles {
 							if(!running){
 								try{
 									new File(main).delete();
-								}catch(Exception e){}
+								}catch(Exception e){
+									
+								}
 								Toast.makeText(ctx, (R.string.zipinterrupted), Toast.LENGTH_SHORT).show();
 							}else{
+								
 								switch(FileQuestHD.getCurrentItem()){
 								case 0:
 									try{
@@ -197,7 +260,7 @@ public class ZipFiles {
 								ctx.sendBroadcast(new Intent("FQ_DELETE"));
 								Toast.makeText(ctx, R.string.items_zipped, Toast.LENGTH_SHORT).show();
 							}
-							dialog.dismiss();
+							dial.dismiss();
 							break;
 					case 4:
 							Toast.makeText(ctx, ctx.getString(R.string.ziperror), Toast.LENGTH_SHORT).show();
@@ -206,7 +269,7 @@ public class ZipFiles {
 			}
 		};
 		
-		final Thread thread = new Thread(new Runnable() {
+		thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
@@ -240,19 +303,15 @@ public class ZipFiles {
 								}						
 						}
 					handle.sendEmptyMessage(3);
-				}else
-					//UNABLE TO CREATE ZIP OUTPUT STREAM....SEND ERROR...
-					handle.sendEmptyMessage(4);
+				}
 			}		
 		});
-		
-		final Button start = (Button)dialog.findViewById(R.id.zipOkButton);
+		/*
 		start.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				running = true;
-				dialog.setCancelable(false);
 				if(DEST.endsWith("/"))
 					DEST = DEST.substring(0, DEST.length()-1);
 				try {
@@ -271,11 +330,10 @@ public class ZipFiles {
 				status.setVisibility(View.VISIBLE);
 				getname.setEnabled(false);
 				thread.start();
-				start.setVisibility(View.GONE);
 			}
-		});
+		});*/
 		
-		
+		/*
 		cancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -288,8 +346,7 @@ public class ZipFiles {
 				}else
 					dialog.dismiss();
 			}
-		});
-		dialog.show();
+		});*/
 	}
 	
 	private void zip_It(File file , Context ctx) {

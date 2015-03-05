@@ -159,6 +159,9 @@
         <item>Zip unknowns</item>
     </string-array>
     
+    <string name="cannot_perform_here">Cannot start task here </string>
+    <string name="reset_pass">Reset</string>
+    <string name="verify">Verify password</string>
     <string name="added_to_ls">Added to task list</string>
     <string name="delete_message">All the selected items will be deleted permanently!</string>
     <string name="dismiss">Dismiss</string>

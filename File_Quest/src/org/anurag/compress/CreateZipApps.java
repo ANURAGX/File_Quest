@@ -96,7 +96,7 @@ public class CreateZipApps {
 			
 		}
 		mPack = ctx.getPackageManager();
-		final Button cancel = (Button)dialog.findViewById(R.id.zipCalcelButton);
+		final Button cancel ;//= (Button)dialog.findViewById(R.id.zipCalcelButton);
 		final EditText getname = (EditText)dialog.findViewById(R.id.getArchiveName);
 		final ProgressBar progress = (ProgressBar)dialog.findViewById(R.id.zipProgressBar);
 		final TextView destination = (TextView)dialog.findViewById(R.id.zipLoc);
@@ -107,8 +107,8 @@ public class CreateZipApps {
 		final CheckBox delete = (CheckBox)dialog.findViewById(R.id.zipChioce);
 		final CheckBox keep = (CheckBox)dialog.findViewById(R.id.tarChioce);
 		TextView opt = (TextView)dialog.findViewById(R.id.zipFormat);
-		TextView til = (TextView)dialog.findViewById(R.id.zipFileTitle);
-		til.setText(ctx.getString(R.string.ziprecovery));
+		TextView til ;//= (TextView)dialog.findViewById(R.id.zipFileTitle);
+		//til.setText(ctx.getString(R.string.ziprecovery));
 		
 		opt.setVisibility(View.GONE);
 		delete.setVisibility(View.GONE);
@@ -168,7 +168,7 @@ public class CreateZipApps {
 								//SENDING BROADCAST TO RELOAD THE LIST ON COMPLETION OF ZIP
 								//OPERATION....
 								ctx.sendBroadcast(new Intent("FQ_DELETE"));
-								cancel.setText(ctx.getString(R.string.ok));
+								//cancel.setText(ctx.getString(R.string.ok));
 								status.setText(ctx.getString(R.string.zipsuccessful));
 								progress.setVisibility(View.GONE);
 								filename.setVisibility(View.GONE);
@@ -226,7 +226,7 @@ public class CreateZipApps {
 			
 		});
 		
-		final Button start = (Button)dialog.findViewById(R.id.zipOkButton);
+		final Button start=null; //(Button)dialog.findViewById(R.id.zipOkButton);
 		start.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -254,7 +254,7 @@ public class CreateZipApps {
 		});
 		
 		
-		cancel.setOnClickListener(new View.OnClickListener() {
+	/*	cancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -268,7 +268,7 @@ public class CreateZipApps {
 					dialog.dismiss();
 				}	
 			}
-		});
+		});*/
 		dialog.show();
 	}
 	

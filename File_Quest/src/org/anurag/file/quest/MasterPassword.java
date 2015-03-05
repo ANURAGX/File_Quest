@@ -19,6 +19,8 @@
 
 package org.anurag.file.quest;
 
+import java.util.ArrayList;
+
 import org.anurag.dialogs.Rename;
 import org.anurag.dialogs.ZipFiles;
 import org.anurag.fragments.FileGallery;
@@ -26,16 +28,18 @@ import org.anurag.fragments.RootPanel;
 import org.anurag.fragments.SdCardPanel;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
 
 /**
  * 
@@ -53,15 +57,25 @@ public class MasterPassword {
 	 * @param prefs
 	 * @param MODE
 	 */
-	public MasterPassword(final Context ctx , int width , final Item item ,  SharedPreferences prefs2 ,final Constants.MODES MODE) {
+	public MasterPassword(final Context ctx , final Item item ,  SharedPreferences prefs2 ,final Constants.MODES MODE,
+			final ArrayList<Item> ls) {
 		// TODO Auto-generated constructor stub
-		final Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
-		dialog.setCancelable(true);
-		dialog.setContentView(R.layout.master_password);
-		dialog.getWindow().getAttributes().width = width;
-		final EditText pass = (EditText)dialog.findViewById(R.id.password);
-		final EditText confirm = (EditText)dialog.findViewById(R.id.confirmpassword);
-		final EditText newpass = (EditText)dialog.findViewById(R.id.newpassword);
+		
+		LayoutInflater inf = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inf.inflate(R.layout.master_password, null , false);
+		
+		final MaterialDialog dialog;
+		
+		MaterialDialog.Builder build = new MaterialDialog.Builder(ctx);
+		build.autoDismiss(false)
+		.negativeText(R.string.dismiss)
+		.customView(view , true);
+		
+		
+		
+		final EditText pass = (EditText)view.findViewById(R.id.password);
+		final EditText confirm = (EditText)view.findViewById(R.id.confirmpassword);
+		final EditText newpass = (EditText)view.findViewById(R.id.newpassword);
 		
 		SharedPreferences prefs = prefs2;
 		if(prefs == null)
@@ -71,39 +85,37 @@ public class MasterPassword {
 		final String password = prefs.getString("MASTER_PASSWORD", null);
 		
 		
-		Button cancel = (Button)dialog.findViewById(R.id.copyCancel);
-		cancel.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				dialog.dismiss();
-			}
-		});
-		
-		Button set = (Button)dialog.findViewById(R.id.copyOk);
+		//Button set = null;//(Button)dialog.findViewById(R.id.copyOk);
 		
 		//MODE=1 means password has to be reset...
 		if(MODE == Constants.MODES.RESET && password != null){
-			TextView msg = (TextView)dialog.findViewById(R.id.Message);
+			TextView msg = (TextView)view.findViewById(R.id.Message);
 			msg.setText(ctx.getResources().getString(R.string.changepasswd));
 			newpass.setVisibility(View.VISIBLE);
-			TextView co = (TextView)dialog.findViewById(R.id.newpasswdtext);
+			TextView co = (TextView)view.findViewById(R.id.newpasswdtext);
 			co.setVisibility(View.VISIBLE);
-			co = (TextView)dialog.findViewById(R.id.header);
+			co = (TextView)view.findViewById(R.id.header);
 			co.setText(ctx.getString(R.string.resetmasterpassword));
+			build.title(R.string.setmasterpassword);
+			build.positiveText(R.string.reset_pass);
 		}
 		
 		
 		
 		if(password==null){
-			TextView msg = (TextView)dialog.findViewById(R.id.Message);
+			TextView msg = (TextView)view.findViewById(R.id.Message);
 			if(MODE == Constants.MODES.DEFAULT)
 				msg.setText(ctx.getResources().getString(R.string.setpasswd));
+			build.title(R.string.setmasterpassword);
+			build.positiveText(R.string.set);
 		}
 		///MODE!=1 means password confirmation...
 		else if(password != null && MODE!=Constants.MODES.RESET){
 			
-			TextView msg = (TextView)dialog.findViewById(R.id.Message);
+			build.positiveText(android.R.string.ok);
+			build.title(R.string.verify);
+			
+			TextView msg = (TextView)view.findViewById(R.id.Message);
 			if(MODE == Constants.MODES.ARCHIVE)
 				msg.setText((R.string.arcpasswd));
 			else if(MODE == Constants.MODES.COPY)
@@ -129,22 +141,16 @@ public class MasterPassword {
 			else if(MODE == Constants.MODES.DEFAULT)
 				msg.setText((R.string.unlockpasswd));
 			confirm.setVisibility(View.GONE);
-			TextView con = (TextView)dialog.findViewById(R.id.currentFile);
+			TextView con = (TextView)view.findViewById(R.id.currentFile);
 			con.setVisibility(View.GONE);
-			con = (TextView)dialog.findViewById(R.id.header);
-			con.setText(ctx.getString(R.string.entermaster));
-			set.setText(ctx.getString(R.string.ok));
 		}	
 		
-		Constants.activeMode = MODE;
-		set.setOnClickListener(new View.OnClickListener() {
+		build.callback(new ButtonCallback() {
 			@Override
-			public void onClick(View arg0) {
+			public void onPositive(MaterialDialog dialog) {
 				// TODO Auto-generated method stub
+				super.onPositive(dialog);
 				
-				//getting the reference about task for which password
-				//was verified...
-							
 				if(password == null){
 					if(pass.getText().toString().length()<3){
 						//password length is not appropriate....
@@ -259,15 +265,15 @@ public class MasterPassword {
 							switch(FileQuestHD.getCurrentItem()){
 							
 							case 0:
-								new ZipFiles(Constants.ctx, FileGallery.get_selected_items());
+								new ZipFiles(Constants.ctx, ls);
 								break;
 								
 							case 1:
-								new ZipFiles(Constants.ctx, RootPanel.get_selected_items());
+								new ZipFiles(Constants.ctx, ls);
 								break;
 								
 							case 2:
-								new ZipFiles(Constants.ctx, SdCardPanel.get_selected_items());
+								new ZipFiles(Constants.ctx, ls);
 								break;
 							}
 						}
@@ -291,11 +297,24 @@ public class MasterPassword {
 					}
 				}
 			}
-		});		
+
+			@Override
+			public void onNegative(MaterialDialog dialog) {
+				// TODO Auto-generated method stub
+				super.onNegative(dialog);
+				dialog.dismiss();
+			}			
+		});
 		
-		dialog.show();
-		if(Constants.disable_lock)
-			lock_disabled(ctx, item, dialog, MODE);
+		dialog = build.show();
+		
+		Constants.activeMode = MODE;
+		
+		
+		if(Constants.disable_lock){
+			lock_disabled(ctx, item,  MODE);
+			dialog.dismiss();
+		}	
 	}
 	
 	/**
@@ -305,7 +324,7 @@ public class MasterPassword {
 	 * @param dialog
 	 * @param MODE
 	 */
-	private void lock_disabled(Context ctx , Item item ,Dialog dialog , Constants.MODES MODE){
+	private void lock_disabled(Context ctx , Item item , Constants.MODES MODE){
 		Intent intent = new Intent("FQ_FILE_LOCKED_OR_UNLOCKED");
 		try{
 			//in some cases item will always be null...
@@ -327,7 +346,6 @@ public class MasterPassword {
 		if(Constants.activeMode == Constants.MODES.G_OPEN)
 			intent.putExtra("g_open_path", item.getPath());
 		ctx.sendBroadcast(intent);
-		dialog.dismiss();
 	}
 	
 	/**

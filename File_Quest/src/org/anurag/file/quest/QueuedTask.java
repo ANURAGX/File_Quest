@@ -34,22 +34,27 @@ public class QueuedTask {
 	private int files;
 	private String id;
 	private String task_Type;
+	private boolean hasLockedItem;
 	/**
 	 * 
 	 * @param item
 	 * @param task_ID
 	 */
-	public QueuedTask(ArrayList<Item> item , int task_ID , int folder_c , int file_c) {
+	public QueuedTask(ArrayList<Item> item , int task_ID , int folder_c , int file_c
+			,boolean locked) {
 		// TODO Auto-generated constructor stub
 		this.ls = item;
 		this.TASK_ID = task_ID;
 		this.folders = folder_c;
 		this.files = file_c;
+		this.hasLockedItem = locked;
 		
 		if(task_ID == 1)
 			task_Type = "COPY";
-		else
+		else if(task_ID == 2)
 			task_Type = "CUT";
+		else
+			task_Type = "COMPRESS";
 		
 	}
 	
@@ -109,6 +114,14 @@ public class QueuedTask {
 	 */
 	public String getId(){
 		return this.id;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean hasLockedItem(){
+		return this.hasLockedItem;
 	}
 	
 	/**

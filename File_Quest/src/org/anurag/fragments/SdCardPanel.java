@@ -373,7 +373,7 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 		}
 		
 		if(item.isLocked()){
-			new MasterPassword(getActivity(), Constants.size.x*8/9, item, null, Constants.MODES.OPEN);
+			new MasterPassword(getActivity(), item, null, Constants.MODES.OPEN,null);
 			return;
 		}
 		

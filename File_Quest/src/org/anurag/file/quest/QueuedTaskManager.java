@@ -22,6 +22,7 @@ package org.anurag.file.quest;
 import java.util.HashMap;
 
 import org.anurag.dialogs.CopyDialog;
+import org.anurag.dialogs.ZipFiles;
 import org.anurag.fragments.RootPanel;
 import org.anurag.fragments.SdCardPanel;
 
@@ -39,6 +40,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * this class handles the queued tasks like copying,moving,etc....
@@ -51,6 +53,7 @@ public class QueuedTaskManager {
 	private HashMap<String , QueuedTask> task_list;
 	public int COPY_ID = 1;
 	public int CUT_ID = 2;
+	public int COMPRESS_ID = 3;
 	private Context ctx;
 	private ListView ls;
 	private PopupWindow popupWindow;
@@ -140,6 +143,16 @@ public class QueuedTaskManager {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
+				
+				//copy,cut and zip operation can't be done in panel no. 0 and 3
+				//so returning
+				if(FileQuestHD.getCurrentItem() == 0 ||
+						FileQuestHD.getCurrentItem() == 3){
+					Toast.makeText(ctx, R.string.cannot_perform_here, Toast.LENGTH_SHORT).show();
+					popupWindow.dismiss();
+					return;
+				}
+				
 				QueuedTask tsk = task_list.get(""+arg2);
 				if(tsk == null){
 					return;
@@ -160,8 +173,19 @@ public class QueuedTaskManager {
 					return;
 				}
 				
-				new CopyDialog(ctx, tsk.getList(), path, 
-						tsk.getTaskID() == COPY_ID ? false : true);
+				//item has to be zipped....
+				if(tsk.getTaskType().equalsIgnoreCase("compress")){
+					
+					//checking whether queued item is locked or not.... 
+					if(tsk.hasLockedItem()){
+						new MasterPassword(ctx, null, null, Constants.MODES.ARCHIVE, tsk.getList());
+					}else{
+						new ZipFiles(ctx, tsk.getList());
+					}
+				}else{
+					new CopyDialog(ctx, tsk.getList(), path, 
+							tsk.getTaskID() == COPY_ID ? false : true);
+				}
 				task_list.remove(""+arg2);
 				closePopupWindow();
 			}

@@ -31,7 +31,6 @@ import org.anurag.dialogs.DeleteFiles;
 import org.anurag.dialogs.OpenFileDialog;
 import org.anurag.dialogs.Rename;
 import org.anurag.dialogs.WhatsNew;
-import org.anurag.dialogs.ZipFiles;
 import org.anurag.file.quest.SystemBarTintManager.SystemBarConfig;
 import org.anurag.fragments.AppStore;
 import org.anurag.fragments.FileGallery;
@@ -395,8 +394,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 						if(!FileGallery.does_list_has_locked_item())
 							new Rename(FileQuestHD.this, re_ls , panel);
 						else
-							new MasterPassword(FileQuestHD.this, Constants.size.x*8/9, null ,
-									prefs, Constants.MODES.RENAME);
+							new MasterPassword(FileQuestHD.this,null ,prefs, Constants.MODES.RENAME,null);
 					}
 					
 					break;
@@ -408,8 +406,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 						if(!RootPanel.does_list_has_locked_item())
 							new Rename(FileQuestHD.this, re_ls, panel);
 						else
-							new MasterPassword(FileQuestHD.this, Constants.size.x*8/9, null ,
-									prefs, Constants.MODES.RENAME);
+							new MasterPassword(FileQuestHD.this, null ,prefs, Constants.MODES.RENAME,null);
 					}
 					break;
 				
@@ -420,8 +417,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 						if(!SdCardPanel.does_list_has_locked_item())
 							new Rename(FileQuestHD.this, re_ls, panel);
 						else
-							new MasterPassword(FileQuestHD.this, Constants.size.x*8/9, null, 
-									prefs, Constants.MODES.RENAME);
+							new MasterPassword(FileQuestHD.this, null,prefs, Constants.MODES.RENAME,null);
 							
 					}
 					break;
@@ -436,8 +432,10 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			
 		case R.id.action_zip:
 			//zipping the files...
+			int id = mgr.COMPRESS_ID;
 			if(Constants.LONG_CLICK[panel])
-				switch(panel){
+				queueItems(panel , id);
+				/*switch(panel){
 				
 				case 0:
 					//first checking the locked status of files to be renamed....
@@ -475,7 +473,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 									prefs, Constants.MODES.ARCHIVE);							
 					}
 					break;
-				}
+				}*/
 			break;
 			
 		case R.id.action_properties:
@@ -514,18 +512,23 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		QueuedTask task = null;
 		switch(panel){
 		case 0:
-			
+			task = new QueuedTask(FileGallery.get_selected_items(), ID,
+					FileGallery.folder_count, FileGallery.file_count ,
+					FileGallery.does_list_has_locked_item());
+			FileGallery.clear_selected_items();
 			break;
 			
 		case 1:
 			task = new QueuedTask(RootPanel.get_selected_items(), ID,
-					RootPanel.folder_count, RootPanel.file_count);
+					RootPanel.folder_count, RootPanel.file_count,
+					RootPanel.does_list_has_locked_item());
 			RootPanel.clear_selected_items();
 			break;
 			
 		case 2:
 			task = new QueuedTask(SdCardPanel.get_selected_items(), ID,
-					SdCardPanel.folder_count, SdCardPanel.file_count);
+					SdCardPanel.folder_count, SdCardPanel.file_count,
+					SdCardPanel.does_list_has_locked_item());
 			SdCardPanel.clear_selected_items();
 			break;
 		}
@@ -571,9 +574,9 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 	    			open_gesture_recognized_item(path , panel);
 	    		
 	    		else //item is locked.... 
-	    			new MasterPassword(FileQuestHD.this, Constants.size.x*8/9,
+	    			new MasterPassword(FileQuestHD.this, 
 	    					new Item(new File(path), null , null , null), 
-	    					prefs , Constants.MODES.G_OPEN);
+	    					prefs , Constants.MODES.G_OPEN,null);
 	    	}
 	    	break;
 	    }
