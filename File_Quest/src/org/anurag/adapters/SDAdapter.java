@@ -36,10 +36,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.MediaStore.Video.Thumbnails;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -197,13 +195,16 @@ public class SDAdapter extends BaseAdapter{
 			else
 				new LoadAlbumArt(h.icon , item).execute();
 			
-		}else if(item.getType().equals("Video")){
+		}
+		//video thumb loader
+		/*
+		else if(item.getType().equals("Video")){
 			Bitmap vi = Constants.vidList.get(item.getPath());
 			if(vi != null)
 				h.icon.setImageBitmap(vi);
 			else
 				new VidThumb(h.icon, item).execute();
-		}
+		}*/
 		
 		//true when multi select is on....
 		if(Constants.LONG_CLICK[2]){
@@ -375,7 +376,7 @@ public class SDAdapter extends BaseAdapter{
 	 * 
 	 * @author anurag
 	 *
-	 */
+	 *//*
 	private class VidThumb extends AsyncTask<Void, Void, Void>{
 
 		ImageView iview;
@@ -408,7 +409,6 @@ public class SDAdapter extends BaseAdapter{
 				Constants.vidList = new HashMap<>();
 			}
 			return null;
-		}
-		
-	}
+		}		
+	}*/
 }

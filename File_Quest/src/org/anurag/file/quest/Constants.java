@@ -86,7 +86,7 @@ public class Constants {
 	public static HashMap<String, Drawable> apkList = new HashMap<>();
 	public static HashMap<String, Bitmap> imgList = new HashMap<>();
 	public static HashMap<String, Bitmap> musicList = new HashMap<>();
-	public static HashMap<String, Bitmap> vidList = new HashMap<>();
+	//public static HashMap<String, Bitmap> vidList = new HashMap<>();
 	
 	
 	/**

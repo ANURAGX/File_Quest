@@ -20,7 +20,6 @@
 package org.anurag.adapters;
 
 import java.io.File;
-
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -38,10 +37,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.MediaStore.Video.Thumbnails;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -226,13 +223,15 @@ public class FileGalleryAdapter extends BaseAdapter {
 				new LoadAlbumArt(h.icon, item).execute();
 			}			
 		}
-		else if(item.getType().equals("Video")){
+		
+		//video thumb loader....
+		/*else if(item.getType().equals("Video")){
 			Bitmap vi = Constants.vidList.get(item.getPath());
 			if(vi != null)
 				h.icon.setImageBitmap(vi);
 			else
 				new VidThumb(h.icon, item).execute();
-		}
+		}*/
 		
 		
 		//true when multi select is on....
@@ -418,6 +417,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 	 * @author anurag
 	 *
 	 */
+	/*
 	private class VidThumb extends AsyncTask<Void, Void, Void>{
 
 		ImageView iview;
@@ -452,7 +452,7 @@ public class FileGalleryAdapter extends BaseAdapter {
 			return null;
 		}
 		
-	}
+	}*/
 	/**
 	 * THIS FUNCTION RETURN THE SIZE IF THE GIVEN FIZE IN PARAMETER
 	 * @param f

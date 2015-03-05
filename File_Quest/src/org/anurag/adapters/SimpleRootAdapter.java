@@ -36,10 +36,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.MediaStore.Video.Thumbnails;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -189,13 +187,16 @@ public class SimpleRootAdapter extends BaseAdapter{
 				new LoadAlbumArt(h.icn , item).execute();
 			
 		}
+		
+		//video thumb loader
+		/*
 		else if(item.getType().equals("Video")){
 			Bitmap vi = Constants.vidList.get(item.getPath());
 			if(vi != null)
 				h.icn.setImageBitmap(vi);
 			else
 				new VidThumb(h.icn, item).execute();
-		}
+		}*/
 		
 			
 		//true when multi select is on....
@@ -367,7 +368,7 @@ public class SimpleRootAdapter extends BaseAdapter{
 	 * 
 	 * @author anurag
 	 *
-	 */
+	 *//*
 	private class VidThumb extends AsyncTask<Void, Void, Void>{
 
 		ImageView iview;
@@ -400,7 +401,6 @@ public class SimpleRootAdapter extends BaseAdapter{
 				Constants.vidList = new HashMap<>();
 			}
 			return null;
-		}
-		
-	}
+		}		
+	}*/
 }
