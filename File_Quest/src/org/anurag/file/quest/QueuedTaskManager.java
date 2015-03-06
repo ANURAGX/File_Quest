@@ -27,6 +27,7 @@ import org.anurag.fragments.RootPanel;
 import org.anurag.fragments.SdCardPanel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -132,7 +133,7 @@ public class QueuedTaskManager {
 		ls = new ListView(ctx);
 		prepareList(ls);
 		popupWindow.setOutsideTouchable(true);
-		popupWindow.setWidth(Constants.size.x*7/10);
+		popupWindow.setWidth(Constants.size.x*8/10);
 		popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
 		popupWindow.setContentView(ls);
 		popupWindow.setFocusable(true);
@@ -187,6 +188,11 @@ public class QueuedTaskManager {
 							tsk.getTaskID() == COPY_ID ? false : true);
 				}
 				task_list.remove(""+arg2);
+				if(task_list.size() == 0){
+					//no pending task
+					//so hiding pending task button from action bar
+					ctx.sendBroadcast(new Intent("FQ_DELETE"));
+				}
 				closePopupWindow();
 			}
 		});		
@@ -288,7 +294,12 @@ public class QueuedTaskManager {
 				public void onClick(View arg0) {
 					// TODO Auto-generated method stub
 					task_list.remove(""+arg0.getId());
-					closePopupWindow();					
+					closePopupWindow();			
+					if(task_list.size() == 0){
+						//no pending task
+						//so hiding pending task button from action bar
+						ctx.sendBroadcast(new Intent("FQ_DELETE"));
+					}
 				}
 			});			
 			return view;
