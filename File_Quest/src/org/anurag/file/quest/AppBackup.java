@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import org.anurag.adapters.AppAdapter;
 import org.anurag.fragments.AppStore;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -41,13 +40,18 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
+
 /**
+ * 
+ * this class handles the app backup operation
  * 
  * @author Anurag
  *
@@ -67,6 +71,9 @@ public class AppBackup {
 	private String pname;
 	private String vname;
 	private String appnam;
+	private Thread thread;
+	private ProgressBar progress;
+	private MaterialDialog dialog;
 	
 	/**
 	 * 
@@ -77,20 +84,58 @@ public class AppBackup {
 	public AppBackup(final Context ctx , int width, final ArrayList<ApplicationInfo> list) {
 		// TODO Auto-generated constructor stub
 		running = false;
-		final Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
-		dialog.setCancelable(true);
-		dialog.setContentView(R.layout.app_backup_dialog);
-		dialog.getWindow().getAttributes().width = width;
+		
+		LayoutInflater inf = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inf.inflate(R.layout.app_backup_dialog, null , false);
+		
+		
+		MaterialDialog.Builder build = new MaterialDialog.Builder(ctx);
+		build.title(R.string.app_backup)
+		.positiveText(R.string.takebackup)
+		.negativeText(R.string.dismiss)
+		.customView(view, true)
+		.callback(new ButtonCallback() {
+
+			@Override
+			public void onPositive(MaterialDialog dialog) {
+				// TODO Auto-generated method stub
+				super.onPositive(dialog);
+				
+				//already running, so returning
+				if(running){
+					return;
+				}
+				
+				thread.start();
+				running = true;
+				dialog.setCancelable(false);
+				progress.setVisibility(View.VISIBLE);
+				
+			}
+
+			@Override
+			public void onNegative(MaterialDialog dialog) {
+				// TODO Auto-generated method stub
+				super.onNegative(dialog);
+				running = false;
+				dialog.dismiss();
+			}
+			
+		})
+		.autoDismiss(false);
+		
+		
+		
 		mPack = ctx.getPackageManager();
-		final ProgressBar progress = (ProgressBar)dialog.findViewById(R.id.progress);
-		final TextView appsize = (TextView)dialog.findViewById(R.id.appSize);
-		final TextView version = (TextView)dialog.findViewById(R.id.appVersionCode);
-		final TextView packagename = (TextView)dialog.findViewById(R.id.appProcessName);
-		final TextView lastbackup = (TextView)dialog.findViewById(R.id.appBackupMessage);
-		final TextView appname = (TextView)dialog.findViewById(R.id.appname);
-		final TextView spaceleft = (TextView)dialog.findViewById(R.id.header2);
+		progress = (ProgressBar)view.findViewById(R.id.progress);
+		final TextView appsize = (TextView)view.findViewById(R.id.appSize);
+		final TextView version = (TextView)view.findViewById(R.id.appVersionCode);
+		final TextView packagename = (TextView)view.findViewById(R.id.appProcessName);
+		final TextView lastbackup = (TextView)view.findViewById(R.id.appBackupMessage);
+		final TextView appname = (TextView)view.findViewById(R.id.appname);
+		final TextView spaceleft = (TextView)view.findViewById(R.id.header2);
 		spaceleft.setText(spaceleft(new File(Environment.getExternalStorageDirectory().getPath()).getFreeSpace(), ctx));
-		TextView spaceavail = (TextView)dialog.findViewById(R.id.header);
+		TextView spaceavail = (TextView)view.findViewById(R.id.header);
 		spaceavail.setText(spaceavail(new File(Environment.getExternalStorageDirectory().getPath()).getTotalSpace(), ctx));
 		
 		
@@ -131,16 +176,6 @@ public class AppBackup {
 		}	
 		progress.setVisibility(View.GONE);
 		
-		final Button cancel = (Button)dialog.findViewById(R.id.appCacheBtn);
-		cancel.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				dialog.dismiss();
-				running = false;
-				
-			}
-		});
 		
 		final Handler handle = new Handler(){
 			@Override
@@ -163,20 +198,17 @@ public class AppBackup {
 							break;
 							
 					case 2:
-							if(running){
-								lastbackup.setText(ctx.getString(R.string.backupsuccessful));
-								progress.setVisibility(View.GONE);
-								cancel.setText(ctx.getString(R.string.ok));
-							}else
+							dialog.dismiss();
+							if(!running){
 								Toast.makeText(ctx, ctx.getString(R.string.backupinterrupted), Toast.LENGTH_SHORT).show();
-							if(FileQuestHD.getCurrentItem() == 3){
+							}if(FileQuestHD.getCurrentItem() == 3){
 								AppStore.resetAdapter();
 							}
 				}
 			}
 		};
 		
-		final Thread thread = new Thread(new Runnable() {
+		thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
@@ -223,32 +255,14 @@ public class AppBackup {
 								
 							}catch(IOException e){
 								
-							}
-							
+							}							
 						}
 					}
-					handle.sendEmptyMessage(2);
-					
+					handle.sendEmptyMessage(2);					
 				}
 			}
-		});
-		
-		final Button start = (Button)dialog.findViewById(R.id.appBackupBtn);
-		start.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				thread.start();
-				running = true;
-				dialog.setCancelable(false);
-				progress.setVisibility(View.VISIBLE);
-				start.setVisibility(View.GONE);
-			}
-		});
-		
-		
-		
-		dialog.show();
+		});			
+		dialog = build.show();		
 	}
 	
 	/**

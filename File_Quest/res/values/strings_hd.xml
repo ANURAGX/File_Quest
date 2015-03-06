@@ -17,7 +17,8 @@
 -->
 
 <resources>
-
+	
+    <string name="app_backup">App backup</string>
     <string name="action_search">Search</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_gesture">Gesture</string>
