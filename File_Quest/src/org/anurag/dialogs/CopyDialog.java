@@ -239,6 +239,8 @@ public class CopyDialog {
 			Toast.makeText(mContext, mContext.getResources().getString(R.string.copintr), Toast.LENGTH_SHORT).show();
 		
 		dial.dismiss();
+		
+		mContext.sendBroadcast(new Intent("UPDATE_SPACE"));
 		switch(FileQuestHD.getCurrentItem()){
 		case 0:
 			try{

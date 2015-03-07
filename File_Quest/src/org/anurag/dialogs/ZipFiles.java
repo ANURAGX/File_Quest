@@ -257,7 +257,7 @@ public class ZipFiles {
 									break;
 								}
 								Utils.updateUI();
-								ctx.sendBroadcast(new Intent("FQ_DELETE"));
+								ctx.sendBroadcast(new Intent("UPDATE_SPACE"));
 								Toast.makeText(ctx, R.string.items_zipped, Toast.LENGTH_SHORT).show();
 							}
 							dial.dismiss();

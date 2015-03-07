@@ -33,6 +33,7 @@ import org.anurag.adapters.AppAdapter;
 import org.anurag.fragments.AppStore;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -81,7 +82,7 @@ public class AppBackup {
 	 * @param width FOR DIALOG BOX...
 	 * @param list OF APPS TO BE BACKED UP....
 	 */
-	public AppBackup(final Context ctx , int width, final ArrayList<ApplicationInfo> list) {
+	public AppBackup(final Context ctx , final ArrayList<ApplicationInfo> list) {
 		// TODO Auto-generated constructor stub
 		running = false;
 		
@@ -199,6 +200,7 @@ public class AppBackup {
 							
 					case 2:
 							dialog.dismiss();
+							ctx.sendBroadcast(new Intent("UPDATE_SPACE"));
 							if(!running){
 								Toast.makeText(ctx, ctx.getString(R.string.backupinterrupted), Toast.LENGTH_SHORT).show();
 							}if(FileQuestHD.getCurrentItem() == 3){

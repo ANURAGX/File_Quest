@@ -435,45 +435,6 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			int id = mgr.COMPRESS_ID;
 			if(Constants.LONG_CLICK[panel])
 				queueItems(panel , id);
-				/*switch(panel){
-				
-				case 0:
-					//first checking the locked status of files to be renamed....
-					{
-						ArrayList<Item> re_ls = FileGallery.get_selected_items();
-						if(!FileGallery.does_list_has_locked_item())
-							new ZipFiles(FileQuestHD.this ,  re_ls);
-						else
-							new MasterPassword(FileQuestHD.this, Constants.size.x*8/9, null ,
-									prefs, Constants.MODES.ARCHIVE);
-					}
-					
-					break;
-				
-				case 1:
-					//first checking the locked status of files to be renamed....
-					{
-						ArrayList<Item> re_ls = RootPanel.get_selected_items();
-						if(!RootPanel.does_list_has_locked_item())
-							new ZipFiles(FileQuestHD.this,  re_ls);
-						else
-							new MasterPassword(FileQuestHD.this, Constants.size.x*8/9, null ,
-									prefs, Constants.MODES.ARCHIVE);
-					}
-					break;
-				
-				case 2:
-					//first checking the locked status of files to be renamed....
-					{
-						ArrayList<Item> re_ls = SdCardPanel.get_selected_items();
-						if(!SdCardPanel.does_list_has_locked_item())
-							new ZipFiles(FileQuestHD.this,  re_ls);
-						else
-							new MasterPassword(FileQuestHD.this, Constants.size.x*8/9, null, 
-									prefs, Constants.MODES.ARCHIVE);							
-					}
-					break;
-				}*/
 			break;
 			
 		case R.id.action_properties:
@@ -1335,7 +1296,12 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			else if(action.equalsIgnoreCase("FQ_DELETE")){
 				Constants.LONG_CLICK[panel] = false;
 				invalidateOptionsMenu();
-			}			
+				load_sd_space();
+			}		
+			
+			else if(action.endsWith("UPDATE_SPACE")){
+				load_sd_space();
+			}
 		}		
 	}
 	
@@ -1349,6 +1315,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		filter.addAction("update_action_bar_long_click");
 		filter.addAction("list_view_anim_changed");
 		filter.addAction("FQ_DELETE");
+		filter.addAction("UPDATE_SPACE");
 		this.registerReceiver(broadcasts, filter);
 	}
 	

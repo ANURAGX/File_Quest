@@ -129,7 +129,7 @@ public class AppStore extends Fragment{
 				
 				ArrayList<ApplicationInfo> infos = new ArrayList<ApplicationInfo>();
 				infos.add(apps.get(position));
-				new AppBackup(getActivity(), Constants.size.x*8/9, infos);
+				new AppBackup(getActivity(), infos);
 			}
 		});
 		
