@@ -1293,14 +1293,31 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				AppStore.change_list_anim();
 			}			
 			
+			//reload sdcard space after delete
 			else if(action.equalsIgnoreCase("FQ_DELETE")){
 				Constants.LONG_CLICK[panel] = false;
 				invalidateOptionsMenu();
 				load_sd_space();
 			}		
 			
+			//reload sd card space info on action bar after copy ,cut,zip operation
 			else if(action.endsWith("UPDATE_SPACE")){
 				load_sd_space();
+			}
+			
+			else if(action.equalsIgnoreCase("FQ_OPEN_ZIP")){
+				//open zip file....
+				open_archives(panel);
+			}
+			
+			else if(action.equalsIgnoreCase("FQ_OPEN_RAR")){
+				//open rar file....
+				open_archives(panel);
+			}
+			
+			else if(action.equalsIgnoreCase("FQ_OPEN_TAR")){
+				//open tar file....
+				open_archives(panel);
 			}
 		}		
 	}
@@ -1316,9 +1333,27 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		filter.addAction("list_view_anim_changed");
 		filter.addAction("FQ_DELETE");
 		filter.addAction("UPDATE_SPACE");
+		filter.addAction("FQ_OPEN_TAR");
+		filter.addAction("FQ_OPEN_RAR");
+		filter.addAction("FQ_OPEN_ZIP");
 		this.registerReceiver(broadcasts, filter);
 	}
 	
+	public void open_archives(int panel) {
+		// TODO Auto-generated method stub
+		switch(panel){
+		case 0:
+			
+			break;
+			
+		case 1:
+			
+			break;
+			
+		case 2:
+		}
+	}
+
 	private void init_drawer_menu() {
 		// TODO Auto-generated method stub
 		ExpandableListView drLs = (ExpandableListView) drawer.findViewById(R.id.drawer_menu_list);
