@@ -27,8 +27,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.widget.ListView;
 /**
  * 
  * @author Anurag
@@ -51,7 +49,13 @@ public class ZipManager {
 		ctx = context;
 	}
 
-	
+	/**
+	 * 
+	 * @param path
+	 */
+	public void setPath(String path){
+		this.zipPath = path;
+	}
 	
 	public ArrayList<ZipObj> generateList(){
 		while(zList.hasMoreElements()){
@@ -147,30 +151,5 @@ public class ZipManager {
 			}
 		};		
 		Collections.sort(list, comp);
-	}
-	
-	/**
-	 * 
-	 * @param ls
-	 * @param ctx
-	 * @param src
-	 * @param path
-	 */
-	public void setZipAdapter(final ListView ls , final Context ctx , final ZipFile src , final String path){
-		new AsyncTask<Void , Void , Void>(){
-			@Override
-			protected void onPostExecute(Void result) {
-				// TODO Auto-generated method stub
-				super.onPostExecute(result);
-				ls.setAdapter(new ZipAdapter(list, ctx));
-			}
-
-			@Override
-			protected Void doInBackground(Void... arg0) {
-				// TODO Auto-generated method stub
-				list = new ZipManager(src, path, ctx).generateList();
-				return null;
-			}
-		}.execute();
 	}
 }

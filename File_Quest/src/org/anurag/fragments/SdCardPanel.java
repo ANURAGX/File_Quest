@@ -104,11 +104,13 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	//no. of selected files in selected files
 	public static int file_count;
 	
-	
+	//manager for zip files....
 	private ZipManager zMgr;
 	
+	//manager for rar files....
 	private RarManager rMgr;
 	
+	//manager for tar files....
 	private TarManager tMgr;
 	
 	public SdCardPanel() {

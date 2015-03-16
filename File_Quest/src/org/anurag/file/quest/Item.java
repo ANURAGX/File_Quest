@@ -23,6 +23,11 @@ import java.io.File;
 
 import android.graphics.drawable.Drawable;
 
+/**
+ * 
+ * @author anurag
+ *
+ */
 public class Item {
 	
 	private File file;
@@ -34,6 +39,14 @@ public class Item {
 	private String type;
 	private boolean isLocked;
 	private boolean isFav;
+	
+	/**
+	 * 
+	 * @param fi
+	 * @param img
+	 * @param typ
+	 * @param si
+	 */
 	public Item(File fi , Drawable img , String typ , String si) {
 		// TODO Auto-generated constructor stub
 		this.file = fi;
