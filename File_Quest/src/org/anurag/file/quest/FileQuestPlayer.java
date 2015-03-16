@@ -25,21 +25,25 @@ import java.io.IOException;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 
 /**
@@ -66,29 +70,40 @@ public class FileQuestPlayer extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		playing = true;
-		Point size = new Point();
-		getWindowManager().getDefaultDisplay().getSize(size);
 		Intent intent = getIntent();
-
+	
+		LayoutInflater inf = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inf.inflate(R.layout.file_quest_player, null , false);
 		
-		if(Constants.COLOR_STYLE == 0){
-			//this condition is true then this activity was called explicitly....
-			Constants.COLOR_STYLE = getResources().getColor(R.color.orange);
-			ThemeOrganizer.BUILD_THEME(Constants.COLOR_STYLE);
-		}	
+		new MaterialDialog.Builder(FileQuestPlayer.this)
+		.autoDismiss(true)
+		.dismissListener(new OnDismissListener() {
+			
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+				// TODO Auto-generated method stub
+				try{
+					player.release();
+					playing = false;
+				}catch(Exception e){
+					
+				}
+				FileQuestPlayer.this.finish();
+			}
+		})
+		.customView(view, true)
+		.show();
 		
-		Dialog dialog = new Dialog(FileQuestPlayer.this, Constants.DIALOG_STYLE);
-		dialog.setCancelable(true); 
-		dialog.setContentView(R.layout.file_quest_player);
-		seekbar = (SeekBar)dialog.findViewById(R.id.seek);
+		
+		seekbar = (SeekBar)view.findViewById(R.id.seek);
 		
 		
-		total_time = (TextView)dialog.findViewById(R.id.time_total);
-		current_time = (TextView)dialog.findViewById(R.id.time_current);
+		total_time = (TextView)view.findViewById(R.id.time_total);
+		current_time = (TextView)view.findViewById(R.id.time_current);
 		
-		TextView albumname = (TextView)dialog.findViewById(R.id.albumName);
-		TextView artist = (TextView)dialog.findViewById(R.id.artistName);
-		ImageView album = (ImageView)dialog.findViewById(R.id.albumart);
+		TextView albumname = (TextView)view.findViewById(R.id.albumName);
+		TextView artist = (TextView)view.findViewById(R.id.artistName);
+		ImageView album = (ImageView)view.findViewById(R.id.albumart);
 		try {
 			player = new MediaPlayer();
 			player.setDataSource(FileQuestPlayer.this, intent.getData());
@@ -144,7 +159,7 @@ public class FileQuestPlayer extends Activity{
 				Bitmap img = BitmapFactory.decodeByteArray(art, 0, art.length);
 				album.setImageBitmap(img);
 			}catch(Exception e){
-				//album.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_albumart));
+				album.setImageDrawable(getResources().getDrawable(R.drawable.album_art));
 			}
 			
 			//setting the album name...
@@ -200,22 +215,6 @@ public class FileQuestPlayer extends Activity{
 			}
 		});
 		
-		dialog.getWindow().getAttributes().width = size.x*8/9;
-		if(player!=null)
-			dialog.show();
-		dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-			@Override
-			public void onDismiss(DialogInterface dialog) {
-				// TODO Auto-generated method stub
-				try{
-					player.release();
-					playing = false;
-				}catch(Exception e){
-					
-				}
-				FileQuestPlayer.this.finish();
-			}
-		});
 		
 		if(player != null){
 			final Handler handle = new Handler(){

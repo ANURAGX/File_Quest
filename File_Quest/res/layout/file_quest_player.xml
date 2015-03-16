@@ -25,9 +25,7 @@
     android:layout_gravity="center" >
     
     <TextView
-        android:background="@color/semi_white15"
         android:gravity="center" 
-        android:textColor="@android:color/white"
         android:textStyle="bold"
         android:textSize="18sp"
         android:padding="5dp"
@@ -39,7 +37,6 @@
     <ImageView 
             android:id="@+id/albumart"
             android:layout_gravity="center"
-            android:background="@color/semi_white30"
             android:layout_width="match_parent"
             android:layout_height="270dp"/>
     
@@ -59,7 +56,6 @@
             android:layout_height="wrap_content">
             
              <TextView 
-                android:textColor="@android:color/white"
                 android:textSize="15sp"
                 android:paddingBottom="10dp" 
             	android:id="@+id/albumName"
@@ -71,7 +67,6 @@
             	android:text="@string/album_name"/>  
             
         	<TextView 
-            	android:textColor="@android:color/white"
             	android:id="@+id/artistName"
             	android:paddingLeft="00dp"
             	android:layout_gravity="center"
@@ -96,7 +91,6 @@
         	android:orientation="horizontal" >
         	<TextView
             	android:id="@+id/time_current"
-            	android:textColor="@android:color/white"
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
             	android:layout_centerVertical="true"
@@ -105,7 +99,6 @@
 
         	<TextView
             	android:id="@+id/time_total"
-            	android:textColor="@android:color/white"
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
             	android:layout_alignParentRight="true"
