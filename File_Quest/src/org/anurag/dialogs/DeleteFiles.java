@@ -82,7 +82,7 @@ public class DeleteFiles{
 	 * @param lsKeys for list of files
 	 * @param msg to show....
 	 */
-	public DeleteFiles(Context ctx,int width , ConcurrentHashMap<String , Item> list ,ConcurrentHashMap<String, String> lsKeys,
+	public DeleteFiles(Context ctx,ConcurrentHashMap<String , Item> list ,ConcurrentHashMap<String, String> lsKeys,
 			String msg) {
 		// TODO Auto-generated constructor stub
 		ArrayList<Item> itms = new ArrayList<Item>();
@@ -92,7 +92,7 @@ public class DeleteFiles{
 				itms.add(list.get(lsKeys.get(""+i)));
 		}
 		
-		new DeleteFiles(ctx, width, itms, msg);
+		new DeleteFiles(ctx,  itms, msg);
 	}
 	
 	/**
@@ -102,17 +102,17 @@ public class DeleteFiles{
 	 * @param list
 	 * @param lsKeys
 	 */
-	public DeleteFiles(Context ctx,int width , ConcurrentHashMap<String , Item> list ,ConcurrentHashMap<String, String> lsKeys){
+	public DeleteFiles(Context ctx, ConcurrentHashMap<String , Item> list ,ConcurrentHashMap<String, String> lsKeys){
 		// TODO Auto-generated constructor stub
 		ArrayList<Item> itms = new ArrayList<Item>();
 		len = list.size();
 		for(int i = 0 ; i<len ; ++i){
 			itms.add(list.get(lsKeys.get(""+i)));
 		}		
-		new DeleteFiles(ctx, width, itms, null);
+		new DeleteFiles(ctx, itms, null);
 	}
 	
-	public DeleteFiles(Context context,int width,final ArrayList<Item> list,String msg) {
+	public DeleteFiles(Context context,final ArrayList<Item> list,String msg) {
 		// TODO Auto-generated constructor stub
 		
 		music_deleted =	app_deleted = img_deleted = vid_deleted = doc_deleted =

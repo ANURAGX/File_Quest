@@ -162,8 +162,7 @@ public class ImageViewer extends ActionBarActivity{
 				ls.add(new Item(new File(intent.getData().getPath()),
 						null, null, null));
 				
-				new DeleteFiles(ImageViewer.this, Constants.size.x*8/9,
-						ls , null);
+				new DeleteFiles(ImageViewer.this,ls , null);
 				
 				//ImageViewer.this.finish();				
 			}

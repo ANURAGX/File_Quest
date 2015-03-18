@@ -21,6 +21,7 @@ package org.anurag.file.quest;
 
 import java.util.ArrayList;
 
+import org.anurag.dialogs.DeleteFiles;
 import org.anurag.dialogs.Rename;
 import org.anurag.dialogs.ZipFiles;
 import org.anurag.fragments.FileGallery;
@@ -262,20 +263,9 @@ public class MasterPassword {
 						
 						//zipping the locked items....
 						else if(Constants.activeMode == Constants.MODES.ARCHIVE){
-							switch(FileQuestHD.getCurrentItem()){
-							
-							case 0:
-								new ZipFiles(Constants.ctx, ls);
-								break;
-								
-							case 1:
-								new ZipFiles(Constants.ctx, ls);
-								break;
-								
-							case 2:
-								new ZipFiles(Constants.ctx, ls);
-								break;
-							}
+							new ZipFiles(ctx, ls);
+						}else if(Constants.activeMode == Constants.MODES.DELETE){
+							new DeleteFiles(ctx, ls, null);
 						}
 						
 						//removing the locked item from the db....

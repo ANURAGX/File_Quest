@@ -128,7 +128,7 @@ public class ConfirmTweakTask {
 				//providing the list of selected files for operation....
 				switch(tweaktype){
 				case 1:
-					new DeleteFiles(ctx, Constants.size.x*8/9, list, keys);
+					new DeleteFiles(ctx, list, keys);
 					break;
 					
 				case 2:

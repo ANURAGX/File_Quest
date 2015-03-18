@@ -363,17 +363,34 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		case R.id.action_delete:
 			switch(panel){
 			case 0:
-				new DeleteFiles(FileQuestHD.this, Constants.size.x*8/9, FileGallery.lists,
-						FileGallery.keys , null);
+				{
+					ArrayList<Item> re_ls = FileGallery.get_selected_items();
+					if(!FileGallery.does_list_has_locked_item())
+						new DeleteFiles(FileQuestHD.this, re_ls , null);
+					else
+						new MasterPassword(FileQuestHD.this, null, prefs, Constants.MODES.DELETE, re_ls);
+				}
+				
 				break;
 			case 1:
-				new DeleteFiles(FileQuestHD.this, Constants.size.x*8/9,
-						RootPanel.get_selected_items(), null);
+				{
+					ArrayList<Item> re_ls = RootPanel.get_selected_items();
+					if(!RootPanel.does_list_has_locked_item())
+						new DeleteFiles(FileQuestHD.this, re_ls, null);
+					else
+						new MasterPassword(FileQuestHD.this, null ,prefs, Constants.MODES.DELETE,re_ls);
+				}
+			
 				break;
 				
-			case 2:
-				new DeleteFiles(FileQuestHD.this, Constants.size.x*8/9,
-						SdCardPanel.get_selected_items() , null);
+			case 2://first checking the locked status of files to be renamed....
+				{	
+					ArrayList<Item> re_ls = SdCardPanel.get_selected_items();
+					if(!SdCardPanel.does_list_has_locked_item())
+						new DeleteFiles(FileQuestHD.this, re_ls, null);
+					else
+						new MasterPassword(FileQuestHD.this, null,prefs, Constants.MODES.DELETE,re_ls);
+				}
 			}
 			break;
 			
