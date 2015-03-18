@@ -19,6 +19,7 @@
 
 package org.anurag.dialogs;
 
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.anurag.file.quest.Constants;
@@ -135,7 +136,12 @@ public class ConfirmTweakTask {
 					break;
 					
 				case 3:
-					
+					ArrayList<Item> itms = new ArrayList<Item>();
+					int len = list.size();
+					for(int i = 0 ; i<len ; ++i){
+						itms.add(list.get(keys.get(""+i)));
+					}
+					new ZipFiles(ctx, itms);
 					break;
 				}				
 				dialog.dismiss();

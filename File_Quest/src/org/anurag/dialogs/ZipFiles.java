@@ -41,6 +41,7 @@ import org.anurag.fragments.SdCardPanel;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -204,6 +205,10 @@ public class ZipFiles {
 		case 2:
 			DEST= SdCardPanel.get_current_working_dir().getPath(); 
 			break;
+		}
+		
+		if(DEST == null){
+			DEST = Environment.getExternalStorageDirectory().getAbsolutePath();
 		}
 		
 		destination.setText(ctx.getString(R.string.dest)+" "+DEST);		
