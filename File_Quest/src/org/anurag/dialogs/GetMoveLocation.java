@@ -69,7 +69,7 @@ public class GetMoveLocation {
 	
 		LayoutInflater inf = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inf.inflate(R.layout.list_view_hd, null , false);
-		
+		view.setPadding(10, 0, 0, 0);
 		final ListView ls = (ListView)view.findViewById(R.id.list_view_hd);
 		
 		new MaterialDialog.Builder(mContext)
@@ -83,9 +83,9 @@ public class GetMoveLocation {
 			public void onNeutral(MaterialDialog dialog) {
 				// TODO Auto-generated method stub
 				super.onNeutral(dialog);
-				if(stack.size()>1){
-					file = stack.pop();
-					
+				if(stack.size() > 1){
+					stack.pop();
+					file = stack.peek();
 					list = file.listFiles();
 					
 					Arrays.sort(list, new Comparator<File>() {

@@ -39,7 +39,6 @@
         android:paddingBottom="10dp"
         android:layout_weight="4.5">
         <ImageView 
-            android:background="@drawable/task"
             android:id="@+id/infoIcon"
             android:gravity="center_vertical" 
             android:layout_width="45.0dip" 
