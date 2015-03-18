@@ -197,6 +197,7 @@
     <string name="internal_sd">Internal SD</string>
     <string name="total">Total</string>
     <string name="free">Free</string>
+    <string name="fq_tweak">Tweaks</string>
     <string name="move_tweak">All your %s files will be moved to selected folder.</string>
     <string name="clean_tweak">All your %s files will be deleted permanently.</string>
     <string name="zip_tweak">All your %s files will be zipped to selected folder.</string>

@@ -53,7 +53,7 @@ public class ConfirmTweakTask {
 		// TODO Auto-generated constructor stub
 		
 		Builder dialog = new MaterialDialog.Builder(ctx);
-		dialog.title(R.string.delete);
+		dialog.title(R.string.fq_tweak);
 		String msg = null;
 		switch(tweaktype){
 		case 1:
@@ -131,7 +131,7 @@ public class ConfirmTweakTask {
 					break;
 					
 				case 2:
-					
+					new GetMoveLocation(ctx, list, keys);
 					break;
 					
 				case 3:

@@ -108,11 +108,11 @@ public class DBoxManager {
     public static void setDropBoxAdapter(final int ITEM ,final Context ctx){
     	final Dialog dialog = new Dialog(ctx , Constants.DIALOG_STYLE);
     	dialog.setCancelable(false);
-    	dialog.setContentView(R.layout.p_dialog);
+    //	dialog.setContentView(R.layout.p_dialog);
     	dialog.getWindow().getAttributes().width = Constants.size.x*8/9;
-    	WebView prog = (WebView)dialog.findViewById(R.id.p_Web_View);
-    	prog.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
-		prog.setEnabled(false);
+    	//WebView prog = (WebView)dialog.findViewById(R.id.p_Web_View);
+    	//prog.loadUrl("file:///android_asset/Progress_Bar_HTML/index.html");
+		//prog.setEnabled(false);
     	final Handler handle = new Handler(){
 			@Override
 			public void handleMessage(Message msg) {
