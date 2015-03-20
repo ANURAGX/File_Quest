@@ -24,9 +24,6 @@ import java.util.ArrayList;
 
 import org.anurag.adapters.SDAdapter;
 import org.anurag.adapters.SimpleSDAdapter;
-import org.anurag.compress.RarManager;
-import org.anurag.compress.TarManager;
-import org.anurag.compress.ZipManager;
 import org.anurag.dialogs.OpenFileDialog;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuestHD;
@@ -104,15 +101,7 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	//no. of selected files in selected files
 	public static int file_count;
 	
-	//manager for zip files....
-	private ZipManager zMgr;
-	
-	//manager for rar files....
-	private RarManager rMgr;
-	
-	//manager for tar files....
-	private TarManager tMgr;
-	
+		
 	public SdCardPanel() {
 		// TODO Auto-generated constructor stub
 		counter = 0;
@@ -464,4 +453,25 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	public static void push_path(String path){
 		manager.pushPath(path);
 	}	
+	
+	/**
+	 * 
+	 * @param type
+	 */
+	public static void loadArchive(int type){
+		switch(type){
+		case 1:
+			manager.setInZip(true);
+			manager.pushPath(item.getPath());
+			load.execute();
+			break;
+		case 2:
+			
+			break;
+			
+		case 3:
+			
+			break;
+		}
+	}
 }

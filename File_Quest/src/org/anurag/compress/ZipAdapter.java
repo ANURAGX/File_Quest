@@ -31,12 +31,18 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * 
+ * @author anurag
+ *
+ */
 public class ZipAdapter extends BaseAdapter{
 
-	ArrayList<ZipObj> list;
-	Context ctx;
-	LayoutInflater inflater;
-	ZipObj zFile;
+	private ArrayList<ZipObj> list;
+	private Context ctx;
+	private LayoutInflater inflater;
+	private ZipObj zFile;
+	
 	public ZipAdapter(ArrayList<ZipObj> object , Context context) {
 		// TODO Auto-generated constructor stub
 		list = object;
@@ -78,21 +84,18 @@ public class ZipAdapter extends BaseAdapter{
 	}
 
 	@Override
-	public View getView(int pos, View convertView, ViewGroup arg2) {
+	public View getView(int pos, View w, ViewGroup arg2) {
 		// TODO Auto-generated method stub
 		Holder h = new Holder(); 
 		zFile = list.get(pos);
-		if(convertView == null){
-			convertView = inflater.inflate(R.layout.row_list_app, arg2 , false);
-			h.icon = (ImageView)convertView.findViewById(R.id.fileIcon);
-			h.fName = (TextView)convertView.findViewById(R.id.fileName);
-			h.fType = (TextView)convertView.findViewById(R.id.fileType);
-			h.fSize = (TextView)convertView.findViewById(R.id.fileSize);
-			h.box = (CheckBox)convertView.findViewById(R.id.checkbox);
-			h.box.setVisibility(View.GONE);
-			convertView.setTag(h);
-		}else
-			h = (Holder) convertView.getTag();
+		View convertView = inflater.inflate(R.layout.row_list_app, arg2 , false);
+		h.icon = (ImageView)convertView.findViewById(R.id.fileIcon);
+		h.fName = (TextView)convertView.findViewById(R.id.fileName);
+		h.fType = (TextView)convertView.findViewById(R.id.fileType);
+		h.fSize = (TextView)convertView.findViewById(R.id.fileSize);
+		h.box = (CheckBox)convertView.findViewById(R.id.checkbox);
+		h.box.setVisibility(View.GONE);
+		convertView.setTag(h);
 		
 		if(!zFile.isFile()){
 			h.fSize.setVisibility(View.GONE);
@@ -105,5 +108,4 @@ public class ZipAdapter extends BaseAdapter{
 		
 		return convertView;
 	}
-
 }

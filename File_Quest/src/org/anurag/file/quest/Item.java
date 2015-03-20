@@ -20,7 +20,9 @@
 package org.anurag.file.quest;
 
 import java.io.File;
+import java.util.zip.ZipEntry;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 /**
@@ -30,6 +32,7 @@ import android.graphics.drawable.Drawable;
  */
 public class Item {
 	
+	//Ordinary file handling....
 	private File file;
 	private String name;
 	private String path;
@@ -186,4 +189,108 @@ public class Item {
 	public boolean isFavItem(){
 		return this.isFav;
 	}
+	
+	//---------------------------------------------------//
+	//---------------------------------------------------//
+	//Zip file handling Related stuff(inside zip archive)
+
+	private String z_path;
+	private String z_name;
+	private String z_entry;
+	private boolean isFile;
+	private ZipEntry z;
+	
+	/**
+	 * 
+	 * @param zPath
+	 * @param zName
+	 * @param zEntry
+	 * @param zSize
+	 * @param ctx
+	 * @param entry
+	 */
+	public Item(String zPath,String zName,String zEntry,long zSize,Context ctx , ZipEntry entry) {
+		// TODO Auto-generated constructor stub
+		
+		this.z_path = zPath;
+		this.name = this.z_name = zName;
+		this.z_entry = zEntry;
+		this.size = size(zSize);
+		this.isFile = z_checkForFile();
+		this.z = entry;		
+		FileType t = new FileType(new File(zPath), ctx);
+		this.type = t.getType();
+		this.icon = t.getIcon();
+	}
+	
+	private String size(long size){
+		if(size>Constants.GB)
+			return String.format(Constants.GB_STR, (double)size/(Constants.GB));
+		
+		else if(size > Constants.MB)
+			return String.format(Constants.MB_STR, (double)size/(Constants.MB));
+		
+		else if(size>1024)
+			return String.format(Constants.KB_STR, (double)size/(1024));
+		
+		else
+			return String.format(Constants.BYT_STR, (double)size);
+	}	
+	
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String z_getName(){
+		return this.z_name;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String z_getPath(){
+		String str = this.z_path + "/"+this.z_name;
+		return str;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getEntry(){
+		return this.z_entry;
+	}
+	
+		
+	/**
+	 * 
+	 * @return
+	 */
+	public ZipEntry getZipEntry(){
+		return this.z;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean is_z_File(){
+		return this.isFile;
+	}
+	
+	/**
+	 * 
+	 * @return 
+	 */
+	private boolean z_checkForFile(){
+		String str = z_entry.substring(z_path.length(), z_entry.length());
+		if(str.startsWith("/"))
+			str = str.substring(1, str.length());
+		if(str.contains("/"))
+			return false;
+		return true;
+	}
+	
 }

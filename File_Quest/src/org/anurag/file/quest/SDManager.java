@@ -21,8 +21,13 @@ package org.anurag.file.quest;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
+
+import org.anurag.compress.ZipManager;
 
 import android.content.Context;
 
@@ -38,6 +43,9 @@ public class SDManager {
 	private Context ctx;
 	private File file;
 	private FileUtils utils;
+	
+	private boolean isInZip;
+	private ZipManager zMgr;
 	
 	/**
 	 * 
@@ -68,6 +76,19 @@ public class SDManager {
 	}
 	
 	/**
+	 * 
+	 * @param value
+	 */
+	public void setInZip(boolean value){
+		if(!value){
+			zMgr = null;
+		}
+		isInZip = value;
+	}
+	
+	
+	
+	/**
 	 * Function To return Current File Name
 	 * @return
 	 */
@@ -95,6 +116,10 @@ public class SDManager {
 	 * @return
 	 */
 	public ArrayList<Item> getList(){
+		if(isInZip){
+			return zMgr.generateList();
+		}		
+		
 		items.clear();
 		
 		file = new File(nStack.peek());
@@ -155,6 +180,21 @@ public class SDManager {
 	 * @param path which was being viewed....
 	 */
 	public void pushPath(String path){
+		if(isInZip){
+			if(zMgr == null){
+				
+				try {
+					zMgr = new ZipManager(new ZipFile(new File(path)), "/", ctx);
+				} catch (ZipException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}	
+			return;
+		}
 		nStack.push(path);
 	}
 	

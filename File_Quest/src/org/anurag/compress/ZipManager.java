@@ -26,6 +26,8 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.anurag.file.quest.Item;
+
 import android.content.Context;
 /**
  * 
@@ -33,7 +35,7 @@ import android.content.Context;
  */
 public class ZipManager {
 	
-	private ArrayList<ZipObj> list;
+	private ArrayList<Item> list;
 	private ZipEntry entry;
 	private Enumeration<? extends ZipEntry> zList;
 	private String zipPath;
@@ -44,7 +46,7 @@ public class ZipManager {
 	public ZipManager(ZipFile file ,String pathToShow , Context context){
 		// TODO Auto-generated constructor stub
 		zList = file.entries();
-		list = new ArrayList<ZipObj>();
+		list = new ArrayList<Item>();
 		zipPath = pathToShow;
 		ctx = context;
 	}
@@ -57,7 +59,7 @@ public class ZipManager {
 		this.zipPath = path;
 	}
 	
-	public ArrayList<ZipObj> generateList(){
+	public ArrayList<Item> generateList(){
 		while(zList.hasMoreElements()){
 			entry = zList.nextElement();
 			if(entry.isDirectory())
@@ -76,17 +78,17 @@ public class ZipManager {
 					name = name.substring(1, name.length());
 				name = eliminateSlash(name);
 				for(int i=0;i<len;++i){
-					if(list.get(i).getName().equalsIgnoreCase(name)){
+					if(list.get(i).z_getName().equalsIgnoreCase(name)){
 						added = true;
 						break;
 					}
 				}
 				if(!added){
-					list.add(new ZipObj("", name, entry.getName(), entry.getSize(), ctx , entry) );
+					list.add(new Item("", name, entry.getName(), entry.getSize(), ctx , entry) );
 				}				
 			}else{
 				/**
-				 * LISTING HAS TO BE DONE FROM THE PROVODED PATH....
+				 * LISTING HAS TO BE DONE FROM THE PROVIDED PATH....
 				 */
 				
 				/*
@@ -98,17 +100,17 @@ public class ZipManager {
 					name = eliminateSlash(name);
 					if(len>0){					
 						for(int i=0;i<len;++i){
-							if(list.get(i).getName().equalsIgnoreCase(name)){
+							if(list.get(i).z_getName().equalsIgnoreCase(name)){
 								added = true;
 								break;
 							}
 						}						
-						if(!added&&entryname.startsWith(zipPath)){
-							list.add(new ZipObj(zipPath, name, entry.getName(), entry.getSize(), ctx , entry));
+						if(!added && entryname.startsWith(zipPath)){
+							list.add(new Item(zipPath, name, entry.getName(), entry.getSize(), ctx , entry));
 						}
 					}else{
 						if(entryname.startsWith(zipPath)){
-							list.add(new ZipObj(zipPath, name, entry.getName(), entry.getSize(), ctx,entry));
+							list.add(new Item(zipPath, name, entry.getName(), entry.getSize(), ctx,entry));
 						}
 					}
 				}catch(Exception e){
@@ -137,14 +139,14 @@ public class ZipManager {
 	 * FIRST FOLDER AND THEN FILES.....
 	 */
 	private void sort(){
-		Comparator<ZipObj> comp = new Comparator<ZipObj>() {
+		Comparator<Item> comp = new Comparator<Item>() {
 			@Override
-			public int compare(ZipObj a, ZipObj b) {
+			public int compare(Item a, Item b) {
 				// TODO Auto-generated method stub
-				boolean aisfolder =!a.isFile();
-				boolean bisfolder = !b.isFile();
+				boolean aisfolder =!a.is_z_File();
+				boolean bisfolder = !b.is_z_File();
 				if(aisfolder==bisfolder)
-					return a.getName().compareToIgnoreCase(b.getName());
+					return a.z_getName().compareToIgnoreCase(b.z_getName());
 				else if(bisfolder)
 					return 1;
 				return -1;

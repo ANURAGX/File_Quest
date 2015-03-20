@@ -1322,19 +1322,19 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				load_sd_space();
 			}
 			
-			else if(action.equalsIgnoreCase("FQ_OPEN_ZIP")){
+			else if(action.equalsIgnoreCase("FQ_ZIP_OPEN")){
 				//open zip file....
-				open_archives(panel);
+				open_archives(panel,1);
 			}
 			
-			else if(action.equalsIgnoreCase("FQ_OPEN_RAR")){
+			else if(action.equalsIgnoreCase("FQ_RAR_OPEN")){
 				//open rar file....
-				open_archives(panel);
+				open_archives(panel,2);
 			}
 			
-			else if(action.equalsIgnoreCase("FQ_OPEN_TAR")){
+			else if(action.equalsIgnoreCase("FQ_TAR_OPEN")){
 				//open tar file....
-				open_archives(panel);
+				open_archives(panel,3);
 			}
 		}		
 	}
@@ -1350,13 +1350,18 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		filter.addAction("list_view_anim_changed");
 		filter.addAction("FQ_DELETE");
 		filter.addAction("UPDATE_SPACE");
-		filter.addAction("FQ_OPEN_TAR");
-		filter.addAction("FQ_OPEN_RAR");
-		filter.addAction("FQ_OPEN_ZIP");
+		filter.addAction("FQ_TAR_OPEN");
+		filter.addAction("FQ_RAR_OPEN");
+		filter.addAction("FQ_ZIP_OPEN");
 		this.registerReceiver(broadcasts, filter);
 	}
 	
-	public void open_archives(int panel) {
+	/**
+	 * 
+	 * @param panel
+	 * @param archive_type
+	 */
+	private void open_archives(int panel , int archive_type) {
 		// TODO Auto-generated method stub
 		switch(panel){
 		case 0:
@@ -1368,6 +1373,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			break;
 			
 		case 2:
+			SdCardPanel.loadArchive(archive_type);
+			break;
 		}
 	}
 
