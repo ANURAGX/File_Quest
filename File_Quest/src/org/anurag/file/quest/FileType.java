@@ -205,6 +205,15 @@ public class FileType {
 	
 	/**
 	 * 
+	 * 
+	 * @return the folder string
+	 */
+	public String getFolderString(){
+		return flder;
+	}
+	
+	/**
+	 * 
 	 * @param f
 	 * @param ctx
 	 * @return

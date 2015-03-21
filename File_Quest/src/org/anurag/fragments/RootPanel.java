@@ -231,7 +231,7 @@ public class RootPanel extends Fragment{
 			if(item.isDirectory()){
 				//selecting a folder....
 				manager.pushPath(item.getPath());
-				FileQuestHD.notify_Title_Indicator(1, item.getName());
+				FileQuestHD.notify_Title_Indicator(1, manager.getCurrentDirectoryName());
 				load.execute();
 			}else{
 				//selecting a file....

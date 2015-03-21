@@ -42,11 +42,13 @@ public class ZipManager {
 	int len = 0;
 	private String entryname;
 	private Context ctx;
+	private ZipFile zFile;
+	
 	
 	public ZipManager(ZipFile file ,String pathToShow , Context context){
 		// TODO Auto-generated constructor stub
-		zList = file.entries();
-		list = new ArrayList<Item>();
+		//zList = file.entries();
+		zFile = file;
 		zipPath = pathToShow;
 		ctx = context;
 	}
@@ -60,14 +62,17 @@ public class ZipManager {
 	}
 	
 	public ArrayList<Item> generateList(){
-		while(zList.hasMoreElements()){
-			entry = zList.nextElement();
-			if(entry.isDirectory())
-				continue;
-			
-			boolean added = false;
-			entryname = entry.getName();
-			if(zipPath.equalsIgnoreCase("/")){
+		list = new ArrayList<Item>();
+		zList = zFile.entries();
+		
+		if(zipPath.equalsIgnoreCase("/")){
+			while(zList.hasMoreElements()){
+				entry = zList.nextElement();
+				if(entry.isDirectory())
+					continue;
+				
+				boolean added = false;
+				entryname = entry.getName();
 				/**
 				 * LIST FILES FROM THE PARENT PATH OF ZIP FILE....
 				 */
@@ -86,7 +91,16 @@ public class ZipManager {
 				if(!added){
 					list.add(new Item("", name, entry.getName(), entry.getSize(), ctx , entry) );
 				}				
-			}else{
+			}
+		}else{
+				
+			while(zList.hasMoreElements()){
+				entry = zList.nextElement();
+				if(entry.isDirectory())
+					continue;
+				
+				boolean added = false;
+				entryname = entry.getName();
 				/**
 				 * LISTING HAS TO BE DONE FROM THE PROVIDED PATH....
 				 */
@@ -118,6 +132,7 @@ public class ZipManager {
 				}				
 			}
 		}
+		
 		sort();
 		return list;
 	}
@@ -143,9 +158,9 @@ public class ZipManager {
 			@Override
 			public int compare(Item a, Item b) {
 				// TODO Auto-generated method stub
-				boolean aisfolder =!a.is_z_File();
-				boolean bisfolder = !b.is_z_File();
-				if(aisfolder==bisfolder)
+				boolean aisfolder = a.isDirectory();
+				boolean bisfolder = b.isDirectory();
+				if(aisfolder == bisfolder)
 					return a.z_getName().compareToIgnoreCase(b.z_getName());
 				else if(bisfolder)
 					return 1;

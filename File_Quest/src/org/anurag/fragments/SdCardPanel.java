@@ -390,7 +390,7 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 			if(item.isDirectory()){
 				//selecting a folder....
 				SdCardPanel.manager.pushPath(item.getPath());
-				FileQuestHD.notify_Title_Indicator(2, item.getName());
+				FileQuestHD.notify_Title_Indicator(2, manager.getCurrentDirectoryName());
 				load.execute();
 			}else{
 				//selecting a file....

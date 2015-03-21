@@ -116,9 +116,12 @@ public class SDManager {
 	 * @return
 	 */
 	public ArrayList<Item> getList(){
-		if(isInZip){
+		if(isInZip && nStack.peek().contains("->")){
+			zMgr.setPath(nStack.peek().substring(0 , nStack.peek().length() - 6));
 			return zMgr.generateList();
-		}		
+		}else{
+			setInZip(false);
+		}
 		
 		items.clear();
 		
@@ -184,7 +187,7 @@ public class SDManager {
 			if(zMgr == null){
 				
 				try {
-					zMgr = new ZipManager(new ZipFile(new File(path)), "/", ctx);
+					zMgr = new ZipManager(new ZipFile(new File(path)), "", ctx);
 				} catch (ZipException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -192,7 +195,11 @@ public class SDManager {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				nStack.push("/ ->Zip");
+				return;
 			}	
+
+			nStack.push(path + " ->Zip");
 			return;
 		}
 		nStack.push(path);
@@ -203,6 +210,5 @@ public class SDManager {
 	 */
 	public void popTopPath(){
 		nStack.pop();
-	}
-	
+	}	
 }

@@ -42,7 +42,7 @@ public class Item {
 	private String type;
 	private boolean isLocked;
 	private boolean isFav;
-	
+	private boolean isDir;
 	/**
 	 * 
 	 * @param fi
@@ -59,8 +59,9 @@ public class Item {
 		this.icon = img;
 		this.type = typ;
 		this.size = si;
-		isLocked = Constants.db.isLocked(this.path);
-		isFav = Constants.db.isFavItem(this.path);
+		this.isLocked = Constants.db.isLocked(this.path);
+		this.isFav = Constants.db.isFavItem(this.path);
+		this.isDir = file.isDirectory();
 	}
 	
 	/**
@@ -98,6 +99,7 @@ public class Item {
 	/**
 	 * 
 	 * @return
+		this.size = size(zSize);
 	 */
 	public String getType(){
 		return this.type;
@@ -140,7 +142,7 @@ public class Item {
 	 * @return
 	 */
 	public boolean isDirectory(){
-		return file.isDirectory();
+		return (isDir);
 	}
 	
 	/**
@@ -148,7 +150,13 @@ public class Item {
 	 * @return
 	 */
 	public boolean exists(){
-		return this.file.exists();
+		try{
+			return this.file.exists();
+			
+		}catch(NullPointerException e){
+			
+		}
+		return true;
 	}
 	/**
 	 * 
@@ -197,7 +205,6 @@ public class Item {
 	private String z_path;
 	private String z_name;
 	private String z_entry;
-	private boolean isFile;
 	private ZipEntry z;
 	
 	/**
@@ -213,14 +220,26 @@ public class Item {
 		// TODO Auto-generated constructor stub
 		
 		this.z_path = zPath;
+		
+		if(!z_path.equalsIgnoreCase(""))
+			this.path = this.z_path + "/" + zName;
+		else
+			this.path = zName;
+		
 		this.name = this.z_name = zName;
 		this.z_entry = zEntry;
-		this.size = size(zSize);
-		this.isFile = z_checkForFile();
+		this.isDir = !z_checkForFile();
 		this.z = entry;		
 		FileType t = new FileType(new File(zPath), ctx);
-		this.type = t.getType();
-		this.icon = t.getIcon();
+		if(isDir){
+			this.type = t.getFolderString();
+			this.icon = Constants.FOLDER_IMAGE;
+			this.size = "";
+		}else{
+			this.type = t.getType();
+			this.icon = t.getIcon();
+			this.size = size(zSize);
+		}
 	}
 	
 	private String size(long size){
@@ -272,13 +291,6 @@ public class Item {
 		return this.z;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean is_z_File(){
-		return this.isFile;
-	}
 	
 	/**
 	 * 
