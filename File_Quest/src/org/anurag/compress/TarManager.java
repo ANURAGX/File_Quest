@@ -26,11 +26,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.zip.GZIPInputStream;
+
+import org.anurag.file.quest.Item;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
+
 import android.content.Context;
 
 
@@ -41,23 +43,30 @@ import android.content.Context;
  */
 public class TarManager {
 	
-	ArrayList<TarObj> list;
-	Context ctx;
-	String path;
-	TarArchiveInputStream tar;
-	List<TarArchiveEntry> ls;
+	private ArrayList<Item> list;
+	private Context ctx;
+	private String path;
+	private TarArchiveInputStream tar;
+	private File f;
+	
+	/**
+	 * 
+	 * @param file
+	 * @param pathToShow
+	 * @param ct
+	 * @throws IOException
+	 */
 	public TarManager(File file,String pathToShow , Context ct) throws IOException {
 		// TODO Auto-generated constructor stub
-		if(file.getName().endsWith(".tar.gz"))
-			tar = new TarArchiveInputStream(new GZIPInputStream(new BufferedInputStream(new FileInputStream(file))));
-		else if(file.getName().endsWith(".tar.bz2")||file.getName().endsWith(".TAR.BZ2"))
-			tar = new TarArchiveInputStream(new BZip2CompressorInputStream(new BufferedInputStream(new FileInputStream(file))));
-		else
-			tar = new TarArchiveInputStream(new BufferedInputStream(new FileInputStream(file)));
+		f = file;
 		path = pathToShow;
 		ctx = ct;
 	}
 	
+	
+	public void setPath(String p){
+		this.path = p;
+	}
 	
 	/**
 	 * 
@@ -67,55 +76,74 @@ public class TarManager {
 	 * @return
 	 * @throws IOException
 	 */
-	public ArrayList<TarObj> generateList() throws IOException{
-		list = new ArrayList<TarObj>();
+	public ArrayList<Item> generateList(){
+		
+		list = new ArrayList<Item>();
 		TarArchiveEntry entry;
-		while((entry=tar.getNextTarEntry())!=null){
+		
+		try {
+			if(f.getName().endsWith(".tar.gz"))
+				tar = new TarArchiveInputStream(new GZIPInputStream(new BufferedInputStream(new FileInputStream(f))));
+
+			else if(f.getName().endsWith(".tar.bz2")||f.getName().endsWith(".TAR.BZ2"))
+				tar = new TarArchiveInputStream(new BZip2CompressorInputStream(new BufferedInputStream(new FileInputStream(f))));
+			else
+				tar = new TarArchiveInputStream(new BufferedInputStream(new FileInputStream(f)));
 			
-			boolean added = false;
-			int len = list.size();
-			String name = entry.getName();
-			if(name.startsWith("/"))
-				name = name.substring(1, name.length());
-			if(entry.isDirectory())
-				name = name.substring(0, name.length()-1);
 			
-			if(path.equalsIgnoreCase("/")){
-				while(name.contains("/"))
-					name = name.substring(0,name.lastIndexOf("/"));
+			while((entry=tar.getNextTarEntry())!=null){
 				
-				for(int i=0;i<len;++i){
-					if(list.get(i).getName().equalsIgnoreCase(name)){
-							added = true;
-						    break;
+				boolean added = false;
+				int len = list.size();
+				String name = entry.getName();
+				if(name.startsWith("/"))
+					name = name.substring(1, name.length());
+				if(entry.isDirectory())
+					name = name.substring(0, name.length()-1);
+				
+				if(path.equalsIgnoreCase("/")){
+					while(name.contains("/"))
+						name = name.substring(0,name.lastIndexOf("/"));
+					
+					for(int i=0;i<len;++i){
+						if(list.get(i).getName().equalsIgnoreCase(name)){
+								added = true;
+							    break;
+						}
+					}
+					if(!added&&!name.equalsIgnoreCase(""))
+						list.add(new Item(entry, name, "", ctx));
+				}else{
+					try{
+						name = name.substring(path.length()+1, name.length());
+						while(name.contains("/"))
+							name = name.substring(0, name.lastIndexOf("/"));
+						
+						if(len>0){
+							for(int i=0;i<len;++i)
+								if(list.get(i).getName().equalsIgnoreCase(name)){
+									added = true;
+									break;
+								}
+							if(!added && entry.getName().startsWith(path))
+								list.add(new Item(entry, name, path, ctx));
+						}else if(entry.getName().startsWith(path))
+							list.add(new Item(entry, name, path, ctx));
+					}catch(Exception e){
+						
 					}
 				}
-				if(!added&&!name.equalsIgnoreCase(""))
-					list.add(new TarObj(entry, name, "", ctx));
-			}else{
-				try{
-					name = name.substring(path.length()+1, name.length());
-					while(name.contains("/"))
-						name = name.substring(0, name.lastIndexOf("/"));
-					
-					if(len>0){
-						for(int i=0;i<len;++i)
-							if(list.get(i).getName().equalsIgnoreCase(name)){
-								added = true;
-								break;
-							}
-						if(!added && entry.getName().startsWith(path))
-							list.add(new TarObj(entry, name, path, ctx));
-					}else if(entry.getName().startsWith(path))
-						list.add(new TarObj(entry, name, path, ctx));
-				}catch(Exception e){
-					
-				}
-			}
-		}	
-		tar.close();
-		sort();
-		return list;
+			}	
+			tar.close();
+			sort();
+			return list;
+		
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return null;
+		}
+		
 	}
 	
 	/**
@@ -123,12 +151,12 @@ public class TarManager {
 	 * FIRST FOLDER AND THEN FILES.....
 	 */
 	private void sort(){
-		Comparator<TarObj> comp = new Comparator<TarObj>() {
+		Comparator<Item> comp = new Comparator<Item>() {
 			@Override
-			public int compare(TarObj a, TarObj b) {
+			public int compare(Item a, Item b) {
 				// TODO Auto-generated method stub
-				boolean aisfolder =!a.isFile();
-				boolean bisfolder = !b.isFile();
+				boolean aisfolder = a.isDirectory();
+				boolean bisfolder = b.isDirectory();
 				if(aisfolder==bisfolder)
 					return a.getName().compareToIgnoreCase(b.getName());
 				else if(bisfolder)

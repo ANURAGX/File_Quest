@@ -1332,10 +1332,11 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				open_archives(panel,2);
 			}
 			
+			/*
 			else if(action.equalsIgnoreCase("FQ_TAR_OPEN")){
 				//open tar file....
 				open_archives(panel,3);
-			}
+			}*/
 		}		
 	}
 	
@@ -1350,7 +1351,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		filter.addAction("list_view_anim_changed");
 		filter.addAction("FQ_DELETE");
 		filter.addAction("UPDATE_SPACE");
-		filter.addAction("FQ_TAR_OPEN");
+		//filter.addAction("FQ_TAR_OPEN");
 		filter.addAction("FQ_RAR_OPEN");
 		filter.addAction("FQ_ZIP_OPEN");
 		this.registerReceiver(broadcasts, filter);

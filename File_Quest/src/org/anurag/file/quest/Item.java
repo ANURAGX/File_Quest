@@ -22,8 +22,12 @@ package org.anurag.file.quest;
 import java.io.File;
 import java.util.zip.ZipEntry;
 
+import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+
+import com.github.junrar.rarfile.FileHeader;
 
 /**
  * 
@@ -304,5 +308,123 @@ public class Item {
 			return false;
 		return true;
 	}
+	
+
+	//---------------------------------------------------//
+	//---------------------------------------------------//
+	//RAR file handling Related stuff(inside rar archive)
+	
+
+	private String headername;
+
+	private FileHeader fh;
+	
+	/**
+	 * 
+	 * @param header
+	 * @param Name
+	 * @param Path
+	 * @param ctx
+	 */
+	public Item(FileHeader header, String Name , String Path , Context ctx) {
+		// TODO Auto-generated constructor stub
+		if(header.isUnicode())
+			this.headername = header.getFileNameW();
+		else
+			this.headername = header.getFileNameString();
+		this.name = Name;
+		this.path = Path;
+		this.fh = header;
+		this.isDir = !r_checkForFile();
+
+		FileType t = new FileType(new File(path), ctx);
+		if(isDir){
+			this.type = t.getFolderString();
+			this.icon = Constants.FOLDER_IMAGE;
+			this.size = "";
+		}else{
+			this.type = t.getType();
+			this.icon = t.getIcon();
+			this.size = size(fh.getFullPackSize());
+		}		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public FileHeader r_getFileHeader(){
+		return this.fh;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String r_getFileHeaderName(){
+		return this.headername;
+	}
+	
+	/**
+	 * 
+	 * @return true if file....
+	 */
+	private boolean r_checkForFile(){
+		String str = headername.substring(path.length(), headername.length());
+		if(str.startsWith("\\"))
+			str = str.substring(1, str.length());
+		if(str.contains("\\"))
+			return false;
+		return true;
+	}
+	
+	
+
+	//---------------------------------------------------//
+	//---------------------------------------------------//
+	//TAR file handling Related stuff(inside tar archive)
+			
+	private TarArchiveEntry ent;
+	/**
+	 * 
+	 * @param entry
+	 * @param fname
+	 * @param pname
+	 * @param ct
+	 */
+	public Item(TarArchiveEntry entry , String fname , String pname,Context ct) {
+		// TODO Auto-generated constructor stub
+		this.ent = entry;
+		this.name = fname;
+		this.path = pname;
+		
+		this.isDir = !t_checkForFile();
+
+		FileType t = new FileType(new File(path), ct);
+		if(isDir){
+			this.type = t.getFolderString();
+			this.icon = Constants.FOLDER_IMAGE;
+			this.size = "";
+		}else{
+			this.type = t.getType();
+			this.icon = t.getIcon();
+			this.size = size(fh.getFullPackSize());
+		}	
+		
+	}
+	
+	/**
+	 * 
+	 * @return true if it is file
+	 */
+	private boolean t_checkForFile(){
+		String str = ent.getName().substring(path.length(), ent.getName().length());
+		if(str.startsWith("/"))
+			str = str.substring(1, str.length());
+		if(str.contains("/"))
+			return false;
+		return true;
+	}
+
 	
 }

@@ -462,16 +462,16 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 		switch(type){
 		case 1:
 			manager.setInZip(true);
-			manager.pushPath(item.getPath());
-			load.execute();
 			break;
 		case 2:
-			
+			manager.setInRar(true);
 			break;
 			
 		case 3:
-			
+			//for tar archives....
 			break;
 		}
+		manager.pushPath(item.getPath());
+		load.execute();
 	}
 }

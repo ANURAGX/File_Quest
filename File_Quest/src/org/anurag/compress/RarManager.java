@@ -23,7 +23,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import org.anurag.file.quest.Item;
+
 import android.content.Context;
+
 import com.github.junrar.Archive;
 import com.github.junrar.rarfile.FileHeader;
 
@@ -35,19 +39,37 @@ import com.github.junrar.rarfile.FileHeader;
  */
 public class RarManager {
 	
-	ArrayList<RarObj> list;
-	Context ctx;
-	String path;
-	List<FileHeader> ls;
+	private ArrayList<Item> list;
+	private Context ctx;
+	private String path;
+	private List<FileHeader> ls;
+	private Archive rar;
+	
+	/**
+	 * 
+	 * @param rarfile
+	 * @param pathToShow
+	 * @param context
+	 */
 	public RarManager(Archive rarfile, String pathToShow , Context context) {
 		// TODO Auto-generated constructor stub
-		list = new ArrayList<RarObj>();
+		list = new ArrayList<Item>();
 		path = pathToShow;
 		ctx = context;
-		ls = rarfile.getFileHeaders();
+		rar = rarfile;
 	}
 	
-	public ArrayList<RarObj> generateList(){
+	/**
+	 * 
+	 * @param showPath
+	 */
+	public void setPath(String showPath){
+		path = showPath;
+	}
+	
+	public ArrayList<Item> generateList(){
+		ls = rar.getFileHeaders();
+				
 		for(FileHeader fh : ls){
 			if(fh.isDirectory())
 				continue;
@@ -62,13 +84,13 @@ public class RarManager {
 				while(name.contains("\\"))
 					name = name.substring(0, name.lastIndexOf("\\"));
 				for(int i=0;i<len;++i)
-					if(list.get(0).getFileName().equalsIgnoreCase(name)){
+					if(list.get(0).getName().equalsIgnoreCase(name)){
 						added = true;
 						break;
 					}
 				
 				if(!added)
-					list.add(new RarObj(fh, name, "", ctx));
+					list.add(new Item(fh, name, "", ctx));
 			}else{
 				try{
 					String headername = name;
@@ -77,18 +99,18 @@ public class RarManager {
 						while(name.contains("\\"))
 							name = name.substring(0, name.lastIndexOf("\\"));
 						for(int i=0;i<len;++i){
-							if(list.get(i).getFileName().equalsIgnoreCase(name)){
+							if(list.get(i).getName().equalsIgnoreCase(name)){
 								added = true;
 								break;
 							}
 						}
 						if(!added && headername.startsWith(path))
-							list.add(new RarObj(fh, name, path, ctx));
+							list.add(new Item(fh, name, path, ctx));
 					}else{
 						if(headername.startsWith(path)){
 							while(name.contains("\\"))
 								name = name.substring(0, name.lastIndexOf("\\"));
-							list.add(new RarObj(fh, name, path, ctx));
+							list.add(new Item(fh, name, path, ctx));
 						}	
 					}
 				}catch(StringIndexOutOfBoundsException e){
@@ -106,14 +128,14 @@ public class RarManager {
 	 * FIRST FOLDER AND THEN FILES.....
 	 */
 	private void sort(){
-		Comparator<RarObj> comp = new Comparator<RarObj>() {
+		Comparator<Item> comp = new Comparator<Item>() {
 			@Override
-			public int compare(RarObj a, RarObj b) {
+			public int compare(Item a, Item b) {
 				// TODO Auto-generated method stub
-				boolean aisfolder =!a.isFile();
-				boolean bisfolder = !b.isFile();
+				boolean aisfolder = a.isDirectory();
+				boolean bisfolder = b.isDirectory();
 				if(aisfolder==bisfolder)
-					return a.getFileName().compareToIgnoreCase(b.getFileName());
+					return a.getName().compareToIgnoreCase(b.getName());
 				else if(bisfolder)
 					return 1;
 				return -1;

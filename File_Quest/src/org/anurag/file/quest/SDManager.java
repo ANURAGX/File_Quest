@@ -24,12 +24,15 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
-import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+import org.anurag.compress.RarManager;
 import org.anurag.compress.ZipManager;
 
 import android.content.Context;
+
+import com.github.junrar.Archive;
+import com.github.junrar.exception.RarException;
 
 /**
  * 
@@ -44,8 +47,12 @@ public class SDManager {
 	private File file;
 	private FileUtils utils;
 	
+//	private boolean isInTar;
 	private boolean isInZip;
+	private boolean isInRar;
 	private ZipManager zMgr;
+	private RarManager rMgr;
+//	private TarManager tMgr;
 	
 	/**
 	 * 
@@ -86,7 +93,27 @@ public class SDManager {
 		isInZip = value;
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 */
+	public void setInRar(boolean value){
+		if(!value){
+			rMgr = null;
+		}
+		isInRar = value;
+	}
 	
+	/**
+	 * 
+	 * @param value
+	 *//*
+	public void setInTar(boolean value){
+		if(!value){
+			tMgr = null;
+		}
+		isInTar = value;
+	}*/
 	
 	/**
 	 * Function To return Current File Name
@@ -113,14 +140,28 @@ public class SDManager {
 	
 	/**
 	 * 
-	 * @return
+	 * @return the list of files of selected folder,can return list inside of rar,zip 
+	 * or tar archives....
+	 * 
+	 * sorting is not applied inside archives,it uses default folder first 
+	 * sorting(in alphabetical order)...
+	 * 
 	 */
 	public ArrayList<Item> getList(){
 		if(isInZip && nStack.peek().contains("->")){
 			zMgr.setPath(nStack.peek().substring(0 , nStack.peek().length() - 6));
 			return zMgr.generateList();
-		}else{
+		}else if(isInRar && nStack.peek().contains("->")){
+			rMgr.setPath(nStack.peek().substring(0 , nStack.peek().length() - 6));
+			return rMgr.generateList();
+		}/*else if(isInTar && nStack.peek().contains("->")){
+			tMgr.setPath(nStack.peek().substring(0 , nStack.peek().length() - 6));
+			return tMgr.generateList();
+		}*/
+		else{
 			setInZip(false);
+			setInRar(false);
+			//setInTar(false);
 		}
 		
 		items.clear();
@@ -188,13 +229,12 @@ public class SDManager {
 				
 				try {
 					zMgr = new ZipManager(new ZipFile(new File(path)), "", ctx);
-				} catch (ZipException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					isInZip = false;
+					return;
 				}
+				
 				nStack.push("/ ->Zip");
 				return;
 			}	
@@ -202,6 +242,41 @@ public class SDManager {
 			nStack.push(path + " ->Zip");
 			return;
 		}
+		
+		if(isInRar){
+			if(rMgr == null){
+				try {
+					rMgr = new RarManager(new Archive(new File(path)), "", ctx);
+				} catch (RarException | IOException e) {
+					// TODO Auto-generated catch block
+					isInRar = false;
+					return;
+				}
+				nStack.push("/ ->Rar");
+				return;
+			}
+			
+			nStack.push(path + " ->Rar");
+			return;
+		}
+	/*
+		if(isInTar){
+			if(tMgr == null){
+				try {
+					tMgr = new TarManager(new File(path), "", ctx);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					isInTar = false;
+					return;
+				}
+
+				nStack.push("/ ->Tar");
+				return;
+			}
+			nStack.push(path + " ->Tar");
+			return;
+		
+		}		*/
 		nStack.push(path);
 	}
 	
