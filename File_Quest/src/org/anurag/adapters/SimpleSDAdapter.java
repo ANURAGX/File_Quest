@@ -148,7 +148,7 @@ public class SimpleSDAdapter extends BaseAdapter{
 		
 		//archive is opened,so hiding lock and favorite icons from list view
 		if(arch){
-				view.findViewById(R.id.imgs).setVisibility(View.GONE);
+			view.findViewById(R.id.imgs).setVisibility(View.GONE);
 		}				
 		
 		h.favimg.setId(arg0);

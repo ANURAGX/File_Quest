@@ -373,10 +373,9 @@ public class RootPanel extends Fragment{
 	private BaseAdapter getListAdapter(){
 		switch(Constants.LIST_TYPE){
 		case 1:
-			return new SimpleRootAdapter(getActivity(), adapter_list);
+			return new SimpleRootAdapter(getActivity(), adapter_list , manager.isArchiveOpened());
 		case 2:
-			return new RootAdapter(getActivity(), adapter_list);
-			
+			return new RootAdapter(getActivity(), adapter_list , manager.isArchiveOpened());
 		}
 		return null; 
 	}
@@ -442,4 +441,26 @@ public class RootPanel extends Fragment{
 	public static void push_path(String path){
 		manager.pushPath(path);
 	}
+	
+	/**
+	 * 
+	 * @param type
+	 */
+	public static void loadArchive(int type){
+		switch(type){
+		case 1:
+			manager.setInZip(true);
+			break;
+		case 2:
+			manager.setInRar(true);
+			break;
+			
+		case 3:
+			//for tar archives....
+			break;
+		}
+		manager.pushPath(item.getPath());
+		load.execute();
+	}
+	
 }

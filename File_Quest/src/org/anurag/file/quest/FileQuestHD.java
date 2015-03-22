@@ -1370,7 +1370,7 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			break;
 			
 		case 1:
-			
+			RootPanel.loadArchive(archive_type);
 			break;
 			
 		case 2:

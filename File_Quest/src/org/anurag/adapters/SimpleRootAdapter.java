@@ -53,9 +53,17 @@ public class SimpleRootAdapter extends BaseAdapter{
 	private Item item;
 	private Context ctx;
 	private Bitmap image;
+	private boolean arch;
 	
-	public SimpleRootAdapter(Context ct , ArrayList<Item> objs) {
+	/**
+	 * 
+	 * @param ct
+	 * @param objs
+	 * @param archive
+	 */
+	public SimpleRootAdapter(Context ct , ArrayList<Item> objs , boolean archive) {
 		// TODO Auto-generated constructor stub
+		arch = archive;
 		list = objs;
 		ctx = ct;
 		inf = (LayoutInflater) ct.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -164,6 +172,12 @@ public class SimpleRootAdapter extends BaseAdapter{
 				}
 			}
 		});
+		
+
+		//archive is opened,so hiding lock and favorite icons from list view
+		if(arch){
+			view.findViewById(R.id.imgs).setVisibility(View.GONE);
+		}	
 		
 		h.name.setText(item.getName());
 		h.icn.setImageDrawable(item.getIcon());

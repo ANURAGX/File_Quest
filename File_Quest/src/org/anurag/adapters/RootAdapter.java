@@ -55,9 +55,17 @@ public class RootAdapter extends BaseAdapter{
 	private Context ctx;
 	private ArrayList<Item> list; 
 	private LayoutInflater inflater;
+	private boolean arch;
 	
-	public RootAdapter(Context context,ArrayList<Item> object) {
+	/**
+	 * 
+	 * @param context
+	 * @param object
+	 * @param archive
+	 */
+	public RootAdapter(Context context,ArrayList<Item> object , boolean archive) {
 		// TODO Auto-generated constructor stub
+		arch = archive;
 		ctx = context;
 		list = object;
 		inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -172,6 +180,11 @@ public class RootAdapter extends BaseAdapter{
 			}
 		});
 		
+
+		//archive is opened,so hiding lock and favorite icons from list view
+		if(arch){
+			convertView.findViewById(R.id.imgs).setVisibility(View.GONE);
+		}	
 		
 		h.fName.setText(item.getName());
 		h.fType.setText(item.getType());

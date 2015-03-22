@@ -22,8 +22,16 @@ package org.anurag.file.quest;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.zip.ZipFile;
+
+import org.anurag.compress.RarManager;
+import org.anurag.compress.ZipManager;
+
+import com.github.junrar.Archive;
+import com.github.junrar.exception.RarException;
 
 import android.content.Context;
 
@@ -40,6 +48,13 @@ public class RootManager {
 	private File file;
 	private FileUtils utils;
 	
+
+//	private boolean isInTar;
+	private boolean isInZip;
+	private boolean isInRar;
+	private ZipManager zMgr;
+	private RarManager rMgr;
+//	private TarManager tMgr;
 	/**
 	 * 
 	 * @param context
@@ -51,6 +66,37 @@ public class RootManager {
 		nStack.push("/");
 		items = new ArrayList<Item>();
 		utils = new FileUtils();
+	}
+	
+	
+	/**
+	 * 
+	 * @param value
+	 */
+	public void setInZip(boolean value){
+		if(!value){
+			zMgr = null;
+		}
+		isInZip = value;
+	}
+	
+	/**
+	 * 
+	 * @param value
+	 */
+	public void setInRar(boolean value){
+		if(!value){
+			rMgr = null;
+		}
+		isInRar = value;
+	}
+	
+	/**
+	 * 
+	 * @return true if rar or zip archive is opened
+	 */
+	public boolean isArchiveOpened(){
+		return (isInRar || isInZip);
 	}
 	
 	/**
@@ -91,6 +137,23 @@ public class RootManager {
 	 * @return
 	 */
 	public ArrayList<Item> getList(){
+		
+		if(isInZip && nStack.peek().contains("->")){
+			zMgr.setPath(nStack.peek().substring(0 , nStack.peek().length() - 6));
+			return zMgr.generateList();
+		}else if(isInRar && nStack.peek().contains("->")){
+			rMgr.setPath(nStack.peek().substring(0 , nStack.peek().length() - 6));
+			return rMgr.generateList();
+		}/*else if(isInTar && nStack.peek().contains("->")){
+			tMgr.setPath(nStack.peek().substring(0 , nStack.peek().length() - 6));
+			return tMgr.generateList();
+		}*/
+		else{
+			setInZip(false);
+			setInRar(false);
+			//setInTar(false);
+		}
+		
 		items.clear();		
 		file = new File(nStack.peek());
 		File[] files = listFiles(file);
@@ -190,6 +253,60 @@ public class RootManager {
 	 * @param path which was being viewed....
 	 */
 	public void pushPath(String path){
+		if(isInZip){
+			if(zMgr == null){
+				
+				try {
+					zMgr = new ZipManager(new ZipFile(new File(path)), "", ctx);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					isInZip = false;
+					return;
+				}
+				
+				nStack.push("/ ->Zip");
+				return;
+			}	
+
+			nStack.push(path + " ->Zip");
+			return;
+		}
+		
+		if(isInRar){
+			if(rMgr == null){
+				try {
+					rMgr = new RarManager(new Archive(new File(path)), "", ctx);
+				} catch (RarException | IOException e) {
+					// TODO Auto-generated catch block
+					isInRar = false;
+					return;
+				}
+				nStack.push("/ ->Rar");
+				return;
+			}
+			
+			nStack.push(path + " ->Rar");
+			return;
+		}
+	/*
+		if(isInTar){
+			if(tMgr == null){
+				try {
+					tMgr = new TarManager(new File(path), "", ctx);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					isInTar = false;
+					return;
+				}
+
+				nStack.push("/ ->Tar");
+				return;
+			}
+			nStack.push(path + " ->Tar");
+			return;
+		
+		}		*/
+		
 		nStack.push(path);
 	}
 	
