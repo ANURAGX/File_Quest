@@ -32,6 +32,7 @@ import org.anurag.dialogs.BluetoothChooser;
 import org.anurag.dialogs.OpenFileDialog;
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
@@ -66,7 +67,7 @@ public class ExtractTarFile {
 	boolean errors;
     TarArchiveInputStream tar;
 	String dest;
-	public ExtractTarFile(final Context ctx ,final TarObj zFile , final int width , String extractDir ,final File file ,final int mode) {
+	public ExtractTarFile(final Context ctx ,final Item zFile , final int width , String extractDir ,final File file ,final int mode) {
 		// TODO Auto-generated constructor stub
 		running = false;
 		errors = false;
@@ -138,7 +139,7 @@ public class ExtractTarFile {
 							    	new OpenFileDialog(ctx, Uri.parse(dest));
 							    }else if(mode==2){
 							    	//FILE HAS TO BE SHARED....
-							    	new BluetoothChooser(ctx, new File(dest).getAbsolutePath(), width, null);
+							    	new BluetoothChooser(ctx, new File(dest).getAbsolutePath(), null);
 							    }
 							    else{
 							    	if(errors)
@@ -179,16 +180,16 @@ public class ExtractTarFile {
 							if(ze.isDirectory())
 								continue;
 							handle.sendEmptyMessage(4);
-							if(zFile.isFile()){
+							if(!zFile.isDirectory()){
 								//EXTRACTING A SINGLE FILE FROM AN ARCHIVE....
-								if(ze.getName().equalsIgnoreCase(zFile.getEntryName())){
+								if(ze.getName().equalsIgnoreCase(zFile.t_getEntryName())){
 									try {
 									    
 										//SENDING CURRENT FILE NAME....
 										try{
 											name = zFile.getName();
 										}catch(Exception e){
-											name = zFile.getEntryName();
+											name = zFile.t_getEntryName();
 										}
 										handle.sendEmptyMessage(0);
 										dest = DEST;

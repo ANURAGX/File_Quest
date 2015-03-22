@@ -63,7 +63,7 @@ public class BluetoothChooser{
 	private String u;
 	
 	
-	public BluetoothChooser(Context context, String Data,int  width, String url) {
+	public BluetoothChooser(Context context, String Data, String url) {
 		// TODO Auto-generated constructor stub
 		mContext = context;
 		

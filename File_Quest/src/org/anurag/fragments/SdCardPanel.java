@@ -392,6 +392,14 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 				SdCardPanel.manager.pushPath(item.getPath());
 				FileQuestHD.notify_Title_Indicator(2, manager.getCurrentDirectoryName());
 				load.execute();
+			}else if(item.isFileInsideZipArchive()){
+				//file selected is in zip archive....
+				
+				
+			}else if(item.isFileInsideRarArchive()){
+				//file selected is in rar archive....
+				
+				
 			}else{
 				//selecting a file....
 				new OpenFileDialog(Constants.ctx, Uri.parse(item.getPath()));

@@ -210,7 +210,7 @@ public class Item {
 	private String z_name;
 	private String z_entry;
 	private ZipEntry z;
-	
+	private boolean fileInsideZipArchive;
 	/**
 	 * 
 	 * @param zPath
@@ -229,6 +229,8 @@ public class Item {
 			this.path = this.z_path + "/" + zName;
 		else
 			this.path = zName;
+		
+		this.fileInsideZipArchive = true;
 		
 		this.name = this.z_name = zName;
 		this.z_entry = zEntry;
@@ -260,6 +262,13 @@ public class Item {
 			return String.format(Constants.BYT_STR, (double)size);
 	}	
 	
+	/**
+	 * 
+	 * @return true if selected file is inside zip archive....
+	 */
+	public boolean isFileInsideZipArchive(){
+		return this.fileInsideZipArchive;
+	}
 
 	/**
 	 * 
@@ -316,7 +325,7 @@ public class Item {
 	
 
 	private String headername;
-
+	private boolean fileInsideRarArchive;
 	private FileHeader fh;
 	
 	/**
@@ -332,6 +341,9 @@ public class Item {
 			this.headername = header.getFileNameW();
 		else
 			this.headername = header.getFileNameString();
+		
+		this.fileInsideRarArchive = true;
+		
 		this.name = Name;
 		this.path = Path;
 		this.fh = header;
@@ -347,6 +359,14 @@ public class Item {
 			this.icon = t.getIcon();
 			this.size = size(fh.getFullPackSize());
 		}		
+	}
+	
+	/**
+	 * 
+	 * @return true if selected file is inside of rar archive....
+	 */
+	public boolean isFileInsideRarArchive(){
+		return this.fileInsideRarArchive;
 	}
 	
 	/**
@@ -426,5 +446,8 @@ public class Item {
 		return true;
 	}
 
+	public String t_getEntryName(){
+		return ent.getName();
+	}
 	
 }

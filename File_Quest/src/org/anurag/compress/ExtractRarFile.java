@@ -29,6 +29,7 @@ import org.anurag.dialogs.BluetoothChooser;
 import org.anurag.dialogs.OpenFileDialog;
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
 
 import android.app.Dialog;
@@ -69,7 +70,7 @@ public class ExtractRarFile {
 	List<FileHeader> zList;
 	
 	String dest;
-	public ExtractRarFile(final Context ctx ,final RarObj zFile , final int width , String extractDir ,final File file ,final int mode) {
+	public ExtractRarFile(final Context ctx ,final Item zFile , final int width , String extractDir ,final File file ,final int mode) {
 		// TODO Auto-generated constructor stub
 		running = false;
 		errors = false;
@@ -133,7 +134,7 @@ public class ExtractRarFile {
 							    	new OpenFileDialog(ctx, Uri.parse(dest));
 							    }else if(mode==2){
 							    	//FILE HAS TO BE SHARED....
-							    	new BluetoothChooser(ctx, new File(dest).getAbsolutePath(), width, null);
+							    	new BluetoothChooser(ctx, new File(dest).getAbsolutePath(),  null);
 							    }
 							    else{
 							    	if(errors)
@@ -169,20 +170,20 @@ public class ExtractRarFile {
 					if(zList!=null)
 					for(FileHeader ze:zList){
 						handle.sendEmptyMessage(4);
-						if(zFile.isFile()){
+						if(!zFile.isDirectory()){
 							//EXTRACTING A SINGLE FILE FROM AN ARCHIVE....
 							String nam;
 							if(ze.isUnicode())
 								nam = ze.getFileNameW();
 							else nam = ze.getFileNameString();
-							if(nam.equalsIgnoreCase(zFile.getFileHeaderName())){
+							if(nam.equalsIgnoreCase(zFile.r_getFileHeaderName())){
 								try {
 								    
 									//SENDING CURRENT FILE NAME....
 									try{
-										name = zFile.getFileName();
+										name = zFile.getName();
 									}catch(Exception e){
-										name = zFile.getFileHeaderName();
+										name = zFile.r_getFileHeaderName();
 									}
 									handle.sendEmptyMessage(0);
 									dest = DEST;

@@ -152,8 +152,7 @@ public class ImageViewer extends ActionBarActivity{
 		switch(item.getItemId()){
 		case R.id.share_image:
 			if(intent != null)
-				new BluetoothChooser(ImageViewer.this, intent.getData().getPath() , 
-						Constants.size.x*8/9, null);
+				new BluetoothChooser(ImageViewer.this, intent.getData().getPath() , null);
 			break;
 			
 		case R.id.delete_image:

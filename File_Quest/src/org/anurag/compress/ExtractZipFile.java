@@ -32,6 +32,7 @@ import org.anurag.dialogs.BluetoothChooser;
 import org.anurag.dialogs.OpenFileDialog;
 import org.anurag.file.quest.AppBackup;
 import org.anurag.file.quest.Constants;
+import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
 
 import android.app.Dialog;
@@ -67,7 +68,7 @@ public class ExtractZipFile {
 	Enumeration<? extends ZipEntry> zList;
 	
 	String dest;
-	public ExtractZipFile(final Context ctx ,final ZipObj zFile , final int width , String extractDir ,final File file ,final int mode) {
+	public ExtractZipFile(final Context ctx ,final Item zFile , final int width , String extractDir ,final File file ,final int mode) {
 		// TODO Auto-generated constructor stub
 		running = false;
 		errors = false;
@@ -137,7 +138,7 @@ public class ExtractZipFile {
 							    	new OpenFileDialog(ctx, Uri.parse(dest));
 							    }else if(mode==2){
 							    	//FILE HAS TO BE SHARED....
-							    	new BluetoothChooser(ctx, new File(dest).getAbsolutePath(), width, null);
+							    	new BluetoothChooser(ctx, new File(dest).getAbsolutePath(), null);
 							    }
 							    else{
 							    	if(errors)
@@ -177,7 +178,7 @@ public class ExtractZipFile {
 					//	++count;
 						ze = zList.nextElement();
 						handle.sendEmptyMessage(4);
-						if(zFile.isFile()){
+						if(!zFile.isDirectory()){
 							//EXTRACTING A SINGLE FILE FROM AN ARCHIVE....
 							if(ze.getName().equalsIgnoreCase(zFile.getEntry())){
 								try {
