@@ -29,6 +29,7 @@
     
       
     	 <LinearLayout 
+    	     android:id="@+id/imgs"
     	     android:orientation="horizontal"
     	     android:layout_width="50dp"
     	     android:layout_height="50dp">

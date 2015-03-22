@@ -106,6 +106,14 @@ public class SDManager {
 	
 	/**
 	 * 
+	 * @return true if rar or zip archive is opened
+	 */
+	public boolean isArchiveOpened(){
+		return (isInRar || isInZip);
+	}
+	
+	/**
+	 * 
 	 * @param value
 	 *//*
 	public void setInTar(boolean value){

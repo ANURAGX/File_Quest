@@ -275,9 +275,9 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	private BaseAdapter getListAdapter(){
 		switch(Constants.LIST_TYPE){
 		case 1:
-			return new SimpleSDAdapter(getActivity(), adapter_list);
+			return new SimpleSDAdapter(getActivity(), adapter_list , manager.isArchiveOpened());
 		case 2:
-			return new SDAdapter(getActivity(), adapter_list);			
+			return new SDAdapter(getActivity(), adapter_list , manager.isArchiveOpened());			
 		}
 		return null; 
 	}

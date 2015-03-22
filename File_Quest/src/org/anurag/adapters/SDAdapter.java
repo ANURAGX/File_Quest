@@ -55,10 +55,18 @@ public class SDAdapter extends BaseAdapter{
 	private Context ctx;
 	private ArrayList<Item> list; 
 	private LayoutInflater inflater;
+	private boolean arch;
 	
-	public SDAdapter(Context context,ArrayList<Item> object) {
+	/**
+	 * 
+	 * @param context
+	 * @param object
+	 * @param archive
+	 */
+	public SDAdapter(Context context,ArrayList<Item> object , boolean archive) {
 		// TODO Auto-generated constructor stub
 		ctx = context;
+		arch = archive;
 		list = object;
 		inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -145,6 +153,11 @@ public class SDAdapter extends BaseAdapter{
 			h.favimg.setImageDrawable(Constants.FAV_IMG);
 		else
 			h.favimg.setImageDrawable(Constants.NONFAV_IMG);
+		
+		//archive is opened,so hiding lock and favorite icons from list view
+		if(arch){
+			convertView.findViewById(R.id.imgs).setVisibility(View.GONE);
+		}
 		
 		h.favimg.setId(pos);
 		h.favimg.setOnClickListener(new View.OnClickListener() {
