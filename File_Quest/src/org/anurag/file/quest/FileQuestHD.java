@@ -1366,7 +1366,8 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		// TODO Auto-generated method stub
 		switch(panel){
 		case 0:
-			
+			pager.setCurrentItem(2);
+			SdCardPanel.loadArchive(archive_type);
 			break;
 			
 		case 1:

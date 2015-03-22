@@ -513,4 +513,11 @@ public class FileGallery extends Fragment implements OnClickListener{
 		return isListHasLockedItem;
 	}
 	
+	/**
+	 * 
+	 * @return currently selected item
+	 */
+	public static Item getItem(){
+		return item;
+	}
 }

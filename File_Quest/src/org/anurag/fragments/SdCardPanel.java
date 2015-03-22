@@ -471,7 +471,20 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 			//for tar archives....
 			break;
 		}
-		manager.pushPath(item.getPath());
+		String nam = null;
+		if(item != null){
+			nam = item.getName();
+			manager.pushPath(item.getPath());
+		}else{
+			nam = FileGallery.getItem().getName();
+			manager.pushPath(FileGallery.getItem().getPath());
+		}
+		
+		if(manager.isArchiveOpened()){
+			FileQuestHD.notify_Title_Indicator(2,nam + " "
+					+ manager.getCurrentDirectoryName());
+		}
+		
 		load.execute();
 	}
 }

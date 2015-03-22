@@ -460,6 +460,12 @@ public class RootPanel extends Fragment{
 			break;
 		}
 		manager.pushPath(item.getPath());
+		String nam = item.getName();
+		
+		if(manager.isArchiveOpened()){
+			FileQuestHD.notify_Title_Indicator(1,nam + " "
+					+ manager.getCurrentDirectoryName());
+		}
 		load.execute();
 	}
 	
