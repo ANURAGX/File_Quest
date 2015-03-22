@@ -335,6 +335,19 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 		
 		switch(item.getItemId()){
 		
+		case R.id.action_share:
+			//sharing the item....
+
+			//if archive is opened then share operation is aborted
+			if(RootPanel.isArchiveOpened() || SdCardPanel.isArchiveOpened()){
+				Toast.makeText(FileQuestHD.this, R.string.share_in_archive_err,
+						Toast.LENGTH_SHORT).show();
+				break;
+			}	
+			
+			//sharing the item
+			break;
+		
 		case R.id.action_queued:
 			{
 				//showing the list of queued task in popup window
@@ -373,6 +386,14 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 				
 				break;
 			case 1:
+				//if archive is opened then delete is aborted
+				if(RootPanel.isArchiveOpened()){
+					Toast.makeText(FileQuestHD.this, R.string.delete_in_archive_err,
+							Toast.LENGTH_SHORT).show();
+					break;
+				}				
+				
+				//first checking the locked status of files to be deleted....
 				{
 					ArrayList<Item> re_ls = RootPanel.get_selected_items();
 					if(!RootPanel.does_list_has_locked_item())
@@ -383,7 +404,16 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			
 				break;
 				
-			case 2://first checking the locked status of files to be renamed....
+			case 2:
+				
+				//if archive is opened then delete is aborted
+				if(SdCardPanel.isArchiveOpened()){
+					Toast.makeText(FileQuestHD.this, R.string.delete_in_archive_err,
+							Toast.LENGTH_SHORT).show();
+					break;
+				}				
+				
+				//first checking the locked status of files to be deleted....
 				{	
 					ArrayList<Item> re_ls = SdCardPanel.get_selected_items();
 					if(!SdCardPanel.does_list_has_locked_item())
@@ -395,6 +425,15 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			break;
 			
 		case R.id.action_add_gesture:
+
+			//if archive is opened then adding gesture operation is aborted
+			if(RootPanel.isArchiveOpened() || SdCardPanel.isArchiveOpened()){
+				Toast.makeText(FileQuestHD.this, R.string.gesture_in_archive_err,
+						Toast.LENGTH_SHORT).show();
+				break;
+			}	
+			
+			//adding gesture....
 			Intent intnt = new Intent(FileQuestHD.this , AddGesture.class);
 			startActivity(intnt);
 			break;
@@ -417,6 +456,15 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 					break;
 				
 				case 1:
+
+					//if archive is opened then rename is aborted
+					if(RootPanel.isArchiveOpened()){
+						Toast.makeText(FileQuestHD.this, R.string.rename_in_archive_err,
+								Toast.LENGTH_SHORT).show();
+						break;
+					}			
+					
+					
 					//first checking the locked status of files to be renamed....
 					{
 						ArrayList<Item> re_ls = RootPanel.get_selected_items();
@@ -428,6 +476,14 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 					break;
 				
 				case 2:
+					//if archive is opened then rename is aborted
+					if(SdCardPanel.isArchiveOpened()){
+						Toast.makeText(FileQuestHD.this, R.string.rename_in_archive_err,
+								Toast.LENGTH_SHORT).show();
+						break;
+					}			
+					
+					
 					//first checking the locked status of files to be renamed....
 					{
 						ArrayList<Item> re_ls = SdCardPanel.get_selected_items();
@@ -448,6 +504,14 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			break;
 			
 		case R.id.action_zip:
+			
+			//if archive is opened then compress operation is aborted
+			if(RootPanel.isArchiveOpened() || SdCardPanel.isArchiveOpened()){
+				Toast.makeText(FileQuestHD.this, R.string.zip_in_archive_err,
+						Toast.LENGTH_SHORT).show();
+				break;
+			}		
+			
 			//zipping the files...
 			int id = mgr.COMPRESS_ID;
 			if(Constants.LONG_CLICK[panel])
@@ -470,7 +534,15 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			break;
 			
 		case R.id.action_cut:
-			{	//queues the files for cut
+			{	
+				//if archive is opened then cut operation is aborted
+				if(RootPanel.isArchiveOpened() || SdCardPanel.isArchiveOpened()){
+					Toast.makeText(FileQuestHD.this, R.string.cut_in_archive_err,
+							Toast.LENGTH_SHORT).show();
+					break;
+				}			
+				
+				//queues the files for cut
 				int ID = mgr.CUT_ID;
 				queueItems(panel , ID);
 				

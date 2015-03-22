@@ -131,7 +131,7 @@ public class CreateItem {
 			}
 			
 		})
-		.customView(view , false)
+		.customView(view , true)
 		.autoDismiss(false)
 		.content("Message")
 		.title(R.string.add_item)

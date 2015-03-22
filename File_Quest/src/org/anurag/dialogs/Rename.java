@@ -99,7 +99,7 @@ public class Rename {
 		new MaterialDialog.Builder(ctx)
 		.title(R.string.rename)
 		.autoDismiss(false)
-		.customView(view, false)
+		.customView(view, true)
 		.positiveText(R.string.rename)
 		.negativeText(R.string.dismiss)
 		.callback(new ButtonCallback() {

@@ -469,4 +469,11 @@ public class RootPanel extends Fragment{
 		load.execute();
 	}
 	
+	/**
+	 * 
+	 * @return true if archive is opened....
+	 */
+	public static boolean isArchiveOpened(){
+		return manager.isArchiveOpened();
+	}
 }

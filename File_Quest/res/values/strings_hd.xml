@@ -202,4 +202,11 @@
     <string name="zip_tweak">All your %s files will be zipped to selected folder.</string>
     <string name="confirmdeletion">Are you sure to delete the selected items :- All the items in this category will be deleted permanently....</string>
 	<string name="open">Open</string>
+	<string name="delete_in_archive_err">Can\'t delete item inside of archive</string>
+	<string name="rename_in_archive_err">Can\'t rename item inside of archive</string>
+	<string name="cut_in_archive_err">Can\'t cut item inside of archive</string>
+	<string name="zip_in_archive_err">Can\'t compress item inside of archive</string>
+	<string name="gesture_in_archive_err">Can\'t add gesture for item inside of archive</string>
+	<string name="share_in_archive_err">Can\'t share item inside of archive</string>
+	
 </resources>
