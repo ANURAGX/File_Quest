@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import org.anurag.adapters.SDAdapter;
 import org.anurag.adapters.SimpleSDAdapter;
+import org.anurag.compress.ExtractZipFile;
 import org.anurag.dialogs.OpenFileDialog;
 import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.FileQuestHD;
@@ -394,11 +395,14 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 				load.execute();
 			}else if(item.isFileInsideZipArchive()){
 				//file selected is in zip archive....
-				
-				
+				new ExtractZipFile(Constants.ctx, item, null, manager.getArchiveFile() , true , false);				
 			}else if(item.isFileInsideRarArchive()){
 				//file selected is in rar archive....
 				
+				//new ExtractRarFile(Constants.ctx, item, null, manager.getArchiveFile() , true , false);
+				
+				Toast.makeText(Constants.ctx, R.string.rar_extraction_not_supported,
+						Toast.LENGTH_SHORT).show();
 				
 			}else{
 				//selecting a file....

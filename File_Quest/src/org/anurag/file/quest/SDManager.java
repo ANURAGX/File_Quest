@@ -54,6 +54,7 @@ public class SDManager {
 	private RarManager rMgr;
 //	private TarManager tMgr;
 	
+	private File arch_File;
 	/**
 	 * 
 	 * @param context
@@ -110,6 +111,22 @@ public class SDManager {
 	 */
 	public boolean isArchiveOpened(){
 		return (isInRar || isInZip);
+	}
+	
+	/**
+	 * 
+	 * @return true if zip archive is opened....
+	 */
+	public boolean isZipArchiveOpened(){
+		return isInZip;
+	}
+	
+	/**
+	 * 
+	 * @return true if zip archive is opened....
+	 */
+	public boolean isRarArchiveOpened(){
+		return isInRar;
 	}
 	
 	/**
@@ -236,7 +253,8 @@ public class SDManager {
 			if(zMgr == null){
 				
 				try {
-					zMgr = new ZipManager(new ZipFile(new File(path)), "", ctx);
+					arch_File = new File(path);
+					zMgr = new ZipManager(new ZipFile(arch_File), "", ctx);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					isInZip = false;
@@ -254,7 +272,8 @@ public class SDManager {
 		if(isInRar){
 			if(rMgr == null){
 				try {
-					rMgr = new RarManager(new Archive(new File(path)), "", ctx);
+					arch_File = new File(path);
+					rMgr = new RarManager(new Archive(arch_File), "", ctx);
 				} catch (RarException | IOException e) {
 					// TODO Auto-generated catch block
 					isInRar = false;
@@ -293,5 +312,21 @@ public class SDManager {
 	 */
 	public void popTopPath(){
 		nStack.pop();
-	}	
+	}
+	
+	/**
+	 * 
+	 * @param archive file path....
+	 */
+	public void setArchiveFile(String file){
+		arch_File = new File(file);
+	}
+	
+	/**
+	 * 
+	 * @return the main archive file....
+	 */
+	public File getArchiveFile(){
+		return arch_File;
+	}
 }

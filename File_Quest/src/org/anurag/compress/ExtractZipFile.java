@@ -35,56 +35,106 @@ import org.anurag.file.quest.Constants;
 import org.anurag.file.quest.Item;
 import org.anurag.file.quest.R;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
+
 /**
+ * This class is for extracting the files from zip archive....
  * 
  * @author Anurag
  *
  */
 public class ExtractZipFile {
 	
-	boolean running ;
-	//ZipInputStream zis;
-	byte data[] = new byte[Constants.BUFFER];
-	long prog ;
-	int read ;
-	String DEST;
-	String name;
-	String size;
-	long max;
-	boolean errors;
+	private boolean running;
+	private byte data[] = new byte[Constants.BUFFER];
+	private long prog ;
+	private int read ;
+	private String DEST;
+	private String name;
+	private String size;
+	private long max;
+	private boolean errors;
+	private Enumeration<? extends ZipEntry> zList;
+	private String dest;	
+	private Thread thread;
 	
-	Enumeration<? extends ZipEntry> zList;
-	
-	String dest;
-	public ExtractZipFile(final Context ctx ,final Item zFile , final int width , String extractDir ,final File file ,final int mode) {
+	/**
+	 * 
+	 * @param ctx
+	 * @param zFile item to be extracted
+	 * @param extractDir path where to extract
+	 * @param file main zip file from which extraction will be done
+	 * @param openafterExtract true then open file after extraction
+	 * @param share if true then open window to share the file after extraction
+	 */
+	public ExtractZipFile(final Context ctx ,final Item zFile , final String extractDir ,
+			final File file ,final boolean openafterExtract , final boolean share) {
 		// TODO Auto-generated constructor stub
 		running = false;
 		errors = false;
 		prog = 0;
 		read = 0;
-		final Dialog dialog = new Dialog(ctx, Constants.DIALOG_STYLE);
-		dialog.setCancelable(true);
-		dialog.setContentView(R.layout.extract_file);
-		dialog.getWindow().getAttributes().width = width;
+		final Handler handle;final
+		
+		LayoutInflater INF = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = INF.inflate(R.layout.extract_file, null , false);
+		final ProgressBar progress = (ProgressBar)view.findViewById(R.id.zipProgressBar);
+		
+		MaterialDialog.Builder build = new MaterialDialog.Builder(ctx);
+		
+		build.title(R.string.extract)
+		.customView(view, true)
+		.autoDismiss(false)
+		.callback(new ButtonCallback() {
+
+			@Override
+			public void onPositive(MaterialDialog dialog) {
+				// TODO Auto-generated method stub
+				super.onPositive(dialog);
+				if(running){
+					progress.setVisibility(View.VISIBLE);
+					thread.start();
+				}
+			}
+
+			@Override
+			public void onNegative(MaterialDialog dialog) {
+				// TODO Auto-generated method stub
+				super.onNegative(dialog);
+				running = false;
+				dialog.dismiss();
+			}
+
+			@Override
+			public void onNeutral(MaterialDialog dialog) {
+				// TODO Auto-generated method stub
+				super.onNeutral(dialog);
+			}			
+		})
+		.positiveText(R.string.extract)
+		.negativeText(R.string.dismiss);
+		
+		final MaterialDialog dialog = build.show();
+		
+		
 		DEST = extractDir;
-		final ProgressBar progress = (ProgressBar)dialog.findViewById(R.id.zipProgressBar);
-		final TextView to = (TextView)dialog.findViewById(R.id.zipFileName);
-		final TextView from = (TextView)dialog.findViewById(R.id.zipLoc);
-		final TextView cfile = (TextView)dialog.findViewById(R.id.zipSize );
-		final TextView zsize = (TextView)dialog.findViewById(R.id.zipNoOfFiles);
-		final TextView status = (TextView)dialog.findViewById(R.id.zipFileLocation);
+		final TextView to = (TextView)view.findViewById(R.id.zipFileName);
+		final TextView from = (TextView)view.findViewById(R.id.zipLoc);
+		final TextView cfile = (TextView)view.findViewById(R.id.zipSize );
+		final TextView zsize = (TextView)view.findViewById(R.id.zipNoOfFiles);
+		final TextView status = (TextView)view.findViewById(R.id.zipFileLocation);
 		
 		
 		if(extractDir==null)
@@ -94,12 +144,7 @@ public class ExtractZipFile {
 		
 		from.setText(ctx.getString(R.string.extractingfrom)+" "+file.getName());
 		
-		if(mode==2){
-			//ZIP ENTRY HAS TO BE SHARED VIA BLUETOOTH,ETC...
-			TextView t = (TextView)dialog.findViewById(R.id.preparing);
-			t.setText(ctx.getString(R.string.preparingtoshare));
-		}
-		
+				
 		try {
 			zList = new ZipFile(file).entries();
 		} catch (IOException e1) {
@@ -116,7 +161,7 @@ public class ExtractZipFile {
 			zis = null;
 		}*/
 		
-		final Handler handle = new Handler(){
+		handle = new Handler(){
 			@Override
 			public void handleMessage(Message msg){
 				switch(msg.what){
@@ -133,20 +178,22 @@ public class ExtractZipFile {
 					case 2:
 							if(running){
 								dialog.dismiss();
-							    if(mode==0){
+							    if(openafterExtract){
 							    	//after extracting file ,it has to be opened....
 							    	new OpenFileDialog(ctx, Uri.parse(dest));
-							    }else if(mode==2){
+							    }
+							    
+							    if(share){
 							    	//FILE HAS TO BE SHARED....
 							    	new BluetoothChooser(ctx, new File(dest).getAbsolutePath(), null);
 							    }
-							    else{
-							    	if(errors)
-							    		Toast.makeText(ctx, ctx.getString(R.string.errorinext), Toast.LENGTH_SHORT).show();
-							    	Toast.makeText(ctx, ctx.getString(R.string.fileextracted),Toast.LENGTH_SHORT).show();
+							    
+							    if(errors){
+							    	Toast.makeText(ctx, R.string.errorinext, Toast.LENGTH_SHORT).show();
 							    }
-							}
-						    
+							    Toast.makeText(ctx, ctx.getString(R.string.fileextracted),Toast.LENGTH_SHORT).show();
+							    
+							}						    
 						    break;
 					case 3:
 							zsize.setText(size);
@@ -162,7 +209,7 @@ public class ExtractZipFile {
 			}
 		};
 		
-		final Thread thread = new Thread(new Runnable() {
+		thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
@@ -285,22 +332,10 @@ public class ExtractZipFile {
 			}
 		});
 		
-		Button cancel = (Button)dialog.findViewById(R.id.calcelButton);
-		cancel.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				dialog.dismiss();
-				handle.sendEmptyMessage(5);
-			}
-		});
-		Button st = (Button)dialog.findViewById(R.id.extractButton);
-		st.setVisibility(View.GONE);
-		
-		dialog.show();
-		running = true;
-		thread.start();
-		dialog.setCancelable(false);
-		progress.setVisibility(View.VISIBLE);
+		if(extractDir == null){
+			running = true;
+			thread.start();
+			progress.setVisibility(View.VISIBLE);
+		}		
 	}
 }

@@ -208,5 +208,7 @@
 	<string name="zip_in_archive_err">Can\'t compress item inside of archive</string>
 	<string name="gesture_in_archive_err">Can\'t add gesture for item inside of archive</string>
 	<string name="share_in_archive_err">Can\'t share item inside of archive</string>
+	<string name="rar_extraction_not_supported">File extraction from rar archive not supported</string>
+	
 	
 </resources>

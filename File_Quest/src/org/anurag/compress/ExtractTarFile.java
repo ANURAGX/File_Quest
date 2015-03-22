@@ -95,7 +95,7 @@ public class ExtractTarFile {
 		
 		if(mode==2){
 			//TAR ENTRY HAS TO BE SHARED VIA BLUETOOTH,ETC...
-			TextView t = (TextView)dialog.findViewById(R.id.preparing);
+			TextView t=null ;//= (TextView)dialog.findViewById(R.id.preparing);
 			t.setText(ctx.getString(R.string.preparingtoshare));
 		}
 		
@@ -282,7 +282,7 @@ public class ExtractTarFile {
 				}
 			}
 		});
-		
+		/*
 		Button cancel = (Button)dialog.findViewById(R.id.calcelButton);
 		cancel.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -293,7 +293,7 @@ public class ExtractTarFile {
 			}
 		});
 		Button st = (Button)dialog.findViewById(R.id.extractButton);
-		st.setVisibility(View.GONE);
+		st.setVisibility(View.GONE);*/
 		
 		dialog.show();
 		running = true;
