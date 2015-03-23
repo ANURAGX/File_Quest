@@ -103,7 +103,7 @@ public class ExtractZipFile {
 			public void onPositive(MaterialDialog dialog) {
 				// TODO Auto-generated method stub
 				super.onPositive(dialog);
-				if(running){
+				if(!running){
 					progress.setVisibility(View.VISIBLE);
 					thread.start();
 				}

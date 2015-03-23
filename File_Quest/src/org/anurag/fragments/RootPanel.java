@@ -488,4 +488,13 @@ public class RootPanel extends Fragment{
 	public static boolean isArchiveOpened(){
 		return manager.isArchiveOpened();
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static File getArchiveFile(){
+		return manager.getArchiveFile();
+	}
+	
 }

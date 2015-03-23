@@ -507,4 +507,12 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	public static boolean isArchiveOpened(){
 		return manager.isArchiveOpened();
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static File getArchiveFile(){
+		return manager.getArchiveFile();
+	}
 }
