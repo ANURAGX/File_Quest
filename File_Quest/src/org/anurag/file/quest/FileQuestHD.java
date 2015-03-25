@@ -527,7 +527,18 @@ public class FileQuestHD extends ActionBarActivity implements Toolbar.OnMenuItem
 			break;
 			
 		case R.id.action_copy:
-			{	//queues the files for copy
+			{	
+
+				//if archive is opened then copy operation is aborted
+				
+				//this restriction will be removed....
+				if(RootPanel.isArchiveOpened() || SdCardPanel.isArchiveOpened()){
+					Toast.makeText(FileQuestHD.this, R.string.cut_in_archive_err,
+							Toast.LENGTH_SHORT).show();
+					break;
+				}	
+				
+				//queues the files for copy
 				int ID = mgr.COPY_ID;
 				queueItems(panel , ID);
 			}
