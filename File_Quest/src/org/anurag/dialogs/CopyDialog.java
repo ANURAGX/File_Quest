@@ -101,7 +101,8 @@ public class CopyDialog {
 	private boolean cut;
 	private Handler handle;
 	private boolean running ;
-	
+	private boolean error;
+	private String errmsg;
 	/**
 	 * 
 	 * @param context
@@ -179,6 +180,9 @@ public class CopyDialog {
 							
 					case 10:
 							endOfCopy(dialog);
+							if(error){
+								Toast.makeText(mContext, errmsg, Toast.LENGTH_SHORT).show();
+							}
 				}
 			}
 		};		
@@ -201,6 +205,9 @@ public class CopyDialog {
 						file = list.get(i).getFile();
 						if(file!=null){
 							copyToDirectory(file.getPath(), DEST);
+							if(error){
+								break;
+							}
 							if(cut){
 								if(Dest.canWrite())
 									deleteTargetForCut(file);
@@ -210,7 +217,9 @@ public class CopyDialog {
 							}	
 						}
 					}catch(NullPointerException e){
-						
+						error = true;
+						errmsg = e.toString();
+						break;
 					}
 				}
 				//COPYING DONE NOW REGENERATING KEYS AND EXITING DIALOG....
@@ -317,10 +326,14 @@ public class CopyDialog {
 				addToFileGallery(cp_file);
 								
 			} catch (FileNotFoundException e) {
+				error = true;
+				errmsg = e.toString();
 				Log.e("FileNotFoundException", e.getMessage());
 				return -1;
 
 			} catch (IOException e) {
+				error = true;
+				errmsg = e.toString();
 				Log.e("IOException", e.getMessage());
 				return -1;
 
@@ -371,7 +384,7 @@ public class CopyDialog {
 	
 	
 	// Move or Copy with Root Access using RootTools library
-		private static int moveCopyRoot(String old, String newDir) {
+	private int moveCopyRoot(String old, String newDir) {
 			try {
 				File f = new File(old);
 				if (LinuxShell.isRoot()) {
@@ -384,6 +397,8 @@ public class CopyDialog {
 					return -1;
 				}
 			} catch (Exception e){
+				error = true;
+				errmsg = e.toString();
 				return -1;
 			}
 		}
