@@ -181,7 +181,7 @@ public class CopyDialog {
 					case 10:
 							endOfCopy(dialog);
 							if(error){
-								Toast.makeText(mContext, errmsg, Toast.LENGTH_SHORT).show();
+								Toast.makeText(mContext, errmsg, Toast.LENGTH_LONG).show();
 							}
 				}
 			}
@@ -218,7 +218,7 @@ public class CopyDialog {
 						}
 					}catch(NullPointerException e){
 						error = true;
-						errmsg = e.toString();
+						errmsg = e.getMessage();
 						break;
 					}
 				}
@@ -241,12 +241,14 @@ public class CopyDialog {
 		}catch(Exception e){
 			mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(Constants.PATH))));
 		}
-		if(running){
-			Toast.makeText(mContext, mContext.getResources().getString(R.string.copsuccess), Toast.LENGTH_SHORT).show();
-			running = false;
-		}else
-			Toast.makeText(mContext, mContext.getResources().getString(R.string.copintr), Toast.LENGTH_SHORT).show();
-		
+		if(!error){
+			if(running){
+				Toast.makeText(mContext, mContext.getResources().getString(R.string.copsuccess), Toast.LENGTH_SHORT).show();
+				running = false;
+			}else
+				Toast.makeText(mContext, mContext.getResources().getString(R.string.copintr), Toast.LENGTH_SHORT).show();
+			
+		}
 		dial.dismiss();
 		
 		mContext.sendBroadcast(new Intent("UPDATE_SPACE"));
@@ -327,13 +329,13 @@ public class CopyDialog {
 								
 			} catch (FileNotFoundException e) {
 				error = true;
-				errmsg = e.toString();
+				errmsg = e.getMessage();
 				Log.e("FileNotFoundException", e.getMessage());
 				return -1;
 
 			} catch (IOException e) {
 				error = true;
-				errmsg = e.toString();
+				errmsg = e.getMessage();
 				Log.e("IOException", e.getMessage());
 				return -1;
 
@@ -398,7 +400,7 @@ public class CopyDialog {
 				}
 			} catch (Exception e){
 				error = true;
-				errmsg = e.toString();
+				errmsg = e.getMessage();
 				return -1;
 			}
 		}

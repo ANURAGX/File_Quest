@@ -294,6 +294,12 @@ public class SdCardPanel extends Fragment implements OnItemClickListener , OnIte
 	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2,
 			long arg3) {
 		// TODO Auto-generated method stub
+		
+		//long pressing ability disabled inside archive....
+		//may be get removed in next update
+		if(manager.isArchiveOpened())
+			return true;
+		
 		boolean sendBroadcast = false;
 		item = adapter_list.get(arg2);
 		if(ITEMS == null){
