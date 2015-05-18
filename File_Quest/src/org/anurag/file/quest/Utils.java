@@ -433,6 +433,7 @@ public class Utils {
 			// TODO Auto-generated method stub
 			if(!Utils.loaded){
 				prepareFavList();
+				handler.sendEmptyMessage(0);
 				start(Environment.getExternalStorageDirectory());
 				Utils.loaded = true;
 			}	

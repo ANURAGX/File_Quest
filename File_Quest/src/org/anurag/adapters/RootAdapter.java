@@ -167,7 +167,8 @@ public class RootAdapter extends BaseAdapter{
 					Toast.makeText(ctx, R.string.favremoved, Toast.LENGTH_SHORT).show();
 					//rebuilding the favorite items list after an item was removed....
 					Utils.buildFavItems(list.get(im.getId()) , false);
-					Utils.fav_Update_Needed = true;
+					//Utils.fav_Update_Needed = true;
+					Utils.update_fav();
 				}else{
 					im.setImageDrawable(ctx.getResources().getDrawable(R.drawable.fav_icon_hd));
 					list.get(im.getId()).setFavStatus(true);
@@ -175,7 +176,8 @@ public class RootAdapter extends BaseAdapter{
 					Toast.makeText(ctx, R.string.favadded, Toast.LENGTH_SHORT).show();
 					//rebuilding the favorite items list after an item was added....
 					Utils.buildFavItems(list.get(im.getId()) , true);
-					Utils.fav_Update_Needed = true;
+					//Utils.fav_Update_Needed = true;
+					Utils.update_fav();
 				}
 			}
 		});

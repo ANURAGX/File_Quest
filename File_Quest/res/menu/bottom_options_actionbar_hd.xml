@@ -112,12 +112,15 @@
         	    android:id="@+id/detail_ls"
         	    android:title="@string/action_list"/>
         	
+        	<!--GRID VIEW DISABLED TILL NEXT UPDATE  -->
         	<item 
+        	    android:visible="false"
         	    android:checkable="true"
         	    android:id="@+id/simple_grid"
         	    android:title="@string/action_simplegrid"/>
         	
         	<item 
+        	    android:visible="false"
         	    android:checkable="true"
         	    android:id="@+id/detail_grid"
         	    android:title="@string/action_grid"/>
