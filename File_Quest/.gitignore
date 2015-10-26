@@ -11,3 +11,4 @@ gen/
 local.properties
 lint.xml
 **/*.iml
+../.idea
